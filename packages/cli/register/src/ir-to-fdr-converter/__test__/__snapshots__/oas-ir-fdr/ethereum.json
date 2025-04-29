@@ -1953,9 +1953,9 @@
         ]
       }
     },
-    "EthGetProofResultOneOfZero": {
+    "EthGetProofResult0": {
       "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-      "name": "EthGetProofResultOneOfZero",
+      "name": "EthGetProofResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2044,11 +2044,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetProofResultOneOfZero",
+            "typeName": "EthGetProofResult0",
             "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
             "type": {
               "type": "id",
-              "value": "EthGetProofResultOneOfZero"
+              "value": "EthGetProofResult0"
             }
           },
           {
@@ -2111,11 +2111,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetProofResultOneOfZero",
+            "typeName": "EthGetProofResult0",
             "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
             "type": {
               "type": "id",
-              "value": "EthGetProofResultOneOfZero"
+              "value": "EthGetProofResult0"
             }
           },
           {
@@ -2298,9 +2298,9 @@
         }
       }
     },
-    "EthSyncingResultOneOfZero": {
+    "EthSyncingResult0": {
       "description": "An object with sync status data",
-      "name": "EthSyncingResultOneOfZero",
+      "name": "EthSyncingResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2363,8 +2363,8 @@
         ]
       }
     },
-    "EthSyncingResultOneOfOne": {
-      "name": "EthSyncingResultOneOfOne",
+    "EthSyncingResult1": {
+      "name": "EthSyncingResult1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2381,18 +2381,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResultOneOfZero",
+            "typeName": "EthSyncingResult0",
             "description": "An object with sync status data",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfZero"
+              "value": "EthSyncingResult0"
             }
           },
           {
-            "typeName": "EthSyncingResultOneOfOne",
+            "typeName": "EthSyncingResult1",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOne"
+              "value": "EthSyncingResult1"
             }
           }
         ]
@@ -2404,18 +2404,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResultOneOfZero",
+            "typeName": "EthSyncingResult0",
             "description": "An object with sync status data",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfZero"
+              "value": "EthSyncingResult0"
             }
           },
           {
-            "typeName": "EthSyncingResultOneOfOne",
+            "typeName": "EthSyncingResult1",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOne"
+              "value": "EthSyncingResult1"
             }
           }
         ]

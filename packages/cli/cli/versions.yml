@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Enhance OpenAPI -> IR parser to better handle inlined oneOf schemas. The parser now uses the schema ID when 
+      generating names for oneOf variants, resulting in more predictable and consistent type names in the generated SDKs.
+    type: feat
+  irVersion: 57
+  version: 0.59.1
+
+- changelogEntry:
+  - summary: |
       Add the `fern sdk version` command to generate the next semantic version based on your API changes.
       This command is in-development; changes are expected.
     type: feat

@@ -13,8 +13,8 @@
         }
       }
     },
-    "ETHCALLParamsOneOfZero": {
-      "name": "ETHCALLParamsOneOfZero",
+    "EthcallParams0": {
+      "name": "EthcallParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -26,9 +26,9 @@
         }
       }
     },
-    "ETHCALLParamsOneOfOne": {
+    "EthcallParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHCALLParamsOneOfOne",
+      "name": "EthcallParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -50,8 +50,8 @@
         ]
       }
     },
-    "ETHCALLParamsOneOfTwo": {
-      "name": "ETHCALLParamsOneOfTwo",
+    "EthcallParams2": {
+      "name": "EthcallParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -549,25 +549,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHCALLParamsOneOfZero",
+            "typeName": "EthcallParams0",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamsOneOfZero"
+              "value": "EthcallParams0"
             }
           },
           {
-            "typeName": "ETHCALLParamsOneOfOne",
+            "typeName": "EthcallParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamsOneOfOne"
+              "value": "EthcallParams1"
             }
           },
           {
-            "typeName": "ETHCALLParamsOneOfTwo",
+            "typeName": "EthcallParams2",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamsOneOfTwo"
+              "value": "EthcallParams2"
             }
           }
         ]
@@ -599,8 +599,8 @@
         }
       }
     },
-    "ETHESTIMATEGASParamsOneOfZero": {
-      "name": "ETHESTIMATEGASParamsOneOfZero",
+    "EthestimategasParams0": {
+      "name": "EthestimategasParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -612,9 +612,9 @@
         }
       }
     },
-    "ETHESTIMATEGASParamsOneOfOne": {
+    "EthestimategasParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHESTIMATEGASParamsOneOfOne",
+      "name": "EthestimategasParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -1122,18 +1122,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHESTIMATEGASParamsOneOfZero",
+            "typeName": "EthestimategasParams0",
             "type": {
               "type": "id",
-              "value": "ETHESTIMATEGASParamsOneOfZero"
+              "value": "EthestimategasParams0"
             }
           },
           {
-            "typeName": "ETHESTIMATEGASParamsOneOfOne",
+            "typeName": "EthestimategasParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHESTIMATEGASParamsOneOfOne"
+              "value": "EthestimategasParams1"
             }
           }
         ]
@@ -1165,8 +1165,8 @@
         }
       }
     },
-    "ETHGETBALANCEParamsOneOfZero": {
-      "name": "ETHGETBALANCEParamsOneOfZero",
+    "EthgetbalanceParams0": {
+      "name": "EthgetbalanceParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -1178,9 +1178,9 @@
         }
       }
     },
-    "ETHGETBALANCEParamsOneOfOne": {
+    "EthgetbalanceParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBALANCEParamsOneOfOne",
+      "name": "EthgetbalanceParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -1202,8 +1202,8 @@
         ]
       }
     },
-    "ETHGETBALANCEParamsOneOfTwo": {
-      "name": "ETHGETBALANCEParamsOneOfTwo",
+    "EthgetbalanceParams2": {
+      "name": "EthgetbalanceParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -1221,25 +1221,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBALANCEParamsOneOfZero",
+            "typeName": "EthgetbalanceParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfZero"
+              "value": "EthgetbalanceParams0"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamsOneOfOne",
+            "typeName": "EthgetbalanceParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfOne"
+              "value": "EthgetbalanceParams1"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamsOneOfTwo",
+            "typeName": "EthgetbalanceParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfTwo"
+              "value": "EthgetbalanceParams2"
             }
           }
         ]
@@ -1264,25 +1264,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBALANCEParamsOneOfZero",
+            "typeName": "EthgetbalanceParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfZero"
+              "value": "EthgetbalanceParams0"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamsOneOfOne",
+            "typeName": "EthgetbalanceParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfOne"
+              "value": "EthgetbalanceParams1"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamsOneOfTwo",
+            "typeName": "EthgetbalanceParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamsOneOfTwo"
+              "value": "EthgetbalanceParams2"
             }
           }
         ]
@@ -1301,8 +1301,8 @@
         }
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfZero": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfZero",
+    "EthGetBlockByHashResultTransactions0": {
+      "name": "EthGetBlockByHashResultTransactions0",
       "shape": {
         "type": "alias",
         "value": {
@@ -1317,8 +1317,8 @@
         }
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZeroAccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZeroAccessListItems",
+    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1355,8 +1355,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZero": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZero",
+    "EthGetBlockByHashResultTransactionsOneOf1Items0": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1461,7 +1461,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZeroAccessListItems"
+                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems"
               }
             }
           },
@@ -1524,8 +1524,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOneAccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOneAccessListItems",
+    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1562,8 +1562,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOne": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOne",
+    "EthGetBlockByHashResultTransactionsOneOf1Items1": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1674,7 +1674,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOneAccessListItems"
+                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf1AccessListItems"
               }
             }
           },
@@ -1737,8 +1737,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwoAccessListItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwoAccessListItems",
+    "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1775,8 +1775,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwo": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwo",
+    "EthGetBlockByHashResultTransactionsOneOf1Items2": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1865,7 +1865,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwoAccessListItems"
+                "value": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf2AccessListItems"
               }
             }
           },
@@ -1928,8 +1928,8 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfThree": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfThree",
+    "EthGetBlockByHashResultTransactionsOneOf1Items3": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2058,51 +2058,51 @@
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOneItems": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOneItems",
+    "EthGetBlockByHashResultTransactionsOneOf1Items": {
+      "name": "EthGetBlockByHashResultTransactionsOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZero",
+            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfZero"
+              "value": "EthGetBlockByHashResultTransactionsOneOf1Items0"
             }
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOne",
+            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfOne"
+              "value": "EthGetBlockByHashResultTransactionsOneOf1Items1"
             }
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwo",
+            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfTwo"
+              "value": "EthGetBlockByHashResultTransactionsOneOf1Items2"
             }
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfThree",
+            "typeName": "EthGetBlockByHashResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfOneItemsOneOfThree"
+              "value": "EthGetBlockByHashResultTransactionsOneOf1Items3"
             }
           }
         ]
       }
     },
-    "EthGetBlockByHashResultTransactionsOneOfOne": {
-      "name": "EthGetBlockByHashResultTransactionsOneOfOne",
+    "EthGetBlockByHashResultTransactions1": {
+      "name": "EthGetBlockByHashResultTransactions1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByHashResultTransactionsOneOfOneItems"
+            "value": "EthGetBlockByHashResultTransactionsOneOf1Items"
           }
         }
       }
@@ -2113,17 +2113,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfZero",
+            "typeName": "EthGetBlockByHashResultTransactions0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfZero"
+              "value": "EthGetBlockByHashResultTransactions0"
             }
           },
           {
-            "typeName": "EthGetBlockByHashResultTransactionsOneOfOne",
+            "typeName": "EthGetBlockByHashResultTransactions1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByHashResultTransactionsOneOfOne"
+              "value": "EthGetBlockByHashResultTransactions1"
             }
           }
         ]
@@ -2496,8 +2496,8 @@
         }
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfZero": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfZero",
+    "EthGetBlockByNumberResultTransactions0": {
+      "name": "EthGetBlockByNumberResultTransactions0",
       "shape": {
         "type": "alias",
         "value": {
@@ -2512,8 +2512,8 @@
         }
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZeroAccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZeroAccessListItems",
+    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2550,8 +2550,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZero": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZero",
+    "EthGetBlockByNumberResultTransactionsOneOf1Items0": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2656,7 +2656,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZeroAccessListItems"
+                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf0AccessListItems"
               }
             }
           },
@@ -2719,8 +2719,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOneAccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOneAccessListItems",
+    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2757,8 +2757,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOne": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOne",
+    "EthGetBlockByNumberResultTransactionsOneOf1Items1": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2869,7 +2869,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOneAccessListItems"
+                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf1AccessListItems"
               }
             }
           },
@@ -2932,8 +2932,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwoAccessListItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwoAccessListItems",
+    "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2970,8 +2970,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwo": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwo",
+    "EthGetBlockByNumberResultTransactionsOneOf1Items2": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3060,7 +3060,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwoAccessListItems"
+                "value": "EthGetBlockByNumberResultTransactionsOneOf1ItemsOneOf2AccessListItems"
               }
             }
           },
@@ -3123,8 +3123,8 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfThree": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfThree",
+    "EthGetBlockByNumberResultTransactionsOneOf1Items3": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3253,51 +3253,51 @@
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOneItems": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOneItems",
+    "EthGetBlockByNumberResultTransactionsOneOf1Items": {
+      "name": "EthGetBlockByNumberResultTransactionsOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZero",
+            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfZero"
+              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items0"
             }
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOne",
+            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfOne"
+              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items1"
             }
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwo",
+            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items2",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfTwo"
+              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items2"
             }
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfThree",
+            "typeName": "EthGetBlockByNumberResultTransactionsOneOf1Items3",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfOneItemsOneOfThree"
+              "value": "EthGetBlockByNumberResultTransactionsOneOf1Items3"
             }
           }
         ]
       }
     },
-    "EthGetBlockByNumberResultTransactionsOneOfOne": {
-      "name": "EthGetBlockByNumberResultTransactionsOneOfOne",
+    "EthGetBlockByNumberResultTransactions1": {
+      "name": "EthGetBlockByNumberResultTransactions1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EthGetBlockByNumberResultTransactionsOneOfOneItems"
+            "value": "EthGetBlockByNumberResultTransactionsOneOf1Items"
           }
         }
       }
@@ -3308,17 +3308,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfZero",
+            "typeName": "EthGetBlockByNumberResultTransactions0",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfZero"
+              "value": "EthGetBlockByNumberResultTransactions0"
             }
           },
           {
-            "typeName": "EthGetBlockByNumberResultTransactionsOneOfOne",
+            "typeName": "EthGetBlockByNumberResultTransactions1",
             "type": {
               "type": "id",
-              "value": "EthGetBlockByNumberResultTransactionsOneOfOne"
+              "value": "EthGetBlockByNumberResultTransactions1"
             }
           }
         ]
@@ -3653,8 +3653,8 @@
         ]
       }
     },
-    "ETHGETBLOCKBYNUMBERParamsOneOfZero": {
-      "name": "ETHGETBLOCKBYNUMBERParamsOneOfZero",
+    "EthgetblockbynumberParams0": {
+      "name": "EthgetblockbynumberParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3666,9 +3666,9 @@
         }
       }
     },
-    "ETHGETBLOCKBYNUMBERParamsOneOfOne": {
+    "EthgetblockbynumberParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBLOCKBYNUMBERParamsOneOfOne",
+      "name": "EthgetblockbynumberParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3696,18 +3696,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamsOneOfZero",
+            "typeName": "EthgetblockbynumberParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamsOneOfZero"
+              "value": "EthgetblockbynumberParams0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamsOneOfOne",
+            "typeName": "EthgetblockbynumberParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamsOneOfOne"
+              "value": "EthgetblockbynumberParams1"
             }
           }
         ]
@@ -3719,18 +3719,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamsOneOfZero",
+            "typeName": "EthgetblockbynumberParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamsOneOfZero"
+              "value": "EthgetblockbynumberParams0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamsOneOfOne",
+            "typeName": "EthgetblockbynumberParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamsOneOfOne"
+              "value": "EthgetblockbynumberParams1"
             }
           }
         ]
@@ -3790,8 +3790,8 @@
         }
       }
     },
-    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero": {
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero",
+    "EthgetblocktransactioncountbynumberParams0": {
+      "name": "EthgetblocktransactioncountbynumberParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3803,9 +3803,9 @@
         }
       }
     },
-    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne": {
+    "EthgetblocktransactioncountbynumberParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne",
+      "name": "EthgetblocktransactioncountbynumberParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3833,18 +3833,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero",
+            "typeName": "EthgetblocktransactioncountbynumberParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero"
+              "value": "EthgetblocktransactioncountbynumberParams0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne",
+            "typeName": "EthgetblocktransactioncountbynumberParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne"
+              "value": "EthgetblocktransactioncountbynumberParams1"
             }
           }
         ]
@@ -3856,18 +3856,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero",
+            "typeName": "EthgetblocktransactioncountbynumberParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfZero"
+              "value": "EthgetblocktransactioncountbynumberParams0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne",
+            "typeName": "EthgetblocktransactioncountbynumberParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamsOneOfOne"
+              "value": "EthgetblocktransactioncountbynumberParams1"
             }
           }
         ]
@@ -3889,8 +3889,8 @@
         }
       }
     },
-    "ETHGETCODEParamsOneOfZero": {
-      "name": "ETHGETCODEParamsOneOfZero",
+    "EthgetcodeParams0": {
+      "name": "EthgetcodeParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3902,9 +3902,9 @@
         }
       }
     },
-    "ETHGETCODEParamsOneOfOne": {
+    "EthgetcodeParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETCODEParamsOneOfOne",
+      "name": "EthgetcodeParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3926,8 +3926,8 @@
         ]
       }
     },
-    "ETHGETCODEParamsOneOfTwo": {
-      "name": "ETHGETCODEParamsOneOfTwo",
+    "EthgetcodeParams2": {
+      "name": "EthgetcodeParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -3945,25 +3945,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETCODEParamsOneOfZero",
+            "typeName": "EthgetcodeParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfZero"
+              "value": "EthgetcodeParams0"
             }
           },
           {
-            "typeName": "ETHGETCODEParamsOneOfOne",
+            "typeName": "EthgetcodeParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfOne"
+              "value": "EthgetcodeParams1"
             }
           },
           {
-            "typeName": "ETHGETCODEParamsOneOfTwo",
+            "typeName": "EthgetcodeParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfTwo"
+              "value": "EthgetcodeParams2"
             }
           }
         ]
@@ -3988,25 +3988,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETCODEParamsOneOfZero",
+            "typeName": "EthgetcodeParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfZero"
+              "value": "EthgetcodeParams0"
             }
           },
           {
-            "typeName": "ETHGETCODEParamsOneOfOne",
+            "typeName": "EthgetcodeParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfOne"
+              "value": "EthgetcodeParams1"
             }
           },
           {
-            "typeName": "ETHGETCODEParamsOneOfTwo",
+            "typeName": "EthgetcodeParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamsOneOfTwo"
+              "value": "EthgetcodeParams2"
             }
           }
         ]
@@ -4025,8 +4025,8 @@
         }
       }
     },
-    "EthGetLogsResultOneOfZero": {
-      "name": "EthGetLogsResultOneOfZero",
+    "EthGetLogsResult0": {
+      "name": "EthGetLogsResult0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4041,8 +4041,8 @@
         }
       }
     },
-    "EthGetLogsResultOneOfOneItems": {
-      "name": "EthGetLogsResultOneOfOneItems",
+    "EthGetLogsResultOneOf1Items": {
+      "name": "EthGetLogsResultOneOf1Items",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4166,15 +4166,15 @@
         ]
       }
     },
-    "EthGetLogsResultOneOfOne": {
-      "name": "EthGetLogsResultOneOfOne",
+    "EthGetLogsResult1": {
+      "name": "EthGetLogsResult1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "EthGetLogsResultOneOfOneItems"
+            "value": "EthGetLogsResultOneOf1Items"
           }
         }
       }
@@ -4185,24 +4185,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResultOneOfZero",
+            "typeName": "EthGetLogsResult0",
             "type": {
               "type": "id",
-              "value": "EthGetLogsResultOneOfZero"
+              "value": "EthGetLogsResult0"
             }
           },
           {
-            "typeName": "EthGetLogsResultOneOfOne",
+            "typeName": "EthGetLogsResult1",
             "type": {
               "type": "id",
-              "value": "EthGetLogsResultOneOfOne"
+              "value": "EthGetLogsResult1"
             }
           }
         ]
       }
     },
-    "ETHGETLOGSParamsAddressOneOfZero": {
-      "name": "ETHGETLOGSParamsAddressOneOfZero",
+    "EthgetlogsParamsAddress0": {
+      "name": "EthgetlogsParamsAddress0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4214,8 +4214,8 @@
         }
       }
     },
-    "ETHGETLOGSParamsAddressOneOfOne": {
-      "name": "ETHGETLOGSParamsAddressOneOfOne",
+    "EthgetlogsParamsAddress1": {
+      "name": "EthgetlogsParamsAddress1",
       "shape": {
         "type": "alias",
         "value": {
@@ -4236,24 +4236,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETLOGSParamsAddressOneOfZero",
+            "typeName": "EthgetlogsParamsAddress0",
             "type": {
               "type": "id",
-              "value": "ETHGETLOGSParamsAddressOneOfZero"
+              "value": "EthgetlogsParamsAddress0"
             }
           },
           {
-            "typeName": "ETHGETLOGSParamsAddressOneOfOne",
+            "typeName": "EthgetlogsParamsAddress1",
             "type": {
               "type": "id",
-              "value": "ETHGETLOGSParamsAddressOneOfOne"
+              "value": "EthgetlogsParamsAddress1"
             }
           }
         ]
       }
     },
-    "ETHGETLOGSParamsTopicsItemsOneOfZero": {
-      "name": "ETHGETLOGSParamsTopicsItemsOneOfZero",
+    "EthgetlogsParamsTopicsItems0": {
+      "name": "EthgetlogsParamsTopicsItems0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4265,8 +4265,8 @@
         }
       }
     },
-    "ETHGETLOGSParamsTopicsItemsOneOfOne": {
-      "name": "ETHGETLOGSParamsTopicsItemsOneOfOne",
+    "EthgetlogsParamsTopicsItems1": {
+      "name": "EthgetlogsParamsTopicsItems1",
       "shape": {
         "type": "alias",
         "value": {
@@ -4287,17 +4287,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETLOGSParamsTopicsItemsOneOfZero",
+            "typeName": "EthgetlogsParamsTopicsItems0",
             "type": {
               "type": "id",
-              "value": "ETHGETLOGSParamsTopicsItemsOneOfZero"
+              "value": "EthgetlogsParamsTopicsItems0"
             }
           },
           {
-            "typeName": "ETHGETLOGSParamsTopicsItemsOneOfOne",
+            "typeName": "EthgetlogsParamsTopicsItems1",
             "type": {
               "type": "id",
-              "value": "ETHGETLOGSParamsTopicsItemsOneOfOne"
+              "value": "EthgetlogsParamsTopicsItems1"
             }
           }
         ]
@@ -4437,17 +4437,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResultOneOfZero",
+            "typeName": "EthGetLogsResult0",
             "type": {
               "type": "id",
-              "value": "EthGetLogsResultOneOfZero"
+              "value": "EthGetLogsResult0"
             }
           },
           {
-            "typeName": "EthGetLogsResultOneOfOne",
+            "typeName": "EthGetLogsResult1",
             "type": {
               "type": "id",
-              "value": "EthGetLogsResultOneOfOne"
+              "value": "EthGetLogsResult1"
             }
           }
         ]
@@ -4577,8 +4577,8 @@
         ]
       }
     },
-    "ETHGETPROOFParamsOneOfZero": {
-      "name": "ETHGETPROOFParamsOneOfZero",
+    "EthgetproofParams0": {
+      "name": "EthgetproofParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4590,9 +4590,9 @@
         }
       }
     },
-    "ETHGETPROOFParamsOneOfOne": {
+    "EthgetproofParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETPROOFParamsOneOfOne",
+      "name": "EthgetproofParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -4614,8 +4614,8 @@
         ]
       }
     },
-    "ETHGETPROOFParamsOneOfTwo": {
-      "name": "ETHGETPROOFParamsOneOfTwo",
+    "EthgetproofParams2": {
+      "name": "EthgetproofParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -4633,25 +4633,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETPROOFParamsOneOfZero",
+            "typeName": "EthgetproofParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfZero"
+              "value": "EthgetproofParams0"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamsOneOfOne",
+            "typeName": "EthgetproofParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfOne"
+              "value": "EthgetproofParams1"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamsOneOfTwo",
+            "typeName": "EthgetproofParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfTwo"
+              "value": "EthgetproofParams2"
             }
           }
         ]
@@ -4692,25 +4692,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETPROOFParamsOneOfZero",
+            "typeName": "EthgetproofParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfZero"
+              "value": "EthgetproofParams0"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamsOneOfOne",
+            "typeName": "EthgetproofParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfOne"
+              "value": "EthgetproofParams1"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamsOneOfTwo",
+            "typeName": "EthgetproofParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamsOneOfTwo"
+              "value": "EthgetproofParams2"
             }
           }
         ]
@@ -4798,8 +4798,8 @@
         ]
       }
     },
-    "ETHGETSTORAGEATParamsOneOfZero": {
-      "name": "ETHGETSTORAGEATParamsOneOfZero",
+    "EthgetstorageatParams0": {
+      "name": "EthgetstorageatParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4811,9 +4811,9 @@
         }
       }
     },
-    "ETHGETSTORAGEATParamsOneOfOne": {
+    "EthgetstorageatParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETSTORAGEATParamsOneOfOne",
+      "name": "EthgetstorageatParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -4835,8 +4835,8 @@
         ]
       }
     },
-    "ETHGETSTORAGEATParamsOneOfTwo": {
-      "name": "ETHGETSTORAGEATParamsOneOfTwo",
+    "EthgetstorageatParams2": {
+      "name": "EthgetstorageatParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -4854,25 +4854,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfZero",
+            "typeName": "EthgetstorageatParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfZero"
+              "value": "EthgetstorageatParams0"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfOne",
+            "typeName": "EthgetstorageatParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfOne"
+              "value": "EthgetstorageatParams1"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfTwo",
+            "typeName": "EthgetstorageatParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfTwo"
+              "value": "EthgetstorageatParams2"
             }
           }
         ]
@@ -4910,25 +4910,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfZero",
+            "typeName": "EthgetstorageatParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfZero"
+              "value": "EthgetstorageatParams0"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfOne",
+            "typeName": "EthgetstorageatParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfOne"
+              "value": "EthgetstorageatParams1"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamsOneOfTwo",
+            "typeName": "EthgetstorageatParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamsOneOfTwo"
+              "value": "EthgetstorageatParams2"
             }
           }
         ]
@@ -4947,8 +4947,8 @@
         }
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfZeroAccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfZeroAccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4985,8 +4985,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfZero": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfZero",
+    "EthGetTransactionByBlockHashAndIndexResult0": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5091,7 +5091,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOfZeroAccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf0AccessListItems"
               }
             }
           },
@@ -5154,8 +5154,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfOneAccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfOneAccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5192,8 +5192,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfOne": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfOne",
+    "EthGetTransactionByBlockHashAndIndexResult1": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5304,7 +5304,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOfOneAccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf1AccessListItems"
               }
             }
           },
@@ -5367,8 +5367,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfTwoAccessListItems": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfTwoAccessListItems",
+    "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems": {
+      "name": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5405,8 +5405,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfTwo": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfTwo",
+    "EthGetTransactionByBlockHashAndIndexResult2": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5495,7 +5495,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockHashAndIndexResultOneOfTwoAccessListItems"
+                "value": "EthGetTransactionByBlockHashAndIndexResultOneOf2AccessListItems"
               }
             }
           },
@@ -5558,8 +5558,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockHashAndIndexResultOneOfThree": {
-      "name": "EthGetTransactionByBlockHashAndIndexResultOneOfThree",
+    "EthGetTransactionByBlockHashAndIndexResult3": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5694,31 +5694,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResultOneOfZero",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResult0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResultOneOfZero"
+              "value": "EthGetTransactionByBlockHashAndIndexResult0"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResultOneOfOne",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResult1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResultOneOfOne"
+              "value": "EthGetTransactionByBlockHashAndIndexResult1"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResultOneOfTwo",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResult2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResultOneOfTwo"
+              "value": "EthGetTransactionByBlockHashAndIndexResult2"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockHashAndIndexResultOneOfThree",
+            "typeName": "EthGetTransactionByBlockHashAndIndexResult3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockHashAndIndexResultOneOfThree"
+              "value": "EthGetTransactionByBlockHashAndIndexResult3"
             }
           }
         ]
@@ -5763,8 +5763,8 @@
         }
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfZeroAccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfZeroAccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5801,8 +5801,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfZero": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfZero",
+    "EthGetTransactionByBlockNumberAndIndexResult0": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5907,7 +5907,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfZeroAccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf0AccessListItems"
               }
             }
           },
@@ -5970,8 +5970,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfOneAccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfOneAccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6008,8 +6008,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfOne": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfOne",
+    "EthGetTransactionByBlockNumberAndIndexResult1": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6120,7 +6120,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfOneAccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf1AccessListItems"
               }
             }
           },
@@ -6183,8 +6183,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfTwoAccessListItems": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfTwoAccessListItems",
+    "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6221,8 +6221,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfTwo": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfTwo",
+    "EthGetTransactionByBlockNumberAndIndexResult2": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6311,7 +6311,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfTwoAccessListItems"
+                "value": "EthGetTransactionByBlockNumberAndIndexResultOneOf2AccessListItems"
               }
             }
           },
@@ -6374,8 +6374,8 @@
         ]
       }
     },
-    "EthGetTransactionByBlockNumberAndIndexResultOneOfThree": {
-      "name": "EthGetTransactionByBlockNumberAndIndexResultOneOfThree",
+    "EthGetTransactionByBlockNumberAndIndexResult3": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6510,38 +6510,38 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResultOneOfZero",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResult0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfZero"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult0"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResultOneOfOne",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResult1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfOne"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult1"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResultOneOfTwo",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResult2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfTwo"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult2"
             }
           },
           {
-            "typeName": "EthGetTransactionByBlockNumberAndIndexResultOneOfThree",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexResult3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByBlockNumberAndIndexResultOneOfThree"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult3"
             }
           }
         ]
       }
     },
-    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero": {
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero",
+    "EthgettransactionbyblocknumberandindexParams0": {
+      "name": "EthgettransactionbyblocknumberandindexParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -6553,9 +6553,9 @@
         }
       }
     },
-    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne": {
+    "EthgettransactionbyblocknumberandindexParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne",
+      "name": "EthgettransactionbyblocknumberandindexParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -6583,18 +6583,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero",
+            "typeName": "EthgettransactionbyblocknumberandindexParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero"
+              "value": "EthgettransactionbyblocknumberandindexParams0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne",
+            "typeName": "EthgettransactionbyblocknumberandindexParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne"
+              "value": "EthgettransactionbyblocknumberandindexParams1"
             }
           }
         ]
@@ -6606,18 +6606,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero",
+            "typeName": "EthgettransactionbyblocknumberandindexParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfZero"
+              "value": "EthgettransactionbyblocknumberandindexParams0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne",
+            "typeName": "EthgettransactionbyblocknumberandindexParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamsOneOfOne"
+              "value": "EthgettransactionbyblocknumberandindexParams1"
             }
           }
         ]
@@ -6649,8 +6649,8 @@
         }
       }
     },
-    "EthGetTransactionByHashResultOneOfZeroAccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOfZeroAccessListItems",
+    "EthGetTransactionByHashResultOneOf0AccessListItems": {
+      "name": "EthGetTransactionByHashResultOneOf0AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6687,8 +6687,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfZero": {
-      "name": "EthGetTransactionByHashResultOneOfZero",
+    "EthGetTransactionByHashResult0": {
+      "name": "EthGetTransactionByHashResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6793,7 +6793,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOfZeroAccessListItems"
+                "value": "EthGetTransactionByHashResultOneOf0AccessListItems"
               }
             }
           },
@@ -6856,8 +6856,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfOneAccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOfOneAccessListItems",
+    "EthGetTransactionByHashResultOneOf1AccessListItems": {
+      "name": "EthGetTransactionByHashResultOneOf1AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6894,8 +6894,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfOne": {
-      "name": "EthGetTransactionByHashResultOneOfOne",
+    "EthGetTransactionByHashResult1": {
+      "name": "EthGetTransactionByHashResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7006,7 +7006,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOfOneAccessListItems"
+                "value": "EthGetTransactionByHashResultOneOf1AccessListItems"
               }
             }
           },
@@ -7069,8 +7069,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfTwoAccessListItems": {
-      "name": "EthGetTransactionByHashResultOneOfTwoAccessListItems",
+    "EthGetTransactionByHashResultOneOf2AccessListItems": {
+      "name": "EthGetTransactionByHashResultOneOf2AccessListItems",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7107,8 +7107,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfTwo": {
-      "name": "EthGetTransactionByHashResultOneOfTwo",
+    "EthGetTransactionByHashResult2": {
+      "name": "EthGetTransactionByHashResult2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7197,7 +7197,7 @@
               "type": "list",
               "itemType": {
                 "type": "id",
-                "value": "EthGetTransactionByHashResultOneOfTwoAccessListItems"
+                "value": "EthGetTransactionByHashResultOneOf2AccessListItems"
               }
             }
           },
@@ -7260,8 +7260,8 @@
         ]
       }
     },
-    "EthGetTransactionByHashResultOneOfThree": {
-      "name": "EthGetTransactionByHashResultOneOfThree",
+    "EthGetTransactionByHashResult3": {
+      "name": "EthGetTransactionByHashResult3",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7396,31 +7396,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetTransactionByHashResultOneOfZero",
+            "typeName": "EthGetTransactionByHashResult0",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResultOneOfZero"
+              "value": "EthGetTransactionByHashResult0"
             }
           },
           {
-            "typeName": "EthGetTransactionByHashResultOneOfOne",
+            "typeName": "EthGetTransactionByHashResult1",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResultOneOfOne"
+              "value": "EthGetTransactionByHashResult1"
             }
           },
           {
-            "typeName": "EthGetTransactionByHashResultOneOfTwo",
+            "typeName": "EthGetTransactionByHashResult2",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResultOneOfTwo"
+              "value": "EthGetTransactionByHashResult2"
             }
           },
           {
-            "typeName": "EthGetTransactionByHashResultOneOfThree",
+            "typeName": "EthGetTransactionByHashResult3",
             "type": {
               "type": "id",
-              "value": "EthGetTransactionByHashResultOneOfThree"
+              "value": "EthGetTransactionByHashResult3"
             }
           }
         ]
@@ -7452,8 +7452,8 @@
         }
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamsOneOfZero": {
-      "name": "ETHGETTRANSACTIONCOUNTParamsOneOfZero",
+    "EthgettransactioncountParams0": {
+      "name": "EthgettransactioncountParams0",
       "shape": {
         "type": "alias",
         "value": {
@@ -7465,9 +7465,9 @@
         }
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamsOneOfOne": {
+    "EthgettransactioncountParams1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETTRANSACTIONCOUNTParamsOneOfOne",
+      "name": "EthgettransactioncountParams1",
       "shape": {
         "type": "enum",
         "values": [
@@ -7489,8 +7489,8 @@
         ]
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamsOneOfTwo": {
-      "name": "ETHGETTRANSACTIONCOUNTParamsOneOfTwo",
+    "EthgettransactioncountParams2": {
+      "name": "EthgettransactioncountParams2",
       "shape": {
         "type": "alias",
         "value": {
@@ -7508,25 +7508,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfZero",
+            "typeName": "EthgettransactioncountParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfZero"
+              "value": "EthgettransactioncountParams0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfOne",
+            "typeName": "EthgettransactioncountParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfOne"
+              "value": "EthgettransactioncountParams1"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfTwo",
+            "typeName": "EthgettransactioncountParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfTwo"
+              "value": "EthgettransactioncountParams2"
             }
           }
         ]
@@ -7551,25 +7551,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfZero",
+            "typeName": "EthgettransactioncountParams0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfZero"
+              "value": "EthgettransactioncountParams0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfOne",
+            "typeName": "EthgettransactioncountParams1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfOne"
+              "value": "EthgettransactioncountParams1"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamsOneOfTwo",
+            "typeName": "EthgettransactioncountParams2",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamsOneOfTwo"
+              "value": "EthgettransactioncountParams2"
             }
           }
         ]
@@ -7980,8 +7980,8 @@
         }
       }
     },
-    "EthSyncingResultOneOfZero": {
-      "name": "EthSyncingResultOneOfZero",
+    "EthSyncingResult0": {
+      "name": "EthSyncingResult0",
       "shape": {
         "type": "alias",
         "value": {
@@ -7992,8 +7992,8 @@
         }
       }
     },
-    "EthSyncingResultOneOfOneOneOfZero": {
-      "name": "EthSyncingResultOneOfOneOneOfZero",
+    "EthSyncingResult10": {
+      "name": "EthSyncingResult10",
       "shape": {
         "type": "object",
         "extends": [],
@@ -8040,9 +8040,9 @@
         ]
       }
     },
-    "EthSyncingResultOneOfOneOneOfOne": {
+    "EthSyncingResult11": {
       "description": "Should always return false if not syncing.",
-      "name": "EthSyncingResultOneOfOneOneOfOne",
+      "name": "EthSyncingResult11",
       "shape": {
         "type": "alias",
         "value": {
@@ -8053,24 +8053,24 @@
         }
       }
     },
-    "EthSyncingResultOneOfOne": {
-      "name": "EthSyncingResultOneOfOne",
+    "EthSyncingResult1": {
+      "name": "EthSyncingResult1",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResultOneOfOneOneOfZero",
+            "typeName": "EthSyncingResult10",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOneOneOfZero"
+              "value": "EthSyncingResult10"
             }
           },
           {
-            "typeName": "EthSyncingResultOneOfOneOneOfOne",
+            "typeName": "EthSyncingResult11",
             "description": "Should always return false if not syncing.",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOneOneOfOne"
+              "value": "EthSyncingResult11"
             }
           }
         ]
@@ -8082,17 +8082,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResultOneOfZero",
+            "typeName": "EthSyncingResult0",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfZero"
+              "value": "EthSyncingResult0"
             }
           },
           {
-            "typeName": "EthSyncingResultOneOfOne",
+            "typeName": "EthSyncingResult1",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOne"
+              "value": "EthSyncingResult1"
             }
           }
         ]
@@ -8104,17 +8104,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthSyncingResultOneOfZero",
+            "typeName": "EthSyncingResult0",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfZero"
+              "value": "EthSyncingResult0"
             }
           },
           {
-            "typeName": "EthSyncingResultOneOfOne",
+            "typeName": "EthSyncingResult1",
             "type": {
               "type": "id",
-              "value": "EthSyncingResultOneOfOne"
+              "value": "EthSyncingResult1"
             }
           }
         ]

@@ -3228,9 +3228,9 @@
         }
       }
     },
-    "GetHealthResultOneOfZero": {
+    "GetHealthResult0": {
       "description": "Result is 'ok' if healthy.",
-      "name": "GetHealthResultOneOfZero",
+      "name": "GetHealthResult0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3241,9 +3241,9 @@
         }
       }
     },
-    "GetHealthResultOneOfOne": {
+    "GetHealthResult1": {
       "description": "An error object if unhealthy.",
-      "name": "GetHealthResultOneOfOne",
+      "name": "GetHealthResult1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3257,19 +3257,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResultOneOfZero",
+            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
               "type": "id",
-              "value": "GetHealthResultOneOfZero"
+              "value": "GetHealthResult0"
             }
           },
           {
-            "typeName": "GetHealthResultOneOfOne",
+            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
               "type": "id",
-              "value": "GetHealthResultOneOfOne"
+              "value": "GetHealthResult1"
             }
           }
         ]
@@ -3282,19 +3282,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResultOneOfZero",
+            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
               "type": "id",
-              "value": "GetHealthResultOneOfZero"
+              "value": "GetHealthResult0"
             }
           },
           {
-            "typeName": "GetHealthResultOneOfOne",
+            "typeName": "GetHealthResult1",
             "description": "An error object if unhealthy.",
             "type": {
               "type": "id",
-              "value": "GetHealthResultOneOfOne"
+              "value": "GetHealthResult1"
             }
           }
         ]
@@ -6925,18 +6925,18 @@
         ]
       }
     },
-    "GetTransactionResultTransactionOneOfZero": {
+    "GetTransactionResultTransaction0": {
       "description": "The transaction details in JSON format.",
-      "name": "GetTransactionResultTransactionOneOfZero",
+      "name": "GetTransactionResultTransaction0",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
       }
     },
-    "GetTransactionResultTransactionOneOfOne": {
+    "GetTransactionResultTransaction1": {
       "description": "The transaction details as encoded binary data.",
-      "name": "GetTransactionResultTransactionOneOfOne",
+      "name": "GetTransactionResultTransaction1",
       "shape": {
         "type": "alias",
         "value": {
@@ -6954,19 +6954,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultTransactionOneOfZero",
+            "typeName": "GetTransactionResultTransaction0",
             "description": "The transaction details in JSON format.",
             "type": {
               "type": "id",
-              "value": "GetTransactionResultTransactionOneOfZero"
+              "value": "GetTransactionResultTransaction0"
             }
           },
           {
-            "typeName": "GetTransactionResultTransactionOneOfOne",
+            "typeName": "GetTransactionResultTransaction1",
             "description": "The transaction details as encoded binary data.",
             "type": {
               "type": "id",
-              "value": "GetTransactionResultTransactionOneOfOne"
+              "value": "GetTransactionResultTransaction1"
             }
           }
         ]
@@ -6981,8 +6981,8 @@
         "properties": []
       }
     },
-    "GetTransactionResultVersionOneOfZero": {
-      "name": "GetTransactionResultVersionOneOfZero",
+    "GetTransactionResultVersion0": {
+      "name": "GetTransactionResultVersion0",
       "shape": {
         "type": "alias",
         "value": {
@@ -6993,8 +6993,8 @@
         }
       }
     },
-    "GetTransactionResultVersionOneOfOne": {
-      "name": "GetTransactionResultVersionOneOfOne",
+    "GetTransactionResultVersion1": {
+      "name": "GetTransactionResultVersion1",
       "shape": {
         "type": "alias",
         "value": {
@@ -7012,17 +7012,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultVersionOneOfZero",
+            "typeName": "GetTransactionResultVersion0",
             "type": {
               "type": "id",
-              "value": "GetTransactionResultVersionOneOfZero"
+              "value": "GetTransactionResultVersion0"
             }
           },
           {
-            "typeName": "GetTransactionResultVersionOneOfOne",
+            "typeName": "GetTransactionResultVersion1",
             "type": {
               "type": "id",
-              "value": "GetTransactionResultVersionOneOfOne"
+              "value": "GetTransactionResultVersion1"
             }
           }
         ]

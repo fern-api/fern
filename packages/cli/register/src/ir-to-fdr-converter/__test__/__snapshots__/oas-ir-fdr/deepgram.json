@@ -3150,27 +3150,27 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1ListenPostParametersSchemaOneOfZero",
+            "typeName": "V1ListenPostParametersSchema0",
             "description": "Use the latest version of a model",
             "type": {
               "type": "id",
-              "value": "V1ListenPostParametersSchemaOneOfZero"
+              "value": "V1ListenPostParametersSchema0"
             }
           },
           {
-            "typeName": "V1ListenPostParametersSchemaOneOfOne",
+            "typeName": "V1ListenPostParametersSchema1",
             "description": "Use a previous version of a model",
             "type": {
               "type": "id",
-              "value": "V1ListenPostParametersSchemaOneOfOne"
+              "value": "V1ListenPostParametersSchema1"
             }
           }
         ]
       }
     },
-    "V1ListenPostParametersSchemaOneOfZero": {
+    "V1ListenPostParametersSchema0": {
       "description": "Use the latest version of a model",
-      "name": "V1ListenPostParametersSchemaOneOfZero",
+      "name": "V1ListenPostParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -3180,9 +3180,9 @@
         ]
       }
     },
-    "V1ListenPostParametersSchemaOneOfOne": {
+    "V1ListenPostParametersSchema1": {
       "description": "Use a previous version of a model",
-      "name": "V1ListenPostParametersSchemaOneOfOne",
+      "name": "V1ListenPostParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
@@ -3193,8 +3193,8 @@
         }
       }
     },
-    "V1ListenPostParametersSchemaOneOfOneItems": {
-      "name": "V1ListenPostParametersSchemaOneOfOneItems",
+    "V1ListenPostParametersSchemaOneOf1Items": {
+      "name": "V1ListenPostParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -3222,8 +3222,8 @@
         ]
       }
     },
-    "V1ReadPostParametersSchemaOneOfZero": {
-      "name": "V1ReadPostParametersSchemaOneOfZero",
+    "V1ReadPostParametersSchema0": {
+      "name": "V1ReadPostParametersSchema0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3234,8 +3234,8 @@
         }
       }
     },
-    "V1ReadPostParametersSchemaOneOfOne": {
-      "name": "V1ReadPostParametersSchemaOneOfOne",
+    "V1ReadPostParametersSchema1": {
+      "name": "V1ReadPostParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
@@ -3249,9 +3249,9 @@
         }
       }
     },
-    "V1SpeakPostParametersSchemaOneOfZero": {
+    "V1SpeakPostParametersSchema0": {
       "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
-      "name": "V1SpeakPostParametersSchemaOneOfZero",
+      "name": "V1SpeakPostParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -3273,9 +3273,9 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfOne": {
+    "V1SpeakPostParametersSchema1": {
       "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchemaOneOfOne",
+      "name": "V1SpeakPostParametersSchema1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3288,9 +3288,9 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfTwo": {
+    "V1SpeakPostParametersSchema2": {
       "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchemaOneOfTwo",
+      "name": "V1SpeakPostParametersSchema2",
       "shape": {
         "type": "enum",
         "values": [
@@ -3309,51 +3309,51 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SpeakPostParametersSchemaOneOfZero",
+            "typeName": "V1SpeakPostParametersSchema0",
             "description": "Encoding - linear16. Supported sample rates - 8000, 16000, 24000, 32000, 48000 Hz.",
             "type": {
               "type": "id",
-              "value": "V1SpeakPostParametersSchemaOneOfZero"
+              "value": "V1SpeakPostParametersSchema0"
             }
           },
           {
-            "typeName": "V1SpeakPostParametersSchemaOneOfOne",
+            "typeName": "V1SpeakPostParametersSchema1",
             "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
             "type": {
               "type": "id",
-              "value": "V1SpeakPostParametersSchemaOneOfOne"
+              "value": "V1SpeakPostParametersSchema1"
             }
           },
           {
-            "typeName": "V1SpeakPostParametersSchemaOneOfTwo",
+            "typeName": "V1SpeakPostParametersSchema2",
             "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
             "type": {
               "type": "id",
-              "value": "V1SpeakPostParametersSchemaOneOfTwo"
+              "value": "V1SpeakPostParametersSchema2"
             }
           },
           {
-            "typeName": "V1SpeakPostParametersSchemaOneOfThree",
+            "typeName": "V1SpeakPostParametersSchema3",
             "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
             "type": {
               "type": "id",
-              "value": "V1SpeakPostParametersSchemaOneOfThree"
+              "value": "V1SpeakPostParametersSchema3"
             }
           },
           {
-            "typeName": "V1SpeakPostParametersSchemaOneOfFour",
+            "typeName": "V1SpeakPostParametersSchema4",
             "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
             "type": {
               "type": "id",
-              "value": "V1SpeakPostParametersSchemaOneOfFour"
+              "value": "V1SpeakPostParametersSchema4"
             }
           }
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfThree": {
+    "V1SpeakPostParametersSchema3": {
       "description": "Encoding - mp3. Sample rate is fixed and not configurable (22050 Hz).",
-      "name": "V1SpeakPostParametersSchemaOneOfThree",
+      "name": "V1SpeakPostParametersSchema3",
       "shape": {
         "type": "enum",
         "values": [
@@ -3363,9 +3363,9 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfFour": {
+    "V1SpeakPostParametersSchema4": {
       "description": "Encoding - opus. Sample rate is fixed at 48000 Hz.",
-      "name": "V1SpeakPostParametersSchemaOneOfFour",
+      "name": "V1SpeakPostParametersSchema4",
       "shape": {
         "type": "enum",
         "values": [
@@ -3375,9 +3375,9 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfFive": {
+    "V1SpeakPostParametersSchema5": {
       "description": "Encoding - opus. High-compression audio format optimized for real-time communications.",
-      "name": "V1SpeakPostParametersSchemaOneOfFive",
+      "name": "V1SpeakPostParametersSchema5",
       "shape": {
         "type": "enum",
         "values": [
@@ -3387,9 +3387,9 @@
         ]
       }
     },
-    "V1SpeakPostParametersSchemaOneOfSix": {
+    "V1SpeakPostParametersSchema6": {
       "description": "Encoding - aac. Advanced audio format offering better quality at smaller file sizes than mp3.",
-      "name": "V1SpeakPostParametersSchemaOneOfSix",
+      "name": "V1SpeakPostParametersSchema6",
       "shape": {
         "type": "enum",
         "values": [
@@ -5282,8 +5282,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOfZero": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOfZero",
+    "ManagementApiGetModelResponse2000": {
+      "name": "ManagementApiGetModelResponse2000",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5403,8 +5403,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOfOneMetadata": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOfOneMetadata",
+    "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata": {
+      "name": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5477,8 +5477,8 @@
         ]
       }
     },
-    "V1ModelsModelIdGetResponsesSchemaOneOfOne": {
-      "name": "V1ModelsModelIdGetResponsesSchemaOneOfOne",
+    "ManagementApiGetModelResponse2001": {
+      "name": "ManagementApiGetModelResponse2001",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5565,7 +5565,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "V1ModelsModelIdGetResponsesSchemaOneOfOneMetadata"
+                "value": "V1ModelsModelIdGetResponsesSchemaOneOf1Metadata"
               }
             }
           }
@@ -5578,17 +5578,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1ModelsModelIdGetResponsesSchemaOneOfZero",
+            "typeName": "ManagementApiGetModelResponse2000",
             "type": {
               "type": "id",
-              "value": "V1ModelsModelIdGetResponsesSchemaOneOfZero"
+              "value": "ManagementApiGetModelResponse2000"
             }
           },
           {
-            "typeName": "V1ModelsModelIdGetResponsesSchemaOneOfOne",
+            "typeName": "ManagementApiGetModelResponse2001",
             "type": {
               "type": "id",
-              "value": "V1ModelsModelIdGetResponsesSchemaOneOfOne"
+              "value": "ManagementApiGetModelResponse2001"
             }
           }
         ]
@@ -6450,9 +6450,9 @@
         }
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfZeroType": {
+    "ChannelsListenMessagesControlMessagesRequestOneOf0Type": {
       "description": "Used to handle specific scenarios where you need to force the server to process all unprocessed audio data and immediately return the final results",
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfZeroType",
+      "name": "ChannelsListenMessagesControlMessagesRequestOneOf0Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -6462,8 +6462,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfZero": {
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfZero",
+    "ListenControlMessagesRequest0": {
+      "name": "ListenControlMessagesRequest0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6475,16 +6475,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessagesRequestOneOfZeroType"
+                "value": "ChannelsListenMessagesControlMessagesRequestOneOf0Type"
               }
             }
           }
         ]
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfOneType": {
+    "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfOneType",
+      "name": "ChannelsListenMessagesControlMessagesRequestOneOf1Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -6494,8 +6494,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfOne": {
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfOne",
+    "ListenControlMessagesRequest1": {
+      "name": "ListenControlMessagesRequest1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6507,16 +6507,16 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessagesRequestOneOfOneType"
+                "value": "ChannelsListenMessagesControlMessagesRequestOneOf1Type"
               }
             }
           }
         ]
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfTwoType": {
+    "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfTwoType",
+      "name": "ChannelsListenMessagesControlMessagesRequestOneOf2Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -6526,8 +6526,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessagesRequestOneOfTwo": {
-      "name": "ChannelsListenMessagesControlMessagesRequestOneOfTwo",
+    "ListenControlMessagesRequest2": {
+      "name": "ListenControlMessagesRequest2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6539,7 +6539,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessagesRequestOneOfTwoType"
+                "value": "ChannelsListenMessagesControlMessagesRequestOneOf2Type"
               }
             }
           }
@@ -6552,24 +6552,24 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ChannelsListenMessagesControlMessagesRequestOneOfZero",
+            "typeName": "ListenControlMessagesRequest0",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessagesRequestOneOfZero"
+              "value": "ListenControlMessagesRequest0"
             }
           },
           {
-            "typeName": "ChannelsListenMessagesControlMessagesRequestOneOfOne",
+            "typeName": "ListenControlMessagesRequest1",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessagesRequestOneOfOne"
+              "value": "ListenControlMessagesRequest1"
             }
           },
           {
-            "typeName": "ChannelsListenMessagesControlMessagesRequestOneOfTwo",
+            "typeName": "ListenControlMessagesRequest2",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessagesRequestOneOfTwo"
+              "value": "ListenControlMessagesRequest2"
             }
           }
         ]
@@ -6920,8 +6920,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfZeroType": {
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfZeroType",
+    "ChannelsListenMessagesControlMessageResponseOneOf0Type": {
+      "name": "ChannelsListenMessagesControlMessageResponseOneOf0Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -6931,9 +6931,9 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfZero": {
+    "ListenControlMessageResponse0": {
       "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfZero",
+      "name": "ListenControlMessageResponse0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6944,7 +6944,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOfZeroType"
+                "value": "ChannelsListenMessagesControlMessageResponseOneOf0Type"
               }
             }
           },
@@ -6965,8 +6965,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfOneType": {
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfOneType",
+    "ChannelsListenMessagesControlMessageResponseOneOf1Type": {
+      "name": "ChannelsListenMessagesControlMessageResponseOneOf1Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -6976,9 +6976,9 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfOne": {
+    "ListenControlMessageResponse1": {
       "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfOne",
+      "name": "ListenControlMessageResponse1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6989,7 +6989,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOfOneType"
+                "value": "ChannelsListenMessagesControlMessageResponseOneOf1Type"
               }
             }
           },
@@ -7078,8 +7078,8 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfTwoType": {
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfTwoType",
+    "ChannelsListenMessagesControlMessageResponseOneOf2Type": {
+      "name": "ChannelsListenMessagesControlMessageResponseOneOf2Type",
       "shape": {
         "type": "enum",
         "values": [
@@ -7089,9 +7089,9 @@
         ]
       }
     },
-    "ChannelsListenMessagesControlMessageResponseOneOfTwo": {
+    "ListenControlMessageResponse2": {
       "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
-      "name": "ChannelsListenMessagesControlMessageResponseOneOfTwo",
+      "name": "ListenControlMessageResponse2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -7102,7 +7102,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ChannelsListenMessagesControlMessageResponseOneOfTwoType"
+                "value": "ChannelsListenMessagesControlMessageResponseOneOf2Type"
               }
             }
           },
@@ -7197,27 +7197,27 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ChannelsListenMessagesControlMessageResponseOneOfZero",
+            "typeName": "ListenControlMessageResponse0",
             "description": "The server will process all remaining audio data and return the final results. You may receive a response with the from_finalize attribute set to true, indicating that the finalization process is complete. This response typically occurs when there is a noticeable amount of audio buffered in the server.\n",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessageResponseOneOfZero"
+              "value": "ListenControlMessageResponse0"
             }
           },
           {
-            "typeName": "ChannelsListenMessagesControlMessageResponseOneOfOne",
+            "typeName": "ListenControlMessageResponse1",
             "description": "Provides real-time metadata during audio streaming, including audio characteristics\nand processing details. This response is sent periodically during streaming to\nprovide updates about the audio being processed.\n",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessageResponseOneOfOne"
+              "value": "ListenControlMessageResponse1"
             }
           },
           {
-            "typeName": "ChannelsListenMessagesControlMessageResponseOneOfTwo",
+            "typeName": "ListenControlMessageResponse2",
             "description": "Indicates that the server has closed the WebSocket connection and the server will process all remaining audio data.\n",
             "type": {
               "type": "id",
-              "value": "ChannelsListenMessagesControlMessageResponseOneOfTwo"
+              "value": "ListenControlMessageResponse2"
             }
           }
         ]

@@ -18,6 +18,7 @@ import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
+        id: string;
         schema: OpenAPIV3_1.SchemaObject;
         inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
@@ -33,10 +34,12 @@ export class OneOfSchemaConverter extends AbstractConverter<
     OneOfSchemaConverter.Output | undefined
 > {
     private readonly schema: OpenAPIV3_1.SchemaObject;
+    private readonly id: string;
 
-    constructor({ context, breadcrumbs, schema }: OneOfSchemaConverter.Args) {
+    constructor({ context, breadcrumbs, schema, id, inlinedTypes }: OneOfSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
+        this.id = id;
     }
 
     public async convert(): Promise<OneOfSchemaConverter.Output | undefined> {
@@ -153,8 +156,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.oneOf ?? []).entries(),
             ...(this.schema.anyOf ?? []).entries()
         ]) {
-            const subBreadcrumbs = [...this.breadcrumbs, "oneOf", convertNumberToSnakeCase(index) ?? ""];
-
             if (this.context.isReferenceObject(subSchema)) {
                 const maybeTypeReference = await this.context.convertReferenceToTypeReference(subSchema);
                 if (maybeTypeReference.ok) {
@@ -166,11 +167,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            const schemaId = this.context.convertBreadcrumbsToName(subBreadcrumbs);
+            const schemaId = this.context.convertBreadcrumbsToName([`${this.id}_${index}`]);
             const schemaConverter = new SchemaConverter({
                 context: this.context,
                 id: schemaId,
-                breadcrumbs: subBreadcrumbs,
+                breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 schema: subSchema
             });
             const convertedSchema = await schemaConverter.convert();
