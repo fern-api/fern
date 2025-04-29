@@ -30,6 +30,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/configs": "workspace:*",
     "@bufbuild/protobuf": "^2.2.5",
     "@bufbuild/protoplugin": "2.2.5"
   },
