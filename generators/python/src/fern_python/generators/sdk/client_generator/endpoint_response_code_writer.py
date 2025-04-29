@@ -65,6 +65,26 @@ class EndpointResponseCodeWriter:
 
         return AST.CodeWriter(write)
 
+    def _instantiate_http_response(
+        self,
+        *,
+        data: AST.Expression,
+    ) -> AST.ClassInstantiation:
+        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
+        return AST.ClassInstantiation(
+            class_=AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
+                    named_import=response_class,
+                ),
+            ),
+            kwargs=[
+                ("response", AST.Expression(RESPONSE_VARIABLE)),
+                ("data", data),
+            ],
+        )
+
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
         iter_func_body = []
 
@@ -195,31 +215,17 @@ class EndpointResponseCodeWriter:
             )
         )
 
-        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
         writer.write_node(
             AST.ReturnStatement(
-                AST.ClassInstantiation(
-                    class_=AST.ClassReference(
-                        qualified_name_excluding_import=(),
-                        import_=AST.ReferenceImport(
-                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
-                            named_import=response_class,
-                        ),
-                    ),
-                    kwargs=[
-                        ("response", AST.Expression(RESPONSE_VARIABLE)),
-                        (
-                            "data",
-                            AST.Expression(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        qualified_name_excluding_import=("_iter",),
-                                    ),
-                                    args=[],
-                                )
+                self._instantiate_http_response(
+                    data=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                qualified_name_excluding_import=("_iter",),
                             ),
-                        ),
-                    ],
+                            args=[],
+                        )
+                    )
                 )
             )
         )
@@ -342,22 +348,7 @@ class EndpointResponseCodeWriter:
 
             # Return wrapped in either HttpResponse or AsyncHttpResponse
             writer.write("return ")
-            response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
-            writer.write_node(
-                AST.ClassInstantiation(
-                    class_=AST.ClassReference(
-                        qualified_name_excluding_import=(),
-                        import_=AST.ReferenceImport(
-                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
-                            named_import=response_class,
-                        ),
-                    ),
-                    kwargs=[
-                        ("response", AST.Expression(RESPONSE_VARIABLE)),
-                        ("data", AST.Expression("_data")),
-                    ],
-                )
-            )
+            writer.write_node(self._instantiate_http_response(data=AST.Expression("_data")))
             if is_optional:
                 writer.write("  # type: ignore")
             writer.write_newline_if_last_line_not()
@@ -389,7 +380,7 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
     ) -> None:
         writer.write("return ")
-        writer.write_node(AST.Expression(f"{RESPONSE_VARIABLE}.read()"))
+        writer.write_node(self._instantiate_http_response(data=AST.Expression(f"{RESPONSE_VARIABLE}.read()")))
         writer.write("  # type: ignore ")
         writer.write_newline_if_last_line_not()
 
@@ -399,7 +390,7 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
     ) -> None:
         writer.write("return ")
-        writer.write_node(AST.Expression(f"{RESPONSE_VARIABLE}.text"))
+        writer.write_node(self._instantiate_http_response(data=AST.Expression(f"{RESPONSE_VARIABLE}.text")))
         writer.write("  # type: ignore ")
         writer.write_newline_if_last_line_not()
 
@@ -413,31 +404,17 @@ class EndpointResponseCodeWriter:
 
         # For raw clients, wrap the generator in an HttpResponse
         if self._is_raw_client:
-            response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
             iter_method = self._get_iter_bytes_method(is_async=self._is_async)
             writer.write("return ")
             writer.write_node(
-                AST.ClassInstantiation(
-                    class_=AST.ClassReference(
-                        qualified_name_excluding_import=(),
-                        import_=AST.ReferenceImport(
-                            module=AST.Module.local(*self._context.core_utilities._module_path, "http_response"),
-                            named_import=response_class,
-                        ),
+                self._instantiate_http_response(
+                    data=AST.Expression(
+                        f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} async for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
+                        + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
+                        if self._is_async
+                        else f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
+                        + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
                     ),
-                    kwargs=[
-                        ("response", AST.Expression(RESPONSE_VARIABLE)),
-                        (
-                            "data",
-                            AST.Expression(
-                                f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} async for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
-                                + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
-                                if self._is_async
-                                else f"({EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} "
-                                + f"in {RESPONSE_VARIABLE}.{iter_method}(chunk_size={chunk_size_variable}))"
-                            ),
-                        ),
-                    ],
                 )
             )
             writer.write_newline_if_last_line_not()
@@ -463,25 +440,8 @@ class EndpointResponseCodeWriter:
                 if self._response is None or self._response.body is None:
                     if self._is_raw_client:
                         # For raw clients, return HttpResponse/AsyncHttpResponse with data=None
-                        response_class = "AsyncHttpResponse" if self._is_async else "HttpResponse"
                         writer.write("return ")
-                        writer.write_node(
-                            AST.ClassInstantiation(
-                                class_=AST.ClassReference(
-                                    qualified_name_excluding_import=(),
-                                    import_=AST.ReferenceImport(
-                                        module=AST.Module.local(
-                                            *self._context.core_utilities._module_path, "http_response"
-                                        ),
-                                        named_import=response_class,
-                                    ),
-                                ),
-                                kwargs=[
-                                    ("response", AST.Expression(RESPONSE_VARIABLE)),
-                                    ("data", AST.Expression("None")),
-                                ],
-                            )
-                        )
+                        writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
                         writer.write_newline_if_last_line_not()
                     else:
                         writer.write_line("return")

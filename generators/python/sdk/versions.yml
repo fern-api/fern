@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.16.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where `bytes` and `text` responses were not handled correctly.
+
 - version: 4.16.1
   irVersion: 57
   changelogEntry:
