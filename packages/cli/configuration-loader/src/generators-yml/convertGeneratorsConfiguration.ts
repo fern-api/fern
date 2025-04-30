@@ -967,7 +967,9 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
 /**
  * Type guard to check if a GitHub configuration is a self-hosted configuration
  */
-function isGithubSelfhosted(github: generatorsYml.GithubConfigurationSchema | undefined): github is generatorsYml.GithubSelfhostedSchema {
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
     if (github == null) {
         return false;
     }
