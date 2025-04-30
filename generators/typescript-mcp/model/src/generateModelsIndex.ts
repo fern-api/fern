@@ -14,6 +14,6 @@ export function generateModelsIndex(context: ModelGeneratorContext): void {
         customConfig: context.customConfig
     });
     if (file != null) {
-        context.project.addSchemasFiles(file);
+        context.project.addSchemasFile(file);
     }
 }

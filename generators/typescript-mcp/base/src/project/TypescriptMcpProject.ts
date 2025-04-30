@@ -32,15 +32,15 @@ export class TypescriptMcpProject extends AbstractProject<
         this.filepaths = new TypescriptMcpProjectFilepaths();
     }
 
-    public addSrcFiles(file: File): void {
+    public addSrcFile(file: File): void {
         this.sourceFiles.push(file);
     }
 
-    public addSchemasFiles(file: File): void {
+    public addSchemasFile(file: File): void {
         this.schemasFiles.push(file);
     }
 
-    public addToolsFiles(file: File): void {
+    public addToolsFile(file: File): void {
         this.toolsFiles.push(file);
     }
 

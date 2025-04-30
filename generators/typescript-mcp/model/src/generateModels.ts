@@ -16,7 +16,7 @@ export function generateModels(context: ModelGeneratorContext): void {
             _other: () => undefined
         });
         if (file != null) {
-            context.project.addSchemasFiles(file);
+            context.project.addSchemasFile(file);
         }
     }
 }

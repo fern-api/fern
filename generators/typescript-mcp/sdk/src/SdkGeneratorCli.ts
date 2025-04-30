@@ -8,6 +8,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ServerGenerator } from "./server/ServerGenerator";
+import { ToolsGenerator } from "./tools/ToolsGenerator";
 
 export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,
@@ -51,11 +52,17 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         generateModels(context);
         generateModelsIndex(context);
         this.generateServer(context);
+        this.generateTools(context);
         await context.project.persist();
     }
 
     private generateServer(context: SdkGeneratorContext) {
         const server = new ServerGenerator(context);
-        context.project.addSrcFiles(server.generate());
+        context.project.addSrcFile(server.generate());
+    }
+
+    private generateTools(context: SdkGeneratorContext) {
+        const tools = new ToolsGenerator(context);
+        context.project.addToolsFile(tools.generate());
     }
 }
