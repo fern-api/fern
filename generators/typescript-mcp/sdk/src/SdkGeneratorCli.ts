@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { generateModels } from "@fern-api/php-model";
 import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base";
+import { generateModels, generateModelsIndex } from "@fern-api/typescript-mcp-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -49,6 +49,7 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         generateModels(context);
+        generateModelsIndex(context);
         this.generateServer(context);
         await context.project.persist();
     }

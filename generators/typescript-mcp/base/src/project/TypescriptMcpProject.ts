@@ -148,8 +148,7 @@ class PackageJson {
     }
 
     private build(): Record<string, unknown> {
-        let packageJson: Record<string, unknown> = {
-            ...this.context.customConfig.packageJson,
+        const packageJson: Record<string, unknown> = {
             name: `@${this.context.config.organization}/${this.context.config.organization}-mcp-server`,
             description: `Model Context Protocol (MCP) server for ${this.context.config.organization}.`,
             version: this.context.version ?? "0.0.0",
@@ -177,7 +176,6 @@ class PackageJson {
                 typescript: "^5.8.2"
             }
         };
-        packageJson = mergeExtraConfigs(packageJson, this.context.customConfig.packageJson);
         return packageJson;
     }
 
@@ -188,24 +186,4 @@ class PackageJson {
 
 function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
-}
-
-export function mergeExtraConfigs(
-    packageJson: Record<string, unknown>,
-    extraConfigs: Record<string, unknown> | undefined
-): Record<string, unknown> {
-    function customizer(objValue: unknown, srcValue: unknown) {
-        if (isArray(objValue) && isArray(srcValue)) {
-            return [...new Set(srcValue.concat(objValue))];
-        } else if (typeof objValue === "object" && typeof srcValue === "object") {
-            return {
-                ...objValue,
-                ...srcValue
-            };
-        } else {
-            return srcValue;
-        }
-    }
-
-    return mergeWith(cloneDeep(packageJson), extraConfigs ?? {}, customizer);
 }

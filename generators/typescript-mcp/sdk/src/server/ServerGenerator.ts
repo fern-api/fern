@@ -5,17 +5,11 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-const SERVER_DIRECTORY = "";
-
 export class ServerGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     SdkGeneratorContext
 > {
-    protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of(SERVER_DIRECTORY));
-    }
-
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
@@ -53,13 +47,15 @@ export function registerTools(server: McpServer) {
   for (const tool of Object.values(tools)) {
     tool.register(server);
   }
-}
-
-`);
+}`);
             }),
-            directory: RelativeFilePath.of(SERVER_DIRECTORY),
+            directory: this.getFilepath(),
             filename: "server.ts",
             customConfig: this.context.customConfig
         });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(RelativeFilePath.of(""));
     }
 }

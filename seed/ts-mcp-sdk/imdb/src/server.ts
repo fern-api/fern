@@ -33,4 +33,3 @@ export function registerTools(server: McpServer) {
     tool.register(server);
   }
 }
-

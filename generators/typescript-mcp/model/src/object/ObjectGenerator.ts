@@ -6,8 +6,6 @@ import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-const SCHEMA_DIRECTORY = "";
-
 export class ObjectGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
@@ -29,13 +27,13 @@ export class ObjectGenerator extends FileGenerator<
                 writer.writeLine(`const ${this.typeDeclaration.name.name.pascalCase.safeName} = {};`);
                 writer.writeLine(`export default ${this.typeDeclaration.name.name.pascalCase.safeName};`);
             }),
-            directory: RelativeFilePath.of(SCHEMA_DIRECTORY),
+            directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.pascalCase.safeName}.ts`,
             customConfig: this.context.customConfig
         });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return RelativeFilePath.of(SCHEMA_DIRECTORY);
+        return RelativeFilePath.of("");
     }
 }
