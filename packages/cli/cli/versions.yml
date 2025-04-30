@@ -1,3 +1,11 @@
+
+- changelogEntry:
+  - summary: |
+      `fern docs dev` now better reflects the production version of docs. To use the legacy version, use the `--legacy` flag.
+    type: feat
+  irVersion: 57
+  version: 0.59.4
+
 - changelogEntry:
   - summary: |
       Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 
