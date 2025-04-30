@@ -9,6 +9,7 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { GithubConfigurationSchema, GithubSelfhostedSchema } from "@fern-api/configuration/src/generators-yml";
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -593,7 +594,7 @@ async function convertOutputMode({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
-    if (generator.github != null) {
+    if (generator.github != null && !isGithubSelfhosted(generator.github)) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
@@ -887,6 +888,8 @@ function getGithubLicenseSchema(
         return generator["publish-metadata"].license;
     } else if (generator.metadata?.license != null) {
         return generator.metadata.license;
+    } else if (isGithubSelfhosted(generator.github)) {
+        return undefined;
     }
     return generator.github?.license;
 }
@@ -961,3 +964,16 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
         context.logger.warn("\t" + warnings.join("\n\t"));
     }
 }
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: GithubConfigurationSchema | undefined
+): github is GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
+}
+
