@@ -1,7 +1,9 @@
 export enum AsIsFiles {
     // Top-level files.
-    IndexTs = "src/index.ts",
-    ServerCustomTs = "src/server.custom.ts",
     GitIgnore = ".gitignore",
-    TsConfigJson = "tsconfig.json"
+    TsConfigJson = "tsconfig.json",
+
+    // src files.
+    IndexTs = "src/index.ts",
+    ServerCustomTs = "src/server.custom.ts"
 }

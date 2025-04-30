@@ -11,6 +11,8 @@ import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypesc
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const DIST_DIRECTORY_NAME = "dist";
 const SRC_DIRECTORY_NAME = "src";
+const SCHEMAS_DIRECTORY_NAME = "schemas";
+const TOOLS_DIRECTORY_NAME = "tools";
 
 const PACKAGE_JSON_FILENAME = "package.json";
 
@@ -21,6 +23,8 @@ export class TypescriptMcpProject extends AbstractProject<
     AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>
 > {
     private sourceFiles: File[] = [];
+    private schemasFiles: File[] = [];
+    private toolsFiles: File[] = [];
     public readonly filepaths: TypescriptMcpProjectFilepaths;
 
     public constructor({ context }: { context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> }) {
@@ -28,16 +32,25 @@ export class TypescriptMcpProject extends AbstractProject<
         this.filepaths = new TypescriptMcpProjectFilepaths();
     }
 
-    public addTypescriptMcpFiles(file: File): void {
+    public addSrcFiles(file: File): void {
         this.sourceFiles.push(file);
+    }
+
+    public addSchemasFiles(file: File): void {
+        this.schemasFiles.push(file);
+    }
+
+    public addToolsFiles(file: File): void {
+        this.toolsFiles.push(file);
     }
 
     public async persist(): Promise<void> {
         this.context.logger.debug(`Writing typescript project files to ${this.absolutePathToOutputDirectory}`);
         await this.createRawFiles();
         await this.createPackageJson();
-        await this.createDistDirectory();
         await this.createSrcDirectory();
+        await this.createSchemasDirectory();
+        await this.createToolsDirectory();
         this.context.logger.debug(
             `Successfully wrote typescript project files to ${this.absolutePathToOutputDirectory}`
         );
@@ -66,17 +79,24 @@ export class TypescriptMcpProject extends AbstractProject<
         );
     }
 
-    private async createDistDirectory(): Promise<AbsoluteFilePath> {
-        return await this.createTypescriptMcpDirectory({
-            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getDistDirectory()),
-            files: this.sourceFiles
-        });
-    }
-
     private async createSrcDirectory(): Promise<AbsoluteFilePath> {
         return await this.createTypescriptMcpDirectory({
             absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getSrcDirectory()),
             files: this.sourceFiles
+        });
+    }
+
+    private async createSchemasDirectory(): Promise<AbsoluteFilePath> {
+        return await this.createTypescriptMcpDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getSchemasDirectory()),
+            files: this.schemasFiles
+        });
+    }
+
+    private async createToolsDirectory(): Promise<AbsoluteFilePath> {
+        return await this.createTypescriptMcpDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory, this.filepaths.getToolsDirectory()),
+            files: this.toolsFiles
         });
     }
 
@@ -101,12 +121,16 @@ export class TypescriptMcpProject extends AbstractProject<
 class TypescriptMcpProjectFilepaths {
     constructor() {}
 
-    public getDistDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(DIST_DIRECTORY_NAME);
-    }
-
     public getSrcDirectory(): RelativeFilePath {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
+    }
+
+    public getSchemasDirectory(): RelativeFilePath {
+        return join(this.getSrcDirectory(), RelativeFilePath.of(SCHEMAS_DIRECTORY_NAME));
+    }
+
+    public getToolsDirectory(): RelativeFilePath {
+        return join(this.getSrcDirectory(), RelativeFilePath.of(TOOLS_DIRECTORY_NAME));
     }
 }
 

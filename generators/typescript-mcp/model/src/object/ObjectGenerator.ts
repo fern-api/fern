@@ -6,7 +6,7 @@ import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-const SCHEMA_DIRECTORY = "src/schemas";
+const SCHEMA_DIRECTORY = "";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptMcpFile,
