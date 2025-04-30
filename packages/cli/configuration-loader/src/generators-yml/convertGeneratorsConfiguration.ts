@@ -9,7 +9,6 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
-import { GithubConfigurationSchema, GithubSelfhostedSchema } from "@fern-api/configuration/src/generators-yml";
 
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
@@ -968,12 +967,9 @@ function warnForDeprecatedConfiguration(context: TaskContext, config: generators
 /**
  * Type guard to check if a GitHub configuration is a self-hosted configuration
  */
-function isGithubSelfhosted(
-    github: GithubConfigurationSchema | undefined
-): github is GithubSelfhostedSchema {
+function isGithubSelfhosted(github: generatorsYml.GithubConfigurationSchema | undefined): github is generatorsYml.GithubSelfhostedSchema {
     if (github == null) {
         return false;
     }
     return "uri" in github && "token" in github;
 }
-

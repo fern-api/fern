@@ -52,10 +52,10 @@ export const V57_TO_V56_MIGRATION: IrMigration<
             skipValidation: true
         }),
     migrateBackwards: (v57): IrVersions.V56.ir.IntermediateRepresentation => {
-        // eslincleart-disable-next-line @typescript-eslint/no-explicit-any
         return {
             ...v57,
             dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined
+        // eslincleart-disable-next-line @typescript-eslint/no-explicit-any            
         } as any;
     }
 };
