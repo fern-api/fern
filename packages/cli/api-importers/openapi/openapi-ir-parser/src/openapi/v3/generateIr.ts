@@ -363,7 +363,7 @@ export function generateIr({
         }),
         basePath: getFernBasePath(openApi),
         title: openApi.info.title ?? "",
-        description: openApi.info.description ?? "",
+        description: openApi.info.description,
         groups: Object.fromEntries(
             Object.entries(groupInfo ?? {}).map(([key, value]) => {
                 return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
