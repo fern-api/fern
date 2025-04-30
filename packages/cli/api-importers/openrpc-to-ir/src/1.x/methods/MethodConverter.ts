@@ -70,7 +70,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         const path: HttpPath = constructHttpPath("/{apiKey}");
 
         const requestProperties: InlinedRequestBodyProperty[] = [];
-        for (const param of this.method.params) {
+        for (const [index, param] of this.method.params.entries()) {
             let resolvedParam: ContentDescriptorObject;
             if (this.context.isReferenceObject(param)) {
                 const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param);
@@ -82,13 +82,13 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             } else {
                 resolvedParam = param;
             }
-
+            const schemaId = [...this.method.name, "Param", resolvedParam.name].join("_");
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
-                breadcrumbs: [...this.method.name, "params"],
+                breadcrumbs: [...this.breadcrumbs, `params[${index}]`],
+                schemaIdOverride: schemaId,
                 context: this.context,
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
             });
-            const schemaId = [...this.method.name, "Param", resolvedParam.name].join("_");
             const schema = await parameterSchemaConverter.convert();
             if (schema != null) {
                 requestProperties.push({

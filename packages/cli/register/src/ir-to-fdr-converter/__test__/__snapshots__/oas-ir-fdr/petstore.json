@@ -64,7 +64,7 @@
       }
     },
     "l_i_s_t___p_e_t_s_Param_limit": {
-      "name": "LISTPETSParams",
+      "name": "l_i_s_t___p_e_t_s_Param_limit",
       "shape": {
         "type": "alias",
         "value": {
@@ -77,7 +77,7 @@
       }
     },
     "c_r_e_a_t_e___p_e_t_Param_newPetName": {
-      "name": "CREATEPETParams",
+      "name": "c_r_e_a_t_e___p_e_t_Param_newPetName",
       "shape": {
         "type": "alias",
         "value": {
@@ -89,7 +89,7 @@
       }
     },
     "c_r_e_a_t_e___p_e_t_Param_newPetTag": {
-      "name": "CREATEPETParams",
+      "name": "c_r_e_a_t_e___p_e_t_Param_newPetTag",
       "shape": {
         "type": "alias",
         "value": {

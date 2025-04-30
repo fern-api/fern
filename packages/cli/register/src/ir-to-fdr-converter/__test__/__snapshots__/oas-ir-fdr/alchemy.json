@@ -1089,7 +1089,7 @@
       }
     },
     "w_e_b_3___s_h_a_3_Param_data": {
-      "name": "WEBSHAParams",
+      "name": "w_e_b_3___s_h_a_3_Param_data",
       "shape": {
         "type": "alias",
         "value": {
@@ -1183,30 +1183,8 @@
         ]
       }
     },
-    "ETHCALLParams": {
-      "name": "ETHCALLParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___c_a_l_l_Param_blockNumber": {
-      "name": "ETHCALLParams",
+      "name": "e_t_h___c_a_l_l_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1241,7 +1219,7 @@
       }
     },
     "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_includeTransactions": {
-      "name": "ETHGETBLOCKBYHASHParams",
+      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1252,30 +1230,8 @@
         }
       }
     },
-    "ETHGETBLOCKBYNUMBERParams": {
-      "name": "ETHGETBLOCKBYNUMBERParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "ETHGETBLOCKBYNUMBERParams",
+      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1297,7 +1253,7 @@
       }
     },
     "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_includeTransactions": {
-      "name": "ETHGETBLOCKBYNUMBERParams",
+      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1308,30 +1264,8 @@
         }
       }
     },
-    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams": {
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams",
+      "name": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1378,30 +1312,8 @@
         }
       }
     },
-    "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams": {
-      "name": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
-      "name": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
+      "name": "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1422,8 +1334,8 @@
         ]
       }
     },
-    "ETHGETLOGSParamsAddress": {
-      "name": "ETHGETLOGSParamsAddress",
+    "MethodsParams0Address": {
+      "name": "MethodsParams0Address",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1444,59 +1356,9 @@
         ]
       }
     },
-    "ETHGETLOGSParams": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "ETHGETLOGSParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "ETHGETLOGSParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_L_o_g_s_Param_filter": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "ETHGETLOGSParams",
+      "name": "e_t_h___g_e_t_L_o_g_s_Param_filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1527,7 +1389,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ETHGETLOGSParamsAddress"
+                "value": "MethodsParams0Address"
               }
             }
           },
@@ -1557,30 +1419,8 @@
         }
       }
     },
-    "ETHGETSTORAGEATParams": {
-      "name": "ETHGETSTORAGEATParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber": {
-      "name": "ETHGETSTORAGEATParams",
+      "name": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1667,30 +1507,8 @@
         ]
       }
     },
-    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams": {
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams",
+      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1799,30 +1617,8 @@
         ]
       }
     },
-    "ETHGETTRANSACTIONCOUNTParams": {
-      "name": "ETHGETTRANSACTIONCOUNTParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber": {
-      "name": "ETHGETTRANSACTIONCOUNTParams",
+      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1909,30 +1705,8 @@
         ]
       }
     },
-    "ETHGETUNCLECOUNTBYBLOCKNUMBERParams": {
-      "name": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams",
+      "name": "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2061,30 +1835,8 @@
         ]
       }
     },
-    "ETHGETPROOFParams": {
-      "name": "ETHGETPROOFParams",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber": {
-      "name": "ETHGETPROOFParams",
+      "name": "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -2152,81 +1904,9 @@
         }
       }
     },
-    "ETHNEWFILTERParamsAddress": {
-      "name": "ETHNEWFILTERParamsAddress",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "Address",
-            "type": {
-              "type": "id",
-              "value": "Address"
-            }
-          },
-          {
-            "typeName": "Addresses",
-            "type": {
-              "type": "id",
-              "value": "Addresses"
-            }
-          }
-        ]
-      }
-    },
-    "ETHNEWFILTERParams": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "ETHNEWFILTERParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "ETHNEWFILTERParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
-            }
-          }
-        ]
-      }
-    },
     "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "ETHNEWFILTERParams",
+      "name": "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2257,7 +1937,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ETHNEWFILTERParamsAddress"
+                "value": "MethodsParams0Address"
               }
             }
           },
@@ -3043,7 +2723,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHCALLParams"
+                    "value": "e_t_h___c_a_l_l_Param_blockNumber"
                   }
                 }
               ]
@@ -3643,7 +3323,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETBLOCKBYNUMBERParams"
+                    "value": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber"
                   }
                 },
                 {
@@ -3832,7 +3512,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParams"
+                    "value": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber"
                   }
                 }
               ]
@@ -4433,7 +4113,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETRAWTRANSACTIONBYBLOCKNUMBERANDINDEXParams"
+                    "value": "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber"
                   }
                 },
                 {
@@ -4531,7 +4211,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETLOGSParams"
+                    "value": "e_t_h___g_e_t_L_o_g_s_Param_filter"
                   }
                 }
               ]
@@ -4658,7 +4338,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETSTORAGEATParams"
+                    "value": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber"
                   }
                 }
               ]
@@ -4852,7 +4532,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParams"
+                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber"
                   }
                 },
                 {
@@ -5095,7 +4775,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETTRANSACTIONCOUNTParams"
+                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber"
                   }
                 }
               ]
@@ -5627,7 +5307,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETUNCLECOUNTBYBLOCKNUMBERParams"
+                    "value": "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber"
                   }
                 }
               ]
@@ -5725,7 +5405,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHGETPROOFParams"
+                    "value": "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber"
                   }
                 }
               ]
@@ -6140,7 +5820,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "ETHNEWFILTERParams"
+                    "value": "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter"
                   }
                 }
               ]
