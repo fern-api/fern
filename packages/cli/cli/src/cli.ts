@@ -1162,11 +1162,18 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     default: false,
                     description: "Run the beta app router development server"
                 })
+                .option("legacy", {
+                    boolean: true,
+                    default: true,
+                    description: "Run the legacy development server"
+                })
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
                 }),
         async (argv) => {
+            const appPreview = argv.beta && !argv.legacy;
+
             let port: number;
             if (argv.port != null) {
                 port = argv.port;
@@ -1177,7 +1184,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             let backendPort: number;
             if (argv.backendPort != null) {
                 backendPort = argv.backendPort;
-            } else if (argv.beta) {
+            } else if (appPreview) {
                 backendPort = await getPort({
                     port: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]
                 });
@@ -1195,7 +1202,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                appPreview: argv.beta,
+                appPreview,
                 backendPort
             });
         }
