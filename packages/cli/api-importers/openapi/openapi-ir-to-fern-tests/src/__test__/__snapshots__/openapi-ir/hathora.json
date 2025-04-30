@@ -1,5 +1,6 @@
 {
   "title": "Hathora Cloud API",
+  "description": "",
   "servers": [
     {
       "url": "https://api.hathora.dev"

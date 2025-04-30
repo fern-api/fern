@@ -1,5 +1,6 @@
 {
   "title": "Test extension `x-fern-pagination`",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

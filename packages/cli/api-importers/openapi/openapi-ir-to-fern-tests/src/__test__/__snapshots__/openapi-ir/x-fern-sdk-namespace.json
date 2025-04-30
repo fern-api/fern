@@ -1,5 +1,6 @@
 {
   "title": "Test extension `x-fern-sdk-namespace` and `x-fern-sdk-group-name` for schemas.",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

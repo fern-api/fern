@@ -1,5 +1,6 @@
 {
   "title": "Test spec for `float` types specified as number formats.",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

@@ -1,5 +1,6 @@
 {
   "title": "Test extension `x-fern-audiences`",
+  "description": "",
   "servers": [
     {
       "url": "https://api.com",

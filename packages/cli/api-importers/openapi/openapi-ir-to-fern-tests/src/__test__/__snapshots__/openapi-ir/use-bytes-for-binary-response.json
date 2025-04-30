@@ -1,5 +1,6 @@
 {
   "title": "Streaming API w/ use-bytes-for-binary-response",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

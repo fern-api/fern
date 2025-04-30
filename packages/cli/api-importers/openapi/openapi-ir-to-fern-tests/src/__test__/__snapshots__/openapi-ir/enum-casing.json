@@ -1,5 +1,6 @@
 {
   "title": "Example API",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

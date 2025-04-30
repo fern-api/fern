@@ -1,5 +1,6 @@
 {
   "title": "Test extension `x-fern-encoding` for schemas",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

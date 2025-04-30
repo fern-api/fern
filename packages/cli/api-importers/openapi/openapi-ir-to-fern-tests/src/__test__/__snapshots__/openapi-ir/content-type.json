@@ -1,5 +1,6 @@
 {
   "title": "Test content-type parsing.",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {
