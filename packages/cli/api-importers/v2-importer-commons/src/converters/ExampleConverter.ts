@@ -228,11 +228,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         // Check for default value in schema
-        const resolvedDefault = this.context.isReferenceObject(this.schema) 
-            ? (await this.resolveSchema(this.schema))?.default 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
             : this.schema.default;
-        
-        if (typeof resolvedDefault === 'boolean') {
+
+        if (typeof resolvedDefault === "boolean") {
             return {
                 isValid: true,
                 coerced: false,
@@ -240,7 +240,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 errors: []
             };
         }
-        
+
         return {
             isValid: false,
             coerced: false,
@@ -265,10 +265,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema) 
-            ? (await this.resolveSchema(this.schema))?.default 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
             : this.schema.default;
-        
+
         if (resolvedDefault !== undefined && resolvedSchema.enum?.includes(resolvedDefault)) {
             return {
                 isValid: true,
@@ -310,11 +310,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 errors: []
             };
         }
-        
-        const resolvedDefault = this.context.isReferenceObject(this.schema) 
-            ? (await this.resolveSchema(this.schema))?.default 
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
             : this.schema.default;
-        if (typeof resolvedDefault === 'number') {
+        if (typeof resolvedDefault === "number") {
             return {
                 isValid: true,
                 coerced: false,
@@ -356,11 +356,11 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema) 
-            ? (await this.resolveSchema(this.schema))?.default 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
             : this.schema.default;
-        
-        if (typeof resolvedDefault === 'string') {
+
+        if (typeof resolvedDefault === "string") {
             return {
                 isValid: true,
                 coerced: false,
@@ -404,10 +404,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
         }
 
-        const resolvedDefault = this.context.isReferenceObject(this.schema) 
-            ? (await this.resolveSchema(this.schema))?.default 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
             : this.schema.default;
-        if (typeof resolvedDefault === 'number' && Number.isInteger(resolvedDefault)) {
+        if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
             return {
                 isValid: true,
                 coerced: false,
