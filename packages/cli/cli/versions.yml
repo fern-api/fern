@@ -1,5 +1,14 @@
 - changelogEntry:
   - summary: |
+      Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 
+      "Param" keyword, and parameter name. This prevents naming conflicts when different methods have parameters 
+      with the same name, resulting in more reliable and consistent type generation in the SDKs.
+    type: fix
+  irVersion: 57
+  version: 0.59.3
+
+- changelogEntry:
+  - summary: |
       Add ping/pong to keep websocket connection alive in local development mode.
     type: fix
   irVersion: 57
