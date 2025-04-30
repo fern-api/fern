@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v57.11.0] - 2024-04-23
+
+- Feature: Add support for GitHub publishing configuration in the IR, for self-hosted.
+
 ## [v57.10.0] - 2024-04-23
 
 - Fix: `examples.yml` cannot have any recurisve reference to `http.yml` in fern otherwise the Python SDK will not build.
