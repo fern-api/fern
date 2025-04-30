@@ -5,9 +5,14 @@ import { TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
 export function generateModelsIndex(context: ModelGeneratorContext): void {
+    const exportStrings = Object.values(context.ir.types).map((typeDeclaration) => {
+        return `export * as ${typeDeclaration.name.name.camelCase.safeName} from "./${typeDeclaration.name.name.camelCase.safeName}";`;
+    });
     const file = new TypescriptMcpFile({
         node: ts.codeblock((writer) => {
-            writer.writeLine("// index.ts"); // TODO
+            exportStrings.forEach((exportString) => {
+                writer.writeLine(exportString);
+            });
         }),
         directory: RelativeFilePath.of(""),
         filename: "index.ts",

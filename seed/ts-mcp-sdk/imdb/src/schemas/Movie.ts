@@ -1,2 +1,3 @@
-const Movie = {};
-export default Movie;
+import z from "zod";
+
+const movie = z.object({});

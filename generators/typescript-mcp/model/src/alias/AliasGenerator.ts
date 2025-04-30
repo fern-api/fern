@@ -2,11 +2,11 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
-import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-export class ObjectGenerator extends FileGenerator<
+export class AliasGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
@@ -15,7 +15,7 @@ export class ObjectGenerator extends FileGenerator<
     constructor(
         context: ModelGeneratorContext,
         typeDeclaration: TypeDeclaration,
-        private readonly objectDeclaration: ObjectTypeDeclaration
+        private readonly aliasDeclaration: AliasTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
@@ -26,7 +26,7 @@ export class ObjectGenerator extends FileGenerator<
             node: ts.codeblock((writer) => {
                 writer.writeLine("import z from \"zod\";");
                 writer.writeLine("\n");
-                writer.writeLine(`const ${this.typeDeclaration.name.name.camelCase.safeName} = z.object({});`);
+                writer.writeLine("const schema = undefined;");
             }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.camelCase.safeName}.ts`,

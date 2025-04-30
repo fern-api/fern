@@ -1,2 +1,3 @@
-const CreateMovieRequest = {};
-export default CreateMovieRequest;
+import z from "zod";
+
+const createMovieRequest = z.object({});
