@@ -22,7 +22,7 @@ describe("fern docs dev", () => {
 
         await sleep(20_000);
 
-        const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
+        const response = await fetch("http://localhost:3001/v2/registry/docs/load-with-url", {
             method: "POST"
         });
 
