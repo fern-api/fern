@@ -17,6 +17,6 @@ export class SdkGeneratorContext extends AbstractTypescriptMcpGeneratorContext<T
     }
 
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore, AsIsFiles.ReadmeMd, AsIsFiles.TsConfigJson];
+        return [AsIsFiles.GitIgnore, AsIsFiles.IndexTs, AsIsFiles.ServerCustomTs, AsIsFiles.TsConfigJson];
     }
 }

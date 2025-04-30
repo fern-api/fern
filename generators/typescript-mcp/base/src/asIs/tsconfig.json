@@ -3,6 +3,7 @@
     "module": "Node16",
     "moduleResolution": "Node16",
     "isolatedModules": true,
+    "strictNullChecks": true,
     "outDir": "dist",
     "rootDir": "src"
   },

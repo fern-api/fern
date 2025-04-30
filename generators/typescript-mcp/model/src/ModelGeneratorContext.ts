@@ -3,6 +3,6 @@ import { AbstractTypescriptMcpGeneratorContext, AsIsFiles, FileLocation } from "
 
 export class ModelGeneratorContext extends AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> {
     public getRawAsIsFiles(): string[] {
-        return [AsIsFiles.GitIgnore, AsIsFiles.ReadmeMd, AsIsFiles.TsConfigJson];
+        return [AsIsFiles.GitIgnore, AsIsFiles.TsConfigJson];
     }
 }
