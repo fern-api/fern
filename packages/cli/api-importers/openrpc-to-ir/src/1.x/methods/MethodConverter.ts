@@ -82,7 +82,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             } else {
                 resolvedParam = param;
             }
-            const schemaId = [...this.method.name, "Param", resolvedParam.name].join("_");
+            const schemaId = [this.method.name, "Param", resolvedParam.name].join("_");
             const parameterSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 breadcrumbs: [...this.breadcrumbs, `params[${index}]`],
                 schemaIdOverride: schemaId,

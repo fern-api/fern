@@ -13,8 +13,8 @@
         }
       }
     },
-    "ETHCALLParamBlock0": {
-      "name": "ETHCALLParamBlock0",
+    "EthCallParamBlock0": {
+      "name": "EthCallParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -26,9 +26,9 @@
         }
       }
     },
-    "ETHCALLParamBlock1": {
+    "EthCallParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHCALLParamBlock1",
+      "name": "EthCallParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -50,8 +50,8 @@
         ]
       }
     },
-    "ETHCALLParamBlock2": {
-      "name": "ETHCALLParamBlock2",
+    "EthCallParamBlock2": {
+      "name": "EthCallParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -63,31 +63,31 @@
         }
       }
     },
-    "e_t_h___c_a_l_l_Param_Block": {
-      "name": "e_t_h___c_a_l_l_Param_Block",
+    "eth_call_Param_Block": {
+      "name": "eth_call_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHCALLParamBlock0",
+            "typeName": "EthCallParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamBlock0"
+              "value": "EthCallParamBlock0"
             }
           },
           {
-            "typeName": "ETHCALLParamBlock1",
+            "typeName": "EthCallParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamBlock1"
+              "value": "EthCallParamBlock1"
             }
           },
           {
-            "typeName": "ETHCALLParamBlock2",
+            "typeName": "EthCallParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHCALLParamBlock2"
+              "value": "EthCallParamBlock2"
             }
           }
         ]
@@ -131,8 +131,8 @@
         ]
       }
     },
-    "e_t_h___c_a_l_l_Param_Transaction": {
-      "name": "e_t_h___c_a_l_l_Param_Transaction",
+    "eth_call_Param_Transaction": {
+      "name": "eth_call_Param_Transaction",
       "shape": {
         "type": "object",
         "extends": [],
@@ -378,8 +378,8 @@
         }
       }
     },
-    "ETHESTIMATEGASParamBlock0": {
-      "name": "ETHESTIMATEGASParamBlock0",
+    "EthEstimateGasParamBlock0": {
+      "name": "EthEstimateGasParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -391,9 +391,9 @@
         }
       }
     },
-    "ETHESTIMATEGASParamBlock1": {
+    "EthEstimateGasParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHESTIMATEGASParamBlock1",
+      "name": "EthEstimateGasParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -415,31 +415,31 @@
         ]
       }
     },
-    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Block": {
-      "name": "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Block",
+    "eth_estimateGas_Param_Block": {
+      "name": "eth_estimateGas_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHESTIMATEGASParamBlock0",
+            "typeName": "EthEstimateGasParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHESTIMATEGASParamBlock0"
+              "value": "EthEstimateGasParamBlock0"
             }
           },
           {
-            "typeName": "ETHESTIMATEGASParamBlock1",
+            "typeName": "EthEstimateGasParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHESTIMATEGASParamBlock1"
+              "value": "EthEstimateGasParamBlock1"
             }
           }
         ]
       }
     },
-    "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Transaction": {
-      "name": "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Transaction",
+    "eth_estimateGas_Param_Transaction": {
+      "name": "eth_estimateGas_Param_Transaction",
       "shape": {
         "type": "object",
         "extends": [],
@@ -685,8 +685,8 @@
         }
       }
     },
-    "ETHGETBALANCEParamBlock0": {
-      "name": "ETHGETBALANCEParamBlock0",
+    "EthGetBalanceParamBlock0": {
+      "name": "EthGetBalanceParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -698,9 +698,9 @@
         }
       }
     },
-    "ETHGETBALANCEParamBlock1": {
+    "EthGetBalanceParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBALANCEParamBlock1",
+      "name": "EthGetBalanceParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -722,8 +722,8 @@
         ]
       }
     },
-    "ETHGETBALANCEParamBlock2": {
-      "name": "ETHGETBALANCEParamBlock2",
+    "EthGetBalanceParamBlock2": {
+      "name": "EthGetBalanceParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -735,38 +735,38 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_a_l_a_n_c_e_Param_Block": {
-      "name": "e_t_h___g_e_t_B_a_l_a_n_c_e_Param_Block",
+    "eth_getBalance_Param_Block": {
+      "name": "eth_getBalance_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBALANCEParamBlock0",
+            "typeName": "EthGetBalanceParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamBlock0"
+              "value": "EthGetBalanceParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamBlock1",
+            "typeName": "EthGetBalanceParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamBlock1"
+              "value": "EthGetBalanceParamBlock1"
             }
           },
           {
-            "typeName": "ETHGETBALANCEParamBlock2",
+            "typeName": "EthGetBalanceParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHGETBALANCEParamBlock2"
+              "value": "EthGetBalanceParamBlock2"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_B_a_l_a_n_c_e_Param_Address": {
-      "name": "e_t_h___g_e_t_B_a_l_a_n_c_e_Param_Address",
+    "eth_getBalance_Param_Address": {
+      "name": "eth_getBalance_Param_Address",
       "shape": {
         "type": "alias",
         "value": {
@@ -1948,8 +1948,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_Block hash": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_Block hash",
+    "eth_getBlockByHash_Param_Block hash": {
+      "name": "eth_getBlockByHash_Param_Block hash",
       "shape": {
         "type": "alias",
         "value": {
@@ -1961,8 +1961,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_Hydrated transactions": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_Hydrated transactions",
+    "eth_getBlockByHash_Param_Hydrated transactions": {
+      "name": "eth_getBlockByHash_Param_Hydrated transactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -3143,8 +3143,8 @@
         ]
       }
     },
-    "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag0": {
-      "name": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag0",
+    "EthGetBlockByNumberParamBlockNumberOrTag0": {
+      "name": "EthGetBlockByNumberParamBlockNumberOrTag0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3156,9 +3156,9 @@
         }
       }
     },
-    "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag1": {
+    "EthGetBlockByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag1",
+      "name": "EthGetBlockByNumberParamBlockNumberOrTag1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3180,31 +3180,31 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_Block number or tag": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_Block number or tag",
+    "eth_getBlockByNumber_Param_Block number or tag": {
+      "name": "eth_getBlockByNumber_Param_Block number or tag",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag0",
+            "typeName": "EthGetBlockByNumberParamBlockNumberOrTag0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag0"
+              "value": "EthGetBlockByNumberParamBlockNumberOrTag0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag1",
+            "typeName": "EthGetBlockByNumberParamBlockNumberOrTag1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKBYNUMBERParamBlockNumberOrTag1"
+              "value": "EthGetBlockByNumberParamBlockNumberOrTag1"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_Hydrated transactions": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_Hydrated transactions",
+    "eth_getBlockByNumber_Param_Hydrated transactions": {
+      "name": "eth_getBlockByNumber_Param_Hydrated transactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -3228,8 +3228,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Param_Block hash": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_H_a_s_h_Param_Block hash",
+    "eth_getBlockTransactionCountByHash_Param_Block hash": {
+      "name": "eth_getBlockTransactionCountByHash_Param_Block hash",
       "shape": {
         "type": "alias",
         "value": {
@@ -3257,8 +3257,8 @@
         }
       }
     },
-    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag0": {
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag0",
+    "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0": {
+      "name": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3270,9 +3270,9 @@
         }
       }
     },
-    "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag1": {
+    "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag1",
+      "name": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3294,24 +3294,24 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_Block number or tag": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_Block number or tag",
+    "eth_getBlockTransactionCountByNumber_Param_Block number or tag": {
+      "name": "eth_getBlockTransactionCountByNumber_Param_Block number or tag",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag0",
+            "typeName": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag0"
+              "value": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag0"
             }
           },
           {
-            "typeName": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag1",
+            "typeName": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETBLOCKTRANSACTIONCOUNTBYNUMBERParamBlockNumberOrTag1"
+              "value": "EthGetBlockTransactionCountByNumberParamBlockNumberOrTag1"
             }
           }
         ]
@@ -3333,8 +3333,8 @@
         }
       }
     },
-    "ETHGETCODEParamBlock0": {
-      "name": "ETHGETCODEParamBlock0",
+    "EthGetCodeParamBlock0": {
+      "name": "EthGetCodeParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3346,9 +3346,9 @@
         }
       }
     },
-    "ETHGETCODEParamBlock1": {
+    "EthGetCodeParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETCODEParamBlock1",
+      "name": "EthGetCodeParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3370,8 +3370,8 @@
         ]
       }
     },
-    "ETHGETCODEParamBlock2": {
-      "name": "ETHGETCODEParamBlock2",
+    "EthGetCodeParamBlock2": {
+      "name": "EthGetCodeParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -3383,38 +3383,38 @@
         }
       }
     },
-    "e_t_h___g_e_t_C_o_d_e_Param_Block": {
-      "name": "e_t_h___g_e_t_C_o_d_e_Param_Block",
+    "eth_getCode_Param_Block": {
+      "name": "eth_getCode_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETCODEParamBlock0",
+            "typeName": "EthGetCodeParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamBlock0"
+              "value": "EthGetCodeParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETCODEParamBlock1",
+            "typeName": "EthGetCodeParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamBlock1"
+              "value": "EthGetCodeParamBlock1"
             }
           },
           {
-            "typeName": "ETHGETCODEParamBlock2",
+            "typeName": "EthGetCodeParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHGETCODEParamBlock2"
+              "value": "EthGetCodeParamBlock2"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_C_o_d_e_Param_Address": {
-      "name": "e_t_h___g_e_t_C_o_d_e_Param_Address",
+    "eth_getCode_Param_Address": {
+      "name": "eth_getCode_Param_Address",
       "shape": {
         "type": "alias",
         "value": {
@@ -3717,8 +3717,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Param_Filter": {
-      "name": "e_t_h___g_e_t_L_o_g_s_Param_Filter",
+    "eth_getLogs_Param_Filter": {
+      "name": "eth_getLogs_Param_Filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3927,8 +3927,8 @@
         ]
       }
     },
-    "ETHGETPROOFParamBlock0": {
-      "name": "ETHGETPROOFParamBlock0",
+    "EthGetProofParamBlock0": {
+      "name": "EthGetProofParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3940,9 +3940,9 @@
         }
       }
     },
-    "ETHGETPROOFParamBlock1": {
+    "EthGetProofParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETPROOFParamBlock1",
+      "name": "EthGetProofParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -3964,8 +3964,8 @@
         ]
       }
     },
-    "ETHGETPROOFParamBlock2": {
-      "name": "ETHGETPROOFParamBlock2",
+    "EthGetProofParamBlock2": {
+      "name": "EthGetProofParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -3977,38 +3977,38 @@
         }
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Param_Block": {
-      "name": "e_t_h___g_e_t_P_r_o_o_f_Param_Block",
+    "eth_getProof_Param_Block": {
+      "name": "eth_getProof_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETPROOFParamBlock0",
+            "typeName": "EthGetProofParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamBlock0"
+              "value": "EthGetProofParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamBlock1",
+            "typeName": "EthGetProofParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamBlock1"
+              "value": "EthGetProofParamBlock1"
             }
           },
           {
-            "typeName": "ETHGETPROOFParamBlock2",
+            "typeName": "EthGetProofParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHGETPROOFParamBlock2"
+              "value": "EthGetProofParamBlock2"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Param_Address": {
-      "name": "e_t_h___g_e_t_P_r_o_o_f_Param_Address",
+    "eth_getProof_Param_Address": {
+      "name": "eth_getProof_Param_Address",
       "shape": {
         "type": "alias",
         "value": {
@@ -4020,8 +4020,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Param_StorageKeys": {
-      "name": "e_t_h___g_e_t_P_r_o_o_f_Param_StorageKeys",
+    "eth_getProof_Param_StorageKeys": {
+      "name": "eth_getProof_Param_StorageKeys",
       "shape": {
         "type": "alias",
         "value": {
@@ -4118,8 +4118,8 @@
         ]
       }
     },
-    "ETHGETSTORAGEATParamBlock0": {
-      "name": "ETHGETSTORAGEATParamBlock0",
+    "EthGetStorageAtParamBlock0": {
+      "name": "EthGetStorageAtParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -4131,9 +4131,9 @@
         }
       }
     },
-    "ETHGETSTORAGEATParamBlock1": {
+    "EthGetStorageAtParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETSTORAGEATParamBlock1",
+      "name": "EthGetStorageAtParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -4155,8 +4155,8 @@
         ]
       }
     },
-    "ETHGETSTORAGEATParamBlock2": {
-      "name": "ETHGETSTORAGEATParamBlock2",
+    "EthGetStorageAtParamBlock2": {
+      "name": "EthGetStorageAtParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -4168,38 +4168,38 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Block": {
-      "name": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Block",
+    "eth_getStorageAt_Param_Block": {
+      "name": "eth_getStorageAt_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETSTORAGEATParamBlock0",
+            "typeName": "EthGetStorageAtParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamBlock0"
+              "value": "EthGetStorageAtParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamBlock1",
+            "typeName": "EthGetStorageAtParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamBlock1"
+              "value": "EthGetStorageAtParamBlock1"
             }
           },
           {
-            "typeName": "ETHGETSTORAGEATParamBlock2",
+            "typeName": "EthGetStorageAtParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHGETSTORAGEATParamBlock2"
+              "value": "EthGetStorageAtParamBlock2"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Address": {
-      "name": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Address",
+    "eth_getStorageAt_Param_Address": {
+      "name": "eth_getStorageAt_Param_Address",
       "shape": {
         "type": "alias",
         "value": {
@@ -4211,8 +4211,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Storage slot": {
-      "name": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Storage slot",
+    "eth_getStorageAt_Param_Storage slot": {
+      "name": "eth_getStorageAt_Param_Storage slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -5014,8 +5014,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Param_Block hash": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Param_Block hash",
+    "eth_getTransactionByBlockHashAndIndex_Param_Block hash": {
+      "name": "eth_getTransactionByBlockHashAndIndex_Param_Block hash",
       "shape": {
         "type": "alias",
         "value": {
@@ -5027,8 +5027,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Param_Transaction index": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Param_Transaction index",
+    "eth_getTransactionByBlockHashAndIndex_Param_Transaction index": {
+      "name": "eth_getTransactionByBlockHashAndIndex_Param_Transaction index",
       "shape": {
         "type": "alias",
         "value": {
@@ -5830,8 +5830,8 @@
         ]
       }
     },
-    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock0": {
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock0",
+    "EthGetTransactionByBlockNumberAndIndexParamBlock0": {
+      "name": "EthGetTransactionByBlockNumberAndIndexParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5843,9 +5843,9 @@
         }
       }
     },
-    "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock1": {
+    "EthGetTransactionByBlockNumberAndIndexParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock1",
+      "name": "EthGetTransactionByBlockNumberAndIndexParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -5867,31 +5867,31 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_Block": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_Block",
+    "eth_getTransactionByBlockNumberAndIndex_Param_Block": {
+      "name": "eth_getTransactionByBlockNumberAndIndex_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock0",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock0"
+              "value": "EthGetTransactionByBlockNumberAndIndexParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock1",
+            "typeName": "EthGetTransactionByBlockNumberAndIndexParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONBYBLOCKNUMBERANDINDEXParamBlock1"
+              "value": "EthGetTransactionByBlockNumberAndIndexParamBlock1"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_Transaction index": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_Transaction index",
+    "eth_getTransactionByBlockNumberAndIndex_Param_Transaction index": {
+      "name": "eth_getTransactionByBlockNumberAndIndex_Param_Transaction index",
       "shape": {
         "type": "alias",
         "value": {
@@ -6693,8 +6693,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Param_Transaction hash": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Param_Transaction hash",
+    "eth_getTransactionByHash_Param_Transaction hash": {
+      "name": "eth_getTransactionByHash_Param_Transaction hash",
       "shape": {
         "type": "alias",
         "value": {
@@ -6719,8 +6719,8 @@
         }
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamBlock0": {
-      "name": "ETHGETTRANSACTIONCOUNTParamBlock0",
+    "EthGetTransactionCountParamBlock0": {
+      "name": "EthGetTransactionCountParamBlock0",
       "shape": {
         "type": "alias",
         "value": {
@@ -6732,9 +6732,9 @@
         }
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamBlock1": {
+    "EthGetTransactionCountParamBlock1": {
       "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
-      "name": "ETHGETTRANSACTIONCOUNTParamBlock1",
+      "name": "EthGetTransactionCountParamBlock1",
       "shape": {
         "type": "enum",
         "values": [
@@ -6756,8 +6756,8 @@
         ]
       }
     },
-    "ETHGETTRANSACTIONCOUNTParamBlock2": {
-      "name": "ETHGETTRANSACTIONCOUNTParamBlock2",
+    "EthGetTransactionCountParamBlock2": {
+      "name": "EthGetTransactionCountParamBlock2",
       "shape": {
         "type": "alias",
         "value": {
@@ -6769,38 +6769,38 @@
         }
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_Block": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_Block",
+    "eth_getTransactionCount_Param_Block": {
+      "name": "eth_getTransactionCount_Param_Block",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamBlock0",
+            "typeName": "EthGetTransactionCountParamBlock0",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamBlock0"
+              "value": "EthGetTransactionCountParamBlock0"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamBlock1",
+            "typeName": "EthGetTransactionCountParamBlock1",
             "description": "`earliest`: The lowest numbered block the client has available; `finalized`: The most recent crypto-economically secure block, cannot be re-orged outside of manual intervention driven by community coordination; `safe`: The most recent block that is safe from re-orgs under honest majority and certain synchronicity assumptions; `latest`: The most recent block in the canonical chain observed by the client, this block may be re-orged out of the canonical chain even under healthy/normal conditions; `pending`: A sample next block built by the client on top of `latest` and containing the set of transactions usually taken from local mempool. Before the merge transition is finalized, any call querying for `finalized` or `safe` block MUST be responded to with `-39001: Unknown block` error",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamBlock1"
+              "value": "EthGetTransactionCountParamBlock1"
             }
           },
           {
-            "typeName": "ETHGETTRANSACTIONCOUNTParamBlock2",
+            "typeName": "EthGetTransactionCountParamBlock2",
             "type": {
               "type": "id",
-              "value": "ETHGETTRANSACTIONCOUNTParamBlock2"
+              "value": "EthGetTransactionCountParamBlock2"
             }
           }
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_Address": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_Address",
+    "eth_getTransactionCount_Param_Address": {
+      "name": "eth_getTransactionCount_Param_Address",
       "shape": {
         "type": "alias",
         "value": {
@@ -7165,8 +7165,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Param_Transaction hash": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Param_Transaction hash",
+    "eth_getTransactionReceipt_Param_Transaction hash": {
+      "name": "eth_getTransactionReceipt_Param_Transaction hash",
       "shape": {
         "type": "alias",
         "value": {
@@ -7191,8 +7191,8 @@
         }
       }
     },
-    "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction": {
-      "name": "e_t_h___s_e_n_d_R_a_w_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction",
+    "eth_sendRawTransaction_Param_Transaction": {
+      "name": "eth_sendRawTransaction_Param_Transaction",
       "shape": {
         "type": "alias",
         "value": {
@@ -7381,8 +7381,8 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Param_Data": {
-      "name": "w_e_b_3___s_h_a_3_Param_Data",
+    "web3_sha3_Param_Data": {
+      "name": "web3_sha3_Param_Data",
       "shape": {
         "type": "alias",
         "value": {
@@ -7572,7 +7572,7 @@
                   "key": "Transaction",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___c_a_l_l_Param_Transaction"
+                    "value": "eth_call_Param_Transaction"
                   }
                 },
                 {
@@ -7580,7 +7580,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___c_a_l_l_Param_Block"
+                    "value": "eth_call_Param_Block"
                   }
                 }
               ]
@@ -7812,7 +7812,7 @@
                   "key": "Transaction",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Transaction"
+                    "value": "eth_estimateGas_Param_Transaction"
                   }
                 },
                 {
@@ -7820,7 +7820,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___e_s_t_i_m_a_t_e_G_a_s_Param_Block"
+                    "value": "eth_estimateGas_Param_Block"
                   }
                 }
               ]
@@ -8063,7 +8063,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_B_a_l_a_n_c_e_Param_Block"
+                    "value": "eth_getBalance_Param_Block"
                   }
                 }
               ]
@@ -8406,7 +8406,7 @@
                   "key": "Block number or tag",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_Block number or tag"
+                    "value": "eth_getBlockByNumber_Param_Block number or tag"
                   }
                 },
                 {
@@ -8750,7 +8750,7 @@
                   "key": "Block number or tag",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_Block number or tag"
+                    "value": "eth_getBlockTransactionCountByNumber_Param_Block number or tag"
                   }
                 }
               ]
@@ -8890,7 +8890,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_C_o_d_e_Param_Block"
+                    "value": "eth_getCode_Param_Block"
                   }
                 }
               ]
@@ -9018,7 +9018,7 @@
                   "key": "Filter",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_L_o_g_s_Param_Filter"
+                    "value": "eth_getLogs_Param_Filter"
                   }
                 }
               ]
@@ -9230,7 +9230,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_P_r_o_o_f_Param_Block"
+                    "value": "eth_getProof_Param_Block"
                   }
                 }
               ]
@@ -9419,7 +9419,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_Block"
+                    "value": "eth_getStorageAt_Param_Block"
                   }
                 }
               ]
@@ -9723,7 +9723,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_Block"
+                    "value": "eth_getTransactionByBlockNumberAndIndex_Param_Block"
                   }
                 },
                 {
@@ -10066,7 +10066,7 @@
                   "key": "Block",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_Block"
+                    "value": "eth_getTransactionCount_Param_Block"
                   }
                 }
               ]

@@ -160,8 +160,8 @@
         ]
       }
     },
-    "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Param_Configuration": {
-      "name": "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Param_Configuration",
+    "getAccountInfo_Param_Configuration": {
+      "name": "getAccountInfo_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -214,9 +214,9 @@
         ]
       }
     },
-    "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Param_Pubkey": {
+    "getAccountInfo_Param_Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Param_Pubkey",
+      "name": "getAccountInfo_Param_Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -317,8 +317,8 @@
         ]
       }
     },
-    "g_e_t_B_a_l_a_n_c_e_Param_Configuration": {
-      "name": "g_e_t_B_a_l_a_n_c_e_Param_Configuration",
+    "getBalance_Param_Configuration": {
+      "name": "getBalance_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -350,9 +350,9 @@
         ]
       }
     },
-    "g_e_t_B_a_l_a_n_c_e_Param_Pubkey": {
+    "getBalance_Param_Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_B_a_l_a_n_c_e_Param_Pubkey",
+      "name": "getBalance_Param_Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -1424,8 +1424,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_Param_Configuration": {
-      "name": "g_e_t_B_l_o_c_k_Param_Configuration",
+    "getBlock_Param_Configuration": {
+      "name": "getBlock_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1493,8 +1493,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_Param_slot": {
-      "name": "g_e_t_B_l_o_c_k_Param_slot",
+    "getBlock_Param_slot": {
+      "name": "getBlock_Param_slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -1664,8 +1664,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_C_o_m_m_i_t_m_e_n_t_Param_block": {
-      "name": "g_e_t_B_l_o_c_k_C_o_m_m_i_t_m_e_n_t_Param_block",
+    "getBlockCommitment_Param_block": {
+      "name": "getBlockCommitment_Param_block",
       "shape": {
         "type": "alias",
         "value": {
@@ -1735,8 +1735,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_H_e_i_g_h_t_Param_Configuration": {
-      "name": "g_e_t_B_l_o_c_k_H_e_i_g_h_t_Param_Configuration",
+    "getBlockHeight_Param_Configuration": {
+      "name": "getBlockHeight_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1895,8 +1895,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_P_r_o_d_u_c_t_i_o_n_Param_Configuration": {
-      "name": "g_e_t_B_l_o_c_k_P_r_o_d_u_c_t_i_o_n_Param_Configuration",
+    "getBlockProduction_Param_Configuration": {
+      "name": "getBlockProduction_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2000,8 +2000,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_s_Param_Configuration": {
-      "name": "g_e_t_B_l_o_c_k_s_Param_Configuration",
+    "getBlocks_Param_Configuration": {
+      "name": "getBlocks_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2020,8 +2020,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_s_Param_start_slot": {
-      "name": "g_e_t_B_l_o_c_k_s_Param_start_slot",
+    "getBlocks_Param_start_slot": {
+      "name": "getBlocks_Param_start_slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -2032,8 +2032,8 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_s_Param_end_slot": {
-      "name": "g_e_t_B_l_o_c_k_s_Param_end_slot",
+    "getBlocks_Param_end_slot": {
+      "name": "getBlocks_Param_end_slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -2060,8 +2060,8 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_Configuration": {
-      "name": "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_Configuration",
+    "getBlocksWithLimit_Param_Configuration": {
+      "name": "getBlocksWithLimit_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2080,8 +2080,8 @@
         ]
       }
     },
-    "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_start_slot": {
-      "name": "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_start_slot",
+    "getBlocksWithLimit_Param_start_slot": {
+      "name": "getBlocksWithLimit_Param_start_slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -2092,8 +2092,8 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_limit": {
-      "name": "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_limit",
+    "getBlocksWithLimit_Param_limit": {
+      "name": "getBlocksWithLimit_Param_limit",
       "shape": {
         "type": "alias",
         "value": {
@@ -2120,8 +2120,8 @@
         }
       }
     },
-    "g_e_t_B_l_o_c_k_T_i_m_e_Param_block": {
-      "name": "g_e_t_B_l_o_c_k_T_i_m_e_Param_block",
+    "getBlockTime_Param_block": {
+      "name": "getBlockTime_Param_block",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2377,8 +2377,8 @@
         ]
       }
     },
-    "g_e_t_E_p_o_c_h_I_n_f_o_Param_Configuration": {
-      "name": "g_e_t_E_p_o_c_h_I_n_f_o_Param_Configuration",
+    "getEpochInfo_Param_Configuration": {
+      "name": "getEpochInfo_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2648,8 +2648,8 @@
         ]
       }
     },
-    "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Configuration": {
-      "name": "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Configuration",
+    "getFeeForMessage_Param_Configuration": {
+      "name": "getFeeForMessage_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2681,8 +2681,8 @@
         ]
       }
     },
-    "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Message": {
-      "name": "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Message",
+    "getFeeForMessage_Param_Message": {
+      "name": "getFeeForMessage_Param_Message",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3008,8 +3008,8 @@
         ]
       }
     },
-    "g_e_t_I_n_f_l_a_t_i_o_n_G_o_v_e_r_n_o_r_Param_Configuration": {
-      "name": "g_e_t_I_n_f_l_a_t_i_o_n_G_o_v_e_r_n_o_r_Param_Configuration",
+    "getInflationGovernor_Param_Configuration": {
+      "name": "getInflationGovernor_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3314,8 +3314,8 @@
         ]
       }
     },
-    "g_e_t_I_n_f_l_a_t_i_o_n_R_e_w_a_r_d_Param_Addresses": {
-      "name": "g_e_t_I_n_f_l_a_t_i_o_n_R_e_w_a_r_d_Param_Addresses",
+    "getInflationReward_Param_Addresses": {
+      "name": "getInflationReward_Param_Addresses",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3439,8 +3439,8 @@
         ]
       }
     },
-    "g_e_t_L_a_r_g_e_s_t_A_c_c_o_u_n_t_s_Param_Configuration": {
-      "name": "g_e_t_L_a_r_g_e_s_t_A_c_c_o_u_n_t_s_Param_Configuration",
+    "getLargestAccounts_Param_Configuration": {
+      "name": "getLargestAccounts_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3519,8 +3519,8 @@
         ]
       }
     },
-    "g_e_t_L_a_t_e_s_t_B_l_o_c_k_h_a_s_h_Param_Configuration": {
-      "name": "g_e_t_L_a_t_e_s_t_B_l_o_c_k_h_a_s_h_Param_Configuration",
+    "getLatestBlockhash_Param_Configuration": {
+      "name": "getLatestBlockhash_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3613,8 +3613,8 @@
         }
       }
     },
-    "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Configuration": {
-      "name": "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Configuration",
+    "getMinimumBalanceForRentExemption_Param_Configuration": {
+      "name": "getMinimumBalanceForRentExemption_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3633,8 +3633,8 @@
         ]
       }
     },
-    "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Account data length": {
-      "name": "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Account data length",
+    "getMinimumBalanceForRentExemption_Param_Account data length": {
+      "name": "getMinimumBalanceForRentExemption_Param_Account data length",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3758,8 +3758,8 @@
         ]
       }
     },
-    "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Param_Configuration": {
-      "name": "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Param_Configuration",
+    "getMultipleAccounts_Param_Configuration": {
+      "name": "getMultipleAccounts_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3812,8 +3812,8 @@
         ]
       }
     },
-    "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Param_Pubkeys": {
-      "name": "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Param_Pubkeys",
+    "getMultipleAccounts_Param_Pubkeys": {
+      "name": "getMultipleAccounts_Param_Pubkeys",
       "shape": {
         "type": "alias",
         "value": {
@@ -3962,8 +3962,8 @@
         ]
       }
     },
-    "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Param_Configuration": {
-      "name": "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Param_Configuration",
+    "getProgramAccounts_Param_Configuration": {
+      "name": "getProgramAccounts_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4042,9 +4042,9 @@
         ]
       }
     },
-    "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Param_Pubkey": {
+    "getProgramAccounts_Param_Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Param_Pubkey",
+      "name": "getProgramAccounts_Param_Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -4142,8 +4142,8 @@
         ]
       }
     },
-    "g_e_t_R_e_c_e_n_t_P_e_r_f_o_r_m_a_n_c_e_S_a_m_p_l_e_s_Param_limit": {
-      "name": "g_e_t_R_e_c_e_n_t_P_e_r_f_o_r_m_a_n_c_e_S_a_m_p_l_e_s_Param_limit",
+    "getRecentPerformanceSamples_Param_limit": {
+      "name": "getRecentPerformanceSamples_Param_limit",
       "shape": {
         "type": "alias",
         "value": {
@@ -4202,8 +4202,8 @@
         ]
       }
     },
-    "g_e_t_R_e_c_e_n_t_P_r_i_o_r_i_t_i_z_a_t_i_o_n_F_e_e_s_Param_Account addresses": {
-      "name": "g_e_t_R_e_c_e_n_t_P_r_i_o_r_i_t_i_z_a_t_i_o_n_F_e_e_s_Param_Account addresses",
+    "getRecentPrioritizationFees_Param_Account addresses": {
+      "name": "getRecentPrioritizationFees_Param_Account addresses",
       "shape": {
         "type": "alias",
         "value": {
@@ -4337,8 +4337,8 @@
         ]
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Param_Configuration": {
-      "name": "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Param_Configuration",
+    "getSignaturesForAddress_Param_Configuration": {
+      "name": "getSignaturesForAddress_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4410,9 +4410,9 @@
         ]
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Param_Account address": {
+    "getSignaturesForAddress_Param_Account address": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Param_Account address",
+      "name": "getSignaturesForAddress_Param_Account address",
       "shape": {
         "type": "alias",
         "value": {
@@ -4533,8 +4533,8 @@
         ]
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Param_Configuration": {
-      "name": "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Param_Configuration",
+    "getSignatureStatuses_Param_Configuration": {
+      "name": "getSignatureStatuses_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4555,8 +4555,8 @@
         ]
       }
     },
-    "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Param_Signatures": {
-      "name": "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Param_Signatures",
+    "getSignatureStatuses_Param_Signatures": {
+      "name": "getSignatureStatuses_Param_Signatures",
       "shape": {
         "type": "alias",
         "value": {
@@ -4583,8 +4583,8 @@
         }
       }
     },
-    "g_e_t_S_l_o_t_Param_Configuration": {
-      "name": "g_e_t_S_l_o_t_Param_Configuration",
+    "getSlot_Param_Configuration": {
+      "name": "getSlot_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4628,8 +4628,8 @@
         }
       }
     },
-    "g_e_t_S_l_o_t_L_e_a_d_e_r_Param_Configuration": {
-      "name": "g_e_t_S_l_o_t_L_e_a_d_e_r_Param_Configuration",
+    "getSlotLeader_Param_Configuration": {
+      "name": "getSlotLeader_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4674,8 +4674,8 @@
         }
       }
     },
-    "g_e_t_S_l_o_t_L_e_a_d_e_r_s_Param_Start slot": {
-      "name": "g_e_t_S_l_o_t_L_e_a_d_e_r_s_Param_Start slot",
+    "getSlotLeaders_Param_Start slot": {
+      "name": "getSlotLeaders_Param_Start slot",
       "shape": {
         "type": "alias",
         "value": {
@@ -4686,8 +4686,8 @@
         }
       }
     },
-    "g_e_t_S_l_o_t_L_e_a_d_e_r_s_Param_Limit": {
-      "name": "g_e_t_S_l_o_t_L_e_a_d_e_r_s_Param_Limit",
+    "getSlotLeaders_Param_Limit": {
+      "name": "getSlotLeaders_Param_Limit",
       "shape": {
         "type": "alias",
         "value": {
@@ -4778,8 +4778,8 @@
         ]
       }
     },
-    "g_e_t_S_u_p_p_l_y_Param_Configuration": {
-      "name": "g_e_t_S_u_p_p_l_y_Param_Configuration",
+    "getSupply_Param_Configuration": {
+      "name": "getSupply_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4939,8 +4939,8 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Param_Configuration": {
-      "name": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Param_Configuration",
+    "getTokenAccountBalance_Param_Configuration": {
+      "name": "getTokenAccountBalance_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -4959,9 +4959,9 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Param_Token account Pubkey": {
+    "getTokenAccountBalance_Param_Token account Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Param_Token account Pubkey",
+      "name": "getTokenAccountBalance_Param_Token account Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -5214,8 +5214,8 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Configuration": {
-      "name": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Configuration",
+    "getTokenAccountsByOwner_Param_Configuration": {
+      "name": "getTokenAccountsByOwner_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5268,8 +5268,8 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Token filter": {
-      "name": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Token filter",
+    "getTokenAccountsByOwner_Param_Token filter": {
+      "name": "getTokenAccountsByOwner_Param_Token filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5303,9 +5303,9 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Token owner Pubkey": {
+    "getTokenAccountsByOwner_Param_Token owner Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Token owner Pubkey",
+      "name": "getTokenAccountsByOwner_Param_Token owner Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -5393,8 +5393,8 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Param_Configuration": {
-      "name": "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Param_Configuration",
+    "getTokenSupply_Param_Configuration": {
+      "name": "getTokenSupply_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5413,9 +5413,9 @@
         ]
       }
     },
-    "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Param_Token Mint Pubkey": {
+    "getTokenSupply_Param_Token Mint Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Param_Token Mint Pubkey",
+      "name": "getTokenSupply_Param_Token Mint Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -5670,8 +5670,8 @@
         ]
       }
     },
-    "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration": {
-      "name": "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration",
+    "getTransaction_Param_Configuration": {
+      "name": "getTransaction_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5714,8 +5714,8 @@
         ]
       }
     },
-    "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction signature": {
-      "name": "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction signature",
+    "getTransaction_Param_Transaction signature": {
+      "name": "getTransaction_Param_Transaction signature",
       "shape": {
         "type": "alias",
         "value": {
@@ -6148,8 +6148,8 @@
         ]
       }
     },
-    "g_e_t_V_o_t_e_A_c_c_o_u_n_t_s_Param_Configuration": {
-      "name": "g_e_t_V_o_t_e_A_c_c_o_u_n_t_s_Param_Configuration",
+    "getVoteAccounts_Param_Configuration": {
+      "name": "getVoteAccounts_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6244,8 +6244,8 @@
         ]
       }
     },
-    "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Param_Configuration": {
-      "name": "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Param_Configuration",
+    "isBlockhashValid_Param_Configuration": {
+      "name": "isBlockhashValid_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6290,8 +6290,8 @@
         ]
       }
     },
-    "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Param_blockhash": {
-      "name": "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Param_blockhash",
+    "isBlockhashValid_Param_blockhash": {
+      "name": "isBlockhashValid_Param_blockhash",
       "shape": {
         "type": "alias",
         "value": {
@@ -6328,8 +6328,8 @@
         }
       }
     },
-    "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Configuration": {
-      "name": "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Configuration",
+    "requestAirdrop_Param_Configuration": {
+      "name": "requestAirdrop_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6348,9 +6348,9 @@
         ]
       }
     },
-    "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Pubkey": {
+    "requestAirdrop_Param_Pubkey": {
       "description": "Base-58 encoded public key.",
-      "name": "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Pubkey",
+      "name": "requestAirdrop_Param_Pubkey",
       "shape": {
         "type": "alias",
         "value": {
@@ -6361,8 +6361,8 @@
         }
       }
     },
-    "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Lamports": {
-      "name": "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Lamports",
+    "requestAirdrop_Param_Lamports": {
+      "name": "requestAirdrop_Param_Lamports",
       "shape": {
         "type": "alias",
         "value": {
@@ -6404,8 +6404,8 @@
         ]
       }
     },
-    "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration": {
-      "name": "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration",
+    "sendTransaction_Param_Configuration": {
+      "name": "sendTransaction_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6475,8 +6475,8 @@
         ]
       }
     },
-    "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction": {
-      "name": "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction",
+    "sendTransaction_Param_Transaction": {
+      "name": "sendTransaction_Param_Transaction",
       "shape": {
         "type": "alias",
         "value": {
@@ -6796,8 +6796,8 @@
         ]
       }
     },
-    "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration": {
-      "name": "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration",
+    "simulateTransaction_Param_Configuration": {
+      "name": "simulateTransaction_Param_Configuration",
       "shape": {
         "type": "object",
         "extends": [],
@@ -6892,8 +6892,8 @@
         ]
       }
     },
-    "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction": {
-      "name": "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Param_Transaction",
+    "simulateTransaction_Param_Transaction": {
+      "name": "simulateTransaction_Param_Transaction",
       "shape": {
         "type": "alias",
         "value": {
@@ -7071,7 +7071,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_A_c_c_o_u_n_t_I_n_f_o_Param_Configuration"
+                    "value": "getAccountInfo_Param_Configuration"
                   }
                 }
               ]
@@ -7188,7 +7188,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_a_l_a_n_c_e_Param_Configuration"
+                    "value": "getBalance_Param_Configuration"
                   }
                 }
               ]
@@ -7307,7 +7307,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_Param_Configuration"
+                    "value": "getBlock_Param_Configuration"
                   }
                 }
               ]
@@ -7523,7 +7523,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_H_e_i_g_h_t_Param_Configuration"
+                    "value": "getBlockHeight_Param_Configuration"
                   }
                 }
               ]
@@ -7632,7 +7632,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_P_r_o_d_u_c_t_i_o_n_Param_Configuration"
+                    "value": "getBlockProduction_Param_Configuration"
                   }
                 }
               ]
@@ -7759,7 +7759,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_s_Param_Configuration"
+                    "value": "getBlocks_Param_Configuration"
                   }
                 }
               ]
@@ -7895,7 +7895,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_s_W_i_t_h_L_i_m_i_t_Param_Configuration"
+                    "value": "getBlocksWithLimit_Param_Configuration"
                   }
                 }
               ]
@@ -8011,7 +8011,7 @@
                   "key": "block",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_B_l_o_c_k_T_i_m_e_Param_block"
+                    "value": "getBlockTime_Param_block"
                   }
                 }
               ]
@@ -8211,7 +8211,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_E_p_o_c_h_I_n_f_o_Param_Configuration"
+                    "value": "getEpochInfo_Param_Configuration"
                   }
                 }
               ]
@@ -8402,7 +8402,7 @@
                   "key": "Message",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Message"
+                    "value": "getFeeForMessage_Param_Message"
                   }
                 },
                 {
@@ -8410,7 +8410,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_F_e_e_F_o_r_M_e_s_s_a_g_e_Param_Configuration"
+                    "value": "getFeeForMessage_Param_Configuration"
                   }
                 }
               ]
@@ -8943,7 +8943,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_I_n_f_l_a_t_i_o_n_G_o_v_e_r_n_o_r_Param_Configuration"
+                    "value": "getInflationGovernor_Param_Configuration"
                   }
                 }
               ]
@@ -9134,7 +9134,7 @@
                   "key": "Addresses",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_I_n_f_l_a_t_i_o_n_R_e_w_a_r_d_Param_Addresses"
+                    "value": "getInflationReward_Param_Addresses"
                   }
                 }
               ]
@@ -9248,7 +9248,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_L_a_r_g_e_s_t_A_c_c_o_u_n_t_s_Param_Configuration"
+                    "value": "getLargestAccounts_Param_Configuration"
                   }
                 }
               ]
@@ -9362,7 +9362,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_L_a_t_e_s_t_B_l_o_c_k_h_a_s_h_Param_Configuration"
+                    "value": "getLatestBlockhash_Param_Configuration"
                   }
                 }
               ]
@@ -9641,7 +9641,7 @@
                   "key": "Account data length",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Account data length"
+                    "value": "getMinimumBalanceForRentExemption_Param_Account data length"
                   }
                 },
                 {
@@ -9649,7 +9649,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_M_i_n_i_m_u_m_B_a_l_a_n_c_e_F_o_r_R_e_n_t_E_x_e_m_p_t_i_o_n_Param_Configuration"
+                    "value": "getMinimumBalanceForRentExemption_Param_Configuration"
                   }
                 }
               ]
@@ -9771,7 +9771,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_M_u_l_t_i_p_l_e_A_c_c_o_u_n_t_s_Param_Configuration"
+                    "value": "getMultipleAccounts_Param_Configuration"
                   }
                 }
               ]
@@ -9895,7 +9895,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_P_r_o_g_r_a_m_A_c_c_o_u_n_t_s_Param_Configuration"
+                    "value": "getProgramAccounts_Param_Configuration"
                   }
                 }
               ]
@@ -10254,7 +10254,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_S_i_g_n_a_t_u_r_e_s_F_o_r_A_d_d_r_e_s_s_Param_Configuration"
+                    "value": "getSignaturesForAddress_Param_Configuration"
                   }
                 }
               ]
@@ -10381,7 +10381,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_S_i_g_n_a_t_u_r_e_S_t_a_t_u_s_e_s_Param_Configuration"
+                    "value": "getSignatureStatuses_Param_Configuration"
                   }
                 }
               ]
@@ -10495,7 +10495,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_S_l_o_t_Param_Configuration"
+                    "value": "getSlot_Param_Configuration"
                   }
                 }
               ]
@@ -10604,7 +10604,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_S_l_o_t_L_e_a_d_e_r_Param_Configuration"
+                    "value": "getSlotLeader_Param_Configuration"
                   }
                 }
               ]
@@ -10841,7 +10841,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_S_u_p_p_l_y_Param_Configuration"
+                    "value": "getSupply_Param_Configuration"
                   }
                 }
               ]
@@ -10958,7 +10958,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_B_a_l_a_n_c_e_Param_Configuration"
+                    "value": "getTokenAccountBalance_Param_Configuration"
                   }
                 }
               ]
@@ -11075,7 +11075,7 @@
                   "key": "Token filter",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Token filter"
+                    "value": "getTokenAccountsByOwner_Param_Token filter"
                   }
                 },
                 {
@@ -11083,7 +11083,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_T_o_k_e_n_A_c_c_o_u_n_t_s_B_y_O_w_n_e_r_Param_Configuration"
+                    "value": "getTokenAccountsByOwner_Param_Configuration"
                   }
                 }
               ]
@@ -11207,7 +11207,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_T_o_k_e_n_S_u_p_p_l_y_Param_Configuration"
+                    "value": "getTokenSupply_Param_Configuration"
                   }
                 }
               ]
@@ -11324,7 +11324,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration"
+                    "value": "getTransaction_Param_Configuration"
                   }
                 }
               ]
@@ -11515,7 +11515,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "g_e_t_V_o_t_e_A_c_c_o_u_n_t_s_Param_Configuration"
+                    "value": "getVoteAccounts_Param_Configuration"
                   }
                 }
               ]
@@ -11632,7 +11632,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "i_s_B_l_o_c_k_h_a_s_h_V_a_l_i_d_Param_Configuration"
+                    "value": "isBlockhashValid_Param_Configuration"
                   }
                 }
               ]
@@ -11847,7 +11847,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "r_e_q_u_e_s_t_A_i_r_d_r_o_p_Param_Configuration"
+                    "value": "requestAirdrop_Param_Configuration"
                   }
                 }
               ]
@@ -11966,7 +11966,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "s_e_n_d_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration"
+                    "value": "sendTransaction_Param_Configuration"
                   }
                 }
               ]
@@ -12085,7 +12085,7 @@
                   "key": "Configuration",
                   "valueType": {
                     "type": "id",
-                    "value": "s_i_m_u_l_a_t_e_T_r_a_n_s_a_c_t_i_o_n_Param_Configuration"
+                    "value": "simulateTransaction_Param_Configuration"
                   }
                 }
               ]

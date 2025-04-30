@@ -1088,8 +1088,8 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Param_data": {
-      "name": "w_e_b_3___s_h_a_3_Param_data",
+    "web3_sha3_Param_data": {
+      "name": "web3_sha3_Param_data",
       "shape": {
         "type": "alias",
         "value": {
@@ -1183,8 +1183,8 @@
         ]
       }
     },
-    "e_t_h___c_a_l_l_Param_blockNumber": {
-      "name": "e_t_h___c_a_l_l_Param_blockNumber",
+    "eth_call_Param_blockNumber": {
+      "name": "eth_call_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1218,8 +1218,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_includeTransactions": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Param_includeTransactions",
+    "eth_getBlockByHash_Param_includeTransactions": {
+      "name": "eth_getBlockByHash_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1230,8 +1230,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber",
+    "eth_getBlockByNumber_Param_blockNumber": {
+      "name": "eth_getBlockByNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1252,8 +1252,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_includeTransactions": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_includeTransactions",
+    "eth_getBlockByNumber_Param_includeTransactions": {
+      "name": "eth_getBlockByNumber_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1264,8 +1264,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber",
+    "eth_getBlockTransactionCountByNumber_Param_blockNumber": {
+      "name": "eth_getBlockTransactionCountByNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1312,8 +1312,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber",
+    "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber": {
+      "name": "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1356,9 +1356,9 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Param_filter": {
+    "eth_getLogs_Param_filter": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "e_t_h___g_e_t_L_o_g_s_Param_filter",
+      "name": "eth_getLogs_Param_filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1419,8 +1419,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber",
+    "eth_getStorageAt_Param_blockNumber": {
+      "name": "eth_getStorageAt_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1507,8 +1507,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber",
+    "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber": {
+      "name": "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1617,8 +1617,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber",
+    "eth_getTransactionCount_Param_blockNumber": {
+      "name": "eth_getTransactionCount_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1705,8 +1705,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber",
+    "eth_getUncleCountByBlockNumber_Param_blockNumber": {
+      "name": "eth_getUncleCountByBlockNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1835,8 +1835,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber": {
-      "name": "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber",
+    "eth_getProof_Param_blockNumber": {
+      "name": "eth_getProof_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1904,9 +1904,9 @@
         }
       }
     },
-    "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter": {
+    "eth_newFilter_Param_filter": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter",
+      "name": "eth_newFilter_Param_filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2723,7 +2723,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___c_a_l_l_Param_blockNumber"
+                    "value": "eth_call_Param_blockNumber"
                   }
                 }
               ]
@@ -3323,7 +3323,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Param_blockNumber"
+                    "value": "eth_getBlockByNumber_Param_blockNumber"
                   }
                 },
                 {
@@ -3512,7 +3512,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Param_blockNumber"
+                    "value": "eth_getBlockTransactionCountByNumber_Param_blockNumber"
                   }
                 }
               ]
@@ -4113,7 +4113,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber"
+                    "value": "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber"
                   }
                 },
                 {
@@ -4211,7 +4211,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_L_o_g_s_Param_filter"
+                    "value": "eth_getLogs_Param_filter"
                   }
                 }
               ]
@@ -4338,7 +4338,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Param_blockNumber"
+                    "value": "eth_getStorageAt_Param_blockNumber"
                   }
                 }
               ]
@@ -4532,7 +4532,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Param_blockNumber"
+                    "value": "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber"
                   }
                 },
                 {
@@ -4775,7 +4775,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Param_blockNumber"
+                    "value": "eth_getTransactionCount_Param_blockNumber"
                   }
                 }
               ]
@@ -5307,7 +5307,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Param_blockNumber"
+                    "value": "eth_getUncleCountByBlockNumber_Param_blockNumber"
                   }
                 }
               ]
@@ -5405,7 +5405,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___g_e_t_P_r_o_o_f_Param_blockNumber"
+                    "value": "eth_getProof_Param_blockNumber"
                   }
                 }
               ]
@@ -5820,7 +5820,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "e_t_h___n_e_w_F_i_l_t_e_r_Param_filter"
+                    "value": "eth_newFilter_Param_filter"
                   }
                 }
               ]
