@@ -1160,11 +1160,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 .option("beta", {
                     boolean: true,
                     default: false,
-                    description: "Run the beta app router development server"
+                    description: "Run the app router development server"
                 })
                 .option("legacy", {
                     boolean: true,
-                    default: true,
+                    default: false,
                     description: "Run the legacy development server"
                 })
                 .option("backend-port", {
@@ -1172,8 +1172,6 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     description: "Run the development backend server on the following port"
                 }),
         async (argv) => {
-            const appPreview = argv.beta && !argv.legacy;
-
             let port: number;
             if (argv.port != null) {
                 port = argv.port;
@@ -1184,12 +1182,10 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             let backendPort: number;
             if (argv.backendPort != null) {
                 backendPort = argv.backendPort;
-            } else if (appPreview) {
+            } else {
                 backendPort = await getPort({
                     port: [3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010, 3011]
                 });
-            } else {
-                backendPort = 0;
             }
             const bundlePath: string | undefined = argv.bundlePath;
             await previewDocsWorkspace({
@@ -1202,7 +1198,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                appPreview,
+                appPreview: argv.beta,
+                legacyPreview: argv.legacy,
                 backendPort
             });
         }

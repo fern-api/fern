@@ -12,6 +12,7 @@ export async function previewDocsWorkspace({
     bundlePath,
     brokenLinks,
     appPreview,
+    legacyPreview,
     backendPort
 }: {
     loadProject: () => Promise<Project>;
@@ -20,6 +21,7 @@ export async function previewDocsWorkspace({
     bundlePath?: string;
     brokenLinks: boolean;
     appPreview?: boolean;
+    legacyPreview?: boolean;
     backendPort: number;
 }): Promise<void> {
     const project = await loadProject();
@@ -28,7 +30,13 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    if (appPreview) {
+    let usePages = legacyPreview;
+    const legacyPin = ["cohere", "deepgram", "payroc", "chainalysis", "devrev", "deriv", "webflow"];
+    if (legacyPin.includes(project.config.organization)) {
+        usePages = true;
+    }
+
+    if (!usePages || appPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
             command: "fern docs dev --beta"
