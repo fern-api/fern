@@ -26568,7 +26568,7 @@
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "status": "valid",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                      "refresh_rate": "6h"
+                      "refresh_rate": "7d"
                     }
                   ]
                 }
@@ -26590,7 +26590,7 @@
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "status": "valid",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                      "refresh_rate": "6h"
+                      "refresh_rate": "7d"
                     }
                   ]
                 }
@@ -26725,7 +26725,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -26740,7 +26740,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -26873,7 +26873,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -26888,7 +26888,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27019,7 +27019,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27034,7 +27034,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27187,7 +27187,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27202,7 +27202,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27409,12 +27409,12 @@
               },
               "headers": {},
               "requestBody": {
-                "access_mode": "single"
+                "access_mode": "recurrent"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "access_mode": "single"
+                  "access_mode": "recurrent"
                 }
               },
               "responseStatusCode": 200,
@@ -27430,7 +27430,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27445,7 +27445,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -35883,7 +35883,7 @@
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                "type": "foo",
+                "type": "monthly",
                 "date_from": "2018-01-01",
                 "date_to": "2019-01-01"
               },
@@ -35891,7 +35891,7 @@
                 "type": "json",
                 "value": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "foo",
+                  "type": "monthly",
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01"
                 }
@@ -43378,15 +43378,15 @@
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
-                        "num_transactions_1w": 39,
-                        "num_transactions_1m": 39,
-                        "num_transactions_3m": 39,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_3m": 19,
+                        "num_transactions_1w": 0,
+                        "num_transactions_1m": 0,
+                        "num_transactions_3m": 0,
+                        "num_incoming_transactions_1w": 0,
+                        "num_incoming_transactions_1m": 0,
+                        "num_incoming_transactions_3m": 0,
+                        "num_outgoing_transactions_1w": 0,
+                        "num_outgoing_transactions_1m": 0,
+                        "num_outgoing_transactions_3m": 0,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -43463,15 +43463,15 @@
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
-                        "num_transactions_1w": 39,
-                        "num_transactions_1m": 39,
-                        "num_transactions_3m": 39,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_3m": 19,
+                        "num_transactions_1w": 0,
+                        "num_transactions_1m": 0,
+                        "num_transactions_3m": 0,
+                        "num_incoming_transactions_1w": 0,
+                        "num_incoming_transactions_1m": 0,
+                        "num_incoming_transactions_3m": 0,
+                        "num_outgoing_transactions_1w": 0,
+                        "num_outgoing_transactions_1m": 0,
+                        "num_outgoing_transactions_3m": 0,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -43663,15 +43663,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -43743,15 +43743,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -43944,15 +43944,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44024,15 +44024,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44223,15 +44223,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44303,15 +44303,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,

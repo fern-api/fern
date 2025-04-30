@@ -11676,8 +11676,8 @@
               "pathParameters": {},
               "queryParameters": {
                 "query": "foo",
-                "skip": 42,
-                "take": 42
+                "skip": 0,
+                "take": 10
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -25607,7 +25607,7 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "fromSnapshots": true
+                "fromSnapshots": false
               },
               "headers": {},
               "responseStatusCode": 200
@@ -26105,8 +26105,8 @@
               },
               "queryParameters": {
                 "ruleId": "foo",
-                "skip": 42,
-                "take": 42
+                "skip": 0,
+                "take": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -27286,7 +27286,7 @@
               "path": "/api/news/features",
               "pathParameters": {},
               "queryParameters": {
-                "version": 42
+                "version": 0
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29226,7 +29226,7 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "version": 42
+                "version": -2
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -33116,7 +33116,7 @@
                 "commentsId": "foo"
               },
               "queryParameters": {
-                "version": 42
+                "version": -2
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -33643,7 +33643,7 @@
                 "userId": "foo"
               },
               "queryParameters": {
-                "version": 42
+                "version": -2
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -34069,7 +34069,7 @@
               },
               "queryParameters": {
                 "appId": "foo",
-                "app": "foo"
+                "app": ""
               },
               "headers": {},
               "responseStatusCode": 200

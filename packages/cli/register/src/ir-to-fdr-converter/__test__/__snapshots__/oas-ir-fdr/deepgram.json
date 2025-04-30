@@ -9694,10 +9694,10 @@
                 "custom_intent": "unsubscribe",
                 "custom_intent_mode": "strict",
                 "detect_entities": true,
-                "detect_language": true,
+                "detect_language": false,
                 "diarize_version": "v2",
                 "diarize": true,
-                "dictation": true,
+                "dictation": false,
                 "encoding": "linear16",
                 "extra": [
                   "key:value",
@@ -9713,9 +9713,9 @@
                   "Twilio:2",
                   "Algolia"
                 ],
-                "language": "bg",
+                "language": "en",
                 "measurements": true,
-                "model": "nova-3",
+                "model": "base-general",
                 "multichannel": true,
                 "numerals": true,
                 "paragraphs": true,
@@ -9759,7 +9759,7 @@
                 "type": "json",
                 "value": {
                   "metadata": {
-                    "transaction_key": "foo",
+                    "transaction_key": "deprecated",
                     "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                     "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                     "created": "2024-05-12T18:57:13.426Z",
@@ -9947,7 +9947,7 @@
                 "type": "json",
                 "value": {
                   "metadata": {
-                    "transaction_key": "foo",
+                    "transaction_key": "deprecated",
                     "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                     "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                     "created": "2024-05-12T18:57:13.426Z",
@@ -10680,7 +10680,7 @@
               "path": "/v1/speak",
               "pathParameters": {},
               "queryParameters": {
-                "bit_rate": 32000,
+                "bit_rate": 48000,
                 "callback": "https://example.com",
                 "container": "wav",
                 "speak_encoding": "linear16",

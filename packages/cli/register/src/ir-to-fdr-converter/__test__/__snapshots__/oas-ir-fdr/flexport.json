@@ -20018,7 +20018,7 @@
               "queryParameters": {
                 "page": 1,
                 "per": 20,
-                "direction": "asc",
+                "direction": "desc",
                 "f.purchase_order.id": 123,
                 "f.booking.id": 54321,
                 "f.purchase_order_line_item.id": 54321
@@ -20672,7 +20672,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "cargo_ready_date",
-                "direction": "asc",
+                "direction": "desc",
                 "f.status": "booked",
                 "f.shipment.id": 123456,
                 "f.consignee_entity_ref": "amazon-us",
@@ -28042,7 +28042,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "due_date",
-                "direction": "asc",
+                "direction": "desc",
                 "f.status": "outstanding",
                 "f.shipment.id": 12345,
                 "f.billed_directly_to_client": true,
@@ -34064,7 +34064,7 @@
               "queryParameters": {
                 "page": 1,
                 "per": 20,
-                "direction": "asc",
+                "direction": "desc",
                 "f.purchase_order.id": 123,
                 "f.line_item_number": 1,
                 "f.item_key": "item1",
@@ -35745,7 +35745,7 @@
                 "per": 20,
                 "f.shipment.id": 42,
                 "f.transportation_mode": 42,
-                "f.include_deleted": true
+                "f.include_deleted": false
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -36118,7 +36118,7 @@
                 "id": 42
               },
               "queryParameters": {
-                "f.include_deleted": true
+                "f.include_deleted": false
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -36852,7 +36852,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "id",
-                "direction": "asc",
+                "direction": "desc",
                 "f.transportation_mode": "ocean",
                 "f.status": "seller_location",
                 "f.statuses.any": "seller_location",

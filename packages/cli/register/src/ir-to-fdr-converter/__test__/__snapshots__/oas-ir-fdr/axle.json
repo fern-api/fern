@@ -1864,7 +1864,7 @@
                     "thirdParties": [
                       {
                         "property": "foo",
-                        "type": "lienholder",
+                        "type": "interest",
                         "name": "foo",
                         "address": {
                           "addressLine1": "foo",
@@ -1942,7 +1942,7 @@
                     "thirdParties": [
                       {
                         "property": "foo",
-                        "type": "lienholder",
+                        "type": "interest",
                         "name": "foo",
                         "address": {
                           "addressLine1": "foo",
