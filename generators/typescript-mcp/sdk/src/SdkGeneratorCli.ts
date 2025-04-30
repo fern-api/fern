@@ -1,8 +1,10 @@
-import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base";
 import { generateModels, generateModelsIndex } from "@fern-api/typescript-mcp-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
@@ -53,6 +55,10 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         generateModelsIndex(context);
         this.generateServer(context);
         this.generateTools(context);
+        await this.generateReadme({
+            context,
+            endpointSnippets: []
+        });
         await context.project.persist();
     }
 
@@ -64,5 +70,23 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     private generateTools(context: SdkGeneratorContext) {
         const tools = new ToolsGenerator(context);
         context.project.addToolsFile(tools.generate());
+    }
+
+    private async generateReadme({
+        context,
+        endpointSnippets
+    }: {
+        context: SdkGeneratorContext;
+        endpointSnippets: Endpoint[];
+    }): Promise<void> {
+        // if (endpointSnippets.length === 0) {
+        //     context.logger.debug("No snippets were produced; skipping README.md generation.");
+        //     return;
+        // }
+
+        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        context.project.addRawFiles(
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
     }
 }

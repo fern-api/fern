@@ -2458,12 +2458,18 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-api/typescript-ast':
         specifier: workspace:*
         version: link:../../typescript-v2/ast
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.17
+        version: 0.0.17
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
@@ -2521,9 +2527,6 @@ importers:
       '@fern-api/typescript-mcp-base':
         specifier: workspace:*
         version: link:../base
-      '@fern-api/typescript-mcp-model':
-        specifier: workspace:*
-        version: 'link:'
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
