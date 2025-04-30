@@ -8461,7 +8461,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -8482,7 +8482,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -8584,7 +8584,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -8596,7 +8596,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -8714,7 +8714,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -8726,7 +8726,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -8920,7 +8920,7 @@
               "queryParameters": {
                 "membership": "active",
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 100
               },
               "headers": {},
               "responseStatusCode": 200
@@ -9283,7 +9283,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -9295,7 +9295,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -9406,7 +9406,7 @@
               "queryParameters": {
                 "show": "all",
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -10373,7 +10373,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -10883,9 +10883,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -10901,15 +10901,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -10925,7 +10925,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -11037,9 +11037,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -11055,15 +11055,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -11079,7 +11079,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -11310,7 +11310,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -11331,7 +11331,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -11451,7 +11451,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -11463,7 +11463,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -11599,7 +11599,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -11611,7 +11611,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -11887,7 +11887,7 @@
               "queryParameters": {
                 "title": "foo",
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -12679,7 +12679,7 @@
               "queryParameters": {
                 "show": "all",
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -12701,7 +12701,7 @@
                       "created_by_user_id": "foo",
                       "last_message": "foo",
                       "id": "foo",
-                      "documents_have_been_modified": true
+                      "documents_have_been_modified": false
                     }
                   ]
                 }
@@ -12724,7 +12724,7 @@
                       "created_by_user_id": "foo",
                       "last_message": "foo",
                       "id": "foo",
-                      "documents_have_been_modified": true
+                      "documents_have_been_modified": false
                     }
                   ]
                 }
@@ -13452,7 +13452,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -13473,7 +13473,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -13611,7 +13611,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -13623,7 +13623,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -13777,7 +13777,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -13789,7 +13789,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -14147,7 +14147,7 @@
                 "title": "foo",
                 "cursor": "foo",
                 "collection_id": "foo",
-                "page_limit": 42,
+                "page_limit": 25,
                 "source": "upload",
                 "strategy": "foo"
               },
@@ -15298,7 +15298,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -15611,7 +15611,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -15632,7 +15632,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -15770,7 +15770,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -15782,7 +15782,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -15936,7 +15936,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -15948,7 +15948,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -16193,7 +16193,7 @@
                     "created_by_user_id": "foo",
                     "last_message": "foo",
                     "id": "foo",
-                    "documents_have_been_modified": true
+                    "documents_have_been_modified": false
                   }
                 ]
               },
@@ -16209,7 +16209,7 @@
                     "created_by_user_id": "foo",
                     "last_message": "foo",
                     "id": "foo",
-                    "documents_have_been_modified": true
+                    "documents_have_been_modified": false
                   }
                 ]
               }
@@ -16293,7 +16293,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16307,7 +16307,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16412,7 +16412,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16426,7 +16426,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16501,9 +16501,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16519,15 +16519,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16543,7 +16543,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -16636,9 +16636,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16654,15 +16654,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16678,7 +16678,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -16762,7 +16762,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16776,7 +16776,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16985,7 +16985,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -17006,7 +17006,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -17108,7 +17108,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -17120,7 +17120,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -17238,7 +17238,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -17250,7 +17250,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -17496,7 +17496,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -17506,7 +17506,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -17524,7 +17524,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -17683,7 +17683,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -17703,7 +17703,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -18169,7 +18169,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -18194,7 +18194,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -18223,7 +18223,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -18363,7 +18363,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -18383,7 +18383,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -18832,7 +18832,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -18842,7 +18842,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -18860,7 +18860,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -19019,7 +19019,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19039,7 +19039,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19505,7 +19505,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -19530,7 +19530,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -19559,7 +19559,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -19699,7 +19699,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19719,7 +19719,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20168,7 +20168,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -20178,7 +20178,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -20196,7 +20196,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -20355,7 +20355,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20375,7 +20375,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20841,7 +20841,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -20866,7 +20866,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -20895,7 +20895,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -21035,7 +21035,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21055,7 +21055,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21504,7 +21504,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -21514,7 +21514,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -21532,7 +21532,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -21691,7 +21691,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21711,7 +21711,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -22177,7 +22177,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22202,7 +22202,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -22231,7 +22231,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -22371,7 +22371,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -22391,7 +22391,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -22840,7 +22840,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22850,7 +22850,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -22868,7 +22868,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -23027,7 +23027,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23047,7 +23047,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23513,7 +23513,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23538,7 +23538,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -23567,7 +23567,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -23707,7 +23707,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23727,7 +23727,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24176,7 +24176,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -24186,7 +24186,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -24204,7 +24204,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -24363,7 +24363,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24383,7 +24383,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24849,7 +24849,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -24874,7 +24874,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -24903,7 +24903,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -25043,7 +25043,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25063,7 +25063,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25512,7 +25512,7 @@
                 "connection_id": "foo"
               },
               "queryParameters": {
-                "parent_id": "foo"
+                "parent_id": ""
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -25522,7 +25522,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -25540,7 +25540,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -25699,7 +25699,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25719,7 +25719,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -26185,7 +26185,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -26210,7 +26210,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -26239,7 +26239,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -26379,7 +26379,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -26399,7 +26399,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -26898,7 +26898,7 @@
                   ],
                   "client_id": "foo",
                   "client_secret": "foo",
-                  "scope": "foo"
+                  "scope": ""
                 }
               },
               "responseBodyV3": {
@@ -26910,7 +26910,7 @@
                   ],
                   "client_id": "foo",
                   "client_secret": "foo",
-                  "scope": "foo"
+                  "scope": ""
                 }
               }
             }
@@ -27338,7 +27338,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27358,7 +27358,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27482,7 +27482,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27502,7 +27502,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27623,7 +27623,7 @@
               },
               "queryParameters": {
                 "cursor": "foo",
-                "page_limit": 42
+                "page_limit": 25
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -27648,7 +27648,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -27677,7 +27677,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -28420,7 +28420,7 @@
                           "user_prompt": null,
                           "llm_model": "gpt-4o",
                           "llm_config": {
-                            "temperature": 42
+                            "temperature": 0.2
                           },
                           "output_format": {},
                           "task_forwarder_id": "foo",
@@ -28428,11 +28428,11 @@
                             "collection_id": "foo",
                             "rag_param": "foo"
                           },
-                          "image_required": true,
+                          "image_required": false,
                           "id": "foo",
                           "created": "foo",
                           "modified": "foo",
-                          "active": true
+                          "active": false
                         }
                       ]
                     }
@@ -28462,7 +28462,7 @@
                           "user_prompt": null,
                           "llm_model": "gpt-4o",
                           "llm_config": {
-                            "temperature": 42
+                            "temperature": 0.2
                           },
                           "output_format": {},
                           "task_forwarder_id": "foo",
@@ -28470,11 +28470,11 @@
                             "collection_id": "foo",
                             "rag_param": "foo"
                           },
-                          "image_required": true,
+                          "image_required": false,
                           "id": "foo",
                           "created": "foo",
                           "modified": "foo",
-                          "active": true
+                          "active": false
                         }
                       ]
                     }
@@ -28599,7 +28599,7 @@
                   },
                   "rationale": "str"
                 },
-                "image_required": true,
+                "image_required": false,
                 "name": "Fintech Pre-Triage",
                 "description": "A task to pre-triage user onboarding before IDV.",
                 "enabled": true
@@ -28621,7 +28621,7 @@
                     },
                     "rationale": "str"
                   },
-                  "image_required": true,
+                  "image_required": false,
                   "name": "Fintech Pre-Triage",
                   "description": "A task to pre-triage user onboarding before IDV.",
                   "enabled": true
@@ -28644,7 +28644,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28652,11 +28652,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28677,7 +28677,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28685,11 +28685,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28820,7 +28820,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28828,11 +28828,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28853,7 +28853,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28861,11 +28861,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29014,7 +29014,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -29022,11 +29022,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29047,7 +29047,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -29055,11 +29055,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29575,7 +29575,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -29596,7 +29596,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -29734,7 +29734,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -29746,7 +29746,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -29900,7 +29900,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -29912,7 +29912,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }

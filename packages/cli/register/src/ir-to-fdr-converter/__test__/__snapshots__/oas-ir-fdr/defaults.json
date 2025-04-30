@@ -199,11 +199,11 @@
             "queryParameters": {
               "boolParam1": true,
               "boolParam2": true,
-              "boolParam3": true,
+              "boolParam3": false,
               "boolParam4": true,
-              "stringParam": "foo",
+              "stringParam": "defaultString",
               "numberParam": 42,
-              "integerParam": 42
+              "integerParam": 100
             },
             "headers": {},
             "responseStatusCode": 200,
@@ -212,8 +212,8 @@
               "value": {
                 "boolField1": true,
                 "boolField2": true,
-                "stringField": "foo",
-                "numberField": 42
+                "stringField": "defaultValue",
+                "numberField": 3.14
               }
             },
             "responseBodyV3": {
@@ -221,8 +221,8 @@
               "value": {
                 "boolField1": true,
                 "boolField2": true,
-                "stringField": "foo",
-                "numberField": 42
+                "stringField": "defaultValue",
+                "numberField": 3.14
               }
             }
           }
