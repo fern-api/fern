@@ -260,17 +260,17 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
             ):
                 writer.write_node(
                     AST.VariableDeclaration(
-                        name="response",
+                        name="pager",
                         initializer=AST.Expression(
-                            f"client.{endpoint.endpoint_package_path}with_raw_response.{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(pagination_endpoint_id) else ''})"
+                            f"client.{endpoint.endpoint_package_path}{endpoint.method_name}({'...' if self._endpoint_metadata.has_parameters(pagination_endpoint_id) else ''})"
                         ),
                     )
                 )
-                writer.write_line("print(response.headers)  # access the response headers")
+                writer.write_line("print(pager.response.headers)  # access the response headers for the first page")
                 writer.write_node(
                     AST.ForStatement(
                         target="item",
-                        iterable="response.data",
+                        iterable="pager",
                         body=[AST.Expression("print(item)  # access the underlying object(s)")],
                     )
                 )
@@ -278,13 +278,16 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 writer.write_node(
                     AST.ForStatement(
                         target="page",
-                        iterable="response.data.iter_pages()",
+                        iterable="pager.iter_pages()",
                         body=[
+                            AST.Expression(
+                                "print(page.response.headers)  # access the response headers for each page\n"
+                            ),
                             AST.ForStatement(
                                 target="item",
                                 iterable="page",
                                 body=[AST.Expression("print(item)  # access the underlying object(s)")],
-                            )
+                            ),
                         ],
                     )
                 )

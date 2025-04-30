@@ -1049,14 +1049,13 @@ class EndpointFunctionGenerator:
         streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> AST.TypeHint:
         # First get the underlying type without any wrappers
-        underlying_type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
+        type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
 
-        # Apply pagination if needed
+        # Handle pagination case. Note that we don't wrap the type hint in an HTTP response wrapper here, because the
+        # paginator type wraps the underlying HTTP response wrapper.
         if self.is_paginated:
-            underlying_type_hint = self._get_pagination_results_type(underlying_type_hint)
-            type_hint = self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
-        else:
-            type_hint = underlying_type_hint
+            underlying_type_hint = self._get_pagination_results_type(type_hint)
+            return self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
 
         # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)
@@ -1071,15 +1070,13 @@ class EndpointFunctionGenerator:
                     AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
                 )
 
-            result_type = streaming_type
-        else:
-            result_type = type_hint
+            return streaming_type
 
         # Finally add HTTP response wrapper for raw clients
-        if self._is_raw_client and not is_streaming:
-            return self._get_http_response_wrapper_type(is_async, result_type)
+        if self._is_raw_client:
+            return self._get_http_response_wrapper_type(is_async, type_hint)
 
-        return result_type
+        return type_hint
 
     def _get_response_body_underlying_type(
         self,
@@ -1578,6 +1575,12 @@ class EndpointFunctionGenerator:
                         ],
                         body=body,
                         is_async=self._is_async,
+                    )
+                )
+            elif self.is_paginated:
+                writer.write_node(
+                    AST.ReturnStatement(
+                        AST.AwaitExpression(func_invocation_expr) if self._is_async else func_invocation_expr
                     )
                 )
             else:

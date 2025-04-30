@@ -574,7 +574,12 @@ class CoreUtilities:
         )
 
     def instantiate_paginator(
-        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
+        self,
+        is_async: bool,
+        has_next: AST.Expression,
+        items: AST.Expression,
+        get_next: AST.Expression,
+        response: AST.Expression,
     ) -> AST.Expression:
         return AST.Expression(
             AST.ClassInstantiation(
@@ -584,6 +589,7 @@ class CoreUtilities:
                     ("has_next", has_next),
                     ("items", items),
                     ("get_next", get_next),
+                    ("response", response),
                 ],
             )
         )
