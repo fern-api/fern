@@ -13,7 +13,17 @@ export class ToolsGenerator extends FileGenerator<
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("// index.ts"); // TODO
+                writer.writeLine(
+                    Object.entries(this.context.ir.services)
+                        .map(([_, service]) => {
+                            return `// SERVICE: ${service.basePath.head}\n${service.endpoints
+                                .map((endpoint) => {
+                                    return `// ENDPOINT: ${endpoint.name.camelCase.safeName}, ${endpoint.method}, ${endpoint.path.head}`;
+                                })
+                                .join("\n")}`;
+                        })
+                        .join("\n")
+                );
             }),
             directory: RelativeFilePath.of(""),
             filename: "index.ts",
