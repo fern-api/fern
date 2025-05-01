@@ -239,7 +239,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 }
             }
             return "Authorization";
-        } 
+        }
         return undefined;
     }
 
