@@ -230,9 +230,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
-        // Check for default value in schema
         const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? (await this.resolveSchema(this.schema))?.default
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
             : this.schema.default;
 
         if (typeof resolvedDefault === "boolean") {
@@ -269,7 +273,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? (await this.resolveSchema(this.schema))?.default
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
             : this.schema.default;
 
         if (resolvedDefault !== undefined && resolvedSchema.enum?.includes(resolvedDefault)) {
@@ -315,7 +324,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? (await this.resolveSchema(this.schema))?.default
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
             : this.schema.default;
         if (typeof resolvedDefault === "number") {
             return {
@@ -360,7 +374,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? (await this.resolveSchema(this.schema))?.default
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
             : this.schema.default;
 
         if (typeof resolvedDefault === "string") {
@@ -408,7 +427,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const resolvedDefault = this.context.isReferenceObject(this.schema)
-            ? (await this.resolveSchema(this.schema))?.default
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
             : this.schema.default;
         if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
             return {

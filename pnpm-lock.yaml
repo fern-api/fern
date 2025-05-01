@@ -7445,6 +7445,9 @@ importers:
       '@bufbuild/protoplugin':
         specifier: 2.2.5
         version: 2.2.5
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../../configs
     devDependencies:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
