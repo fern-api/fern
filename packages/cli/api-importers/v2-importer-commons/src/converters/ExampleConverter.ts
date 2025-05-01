@@ -151,18 +151,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             });
         }
 
-        if (resolvedSchema.type == "object" || resolvedSchema.properties != null) {
-            return this.convertObject({
-                resolvedSchema
-            });
-        }
-
-        if ("allOf" in resolvedSchema && resolvedSchema.allOf != null) {
-            return this.convertAllOf({
-                resolvedSchema
-            });
-        }
-
         if ("oneOf" in resolvedSchema && resolvedSchema.oneOf != null) {
             return this.convertOneOf({
                 resolvedSchema
@@ -171,6 +159,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         if ("anyOf" in resolvedSchema && resolvedSchema.anyOf != null) {
             return this.convertAnyOf({
+                resolvedSchema
+            });
+        }
+
+        if (resolvedSchema.type == "object" || resolvedSchema.properties != null || resolvedSchema.allOf != null) {
+            return this.convertObject({
                 resolvedSchema
             });
         }
@@ -497,7 +491,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }: {
         resolvedSchema: OpenAPIV3_1.SchemaObject;
     }): Promise<ExampleConverter.Output> {
-        if (resolvedSchema.type == "object" && resolvedSchema.properties == null) {
+        if (resolvedSchema.type == "object" && resolvedSchema.properties == null && resolvedSchema.allOf == null) {
             return { isValid: true, coerced: false, validExample: this.example ?? {}, errors: [] };
         }
 
@@ -540,19 +534,67 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             })
         );
 
-        const isValid = resultsByKey.every((entry) => entry.result.isValid);
+        const allOfResults = await Promise.all(
+            (resolvedSchema.allOf ?? []).map(async (subSchema, index) => {
+                const exampleConverter = new ExampleConverter({
+                    breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
+                    context: this.context,
+                    schema: { ...resolvedSchema, ...subSchema, allOf: undefined },
+                    example: this.example,
+                    depth: this.depth + 1,
+                    generateOptionalProperties: this.generateOptionalProperties
+                });
+                return await exampleConverter.convert();
+            })
+        );
 
-        const example = Object.fromEntries(
+        const isValid =
+            resultsByKey.every((entry) => entry.result.isValid) && allOfResults.every((result) => result.isValid);
+
+        let example = Object.fromEntries(
             resultsByKey
                 .map(({ key, result }) => [key, result.validExample])
                 .filter(([_, value]) => value !== undefined)
         );
 
+        const nonObjectResults = allOfResults.filter(
+            (result) => typeof result.validExample !== "object" || result.validExample === null
+        );
+        if (nonObjectResults.length > 0) {
+            const firstValidResult = nonObjectResults.find((result) => result.validExample !== undefined);
+            if (firstValidResult) {
+                return {
+                    isValid,
+                    coerced: false,
+                    validExample: firstValidResult.validExample,
+                    errors: isValid
+                        ? []
+                        : [
+                              ...resultsByKey.flatMap(({ result }) => result.errors),
+                              ...allOfResults.flatMap((result) => result.errors)
+                          ]
+                };
+            }
+        }
+
+        for (const result of allOfResults) {
+            if (typeof result.validExample === "object" && result.validExample !== null) {
+                const validExampleObj = result.validExample as Record<string, unknown>;
+                const filteredEntries = Object.entries(validExampleObj).filter(([_, value]) => value !== undefined);
+                example = { ...example, ...Object.fromEntries(filteredEntries) };
+            }
+        }
+
         return {
             isValid,
             coerced: false,
             validExample: example,
-            errors: isValid ? [] : resultsByKey.flatMap(({ result }) => result.errors)
+            errors: isValid
+                ? []
+                : [
+                      ...resultsByKey.flatMap(({ result }) => result.errors),
+                      ...allOfResults.flatMap((result) => result.errors)
+                  ]
         };
     }
 
@@ -599,59 +641,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             coerced: false,
             validExample: example,
             errors: isValid ? [] : results.flatMap((result) => result?.errors ?? [])
-        };
-    }
-
-    private async convertAllOf({
-        resolvedSchema
-    }: {
-        resolvedSchema: OpenAPIV3_1.SchemaObject;
-    }): Promise<ExampleConverter.Output> {
-        if (!("allOf" in resolvedSchema) || resolvedSchema.allOf == null) {
-            return { isValid: false, coerced: false, validExample: null, errors: [] };
-        }
-        const results = await Promise.all(
-            resolvedSchema.allOf.map(async (subSchema, index) => {
-                const exampleConverter = new ExampleConverter({
-                    breadcrumbs: [...this.breadcrumbs, `allOf[${index}]`],
-                    context: this.context,
-                    schema: subSchema,
-                    example: this.example,
-                    depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
-                });
-                return await exampleConverter.convert();
-            })
-        );
-
-        const isValid = results.every((entry) => entry.isValid);
-
-        if (results.some((result) => typeof result.validExample !== "object" || result.validExample === null)) {
-            const firstValidResult = results.find(
-                (result) => typeof result.validExample !== "object" && result.validExample !== undefined
-            );
-            return {
-                isValid,
-                coerced: false,
-                validExample: firstValidResult?.validExample ?? null,
-                errors: isValid ? [] : results.flatMap((result) => result.errors)
-            };
-        }
-
-        const example = results.reduce((acc, result) => {
-            const exampleObj = result.validExample as Record<string, unknown>;
-            const filteredEntries = Object.entries(exampleObj).filter(([_, value]) => value !== undefined);
-            return {
-                ...acc,
-                ...Object.fromEntries(filteredEntries)
-            };
-        }, {});
-
-        return {
-            isValid,
-            coerced: false,
-            validExample: example,
-            errors: isValid ? [] : results.flatMap((result) => result.errors)
         };
     }
 

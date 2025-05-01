@@ -127,13 +127,13 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
     protected async generateOrValidateExample({
         schema,
-        ignoreErrors,
         example,
+        ignoreErrors,
         generateOptionalProperties
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        example: unknown;
         ignoreErrors?: boolean;
+        example: unknown;
         generateOptionalProperties?: boolean;
     }): Promise<unknown> {
         const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
