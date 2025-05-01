@@ -133,13 +133,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
     }): Promise<WebSocketMessage | undefined> {
         let convertedSchema: TypeDeclaration | undefined = undefined;
 
-        if (context.isReferenceObject(operation.message)) {
-            const resolved = await context.resolveReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>(
-                operation.message as OpenAPIV3.ReferenceObject
-            );
-            if (resolved.resolved) {
-                operation.message = resolved.value;
-            }
+        const resolvedMessage = await context.resolveMaybeReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>({
+            schemaOrReference: operation.message,
+            breadcrumbs: [...this.breadcrumbs, breadcrumbName]
+        });
+        if (resolvedMessage != null) {
+            operation.message = resolvedMessage;
         }
 
         if ("oneOf" in operation.message) {
@@ -158,15 +157,10 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 };
             }
         } else if (context.isMessageWithPayload(operation.message)) {
-            let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-            if (context.isReferenceObject(operation.message.payload)) {
-                const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(operation.message.payload);
-                if (resolved.resolved) {
-                    payloadSchema = resolved.value;
-                }
-            } else {
-                payloadSchema = operation.message.payload;
-            }
+            const payloadSchema = await context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                schemaOrReference: operation.message.payload,
+                breadcrumbs: [...this.breadcrumbs, breadcrumbName]
+            });
             if (payloadSchema != null) {
                 const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                     context: this.context,
@@ -225,14 +219,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         queryParameters: QueryParameter[];
     }): Promise<void> {
         for (const [name, parameter] of Object.entries(this.channel.parameters ?? {})) {
-            let parameterObject = parameter as OpenAPIV3_1.ParameterObject;
-            if (context.isReferenceObject(parameter)) {
-                const resolvedReference = await context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameterObject = resolvedReference.value;
-                } else {
-                    continue;
-                }
+            const parameterObject = await context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (parameterObject == null) {
+                continue;
             }
             const parameterConverter = new ParameterConverter({
                 context: this.context,
@@ -265,13 +257,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         if (this.channel.bindings?.ws?.headers != null) {
             const required = this.channel.bindings.ws.headers.required ?? [];
             for (const [name, schema] of Object.entries(this.channel.bindings.ws.headers.properties ?? {})) {
-                let resolvedHeader = schema;
-                if (context.isReferenceObject(schema)) {
-                    const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(schema);
-                    if (!resolved.resolved) {
-                        continue;
-                    }
-                    resolvedHeader = resolved.value;
+                const resolvedHeader = await context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                    schemaOrReference: schema,
+                    breadcrumbs: [...this.breadcrumbs, name]
+                });
+                if (resolvedHeader == null) {
+                    continue;
                 }
 
                 const parameterConverter = new ParameterConverter({
@@ -305,13 +296,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         if (this.channel.bindings?.ws?.query != null) {
             const required = this.channel.bindings.ws.query.required ?? [];
             for (const [name, schema] of Object.entries(this.channel.bindings.ws.query.properties ?? {})) {
-                let resolvedQuery = schema;
-                if (context.isReferenceObject(schema)) {
-                    const resolved = await context.resolveReference<OpenAPIV3.SchemaObject>(schema);
-                    if (!resolved.resolved) {
-                        continue;
-                    }
-                    resolvedQuery = resolved.value;
+                const resolvedQuery = await context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                    schemaOrReference: schema,
+                    breadcrumbs: [...this.breadcrumbs, name]
+                });
+                if (resolvedQuery == null) {
+                    continue;
                 }
 
                 const parameterConverter = new ParameterConverter({

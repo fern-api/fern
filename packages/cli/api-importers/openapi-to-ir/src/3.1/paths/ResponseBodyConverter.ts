@@ -38,17 +38,21 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public async convert(): Promise<ResponseBodyConverter.Output | undefined> {
-        if (!this.responseBody.content) {
+        // TODO: Handle 204 in a first-class manner
+        if (!this.responseBody.content && this.statusCode !== "204") {
+            this.context.errorCollector.collect({
+                message: `Response body content is missing for status code ${this.statusCode}`,
+                path: this.breadcrumbs
+            });
             return undefined;
         }
 
-        const jsonContentTypes = Object.keys(this.responseBody.content).filter((type) => type.includes("json"));
+        const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         for (const contentType of [...jsonContentTypes]) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                contentType,
                 schemaId
             });
             if (convertedSchema == null) {
@@ -73,12 +77,13 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
         }
 
-        const nonJsonContentTypes = Object.keys(this.responseBody.content).filter((type) => !type.includes("json"));
+        const nonJsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter(
+            (type) => !type.includes("json")
+        );
         for (const contentType of nonJsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = await this.parseMediaTypeObject({
                 mediaTypeObject,
-                contentType,
                 schemaId
             });
             if (convertedSchema == null) {

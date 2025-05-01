@@ -2355,6 +2355,42 @@
         ]
       }
     },
+    "V1EvalPostResponsesSchemaType": {
+      "name": "V1EvalPostResponsesSchemaType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
+          }
+        ]
+      }
+    },
+    "vals_evalPost_Response_400": {
+      "name": "vals_evalPost_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalPostResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1EvalCodeGetResponsesSchema0": {
       "name": "V1EvalCodeGetResponsesSchema0",
       "shape": {
@@ -2452,6 +2488,43 @@
             "type": {
               "type": "id",
               "value": "V1EvalCodeGetResponsesSchema4"
+            }
+          }
+        ]
+      }
+    },
+    "V1EvalCodeGetResponsesSchemaType": {
+      "name": "V1EvalCodeGetResponsesSchemaType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
+          }
+        ]
+      }
+    },
+    "vals_evalGet_Response_400": {
+      "description": "The function throw an error or had invalid syntax",
+      "name": "vals_evalGet_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalCodeGetResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
