@@ -25570,6 +25570,516 @@
         ]
       }
     },
+    "ApiLinksPostResponsesSchemaItems": {
+      "name": "ApiLinksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksPatchResponsesSchemaItems": {
+      "name": "ApiLinksPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksIdPutResponsesSchemaItems": {
+      "name": "ApiLinksIdPutResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksIdPatchResponsesSchemaItems": {
+      "name": "ApiLinksIdPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiAccountsPostResponsesSchemaItems": {
+      "name": "ApiAccountsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiAccountsPatchResponsesSchemaItems": {
+      "name": "ApiAccountsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "ApiTransactionsPostParametersSchema": {
       "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).\n\nWhen you make a asynchronous request, Belvo responds with a `202 - Accepted` payload, including the `request_id`. Once we have retrieved the transaction information, you will receive a `new_transactions_available` webhook with the link and request IDs.\n\n\n**Note**: This parameter is case sensitive (in other words, if you write `ASYNC`, then Belvo will default to a synchronous call).\n",
       "name": "ApiTransactionsPostParametersSchema",
@@ -25582,23 +26092,596 @@
         ]
       }
     },
+    "ApiTransactionsPostResponsesSchemaItems": {
+      "name": "ApiTransactionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTransactionsPatchResponsesSchemaItems": {
+      "name": "ApiTransactionsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiBalancesPostResponsesSchemaItems": {
+      "name": "ApiBalancesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiBalancesPatchResponsesSchemaItems": {
+      "name": "ApiBalancesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiOwnersPostResponsesSchemaItems": {
+      "name": "ApiOwnersPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiOwnersPatchResponsesSchemaItems": {
+      "name": "ApiOwnersPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "ApiInvoicesPostResponsesSchemaItems": {
       "name": "ApiInvoicesPostResponsesSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "InvoiceWithIdSat",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "InvoiceWithIdSat"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "InvoiceDian",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "InvoiceDian"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25610,17 +26693,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "InvoiceWithIdSat",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "InvoiceWithIdSat"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "InvoiceDian",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "InvoiceDian"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25712,31 +26858,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TaxReturnPersonal",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "TaxReturnPersonal"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "TaxReturnPersonalMonthly",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "TaxReturnPersonalMonthly"
+              "value": "TooManySessionsError"
             }
           },
           {
-            "typeName": "TaxReturnBusiness",
+            "typeName": "LoginError",
             "type": {
               "type": "id",
-              "value": "TaxReturnBusiness"
+              "value": "LoginError"
             }
           },
           {
-            "typeName": "TaxReturnBusinessMonthly",
+            "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
-              "value": "TaxReturnBusinessMonthly"
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25800,6 +26995,91 @@
         ]
       }
     },
+    "ApiTaxStatusPostResponsesSchemaItems": {
+      "name": "ApiTaxStatusPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Tax status_DetailTaxStatus_Response_200": {
       "name": "Tax status_DetailTaxStatus_Response_200",
       "shape": {
@@ -25817,6 +27097,941 @@
             "type": {
               "type": "id",
               "value": "TaxStatusDian"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTaxComplianceStatusPostResponsesSchemaItems": {
+      "name": "ApiTaxComplianceStatusPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiIncomesPostResponsesSchemaItems": {
+      "name": "ApiIncomesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiIncomesPatchResponsesSchemaItems": {
+      "name": "ApiIncomesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRecurringExpensesPostResponsesSchemaItems": {
+      "name": "ApiRecurringExpensesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRecurringExpensesPatchResponsesSchemaItems": {
+      "name": "ApiRecurringExpensesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "InvestmentsPortfoliosPostResponsesSchemaItems": {
+      "name": "InvestmentsPortfoliosPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "InvestmentsPortfoliosPatchResponsesSchemaItems": {
+      "name": "InvestmentsPortfoliosPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ReceivablesTransactionsPostResponsesSchemaItems": {
+      "name": "ReceivablesTransactionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRiskInsightsPostResponsesSchemaItems": {
+      "name": "ApiRiskInsightsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRiskInsightsPatchResponsesSchemaItems": {
+      "name": "ApiRiskInsightsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTaxRetentionsPostResponsesSchemaItems": {
+      "name": "ApiTaxRetentionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25850,17 +28065,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TaxDeclarationBusiness",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "TaxDeclarationBusiness"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "TaxDeclarationIndividual",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "TaxDeclarationIndividual"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25883,6 +28161,431 @@
             "type": {
               "type": "id",
               "value": "TaxDeclarationBusiness"
+            }
+          }
+        ]
+      }
+    },
+    "ApiEmploymentRecordsPostResponsesSchemaItems": {
+      "name": "ApiEmploymentRecordsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiEnrichIncomesPostResponsesSchemaItems": {
+      "name": "ApiEnrichIncomesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiCategorizationPostResponsesSchemaItems": {
+      "name": "ApiCategorizationPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsSecretKeysPostResponsesSchemaItems": {
+      "name": "PaymentsSecretKeysPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsWebhooksPostResponsesSchemaItems": {
+      "name": "PaymentsWebhooksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25927,6 +28630,91 @@
             "type": {
               "type": "id",
               "value": "CustomerPse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsCustomersPostResponsesSchemaItems": {
+      "name": "PaymentsCustomersPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25993,6 +28781,91 @@
             "type": {
               "type": "id",
               "value": "BankAccountPseResponse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsBankAccountsPostResponsesSchemaItems": {
+      "name": "PaymentsBankAccountsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -26078,6 +28951,91 @@
         ]
       }
     },
+    "PaymentsPaymentLinksPostResponsesSchemaItems": {
+      "name": "PaymentsPaymentLinksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Payment Links_DetailCreatePaymentlink_Response_200": {
       "name": "Payment Links_DetailCreatePaymentlink_Response_200",
       "shape": {
@@ -26130,6 +29088,91 @@
         ]
       }
     },
+    "PaymentsPaymentIntentsPostResponsesSchemaItems": {
+      "name": "PaymentsPaymentIntentsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Payment Intents_DetailPaymentIntent_Response_200": {
       "name": "Payment Intents_DetailPaymentIntent_Response_200",
       "shape": {
@@ -26155,6 +29198,91 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsPaymentIntentsIdPatchResponsesSchemaItems": {
+      "name": "PaymentsPaymentIntentsIdPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
