@@ -126,6 +126,9 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -168,7 +171,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}

@@ -6971,6 +6971,9 @@
             },
             "type": "reference"
           },
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Gets the stream speech for the given input",
@@ -7337,7 +7340,9 @@
                     "voice_id": "foo"
                   }
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -7407,6 +7412,9 @@
               "type": "named"
             },
             "type": "reference"
+          },
+          "response": {
+            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -7946,7 +7954,9 @@
                     "voice_id": "foo"
                   }
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -8075,6 +8085,9 @@
               "type": "named"
             },
             "type": "reference"
+          },
+          "response": {
+            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -8612,7 +8625,9 @@
                     "voice_id": "foo"
                   }
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -8737,6 +8752,9 @@
               "type": "named"
             },
             "type": "reference"
+          },
+          "response": {
+            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -9017,7 +9035,9 @@
                     "grant_type": "client_credentials"
                   }
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9111,6 +9131,9 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Fetches all the API keys for the logged in user",
@@ -9154,7 +9177,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9193,6 +9218,9 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Create a new API key for the logged in user",
@@ -9236,7 +9264,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9320,6 +9350,9 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Deletes the given API key for the logged in user",
@@ -9444,7 +9477,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9541,6 +9576,9 @@
               "type": "primitive"
             },
             "type": "reference"
+          },
+          "response": {
+            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -9679,7 +9717,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -9773,6 +9813,9 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Gets the list of voices available for the user",
@@ -9816,7 +9859,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -10007,6 +10052,9 @@
             },
             "type": "fileUpload"
           },
+          "response": {
+            "statusCode": 200
+          },
           "errors": [],
           "auth": true,
           "docs": "Create a personal (cloned) voice for the user",
@@ -10031,7 +10079,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 200
+                }
               }
             },
             "userSpecifiedExamples": {}
@@ -10115,6 +10165,9 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "statusCode": 204
+          },
           "errors": [],
           "auth": true,
           "docs": "Delete a personal (cloned) voice",
@@ -10239,7 +10292,9 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {}
+                "response": {
+                  "statusCode": 204
+                }
               }
             },
             "userSpecifiedExamples": {}

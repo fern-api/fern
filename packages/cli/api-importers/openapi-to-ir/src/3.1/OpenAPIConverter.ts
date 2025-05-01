@@ -212,11 +212,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private async convertPaths({
-        idToAuthScheme
-    }: {
-        idToAuthScheme: Record<string, AuthScheme>;
-    }): Promise<{
+    private async convertPaths({ idToAuthScheme }: { idToAuthScheme: Record<string, AuthScheme> }): Promise<{
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     }> {
