@@ -340,10 +340,7 @@
               "pathParameters": {
                 "organizationId": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -472,10 +469,7 @@
               "description": "",
               "path": "/users",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

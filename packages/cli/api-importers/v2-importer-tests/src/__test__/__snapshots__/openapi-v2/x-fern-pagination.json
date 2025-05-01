@@ -1847,9 +1847,7 @@
                     "path": "/list"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "pageNumber": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -3250,10 +3248,7 @@
                     "path": "/list-with-step"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "pageNumber": 42,
-                    "limit": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

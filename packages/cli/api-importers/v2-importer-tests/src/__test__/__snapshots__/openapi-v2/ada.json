@@ -15165,10 +15165,7 @@
                   },
                   "environment": "The subdomain of the client",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "cursor": "65a17e3f43bec88e2792d0eb",
-                    "limit": 8
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

@@ -19146,17 +19146,7 @@
               "description": "",
               "path": "/connections",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "connection_protocol": "connections/1.0",
-                "invitation_key": "foo",
-                "invitation_msg_id": "foo",
-                "my_did": "foo",
-                "state": "start",
-                "their_did": "foo",
-                "their_public_did": "foo",
-                "their_role": "invitee"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19379,12 +19369,7 @@
               "description": "",
               "path": "/connections/create-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "multi_use": true,
-                "public": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -19725,11 +19710,7 @@
               "description": "",
               "path": "/connections/receive-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -20142,11 +20123,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "mediation_id": "foo",
-                "my_endpoint": "foo",
-                "my_label": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20287,9 +20264,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20622,9 +20597,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "key": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21093,8 +21066,7 @@
                 "conn_id": "foo"
               },
               "queryParameters": {
-                "target_connection_id": "foo",
-                "message": "foo"
+                "target_connection_id": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -21208,10 +21180,7 @@
               "description": "",
               "path": "/credential-definitions",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "revocation_registry_size": 1000,
@@ -21381,14 +21350,7 @@
               "description": "",
               "path": "/credential-definitions/created",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "issuer_did": "foo",
-                "schema_id": "foo",
-                "schema_issuer_did": "foo",
-                "schema_name": "foo",
-                "schema_version": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21815,10 +21777,7 @@
               "pathParameters": {
                 "credential_id": "foo"
               },
-              "queryParameters": {
-                "from": "foo",
-                "to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22338,11 +22297,7 @@
               "description": "",
               "path": "/credentials",
               "pathParameters": {},
-              "queryParameters": {
-                "count": "foo",
-                "start": "foo",
-                "wql": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22507,11 +22462,7 @@
               "description": "",
               "path": "/credentials/w3c",
               "pathParameters": {},
-              "queryParameters": {
-                "count": "foo",
-                "start": "foo",
-                "wql": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "contexts": [
@@ -22845,12 +22796,7 @@
               "path": "/didexchange/create-request",
               "pathParameters": {},
               "queryParameters": {
-                "their_public_did": "foo",
-                "alias": "foo",
-                "mediation_id": "foo",
-                "my_endpoint": "foo",
-                "my_label": "foo",
-                "use_public_did": true
+                "their_public_did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23024,12 +22970,7 @@
               "description": "",
               "path": "/didexchange/receive-request",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo",
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -23198,10 +23139,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "my_endpoint": "foo",
-                "my_label": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23356,10 +23294,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "mediation_id": "foo",
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23514,11 +23449,7 @@
               "description": "",
               "path": "/discover-features-2.0/queries",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "query_goal_code": "foo",
-                "query_protocol": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23595,9 +23526,7 @@
               "description": "",
               "path": "/discover-features-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23720,11 +23649,7 @@
               "description": "",
               "path": "/discover-features/query",
               "pathParameters": {},
-              "queryParameters": {
-                "comment": "foo",
-                "connection_id": "foo",
-                "query": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23817,9 +23742,7 @@
               "description": "",
               "path": "/discover-features/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24257,12 +24180,7 @@
               "description": "",
               "path": "/issue-credential-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "issuer",
-                "state": "proposal-sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26319,12 +26237,7 @@
               "description": "",
               "path": "/issue-credential/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "issuer",
-                "state": "proposal_sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28139,8 +28052,7 @@
               "path": "/ledger/did-endpoint",
               "pathParameters": {},
               "queryParameters": {
-                "did": "foo",
-                "endpoint_type": "Endpoint"
+                "did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28609,11 +28521,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "did": "foo",
-                "verkey": "foo",
-                "alias": "foo",
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true,
-                "role": "STEWARD"
+                "verkey": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29178,10 +29086,7 @@
               "description": "",
               "path": "/mediation/keylists",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "role": "server"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29354,10 +29259,7 @@
               "pathParameters": {
                 "mediation_id": "foo"
               },
-              "queryParameters": {
-                "paginate_limit": -1,
-                "paginate_offset": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "filter": {}
@@ -29806,16 +29708,7 @@
               "description": "",
               "path": "/mediation/requests",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "mediator_terms": [
-                  "foo"
-                ],
-                "recipient_terms": [
-                  "foo"
-                ],
-                "state": "request"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31311,9 +31204,7 @@
               "description": "",
               "path": "/multitenancy/wallets",
               "pathParameters": {},
-              "queryParameters": {
-                "wallet_name": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31464,10 +31355,7 @@
               "description": "",
               "path": "/out-of-band/create-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "auto_accept": true,
-                "multi_use": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "accept": [
@@ -31670,12 +31558,7 @@
               "description": "",
               "path": "/out-of-band/receive-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo",
-                "use_existing_connection": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -32588,12 +32471,7 @@
               "description": "",
               "path": "/present-proof-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "prover",
-                "state": "proposal-sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33025,12 +32903,7 @@
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
-              "queryParameters": {
-                "count": "foo",
-                "extra_query": "foo",
-                "referent": "foo",
-                "start": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34167,12 +34040,7 @@
               "description": "",
               "path": "/present-proof/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "prover",
-                "state": "proposal_sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34604,12 +34472,7 @@
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
-              "queryParameters": {
-                "count": "foo",
-                "extra_query": "foo",
-                "referent": "foo",
-                "start": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36171,11 +36034,7 @@
               "description": "",
               "path": "/revocation/credential-record",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_ex_id": "foo",
-                "cred_rev_id": "foo",
-                "rev_reg_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36401,10 +36260,7 @@
               "description": "",
               "path": "/revocation/registries/created",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "state": "init"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36506,10 +36362,7 @@
               "description": "",
               "path": "/revocation/registry/delete-tails-file",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "rev_reg_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36901,10 +36754,7 @@
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37062,10 +36912,7 @@
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38102,10 +37949,7 @@
               "description": "",
               "path": "/schemas",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "attributes": [
@@ -38243,12 +38087,7 @@
               "description": "",
               "path": "/schemas/created",
               "pathParameters": {},
-              "queryParameters": {
-                "schema_id": "foo",
-                "schema_issuer_did": "foo",
-                "schema_name": "foo",
-                "schema_version": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38948,8 +38787,7 @@
               "path": "/transactions/create-request",
               "pathParameters": {},
               "queryParameters": {
-                "tran_id": "foo",
-                "endorser_write_txn": true
+                "tran_id": "foo"
               },
               "headers": {},
               "requestBody": {
@@ -39136,8 +38974,7 @@
                 "conn_id": "foo"
               },
               "queryParameters": {
-                "endorser_did": "foo",
-                "endorser_name": "foo"
+                "endorser_did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -39240,9 +39077,7 @@
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "transaction_my_job": "TRANSACTION_AUTHOR"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39991,13 +39826,7 @@
               "description": "",
               "path": "/wallet/did",
               "pathParameters": {},
-              "queryParameters": {
-                "did": "foo",
-                "key_type": "ed25519",
-                "method": "key",
-                "posture": "public",
-                "verkey": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -40405,10 +40234,7 @@
               "path": "/wallet/did/public",
               "pathParameters": {},
               "queryParameters": {
-                "did": "foo",
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true,
-                "mediation_id": "foo"
+                "did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -40611,10 +40437,7 @@
               "description": "",
               "path": "/wallet/set-did-endpoint",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "did": "WgWxqztrNooG92RXvxSTWv",
@@ -40734,9 +40557,7 @@
             "pathParameters": {
               "tran_id": "foo"
             },
-            "queryParameters": {
-              "endorser_did": "foo"
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {

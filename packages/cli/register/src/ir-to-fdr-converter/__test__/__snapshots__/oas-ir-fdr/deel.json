@@ -19020,9 +19020,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "templateId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -19514,9 +19512,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19736,27 +19732,7 @@
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
-              "queryParameters": {
-                "after_cursor": "foo",
-                "limit": 42,
-                "order_direction": "asc",
-                "types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "new"
-                ],
-                "team_id": 42,
-                "external_id": "foo",
-                "countries": [
-                  "US"
-                ],
-                "currencies": [
-                  "USD"
-                ],
-                "search": "foo",
-                "sort_by": "contract_title"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21143,12 +21119,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "end_date": "1999-12-31",
-                "calculation_type": "CUSTOM_AMOUNT",
-                "workweek_start": "foo",
-                "workweek_end": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22091,9 +22062,7 @@
                 "contract_id": "37nex2x",
                 "task_id": "foo"
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22287,17 +22256,8 @@
                 "contract_id": "37nex2x"
               },
               "queryParameters": {
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "reporter_id": 42,
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "limit": 99,
-                "offset": 0
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22570,18 +22530,8 @@
               "path": "/timesheets",
               "pathParameters": {},
               "queryParameters": {
-                "contract_id": "foo",
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "reporter_id": 42,
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "limit": 99,
-                "offset": 0
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23110,9 +23060,7 @@
               "pathParameters": {
                 "timesheet_id": 42
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27280,23 +27228,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "types": [
-                  "accrued_holiday"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "invoice_id": 42,
-                "reporter_id": 42,
-                "date_from": "1999-12-31",
-                "date_to": "1999-12-31",
-                "limit": 10,
-                "offset": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27597,24 +27529,7 @@
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
-              "queryParameters": {
-                "contract_id": "foo",
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "types": [
-                  "accrued_holiday"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "invoice_id": 42,
-                "reporter_id": 42,
-                "date_from": "1999-12-31",
-                "date_to": "1999-12-31",
-                "limit": 10,
-                "offset": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27949,9 +27864,7 @@
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28684,9 +28597,7 @@
               "path": "/agreements",
               "pathParameters": {},
               "queryParameters": {
-                "contract_id": "37nex2x",
-                "limit": "50",
-                "offset": "0"
+                "contract_id": "37nex2x"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29021,10 +28932,7 @@
               "description": "",
               "path": "/lookups/job-titles",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 99,
-                "after_cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29127,9 +29035,7 @@
               "description": "",
               "path": "/lookups/seniorities",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 50
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29464,16 +29370,7 @@
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
-              "queryParameters": {
-                "issued_from_date": "foo",
-                "issued_to_date": "foo",
-                "statuses": [
-                  "pending"
-                ],
-                "entities": [
-                  "individual"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29865,16 +29762,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "currencies": [
-                  "USD"
-                ],
-                "statuses": [
-                  "paid"
-                ],
-                "entities": [
-                  "individual"
-                ]
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -30186,10 +30074,7 @@
               "description": "",
               "path": "/people",
               "pathParameters": {},
-              "queryParameters": {
-                "offset": 0,
-                "limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

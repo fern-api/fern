@@ -7458,10 +7458,7 @@
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -8064,10 +8061,7 @@
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -8912,10 +8906,7 @@
               "pathParameters": {
                 "proj_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -9812,13 +9803,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_built_in": false,
-                "include_total_count": false,
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -10971,10 +10956,7 @@
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -11822,10 +11804,7 @@
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12699,10 +12678,7 @@
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14382,10 +14358,7 @@
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14921,10 +14894,7 @@
                 "resource_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -15268,11 +15238,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "__user",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15433,9 +15399,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "__user"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "key": "private",
@@ -15611,9 +15575,7 @@
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "__user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15796,11 +15758,7 @@
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "__user",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -15942,9 +15900,7 @@
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "__user"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "description": "whether or not the github repository is private"
@@ -16152,12 +16108,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_total_count": false,
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -17693,13 +17644,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "type": "userset",
-                "include_total_count": false,
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18677,10 +18622,7 @@
                 "env_id": "foo",
                 "condition_set_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18902,10 +18844,7 @@
                 "env_id": "foo",
                 "condition_set_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19141,12 +19080,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "role": "foo",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20723,12 +20657,7 @@
                 "tenant_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "role": "foo",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20953,12 +20882,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_total_count": false,
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21909,13 +21833,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "user": "foo",
-                "role": "foo",
-                "tenant": "foo",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22648,13 +22566,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "user_set": "foo",
-                "permission": "foo",
-                "resource_set": "foo",
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23099,10 +23011,7 @@
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "page": 1,
-                "per_page": 30
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

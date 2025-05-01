@@ -3490,17 +3490,7 @@
               "description": "",
               "path": "/accounts",
               "pathParameters": {},
-              "queryParameters": {
-                "productType": [
-                  "savings"
-                ],
-                "location": "internal",
-                "allows": [
-                  "billPay"
-                ],
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3811,12 +3801,7 @@
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
-              "queryParameters": {
-                "accounts": [
-                  "foo"
-                ],
-                "retryCount": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3984,10 +3969,7 @@
                 "allows": [
                   "billPay"
                 ],
-                "secCode": "arc",
-                "customerId": "foo",
-                "start": "",
-                "limit": 100
+                "secCode": "arc"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4318,10 +4300,7 @@
               "pathParameters": {
                 "accountId": "foo"
               },
-              "queryParameters": {
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -4753,8 +4732,7 @@
               "queryParameters": {
                 "locator": "foo",
                 "locatorType": "abaRoutingNumber",
-                "countryCode": "US",
-                "includeIntermediaryInstitutions": true
+                "countryCode": "US"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4926,9 +4904,7 @@
               },
               "queryParameters": {
                 "startsOn": "2022-07-04",
-                "endsOn": "2022-07-04",
                 "direction": "debit",
-                "count": 6,
                 "frequency": "once"
               },
               "headers": {},
@@ -5094,12 +5070,8 @@
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
-              "queryParameters": {
-                "timeZoneId": "America/New_York"
-              },
-              "headers": {
-                "If-None-Match": "foo"
-              },
+              "queryParameters": {},
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -5272,12 +5244,7 @@
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
-              "queryParameters": {
-                "startsOn": "2022-07-04",
-                "endsOn": "2022-07-04",
-                "type": "internal",
-                "risk": "early"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5669,26 +5636,7 @@
               "pathParameters": {
                 "accountId": "foo"
               },
-              "queryParameters": {
-                "start": "",
-                "limit": 100,
-                "occurredOn": "2023-05-19",
-                "posted": true,
-                "createdOn": "2022-05-19",
-                "postedOn": "2022-05-19",
-                "category": [
-                  "foo"
-                ],
-                "type": [
-                  "balance"
-                ],
-                "subtype": [
-                  "check"
-                ],
-                "amount": "[1000.00,1200.00)",
-                "checkNumber": "[1000,1200)",
-                "retryCount": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5858,9 +5806,7 @@
               "path": "/transactionCategories",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "If-None-Match": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -6047,14 +5993,7 @@
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
-              "queryParameters": {
-                "scheduledOn": "2022-05-19",
-                "debitsOn": "2022-05-19",
-                "creditsOn": "2022-05-19",
-                "historical": true,
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -6258,9 +6197,7 @@
               "path": "/transfers",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Challenge": "foo"
-              },
+              "headers": {},
               "requestBody": {
                 "amount": "275.00",
                 "sourceAccount": {
@@ -6623,9 +6560,7 @@
                 "transferId": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Challenge": "foo"
-              },
+              "headers": {},
               "requestBody": {
                 "amount": "275.00",
                 "targetAccount": {

@@ -4242,10 +4242,7 @@
                   "pathParameters": {
                     "organizationId": "foo"
                   },
-                  "queryParameters": {
-                    "page": 42,
-                    "pageSize": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -7213,10 +7210,7 @@
                     "path": "/users"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "page": 42,
-                    "pageSize": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

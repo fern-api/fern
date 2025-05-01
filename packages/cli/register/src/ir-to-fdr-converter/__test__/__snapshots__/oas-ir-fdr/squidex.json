@@ -11674,11 +11674,7 @@
               "description": "",
               "path": "/api/user-management",
               "pathParameters": {},
-              "queryParameters": {
-                "query": "foo",
-                "skip": 0,
-                "take": 10
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12486,9 +12482,7 @@
               "description": "",
               "path": "/api/users",
               "pathParameters": {},
-              "queryParameters": {
-                "query": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14874,9 +14868,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "query": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25606,9 +25598,7 @@
                 "app": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "fromSnapshots": false
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26103,11 +26093,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "ruleId": "foo",
-                "skip": 0,
-                "take": 20
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27285,9 +27271,7 @@
               "description": "",
               "path": "/api/news/features",
               "pathParameters": {},
-              "queryParameters": {
-                "version": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27503,9 +27487,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "channel": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27624,9 +27606,7 @@
               "pathParameters": {
                 "team": "foo"
               },
-              "queryParameters": {
-                "channel": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28282,10 +28262,7 @@
                 "app": "foo",
                 "schema": "foo"
               },
-              "queryParameters": {
-                "ids": "foo",
-                "q": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28614,11 +28591,7 @@
                 "app": "foo",
                 "schema": "foo"
               },
-              "queryParameters": {
-                "status": "foo",
-                "id": "foo",
-                "publish": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {},
               "requestBodyV3": {
@@ -29225,9 +29198,7 @@
                 "schema": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "version": -2
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29551,11 +29522,7 @@
                 "schema": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "status": "foo",
-                "patch": true,
-                "publish": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {},
               "requestBodyV3": {
@@ -30182,10 +30149,7 @@
                 "schema": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "checkReferrers": true,
-                "permanent": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -30731,9 +30695,7 @@
                 "schema": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "q": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31040,9 +31002,7 @@
                 "schema": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "q": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33115,9 +33075,7 @@
                 "app": "foo",
                 "commentsId": "foo"
               },
-              "queryParameters": {
-                "version": -2
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33642,9 +33600,7 @@
               "pathParameters": {
                 "userId": "foo"
               },
-              "queryParameters": {
-                "version": -2
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34067,10 +34023,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "appId": "foo",
-                "app": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -34691,22 +34644,7 @@
                 "idOrSlug": "foo",
                 "more": "foo"
               },
-              "queryParameters": {
-                "version": 42,
-                "cache": 42,
-                "download": 42,
-                "width": 42,
-                "height": 42,
-                "quality": 42,
-                "mode": "Crop",
-                "bg": "foo",
-                "focusX": 42,
-                "focusY": 42,
-                "nofocus": true,
-                "auto": true,
-                "force": true,
-                "format": "AVIF"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -34958,22 +34896,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "version": 42,
-                "cache": 42,
-                "download": 42,
-                "width": 42,
-                "height": 42,
-                "quality": 42,
-                "mode": "Crop",
-                "bg": "foo",
-                "focusX": 42,
-                "focusY": 42,
-                "nofocus": true,
-                "auto": true,
-                "force": true,
-                "format": "AVIF"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -35075,10 +34998,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "parentId": "foo",
-                "scope": "PathAndItems"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36009,15 +35929,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "parentId": "foo",
-                "ids": "foo",
-                "q": "foo",
-                "$top": 42,
-                "$skip": 42,
-                "$orderby": "foo",
-                "$filter": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36234,11 +36146,7 @@
               "pathParameters": {
                 "app": "foo"
               },
-              "queryParameters": {
-                "parentId": "foo",
-                "id": "foo",
-                "duplicate": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBodyV3": {
                 "type": "form",
@@ -36793,10 +36701,7 @@
                 "app": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "parentId": "foo",
-                "duplicate": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBodyV3": {
                 "type": "form",
@@ -37162,10 +37067,7 @@
                 "app": "foo",
                 "id": "foo"
               },
-              "queryParameters": {
-                "checkReferrers": true,
-                "permanent": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }

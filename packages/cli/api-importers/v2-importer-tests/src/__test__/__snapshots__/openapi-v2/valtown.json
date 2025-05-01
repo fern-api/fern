@@ -31996,8 +31996,6 @@
                   "queryParameters": {
                     "offset": 0,
                     "limit": 20,
-                    "since": "foo",
-                    "until": "foo",
                     "relationship": "any"
                   },
                   "headers": {}
@@ -34710,9 +34708,7 @@
                   "pathParameters": {},
                   "queryParameters": {
                     "offset": 0,
-                    "limit": 20,
-                    "since": "foo",
-                    "until": "foo"
+                    "limit": 20
                   },
                   "headers": {}
                 },
@@ -35564,9 +35560,7 @@
                   },
                   "environment": "Production",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "prefix": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -44998,9 +44992,7 @@
                   "pathParameters": {
                     "code": "foo"
                   },
-                  "queryParameters": {
-                    "args": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -45270,9 +45262,7 @@
                   "pathParameters": {
                     "valname": "foo"
                   },
-                  "queryParameters": {
-                    "args": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {}

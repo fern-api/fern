@@ -25079,17 +25079,7 @@
                   },
                   "environment": "https://api.apiture.com/banking",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "productType": [
-                      "savings"
-                    ],
-                    "location": "internal",
-                    "allows": [
-                      "billPay"
-                    ],
-                    "start": "",
-                    "limit": 100
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -28758,12 +28748,7 @@
                   },
                   "environment": "https://api.apiture.com/banking",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "accounts": [
-                      "foo"
-                    ],
-                    "retryCount": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -35167,10 +35152,7 @@
                     "allows": [
                       "billPay"
                     ],
-                    "secCode": "arc",
-                    "customerId": "foo",
-                    "start": "",
-                    "limit": 100
+                    "secCode": "arc"
                   },
                   "headers": {}
                 },
@@ -36795,10 +36777,7 @@
                   "pathParameters": {
                     "accountId": "foo"
                   },
-                  "queryParameters": {
-                    "start": "",
-                    "limit": 100
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -42401,8 +42380,7 @@
                   "queryParameters": {
                     "locator": "foo",
                     "locatorType": "abaRoutingNumber",
-                    "countryCode": "US",
-                    "includeIntermediaryInstitutions": true
+                    "countryCode": "US"
                   },
                   "headers": {}
                 },
@@ -43725,9 +43703,7 @@
                   },
                   "queryParameters": {
                     "startsOn": "2022-07-04",
-                    "endsOn": "2022-07-04",
                     "direction": "debit",
-                    "count": 6,
                     "frequency": "once"
                   },
                   "headers": {}
@@ -44885,12 +44861,8 @@
                   "pathParameters": {
                     "institutionId": "TIBURON"
                   },
-                  "queryParameters": {
-                    "timeZoneId": "America/New_York"
-                  },
-                  "headers": {
-                    "If-None-Match": "foo"
-                  }
+                  "queryParameters": {},
+                  "headers": {}
                 },
                 "response": {
                   "statusCode": 200,
@@ -46588,12 +46560,7 @@
                   "pathParameters": {
                     "institutionId": "TIBURON"
                   },
-                  "queryParameters": {
-                    "startsOn": "2022-07-04",
-                    "endsOn": "2022-07-04",
-                    "type": "internal",
-                    "risk": "early"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -52453,26 +52420,7 @@
                   "pathParameters": {
                     "accountId": "foo"
                   },
-                  "queryParameters": {
-                    "start": "",
-                    "limit": 100,
-                    "occurredOn": "2023-05-19",
-                    "posted": true,
-                    "createdOn": "2022-05-19",
-                    "postedOn": "2022-05-19",
-                    "category": [
-                      "foo"
-                    ],
-                    "type": [
-                      "balance"
-                    ],
-                    "subtype": [
-                      "check"
-                    ],
-                    "amount": "[1000.00,1200.00)",
-                    "checkNumber": "[1000,1200)",
-                    "retryCount": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -53533,9 +53481,7 @@
                   "environment": "https://api.apiture.com/banking",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {
-                    "If-None-Match": "foo"
-                  }
+                  "headers": {}
                 },
                 "response": {
                   "statusCode": 200,
@@ -60491,14 +60437,7 @@
                   },
                   "environment": "https://api.apiture.com/banking",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "scheduledOn": "2022-05-19",
-                    "debitsOn": "2022-05-19",
-                    "creditsOn": "2022-05-19",
-                    "historical": true,
-                    "start": "",
-                    "limit": 100
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -64647,9 +64586,7 @@
                   "environment": "https://api.apiture.com/banking",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {
-                    "Challenge": "foo"
-                  },
+                  "headers": {},
                   "requestBody": {
                     "amount": "275.00",
                     "sourceAccount": {
@@ -71575,9 +71512,7 @@
                     "transferId": "foo"
                   },
                   "queryParameters": {},
-                  "headers": {
-                    "Challenge": "foo"
-                  },
+                  "headers": {},
                   "requestBody": {
                     "amount": "275.00",
                     "targetAccount": {

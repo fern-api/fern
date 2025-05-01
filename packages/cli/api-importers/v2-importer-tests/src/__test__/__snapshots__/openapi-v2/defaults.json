@@ -1063,15 +1063,7 @@
                     "path": "/test"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "boolParam1": true,
-                    "boolParam2": true,
-                    "boolParam3": false,
-                    "boolParam4": true,
-                    "stringParam": "defaultString",
-                    "numberParam": 42,
-                    "integerParam": 100
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
