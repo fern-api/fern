@@ -3,14 +3,14 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 
+import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
-import { FernToken } from "@fern-api/auth";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
@@ -22,7 +22,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     context
 }: {
-    token: FernToken | undefined,
+    token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
@@ -36,19 +36,18 @@ export async function runLocalGenerationForWorkspace({
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     if (token == null || token.type === "organization") {
-                        interactiveTaskContext.failWithoutThrowing(
-                            "Fern token is required."
-                        );
+                        interactiveTaskContext.failWithoutThrowing("Fern token is required.");
                         return;
                     }
-                } 
+                }
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
-                const absolutePathToLocalOutput = generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
+                const absolutePathToLocalOutput =
+                    generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
@@ -68,9 +67,7 @@ export async function runLocalGenerationForWorkspace({
                     generateOauthClients: false,
                     generatePaginatedClients: false
                 });
-                interactiveTaskContext.logger.info(
-                    chalk.green("Wrote files to " + absolutePathToLocalOutput)
-                );
+                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
             });
         })
     );
