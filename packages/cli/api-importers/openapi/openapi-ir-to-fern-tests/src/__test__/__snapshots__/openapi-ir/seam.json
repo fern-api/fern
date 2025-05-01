@@ -1,5 +1,6 @@
 {
   "title": "Seam Connect",
+  "description": "",
   "servers": [
     {
       "url": "https://connect.getseam.com"

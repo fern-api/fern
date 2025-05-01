@@ -3,6 +3,7 @@ export * from "./GeneratorInvocationSchema";
 export * from "./GeneratorApiSettingsSchema";
 export * from "./GeneratorOutputSchema";
 export * from "./GithubConfigurationSchema";
+export * from "./GithubSelfhostedSchema";
 export * from "./GeneratorSnippetsSchema";
 export * from "./GeneratorPublishMetadataSchema";
 export * from "./GithubCommitAndReleaseSchema";

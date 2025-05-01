@@ -9,6 +9,7 @@
     ]
   },
   "title": "Test extension `x-fern-version`.",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

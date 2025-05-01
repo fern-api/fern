@@ -1,5 +1,6 @@
 {
   "title": "Axle API",
+  "description": "",
   "servers": [
     {
       "url": "https://api.axle.insure",

@@ -1,5 +1,6 @@
 {
   "title": "Test spec for `description` settings defined in anyOf.",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

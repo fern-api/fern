@@ -1,5 +1,6 @@
 {
   "title": "Query Parameters API",
+  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {
