@@ -35,7 +35,7 @@ export async function runLocalGenerationForWorkspace({
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    if (token == null || token.) {
+                    if (token == null || token.type === "organization") {
                         interactiveTaskContext.failWithoutThrowing(
                             "Fern token is required."
                         );
