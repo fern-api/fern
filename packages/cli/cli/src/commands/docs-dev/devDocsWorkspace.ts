@@ -5,6 +5,8 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
+const legacyPin = ["cohere", "deepgram", "payroc", "chainalysis", "devrev", "deriv", "webflow"];
+
 export async function previewDocsWorkspace({
     loadProject,
     cliContext,
@@ -30,9 +32,10 @@ export async function previewDocsWorkspace({
         return;
     }
 
-    let usePages = legacyPreview;
-    const legacyPin = ["cohere", "deepgram", "payroc", "chainalysis", "devrev", "deriv", "webflow"];
-    if (legacyPin.includes(project.config.organization)) {
+    let usePages = legacyPin.includes(project.config.organization);
+    if (appPreview) {
+        usePages = false;
+    } else if (legacyPreview) {
         usePages = true;
     }
 
@@ -88,7 +91,7 @@ export async function previewDocsWorkspace({
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern docs dev"
+        command: "fern docs dev --legacy"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {

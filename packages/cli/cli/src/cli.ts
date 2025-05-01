@@ -1172,6 +1172,12 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                     description: "Run the development backend server on the following port"
                 }),
         async (argv) => {
+            if (argv.beta) {
+                cliContext.logger.warn(
+                    "--beta flag now accesses the same functionality as default and will be deprecated in a future release"
+                );
+            }
+
             let port: number;
             if (argv.port != null) {
                 port = argv.port;
