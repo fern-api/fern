@@ -18,7 +18,7 @@ func do() () {
         &fern.GetRequest{
             Decimal: 2.2,
             Even: 100,
-            Name: "foo",
+            Name: "fern",
         },
     )
 }
