@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Fix an issue where example generation would not correctly merge allOf schemas with parent object schemas.
+    type: fix
+  irVersion: 57
+  version: 0.60.1
+
+- changelogEntry:
+  - summary: |
       Promotes `fern docs dev --beta` to `fern docs dev`; local development now better reflects the production version of docs. To use the legacy version, use the `--legacy` flag.
     type: feat
   irVersion: 57

@@ -8271,13 +8271,31 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "client_id": "foo",
@@ -8298,13 +8316,31 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "client_id": "foo",
@@ -8424,13 +8460,31 @@
                   "tokens": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "client_id": "foo",
@@ -8453,13 +8507,31 @@
                   "tokens": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "client_id": "foo",
@@ -8624,13 +8696,31 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "client_id": "foo",
@@ -8651,13 +8741,31 @@
                 "value": {
                   "token": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "client_id": "foo",
@@ -8751,36 +8859,22 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "type": "google_apps"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "type": "google_apps"
-                }
+                "value": {}
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               }
             }
@@ -8922,23 +9016,13 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               }
             }
@@ -9001,12 +9085,7 @@
                 "type": "json",
                 "value": {
                   "auth_connections": [
-                    {
-                      "display_name": "foo",
-                      "enabled": true,
-                      "id": "foo",
-                      "type": "google_apps"
-                    }
+                    {}
                   ]
                 }
               },
@@ -9014,12 +9093,7 @@
                 "type": "json",
                 "value": {
                   "auth_connections": [
-                    {
-                      "display_name": "foo",
-                      "enabled": true,
-                      "id": "foo",
-                      "type": "google_apps"
-                    }
+                    {}
                   ]
                 }
               }
@@ -9158,38 +9232,22 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "id": "foo",
-                "type": "google_apps"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "id": "foo",
-                  "type": "google_apps"
-                }
+                "value": {}
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "auth_connection": {
-                    "display_name": "foo",
-                    "enabled": true,
-                    "id": "foo",
-                    "type": "google_apps"
-                  }
+                  "auth_connection": {}
                 }
               }
             }
@@ -9361,13 +9419,31 @@
                   "dev_users": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "display_name": "foo",
@@ -9396,13 +9472,31 @@
                   "dev_users": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "display_name": "foo",
@@ -9486,13 +9580,31 @@
                 "value": {
                   "dev_user": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -9517,13 +9629,31 @@
                 "value": {
                   "dev_user": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -9621,29 +9751,76 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "name": "foo",
-                "owned_by": [
-                  "foo"
-                ],
-                "type": "capability"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "name": "foo",
-                  "owned_by": [
-                    "foo"
-                  ],
-                  "type": "capability"
-                }
+                "value": {}
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               },
@@ -9651,7 +9828,66 @@
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               }
@@ -9814,7 +10050,66 @@
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               },
@@ -9822,7 +10117,66 @@
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               }
@@ -10004,7 +10358,63 @@
                   "next_cursor": "foo",
                   "parts": [
                     {
-                      "type": "capability"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "description": "foo",
+                      "name": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ]
                     }
                   ],
                   "prev_cursor": "foo"
@@ -10016,7 +10426,63 @@
                   "next_cursor": "foo",
                   "parts": [
                     {
-                      "type": "capability"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "description": "foo",
+                      "name": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ]
                     }
                   ],
                   "prev_cursor": "foo"
@@ -10090,23 +10556,76 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                "type": "capability"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "capability"
-                }
+                "value": {}
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               },
@@ -10114,7 +10633,66 @@
                 "type": "json",
                 "value": {
                   "part": {
-                    "type": "capability"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "description": "foo",
+                    "name": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ]
                   }
                 }
               }
@@ -10211,13 +10789,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10232,13 +10828,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10408,13 +11022,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10429,13 +11061,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10668,13 +11318,31 @@
                   "rev_orgs": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "display_name": "foo",
@@ -10693,13 +11361,31 @@
                   "rev_orgs": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "display_name": "foo",
@@ -10793,13 +11479,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10814,13 +11518,31 @@
                 "value": {
                   "rev_org": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "display_name": "foo",
@@ -10923,13 +11645,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -10945,13 +11685,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -11122,13 +11880,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -11144,13 +11920,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -11267,13 +12061,31 @@
                   "tags": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "allowed_values": [
@@ -11293,13 +12105,31 @@
                   "tags": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "allowed_values": [
@@ -11394,13 +12224,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -11416,13 +12264,31 @@
                 "value": {
                   "tag": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "allowed_values": [
@@ -11511,23 +12377,53 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                "type": "timeline_comment"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "timeline_comment"
-                }
+                "value": {}
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               },
@@ -11535,7 +12431,43 @@
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               }
@@ -11612,7 +12544,43 @@
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               },
@@ -11620,7 +12588,43 @@
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               }
@@ -11740,7 +12744,43 @@
                   "prev_cursor": "foo",
                   "timeline_entries": [
                     {
-                      "type": "timeline_comment"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "body_type": "snap_kit",
+                      "snap_kit_body": {}
                     }
                   ]
                 }
@@ -11752,7 +12792,43 @@
                   "prev_cursor": "foo",
                   "timeline_entries": [
                     {
-                      "type": "timeline_comment"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "body_type": "snap_kit",
+                      "snap_kit_body": {}
                     }
                   ]
                 }
@@ -11825,23 +12901,53 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "id": "foo",
-                "type": "timeline_comment"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "id": "foo",
-                  "type": "timeline_comment"
-                }
+                "value": {}
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               },
@@ -11849,7 +12955,43 @@
                 "type": "json",
                 "value": {
                   "timeline_entry": {
-                    "type": "timeline_comment"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "body_type": "snap_kit",
+                    "snap_kit_body": {}
                   }
                 }
               }
@@ -11946,13 +13088,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -11969,13 +13129,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -12147,13 +13325,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -12170,13 +13366,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -12250,13 +13464,31 @@
                   "webhooks": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "event_types": [
@@ -12275,13 +13507,31 @@
                   "webhooks": [
                     {
                       "created_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "created_date": "foo",
                       "display_id": "foo",
                       "id": "foo",
                       "modified_by": {
-                        "type": "dev_user"
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
                       },
                       "modified_date": "foo",
                       "event_types": [
@@ -12377,13 +13627,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -12400,13 +13668,31 @@
                 "value": {
                   "webhook": {
                     "created_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "created_date": "foo",
                     "display_id": "foo",
                     "id": "foo",
                     "modified_by": {
-                      "type": "dev_user"
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
                     },
                     "modified_date": "foo",
                     "event_types": [
@@ -12496,31 +13782,100 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                "owned_by": [
-                  "foo"
-                ],
-                "title": "foo",
-                "type": "issue"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "owned_by": [
-                    "foo"
-                  ],
-                  "title": "foo",
-                  "type": "issue"
-                }
+                "value": {}
               },
               "responseStatusCode": 201,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               },
@@ -12528,7 +13883,90 @@
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               }
@@ -12860,7 +14298,84 @@
                 "value": {
                   "works": [
                     {
-                      "type": "issue"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "applies_to_part": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "name": "foo"
+                      },
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "reported_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "stage": {
+                        "name": "foo"
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ],
+                      "target_close_date": "foo",
+                      "title": "foo",
+                      "priority": "p0"
                     }
                   ]
                 }
@@ -12870,7 +14385,84 @@
                 "value": {
                   "works": [
                     {
-                      "type": "issue"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "applies_to_part": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "name": "foo"
+                      },
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "reported_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "stage": {
+                        "name": "foo"
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ],
+                      "target_close_date": "foo",
+                      "title": "foo",
+                      "priority": "p0"
                     }
                   ]
                 }
@@ -12948,7 +14540,90 @@
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               },
@@ -12956,7 +14631,90 @@
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               }
@@ -13230,7 +14988,84 @@
                   "prev_cursor": "foo",
                   "works": [
                     {
-                      "type": "issue"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "applies_to_part": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "name": "foo"
+                      },
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "reported_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "stage": {
+                        "name": "foo"
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ],
+                      "target_close_date": "foo",
+                      "title": "foo",
+                      "priority": "p0"
                     }
                   ]
                 }
@@ -13242,7 +15077,84 @@
                   "prev_cursor": "foo",
                   "works": [
                     {
-                      "type": "issue"
+                      "created_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "created_date": "foo",
+                      "display_id": "foo",
+                      "id": "foo",
+                      "modified_by": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      },
+                      "modified_date": "foo",
+                      "applies_to_part": {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "name": "foo"
+                      },
+                      "artifacts": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo"
+                        }
+                      ],
+                      "body": "foo",
+                      "owned_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "reported_by": [
+                        {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "display_name": "foo",
+                          "display_picture": {},
+                          "email": "foo",
+                          "full_name": "foo",
+                          "state": "active"
+                        }
+                      ],
+                      "stage": {
+                        "name": "foo"
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "display_id": "foo",
+                            "id": "foo",
+                            "name": "foo"
+                          },
+                          "value": "foo"
+                        }
+                      ],
+                      "target_close_date": "foo",
+                      "title": "foo",
+                      "priority": "p0"
                     }
                   ]
                 }
@@ -13315,23 +15227,100 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                "type": "issue"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                  "type": "issue"
-                }
+                "value": {}
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               },
@@ -13339,7 +15328,90 @@
                 "type": "json",
                 "value": {
                   "work": {
-                    "type": "issue"
+                    "created_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "created_date": "foo",
+                    "display_id": "foo",
+                    "id": "foo",
+                    "modified_by": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "display_name": "foo",
+                      "display_picture": {
+                        "display_id": "foo",
+                        "id": "foo"
+                      },
+                      "email": "foo",
+                      "full_name": "foo",
+                      "state": "active"
+                    },
+                    "modified_date": "foo",
+                    "applies_to_part": {
+                      "display_id": "foo",
+                      "id": "foo",
+                      "name": "foo"
+                    },
+                    "artifacts": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo"
+                      }
+                    ],
+                    "body": "foo",
+                    "owned_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "reported_by": [
+                      {
+                        "display_id": "foo",
+                        "id": "foo",
+                        "display_name": "foo",
+                        "display_picture": {
+                          "display_id": "foo",
+                          "id": "foo"
+                        },
+                        "email": "foo",
+                        "full_name": "foo",
+                        "state": "active"
+                      }
+                    ],
+                    "stage": {
+                      "name": "foo"
+                    },
+                    "tags": [
+                      {
+                        "tag": {
+                          "display_id": "foo",
+                          "id": "foo",
+                          "name": "foo"
+                        },
+                        "value": "foo"
+                      }
+                    ],
+                    "target_close_date": "foo",
+                    "title": "foo",
+                    "priority": "p0"
                   }
                 }
               }

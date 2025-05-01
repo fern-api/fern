@@ -4515,10 +4515,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "audio_url": "foo"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "audio_url": "foo"
+                }
               },
               "responseStatusCode": 201,
               "responseBody": {
