@@ -5,8 +5,8 @@ description: SDKs that safely support retrying requests
 
 <Markdown src="/snippets/pro-callout.mdx" />
 
-For any idempotent endpoints, Fern's SDKs will allow you to specify idempotency headers. 
-Typically the headers include `Idempotency-Key`, but you can also specify additional headers. 
+For any idempotent endpoints, Fern's SDKs will allow you to specify idempotency headers.
+Typically the headers include `Idempotency-Key`, but you can also specify additional headers.
 
 <CodeBlocks>
   <CodeBlock title="TypeScript">
@@ -55,6 +55,58 @@ Typically the headers include `Idempotency-Key`, but you can also specify additi
   </CodeBlock>
 </CodeBlocks>
 
-Note that the generated SDKs will not allow you to specify idempotency headers 
-for non-idempotent endpoints. This is to ensure that the user knows exactly 
-which invocations are idempotent and which are not. 
+Note that the generated SDKs will not allow you to specify idempotency headers
+for non-idempotent endpoints. This is to ensure that the user knows exactly
+which invocations are idempotent and which are not.
+
+### Configuration
+
+To enable idempotency headers in your API, you need to do the following in your overrides file:
+
+1. Configure the idempotency headers
+2. Mark individual endpoints as idempotent
+
+<Tabs>
+  <Tab title="OpenAPI">
+    <CodeBlocks>
+      <CodeBlock title="openapi-overrides.yml">
+          ```yaml
+          # Configure the idempotency headers
+          x-fern-idempotency-headers:
+            - header: IDEMPOTENCY-KEY
+              name: idempotency_key
+          
+          # Mark an individual endpoint as idempotent
+          paths:
+            /foo:
+              post:
+                x-fern-idempotent: true
+          ```
+        </CodeBlock>
+    </CodeBlocks>
+  </Tab>
+
+  <Tab title="Fern Definition">
+    <CodeBlocks>
+      <CodeBlock title="api.yml">
+        ```yaml
+        # Configure the idempotency headers
+        name: idempotency-headers
+        auth: bearer
+        idempotency-headers:
+          Idempotency-Key: string
+          Idempotency-Expiration: integer
+        ```
+      </CodeBlock>
+      <CodeBlock title="openapi-overrides.yml">
+        ```yaml
+        # Mark an individual endpoint as idempotent
+        endpoints:
+          foo:
+            idempotent: true
+        ```
+      </CodeBlock>
+    </CodeBlocks>
+  </Tab>
+</Tabs>
+```
