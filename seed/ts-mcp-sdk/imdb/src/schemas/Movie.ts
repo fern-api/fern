@@ -1,3 +1,7 @@
 import z from "zod";
 
-const movie = z.object({});
+export default z.object({
+  id: z.unknown(),
+  title: z.string(),
+  rating: z.number(),
+});

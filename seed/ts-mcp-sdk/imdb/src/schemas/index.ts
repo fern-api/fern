@@ -1,3 +1,3 @@
-export * as movieId from "./movieId";
-export * as movie from "./movie";
-export * as createMovieRequest from "./createMovieRequest";
+export { default as movieId } from "./movieId";
+export { default as movie } from "./movie";
+export { default as createMovieRequest } from "./createMovieRequest";

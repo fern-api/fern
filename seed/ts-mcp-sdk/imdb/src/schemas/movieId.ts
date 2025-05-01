@@ -1,3 +1,3 @@
 import z from "zod";
 
-const schema = undefined;
+export default z.string();

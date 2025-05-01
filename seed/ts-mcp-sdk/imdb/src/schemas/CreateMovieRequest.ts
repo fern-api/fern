@@ -1,3 +1,6 @@
 import z from "zod";
 
-const createMovieRequest = z.object({});
+export default z.object({
+  title: z.string(),
+  rating: z.number(),
+});

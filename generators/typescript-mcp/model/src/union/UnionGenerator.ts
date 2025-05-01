@@ -24,9 +24,9 @@ export class UnionGenerator extends FileGenerator<
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import z from \"zod\";");
+                writer.writeLine('import z from "zod";');
                 writer.writeLine("\n");
-                writer.writeLine("const schema = z.union([]);");
+                writer.writeLine("export default z.union([]);");
             }),
             directory: this.getFilepath(),
             filename: `${this.typeDeclaration.name.name.camelCase.safeName}.ts`,

@@ -6,7 +6,7 @@ import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
 export function generateModelsIndex(context: ModelGeneratorContext): void {
     const exportStrings = Object.values(context.ir.types).map((typeDeclaration) => {
-        return `export * as ${typeDeclaration.name.name.camelCase.safeName} from "./${typeDeclaration.name.name.camelCase.safeName}";`;
+        return `export { default as ${typeDeclaration.name.name.camelCase.safeName} } from "./${typeDeclaration.name.name.camelCase.safeName}";`;
     });
     const file = new TypescriptMcpFile({
         node: ts.codeblock((writer) => {
