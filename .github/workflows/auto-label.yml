@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Label Issues and PRs with OpenAI
-        uses: Prachi-Jamdade/auto-labeler@v2.0.0
+        uses: Prachi-Jamdade/auto-labeler@v2.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
