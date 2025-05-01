@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+    Add support for local SDK generation with a Fern token. When a valid Fern token is provided, 
+    users can now generate complete SDKs locally using Docker, without requiring remote generation. 
+    This enhancement improves the development workflow by allowing for faster iteration and testing 
+    of SDK changes in local environments.
+    type: fix
+  irVersion: 57
+  version: 0.59.5
+
+- changelogEntry:
+  - summary: |
       Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts 
       and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs. 
       This improvement allows API providers to specify meaningful defaults that will be respected in client implementations.
