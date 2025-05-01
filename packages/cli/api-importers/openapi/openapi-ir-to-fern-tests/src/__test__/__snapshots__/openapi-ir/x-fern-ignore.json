@@ -1,6 +1,5 @@
 {
   "title": "Test extension `x-fern-ignore`",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

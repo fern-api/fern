@@ -1,6 +1,5 @@
 {
   "title": "Test extension `x-fern-sdk-group-name` alongside `x-fern-streaming`.",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

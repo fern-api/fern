@@ -1,6 +1,5 @@
 {
   "title": "Squidex API",
-  "description": "",
   "servers": [
     {
       "url": "https://localhost:5001"

@@ -1,6 +1,5 @@
 {
   "title": "Hookdeck Admin REST API",
-  "description": "",
   "servers": [
     {
       "url": "https://api.hookdeck.com/2023-01-01",

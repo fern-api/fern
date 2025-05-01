@@ -1,6 +1,5 @@
 {
   "title": "Test API",
-  "description": "",
   "servers": [
     {
       "url": "https://alpha.spscommerce.com",

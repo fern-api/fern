@@ -1,6 +1,5 @@
 {
   "title": "Test spec for `uint` types specified as number formats.",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

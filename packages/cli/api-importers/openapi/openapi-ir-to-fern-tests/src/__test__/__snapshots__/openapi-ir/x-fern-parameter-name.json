@@ -1,6 +1,5 @@
 {
   "title": "Test extension `x-fern-parameter-name` for parameters.",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

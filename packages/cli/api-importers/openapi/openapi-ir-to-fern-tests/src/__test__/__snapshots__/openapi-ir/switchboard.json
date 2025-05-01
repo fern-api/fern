@@ -1,6 +1,5 @@
 {
   "title": "Browser Control API",
-  "description": "",
   "servers": [
     {
       "url": "https://api.airtop.ai/v1"

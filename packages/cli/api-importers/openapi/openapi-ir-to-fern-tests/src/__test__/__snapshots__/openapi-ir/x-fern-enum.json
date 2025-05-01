@@ -1,6 +1,5 @@
 {
   "title": "Test extension `x-fern-enum` for enums",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

@@ -1,6 +1,5 @@
 {
   "title": "Speechify API:",
-  "description": "",
   "servers": [
     {
       "url": "https://api.sws.speechify.com"

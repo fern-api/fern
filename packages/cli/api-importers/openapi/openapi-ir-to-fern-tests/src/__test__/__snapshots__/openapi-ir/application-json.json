@@ -1,6 +1,5 @@
 {
   "title": "Test vnd.fern.user+json;version=1 and /application-json",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

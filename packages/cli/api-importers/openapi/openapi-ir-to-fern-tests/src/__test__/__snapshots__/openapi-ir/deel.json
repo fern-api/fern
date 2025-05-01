@@ -1,6 +1,5 @@
 {
   "title": "Deel REST API",
-  "description": "",
   "servers": [
     {
       "url": "https://api.letsdeel.com/rest/v1",

@@ -9,7 +9,6 @@
     ]
   },
   "title": "Test extension `x-fern-webhook`.",
-  "description": "",
   "servers": [],
   "websocketServers": [],
   "tags": {

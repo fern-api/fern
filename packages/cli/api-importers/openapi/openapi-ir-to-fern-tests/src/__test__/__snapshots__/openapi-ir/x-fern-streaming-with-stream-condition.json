@@ -1,6 +1,5 @@
 {
   "title": "Vectara REST API v2",
-  "description": "",
   "servers": [
     {
       "url": "https://api.streamingtest.io"
