@@ -12,12 +12,13 @@ export declare namespace loggingExeca {
     export type ReturnValue = ExecaReturnValue;
 }
 
-export async function loggingExeca(
+// returns the currnet command being run by execa
+export function runExeca(
     logger: Logger | undefined,
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
-): Promise<loggingExeca.ReturnValue> {
+): import("execa").ExecaChildProcess {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
@@ -32,19 +33,27 @@ export async function loggingExeca(
     }
 
     logger?.debug(`+ ${logLine}`);
-    const command = execa(executable, args, execaOptions);
+    return execa(executable, args, execaOptions);
+}
+
+// finishes executing the command and returns the result
+export async function loggingExeca(
+    logger: Logger | undefined,
+    executable: string,
+    args: string[] = [],
+    { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
+): Promise<loggingExeca.ReturnValue> {
+    const command = runExeca(logger, executable, args, { doNotPipeOutput, secrets, substitutions, ...execaOptions });
     if (!doNotPipeOutput) {
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
     }
-    return command.then((result) => {
-        // the execa types are incorrect and sometimes stdout and stderr and not defined
-        if (result.stdout == null) {
-            result.stdout = "";
-        }
-        if (result.stderr == null) {
-            result.stderr = "";
-        }
-        return result;
-    });
+    const result = await command;
+    if (result.stdout == null) {
+        result.stdout = "";
+    }
+    if (result.stderr == null) {
+        result.stderr = "";
+    }
+    return result;
 }
