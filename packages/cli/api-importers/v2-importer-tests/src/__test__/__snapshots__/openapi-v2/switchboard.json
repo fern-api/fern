@@ -12212,7 +12212,9 @@
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {},
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "name": "Widget"
+                  },
                   "headers": {}
                 },
                 "response": {
@@ -15103,7 +15105,9 @@
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {},
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "name": "Widget"
+                  },
                   "headers": {}
                 },
                 "response": {}
@@ -21167,7 +21171,13 @@
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {},
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "name": "^Acme.*",
+                    "tags": [
+                      "blue",
+                      "red"
+                    ]
+                  },
                   "headers": {}
                 },
                 "response": {
@@ -24290,7 +24300,13 @@
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {},
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "name": "^Acme.*",
+                    "tags": [
+                      "blue",
+                      "red"
+                    ]
+                  },
                   "headers": {}
                 },
                 "response": {}
@@ -33835,7 +33851,15 @@
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {},
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "sessionIds": [
+                      "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                      "e39522ce-44f0-456f-9efd-07b3d4fdd9f2"
+                    ],
+                    "status": "running",
+                    "offset": 1,
+                    "limit": 10
+                  },
                   "headers": {}
                 },
                 "response": {
@@ -45403,7 +45427,9 @@
                     "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                     "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
                   },
-                  "queryParameters": {},
+                  "queryParameters": {
+                    "Screen resolution": "1920x1080"
+                  },
                   "headers": {}
                 },
                 "response": {
