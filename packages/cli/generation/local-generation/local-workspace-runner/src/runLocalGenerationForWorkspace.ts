@@ -9,16 +9,20 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import { FernToken } from "@fern-api/auth";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
 export async function runLocalGenerationForWorkspace({
+    token,
     projectConfig,
     workspace,
     generatorGroup,
     keepDocker,
     context
 }: {
+    token: FernToken | undefined,
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: AbstractAPIWorkspace<unknown>;
     generatorGroup: generatorsYml.GeneratorGroup;
@@ -31,37 +35,40 @@ export async function runLocalGenerationForWorkspace({
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    interactiveTaskContext.failWithoutThrowing(
-                        "Cannot generate because output location is not local-file-system"
-                    );
-                } else {
-                    const fernWorkspace = await workspace.toFernWorkspace(
-                        { context },
-                        getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    );
+                    if (token == null || token.) {
+                        interactiveTaskContext.failWithoutThrowing(
+                            "Fern token is required."
+                        );
+                        return;
+                    }
+                } 
 
-                    await writeFilesToDiskAndRunGenerator({
-                        organization: projectConfig.organization,
-                        absolutePathToFernConfig: projectConfig._absolutePath,
-                        workspace: fernWorkspace,
-                        generatorInvocation,
-                        absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
-                        absolutePathToLocalSnippetJSON: undefined,
-                        absolutePathToLocalSnippetTemplateJSON: undefined,
-                        audiences: generatorGroup.audiences,
-                        workspaceTempDir,
-                        keepDocker,
-                        context: interactiveTaskContext,
-                        irVersionOverride: generatorInvocation.irVersionOverride,
-                        outputVersionOverride: undefined,
-                        writeUnitTests: false,
-                        generateOauthClients: false,
-                        generatePaginatedClients: false
-                    });
-                    interactiveTaskContext.logger.info(
-                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
-                    );
-                }
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                );
+
+                await writeFilesToDiskAndRunGenerator({
+                    organization: projectConfig.organization,
+                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    workspace: fernWorkspace,
+                    generatorInvocation,
+                    absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path),
+                    absolutePathToLocalSnippetJSON: undefined,
+                    absolutePathToLocalSnippetTemplateJSON: undefined,
+                    audiences: generatorGroup.audiences,
+                    workspaceTempDir,
+                    keepDocker,
+                    context: interactiveTaskContext,
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    outputVersionOverride: undefined,
+                    writeUnitTests: false,
+                    generateOauthClients: false,
+                    generatePaginatedClients: false
+                });
+                interactiveTaskContext.logger.info(
+                    chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
+                );
             });
         })
     );
