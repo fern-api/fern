@@ -12,7 +12,7 @@ export declare namespace loggingExeca {
     export type ReturnValue = ExecaReturnValue;
 }
 
-// returns the currnet command being run by execa
+// returns the current command being run by execa
 export function runExeca(
     logger: Logger | undefined,
     executable: string,
