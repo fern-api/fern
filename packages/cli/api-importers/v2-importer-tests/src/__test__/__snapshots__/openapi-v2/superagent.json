@@ -2710,9 +2710,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all agents",
@@ -2755,9 +2752,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -2827,9 +2822,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -3400,9 +3392,7 @@
                     "type": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -3485,9 +3475,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Get a specific agent",
@@ -3610,9 +3597,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -3695,9 +3680,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a specific agent",
@@ -3820,9 +3802,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -3937,9 +3917,6 @@
               }
             },
             "type": "inlinedRequestBody"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -4069,9 +4046,7 @@
                   "headers": {},
                   "requestBody": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -4185,9 +4160,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -4508,9 +4480,7 @@
                     "input": {}
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -4635,9 +4605,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": false,
@@ -4849,9 +4816,7 @@
                     "password": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -4921,9 +4886,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": false,
@@ -5289,9 +5251,7 @@
                     "password": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -5385,9 +5345,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "userSpecifiedExamples": [],
@@ -5429,9 +5386,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -5514,9 +5469,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
@@ -5638,9 +5590,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -5734,9 +5684,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all API tokens",
@@ -5779,9 +5726,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -5851,9 +5796,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -6002,9 +5944,7 @@
                     "description": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -6087,9 +6027,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Get a specific API token",
@@ -6212,9 +6149,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -6297,9 +6232,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a specific API token",
@@ -6422,9 +6354,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -6518,9 +6448,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all documents",
@@ -6563,9 +6490,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -6635,9 +6560,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -7222,9 +7144,7 @@
                     "name": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -7307,9 +7227,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Get a specific document",
@@ -7432,9 +7349,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -7517,9 +7432,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a specific document",
@@ -7642,9 +7554,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -7738,9 +7648,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all prompts",
@@ -7783,9 +7690,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -7855,9 +7760,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -8174,9 +8076,7 @@
                     "template": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -8259,9 +8159,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Get a specific prompt",
@@ -8384,9 +8281,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -8469,9 +8364,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a specific prompt",
@@ -8594,9 +8486,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -8711,9 +8601,6 @@
               }
             },
             "type": "inlinedRequestBody"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -8843,9 +8730,7 @@
                   "headers": {},
                   "requestBody": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -8939,9 +8824,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all tools",
@@ -8984,9 +8866,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -9056,9 +8936,6 @@
               "type": "named"
             },
             "type": "reference"
-          },
-          "response": {
-            "statusCode": 200
           },
           "errors": [],
           "auth": true,
@@ -9357,9 +9234,7 @@
                     "type": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -9442,9 +9317,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Get a specific tool",
@@ -9567,9 +9439,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -9652,9 +9522,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a specific tool",
@@ -9777,9 +9644,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -9873,9 +9738,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "List all agent traces",
@@ -9918,9 +9780,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}

@@ -9078,9 +9078,6 @@
               }
             }
           ],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": false,
           "docs": "Auth and redirect sessions by ID",
@@ -9127,9 +9124,7 @@
                     "x-call-type": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -15073,9 +15068,6 @@
             }
           ],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": false,
           "docs": "Delete an extension by ID",
@@ -15121,9 +15113,7 @@
                   },
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -24273,9 +24263,6 @@
             }
           ],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": false,
           "docs": "Delete profiles matching query",
@@ -24325,9 +24312,7 @@
                   },
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -42193,9 +42178,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": false,
           "docs": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
@@ -42320,9 +42302,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -42407,9 +42387,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "Get a session event stream for a given session ID",
@@ -42534,9 +42511,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}

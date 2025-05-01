@@ -42,7 +42,7 @@ interface ConvertedRequestBody {
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 interface ConvertedResponseBody {
-    value: HttpResponse;
+    value: HttpResponse | undefined;
     errors: ResponseErrors;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
@@ -216,6 +216,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         }
 
         let convertedResponseBody: ConvertedResponseBody | undefined = undefined;
+        // TODO: Our existing Parser will only parse the first successful response.
+        let hasSuccessfulResponse = false;
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             const statusCodeNum = parseInt(statusCode);
@@ -224,16 +226,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
             if (convertedResponseBody == null) {
                 convertedResponseBody = {
-                    value: {
-                        statusCode: statusCodeNum,
-                        body: undefined
-                    },
+                    value: undefined,
                     errors: [],
                     examples: {}
                 };
             }
             // Convert Successful Responses (2xx)
-            if (statusCodeNum >= 200 && statusCodeNum < 300) {
+            if (statusCodeNum >= 200 && statusCodeNum < 300 && !hasSuccessfulResponse) {
                 const resolvedResponse = await this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
@@ -254,11 +253,15 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 });
                 const converted = await responseBodyConverter.convert();
                 if (converted != null) {
+                    hasSuccessfulResponse = true;
                     this.inlinedTypes = {
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
                     };
-                    convertedResponseBody.value.body = converted.responseBody;
+                    convertedResponseBody.value = {
+                        statusCode: statusCodeNum,
+                        body: converted.responseBody
+                    };
                 }
             }
             // Convert Error Responses (4xx)

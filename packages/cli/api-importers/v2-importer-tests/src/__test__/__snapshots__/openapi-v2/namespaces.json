@@ -21726,9 +21726,6 @@
               }
             }
           ],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a pet.",
@@ -21852,9 +21849,7 @@
                     "api_key": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -25974,9 +25969,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
@@ -26098,9 +26090,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -31797,9 +31787,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "Log user out of the system.",
@@ -31843,9 +31830,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -33289,9 +33274,6 @@
             },
             "type": "reference"
           },
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
@@ -34358,9 +34340,7 @@
                   "headers": {},
                   "requestBody": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -34445,9 +34425,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
@@ -34572,9 +34549,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -53840,9 +53815,6 @@
               }
             }
           ],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "Delete a pet.",
@@ -53966,9 +53938,7 @@
                     "api_key": "foo"
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -58088,9 +58058,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
@@ -58212,9 +58179,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -63911,9 +63876,6 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "Log user out of the system.",
@@ -63957,9 +63919,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -65403,9 +65363,6 @@
             },
             "type": "reference"
           },
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
@@ -66472,9 +66429,7 @@
                   "headers": {},
                   "requestBody": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -66559,9 +66514,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
@@ -66686,9 +66638,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}

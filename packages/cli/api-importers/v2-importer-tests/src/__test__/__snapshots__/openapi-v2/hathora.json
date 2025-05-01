@@ -20452,9 +20452,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [
             {
               "error": {
@@ -20661,9 +20658,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -29355,9 +29350,6 @@
             },
             "type": "fileUpload"
           },
-          "response": {
-            "statusCode": 200
-          },
           "errors": [
             {
               "error": {
@@ -29537,9 +29529,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -29700,9 +29690,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [
             {
               "error": {
@@ -30066,9 +30053,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -55525,9 +55510,6 @@
             }
           ],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [
             {
               "error": {
@@ -55738,9 +55720,7 @@
                   },
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -56014,9 +55994,6 @@
             }
           ],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [
             {
               "error": {
@@ -56355,9 +56332,7 @@
                   },
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -56631,9 +56606,6 @@
             }
           ],
           "headers": [],
-          "response": {
-            "statusCode": 200
-          },
           "errors": [
             {
               "error": {
@@ -56970,9 +56942,7 @@
                   },
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -70360,9 +70330,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [
             {
               "error": {
@@ -70698,9 +70665,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -70861,9 +70826,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [
             {
               "error": {
@@ -71199,9 +71161,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}

@@ -49668,9 +49668,6 @@
             },
             "type": "reference"
           },
-          "response": {
-            "statusCode": 200
-          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
@@ -50838,9 +50835,7 @@
                     ]
                   }
                 },
-                "response": {
-                  "statusCode": 200
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -67187,9 +67182,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
@@ -67393,9 +67385,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
@@ -68804,9 +68794,6 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "response": {
-            "statusCode": 204
-          },
           "errors": [],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
@@ -69010,9 +68997,7 @@
                   "queryParameters": {},
                   "headers": {}
                 },
-                "response": {
-                  "statusCode": 204
-                }
+                "response": {}
               }
             },
             "userSpecifiedExamples": {}
