@@ -1,6 +1,6 @@
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoDataV1Grpc = Data.V1.Grpc;
 
@@ -27,35 +27,49 @@ public record Column
     /// [EXPERIMENTAL] This API is experimental and may change in future releases.
     /// </remarks>
     [JsonExtensionData]
-    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } = new Dictionary<string, JsonElement>();
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
     /// <summary>
     /// Returns a new Column type from its Protobuf-equivalent representation.
     /// </summary>
-    internal static Column FromProto(ProtoDataV1Grpc.Column value) {
-        return new Column{Id = value.Id, Values = value.Values?.ToList() ?? Enumerable.Empty<float>(), Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null, IndexedData = value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null};
+    internal static Column FromProto(ProtoDataV1Grpc.Column value)
+    {
+        return new Column
+        {
+            Id = value.Id,
+            Values = value.Values?.ToList() ?? Enumerable.Empty<float>(),
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+        };
     }
 
     /// <summary>
     /// Maps the Column type into its Protobuf-equivalent representation.
     /// </summary>
-    internal ProtoDataV1Grpc.Column ToProto() {
+    internal ProtoDataV1Grpc.Column ToProto()
+    {
         var result = new ProtoDataV1Grpc.Column();
         result.Id = Id;
-        if (Values.Any()) {
+        if (Values.Any())
+        {
             result.Values.AddRange(Values);
         }
-        if (Metadata != null) {
+        if (Metadata != null)
+        {
             result.Metadata = Metadata.ToProto();
         }
-        if (IndexedData != null) {
+        if (IndexedData != null)
+        {
             result.IndexedData = IndexedData.ToProto();
         }
         return result;
     }
 
     /// <inheritdoc />
-    public override string ToString() {
+    public override string ToString()
+    {
         return JsonUtils.Serialize(this);
     }
-
 }

@@ -6,9 +6,10 @@ import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PrimitiveSchemaValueWithExample } from "./PrimitiveSchemaValueWithExample";
-import { WithDescription } from "../../commons/types/WithDescription";
-import { WithName } from "../../commons/types/WithName";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName";
+import { WithNamespace } from "../../commons/types/WithNamespace";
+import { WithName } from "../../commons/types/WithName";
+import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithTitle } from "../../commons/types/WithTitle";
 
@@ -19,17 +20,19 @@ export const PrimitiveSchemaWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         schema: PrimitiveSchemaValueWithExample,
     })
-    .extend(WithDescription)
-    .extend(WithName)
     .extend(WithSdkGroupName)
+    .extend(WithNamespace)
+    .extend(WithName)
+    .extend(WithDescription)
     .extend(WithAvailability)
     .extend(WithTitle);
 
 export declare namespace PrimitiveSchemaWithExample {
     export interface Raw
-        extends WithDescription.Raw,
+        extends WithSdkGroupName.Raw,
+            WithNamespace.Raw,
             WithName.Raw,
-            WithSdkGroupName.Raw,
+            WithDescription.Raw,
             WithAvailability.Raw,
             WithTitle.Raw {
         schema: PrimitiveSchemaValueWithExample.Raw;

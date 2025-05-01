@@ -48,8 +48,8 @@ class UnionClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.union.get_and_return_union(request=Animal_Dog(name='name', likes_to_woof=True, ), )
         """
-        response = self._raw_client.get_and_return_union(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_union(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncUnionClient:
@@ -92,5 +92,5 @@ class AsyncUnionClient:
             await client.endpoints.union.get_and_return_union(request=Animal_Dog(name='name', likes_to_woof=True, ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_union(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_union(request=request, request_options=request_options)
+        return _response.data

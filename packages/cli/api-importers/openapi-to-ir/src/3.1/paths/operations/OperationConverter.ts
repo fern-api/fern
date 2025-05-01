@@ -2,7 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernIr, HttpEndpoint, HttpEndpointSource } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
-import { ServersConverter } from "@fern-api/v2-importer-commons";
+import { AbstractConverter, ServersConverter } from "@fern-api/v2-importer-commons";
 
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
@@ -12,6 +12,7 @@ export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
         servers?: OpenAPIV3_1.ServerObject[];
+        idToAuthScheme?: Record<string, FernIr.AuthScheme>;
     }
 
     export interface Output extends AbstractOperationConverter.Output {
@@ -25,11 +26,24 @@ export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
     private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly streamingExtensionConverter: FernStreamingExtension;
+    private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
 
-    constructor({ context, breadcrumbs, operation, method, path, idempotent, servers }: OperationConverter.Args) {
+    private static readonly AUTHORIZATION_HEADER = "Authorization";
+
+    constructor({
+        context,
+        breadcrumbs,
+        operation,
+        method,
+        path,
+        idempotent,
+        servers,
+        idToAuthScheme
+    }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
         this.servers = servers;
+        this.idToAuthScheme = idToAuthScheme;
         this.streamingExtensionConverter = new FernStreamingExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation,
@@ -87,6 +101,15 @@ export class OperationConverter extends AbstractOperationConverter {
             baseUrl
         });
 
+        const endpointLevelSecuritySchemes = new Set<string>(
+            this.operation.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
+        );
+        // Convert security scheme IDs to HTTP headers and add them to existing headers
+        const securityHeaders = this.authSchemeToHeaders(Array.from(endpointLevelSecuritySchemes));
+        if (securityHeaders.length > 0) {
+            headers.push(...securityHeaders);
+        }
+
         return {
             group,
             errors: {},
@@ -99,7 +122,9 @@ export class OperationConverter extends AbstractOperationConverter {
                 path,
                 pathParameters,
                 queryParameters,
-                headers,
+                headers: headers.filter(
+                    (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
+                ),
                 requestBody,
                 sdkRequest: undefined,
                 response,
@@ -130,6 +155,63 @@ export class OperationConverter extends AbstractOperationConverter {
                     !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === endpointServer.url)
             )
         };
+    }
+
+    /**
+     * Converts security scheme IDs to HTTP headers
+     * @param securitySchemeIds - List of security scheme IDs
+     * @returns Array of HTTP headers derived from the security schemes
+     */
+    private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
+        const headers: FernIr.HttpHeader[] = [];
+
+        for (const id of securitySchemeIds) {
+            const authScheme = this.idToAuthScheme?.[id];
+            if (authScheme == null) {
+                continue;
+            }
+
+            switch (authScheme.type) {
+                case "bearer":
+                    headers.push({
+                        name: {
+                            name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
+                            wireValue: OperationConverter.AUTHORIZATION_HEADER
+                        },
+                        valueType: AbstractConverter.STRING,
+                        availability: undefined,
+                        docs: undefined,
+                        env: undefined,
+                        v2Examples: undefined
+                    });
+                    break;
+                case "basic":
+                    headers.push({
+                        name: {
+                            name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
+                            wireValue: OperationConverter.AUTHORIZATION_HEADER
+                        },
+                        valueType: AbstractConverter.STRING,
+                        availability: undefined,
+                        docs: undefined,
+                        env: undefined,
+                        v2Examples: undefined
+                    });
+                    break;
+                case "header":
+                    headers.push({
+                        name: authScheme.name,
+                        valueType: AbstractConverter.STRING,
+                        availability: undefined,
+                        docs: undefined,
+                        env: undefined,
+                        v2Examples: undefined
+                    });
+                    break;
+            }
+        }
+
+        return headers;
     }
 
     private convertExamples({

@@ -5,19 +5,19 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { HttpMethod } from "../../http/types/HttpMethod";
+import { V2EndpointLocationHttpMethod } from "./V2EndpointLocationHttpMethod";
 
 export const V2EndpointLocation: core.serialization.ObjectSchema<
     serializers.V2EndpointLocation.Raw,
     FernIr.V2EndpointLocation
 > = core.serialization.objectWithoutOptionalProperties({
-    method: HttpMethod,
+    method: V2EndpointLocationHttpMethod,
     path: core.serialization.string(),
 });
 
 export declare namespace V2EndpointLocation {
     export interface Raw {
-        method: HttpMethod.Raw;
+        method: V2EndpointLocationHttpMethod.Raw;
         path: string;
     }
 }

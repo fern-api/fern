@@ -49,8 +49,8 @@ class UserClient:
         client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
         """
-        response = self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
+        return _response.data
 
     def create_user(
         self,
@@ -82,8 +82,8 @@ class UserClient:
         client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
         """
-        response = self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
-        return response.data
+        _response = self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
+        return _response.data
 
     def update_user(
         self,
@@ -118,10 +118,10 @@ class UserClient:
         client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', tags=['tags', 'tags'], )
         """
-        response = self._raw_client.update_user(
+        _response = self._raw_client.update_user(
             tenant_id, user_id, name=name, tags=tags, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def search_users(
         self,
@@ -153,8 +153,8 @@ class UserClient:
         client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
         client.user.search_users(tenant_id='tenant_id', user_id='user_id', limit=1, )
         """
-        response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
-        return response.data
+        _response = self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
+        return _response.data
 
 
 class AsyncUserClient:
@@ -198,8 +198,8 @@ class AsyncUserClient:
             await client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_user(tenant_id, user_id, request_options=request_options)
+        return _response.data
 
     async def create_user(
         self,
@@ -234,8 +234,8 @@ class AsyncUserClient:
             await client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.create_user(tenant_id, name=name, tags=tags, request_options=request_options)
+        return _response.data
 
     async def update_user(
         self,
@@ -273,10 +273,10 @@ class AsyncUserClient:
             await client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', tags=['tags', 'tags'], )
         asyncio.run(main())
         """
-        response = await self._raw_client.update_user(
+        _response = await self._raw_client.update_user(
             tenant_id, user_id, name=name, tags=tags, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def search_users(
         self,
@@ -311,5 +311,7 @@ class AsyncUserClient:
             await client.user.search_users(tenant_id='tenant_id', user_id='user_id', limit=1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.search_users(tenant_id, user_id, limit=limit, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.search_users(
+            tenant_id, user_id, limit=limit, request_options=request_options
+        )
+        return _response.data

@@ -93,6 +93,7 @@ export function parseAsyncAPIV2({
                                   availability: undefined,
                                   generatedName: "",
                                   title: undefined,
+                                  namespace: undefined,
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),

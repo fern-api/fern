@@ -41,8 +41,8 @@ class FolderClient:
         client = SeedApi(base_url="https://yourhost.com/path/to/api", )
         client.folder.foo()
         """
-        response = self._raw_client.foo(request_options=request_options)
-        return response.data
+        _response = self._raw_client.foo(request_options=request_options)
+        return _response.data
 
 
 class AsyncFolderClient:
@@ -81,5 +81,5 @@ class AsyncFolderClient:
             await client.folder.foo()
         asyncio.run(main())
         """
-        response = await self._raw_client.foo(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.foo(request_options=request_options)
+        return _response.data

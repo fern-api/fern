@@ -82,8 +82,8 @@ class SeedLicense:
         client = SeedLicense(base_url="https://yourhost.com/path/to/api", )
         client.get()
         """
-        response = self._raw_client.get(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(request_options=request_options)
+        return _response.data
 
 
 class AsyncSeedLicense:
@@ -163,5 +163,5 @@ class AsyncSeedLicense:
             await client.get()
         asyncio.run(main())
         """
-        response = await self._raw_client.get(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(request_options=request_options)
+        return _response.data

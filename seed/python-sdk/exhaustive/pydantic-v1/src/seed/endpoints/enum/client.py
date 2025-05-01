@@ -47,8 +47,8 @@ class EnumClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.endpoints.enum.get_and_return_enum(request="SUNNY", )
         """
-        response = self._raw_client.get_and_return_enum(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncEnumClient:
@@ -90,5 +90,5 @@ class AsyncEnumClient:
             await client.endpoints.enum.get_and_return_enum(request="SUNNY", )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_enum(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        return _response.data

@@ -82,7 +82,8 @@
                   }
                 }
               ]
-            }
+            },
+            "contentType": "multipart/form-data"
           }
         },
         "errorsV2": [],
@@ -151,7 +152,8 @@
                   }
                 }
               ]
-            }
+            },
+            "contentType": "multipart/form-data"
           }
         },
         "errorsV2": [],
@@ -249,7 +251,8 @@
                   "exploded": false
                 }
               ]
-            }
+            },
+            "contentType": "multipart/form-data"
           }
         },
         "errorsV2": [],

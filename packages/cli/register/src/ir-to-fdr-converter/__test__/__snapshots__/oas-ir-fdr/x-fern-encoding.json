@@ -19,8 +19,8 @@
         }
       }
     },
-    "MetadataValueOneOfZero": {
-      "name": "MetadataValueOneOfZero",
+    "MetadataValue0": {
+      "name": "MetadataValue0",
       "shape": {
         "type": "alias",
         "value": {
@@ -31,8 +31,8 @@
         }
       }
     },
-    "MetadataValueOneOfOne": {
-      "name": "MetadataValueOneOfOne",
+    "MetadataValue1": {
+      "name": "MetadataValue1",
       "shape": {
         "type": "alias",
         "value": {
@@ -43,8 +43,8 @@
         }
       }
     },
-    "MetadataValueOneOfTwo": {
-      "name": "MetadataValueOneOfTwo",
+    "MetadataValue2": {
+      "name": "MetadataValue2",
       "shape": {
         "type": "alias",
         "value": {
@@ -55,8 +55,8 @@
         }
       }
     },
-    "MetadataValueOneOfThree": {
-      "name": "MetadataValueOneOfThree",
+    "MetadataValue3": {
+      "name": "MetadataValue3",
       "shape": {
         "type": "alias",
         "value": {
@@ -73,31 +73,31 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MetadataValueOneOfZero",
+            "typeName": "MetadataValue0",
             "type": {
               "type": "id",
-              "value": "MetadataValueOneOfZero"
+              "value": "MetadataValue0"
             }
           },
           {
-            "typeName": "MetadataValueOneOfOne",
+            "typeName": "MetadataValue1",
             "type": {
               "type": "id",
-              "value": "MetadataValueOneOfOne"
+              "value": "MetadataValue1"
             }
           },
           {
-            "typeName": "MetadataValueOneOfTwo",
+            "typeName": "MetadataValue2",
             "type": {
               "type": "id",
-              "value": "MetadataValueOneOfTwo"
+              "value": "MetadataValue2"
             }
           },
           {
-            "typeName": "MetadataValueOneOfThree",
+            "typeName": "MetadataValue3",
             "type": {
               "type": "id",
-              "value": "MetadataValueOneOfThree"
+              "value": "MetadataValue3"
             }
           }
         ]

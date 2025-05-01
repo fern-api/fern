@@ -1,6 +1,6 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration } from "@fern-api/ir-sdk";
+import { AuthScheme, TypeDeclaration } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
 import { HttpMethods } from "../../constants/HttpMethods";
@@ -17,6 +17,8 @@ export declare namespace PathConverter {
     export interface Args extends OpenAPIConverter.Args {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
+        servers?: OpenAPIV3_1.ServerObject[];
+        idToAuthScheme?: Record<string, AuthScheme>;
     }
 
     export interface Output {
@@ -29,11 +31,15 @@ export declare namespace PathConverter {
 export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1, PathConverter.Output> {
     private readonly pathItem: OpenAPIV3_1.PathItemObject;
     private readonly path: string;
+    private readonly servers?: OpenAPIV3_1.ServerObject[];
+    private readonly idToAuthScheme?: Record<string, AuthScheme>;
 
-    constructor({ context, breadcrumbs, pathItem, path }: PathConverter.Args) {
+    constructor({ context, breadcrumbs, pathItem, path, servers, idToAuthScheme }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
+        this.servers = servers;
+        this.idToAuthScheme = idToAuthScheme;
     }
 
     public async convert(): Promise<PathConverter.Output | undefined> {
@@ -156,7 +162,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
-            idempotent: isIdempotent
+            idempotent: isIdempotent,
+            idToAuthScheme: this.idToAuthScheme
         });
         return await operationConverter.convert();
     }

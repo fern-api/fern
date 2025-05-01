@@ -5,8 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.pagination import AsyncPager, SyncPager
+from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -29,7 +28,7 @@ class RawComplexClient:
         query: SearchRequestQuery,
         pagination: typing.Optional[StartingAfterPaging] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SyncPager[Conversation]]:
+    ) -> SyncPager[Conversation]:
         """
         Parameters
         ----------
@@ -42,7 +41,7 @@ class RawComplexClient:
 
         Returns
         -------
-        HttpResponse[SyncPager[Conversation]]
+        SyncPager[Conversation]
         """
         _response = self._client_wrapper.httpx_client.request(
             "conversations/search",
@@ -55,73 +54,8 @@ class RawComplexClient:
                     object_=query, annotation=SearchRequestQuery, direction="write"
                 ),
             },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
-                    PaginatedConversationResponse,
-                    parse_obj_as(
-                        type_=PaginatedConversationResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                _has_next = False
-                _get_next = None
-                if _parsed_response.pages is not None and _parsed_response.pages.next is not None:
-                    _parsed_next = _parsed_response.pages.next.starting_after
-                    _has_next = _parsed_next is not None and _parsed_next != ""
-                    _get_next = lambda: self.search(
-                        query=query,
-                        pagination=pagination,
-                        request_options=request_options,
-                    )
-                _items = _parsed_response.conversations
-                return HttpResponse(
-                    response=_response, data=SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-class AsyncRawComplexClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def search(
-        self,
-        *,
-        query: SearchRequestQuery,
-        pagination: typing.Optional[StartingAfterPaging] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AsyncPager[Conversation]]:
-        """
-        Parameters
-        ----------
-        query : SearchRequestQuery
-
-        pagination : typing.Optional[StartingAfterPaging]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[AsyncPager[Conversation]]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "conversations/search",
-            method="POST",
-            json={
-                "pagination": convert_and_respect_annotation_metadata(
-                    object_=pagination, annotation=StartingAfterPaging, direction="write"
-                ),
-                "query": convert_and_respect_annotation_metadata(
-                    object_=query, annotation=SearchRequestQuery, direction="write"
-                ),
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -135,6 +69,7 @@ class AsyncRawComplexClient:
                         object_=_response.json(),
                     ),
                 )
+                _items = _parsed_response.conversations
                 _has_next = False
                 _get_next = None
                 if _parsed_response.pages is not None and _parsed_response.pages.next is not None:
@@ -145,11 +80,84 @@ class AsyncRawComplexClient:
                         pagination=pagination,
                         request_options=request_options,
                     )
-                _items = _parsed_response.conversations
-                return AsyncHttpResponse(
-                    response=_response, data=AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+
+
+class AsyncRawComplexClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def search(
+        self,
+        *,
+        query: SearchRequestQuery,
+        pagination: typing.Optional[StartingAfterPaging] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[Conversation]:
+        """
+        Parameters
+        ----------
+        query : SearchRequestQuery
+
+        pagination : typing.Optional[StartingAfterPaging]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[Conversation]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "conversations/search",
+            method="POST",
+            json={
+                "pagination": convert_and_respect_annotation_metadata(
+                    object_=pagination, annotation=StartingAfterPaging, direction="write"
+                ),
+                "query": convert_and_respect_annotation_metadata(
+                    object_=query, annotation=SearchRequestQuery, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    PaginatedConversationResponse,
+                    parse_obj_as(
+                        type_=PaginatedConversationResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.conversations
+                _has_next = False
+                _get_next = None
+                if _parsed_response.pages is not None and _parsed_response.pages.next is not None:
+                    _parsed_next = _parsed_response.pages.next.starting_after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.search(
+                            query=query,
+                            pagination=pagination,
+                            request_options=request_options,
+                        )
+
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)

@@ -9856,6 +9856,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "voices_CreateVoice_Request",
               "camelCase": {

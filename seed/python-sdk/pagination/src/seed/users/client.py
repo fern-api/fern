@@ -73,10 +73,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_cursor_pagination(
+        return self._raw_client.list_with_cursor_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
@@ -104,10 +103,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_mixed_type_cursor_pagination(
-            cursor=cursor, request_options=request_options
-        )
-        return response.data
+        return self._raw_client.list_with_mixed_type_cursor_pagination(cursor=cursor, request_options=request_options)
 
     def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -138,10 +134,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_body_cursor_pagination(
-            pagination=pagination, request_options=request_options
-        )
-        return response.data
+        return self._raw_client.list_with_body_cursor_pagination(pagination=pagination, request_options=request_options)
 
     def list_with_offset_pagination(
         self,
@@ -185,10 +178,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_offset_pagination(
+        return self._raw_client.list_with_offset_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     def list_with_double_offset_pagination(
         self,
@@ -232,10 +224,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_double_offset_pagination(
+        return self._raw_client.list_with_double_offset_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -266,10 +257,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_body_offset_pagination(
-            pagination=pagination, request_options=request_options
-        )
-        return response.data
+        return self._raw_client.list_with_body_offset_pagination(pagination=pagination, request_options=request_options)
 
     def list_with_offset_step_pagination(
         self,
@@ -310,10 +298,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_offset_step_pagination(
+        return self._raw_client.list_with_offset_step_pagination(
             page=page, limit=limit, order=order, request_options=request_options
         )
-        return response.data
 
     def list_with_offset_pagination_has_next_page(
         self,
@@ -354,10 +341,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_offset_pagination_has_next_page(
+        return self._raw_client.list_with_offset_pagination_has_next_page(
             page=page, limit=limit, order=order, request_options=request_options
         )
-        return response.data
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
@@ -386,8 +372,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_extended_results(cursor=cursor, request_options=request_options)
-        return response.data
+        return self._raw_client.list_with_extended_results(cursor=cursor, request_options=request_options)
 
     def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
@@ -416,10 +401,9 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_extended_results_and_optional_data(
+        return self._raw_client.list_with_extended_results_and_optional_data(
             cursor=cursor, request_options=request_options
         )
-        return response.data
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
@@ -449,8 +433,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
-        return response.data
+        return self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
@@ -478,8 +461,7 @@ class UsersClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.list_with_global_config(offset=offset, request_options=request_options)
-        return response.data
+        return self._raw_client.list_with_global_config(offset=offset, request_options=request_options)
 
 
 class AsyncUsersClient:
@@ -543,10 +525,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_cursor_pagination(
+        return await self._raw_client.list_with_cursor_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     async def list_with_mixed_type_cursor_pagination(
         self, *, cursor: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
@@ -578,10 +559,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_mixed_type_cursor_pagination(
+        return await self._raw_client.list_with_mixed_type_cursor_pagination(
             cursor=cursor, request_options=request_options
         )
-        return response.data
 
     async def list_with_body_cursor_pagination(
         self, *, pagination: typing.Optional[WithCursor] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -616,10 +596,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_body_cursor_pagination(
+        return await self._raw_client.list_with_body_cursor_pagination(
             pagination=pagination, request_options=request_options
         )
-        return response.data
 
     async def list_with_offset_pagination(
         self,
@@ -667,10 +646,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_offset_pagination(
+        return await self._raw_client.list_with_offset_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     async def list_with_double_offset_pagination(
         self,
@@ -718,10 +696,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_double_offset_pagination(
+        return await self._raw_client.list_with_double_offset_pagination(
             page=page, per_page=per_page, order=order, starting_after=starting_after, request_options=request_options
         )
-        return response.data
 
     async def list_with_body_offset_pagination(
         self, *, pagination: typing.Optional[WithPage] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -756,10 +733,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_body_offset_pagination(
+        return await self._raw_client.list_with_body_offset_pagination(
             pagination=pagination, request_options=request_options
         )
-        return response.data
 
     async def list_with_offset_step_pagination(
         self,
@@ -804,10 +780,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_offset_step_pagination(
+        return await self._raw_client.list_with_offset_step_pagination(
             page=page, limit=limit, order=order, request_options=request_options
         )
-        return response.data
 
     async def list_with_offset_pagination_has_next_page(
         self,
@@ -852,10 +827,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_offset_pagination_has_next_page(
+        return await self._raw_client.list_with_offset_pagination_has_next_page(
             page=page, limit=limit, order=order, request_options=request_options
         )
-        return response.data
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
@@ -888,8 +862,7 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_extended_results(cursor=cursor, request_options=request_options)
-        return response.data
+        return await self._raw_client.list_with_extended_results(cursor=cursor, request_options=request_options)
 
     async def list_with_extended_results_and_optional_data(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
@@ -922,10 +895,9 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_extended_results_and_optional_data(
+        return await self._raw_client.list_with_extended_results_and_optional_data(
             cursor=cursor, request_options=request_options
         )
-        return response.data
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
@@ -959,8 +931,7 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
-        return response.data
+        return await self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
@@ -992,5 +963,4 @@ class AsyncUsersClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.list_with_global_config(offset=offset, request_options=request_options)
-        return response.data
+        return await self._raw_client.list_with_global_config(offset=offset, request_options=request_options)

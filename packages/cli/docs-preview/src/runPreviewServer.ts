@@ -80,7 +80,7 @@ export async function runPreviewServer({
             }
             await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
         } catch (err) {
-            const pathToBundle = getPathToBundleFolder();
+            const pathToBundle = getPathToBundleFolder({});
             if (err instanceof Error) {
                 context.logger.debug(`Failed to download latest docs bundle: ${(err as Error).message}`);
             }
@@ -163,7 +163,7 @@ export async function runPreviewServer({
     docsDefinition = await reloadDocsDefinition();
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
-    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder();
+    const bundleRoot = bundlePath ? AbsoluteFilePath.of(path.resolve(bundlePath)) : getPathToBundleFolder({});
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,

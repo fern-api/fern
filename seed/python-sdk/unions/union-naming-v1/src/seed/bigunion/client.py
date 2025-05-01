@@ -45,8 +45,8 @@ class BigunionClient:
         client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
         client.bigunion.get(id='id', )
         """
-        response = self._raw_client.get(id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
 
     def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -68,8 +68,8 @@ class BigunionClient:
         client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
         client.bigunion.update(request=NormalSweetBigUnion(value='value', ), )
         """
-        response = self._raw_client.update(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.update(request=request, request_options=request_options)
+        return _response.data
 
     def update_many(
         self, *, request: typing.Sequence[BigUnion], request_options: typing.Optional[RequestOptions] = None
@@ -93,8 +93,8 @@ class BigunionClient:
         client = SeedUnions(base_url="https://yourhost.com/path/to/api", )
         client.bigunion.update_many(request=[NormalSweetBigUnion(value='value', ), NormalSweetBigUnion(value='value', )], )
         """
-        response = self._raw_client.update_many(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.update_many(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncBigunionClient:
@@ -134,8 +134,8 @@ class AsyncBigunionClient:
             await client.bigunion.get(id='id', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get(id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
 
     async def update(self, *, request: BigUnion, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -160,8 +160,8 @@ class AsyncBigunionClient:
             await client.bigunion.update(request=NormalSweetBigUnion(value='value', ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.update(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.update(request=request, request_options=request_options)
+        return _response.data
 
     async def update_many(
         self, *, request: typing.Sequence[BigUnion], request_options: typing.Optional[RequestOptions] = None
@@ -188,5 +188,5 @@ class AsyncBigunionClient:
             await client.bigunion.update_many(request=[NormalSweetBigUnion(value='value', ), NormalSweetBigUnion(value='value', )], )
         asyncio.run(main())
         """
-        response = await self._raw_client.update_many(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.update_many(request=request, request_options=request_options)
+        return _response.data

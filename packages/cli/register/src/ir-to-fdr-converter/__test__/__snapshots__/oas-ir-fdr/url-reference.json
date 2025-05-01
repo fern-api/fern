@@ -1,25 +1,26 @@
 {
   "types": {
-    "Error": {
-      "name": "Error",
+    "MammalOneOf0Category": {
+      "description": "A category for a pet",
+      "name": "MammalOneOf0Category",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
-            "key": "code",
+            "key": "id",
             "valueType": {
               "type": "optional",
               "itemType": {
                 "type": "primitive",
                 "value": {
-                  "type": "integer"
+                  "type": "long"
                 }
               }
             }
           },
           {
-            "key": "message",
+            "key": "name",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -32,100 +33,1240 @@
           }
         ]
       }
-    }
-  },
-  "subpackages": {},
-  "rootPackage": {
-    "endpoints": [
-      {
-        "auth": false,
-        "method": "GET",
-        "id": "listAllPets",
-        "originalEndpointId": "listAllPets",
-        "name": "List all pets",
-        "path": {
-          "pathParameters": [],
-          "parts": [
-            {
-              "type": "literal",
-              "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/pets"
-            }
-          ]
-        },
-        "queryParameters": [],
-        "headers": [],
-        "response": {
-          "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "Pet"
+    },
+    "MammalOneOf0TagsItems": {
+      "description": "A tag for a pet",
+      "name": "MammalOneOf0TagsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
             }
           },
-          "statusCode": 200,
-          "description": "A list of pets"
-        },
-        "errorsV2": [],
-        "examples": [
           {
-            "name": "",
-            "description": "",
-            "path": "/pets",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 0,
-                "category": null,
-                "name": "doggie",
-                "photoUrls": [
-                  "photoUrls",
-                  "photoUrls"
-                ],
-                "tags": [
-                  null,
-                  null
-                ],
-                "status": "available"
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 0,
-                "category": null,
-                "name": "doggie",
-                "photoUrls": [
-                  "photoUrls",
-                  "photoUrls"
-                ],
-                "tags": [
-                  null,
-                  null
-                ],
-                "status": "available"
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
-        ],
-        "protocol": {
-          "type": "rest"
-        }
+        ]
       }
-    ],
+    },
+    "MammalOneOf0Status": {
+      "description": "pet status in the store",
+      "name": "MammalOneOf0Status",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "available"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "sold"
+          }
+        ]
+      }
+    },
+    "Mammal0": {
+      "description": "A pet for sale in the pet store",
+      "name": "Mammal0",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "description": "A category for a pet",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MammalOneOf0Category"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "photoUrls",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tags",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "MammalOneOf0TagsItems"
+                }
+              }
+            }
+          },
+          {
+            "description": "pet status in the store",
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MammalOneOf0Status"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Mammal1": {
+      "description": "A User who is purchasing from the pet store",
+      "name": "Mammal1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "username",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "User Status",
+            "key": "userStatus",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Mammal": {
+      "name": "Mammal",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Mammal0",
+            "description": "A pet for sale in the pet store",
+            "type": {
+              "type": "id",
+              "value": "Mammal0"
+            }
+          },
+          {
+            "typeName": "Mammal1",
+            "description": "A User who is purchasing from the pet store",
+            "type": {
+              "type": "id",
+              "value": "Mammal1"
+            }
+          }
+        ]
+      }
+    },
+    "PetCategory": {
+      "description": "A category for a pet",
+      "name": "PetCategory",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetTagsItems": {
+      "description": "A tag for a pet",
+      "name": "PetTagsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetStatus": {
+      "description": "pet status in the store",
+      "name": "PetStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "available"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "sold"
+          }
+        ]
+      }
+    },
+    "Pet": {
+      "description": "A pet for sale in the pet store",
+      "name": "Pet",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "description": "A category for a pet",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PetCategory"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "photoUrls",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tags",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "PetTagsItems"
+                }
+              }
+            }
+          },
+          {
+            "description": "pet status in the store",
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PetStatus"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetOwnerCategory": {
+      "description": "A category for a pet",
+      "name": "PetOwnerCategory",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetOwnerTagsItems": {
+      "description": "A tag for a pet",
+      "name": "PetOwnerTagsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetOwnerStatus": {
+      "description": "pet status in the store",
+      "name": "PetOwnerStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "available"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "sold"
+          }
+        ]
+      }
+    },
+    "PetOwner": {
+      "name": "PetOwner",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "username",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "firstName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "lastName",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "phone",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "User Status",
+            "key": "userStatus",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "description": "A category for a pet",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PetOwnerCategory"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "photoUrls",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tags",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "PetOwnerTagsItems"
+                }
+              }
+            }
+          },
+          {
+            "description": "pet status in the store",
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PetOwnerStatus"
+              }
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "OrderStatus": {
+      "description": "Order Status",
+      "name": "OrderStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "placed"
+          },
+          {
+            "value": "approved"
+          },
+          {
+            "value": "delivered"
+          }
+        ]
+      }
+    },
+    "Order": {
+      "description": "An order for a pets from the pet store",
+      "name": "Order",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "petId",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "quantity",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "shipDate",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "description": "Order Status",
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OrderStatus"
+              }
+            }
+          },
+          {
+            "key": "complete",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetPutRequestBodySchemaCategory": {
+      "description": "A category for a pet",
+      "name": "PetPutRequestBodySchemaCategory",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetPutRequestBodySchemaTagsItems": {
+      "description": "A tag for a pet",
+      "name": "PetPutRequestBodySchemaTagsItems",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetPutRequestBodySchemaStatus": {
+      "description": "pet status in the store",
+      "name": "PetPutRequestBodySchemaStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "available"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "sold"
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "pet": {
+      "subpackageId": "pet",
+      "name": "pet",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "PUT",
+          "id": "updateAnExistingPet",
+          "originalEndpointId": "pet.updateAnExistingPet",
+          "name": "Update an existing pet",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/pet"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "id",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "long"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "description": "A category for a pet",
+                    "key": "category",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "PetPutRequestBodySchemaCategory"
+                      }
+                    }
+                  },
+                  {
+                    "key": "name",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  {
+                    "key": "photoUrls",
+                    "valueType": {
+                      "type": "list",
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "tags",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "list",
+                        "itemType": {
+                          "type": "id",
+                          "value": "PetPutRequestBodySchemaTagsItems"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "description": "pet status in the store",
+                    "key": "status",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "PetPutRequestBodySchemaStatus"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "description": "Pet object that needs to be added to the store"
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Pet"
+              }
+            },
+            "statusCode": 200,
+            "description": "A list of pets"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/pet",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "id": 0,
+                "category": {
+                  "id": 6,
+                  "name": "name"
+                },
+                "name": "doggie",
+                "photoUrls": [
+                  "photoUrls",
+                  "photoUrls"
+                ],
+                "tags": [
+                  {
+                    "id": 1,
+                    "name": "name"
+                  },
+                  {
+                    "id": 1,
+                    "name": "name"
+                  }
+                ],
+                "status": "available"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 0,
+                  "category": {
+                    "id": 6,
+                    "name": "name"
+                  },
+                  "name": "doggie",
+                  "photoUrls": [
+                    "photoUrls",
+                    "photoUrls"
+                  ],
+                  "tags": [
+                    {
+                      "id": 1,
+                      "name": "name"
+                    },
+                    {
+                      "id": 1,
+                      "name": "name"
+                    }
+                  ],
+                  "status": "available"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "id": 0,
+                  "category": {
+                    "id": 6,
+                    "name": "name"
+                  },
+                  "name": "doggie",
+                  "photoUrls": [
+                    "photoUrls",
+                    "photoUrls"
+                  ],
+                  "tags": [
+                    {
+                      "id": 1,
+                      "name": "name"
+                    },
+                    {
+                      "id": 1,
+                      "name": "name"
+                    }
+                  ],
+                  "status": "available"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 0,
+                  "category": {
+                    "id": 6,
+                    "name": "name"
+                  },
+                  "name": "doggie",
+                  "photoUrls": [
+                    "photoUrls",
+                    "photoUrls"
+                  ],
+                  "tags": [
+                    {
+                      "id": 1,
+                      "name": "name"
+                    },
+                    {
+                      "id": 1,
+                      "name": "name"
+                    }
+                  ],
+                  "status": "available"
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "order": {
+      "subpackageId": "order",
+      "name": "order",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "getAnOrder",
+          "originalEndpointId": "order.getAnOrder",
+          "name": "Get an order",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/order"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Order"
+              }
+            },
+            "statusCode": 200,
+            "description": "An order object"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/order",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "id": 0,
+                  "petId": 6,
+                  "quantity": 1,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": false
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": 0,
+                  "petId": 6,
+                  "quantity": 1,
+                  "shipDate": "foo",
+                  "status": "placed",
+                  "complete": false
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
     "webhooks": [],
     "websockets": [],
     "types": [
-      "Error"
+      "Mammal",
+      "Pet",
+      "PetOwner",
+      "Order"
     ],
-    "subpackages": []
+    "subpackages": [
+      "pet",
+      "order"
+    ]
   },
   "snippetsConfiguration": {},
   "globalHeaders": []

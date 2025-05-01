@@ -38,6 +38,7 @@ export function getVariableDefinitions(
                         }),
                         description: schema.description,
                         availability: undefined,
+                        namespace: undefined,
                         groupName: undefined
                     }
                 ];

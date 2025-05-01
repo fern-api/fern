@@ -125,6 +125,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         if (this.schema.oneOf != null || this.schema.anyOf != null) {
             const oneOfConverter = new OneOfSchemaConverter({
+                id: this.id,
                 context: this.context,
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema,

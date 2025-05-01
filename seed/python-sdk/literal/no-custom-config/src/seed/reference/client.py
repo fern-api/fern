@@ -60,10 +60,10 @@ class ReferenceClient:
         client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
         client.reference.send(query='What is the weather today', container_object=ContainerObject(nested_objects=[NestedObjectWithLiterals(str_prop='strProp', )], ), )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncReferenceClient:
@@ -116,7 +116,7 @@ class AsyncReferenceClient:
             await client.reference.send(query='What is the weather today', container_object=ContainerObject(nested_objects=[NestedObjectWithLiterals(str_prop='strProp', )], ), )
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
         )
-        return response.data
+        return _response.data

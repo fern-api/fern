@@ -13,13 +13,14 @@ public static class ProtoAnyMapper
         {
             return null;
         }
-        var toProtoMethod = value.GetType().GetMethod(
-            "ToProto",
-            BindingFlags.Instance | BindingFlags.NonPublic
-        );
+        var toProtoMethod = value
+            .GetType()
+            .GetMethod("ToProto", BindingFlags.Instance | BindingFlags.NonPublic);
         if (toProtoMethod == null)
         {
-            throw new InvalidOperationException($"Type {value.GetType()} does not have a ToProto method");
+            throw new InvalidOperationException(
+                $"Type {value.GetType()} does not have a ToProto method"
+            );
         }
         var protoValue = toProtoMethod.Invoke(value, null);
         return WellKnownProto.Any.Pack((IMessage)protoValue);

@@ -66,8 +66,8 @@
         ]
       }
     },
-    "ExampleGetResponsesSchemaOneOfThree": {
-      "name": "ExampleGetResponsesSchemaOneOfThree",
+    "GetExampleResponse2003": {
+      "name": "GetExampleResponse2003",
       "shape": {
         "type": "object",
         "extends": [],
@@ -107,10 +107,10 @@
             }
           },
           {
-            "typeName": "ExampleGetResponsesSchemaOneOfThree",
+            "typeName": "GetExampleResponse2003",
             "type": {
               "type": "id",
-              "value": "ExampleGetResponsesSchemaOneOfThree"
+              "value": "GetExampleResponse2003"
             }
           }
         ]

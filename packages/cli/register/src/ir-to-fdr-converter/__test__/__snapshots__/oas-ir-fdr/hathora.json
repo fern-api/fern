@@ -3005,7 +3005,8 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "errorsV2": [],
@@ -3769,7 +3770,7 @@
               },
               "queryParameters": {
                 "region": "Seattle",
-                "local": true
+                "local": false
               },
               "headers": {
                 "Authorization": "foo"
@@ -3894,7 +3895,7 @@
               },
               "queryParameters": {
                 "region": "Seattle",
-                "local": true
+                "local": false
               },
               "headers": {
                 "Authorization": "foo"
@@ -4021,7 +4022,7 @@
                 "appId": "foo"
               },
               "queryParameters": {
-                "local": true,
+                "local": false,
                 "region": "Seattle"
               },
               "headers": {
@@ -5253,7 +5254,7 @@
                 "appId": "foo"
               },
               "queryParameters": {
-                "follow": true,
+                "follow": false,
                 "tailLines": 42,
                 "region": "Seattle"
               },
@@ -5363,7 +5364,7 @@
                 "processId": "foo"
               },
               "queryParameters": {
-                "follow": true,
+                "follow": false,
                 "tailLines": 42
               },
               "headers": {},
@@ -5472,7 +5473,7 @@
                 "deploymentId": 42
               },
               "queryParameters": {
-                "follow": true,
+                "follow": false,
                 "tailLines": 42
               },
               "headers": {},
@@ -5634,7 +5635,7 @@
                 ],
                 "end": 42,
                 "start": 42,
-                "step": 42
+                "step": 60
               },
               "headers": {},
               "responseStatusCode": 200,

@@ -26,12 +26,11 @@ public class UpdateTestSubmissionStatusTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Admin.UpdateTestSubmissionStatusAsync(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    "no-properties-union"
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Admin.UpdateTestSubmissionStatusAsync(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                "no-properties-union"
+            )
         );
     }
 }

@@ -85,6 +85,85 @@
         ]
       }
     },
+    "type_inlined:DiscriminatedLiteral": {
+      "name": "DiscriminatedLiteral",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": [
+          {
+            "discriminantValue": "customName",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "defaultName",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "stringLiteral",
+                      "value": "Bob"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "george",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "discriminantValue": "literalGeorge",
+            "additionalProperties": {
+              "extends": [],
+              "properties": [
+                {
+                  "key": "value",
+                  "valueType": {
+                    "type": "literal",
+                    "value": {
+                      "type": "booleanLiteral",
+                      "value": true
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "type_inlined:UndiscriminatedLiteral": {
       "name": "UndiscriminatedLiteral",
       "shape": {
@@ -104,6 +183,41 @@
               "value": {
                 "type": "stringLiteral",
                 "value": "$ending"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "literal",
+              "value": {
+                "type": "stringLiteral",
+                "value": "10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "literal",
+              "value": {
+                "type": "booleanLiteral",
+                "value": true
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "literal",
+              "value": {
+                "type": "booleanLiteral",
+                "value": false
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
               }
             }
           }
@@ -589,6 +703,7 @@
         "type_inlined:SomeAliasedLiteral",
         "type_inlined:ATopLevelLiteral",
         "type_inlined:ANestedLiteral",
+        "type_inlined:DiscriminatedLiteral",
         "type_inlined:UndiscriminatedLiteral"
       ],
       "subpackages": []

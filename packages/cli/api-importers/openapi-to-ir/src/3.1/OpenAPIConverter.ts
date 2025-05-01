@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -26,13 +27,18 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             context: this.context
         }) as OpenAPIV3_1.Document;
 
-        await this.convertSecuritySchemes();
+        this.context.spec = (await this.resolveExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as OpenAPIV3_1.Document;
+
+        const idToAuthScheme = await this.convertSecuritySchemes();
 
         await this.convertSchemas();
 
         await this.convertWebhooks();
 
-        const { endpointLevelServers, errors } = await this.convertPaths();
+        const { endpointLevelServers, errors } = await this.convertPaths({ idToAuthScheme });
 
         this.convertServers({ endpointLevelServers });
 
@@ -57,7 +63,13 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         return ir;
     }
 
-    private async convertSecuritySchemes(): Promise<void> {
+    private async convertSecuritySchemes(): Promise<Record<string, AuthScheme>> {
+        const topLevelSchemes = new Set<string>(
+            this.context.spec.security?.flatMap((securityRequirement) => Object.keys(securityRequirement)) ?? []
+        );
+
+        // Create a map to store converted auth schemes by their ID
+        const idToAuthScheme: Record<string, AuthScheme> = {};
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
@@ -75,8 +87,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 securityScheme: resolvedSecurityScheme
             });
             const convertedScheme = securitySchemeConverter.convert();
-            if (convertedScheme != null) {
+            // if no top level schemes, then just add the scheme to the whole api
+            if (convertedScheme != null && (topLevelSchemes.size === 0 || topLevelSchemes.has(id))) {
                 securitySchemes.push(convertedScheme);
+            } else if (convertedScheme != null) {
+                idToAuthScheme[id] = convertedScheme;
             }
         }
 
@@ -87,6 +102,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                 docs: undefined
             };
         }
+
+        return idToAuthScheme;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): void {
@@ -135,9 +152,30 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
-            if (webhookItem == null || !("post" in webhookItem) || !webhookItem.post?.operationId) {
-                continue;
+            if (webhookItem == null) {
+                this.context.errorCollector.collect({
+                    message: "Skipping empty webhook",
+                    path: this.breadcrumbs
+                });
+                return undefined;
             }
+
+            if (!("post" in webhookItem)) {
+                this.context.errorCollector.collect({
+                    message: "Skipping webhook because non-POST method",
+                    path: this.breadcrumbs
+                });
+                return undefined;
+            }
+
+            if (webhookItem.post?.operationId == null) {
+                this.context.errorCollector.collect({
+                    message: "Skipping webhook because no operation id present",
+                    path: this.breadcrumbs
+                });
+                return undefined;
+            }
+
             const operationId = webhookItem.post.operationId;
             const webHookConverter = new WebhookConverter({
                 context: this.context,
@@ -174,7 +212,11 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
         }
     }
 
-    private async convertPaths(): Promise<{
+    private async convertPaths({
+        idToAuthScheme
+    }: {
+        idToAuthScheme: Record<string, AuthScheme>;
+    }): Promise<{
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
     }> {
@@ -185,6 +227,7 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
             if (pathItem == null) {
                 continue;
             }
+
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
@@ -236,7 +279,6 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
 
                     pkg.webhooks = groupId;
                 }
-
                 this.ir.types = {
                     ...this.ir.types,
                     ...convertedPath.inlinedTypes

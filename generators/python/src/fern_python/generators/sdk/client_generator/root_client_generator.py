@@ -609,10 +609,11 @@ class RootClientGenerator(BaseWrappedClientGenerator):
             writer.write("raise ")
             writer.write_node(
                 self._context.core_utilities.instantiate_api_error(
+                    headers=None,
+                    status_code=None,
                     body=AST.Expression(
                         f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
                     ),
-                    status_code=None,
                 )
             )
             writer.outdent()

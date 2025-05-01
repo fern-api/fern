@@ -5535,8 +5535,8 @@
         ]
       }
     },
-    "TimesheetIdItemsItemsOneOfZero": {
-      "name": "TimesheetIdItemsItemsOneOfZero",
+    "TimesheetIdItemsItems0": {
+      "name": "TimesheetIdItemsItems0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5547,8 +5547,8 @@
         }
       }
     },
-    "TimesheetIdItemsItemsOneOfOne": {
-      "name": "TimesheetIdItemsItemsOneOfOne",
+    "TimesheetIdItemsItems1": {
+      "name": "TimesheetIdItemsItems1",
       "shape": {
         "type": "alias",
         "value": {
@@ -5566,17 +5566,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TimesheetIdItemsItemsOneOfZero",
+            "typeName": "TimesheetIdItemsItems0",
             "type": {
               "type": "id",
-              "value": "TimesheetIdItemsItemsOneOfZero"
+              "value": "TimesheetIdItemsItems0"
             }
           },
           {
-            "typeName": "TimesheetIdItemsItemsOneOfOne",
+            "typeName": "TimesheetIdItemsItems1",
             "type": {
               "type": "id",
-              "value": "TimesheetIdItemsItemsOneOfOne"
+              "value": "TimesheetIdItemsItems1"
             }
           }
         ]
@@ -16503,8 +16503,8 @@
         }
       }
     },
-    "UniqueObjectIdentifierOneOfZero": {
-      "name": "UniqueObjectIdentifierOneOfZero",
+    "UniqueObjectIdentifier0": {
+      "name": "UniqueObjectIdentifier0",
       "shape": {
         "type": "alias",
         "value": {
@@ -16515,8 +16515,8 @@
         }
       }
     },
-    "UniqueObjectIdentifierOneOfOne": {
-      "name": "UniqueObjectIdentifierOneOfOne",
+    "UniqueObjectIdentifier1": {
+      "name": "UniqueObjectIdentifier1",
       "shape": {
         "type": "alias",
         "value": {
@@ -16534,17 +16534,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "UniqueObjectIdentifierOneOfZero",
+            "typeName": "UniqueObjectIdentifier0",
             "type": {
               "type": "id",
-              "value": "UniqueObjectIdentifierOneOfZero"
+              "value": "UniqueObjectIdentifier0"
             }
           },
           {
-            "typeName": "UniqueObjectIdentifierOneOfOne",
+            "typeName": "UniqueObjectIdentifier1",
             "type": {
               "type": "id",
-              "value": "UniqueObjectIdentifierOneOfOne"
+              "value": "UniqueObjectIdentifier1"
             }
           }
         ]
@@ -17464,7 +17464,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -17567,7 +17567,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -17799,7 +17799,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -17902,7 +17902,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18134,7 +18134,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18237,7 +18237,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18473,7 +18473,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18576,7 +18576,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18813,7 +18813,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -18916,7 +18916,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -19787,7 +19787,7 @@
                       "is_archived": true,
                       "created_at": "2022-05-24T09:38:46.235Z",
                       "termination_date": "2022-05-24T09:38:46.235Z",
-                      "notice_period": 15,
+                      "notice_period": 0,
                       "who_reports": "both",
                       "external_id": "foo"
                     }
@@ -19838,7 +19838,7 @@
                       "is_archived": true,
                       "created_at": "2022-05-24T09:38:46.235Z",
                       "termination_date": "2022-05-24T09:38:46.235Z",
-                      "notice_period": 15,
+                      "notice_period": 0,
                       "who_reports": "both",
                       "external_id": "foo"
                     }
@@ -20022,7 +20022,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -20125,7 +20125,7 @@
                       "country": "US",
                       "state": "CO"
                     },
-                    "notice_period": 15,
+                    "notice_period": 0,
                     "custom_fields": [
                       {
                         "name": "Employee ID",
@@ -21152,8 +21152,8 @@
                       "completion_date": "2022-05-24T09:38:46.235Z"
                     },
                     "calculation_type": "CUSTOM_AMOUNT",
-                    "workweek_start": 42,
-                    "workweek_end": 42
+                    "workweek_start": 1,
+                    "workweek_end": 5
                   }
                 }
               },
@@ -21170,8 +21170,8 @@
                       "completion_date": "2022-05-24T09:38:46.235Z"
                     },
                     "calculation_type": "CUSTOM_AMOUNT",
-                    "workweek_start": 42,
-                    "workweek_end": 42
+                    "workweek_start": 1,
+                    "workweek_end": 5
                   }
                 }
               }
@@ -22284,8 +22284,8 @@
                 "reporter_id": 42,
                 "date_from": "2022-01-01",
                 "date_to": "2022-12-01",
-                "limit": 42,
-                "offset": 42
+                "limit": 99,
+                "offset": 0
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22568,8 +22568,8 @@
                 "reporter_id": 42,
                 "date_from": "2022-01-01",
                 "date_to": "2022-12-01",
-                "limit": 42,
-                "offset": 42
+                "limit": 99,
+                "offset": 0
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22762,7 +22762,7 @@
               "requestBody": {
                 "data": {
                   "contract_id": "foo",
-                  "description": "foo",
+                  "description": "",
                   "date_submitted": "1999-12-31",
                   "quantity": 42
                 }
@@ -22772,7 +22772,7 @@
                 "value": {
                   "data": {
                     "contract_id": "foo",
-                    "description": "foo",
+                    "description": "",
                     "date_submitted": "1999-12-31",
                     "quantity": 42
                   }
@@ -26850,8 +26850,8 @@
                 "reporter_id": 42,
                 "date_from": "1999-12-31",
                 "date_to": "1999-12-31",
-                "limit": 42,
-                "offset": 42
+                "limit": 10,
+                "offset": 0
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -27168,8 +27168,8 @@
                 "reporter_id": 42,
                 "date_from": "1999-12-31",
                 "date_to": "1999-12-31",
-                "limit": 42,
-                "offset": 42
+                "limit": 10,
+                "offset": 0
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28241,8 +28241,8 @@
               "pathParameters": {},
               "queryParameters": {
                 "contract_id": "37nex2x",
-                "limit": "foo",
-                "offset": "foo"
+                "limit": "50",
+                "offset": "0"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28578,7 +28578,7 @@
               "path": "/lookups/job-titles",
               "pathParameters": {},
               "queryParameters": {
-                "limit": 42,
+                "limit": 99,
                 "after_cursor": "foo"
               },
               "headers": {},
@@ -28684,7 +28684,7 @@
               "path": "/lookups/seniorities",
               "pathParameters": {},
               "queryParameters": {
-                "limit": 42
+                "limit": 50
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29452,7 +29452,7 @@
                         "total": 1015,
                         "workers": [
                           {
-                            "name": "Jane Doe",
+                            "name": "",
                             "picUrl": "foo",
                             "contract_id": "foo"
                           }
@@ -29481,7 +29481,7 @@
                         "total": 1015,
                         "workers": [
                           {
-                            "name": "Jane Doe",
+                            "name": "",
                             "picUrl": "foo",
                             "contract_id": "foo"
                           }
@@ -29743,7 +29743,7 @@
               "path": "/people",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
+                "offset": 0,
                 "limit": 42
               },
               "headers": {},
@@ -29778,7 +29778,7 @@
                           "total": 1015,
                           "workers": [
                             {
-                              "name": "Jane Doe",
+                              "name": "",
                               "picUrl": "foo",
                               "contract_id": "foo"
                             }
@@ -29882,7 +29882,7 @@
                           "total": 1015,
                           "workers": [
                             {
-                              "name": "Jane Doe",
+                              "name": "",
                               "picUrl": "foo",
                               "contract_id": "foo"
                             }

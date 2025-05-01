@@ -1041,8 +1041,8 @@
                             "default": null,
                             "inline": null
                         },
-                        "contentType": null,
-                        "docs": null
+                        "docs": null,
+                        "contentType": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1117,8 +1117,8 @@
                                     "default": null,
                                     "inline": null
                                 },
-                                "contentType": null,
-                                "docs": null
+                                "docs": null,
+                                "contentType": null
                             }
                         },
                         "requestParameterName": {

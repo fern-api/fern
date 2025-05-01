@@ -1,3 +1,5 @@
+import { appendFileSync } from "fs";
+
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
@@ -22,6 +24,17 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
     protected ir: BaseIntermediateRepresentation;
     protected breadcrumbs: string[] = [];
     protected context: Context;
+
+    /**
+     * String primitive type constant
+     */
+    protected static STRING = FernIr.TypeReference.primitive({
+        v1: "STRING",
+        v2: FernIr.PrimitiveTypeV2.string({
+            default: undefined,
+            validation: undefined
+        })
+    });
 
     constructor({ breadcrumbs = [], context }: AbstractConverter.Args<Context>) {
         this.breadcrumbs = breadcrumbs;
@@ -78,6 +91,68 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
      * @returns The converted target type Output
      */
     public abstract convert(): Output | undefined | Promise<Output | undefined>;
+
+    protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
+        const queue = [spec];
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            if (current == null) {
+                continue;
+            }
+
+            if (Array.isArray(current)) {
+                await this.resolveExternalRefsInArray(current, context, queue);
+            } else if (typeof current === "object") {
+                await this.resolveExternalRefsInObject(current as Record<string, unknown>, context, queue);
+            }
+        }
+        return spec;
+    }
+
+    private async resolveExternalRefsInArray(arr: unknown[], context: Context, queue: unknown[]): Promise<void> {
+        for (let i = 0; i < arr.length; i++) {
+            const resolvedRefVal = await this.resolveReferenceChain(arr[i], context, queue);
+            if (resolvedRefVal != null) {
+                arr[i] = resolvedRefVal;
+            }
+        }
+    }
+
+    private async resolveExternalRefsInObject(
+        obj: Record<string, unknown>,
+        context: Context,
+        queue: unknown[]
+    ): Promise<void> {
+        for (const [key, value] of Object.entries(obj)) {
+            const resolvedRefVal = await this.resolveReferenceChain(value, context, queue);
+            if (resolvedRefVal != null) {
+                obj[key] = resolvedRefVal;
+            }
+        }
+    }
+
+    private async resolveReferenceChain(value: unknown, context: Context, queue: unknown[]): Promise<unknown | null> {
+        let resolvedRefVal = value;
+        if (!this.context.isReferenceObject(value)) {
+            queue.push(value);
+            return null;
+        }
+
+        while (this.context.isReferenceObject(resolvedRefVal)) {
+            const externalRef = this.context.isExternalReference(resolvedRefVal.$ref);
+            const nextResolvedRef = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+            if (nextResolvedRef.resolved) {
+                resolvedRefVal = nextResolvedRef.value;
+                if (externalRef) {
+                    return resolvedRefVal;
+                }
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
 
     protected removeXFernIgnores({
         document,

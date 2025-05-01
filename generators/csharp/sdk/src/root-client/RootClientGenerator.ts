@@ -73,7 +73,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const class_ = csharp.class_({
             ...this.context.getRootClientClassReference(),
             partial: true,
-            access: csharp.Access.Public
+            access: this.context.getRootClientAccess()
         });
 
         class_.addField(

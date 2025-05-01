@@ -43,13 +43,12 @@ export function convertObject({
     allOf,
     context,
     propertiesToExclude,
+    namespace,
     groupName,
     fullExamples,
     additionalProperties,
     availability,
-    encoding,
-    source,
-    namespace
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -62,13 +61,13 @@ export function convertObject({
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: SchemaParserContext;
     propertiesToExclude: Set<string>;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
     encoding: Encoding | undefined;
     source: Source;
-    namespace: string | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -110,6 +109,7 @@ export function convertObject({
                                             value: property.schema,
                                             description: undefined,
                                             availability: property.availability,
+                                            namespace: undefined,
                                             groupName: undefined,
                                             inline: undefined
                                         })
@@ -199,6 +199,7 @@ export function convertObject({
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
+                      namespace,
                       groupName,
                       inline: undefined
                   });
@@ -256,6 +257,7 @@ export function convertObject({
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
+        namespace,
         groupName,
         fullExamples,
         additionalProperties,
@@ -274,6 +276,7 @@ export function wrapObject({
     description,
     allOf,
     allOfPropertyConflicts,
+    namespace,
     groupName,
     fullExamples,
     additionalProperties,
@@ -289,6 +292,7 @@ export function wrapObject({
     description: string | undefined;
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
@@ -309,6 +313,7 @@ export function wrapObject({
                 title,
                 allOf,
                 allOfPropertyConflicts,
+                namespace,
                 groupName,
                 fullExamples,
                 additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
@@ -318,6 +323,7 @@ export function wrapObject({
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline: undefined
         });
@@ -330,6 +336,7 @@ export function wrapObject({
         title,
         allOf,
         allOfPropertyConflicts,
+        namespace,
         groupName,
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),

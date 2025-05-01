@@ -44,8 +44,8 @@ class BasicAuthClient:
         client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.basic_auth.get_with_basic_auth()
         """
-        response = self._raw_client.get_with_basic_auth(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_with_basic_auth(request_options=request_options)
+        return _response.data
 
     def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -71,8 +71,8 @@ class BasicAuthClient:
         client.basic_auth.post_with_basic_auth(request={'key': 'value'}
         , )
         """
-        response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncBasicAuthClient:
@@ -112,8 +112,8 @@ class AsyncBasicAuthClient:
             await client.basic_auth.get_with_basic_auth()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_basic_auth(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_with_basic_auth(request_options=request_options)
+        return _response.data
 
     async def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -142,5 +142,5 @@ class AsyncBasicAuthClient:
             , )
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return _response.data

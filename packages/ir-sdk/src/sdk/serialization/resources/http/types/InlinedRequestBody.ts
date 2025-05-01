@@ -11,6 +11,7 @@ import { InlinedRequestBodyProperty } from "./InlinedRequestBodyProperty";
 import { ObjectProperty } from "../../types/types/ObjectProperty";
 import { WithDocs } from "../../commons/types/WithDocs";
 import { WithV2Examples } from "../../examples/types/WithV2Examples";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const InlinedRequestBody: core.serialization.ObjectSchema<
     serializers.InlinedRequestBody.Raw,
@@ -21,19 +22,18 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
         extends: core.serialization.list(DeclaredTypeName),
         properties: core.serialization.list(InlinedRequestBodyProperty),
         extendedProperties: core.serialization.list(ObjectProperty).optional(),
-        contentType: core.serialization.string().optional(),
         extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
     })
     .extend(WithDocs)
-    .extend(WithV2Examples);
+    .extend(WithV2Examples)
+    .extend(WithContentType);
 
 export declare namespace InlinedRequestBody {
-    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw, WithContentType.Raw {
         name: Name.Raw;
         extends: DeclaredTypeName.Raw[];
         properties: InlinedRequestBodyProperty.Raw[];
         extendedProperties?: ObjectProperty.Raw[] | null;
-        contentType?: string | null;
         "extra-properties": boolean;
     }
 }

@@ -51,8 +51,8 @@ class OptionalClient:
         client.optional.send_optional_body(request={'string': {'key': 'value'}
         }, )
         """
-        response = self._raw_client.send_optional_body(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.send_optional_body(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncOptionalClient:
@@ -99,5 +99,5 @@ class AsyncOptionalClient:
             }, )
         asyncio.run(main())
         """
-        response = await self._raw_client.send_optional_body(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.send_optional_body(request=request, request_options=request_options)
+        return _response.data

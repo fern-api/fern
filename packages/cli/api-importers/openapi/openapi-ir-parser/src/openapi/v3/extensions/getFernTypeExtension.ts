@@ -27,6 +27,7 @@ export function getFernTypeExtension({
     description: string | undefined;
     availability: Availability | undefined;
 }): SchemaWithExample | undefined {
+    const namespace = getExtension(schema, FernOpenAPIExtension.SDK_NAMESPACE);
     const groupName = getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const fernType = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
     if (fernType == null) {
@@ -39,6 +40,7 @@ export function getFernTypeExtension({
         title,
         description,
         availability,
+        namespace,
         groupName: typeof groupName === "string" ? [groupName] : groupName
     });
 }
@@ -50,6 +52,7 @@ export function getSchemaFromFernType({
     title,
     description,
     availability,
+    namespace,
     groupName
 }: {
     fernType: string;
@@ -58,6 +61,7 @@ export function getSchemaFromFernType({
     title: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: string[] | undefined;
 }): SchemaWithExample | undefined {
     return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>({
@@ -74,6 +78,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.base64({
                                 example: undefined
@@ -86,6 +91,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.boolean({
                                 default: undefined,
@@ -99,6 +105,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.date({
                                 example: undefined
@@ -111,6 +118,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.datetime({
                                 example: undefined
@@ -123,6 +131,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.float({
                                 example: undefined
@@ -135,6 +144,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.double({
                                 default: undefined,
@@ -153,6 +163,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.uint({
                                 default: undefined,
@@ -166,6 +177,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.int({
                                 default: undefined,
@@ -184,6 +196,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.uint64({
                                 default: undefined,
@@ -197,6 +210,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.int64({
                                 default: undefined,
@@ -212,6 +226,7 @@ export function getSchemaFromFernType({
                             title,
                             description,
                             availability,
+                            namespace,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.string({
                                 default: undefined,
@@ -234,6 +249,7 @@ export function getSchemaFromFernType({
                     example: undefined,
                     description,
                     availability,
+                    namespace,
                     groupName
                 });
             },
@@ -247,6 +263,7 @@ export function getSchemaFromFernType({
                           value: valueType,
                           description,
                           availability,
+                          namespace,
                           groupName,
                           encoding: undefined,
                           example: undefined,
@@ -262,6 +279,7 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
+                          namespace,
                           groupName,
                           example: undefined,
                           inline: undefined
@@ -276,6 +294,7 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
+                          namespace,
                           groupName,
                           inline: undefined
                       })
@@ -289,6 +308,7 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
+                          namespace,
                           groupName,
                           inline: undefined
                       })
@@ -302,6 +322,7 @@ export function getSchemaFromFernType({
                           value: itemType,
                           description,
                           availability,
+                          namespace,
                           groupName,
                           example: undefined,
                           inline: undefined
@@ -321,6 +342,7 @@ export function getSchemaFromFernType({
                     }),
                     description,
                     availability,
+                    namespace,
                     groupName
                 }),
             named: () => {

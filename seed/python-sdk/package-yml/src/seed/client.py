@@ -93,8 +93,8 @@ class SeedPackageYml:
         client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
         client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
         """
-        response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
-        return response.data
+        _response = self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        return _response.data
 
 
 class AsyncSeedPackageYml:
@@ -183,5 +183,5 @@ class AsyncSeedPackageYml:
             await client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
         asyncio.run(main())
         """
-        response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.echo(id, name=name, size=size, request_options=request_options)
+        return _response.data

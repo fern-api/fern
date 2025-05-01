@@ -6,6 +6,7 @@ export * from "./NameAndWireValue";
 export * from "./SafeAndUnsafeString";
 export * from "./EscapedString";
 export * from "./WithJsonExample";
+export * from "./WithContentType";
 export * from "./SubpackageId";
 export * from "./ServiceId";
 export * from "./EndpointId";

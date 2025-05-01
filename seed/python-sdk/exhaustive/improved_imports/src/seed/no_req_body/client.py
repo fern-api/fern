@@ -42,8 +42,8 @@ class NoReqBodyClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.no_req_body.get_with_no_request_body()
         """
-        response = self._raw_client.get_with_no_request_body(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_with_no_request_body(request_options=request_options)
+        return _response.data
 
     def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -62,8 +62,8 @@ class NoReqBodyClient:
         client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
         client.no_req_body.post_with_no_request_body()
         """
-        response = self._raw_client.post_with_no_request_body(request_options=request_options)
-        return response.data
+        _response = self._raw_client.post_with_no_request_body(request_options=request_options)
+        return _response.data
 
 
 class AsyncNoReqBodyClient:
@@ -103,8 +103,8 @@ class AsyncNoReqBodyClient:
             await client.no_req_body.get_with_no_request_body()
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_no_request_body(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_with_no_request_body(request_options=request_options)
+        return _response.data
 
     async def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
@@ -126,5 +126,5 @@ class AsyncNoReqBodyClient:
             await client.no_req_body.post_with_no_request_body()
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_no_request_body(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.post_with_no_request_body(request_options=request_options)
+        return _response.data

@@ -51,8 +51,8 @@ class RawHttpMethodsClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -90,8 +90,8 @@ class RawHttpMethodsClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def test_put(
         self, *, id: str, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -131,8 +131,8 @@ class RawHttpMethodsClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def test_patch(
         self,
@@ -225,8 +225,8 @@ class RawHttpMethodsClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def test_delete(self, *, id: str, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[bool]:
         """
@@ -258,8 +258,8 @@ class RawHttpMethodsClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
 
 class AsyncRawHttpMethodsClient:
@@ -298,8 +298,8 @@ class AsyncRawHttpMethodsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def test_post(
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -337,8 +337,8 @@ class AsyncRawHttpMethodsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def test_put(
         self, *, id: str, string: str, request_options: typing.Optional[RequestOptions] = None
@@ -378,8 +378,8 @@ class AsyncRawHttpMethodsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def test_patch(
         self,
@@ -472,8 +472,8 @@ class AsyncRawHttpMethodsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def test_delete(
         self, *, id: str, request_options: typing.Optional[RequestOptions] = None
@@ -507,5 +507,5 @@ class AsyncRawHttpMethodsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)

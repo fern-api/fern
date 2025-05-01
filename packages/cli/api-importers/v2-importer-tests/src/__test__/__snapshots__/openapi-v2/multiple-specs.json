@@ -234,6 +234,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "upload-with-content-type_Request",
               "camelCase": {

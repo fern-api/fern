@@ -40,8 +40,8 @@ class PathClient:
         client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
         client.path.send()
         """
-        response = self._raw_client.send(request_options=request_options)
-        return response.data
+        _response = self._raw_client.send(request_options=request_options)
+        return _response.data
 
 
 class AsyncPathClient:
@@ -79,5 +79,5 @@ class AsyncPathClient:
             await client.path.send()
         asyncio.run(main())
         """
-        response = await self._raw_client.send(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.send(request_options=request_options)
+        return _response.data

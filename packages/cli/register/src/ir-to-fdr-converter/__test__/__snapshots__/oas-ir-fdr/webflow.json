@@ -42006,7 +42006,7 @@
                       "url": "test-api-domain.com"
                     }
                   ],
-                  "publishToWebflowSubdomain": true
+                  "publishToWebflowSubdomain": false
                 }
               },
               "responseBodyV3": {
@@ -42018,7 +42018,7 @@
                       "url": "test-api-domain.com"
                     }
                   ],
-                  "publishToWebflowSubdomain": true
+                  "publishToWebflowSubdomain": false
                 }
               }
             }
@@ -51547,7 +51547,7 @@
                                 }
                               ]
                             },
-                            "track-inventory": true,
+                            "track-inventory": false,
                             "quantity": 10
                           }
                         }
@@ -51636,7 +51636,7 @@
                                 }
                               ]
                             },
-                            "track-inventory": true,
+                            "track-inventory": false,
                             "quantity": 10
                           }
                         }
@@ -51851,7 +51851,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -51931,7 +51931,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -52109,7 +52109,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -52189,7 +52189,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -52656,7 +52656,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -52698,7 +52698,7 @@
                             }
                           ]
                         },
-                        "track-inventory": true,
+                        "track-inventory": false,
                         "quantity": 10
                       }
                     }
@@ -52897,7 +52897,7 @@
                         }
                       ]
                     },
-                    "track-inventory": true,
+                    "track-inventory": false,
                     "quantity": 10
                   }
                 }
@@ -52935,7 +52935,7 @@
                         }
                       ]
                     },
-                    "track-inventory": true,
+                    "track-inventory": false,
                     "quantity": 10
                   }
                 }

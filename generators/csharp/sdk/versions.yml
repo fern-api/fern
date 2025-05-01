@@ -6,13 +6,28 @@
 #         The C# SDK now uses forward-compatible enums which are not compatible with the previously generated enums.
 #         Set `enable-forward-compatible-enums` to `false` in the configuration to generate the old enums.
 #   irVersion: 53
+- version: 1.16.3
+  createdAt: "2025-04-23"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: Upgrade Csharpier formatter to `1.*` for faster and better formatting.
+- version: 1.16.2
+  createdAt: "2025-04-22"
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add `root-client-class-access` configuration option to control the access modifier of the root client class.
+        `root-client-class-access` defaults to `public`, but can be set to `internal` to make the root client class internal.
+    - type: fix
+      summary: Pin `csharpier` formatter to `0.*` to avoid breaking changes in the formatter.
 - version: 1.16.1
   createdAt: "2025-04-11"
   irVersion: 57
   changelogEntry:
     - type: feat
       summary: Make minor improvements to the ReadOnlyAdditionalProperties and AdditionalProperties properties for internal usage.
-
 - version: 1.16.0
   createdAt: "2025-04-10"
   irVersion: 57

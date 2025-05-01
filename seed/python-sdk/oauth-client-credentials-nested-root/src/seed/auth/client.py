@@ -56,10 +56,10 @@ class AuthClient:
         client = SeedOauthClientCredentials(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
         client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
         """
-        response = self._raw_client.get_token(
+        _response = self._raw_client.get_token(
             client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
         )
-        return response.data
+        return _response.data
 
 
 class AsyncAuthClient:
@@ -110,7 +110,7 @@ class AsyncAuthClient:
             await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
         asyncio.run(main())
         """
-        response = await self._raw_client.get_token(
+        _response = await self._raw_client.get_token(
             client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
         )
-        return response.data
+        return _response.data

@@ -2,6 +2,26 @@
 
 # isort: skip_file
 
-from .types import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral, UndiscriminatedLiteral
+from .types import (
+    ANestedLiteral,
+    ATopLevelLiteral,
+    DiscriminatedLiteral,
+    DiscriminatedLiteral_CustomName,
+    DiscriminatedLiteral_DefaultName,
+    DiscriminatedLiteral_George,
+    DiscriminatedLiteral_LiteralGeorge,
+    SomeAliasedLiteral,
+    UndiscriminatedLiteral,
+)
 
-__all__ = ["ANestedLiteral", "ATopLevelLiteral", "SomeAliasedLiteral", "UndiscriminatedLiteral"]
+__all__ = [
+    "ANestedLiteral",
+    "ATopLevelLiteral",
+    "DiscriminatedLiteral",
+    "DiscriminatedLiteral_CustomName",
+    "DiscriminatedLiteral_DefaultName",
+    "DiscriminatedLiteral_George",
+    "DiscriminatedLiteral_LiteralGeorge",
+    "SomeAliasedLiteral",
+    "UndiscriminatedLiteral",
+]

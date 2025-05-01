@@ -536,6 +536,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                         })
                         .filter(isNonNullish)
                 },
+                contentType: fileUpload.contentType,
                 description: fileUpload.docs ?? undefined
             }),
             bytes: (bytes) => ({

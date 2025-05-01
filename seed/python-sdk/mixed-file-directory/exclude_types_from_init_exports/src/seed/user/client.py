@@ -49,8 +49,8 @@ class UserClient:
         client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
         client.user.list(limit=1, )
         """
-        response = self._raw_client.list(limit=limit, request_options=request_options)
-        return response.data
+        _response = self._raw_client.list(limit=limit, request_options=request_options)
+        return _response.data
 
 
 class AsyncUserClient:
@@ -96,5 +96,5 @@ class AsyncUserClient:
             await client.user.list(limit=1, )
         asyncio.run(main())
         """
-        response = await self._raw_client.list(limit=limit, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.list(limit=limit, request_options=request_options)
+        return _response.data

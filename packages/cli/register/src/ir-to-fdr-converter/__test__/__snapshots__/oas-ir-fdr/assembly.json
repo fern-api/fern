@@ -3340,8 +3340,8 @@
         ]
       }
     },
-    "LemurBaseParametersContextOneOfZero": {
-      "name": "LemurBaseParametersContextOneOfZero",
+    "LemurBaseParametersContext0": {
+      "name": "LemurBaseParametersContext0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3352,8 +3352,8 @@
         }
       }
     },
-    "LemurBaseParametersContextOneOfOne": {
-      "name": "LemurBaseParametersContextOneOfOne",
+    "LemurBaseParametersContext1": {
+      "name": "LemurBaseParametersContext1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3370,17 +3370,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurBaseParametersContextOneOfZero",
+            "typeName": "LemurBaseParametersContext0",
             "type": {
               "type": "id",
-              "value": "LemurBaseParametersContextOneOfZero"
+              "value": "LemurBaseParametersContext0"
             }
           },
           {
-            "typeName": "LemurBaseParametersContextOneOfOne",
+            "typeName": "LemurBaseParametersContext1",
             "type": {
               "type": "id",
-              "value": "LemurBaseParametersContextOneOfOne"
+              "value": "LemurBaseParametersContext1"
             }
           }
         ]
@@ -3501,8 +3501,8 @@
         ]
       }
     },
-    "LemurQuestionContextOneOfZero": {
-      "name": "LemurQuestionContextOneOfZero",
+    "LemurQuestionContext0": {
+      "name": "LemurQuestionContext0",
       "shape": {
         "type": "alias",
         "value": {
@@ -3513,8 +3513,8 @@
         }
       }
     },
-    "LemurQuestionContextOneOfOne": {
-      "name": "LemurQuestionContextOneOfOne",
+    "LemurQuestionContext1": {
+      "name": "LemurQuestionContext1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3531,17 +3531,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurQuestionContextOneOfZero",
+            "typeName": "LemurQuestionContext0",
             "type": {
               "type": "id",
-              "value": "LemurQuestionContextOneOfZero"
+              "value": "LemurQuestionContext0"
             }
           },
           {
-            "typeName": "LemurQuestionContextOneOfOne",
+            "typeName": "LemurQuestionContext1",
             "type": {
               "type": "id",
-              "value": "LemurQuestionContextOneOfOne"
+              "value": "LemurQuestionContext1"
             }
           }
         ]
@@ -4392,7 +4392,7 @@
               "path": "/v2/transcript",
               "pathParameters": {},
               "queryParameters": {
-                "limit": 42,
+                "limit": 10,
                 "status": null,
                 "created_on": "foo",
                 "before_id": "foo",
@@ -4528,7 +4528,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -4704,7 +4704,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -4957,7 +4957,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5133,7 +5133,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5386,7 +5386,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5562,7 +5562,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [

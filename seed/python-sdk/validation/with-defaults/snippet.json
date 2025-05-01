@@ -11,8 +11,8 @@
                 "identifier_override": "endpoint_.create"
             },
             "snippet": {
-                "sync_client": "from seed import SeedValidation\nclient = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nclient.create(decimal=2.2, even=100, name='foo', shape=\"SQUARE\", )\n",
-                "async_client": "from seed import AsyncSeedValidation\nimport asyncio\nclient = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.create(decimal=2.2, even=100, name='foo', shape=\"SQUARE\", )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedValidation\nclient = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nclient.create(decimal=2.2, even=100, name='fern', shape=\"SQUARE\", )\n",
+                "async_client": "from seed import AsyncSeedValidation\nimport asyncio\nclient = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.create(decimal=2.2, even=100, name='fern', shape=\"SQUARE\", )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -24,8 +24,8 @@
                 "identifier_override": "endpoint_.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedValidation\nclient = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nclient.get(decimal=2.2, even=100, name='foo', )\n",
-                "async_client": "from seed import AsyncSeedValidation\nimport asyncio\nclient = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.get(decimal=2.2, even=100, name='foo', )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedValidation\nclient = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nclient.get(decimal=2.2, even=100, name='fern', )\n",
+                "async_client": "from seed import AsyncSeedValidation\nimport asyncio\nclient = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.get(decimal=2.2, even=100, name='fern', )\nasyncio.run(main())",
                 "type": "python"
             }
         }

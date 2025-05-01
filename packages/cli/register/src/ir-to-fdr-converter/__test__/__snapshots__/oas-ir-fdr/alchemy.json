@@ -1077,7 +1077,7 @@
       }
     },
     "w_e_b_3___c_l_i_e_n_t_V_e_r_s_i_o_n_Result": {
-      "name": "MethodsResult",
+      "name": "Web3ClientVersionResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1088,8 +1088,8 @@
         }
       }
     },
-    "w_e_b_3___s_h_a_3_Request_data": {
-      "name": "MethodsParams",
+    "web3_sha3_Param_data": {
+      "name": "web3_sha3_Param_data",
       "shape": {
         "type": "alias",
         "value": {
@@ -1102,7 +1102,7 @@
       }
     },
     "n_e_t___l_i_s_t_e_n_i_n_g_Result": {
-      "name": "MethodsResult",
+      "name": "NetListeningResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1115,7 +1115,7 @@
     },
     "n_e_t___p_e_e_r_C_o_u_n_t_Result": {
       "description": "Hex representation of number of connected peers",
-      "name": "MethodsResult",
+      "name": "NetPeerCountResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1127,7 +1127,7 @@
       }
     },
     "n_e_t___v_e_r_s_i_o_n_Result": {
-      "name": "MethodsResult",
+      "name": "NetVersionResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1139,31 +1139,8 @@
         }
       }
     },
-    "MethodsResult": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
-            "description": "An object with sync status data",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfZero"
-            }
-          },
-          {
-            "typeName": "MethodsResultOneOfOne",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfOne"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
-      "name": "MethodsResult",
+    "EthBlockNumberResult": {
+      "name": "EthBlockNumberResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1184,58 +1161,30 @@
         ]
       }
     },
-    "MethodsParams": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
+    "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
+      "name": "EthBlockNumberResult",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
+        "type": "undiscriminatedUnion",
+        "variants": [
           {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
             }
           },
           {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "MethodsParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
             }
           }
         ]
       }
     },
-    "e_t_h___c_a_l_l_Request_blockNumber": {
-      "name": "MethodsParams",
+    "eth_call_Param_blockNumber": {
+      "name": "eth_call_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1257,7 +1206,7 @@
       }
     },
     "e_t_h___c_h_a_i_n_I_d_Result": {
-      "name": "MethodsResult",
+      "name": "EthChainIdResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1269,8 +1218,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_H_a_s_h_Request_includeTransactions": {
-      "name": "MethodsParams",
+    "eth_getBlockByHash_Param_includeTransactions": {
+      "name": "eth_getBlockByHash_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1281,8 +1230,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "eth_getBlockByNumber_Param_blockNumber": {
+      "name": "eth_getBlockByNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1303,8 +1252,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_B_y_N_u_m_b_e_r_Request_includeTransactions": {
-      "name": "MethodsParams",
+    "eth_getBlockByNumber_Param_includeTransactions": {
+      "name": "eth_getBlockByNumber_Param_includeTransactions",
       "shape": {
         "type": "alias",
         "value": {
@@ -1315,8 +1264,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_B_l_o_c_k_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_B_y_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "eth_getBlockTransactionCountByNumber_Param_blockNumber": {
+      "name": "eth_getBlockTransactionCountByNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1338,7 +1287,7 @@
       }
     },
     "e_t_h___g_e_t_F_i_l_t_e_r_C_h_a_n_g_e_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetFilterChangesResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1351,7 +1300,7 @@
       }
     },
     "e_t_h___g_e_t_F_i_l_t_e_r_L_o_g_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetFilterLogsResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1363,8 +1312,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_R_a_w_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_blockNumber": {
-      "name": "MethodsParams",
+    "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber": {
+      "name": "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1385,8 +1334,8 @@
         ]
       }
     },
-    "MethodsParamsAddress": {
-      "name": "MethodsParamsAddress",
+    "MethodsParams0Address": {
+      "name": "MethodsParams0Address",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1407,9 +1356,9 @@
         ]
       }
     },
-    "e_t_h___g_e_t_L_o_g_s_Request_filter": {
+    "eth_getLogs_Param_filter": {
       "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
+      "name": "eth_getLogs_Param_filter",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1440,7 +1389,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "MethodsParamsAddress"
+                "value": "MethodsParams0Address"
               }
             }
           },
@@ -1458,7 +1407,7 @@
       }
     },
     "e_t_h___g_e_t_L_o_g_s_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetLogsResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1470,8 +1419,8 @@
         }
       }
     },
-    "e_t_h___g_e_t_S_t_o_r_a_g_e_A_t_Request_blockNumber": {
-      "name": "MethodsParams",
+    "eth_getStorageAt_Param_blockNumber": {
+      "name": "eth_getStorageAt_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1492,8 +1441,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
-      "name": "MethodsResult",
+    "EthGetTransactionByBlockHashAndIndexResult": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1514,8 +1463,52 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Request_blockNumber": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_H_a_s_h_A_n_d_I_n_d_e_x_Result": {
+      "name": "EthGetTransactionByBlockHashAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetTransactionByBlockNumberAndIndexResult": {
+      "name": "EthGetTransactionByBlockNumberAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber": {
+      "name": "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1537,7 +1530,29 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_B_l_o_c_k_N_u_m_b_e_r_A_n_d_I_n_d_e_x_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionByBlockNumberAndIndexResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Transaction",
+            "type": {
+              "type": "id",
+              "value": "Transaction"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "EthGetTransactionByHashResult": {
+      "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1559,7 +1574,7 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_B_y_H_a_s_h_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionByHashResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1580,8 +1595,30 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Request_blockNumber": {
-      "name": "MethodsParams",
+    "EthGetTransactionCountResult": {
+      "name": "EthGetTransactionCountResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Nonce",
+            "type": {
+              "type": "id",
+              "value": "Nonce"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "eth_getTransactionCount_Param_blockNumber": {
+      "name": "eth_getTransactionCount_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1603,7 +1640,7 @@
       }
     },
     "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_C_o_u_n_t_Result": {
-      "name": "MethodsResult",
+      "name": "EthGetTransactionCountResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1624,8 +1661,8 @@
         ]
       }
     },
-    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
-      "name": "MethodsResult",
+    "EthGetTransactionReceiptResult": {
+      "name": "EthGetTransactionReceiptResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1646,8 +1683,30 @@
         ]
       }
     },
-    "e_t_h___g_e_t_U_n_c_l_e_C_o_u_n_t_B_y_B_l_o_c_k_N_u_m_b_e_r_Request_blockNumber": {
-      "name": "MethodsParams",
+    "e_t_h___g_e_t_T_r_a_n_s_a_c_t_i_o_n_R_e_c_e_i_p_t_Result": {
+      "name": "EthGetTransactionReceiptResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "Receipt",
+            "type": {
+              "type": "id",
+              "value": "Receipt"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "eth_getUncleCountByBlockNumber_Param_blockNumber": {
+      "name": "eth_getUncleCountByBlockNumber_Param_blockNumber",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -1668,9 +1727,260 @@
         ]
       }
     },
-    "MethodsResultOneOfZero": {
+    "EthGetProofResult0": {
+      "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+      "name": "EthGetProofResult0",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The address of the account or contract of the request",
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Address"
+              }
+            }
+          },
+          {
+            "key": "accountProof",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProofNodes"
+              }
+            }
+          },
+          {
+            "description": "The Ether balance of the account or contract of the request",
+            "key": "balance",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Integer"
+              }
+            }
+          },
+          {
+            "description": "The code hash of the contract of the request (keccak(NULL) if external account)",
+            "key": "codeHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Keccak"
+              }
+            }
+          },
+          {
+            "description": "The transaction count of the account or contract of the request",
+            "key": "nonce",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Nonce"
+              }
+            }
+          },
+          {
+            "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)",
+            "key": "storageHash",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Keccak"
+              }
+            }
+          },
+          {
+            "key": "storageProof",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "StorageProof"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EthGetProofResult": {
+      "name": "EthGetProofResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthGetProofResult0",
+            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+            "type": {
+              "type": "id",
+              "value": "EthGetProofResult0"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "eth_getProof_Param_blockNumber": {
+      "name": "eth_getProof_Param_blockNumber",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BlockNumber",
+            "type": {
+              "type": "id",
+              "value": "BlockNumber"
+            }
+          },
+          {
+            "typeName": "BlockNumberTag",
+            "type": {
+              "type": "id",
+              "value": "BlockNumberTag"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_P_r_o_o_f_Result": {
+      "name": "EthGetProofResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthGetProofResult0",
+            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
+            "type": {
+              "type": "id",
+              "value": "EthGetProofResult0"
+            }
+          },
+          {
+            "typeName": "Null",
+            "type": {
+              "type": "id",
+              "value": "Null"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___g_e_t_W_o_r_k_Result": {
+      "name": "EthGetWorkResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "unknown"
+          }
+        }
+      }
+    },
+    "e_t_h___m_i_n_i_n_g_Result": {
+      "name": "EthMiningResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "eth_newFilter_Param_filter": {
+      "description": "A filter used to monitor the blockchain for log/events",
+      "name": "eth_newFilter_Param_filter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fromBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "toBlock",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "MethodsParams0Address"
+              }
+            }
+          },
+          {
+            "key": "topics",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Topics"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___s_u_b_m_i_t_H_a_s_h_r_a_t_e_Result": {
+      "name": "EthSubmitHashrateResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "e_t_h___s_u_b_m_i_t_W_o_r_k_Result": {
+      "name": "EthSubmitWorkResult",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "EthSyncingResult0": {
       "description": "An object with sync status data",
-      "name": "MethodsResultOneOfZero",
+      "name": "EthSyncingResult0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1733,186 +2043,66 @@
         ]
       }
     },
-    "e_t_h___g_e_t_P_r_o_o_f_Request_blockNumber": {
-      "name": "MethodsParams",
+    "EthSyncingResult1": {
+      "name": "EthSyncingResult1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "EthSyncingResult": {
+      "name": "EthSyncingResult",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BlockNumber",
-            "type": {
-              "type": "id",
-              "value": "BlockNumber"
-            }
-          },
-          {
-            "typeName": "BlockNumberTag",
-            "type": {
-              "type": "id",
-              "value": "BlockNumberTag"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___g_e_t_P_r_o_o_f_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
-            "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified",
-            "type": {
-              "type": "id",
-              "value": "MethodsResultOneOfZero"
-            }
-          },
-          {
-            "typeName": "Null",
-            "type": {
-              "type": "id",
-              "value": "Null"
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___g_e_t_W_o_r_k_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "unknown"
-          }
-        }
-      }
-    },
-    "e_t_h___m_i_n_i_n_g_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___n_e_w_F_i_l_t_e_r_Request_filter": {
-      "description": "A filter used to monitor the blockchain for log/events",
-      "name": "MethodsParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "fromBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "toBlock",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "BlockNumber"
-              }
-            }
-          },
-          {
-            "key": "address",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "MethodsParamsAddress"
-              }
-            }
-          },
-          {
-            "key": "topics",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "Topics"
-              }
-            }
-          }
-        ]
-      }
-    },
-    "e_t_h___s_u_b_m_i_t_H_a_s_h_r_a_t_e_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___s_u_b_m_i_t_W_o_r_k_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "MethodsResultOneOfOne": {
-      "name": "MethodsResultOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "e_t_h___s_y_n_c_i_n_g_Result": {
-      "name": "MethodsResult",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "typeName": "MethodsResultOneOfZero",
+            "typeName": "EthSyncingResult0",
             "description": "An object with sync status data",
             "type": {
               "type": "id",
-              "value": "MethodsResultOneOfZero"
+              "value": "EthSyncingResult0"
             }
           },
           {
-            "typeName": "MethodsResultOneOfOne",
+            "typeName": "EthSyncingResult1",
             "type": {
               "type": "id",
-              "value": "MethodsResultOneOfOne"
+              "value": "EthSyncingResult1"
+            }
+          }
+        ]
+      }
+    },
+    "e_t_h___s_y_n_c_i_n_g_Result": {
+      "name": "EthSyncingResult",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "EthSyncingResult0",
+            "description": "An object with sync status data",
+            "type": {
+              "type": "id",
+              "value": "EthSyncingResult0"
+            }
+          },
+          {
+            "typeName": "EthSyncingResult1",
+            "type": {
+              "type": "id",
+              "value": "EthSyncingResult1"
             }
           }
         ]
       }
     },
     "e_t_h___u_n_i_n_s_t_a_l_l_F_i_l_t_e_r_Result": {
-      "name": "MethodsResult",
+      "name": "EthUninstallFilterResult",
       "shape": {
         "type": "alias",
         "value": {
@@ -1990,12 +2180,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "web3_clientVersion",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -2098,16 +2282,37 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x68656c6c6f20776f726c64"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x68656c6c6f20776f726c64"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -2172,35 +2377,29 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_listening",
-              "params": []
-            },
+            "requestBody": [],
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
               "value": {
-                "id": 1,
                 "jsonrpc": "2.0",
+                "id": "1",
                 "result": true
               }
             },
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "id": 1,
                 "jsonrpc": "2.0",
+                "id": "1",
                 "result": true
               }
-            }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -2271,12 +2470,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_peerCount",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -2365,12 +2558,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_version",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -2439,7 +2626,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthBlockNumberResult"
             }
           }
         },
@@ -2454,12 +2641,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_blockNumber",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -2542,7 +2723,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_call_Param_blockNumber"
                   }
                 }
               ]
@@ -2645,12 +2826,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_chainId",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -2735,12 +2910,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_coinbase",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -2898,12 +3067,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_gasPrice",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -3160,7 +3323,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getBlockByNumber_Param_blockNumber"
                   }
                 },
                 {
@@ -3349,7 +3512,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getBlockTransactionCountByNumber_Param_blockNumber"
                   }
                 }
               ]
@@ -3950,7 +4113,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getRawTransactionByBlockNumberAndIndex_Param_blockNumber"
                   }
                 },
                 {
@@ -4048,7 +4211,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getLogs_Param_filter"
                   }
                 }
               ]
@@ -4175,7 +4338,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getStorageAt_Param_blockNumber"
                   }
                 }
               ]
@@ -4284,7 +4447,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByBlockHashAndIndexResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4294,40 +4457,23 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+              "0x0"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                "0x0"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": {
-                  "gas": "foo",
-                  "gasPrice": "foo",
-                  "nonce": null
-                }
-              }
-            }
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -4386,7 +4532,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getTransactionByBlockNumberAndIndex_Param_blockNumber"
                   }
                 },
                 {
@@ -4406,7 +4552,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByBlockNumberAndIndexResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4520,7 +4666,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionByHashResult"
             }
           },
           "description": "Returns a transaction or null"
@@ -4629,7 +4775,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getTransactionCount_Param_blockNumber"
                   }
                 }
               ]
@@ -4641,7 +4787,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionCountResult"
             }
           }
         },
@@ -4746,7 +4892,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetTransactionReceiptResult"
             }
           },
           "description": "returns either a receipt or null"
@@ -4996,16 +5142,23 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x0",
+              "0x0"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x0",
+                "0x0"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -5154,7 +5307,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getUncleCountByBlockNumber_Param_blockNumber"
                   }
                 }
               ]
@@ -5252,7 +5405,7 @@
                   "key": "blockNumber",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_getProof_Param_blockNumber"
                   }
                 }
               ]
@@ -5264,7 +5417,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthGetProofResult"
             }
           }
         },
@@ -5367,12 +5520,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getWork",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -5461,12 +5608,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_hashrate",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -5537,12 +5678,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_mining",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",
@@ -5626,12 +5761,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_newBlockFilter",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -5691,7 +5820,7 @@
                   "key": "filter",
                   "valueType": {
                     "type": "id",
-                    "value": "MethodsParams"
+                    "value": "eth_newFilter_Param_filter"
                   }
                 }
               ]
@@ -5789,12 +5918,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_newPendingTransactionFilter",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -5862,12 +5985,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_pendingTransactions",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -5936,12 +6053,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_protocolVersion",
-              "params": []
-            },
             "responseStatusCode": 200
           }
         ],
@@ -6246,32 +6357,25 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "0x0000000000000001",
+              "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+              "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "0x0000000000000001",
+                "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+                "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+              ]
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "result": true
-              }
-            }
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -6323,7 +6427,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "MethodsResult"
+              "value": "EthSyncingResult"
             }
           }
         },
@@ -6338,12 +6442,6 @@
             },
             "queryParameters": {},
             "headers": {},
-            "requestBody": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_syncing",
-              "params": []
-            },
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",

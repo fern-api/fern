@@ -2600,7 +2600,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2798,7 +2799,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2963,7 +2965,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3277,7 +3280,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3707,7 +3711,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {

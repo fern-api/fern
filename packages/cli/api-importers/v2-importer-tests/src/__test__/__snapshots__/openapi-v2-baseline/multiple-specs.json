@@ -173,6 +173,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "UploadFileRequest",
               "camelCase": {
@@ -363,6 +364,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "UploadListRequest",
               "camelCase": {
@@ -553,6 +555,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "UploadWithContentTypeRequest",
               "camelCase": {

@@ -30482,6 +30482,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
+            "contentType": "multipart/form-data",
             "name": {
               "originalName": "Body_post_bank_statement_v3_bank_statements_post",
               "camelCase": {

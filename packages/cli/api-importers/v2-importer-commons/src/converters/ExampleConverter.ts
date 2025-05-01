@@ -221,46 +221,77 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertBoolean(): Promise<ExampleConverter.Output> {
         const isValid = typeof this.example === "boolean";
-        return isValid
-            ? {
-                  isValid,
-                  coerced: false,
-                  validExample: this.example,
-                  errors: []
-              }
-            : {
-                  isValid: false,
-                  coerced: false,
-                  validExample: (await this.maybeResolveSchemaExample<boolean>(this.schema)) ?? this.EXAMPLE_BOOLEAN,
-                  errors: [
-                      {
-                          message: `Example is not a boolean: ${JSON.stringify(this.example, null, 2)}`,
-                          path: this.breadcrumbs
-                      }
-                  ]
-              };
+        if (isValid) {
+            return {
+                isValid,
+                coerced: false,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
+        // Check for default value in schema
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
+            : this.schema.default;
+
+        if (typeof resolvedDefault === "boolean") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
+        return {
+            isValid: false,
+            coerced: false,
+            validExample: (await this.maybeResolveSchemaExample<boolean>(this.schema)) ?? this.EXAMPLE_BOOLEAN,
+            errors: [
+                {
+                    message: `Example is not a boolean: ${JSON.stringify(this.example, null, 2)}`,
+                    path: this.breadcrumbs
+                }
+            ]
+        };
     }
 
-    private convertEnum(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output {
+    private async convertEnum(resolvedSchema: OpenAPIV3_1.SchemaObject): Promise<ExampleConverter.Output> {
         const isValid = resolvedSchema.enum?.includes(this.example) ?? false;
-        return isValid
-            ? {
-                  isValid,
-                  coerced: false,
-                  validExample: this.example,
-                  errors: []
-              }
-            : {
-                  isValid,
-                  coerced: false,
-                  validExample: resolvedSchema.enum?.[0],
-                  errors: [
-                      {
-                          message: `Example is not one of the allowed enum values: ${JSON.stringify(resolvedSchema.enum, null, 2)}`,
-                          path: this.breadcrumbs
-                      }
-                  ]
-              };
+        if (isValid) {
+            return {
+                isValid,
+                coerced: false,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
+            : this.schema.default;
+
+        if (resolvedDefault !== undefined && resolvedSchema.enum?.includes(resolvedDefault)) {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
+        return {
+            isValid,
+            coerced: false,
+            validExample: resolvedSchema.enum?.[0],
+            errors: [
+                {
+                    message: `Example is not one of the allowed enum values: ${JSON.stringify(resolvedSchema.enum, null, 2)}`,
+                    path: this.breadcrumbs
+                }
+            ]
+        };
     }
 
     private async convertNumber(): Promise<ExampleConverter.Output> {
@@ -279,6 +310,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 isValid: true,
                 coerced: true,
                 validExample: num,
+                errors: []
+            };
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
+            : this.schema.default;
+        if (typeof resolvedDefault === "number") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
                 errors: []
             };
         }
@@ -316,6 +359,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
+            : this.schema.default;
+
+        if (typeof resolvedDefault === "string") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
         return {
             isValid: false,
             coerced: false,
@@ -349,6 +405,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     errors: []
                 };
             }
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (await this.resolveSchema(this.schema))?.default
+            : this.schema.default;
+        if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
         }
 
         return {

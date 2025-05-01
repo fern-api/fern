@@ -9,6 +9,7 @@ import { Name } from "../../commons/types/Name";
 import { FileUploadRequestProperty } from "./FileUploadRequestProperty";
 import { WithDocs } from "../../commons/types/WithDocs";
 import { WithV2Examples } from "../../examples/types/WithV2Examples";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const FileUploadRequest: core.serialization.ObjectSchema<
     serializers.FileUploadRequest.Raw,
@@ -19,10 +20,11 @@ export const FileUploadRequest: core.serialization.ObjectSchema<
         properties: core.serialization.list(FileUploadRequestProperty),
     })
     .extend(WithDocs)
-    .extend(WithV2Examples);
+    .extend(WithV2Examples)
+    .extend(WithContentType);
 
 export declare namespace FileUploadRequest {
-    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw {
+    export interface Raw extends WithDocs.Raw, WithV2Examples.Raw, WithContentType.Raw {
         name: Name.Raw;
         properties: FileUploadRequestProperty.Raw[];
     }

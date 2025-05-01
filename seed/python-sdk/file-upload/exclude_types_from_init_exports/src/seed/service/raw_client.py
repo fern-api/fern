@@ -119,8 +119,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def just_file(
         self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
@@ -153,8 +153,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def just_file_with_query_params(
         self,
@@ -212,8 +212,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def with_content_type(
         self,
@@ -266,8 +266,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def with_form_encoding(
         self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
@@ -307,8 +307,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def with_form_encoded_containers(
         self,
@@ -407,8 +407,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     def optional_args(
         self,
@@ -448,6 +448,9 @@ class RawServiceClient:
                     else {}
                 ),
             },
+            headers={
+                "content-type": "multipart/form-data",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -463,8 +466,8 @@ class RawServiceClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
 
 class AsyncRawServiceClient:
@@ -564,8 +567,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def just_file(
         self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
@@ -598,8 +601,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def just_file_with_query_params(
         self,
@@ -657,8 +660,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def with_content_type(
         self,
@@ -711,8 +714,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def with_form_encoding(
         self, *, file: core.File, foo: str, bar: MyObject, request_options: typing.Optional[RequestOptions] = None
@@ -752,8 +755,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def with_form_encoded_containers(
         self,
@@ -852,8 +855,8 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=None)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
 
     async def optional_args(
         self,
@@ -893,6 +896,9 @@ class AsyncRawServiceClient:
                     else {}
                 ),
             },
+            headers={
+                "content-type": "multipart/form-data",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -908,5 +914,5 @@ class AsyncRawServiceClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)

@@ -1,4 +1,57 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.17.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for retrieving response headers for each page of paginated responses, instead of just the first page.
+
+- version: 4.16.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where `bytes` and `text` responses were not handled correctly.
+
+- version: 4.16.1
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Fixes an internal release issue in `4.16.0`.
+
+- version: 4.16.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+         Add support for retrieving response headers from the generated `ApiError` class.
+
+- version: 4.15.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for offset step pagination, where the offset position represents the element's index rather
+        than the page number.
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
+
+- version: 4.14.6
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue where multipart/form-data content types are now explicitly sent when configured in the API definition.
+
+- version: 4.14.5
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where SSE streaming responses were not yielded correctly.
+
 - version: 4.14.4
   irVersion: 57
   changelogEntry:

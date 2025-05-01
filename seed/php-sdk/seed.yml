@@ -43,6 +43,10 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+    - outputFolder: package-path
+      customConfig:
+        packagePath: Custom/Package/Path
+        namespace: Custom\Package\Path
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
