@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Promotes `fern docs dev --beta` to `fern docs dev`; local development now better reflects the production version of docs. To use the legacy version, use the `--legacy` flag.
+    type: feat
+  irVersion: 57
+  version: 0.60.0
+
+- changelogEntry:
+  - summary: |
       Add support for local SDK generation with a Fern token. When a valid Fern token is provided, 
       users can now generate complete SDKs locally using Docker, without requiring remote generation. 
       This enhancement improves the development workflow by allowing for faster iteration and testing 
