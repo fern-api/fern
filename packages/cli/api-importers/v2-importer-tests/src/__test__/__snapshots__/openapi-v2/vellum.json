@@ -36288,12 +36288,7 @@
                   },
                   "environment": "Default",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "document_index_id": "foo",
-                    "limit": 42,
-                    "offset": 42,
-                    "ordering": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

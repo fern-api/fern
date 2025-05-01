@@ -34562,16 +34562,7 @@
                   },
                   "environment": "https://api.hume.ai",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "limit": 50,
-                    "status": [
-                      "QUEUED"
-                    ],
-                    "when": "created_before",
-                    "timestamp_ms": 42,
-                    "sort_by": "created",
-                    "direction": "asc"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

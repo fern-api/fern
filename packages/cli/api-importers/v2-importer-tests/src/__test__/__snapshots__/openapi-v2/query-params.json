@@ -1070,14 +1070,7 @@
                     "path": "/search"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "filter": {},
-                    "sort": "asc",
-                    "limit": 42,
-                    "tags": [
-                      "foo"
-                    ]
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
