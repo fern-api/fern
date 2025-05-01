@@ -76,7 +76,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
-  test-ete:
   ete-tests:
     if: github.repository == 'fern-api/fern'
     runs-on: CLI
