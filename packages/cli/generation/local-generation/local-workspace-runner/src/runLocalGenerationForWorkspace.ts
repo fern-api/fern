@@ -48,12 +48,14 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
+                const absolutePathToLocalOutput = generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
+
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
                     generatorInvocation,
-                    absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path),
+                    absolutePathToLocalOutput,
                     absolutePathToLocalSnippetJSON: undefined,
                     absolutePathToLocalSnippetTemplateJSON: undefined,
                     audiences: generatorGroup.audiences,
@@ -67,7 +69,7 @@ export async function runLocalGenerationForWorkspace({
                     generatePaginatedClients: false
                 });
                 interactiveTaskContext.logger.info(
-                    chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
+                    chalk.green("Wrote files to " + absolutePathToLocalOutput)
                 );
             });
         })
