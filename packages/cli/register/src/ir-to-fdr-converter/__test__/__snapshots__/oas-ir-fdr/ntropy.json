@@ -5648,13 +5648,7 @@
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 25,
-                "account_holder_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -6337,13 +6331,7 @@
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 10,
-                "status": "processing"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -6931,13 +6919,7 @@
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 10,
-                "status": "queued"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -7765,12 +7747,7 @@
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 10
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -9196,13 +9173,7 @@
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
-              "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "foo",
-                "limit": 10,
-                "status": "open"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -10059,11 +10030,7 @@
               "description": "",
               "path": "/v3/entities/lookup",
               "pathParameters": {},
-              "queryParameters": {
-                "name": "foo",
-                "website": "foo",
-                "location": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

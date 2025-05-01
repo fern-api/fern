@@ -17430,22 +17430,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                "contractAddresses[]": [
-                  "foo"
-                ],
-                "withMetadata": true,
-                "orderBy": "transferTime",
-                "excludeFilters[]": [
-                  "SPAM"
-                ],
-                "includeFilters[]": [
-                  "SPAM"
-                ],
-                "spamConfidenceLevel": "VERY_HIGH",
-                "tokenUriTimeoutInMs": 42,
-                "pageKey": "foo",
-                "pageSize": 100
+                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -18316,9 +18301,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "withTokenBalances": false,
-                "pageKey": "foo"
+                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -18911,18 +18894,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                "pageKey": "foo",
-                "pageSize": 100,
-                "withMetadata": true,
-                "includeFilters[]": [
-                  "SPAM"
-                ],
-                "excludeFilters[]": [
-                  "SPAM"
-                ],
-                "orderBy": "transferTime",
-                "spamConfidenceLevel": "VERY_HIGH"
+                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -19268,16 +19240,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                "pageKey": "foo",
-                "pageSize": 100,
-                "withMetadata": true,
-                "includeFilters[]": [
-                  "SPAM"
-                ],
-                "excludeFilters[]": [
-                  "SPAM"
-                ]
+                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -19595,11 +19558,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "withMetadata": true,
-                "startToken": "foo",
-                "limit": 42,
-                "tokenUriTimeoutInMs": 42
+                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -20037,14 +19996,7 @@
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
-              "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "collectionSlug": "boredapeyachtclub",
-                "withMetadata": true,
-                "startToken": "foo",
-                "limit": 42,
-                "tokenUriTimeoutInMs": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20442,10 +20394,7 @@
               },
               "queryParameters": {
                 "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "tokenId": "44",
-                "tokenType": "foo",
-                "tokenUriTimeoutInMs": 42,
-                "refreshCache": false
+                "tokenId": "44"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -24711,10 +24660,7 @@
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
-              "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "collectionSlug": "boredapeyachtclub"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25089,19 +25035,7 @@
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
-              "queryParameters": {
-                "fromBlock": "0",
-                "toBlock": "latest",
-                "order": "asc",
-                "marketplace": "seaport",
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "tokenId": "44",
-                "buyerAddress": "foo",
-                "sellerAddress": "foo",
-                "taker": "BUYER",
-                "limit": 42,
-                "pageKey": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25591,22 +25525,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                "contractAddresses[]": [
-                  "foo"
-                ],
-                "withMetadata": true,
-                "orderBy": "transferTime",
-                "excludeFilters[]": [
-                  "SPAM"
-                ],
-                "includeFilters[]": [
-                  "SPAM"
-                ],
-                "spamConfidenceLevel": "VERY_HIGH",
-                "tokenUriTimeoutInMs": 42,
-                "pageKey": "foo",
-                "pageSize": 100
+                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -26077,10 +25996,7 @@
               },
               "queryParameters": {
                 "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "tokenId": "44",
-                "tokenType": "foo",
-                "tokenUriTimeoutInMs": 42,
-                "refreshCache": false
+                "tokenId": "44"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -27569,14 +27485,7 @@
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
-              "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "collectionSlug": "boredapeyachtclub",
-                "withMetadata": true,
-                "startToken": "foo",
-                "limit": 42,
-                "tokenUriTimeoutInMs": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27960,9 +27869,7 @@
               },
               "queryParameters": {
                 "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "tokenId": "44",
-                "pageKey": "foo",
-                "pageSize": 42
+                "tokenId": "44"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28233,9 +28140,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "withTokenBalances": false,
-                "pageKey": "foo"
+                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -30811,19 +30716,7 @@
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
-              "queryParameters": {
-                "fromBlock": "0",
-                "toBlock": "latest",
-                "order": "asc",
-                "marketplace": "seaport",
-                "contractAddress": "0xe785E82358879F061BC3dcAC6f0444462D4b5330",
-                "tokenId": "44",
-                "buyerAddress": "foo",
-                "sellerAddress": "foo",
-                "taker": "BUYER",
-                "limit": 42,
-                "pageKey": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31264,18 +31157,7 @@
                 "apiKey": "docs-demo"
               },
               "queryParameters": {
-                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-                "pageKey": "foo",
-                "pageSize": 100,
-                "withMetadata": true,
-                "includeFilters[]": [
-                  "SPAM"
-                ],
-                "excludeFilters[]": [
-                  "SPAM"
-                ],
-                "orderBy": "transferTime",
-                "spamConfidenceLevel": "VERY_HIGH"
+                "owner": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
               },
               "headers": {},
               "responseStatusCode": 200,

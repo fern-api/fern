@@ -1191,10 +1191,7 @@
               "description": "",
               "path": "/end-users/v1",
               "pathParameters": {},
-              "queryParameters": {
-                "cursor": "65a17e3f43bec88e2792d0eb",
-                "limit": 8
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

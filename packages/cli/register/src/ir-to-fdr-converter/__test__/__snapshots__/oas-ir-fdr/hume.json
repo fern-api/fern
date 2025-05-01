@@ -5355,16 +5355,7 @@
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
-            "queryParameters": {
-              "limit": 50,
-              "status": [
-                "QUEUED"
-              ],
-              "when": "created_before",
-              "timestamp_ms": 42,
-              "sort_by": "created",
-              "direction": "asc"
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {

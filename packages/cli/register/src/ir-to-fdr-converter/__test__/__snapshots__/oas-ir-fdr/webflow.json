@@ -52971,14 +52971,8 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
               "queryParameters": {
-                "cmsLocaleId": "foo",
                 "offset": 0,
-                "limit": 100,
-                "name": "foo",
-                "slug": "foo",
-                "lastPublished": {},
-                "sortBy": "lastPublished",
-                "sortOrder": "asc"
+                "limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -53488,14 +53482,8 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
               "queryParameters": {
-                "cmsLocaleId": "foo",
                 "offset": 0,
-                "limit": 100,
-                "name": "foo",
-                "slug": "foo",
-                "lastPublished": {},
-                "sortBy": "lastPublished",
-                "sortOrder": "asc"
+                "limit": 100
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -54160,9 +54148,7 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
               },
-              "queryParameters": {
-                "cmsLocaleId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -54295,9 +54281,7 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
               },
-              "queryParameters": {
-                "cmsLocaleId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -54684,9 +54668,7 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
               },
-              "queryParameters": {
-                "cmsLocaleId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -54819,9 +54801,7 @@
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
               },
-              "queryParameters": {
-                "cmsLocaleId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -62665,7 +62645,6 @@
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
               "queryParameters": {
-                "status": "pending",
                 "offset": 0,
                 "limit": 100
               },

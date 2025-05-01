@@ -23003,14 +23003,7 @@
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "direction": "desc",
-                "f.purchase_order.id": 123,
-                "f.booking.id": 54321,
-                "f.purchase_order_line_item.id": 54321
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23656,28 +23649,7 @@
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "sort": "cargo_ready_date",
-                "direction": "desc",
-                "f.status": "booked",
-                "f.shipment.id": 123456,
-                "f.consignee_entity_ref": "amazon-us",
-                "f.shipper_entity_ref": "amazon-us",
-                "f.name": "foo",
-                "f.cargo_ready_date": "foo",
-                "f.cargo_ready_date.gt": "foo",
-                "f.cargo_ready_date.gte": "foo",
-                "f.cargo_ready_date.lt": "foo",
-                "f.cargo_ready_date.lte": "foo",
-                "f.created_at": "foo",
-                "f.created_at.gt": "foo",
-                "f.created_at.gte": "foo",
-                "f.created_at.lt": "foo",
-                "f.created_at.lte": "foo",
-                "f.metadata.YOUR_METADATA_KEY": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25447,14 +25419,7 @@
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.shipment.id": "foo",
-                "f.invoice_number": "foo",
-                "f.involved_party_seller_id": "foo",
-                "f.involved_party_seller_ref": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26564,11 +26529,7 @@
               "description": "",
               "path": "/customs_entries",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.shipment.id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26930,17 +26891,7 @@
               "description": "",
               "path": "/documents",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.shipment.id": "foo",
-                "f.document_type": "foo",
-                "f.archived_at.exists": "foo",
-                "f.uploaded_at.gt": "foo",
-                "f.uploaded_at.lt": "foo",
-                "f.uploaded_at.gte": "foo",
-                "f.uploaded_at.lte": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27458,7 +27409,6 @@
                 "f.type": "/shipment_leg#departed",
                 "f.occurred_at.gte": "2020-01-10T20:00:00.000Z",
                 "f.occurred_at.lte": "2020-01-10T20:00:00.000Z",
-                "f.data.shipment.id": 42,
                 "f.data.resource._object": "/invoice"
               },
               "headers": {},
@@ -31026,24 +30976,7 @@
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "sort": "due_date",
-                "direction": "desc",
-                "f.status": "outstanding",
-                "f.shipment.id": 12345,
-                "f.billed_directly_to_client": true,
-                "f.entity.id": 12345,
-                "f.entity.ref": "my-entity-ref",
-                "f.name": "FLEX-123456-1",
-                "f.issued_at.gt": "2019-06-01",
-                "f.issued_at.lt": "2019-06-01T17:29:23.172Z",
-                "f.last_updated_at.gt": "2019-06-01",
-                "f.last_updated_at.lt": "2019-06-01T17:29:23.172Z",
-                "f.client_id": 54321,
-                "f.shipment_id": 12345
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32196,12 +32129,7 @@
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.ref": "foo",
-                "f.metadata.YOUR_METADATA_KEY": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33154,13 +33082,7 @@
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.ref": "foo",
-                "f.company_id": "foo",
-                "f.company_ref": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33833,13 +33755,7 @@
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.company_ref": "foo",
-                "f.company.id": "foo",
-                "f.location.id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34476,15 +34392,7 @@
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.ref": "foo",
-                "f.company_ref": "foo",
-                "f.company.id": "foo",
-                "f.contact.id": "foo",
-                "f.metadata.YOUR_METADATA_KEY": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -35196,13 +35104,7 @@
               "description": "",
               "path": "/ocean/shipment_container_legs",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.leg.id": 42,
-                "f.shipment_container.id": 42,
-                "f.shipment_container.container_number": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -35541,13 +35443,7 @@
               "description": "",
               "path": "/ocean/shipment_containers",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.shipment.id": 42,
-                "f.container_number": "foo",
-                "f.metadata.YOUR_METADATA_KEY": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36023,12 +35919,7 @@
               "description": "",
               "path": "/ports",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.port_type": "airport",
-                "f.unlocode": "CATOR"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36286,11 +36177,7 @@
               "description": "",
               "path": "/products",
               "pathParameters": {},
-              "queryParameters": {
-                "f.sku": "foo",
-                "f.archived_at.exists": true,
-                "f.product_properties.TYPE": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37049,15 +36936,7 @@
               "description": "",
               "path": "/purchase_order_line_items",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "direction": "desc",
-                "f.purchase_order.id": 123,
-                "f.line_item_number": 1,
-                "f.item_key": "item1",
-                "f.purchase_order_version.id": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37845,23 +37724,9 @@
               "path": "/purchase_orders",
               "pathParameters": {},
               "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "sort": "id",
-                "direction": "asc",
-                "f.archived_at.exists": true,
-                "f.status": "open",
-                "f.buyer_ref": "amazon-us",
-                "f.seller_ref": "amazon-us",
-                "f.seller_entity_ref": "id-12345",
-                "f.buyer_entity_ref": "id-54321",
                 "f.roles": [
                   "buyer"
-                ],
-                "f.shipment.id": 123456,
-                "f.name": "PO-123456",
-                "f.updated_at.lt": "2022-01-01 18:26:37 PST",
-                "f.updated_at.gt": "2022-01-01 18:26:37 PST"
+                ]
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -38436,9 +38301,7 @@
               "pathParameters": {
                 "id": 42
               },
-              "queryParameters": {
-                "f.purchase_order_version.id": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38728,13 +38591,7 @@
               "description": "",
               "path": "/shipment_legs",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "f.shipment.id": 42,
-                "f.transportation_mode": 42,
-                "f.include_deleted": false
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39105,9 +38962,7 @@
               "pathParameters": {
                 "id": 42
               },
-              "queryParameters": {
-                "f.include_deleted": false
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39836,39 +39691,7 @@
               "description": "",
               "path": "/shipments",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "per": 20,
-                "sort": "id",
-                "direction": "desc",
-                "f.transportation_mode": "ocean",
-                "f.status": "seller_location",
-                "f.statuses.any": "seller_location",
-                "f.container_number": "BWSE3982156",
-                "f.purchase_order": "PO002811",
-                "f.sku": "ASA121",
-                "f.updated_at.gt": "foo",
-                "f.updated_at.lt": "foo",
-                "f.archived_at.gt": "foo",
-                "f.archived_at.lt": "foo",
-                "f.master_bill_number": "foo",
-                "f.house_bill_number": "foo",
-                "f.consignee_external_ref": "foo",
-                "f.origin_address_ref": "foo",
-                "f.destination_address_ref": "foo",
-                "f.metadata.YOUR_METADATA_KEY": "foo",
-                "f.wants_freight_management_bco": true,
-                "f.wants_flexport_freight": true,
-                "f.wants_import_customs_service": true,
-                "f.wants_export_customs_service": true,
-                "f.wants_commercial_invoice_transcription": true,
-                "f.wants_flexport_insurance": true,
-                "f.wants_pickup_service": true,
-                "f.wants_trade_declaration_service": true,
-                "f.visibility_only": true,
-                "f.wants_delivery_service": true,
-                "f.belongs_to_a_buyers_consol": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

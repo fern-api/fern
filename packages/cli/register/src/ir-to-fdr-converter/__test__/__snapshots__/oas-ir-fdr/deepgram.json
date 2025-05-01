@@ -13517,13 +13517,10 @@
                   "account%20deletion"
                 ],
                 "custom_topic_mode": "strict",
-                "custom_intent": "unsubscribe",
                 "custom_intent_mode": "strict",
                 "detect_entities": true,
-                "detect_language": false,
                 "diarize_version": "v2",
                 "diarize": true,
-                "dictation": false,
                 "encoding": "linear16",
                 "extra": [
                   "key:value",
@@ -13539,9 +13536,7 @@
                   "Twilio:2",
                   "Algolia"
                 ],
-                "language": "en",
                 "measurements": true,
-                "model": "base-general",
                 "multichannel": true,
                 "numerals": true,
                 "paragraphs": true,
@@ -13567,8 +13562,7 @@
                 ],
                 "topics": true,
                 "utterances": true,
-                "utt_split": 1.2,
-                "version": "latest"
+                "utt_split": 1.2
               },
               "headers": {},
               "requestBody": {
@@ -14506,9 +14500,7 @@
               "path": "/v1/speak",
               "pathParameters": {},
               "queryParameters": {
-                "bit_rate": 48000,
                 "callback": "https://example.com",
-                "container": "wav",
                 "speak_encoding": "linear16",
                 "speak_model": "aura-asteria-en",
                 "speak_sample_rate": 24000
@@ -17252,8 +17244,7 @@
               },
               "queryParameters": {
                 "start": "2024-07-01T00:00:00",
-                "end": "2024-07-31T00:00:00",
-                "project_filters": "alternatives.yml"
+                "end": "2024-07-31T00:00:00"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -17559,9 +17550,7 @@
               },
               "queryParameters": {
                 "start": "2024-07-01T00:00:00",
-                "end": "2024-07-31T00:00:00",
-                "project_filters": "alternatives.yml",
-                "usage_breakdown_filters": {}
+                "end": "2024-07-31T00:00:00"
               },
               "headers": {},
               "responseStatusCode": 200,

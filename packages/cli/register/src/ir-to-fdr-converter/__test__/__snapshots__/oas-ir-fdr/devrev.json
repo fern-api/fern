@@ -8447,11 +8447,7 @@
               "description": "",
               "path": "/auth-tokens.list",
               "pathParameters": {},
-              "queryParameters": {
-                "client_id": "foo",
-                "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                "subject": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -9397,20 +9393,7 @@
               "description": "",
               "path": "/dev-users.list",
               "pathParameters": {},
-              "queryParameters": {
-                "cursor": "foo",
-                "email": [
-                  "foo"
-                ],
-                "limit": 42,
-                "mode": "after",
-                "sort_by": [
-                  "foo"
-                ],
-                "state": [
-                  "active"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -10333,23 +10316,7 @@
               "description": "",
               "path": "/parts.list",
               "pathParameters": {},
-              "queryParameters": {
-                "created_by": [
-                  "foo"
-                ],
-                "cursor": "foo",
-                "limit": 42,
-                "mode": "after",
-                "name": [
-                  "foo"
-                ],
-                "owned_by": [
-                  "foo"
-                ],
-                "type": [
-                  "capability"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -11290,24 +11257,7 @@
               "description": "",
               "path": "/rev-orgs.list",
               "pathParameters": {},
-              "queryParameters": {
-                "created_by": [
-                  "foo"
-                ],
-                "created_date.after": "foo",
-                "created_date.before": "foo",
-                "cursor": "foo",
-                "external_ref": [
-                  "foo"
-                ],
-                "limit": 42,
-                "mode": "after",
-                "modified_date.after": "foo",
-                "modified_date.before": "foo",
-                "sort_by": [
-                  "foo"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12046,11 +11996,7 @@
               "description": "",
               "path": "/tags.list",
               "pathParameters": {},
-              "queryParameters": {
-                "cursor": "foo",
-                "limit": 42,
-                "mode": "after"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12730,10 +12676,7 @@
               "path": "/timeline-entries.list",
               "pathParameters": {},
               "queryParameters": {
-                "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                "cursor": "foo",
-                "limit": 42,
-                "mode": "after"
+                "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -14261,36 +14204,7 @@
               "description": "",
               "path": "/works.export",
               "pathParameters": {},
-              "queryParameters": {
-                "applies_to_part": [
-                  "foo"
-                ],
-                "created_by": [
-                  "foo"
-                ],
-                "first": 42,
-                "issue.priority": [
-                  "p0"
-                ],
-                "issue.rev_orgs": [
-                  "foo"
-                ],
-                "owned_by": [
-                  "foo"
-                ],
-                "stage.name": [
-                  "foo"
-                ],
-                "ticket.rev_org": [
-                  "foo"
-                ],
-                "ticket.severity": [
-                  "blocker"
-                ],
-                "type": [
-                  "issue"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14947,38 +14861,7 @@
               "description": "",
               "path": "/works.list",
               "pathParameters": {},
-              "queryParameters": {
-                "applies_to_part": [
-                  "foo"
-                ],
-                "created_by": [
-                  "foo"
-                ],
-                "cursor": "foo",
-                "issue.priority": [
-                  "p0"
-                ],
-                "issue.rev_orgs": [
-                  "foo"
-                ],
-                "limit": 42,
-                "mode": "after",
-                "owned_by": [
-                  "foo"
-                ],
-                "stage.name": [
-                  "foo"
-                ],
-                "ticket.rev_org": [
-                  "foo"
-                ],
-                "ticket.severity": [
-                  "blocker"
-                ],
-                "type": [
-                  "issue"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

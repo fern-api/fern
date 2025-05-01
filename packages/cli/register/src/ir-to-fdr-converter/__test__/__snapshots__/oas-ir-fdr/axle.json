@@ -1626,9 +1626,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "expand": true
-              },
+              "queryParameters": {},
               "headers": {
                 "x-client-id": "foo",
                 "x-client-secret": "foo"
@@ -1796,9 +1794,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "expand": true
-              },
+              "queryParameters": {},
               "headers": {
                 "x-client-id": "foo",
                 "x-client-secret": "foo"

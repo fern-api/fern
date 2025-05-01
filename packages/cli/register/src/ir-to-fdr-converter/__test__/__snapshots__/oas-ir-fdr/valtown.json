@@ -4265,8 +4265,6 @@
               "queryParameters": {
                 "offset": 0,
                 "limit": 20,
-                "since": "foo",
-                "until": "foo",
                 "relationship": "any"
               },
               "headers": {},
@@ -4442,9 +4440,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "offset": 0,
-                "limit": 20,
-                "since": "foo",
-                "until": "foo"
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4582,9 +4578,7 @@
               "description": "",
               "path": "/v1/blob",
               "pathParameters": {},
-              "queryParameters": {
-                "prefix": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5611,9 +5605,7 @@
               "pathParameters": {
                 "code": "foo"
               },
-              "queryParameters": {
-                "args": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5703,9 +5695,7 @@
               "pathParameters": {
                 "valname": "foo"
               },
-              "queryParameters": {
-                "args": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }

@@ -782,9 +782,7 @@
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
-              "queryParameters": {
-                "status": "available"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -906,11 +904,7 @@
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
-              "queryParameters": {
-                "tags": [
-                  "foo"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -1179,10 +1173,7 @@
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "name": "foo",
-                "status": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -1305,9 +1296,7 @@
                 "petId": 42
               },
               "queryParameters": {},
-              "headers": {
-                "api_key": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -1397,9 +1386,7 @@
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "additionalMetadata": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2059,10 +2046,7 @@
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
-              "queryParameters": {
-                "username": "foo",
-                "password": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2737,9 +2721,7 @@
               "description": "",
               "path": "/pet/findByStatus",
               "pathParameters": {},
-              "queryParameters": {
-                "status": "available"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2861,11 +2843,7 @@
               "description": "",
               "path": "/pet/findByTags",
               "pathParameters": {},
-              "queryParameters": {
-                "tags": [
-                  "foo"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3134,10 +3112,7 @@
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "name": "foo",
-                "status": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3260,9 +3235,7 @@
                 "petId": 42
               },
               "queryParameters": {},
-              "headers": {
-                "api_key": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -3352,9 +3325,7 @@
               "pathParameters": {
                 "petId": 42
               },
-              "queryParameters": {
-                "additionalMetadata": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -4014,10 +3985,7 @@
               "description": "",
               "path": "/user/login",
               "pathParameters": {},
-              "queryParameters": {
-                "username": "foo",
-                "password": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

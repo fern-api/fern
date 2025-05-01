@@ -1754,9 +1754,7 @@
               "description": "",
               "path": "/api/v2/accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -1987,13 +1985,7 @@
               "description": "",
               "path": "/api/v2/games/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "complete": "foo",
-                "date": "foo",
-                "before": "foo",
-                "after": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2204,12 +2196,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "complete": "foo",
-                "date": "foo",
-                "before": "foo",
-                "after": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2372,11 +2359,7 @@
               "description": "",
               "path": "/api/v2/groups/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "is_event": "foo",
-                "complete": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2625,10 +2608,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "is_event": "foo",
-                "complete": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2829,9 +2809,7 @@
               "description": "",
               "path": "/api/v2/players/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3062,9 +3040,7 @@
               "description": "",
               "path": "/api/v2/rooms/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3243,9 +3219,7 @@
               "description": "",
               "path": "/api/v2/photos/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

@@ -11847,9 +11847,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12324,11 +12322,7 @@
               "description": "",
               "path": "/org",
               "pathParameters": {},
-              "queryParameters": {
-                "membership": "active",
-                "cursor": "foo",
-                "page_limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -12810,11 +12804,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "show": "all",
-                "cursor": "foo",
-                "page_limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -13778,10 +13768,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14696,9 +14683,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15291,11 +15276,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "title": "foo",
-                "cursor": "foo",
-                "page_limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -16083,11 +16064,7 @@
                 "project_id": "foo",
                 "collection_id": "foo"
               },
-              "queryParameters": {
-                "show": "all",
-                "cursor": "foo",
-                "page_limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -16838,9 +16815,7 @@
                 "project_id": "foo",
                 "collection_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -17549,15 +17524,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "title": "foo",
-                "cursor": "foo",
-                "collection_id": "foo",
-                "page_limit": 25,
-                "source": "upload",
-                "strategy": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18703,10 +18670,7 @@
                 "project_id": "foo",
                 "document_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18997,9 +18961,7 @@
                 "project_id": "foo",
                 "document_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19583,9 +19545,7 @@
               "description": "",
               "path": "/chat/recent",
               "pathParameters": {},
-              "queryParameters": {
-                "project_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20371,9 +20331,7 @@
               "pathParameters": {
                 "chat_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20902,9 +20860,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21222,10 +21178,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -21340,9 +21293,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -21574,10 +21525,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22104,10 +22052,7 @@
               "description": "",
               "path": "/datasource/box/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -22238,9 +22183,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22558,10 +22501,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -22676,9 +22616,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -22910,10 +22848,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23440,10 +23375,7 @@
               "description": "",
               "path": "/datasource/confluence/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -23574,9 +23506,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23894,10 +23824,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24012,9 +23939,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24246,10 +24171,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24776,10 +24698,7 @@
               "description": "",
               "path": "/datasource/dropbox/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24910,9 +24829,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25230,10 +25147,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -25348,9 +25262,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -25582,10 +25494,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26112,10 +26021,7 @@
               "description": "",
               "path": "/datasource/gdrive/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26246,9 +26152,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26566,10 +26470,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26684,9 +26585,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26918,10 +26817,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27448,10 +27344,7 @@
               "description": "",
               "path": "/datasource/notion/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -27582,9 +27475,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27902,10 +27793,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -28020,9 +27908,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -28254,10 +28140,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28784,10 +28667,7 @@
               "description": "",
               "path": "/datasource/onedrive/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -28918,9 +28798,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": ""
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29238,10 +29116,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -29356,9 +29231,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -29590,10 +29463,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -30120,10 +29990,7 @@
               "description": "",
               "path": "/datasource/sharepoint/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -31028,10 +30895,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 25
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31797,11 +31661,7 @@
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
               },
-              "queryParameters": {
-                "name": "foo",
-                "page_limit": 42,
-                "cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32634,8 +32494,6 @@
                 "task_id": "01909843-3596-da54-4756-28af46917e74"
               },
               "queryParameters": {
-                "page_limit": 42,
-                "cursor": "foo",
                 "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1"
               },
               "headers": {},
@@ -32961,9 +32819,7 @@
                 "project_id": "foo",
                 "task_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33783,10 +33639,7 @@
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
               },
-              "queryParameters": {
-                "page_limit": 42,
-                "cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
