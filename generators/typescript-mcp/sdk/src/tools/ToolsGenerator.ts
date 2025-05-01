@@ -13,14 +13,34 @@ export class ToolsGenerator extends FileGenerator<
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
+                writer.writeLine("import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';");
+                writer.writeLine("import { ImdbClient } from '@imdb/client';");
+                writer.writeLine("import * as schemas from '../schemas';");
+                writer.writeLine("\n");
+                writer.writeLine("const client = new ImdbClient();");
                 writer.writeLine(
                     Object.entries(this.context.ir.services)
                         .map(([_, service]) => {
-                            return `// SERVICE: ${service.basePath.head}\n${service.endpoints
+                            return service.endpoints
                                 .map((endpoint) => {
-                                    return `// ENDPOINT: ${endpoint.name.camelCase.safeName}, ${endpoint.method}, ${endpoint.path.head}`;
+                                    return `
+export const ${endpoint.name.camelCase.safeName} = {
+  register: function(server: McpServer) {
+    return server.tool(
+      "${endpoint.name.snakeCase.safeName}",
+      ${endpoint.docs ? `"${endpoint.docs}"` : "undefined"},
+      ${endpoint.method === "POST" ? `schemas.${endpoint.name.camelCase.safeName}Request` : "undefined"},
+      async (params) => {
+        const result = await client.${endpoint.name.camelCase.safeName}(params);
+        return {
+          content: [{ type: "text", text: result }],
+        };
+    }
+    );
+  }
+}`;
                                 })
-                                .join("\n")}`;
+                                .join("\n\n");
                         })
                         .join("\n")
                 );
