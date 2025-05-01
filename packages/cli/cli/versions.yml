@@ -1,5 +1,15 @@
 - changelogEntry:
   - summary: |
+      Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would 
+      generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header. 
+      This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and 
+      avoids creating duplicates, resulting in cleaner and more consistent API definitions.
+    type: feat
+  irVersion: 57
+  version: 0.60.1
+
+- changelogEntry:
+  - summary: |
       Promotes `fern docs dev --beta` to `fern docs dev`; local development now better reflects the production version of docs. To use the legacy version, use the `--legacy` flag.
     type: feat
   irVersion: 57

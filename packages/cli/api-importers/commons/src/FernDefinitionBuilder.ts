@@ -23,6 +23,8 @@ export interface FernDefinitionBuilder {
 
     getGlobalHeaderNames(): Set<string>;
 
+    getAuthHeaderName(): string | undefined;
+
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
     addIdempotencyHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
@@ -226,6 +228,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             headerNames.push(maybeVersionHeader);
         }
         return new Set(headerNames);
+    }
+
+    public getAuthHeaderName(): string | undefined {
+        // Get header from auth schemes
+        if (this.rootApiFile["auth-schemes"] != null) {
+            for (const scheme of Object.values(this.rootApiFile["auth-schemes"])) {
+                if (isHeaderAuthScheme(scheme)) {
+                    return scheme.header;
+                }
+            }
+            return "Authorization";
+        } 
+        return undefined;
     }
 
     public addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void {
