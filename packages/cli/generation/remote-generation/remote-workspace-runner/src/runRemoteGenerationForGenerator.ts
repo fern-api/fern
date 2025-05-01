@@ -182,6 +182,21 @@ function getPublishConfig({
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
 }): FernIr.PublishingConfig | undefined {
+    // HACKHACK: come back and make this exhaustive
+    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        return FernIr.PublishingConfig.github({
+            owner: "",
+            repo: "",
+            token: generatorInvocation.raw.github.token,
+            uri: generatorInvocation.raw.github.uri,
+            target: FernIr.PublishTarget.npm({
+                packageName: undefined,
+                tokenEnvironmentVariable: "NPM_TOKEN",
+                registry: undefined
+            })
+        });
+    }
+
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => undefined,
         github: () => undefined,
@@ -276,4 +291,16 @@ function convertToFdrApiDefinitionSources(
             }
         ])
     );
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }
