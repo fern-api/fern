@@ -18888,7 +18888,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "42",
+                  "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                  "title": "Thanks for everything",
+                  "description": "Description of the Article",
+                  "body": "<p class=\"no-margin\">Body of the Article</p>",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "created_at": 1719492710,
+                  "updated_at": 1719492710,
+                  "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                  "parent_id": 145,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -18901,7 +18915,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "42",
+                  "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                  "title": "Thanks for everything",
+                  "description": "Description of the Article",
+                  "body": "<p class=\"no-margin\">Body of the Article</p>",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "created_at": 1719492710,
+                  "updated_at": 1719492710,
+                  "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                  "parent_id": 145,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -19012,7 +19040,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "45",
+                  "workspace_id": "this_is_an_id43_that_should_be_at_least_4",
+                  "title": "This is the article title",
+                  "description": "",
+                  "body": "",
+                  "author_id": 991267412,
+                  "state": "published",
+                  "created_at": 1719492712,
+                  "updated_at": 1719492712,
+                  "url": "http://help-center.test/myapp-43/en/articles/45-this-is-the-article-title",
+                  "parent_id": 148,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -19025,7 +19067,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "45",
+                  "workspace_id": "this_is_an_id43_that_should_be_at_least_4",
+                  "title": "This is the article title",
+                  "description": "",
+                  "body": "",
+                  "author_id": 991267412,
+                  "state": "published",
+                  "created_at": 1719492712,
+                  "updated_at": 1719492712,
+                  "url": "http://help-center.test/myapp-43/en/articles/45-this-is-the-article-title",
+                  "parent_id": 148,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -19154,7 +19210,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "48",
+                  "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                  "title": "Christmas is here!",
+                  "description": "",
+                  "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                  "author_id": 991267418,
+                  "state": "published",
+                  "created_at": 1719492714,
+                  "updated_at": 1719492714,
+                  "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                  "parent_id": 151,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -19167,7 +19237,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "48",
+                  "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                  "title": "Christmas is here!",
+                  "description": "",
+                  "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                  "author_id": 991267418,
+                  "state": "published",
+                  "created_at": 1719492714,
+                  "updated_at": 1719492714,
+                  "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                  "parent_id": 151,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -19426,7 +19510,22 @@
                   "total_count": 1,
                   "data": {
                     "articles": [
-                      {}
+                      {
+                        "type": "article",
+                        "id": "55",
+                        "workspace_id": "this_is_an_id61_that_should_be_at_least_4",
+                        "title": "Title 1",
+                        "description": "",
+                        "body": "",
+                        "author_id": 991267431,
+                        "state": "draft",
+                        "created_at": 1719492719,
+                        "updated_at": 1719492719,
+                        "url": null,
+                        "parent_id": null,
+                        "parent_ids": [],
+                        "parent_type": null
+                      }
                     ],
                     "highlights": []
                   },
@@ -19445,7 +19544,22 @@
                   "total_count": 1,
                   "data": {
                     "articles": [
-                      {}
+                      {
+                        "type": "article",
+                        "id": "55",
+                        "workspace_id": "this_is_an_id61_that_should_be_at_least_4",
+                        "title": "Title 1",
+                        "description": "",
+                        "body": "",
+                        "author_id": 991267431,
+                        "state": "draft",
+                        "created_at": 1719492719,
+                        "updated_at": 1719492719,
+                        "url": null,
+                        "parent_id": null,
+                        "parent_ids": [],
+                        "parent_type": null
+                      }
                     ],
                     "highlights": []
                   },
@@ -23874,10 +23988,10 @@
               "headers": {
                 "Intercom-Version": "2.11"
               },
-              "requestBody": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -27887,12 +28001,18 @@
                 "Intercom-Version": "2.11"
               },
               "requestBody": {
-                "intercom_user_id": "foo"
+                "intercom_user_id": "foo",
+                "message_type": "comment",
+                "type": "user",
+                "body": "foo"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo"
+                  "intercom_user_id": "foo",
+                  "message_type": "comment",
+                  "type": "user",
+                  "body": "foo"
                 }
               },
               "responseStatusCode": 200,
@@ -30510,7 +30630,9 @@
               "path": "/events",
               "pathParameters": {},
               "queryParameters": {
-                "filter": {},
+                "filter": {
+                  "user_id": "foo"
+                },
                 "type": "foo",
                 "summary": true
               },
@@ -30616,10 +30738,10 @@
               "headers": {
                 "Intercom-Version": "2.11"
               },
-              "requestBody": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200
             }
@@ -31247,10 +31369,10 @@
               "headers": {
                 "Intercom-Version": "2.11"
               },
-              "requestBody": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -34061,12 +34183,18 @@
                 "Intercom-Version": "2.11"
               },
               "requestBody": {
-                "intercom_user_id": "foo"
+                "intercom_user_id": "foo",
+                "message_type": "comment",
+                "type": "user",
+                "body": "foo"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo"
+                  "intercom_user_id": "foo",
+                  "message_type": "comment",
+                  "type": "user",
+                  "body": "foo"
                 }
               },
               "responseStatusCode": 200,
@@ -34200,7 +34328,9 @@
               "requestBody": {
                 "ticket_type_id": "1234",
                 "contacts": [
-                  {}
+                  {
+                    "id": "foo"
+                  }
                 ]
               },
               "requestBodyV3": {
@@ -34208,7 +34338,9 @@
                 "value": {
                   "ticket_type_id": "1234",
                   "contacts": [
-                    {}
+                    {
+                      "id": "foo"
+                    }
                   ]
                 }
               },
@@ -35615,10 +35747,10 @@
               "headers": {
                 "Intercom-Version": "2.11"
               },
-              "requestBody": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -35816,15 +35948,15 @@
               },
               "requestBody": {
                 "type": "user",
-                "user": {},
-                "visitor": {}
+                "user": null,
+                "visitor": null
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "user",
-                  "user": {},
-                  "visitor": {}
+                  "user": null,
+                  "visitor": null
                 }
               },
               "responseStatusCode": 200,

@@ -18936,12 +18936,26 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "menu": {}
+                "menu": {
+                  "options": [
+                    {
+                      "name": "window_prefs",
+                      "title": "Window Preferences"
+                    }
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "menu": {}
+                  "menu": {
+                    "options": [
+                      {
+                        "name": "window_prefs",
+                        "title": "Window Preferences"
+                      }
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -25766,7 +25780,24 @@
                 "auto_remove": true,
                 "comment": "comment",
                 "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "filter": {},
+                "filter": {
+                  "ld_proof": {
+                    "credential": {
+                      "@context": [
+                        {}
+                      ],
+                      "credentialSubject": {},
+                      "issuanceDate": "2010-01-01 19:23:24+00:00",
+                      "issuer": {},
+                      "type": [
+                        "foo"
+                      ]
+                    },
+                    "options": {
+                      "proofType": "Ed25519Signature2018"
+                    }
+                  }
+                },
                 "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                 "trace": false
               },
@@ -25776,7 +25807,24 @@
                   "auto_remove": true,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [
+                          {}
+                        ],
+                        "credentialSubject": {},
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "type": [
+                          "foo"
+                        ]
+                      },
+                      "options": {
+                        "proofType": "Ed25519Signature2018"
+                      }
+                    }
+                  },
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                   "trace": false
                 }
@@ -27867,7 +27915,10 @@
               "requestBody": {
                 "doc": {
                   "credential": {},
-                  "options": {}
+                  "options": {
+                    "proofPurpose": "foo",
+                    "verificationMethod": "foo"
+                  }
                 },
                 "verkey": "verkey"
               },
@@ -27876,7 +27927,10 @@
                 "value": {
                   "doc": {
                     "credential": {},
-                    "options": {}
+                    "options": {
+                      "proofPurpose": "foo",
+                      "verificationMethod": "foo"
+                    }
                   },
                   "verkey": "verkey"
                 }
@@ -27964,13 +28018,23 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "doc": {},
+                "doc": {
+                  "proof": {
+                    "proofPurpose": "foo",
+                    "verificationMethod": "foo"
+                  }
+                },
                 "verkey": "verkey"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "doc": {},
+                  "doc": {
+                    "proof": {
+                      "proofPurpose": "foo",
+                      "verificationMethod": "foo"
+                    }
+                  },
                   "verkey": "verkey"
                 }
               },
@@ -32973,8 +33037,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -32985,8 +33059,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -34532,8 +34616,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -34544,8 +34638,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
