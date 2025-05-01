@@ -1,0 +1,28 @@
+name: Label Issues and PRs
+
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request:
+    types: [opened, reopened]
+  schedule:
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  add-labels:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Label Issues and PRs with OpenAI
+        uses: Prachi-Jamdade/auto-labeler@v2.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          label-mapping: '{ "bug": "bug", "feature": "enhancement", "enhancement": "enhancement", "documentation": "docs", "question": "question", "security": "security", "performance": "performance"}'
+          max-issues: 25
