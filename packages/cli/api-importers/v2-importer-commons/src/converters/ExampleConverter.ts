@@ -557,31 +557,24 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 .filter(([_, value]) => value !== undefined)
         );
 
-        const nonObjectResults = allOfResults.filter(
-            (result) => typeof result.validExample !== "object" || result.validExample === null
-        );
-        if (nonObjectResults.length > 0) {
-            const firstValidResult = nonObjectResults.find((result) => result.validExample !== undefined);
-            if (firstValidResult) {
-                return {
-                    isValid,
-                    coerced: false,
-                    validExample: firstValidResult.validExample,
-                    errors: isValid
-                        ? []
-                        : [
-                              ...resultsByKey.flatMap(({ result }) => result.errors),
-                              ...allOfResults.flatMap((result) => result.errors)
-                          ]
+        for (const result of allOfResults) {
+            if (typeof result.validExample === "object" && result.validExample !== null) {
+                const validExampleObj = result.validExample as Record<string, unknown>;
+                example = {
+                    ...example,
+                    ...Object.fromEntries(Object.entries(validExampleObj).filter(([_, value]) => value !== undefined))
                 };
             }
         }
 
-        for (const result of allOfResults) {
-            if (typeof result.validExample === "object" && result.validExample !== null) {
-                const validExampleObj = result.validExample as Record<string, unknown>;
-                const filteredEntries = Object.entries(validExampleObj).filter(([_, value]) => value !== undefined);
-                example = { ...example, ...Object.fromEntries(filteredEntries) };
+        if (Object.keys(example).length === 0) {
+            const firstValidNonObject = allOfResults.find(
+                (result) =>
+                    result.validExample !== undefined &&
+                    (typeof result.validExample !== "object" || result.validExample === null)
+            );
+            if (firstValidNonObject) {
+                example = firstValidNonObject.validExample;
             }
         }
 
@@ -589,12 +582,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             isValid,
             coerced: false,
             validExample: example,
-            errors: isValid
-                ? []
-                : [
-                      ...resultsByKey.flatMap(({ result }) => result.errors),
-                      ...allOfResults.flatMap((result) => result.errors)
-                  ]
+            errors: [
+                ...resultsByKey.flatMap(({ result }) => result.errors),
+                ...allOfResults.flatMap((result) => result.errors)
+            ]
         };
     }
 
