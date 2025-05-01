@@ -6,17 +6,21 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PostmanPublishTarget } from "./PostmanPublishTarget";
+import { NpmPublishTarget } from "./NpmPublishTarget";
 
 export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.Raw, FernIr.PublishTarget> =
     core.serialization
         .union("type", {
             postman: PostmanPublishTarget,
+            npm: NpmPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
                 switch (value.type) {
                     case "postman":
                         return FernIr.PublishTarget.postman(value);
+                    case "npm":
+                        return FernIr.PublishTarget.npm(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -25,9 +29,13 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
         });
 
 export declare namespace PublishTarget {
-    export type Raw = PublishTarget.Postman;
+    export type Raw = PublishTarget.Postman | PublishTarget.Npm;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
+    }
+
+    export interface Npm extends NpmPublishTarget.Raw {
+        type: "npm";
     }
 }

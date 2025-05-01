@@ -2355,6 +2355,42 @@
         ]
       }
     },
+    "V1EvalPostResponsesSchemaType": {
+      "name": "V1EvalPostResponsesSchemaType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
+          }
+        ]
+      }
+    },
+    "vals_evalPost_Response_400": {
+      "name": "vals_evalPost_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalPostResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1EvalCodeGetResponsesSchema0": {
       "name": "V1EvalCodeGetResponsesSchema0",
       "shape": {
@@ -2452,6 +2488,43 @@
             "type": {
               "type": "id",
               "value": "V1EvalCodeGetResponsesSchema4"
+            }
+          }
+        ]
+      }
+    },
+    "V1EvalCodeGetResponsesSchemaType": {
+      "name": "V1EvalCodeGetResponsesSchemaType",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
+          }
+        ]
+      }
+    },
+    "vals_evalGet_Response_400": {
+      "description": "The function throw an error or had invalid syntax",
+      "name": "vals_evalGet_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalCodeGetResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -3498,8 +3571,8 @@
               "path": "/v1/search/vals",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
+                "offset": 0,
+                "limit": 20,
                 "query": "foo"
               },
               "headers": {},
@@ -4005,8 +4078,8 @@
               "path": "/v1/me/likes",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4190,8 +4263,8 @@
               "path": "/v1/me/comments",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
+                "offset": 0,
+                "limit": 20,
                 "since": "foo",
                 "until": "foo",
                 "relationship": "any"
@@ -4368,8 +4441,8 @@
               "path": "/v1/me/references",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
+                "offset": 0,
+                "limit": 20,
                 "since": "foo",
                 "until": "foo"
               },
@@ -4980,8 +5053,8 @@
                 "user_id": "foo"
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -6476,8 +6549,8 @@
                 "val_id": "foo"
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -6860,8 +6933,8 @@
                 "version": 42
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,

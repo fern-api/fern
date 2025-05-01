@@ -29116,7 +29116,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "conn_id": "foo",
-                "role": "client"
+                "role": "server"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29291,8 +29291,8 @@
                 "mediation_id": "foo"
               },
               "queryParameters": {
-                "paginate_limit": 42,
-                "paginate_offset": 42
+                "paginate_limit": -1,
+                "paginate_offset": 0
               },
               "headers": {},
               "requestBody": {

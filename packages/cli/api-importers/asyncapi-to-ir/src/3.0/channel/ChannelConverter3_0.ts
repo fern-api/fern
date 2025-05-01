@@ -137,14 +137,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         headers: HttpHeader[];
     }): Promise<void> {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
-            let parameterObject: OpenAPIV3.ParameterObject = parameter;
-            if (this.context.isReferenceObject(parameter)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameterObject = resolvedReference.value;
-                } else {
-                    continue;
-                }
+            const parameterObject = await this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs: [...this.breadcrumbs, "parameters"]
+            });
+            if (parameterObject == null) {
+                continue;
             }
             const location = this.convertChannelParameterLocation(parameter.location);
             if (location == null) {

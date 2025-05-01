@@ -73,6 +73,7 @@ export async function generateWorkspace({
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({
+            token,
             projectConfig,
             workspace,
             generatorGroup: group,

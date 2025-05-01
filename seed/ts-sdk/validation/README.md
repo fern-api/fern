@@ -26,7 +26,7 @@ const client = new SeedValidationClient({ environment: "YOUR_BASE_URL" });
 await client.create({
     decimal: 2.2,
     even: 100,
-    name: "foo",
+    name: "fern",
     shape: "SQUARE",
 });
 ```

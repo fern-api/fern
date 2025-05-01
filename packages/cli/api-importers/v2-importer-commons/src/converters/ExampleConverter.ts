@@ -88,7 +88,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (this.depth > this.MAX_DEPTH) {
             return { isValid: true, coerced: false, validExample: this.example, errors: [] };
         }
-        const resolvedSchema = await this.resolveSchema(this.schema);
+        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: this.schema,
+            breadcrumbs: this.breadcrumbs
+        });
         if (resolvedSchema == null) {
             return {
                 isValid: false,
@@ -218,46 +221,86 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
     private async convertBoolean(): Promise<ExampleConverter.Output> {
         const isValid = typeof this.example === "boolean";
-        return isValid
-            ? {
-                  isValid,
-                  coerced: false,
-                  validExample: this.example,
-                  errors: []
-              }
-            : {
-                  isValid: false,
-                  coerced: false,
-                  validExample: (await this.maybeResolveSchemaExample<boolean>(this.schema)) ?? this.EXAMPLE_BOOLEAN,
-                  errors: [
-                      {
-                          message: `Example is not a boolean: ${JSON.stringify(this.example, null, 2)}`,
-                          path: this.breadcrumbs
-                      }
-                  ]
-              };
+        if (isValid) {
+            return {
+                isValid,
+                coerced: false,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
+            : this.schema.default;
+
+        if (typeof resolvedDefault === "boolean") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
+        return {
+            isValid: false,
+            coerced: false,
+            validExample: (await this.maybeResolveSchemaExample<boolean>(this.schema)) ?? this.EXAMPLE_BOOLEAN,
+            errors: [
+                {
+                    message: `Example is not a boolean: ${JSON.stringify(this.example, null, 2)}`,
+                    path: this.breadcrumbs
+                }
+            ]
+        };
     }
 
-    private convertEnum(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output {
+    private async convertEnum(resolvedSchema: OpenAPIV3_1.SchemaObject): Promise<ExampleConverter.Output> {
         const isValid = resolvedSchema.enum?.includes(this.example) ?? false;
-        return isValid
-            ? {
-                  isValid,
-                  coerced: false,
-                  validExample: this.example,
-                  errors: []
-              }
-            : {
-                  isValid,
-                  coerced: false,
-                  validExample: resolvedSchema.enum?.[0],
-                  errors: [
-                      {
-                          message: `Example is not one of the allowed enum values: ${JSON.stringify(resolvedSchema.enum, null, 2)}`,
-                          path: this.breadcrumbs
-                      }
-                  ]
-              };
+        if (isValid) {
+            return {
+                isValid,
+                coerced: false,
+                validExample: this.example,
+                errors: []
+            };
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
+            : this.schema.default;
+
+        if (resolvedDefault !== undefined && resolvedSchema.enum?.includes(resolvedDefault)) {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
+        return {
+            isValid,
+            coerced: false,
+            validExample: resolvedSchema.enum?.[0],
+            errors: [
+                {
+                    message: `Example is not one of the allowed enum values: ${JSON.stringify(resolvedSchema.enum, null, 2)}`,
+                    path: this.breadcrumbs
+                }
+            ]
+        };
     }
 
     private async convertNumber(): Promise<ExampleConverter.Output> {
@@ -276,6 +319,23 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 isValid: true,
                 coerced: true,
                 validExample: num,
+                errors: []
+            };
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
+            : this.schema.default;
+        if (typeof resolvedDefault === "number") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
                 errors: []
             };
         }
@@ -313,6 +373,24 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             };
         }
 
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
+            : this.schema.default;
+
+        if (typeof resolvedDefault === "string") {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
+        }
+
         return {
             isValid: false,
             coerced: false,
@@ -346,6 +424,23 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     errors: []
                 };
             }
+        }
+
+        const resolvedDefault = this.context.isReferenceObject(this.schema)
+            ? (
+                  await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                      schemaOrReference: this.schema,
+                      breadcrumbs: this.breadcrumbs
+                  })
+              )?.default
+            : this.schema.default;
+        if (typeof resolvedDefault === "number" && Number.isInteger(resolvedDefault)) {
+            return {
+                isValid: true,
+                coerced: false,
+                validExample: resolvedDefault,
+                errors: []
+            };
         }
 
         return {
@@ -645,7 +740,10 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private async maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Promise<Type | undefined> {
-        const resolvedSchema = await this.resolveSchema(schema);
+        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: schema,
+            breadcrumbs: this.breadcrumbs
+        });
         if (resolvedSchema == null) {
             return undefined;
         }
@@ -656,18 +754,5 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return Object.values(resolvedSchema.examples ?? {})[0] as Type;
         }
         return undefined;
-    }
-
-    private async resolveSchema(
-        schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    ): Promise<OpenAPIV3_1.SchemaObject | undefined> {
-        if (this.context.isReferenceObject(schema)) {
-            const resolved = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(schema);
-            if (resolved.resolved) {
-                return resolved.value;
-            }
-            return undefined;
-        }
-        return schema;
     }
 }

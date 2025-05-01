@@ -14950,6 +14950,79 @@
         ]
       }
     },
+    "BookingAmendmentsPostResponsesSchemaData": {
+      "name": "BookingAmendmentsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "BookingAmendment_booking_amendment_create_Response_400": {
+      "name": "BookingAmendment_booking_amendment_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingAmendmentsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "BookingLineItemsGetParametersSchema": {
       "name": "BookingLineItemsGetParametersSchema",
       "shape": {
@@ -14970,63 +15043,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "BookingLineItem"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "BookingLineItem_booking_line_item_index_Response_200": {
@@ -15078,6 +15095,71 @@
               "itemType": {
                 "type": "id",
                 "value": "BookingLineItemsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "BookingLineItem_booking_line_item_index_Response_400": {
+      "name": "BookingLineItem_booking_line_item_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15139,6 +15221,79 @@
         ]
       }
     },
+    "BookingLineItemsPostResponsesSchemaData": {
+      "name": "BookingLineItemsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "BookingLineItem_booking_line_item_create_Response_400": {
+      "name": "BookingLineItem_booking_line_item_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "BookingLineItem_booking_line_item_show_Response_200": {
       "name": "BookingLineItem_booking_line_item_show_Response_200",
       "shape": {
@@ -15194,6 +15349,79 @@
         ]
       }
     },
+    "BookingLineItemsIdGetResponsesSchemaData": {
+      "name": "BookingLineItemsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "BookingLineItem_booking_line_item_show_Response_400": {
+      "name": "BookingLineItem_booking_line_item_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "BookingsGetParametersSchema": {
       "name": "BookingsGetParametersSchema",
       "shape": {
@@ -15213,63 +15441,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Booking"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Booking_bookings_index_Response_200": {
@@ -15321,6 +15493,71 @@
               "itemType": {
                 "type": "id",
                 "value": "BookingsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Booking_bookings_index_Response_400": {
+      "name": "Booking_bookings_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15382,6 +15619,79 @@
         ]
       }
     },
+    "BookingsPostResponsesSchemaData": {
+      "name": "BookingsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Booking_create_Response_400": {
+      "name": "Booking_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Booking_show_Response_200": {
       "name": "Booking_show_Response_200",
       "shape": {
@@ -15437,6 +15747,79 @@
         ]
       }
     },
+    "BookingsIdGetResponsesSchemaData": {
+      "name": "BookingsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Booking_show_Response_400": {
+      "name": "Booking_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Carbon Calculation_create_Response_200": {
       "name": "Carbon Calculation_create_Response_200",
       "shape": {
@@ -15486,6 +15869,79 @@
               "itemType": {
                 "type": "id",
                 "value": "CarbonCalculation"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CarbonCalculationPostResponsesSchemaData": {
+      "name": "CarbonCalculationPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Carbon Calculation_create_Response_400": {
+      "name": "Carbon Calculation_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CarbonCalculationPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15666,6 +16122,79 @@
         ]
       }
     },
+    "CommercialInvoicesPostResponsesSchemaData": {
+      "name": "CommercialInvoicesPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Commercial Invoices_create_Response_400": {
+      "name": "Commercial Invoices_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CommercialInvoicesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Commercial Invoices_update_Response_200": {
       "name": "Commercial Invoices_update_Response_200",
       "shape": {
@@ -15715,6 +16244,79 @@
               "itemType": {
                 "type": "id",
                 "value": "CommercialInvoice"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CommercialInvoicesPatchResponsesSchemaData": {
+      "name": "CommercialInvoicesPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Commercial Invoices_update_Response_400": {
+      "name": "Commercial Invoices_update_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CommercialInvoicesPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15776,8 +16378,16 @@
         ]
       }
     },
-    "CustomsEntriesGetResponsesSchemaData": {
-      "name": "CustomsEntriesGetResponsesSchemaData",
+    "CommercialInvoicesIdGetResponsesSchemaData": {
+      "name": "CommercialInvoicesIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Commercial Invoices_show_Response_400": {
+      "name": "Commercial Invoices_show_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15795,31 +16405,25 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             }
@@ -15829,15 +16433,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "CustomsEntry"
-                }
+                "type": "id",
+                "value": "CommercialInvoicesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "CustomsEntriesGetResponsesSchemaData": {
+      "name": "CustomsEntriesGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Customs Entries_customs_entry_index_Response_200": {
@@ -15889,6 +16508,71 @@
               "itemType": {
                 "type": "id",
                 "value": "CustomsEntriesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Customs Entries_customs_entry_index_Response_400": {
+      "name": "Customs Entries_customs_entry_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CustomsEntriesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15950,8 +16634,16 @@
         ]
       }
     },
-    "DocumentsGetResponsesSchemaData": {
-      "name": "DocumentsGetResponsesSchemaData",
+    "CustomsEntriesIdGetResponsesSchemaData": {
+      "name": "CustomsEntriesIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Customs Entries_show_Response_400": {
+      "name": "Customs Entries_show_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -15969,37 +16661,19 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -16015,15 +16689,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Document"
-                }
+                "type": "id",
+                "value": "CustomsEntriesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "DocumentsGetResponsesSchemaData": {
+      "name": "DocumentsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Document_documents_index_Response_200": {
@@ -16075,6 +16764,71 @@
               "itemType": {
                 "type": "id",
                 "value": "DocumentsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Document_documents_index_Response_400": {
+      "name": "Document_documents_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16136,6 +16890,79 @@
         ]
       }
     },
+    "DocumentsPostResponsesSchemaData": {
+      "name": "DocumentsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Document_documents_create_Response_400": {
+      "name": "Document_documents_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Document_documents_show_Response_200": {
       "name": "Document_documents_show_Response_200",
       "shape": {
@@ -16191,6 +17018,152 @@
         ]
       }
     },
+    "DocumentsIdGetResponsesSchemaData": {
+      "name": "DocumentsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Document_documents_show_Response_400": {
+      "name": "Document_documents_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DocumentsIdDownloadGetResponsesSchemaData": {
+      "name": "DocumentsIdDownloadGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Document_documents_download_Response_400": {
+      "name": "Document_documents_download_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsIdDownloadGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "EventsGetParametersSchema": {
       "name": "EventsGetParametersSchema",
       "shape": {
@@ -16222,63 +17195,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "WebhookEvent"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Event_events_index_Response_200": {
@@ -16330,6 +17247,71 @@
               "itemType": {
                 "type": "id",
                 "value": "EventsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Event_events_index_Response_400": {
+      "name": "Event_events_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EventsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16391,6 +17373,79 @@
         ]
       }
     },
+    "EventsIdGetResponsesSchemaData": {
+      "name": "EventsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Event_events_show_Response_400": {
+      "name": "Event_events_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EventsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "InvoicesGetParametersSchema": {
       "name": "InvoicesGetParametersSchema",
       "shape": {
@@ -16416,63 +17471,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Invoice"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Invoices_invoice_index_Response_200": {
@@ -16524,6 +17523,71 @@
               "itemType": {
                 "type": "id",
                 "value": "InvoicesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Invoices_invoice_index_Response_400": {
+      "name": "Invoices_invoice_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "InvoicesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16585,8 +17649,16 @@
         ]
       }
     },
-    "NetworkCompaniesGetResponsesSchemaData": {
-      "name": "NetworkCompaniesGetResponsesSchemaData",
+    "InvoicesIdGetResponsesSchemaData": {
+      "name": "InvoicesIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Invoices_show_Response_400": {
+      "name": "Invoices_show_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16604,37 +17676,19 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -16650,15 +17704,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Company"
-                }
+                "type": "id",
+                "value": "InvoicesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "NetworkCompaniesGetResponsesSchemaData": {
+      "name": "NetworkCompaniesGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Company_network_company_index_Response_200": {
@@ -16716,6 +17785,71 @@
         ]
       }
     },
+    "Company_network_company_index_Response_400": {
+      "name": "Company_network_company_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompaniesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Company_network_company_create_Response_200": {
       "name": "Company_network_company_create_Response_200",
       "shape": {
@@ -16765,6 +17899,79 @@
               "itemType": {
                 "type": "id",
                 "value": "Company"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NetworkCompaniesPostResponsesSchemaData": {
+      "name": "NetworkCompaniesPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Company_network_company_create_Response_400": {
+      "name": "Company_network_company_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompaniesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16881,8 +18088,16 @@
         ]
       }
     },
-    "NetworkCompanyEntitiesGetResponsesSchemaData": {
-      "name": "NetworkCompanyEntitiesGetResponsesSchemaData",
+    "NetworkCompaniesIdPatchResponsesSchemaData": {
+      "name": "NetworkCompaniesIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Company_network_company_update_Response_400": {
+      "name": "Company_network_company_update_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -16900,37 +18115,19 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -16946,15 +18143,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "CompanyEntity"
-                }
+                "type": "id",
+                "value": "NetworkCompaniesIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "NetworkCompanyEntitiesGetResponsesSchemaData": {
+      "name": "NetworkCompanyEntitiesGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "CompanyEntity_company_entity_index_Response_200": {
@@ -17006,6 +18218,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CompanyEntity_company_entity_index_Response_400": {
+      "name": "CompanyEntity_company_entity_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17067,6 +18344,79 @@
         ]
       }
     },
+    "NetworkCompanyEntitiesPostResponsesSchemaData": {
+      "name": "NetworkCompanyEntitiesPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "CompanyEntity_network_company_entity_create_Response_400": {
+      "name": "CompanyEntity_network_company_entity_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "CompanyEntity_network_company_entity_show_Response_200": {
       "name": "CompanyEntity_network_company_entity_show_Response_200",
       "shape": {
@@ -17116,6 +18466,79 @@
               "itemType": {
                 "type": "id",
                 "value": "CompanyEntity"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NetworkCompanyEntitiesIdGetResponsesSchemaData": {
+      "name": "NetworkCompanyEntitiesIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "CompanyEntity_network_company_entity_show_Response_400": {
+      "name": "CompanyEntity_network_company_entity_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17177,8 +18600,16 @@
         ]
       }
     },
-    "NetworkContactsGetResponsesSchemaData": {
-      "name": "NetworkContactsGetResponsesSchemaData",
+    "NetworkCompanyEntitiesIdPatchResponsesSchemaData": {
+      "name": "NetworkCompanyEntitiesIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "CompanyEntity_network_company_entity_update_Response_400": {
+      "name": "CompanyEntity_network_company_entity_update_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17196,37 +18627,19 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -17242,15 +18655,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Contact"
-                }
+                "type": "id",
+                "value": "NetworkCompanyEntitiesIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "NetworkContactsGetResponsesSchemaData": {
+      "name": "NetworkContactsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Contact_network_contact_index_Response_200": {
@@ -17302,6 +18730,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkContactsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Contact_network_contact_index_Response_400": {
+      "name": "Contact_network_contact_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17363,6 +18856,79 @@
         ]
       }
     },
+    "NetworkContactsPostResponsesSchemaData": {
+      "name": "NetworkContactsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Contact_network_contact_create_Response_400": {
+      "name": "Contact_network_contact_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Contact_network_contact_show_Response_200": {
       "name": "Contact_network_contact_show_Response_200",
       "shape": {
@@ -17412,6 +18978,79 @@
               "itemType": {
                 "type": "id",
                 "value": "Contact"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NetworkContactsIdGetResponsesSchemaData": {
+      "name": "NetworkContactsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Contact_network_contact_show_Response_400": {
+      "name": "Contact_network_contact_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17473,8 +19112,16 @@
         ]
       }
     },
-    "NetworkLocationsGetResponsesSchemaData": {
-      "name": "NetworkLocationsGetResponsesSchemaData",
+    "NetworkContactsIdPatchResponsesSchemaData": {
+      "name": "NetworkContactsIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Contact_network_contact_update_Response_400": {
+      "name": "Contact_network_contact_update_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17492,37 +19139,19 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -17538,15 +19167,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Location"
-                }
+                "type": "id",
+                "value": "NetworkContactsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "NetworkLocationsGetResponsesSchemaData": {
+      "name": "NetworkLocationsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Location_index_Response_200": {
@@ -17598,6 +19242,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkLocationsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Location_index_Response_400": {
+      "name": "Location_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17659,6 +19368,79 @@
         ]
       }
     },
+    "NetworkLocationsPostResponsesSchemaData": {
+      "name": "NetworkLocationsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Location_network_location_create_Response_400": {
+      "name": "Location_network_location_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Location_network_location_show_Response_200": {
       "name": "Location_network_location_show_Response_200",
       "shape": {
@@ -17708,6 +19490,79 @@
               "itemType": {
                 "type": "id",
                 "value": "Location"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NetworkLocationsIdGetResponsesSchemaData": {
+      "name": "NetworkLocationsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Location_network_location_show_Response_400": {
+      "name": "Location_network_location_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17769,6 +19624,79 @@
         ]
       }
     },
+    "NetworkLocationsIdPatchResponsesSchemaData": {
+      "name": "NetworkLocationsIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Location_update_Response_400": {
+      "name": "Location_update_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Company_network_company_me_Response_200": {
       "name": "Company_network_company_me_Response_200",
       "shape": {
@@ -17824,8 +19752,16 @@
         ]
       }
     },
-    "OceanShipmentContainerLegsGetResponsesSchemaData": {
-      "name": "OceanShipmentContainerLegsGetResponsesSchemaData",
+    "NetworkMeCompaniesGetResponsesSchemaData": {
+      "name": "NetworkMeCompaniesGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Company_network_company_me_Response_400": {
+      "name": "Company_network_company_me_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -17843,31 +19779,25 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             }
@@ -17877,15 +19807,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "OceanShipmentContainerLeg"
-                }
+                "type": "id",
+                "value": "NetworkMeCompaniesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "OceanShipmentContainerLegsGetResponsesSchemaData": {
+      "name": "OceanShipmentContainerLegsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ContainerLeg_ocean_container_legs_index_Response_200": {
@@ -17937,6 +19882,71 @@
               "itemType": {
                 "type": "id",
                 "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ContainerLeg_ocean_container_legs_index_Response_400": {
+      "name": "ContainerLeg_ocean_container_legs_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17998,8 +20008,16 @@
         ]
       }
     },
-    "OceanShipmentContainersGetResponsesSchemaData": {
-      "name": "OceanShipmentContainersGetResponsesSchemaData",
+    "OceanShipmentContainerLegsIdGetResponsesSchemaData": {
+      "name": "OceanShipmentContainerLegsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "ContainerLeg_ocean_container_legs_show_Response_400": {
+      "name": "ContainerLeg_ocean_container_legs_show_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18017,31 +20035,25 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             }
@@ -18051,15 +20063,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "ShipmentContainer"
-                }
+                "type": "id",
+                "value": "OceanShipmentContainerLegsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "OceanShipmentContainersGetResponsesSchemaData": {
+      "name": "OceanShipmentContainersGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Container_list_Response_200": {
@@ -18111,6 +20138,71 @@
               "itemType": {
                 "type": "id",
                 "value": "OceanShipmentContainersGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Container_list_Response_400": {
+      "name": "Container_list_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainersGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -18172,6 +20264,79 @@
         ]
       }
     },
+    "OceanShipmentContainersIdGetResponsesSchemaData": {
+      "name": "OceanShipmentContainersIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Container_show_Response_400": {
+      "name": "Container_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainersIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PortsGetParametersSchema": {
       "name": "PortsGetParametersSchema",
       "shape": {
@@ -18197,75 +20362,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "total_count",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Place"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Ports_index_Response_200": {
@@ -18323,8 +20420,8 @@
         ]
       }
     },
-    "ProductsGetResponsesSchemaData": {
-      "name": "ProductsGetResponsesSchemaData",
+    "Ports_index_Response_400": {
+      "name": "Ports_index_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -18342,31 +20439,25 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             }
@@ -18376,15 +20467,30 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Product"
-                }
+                "type": "id",
+                "value": "PortsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "ProductsGetResponsesSchemaData": {
+      "name": "ProductsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "Product_index_Response_200": {
@@ -18436,6 +20542,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ProductsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Product_index_Response_400": {
+      "name": "Product_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -18497,6 +20668,79 @@
         ]
       }
     },
+    "ProductsPostResponsesSchemaData": {
+      "name": "ProductsPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Product_create_Response_400": {
+      "name": "Product_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Product_show_Response_200": {
       "name": "Product_show_Response_200",
       "shape": {
@@ -18546,6 +20790,79 @@
               "itemType": {
                 "type": "id",
                 "value": "Product"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ProductsIdGetResponsesSchemaData": {
+      "name": "ProductsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Product_show_Response_400": {
+      "name": "Product_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -18607,6 +20924,79 @@
         ]
       }
     },
+    "ProductsIdPatchResponsesSchemaData": {
+      "name": "ProductsIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Product_update_Response_400": {
+      "name": "Product_update_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PurchaseOrderLineItemsGetParametersSchema": {
       "name": "PurchaseOrderLineItemsGetParametersSchema",
       "shape": {
@@ -18627,57 +21017,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "PurchaseOrderLineItem"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "PurchaseOrderLineItem_purchase_order_line_item_index_Response_200": {
@@ -18735,6 +21075,71 @@
         ]
       }
     },
+    "PurchaseOrderLineItem_purchase_order_line_item_index_Response_400": {
+      "name": "PurchaseOrderLineItem_purchase_order_line_item_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PurchaseOrderLineItem_purchase_order_line_item_show_Response_200": {
       "name": "PurchaseOrderLineItem_purchase_order_line_item_show_Response_200",
       "shape": {
@@ -18784,6 +21189,79 @@
               "itemType": {
                 "type": "id",
                 "value": "PurchaseOrderLineItem"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PurchaseOrderLineItemsIdGetResponsesSchemaData": {
+      "name": "PurchaseOrderLineItemsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PurchaseOrderLineItem_purchase_order_line_item_show_Response_400": {
+      "name": "PurchaseOrderLineItem_purchase_order_line_item_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrderLineItemsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -18856,57 +21334,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "PurchaseOrder"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "PurchaseOrder_purchase_order_index_Response_200": {
@@ -18958,6 +21386,144 @@
               "itemType": {
                 "type": "id",
                 "value": "PurchaseOrdersGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PurchaseOrder_purchase_order_index_Response_400": {
+      "name": "PurchaseOrder_purchase_order_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PurchaseOrdersPostResponsesSchemaData": {
+      "name": "PurchaseOrdersPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PurchaseOrder_purchase_order_create_Response_400": {
+      "name": "PurchaseOrder_purchase_order_create_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -19019,8 +21585,16 @@
         ]
       }
     },
-    "ShipmentLegsGetResponsesSchemaData": {
-      "name": "ShipmentLegsGetResponsesSchemaData",
+    "PurchaseOrdersIdGetResponsesSchemaData": {
+      "name": "PurchaseOrdersIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PurchaseOrder_purchase_order_show_Response_400": {
+      "name": "PurchaseOrder_purchase_order_show_Response_400",
       "shape": {
         "type": "object",
         "extends": [],
@@ -19038,31 +21612,25 @@
             }
           },
           {
-            "key": "prev",
+            "key": "self",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
           },
           {
-            "key": "next",
+            "key": "version",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
                 }
               }
             }
@@ -19072,15 +21640,103 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "ShipmentLeg"
-                }
+                "type": "id",
+                "value": "PurchaseOrdersIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
         ]
+      }
+    },
+    "PurchaseOrdersIdPostResponsesSchemaData": {
+      "name": "PurchaseOrdersIdPostResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "PurchaseOrder_purchase_order_update_Response_400": {
+      "name": "PurchaseOrder_purchase_order_update_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersIdPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ShipmentLegsGetResponsesSchemaData": {
+      "name": "ShipmentLegsGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
       }
     },
     "ShipmentLeg_shipment_leg_index_Response_200": {
@@ -19132,6 +21788,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ShipmentLegsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ShipmentLeg_shipment_leg_index_Response_400": {
+      "name": "ShipmentLeg_shipment_leg_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentLegsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -19193,6 +21914,79 @@
         ]
       }
     },
+    "ShipmentLegsIdGetResponsesSchemaData": {
+      "name": "ShipmentLegsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "ShipmentLeg_shipment_leg_show_Response_400": {
+      "name": "ShipmentLeg_shipment_leg_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentLegsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "ShipmentsGetParametersSchema": {
       "name": "ShipmentsGetParametersSchema",
       "shape": {
@@ -19213,63 +22007,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "prev",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "next",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          {
-            "key": "data",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "Shipment"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Shipment_index_Response_200": {
@@ -19321,6 +22059,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ShipmentsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Shipment_index_Response_400": {
+      "name": "Shipment_index_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -19382,6 +22185,79 @@
         ]
       }
     },
+    "ShipmentsIdGetResponsesSchemaData": {
+      "name": "ShipmentsIdGetResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Shipment_show_Response_400": {
+      "name": "Shipment_show_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Shipment_update_Response_200": {
       "name": "Shipment_update_Response_200",
       "shape": {
@@ -19431,6 +22307,79 @@
               "itemType": {
                 "type": "id",
                 "value": "Shipment"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ShipmentsIdPatchResponsesSchemaData": {
+      "name": "ShipmentsIdPatchResponsesSchemaData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "Shipment_update_Response_400": {
+      "name": "Shipment_update_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -19487,33 +22436,7 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": [
-          {
-            "key": "_object",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "key": "shipments",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "ShipmentsShareablePostResponsesSchemaDataShipmentsItems"
-                }
-              }
-            }
-          }
-        ]
+        "properties": []
       }
     },
     "Shipment_shipments_shareable_Response_200": {
@@ -19565,6 +22488,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ShipmentsShareablePostResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Shipment_shipments_shareable_Response_400": {
+      "name": "Shipment_shipments_shareable_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsShareablePostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -20018,7 +23006,7 @@
               "queryParameters": {
                 "page": 1,
                 "per": 20,
-                "direction": "asc",
+                "direction": "desc",
                 "f.purchase_order.id": 123,
                 "f.booking.id": 54321,
                 "f.purchase_order_line_item.id": 54321
@@ -20672,7 +23660,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "cargo_ready_date",
-                "direction": "asc",
+                "direction": "desc",
                 "f.status": "booked",
                 "f.shipment.id": 123456,
                 "f.consignee_entity_ref": "amazon-us",
@@ -28042,7 +31030,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "due_date",
-                "direction": "asc",
+                "direction": "desc",
                 "f.status": "outstanding",
                 "f.shipment.id": 12345,
                 "f.billed_directly_to_client": true,
@@ -34064,7 +37052,7 @@
               "queryParameters": {
                 "page": 1,
                 "per": 20,
-                "direction": "asc",
+                "direction": "desc",
                 "f.purchase_order.id": 123,
                 "f.line_item_number": 1,
                 "f.item_key": "item1",
@@ -35745,7 +38733,7 @@
                 "per": 20,
                 "f.shipment.id": 42,
                 "f.transportation_mode": 42,
-                "f.include_deleted": true
+                "f.include_deleted": false
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -36118,7 +39106,7 @@
                 "id": 42
               },
               "queryParameters": {
-                "f.include_deleted": true
+                "f.include_deleted": false
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -36852,7 +39840,7 @@
                 "page": 1,
                 "per": 20,
                 "sort": "id",
-                "direction": "asc",
+                "direction": "desc",
                 "f.transportation_mode": "ocean",
                 "f.status": "seller_location",
                 "f.statuses.any": "seller_location",

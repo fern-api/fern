@@ -4392,7 +4392,7 @@
               "path": "/v2/transcript",
               "pathParameters": {},
               "queryParameters": {
-                "limit": 42,
+                "limit": 10,
                 "status": null,
                 "created_on": "foo",
                 "before_id": "foo",
@@ -4528,7 +4528,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -4704,7 +4704,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -4957,7 +4957,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5133,7 +5133,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5386,7 +5386,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [
@@ -5562,7 +5562,7 @@
                   "language_model": "foo",
                   "acoustic_model": "foo",
                   "status": "queued",
-                  "language_code": "en",
+                  "language_code": "en_us",
                   "audio_url": "foo",
                   "text": "foo",
                   "words": [

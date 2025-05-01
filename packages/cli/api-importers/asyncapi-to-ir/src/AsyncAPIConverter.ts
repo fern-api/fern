@@ -74,51 +74,28 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (!this.context.isMessageWithPayload(message) && !this.context.isReferenceObject(message)) {
                     continue;
                 }
+                const messageBreadcrumbs = ["channels", channelPath, "messages", messageId];
 
-                let messageSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-                if (this.context.isMessageWithPayload(message)) {
-                    if (this.context.isReferenceObject(message.payload)) {
-                        const resolved = await this.context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
-                        if (resolved.resolved) {
-                            messageSchema = resolved.value;
-                        }
-                    } else {
-                        messageSchema = message.payload;
-                    }
-                } else if (this.context.isReferenceObject(message)) {
-                    const resolved = await this.context.resolveReference<AsyncAPIV3.ChannelMessage>(message);
-                    if (resolved.resolved) {
-                        const resolvedPayload = resolved.value.payload;
-                        if (this.context.isReferenceObject(resolvedPayload)) {
-                            const resolvedPayloadResolved =
-                                await this.context.resolveReference<OpenAPIV3.SchemaObject>(resolvedPayload);
-                            if (resolvedPayloadResolved.resolved) {
-                                messageSchema = resolvedPayloadResolved.value;
-                            }
-                        } else {
-                            messageSchema = resolvedPayload;
-                        }
-                    }
+                const resolvedMessage = await this.context.resolveMaybeReference<AsyncAPIV3.ChannelMessage>({
+                    schemaOrReference: message,
+                    breadcrumbs: messageBreadcrumbs
+                });
+                if (!this.context.isMessageWithPayload(resolvedMessage)) {
+                    continue;
                 }
+                const messageSchema = await this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                    schemaOrReference: resolvedMessage.payload,
+                    breadcrumbs: messageBreadcrumbs
+                });
                 if (messageSchema == null) {
                     continue;
                 }
                 const typeId = `${channelPath}_${messageId}`;
-                const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
-                    context: this.context,
+                await this.convertSchema({
                     id: typeId,
-                    breadcrumbs: ["channels", channelPath, "messages", messageId],
+                    breadcrumbs: messageBreadcrumbs,
                     schema: messageSchema
                 });
-                const convertedSchema = await schemaConverter.convert();
-                if (convertedSchema != null) {
-                    this.ir.rootPackage.types.push(typeId);
-                    this.ir.types = {
-                        ...this.ir.types,
-                        ...convertedSchema.inlinedTypes,
-                        [typeId]: convertedSchema.typeDeclaration
-                    };
-                }
             }
         }
     }
@@ -128,57 +105,57 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             if (message.payload == null) {
                 continue;
             }
-
-            let payloadSchema: OpenAPIV3.SchemaObject | undefined = undefined;
-            if (this.context.isReferenceObject(message.payload)) {
-                const resolved = await this.context.resolveReference<OpenAPIV3.SchemaObject>(message.payload);
-                if (resolved.resolved) {
-                    payloadSchema = resolved.value;
-                }
-            } else {
-                payloadSchema = message.payload;
-            }
+            const componentBreadcrumbs = ["components", "messages", id];
+            const payloadSchema: OpenAPIV3.SchemaObject | undefined =
+                await this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                    schemaOrReference: message.payload,
+                    breadcrumbs: componentBreadcrumbs
+                });
             if (payloadSchema == null) {
                 continue;
             }
 
-            const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
-                context: this.context,
+            await this.convertSchema({
                 id,
-                breadcrumbs: ["components", "messages", id],
+                breadcrumbs: componentBreadcrumbs,
                 schema: payloadSchema
             });
-
-            const convertedSchema = await schemaConverter.convert();
-
-            if (convertedSchema != null) {
-                this.ir.rootPackage.types.push(id);
-                this.ir.types = {
-                    ...this.ir.types,
-                    ...convertedSchema.inlinedTypes,
-                    [id]: convertedSchema.typeDeclaration
-                };
-            }
         }
     }
 
     private async convertSchemas(): Promise<void> {
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
-            const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
-                context: this.context,
+            await this.convertSchema({
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = await schemaConverter.convert();
-            if (convertedSchema != null) {
-                this.ir.rootPackage.types.push(id);
-                this.ir.types = {
-                    ...this.ir.types,
-                    ...convertedSchema.inlinedTypes,
-                    [id]: convertedSchema.typeDeclaration
-                };
-            }
+        }
+    }
+
+    private async convertSchema({
+        id,
+        breadcrumbs,
+        schema
+    }: {
+        id: string;
+        breadcrumbs: string[];
+        schema: OpenAPIV3.SchemaObject;
+    }): Promise<void> {
+        const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
+            context: this.context,
+            id,
+            breadcrumbs,
+            schema
+        });
+        const convertedSchema = await schemaConverter.convert();
+        if (convertedSchema != null) {
+            this.ir.rootPackage.types.push(id);
+            this.ir.types = {
+                ...this.ir.types,
+                ...convertedSchema.inlinedTypes,
+                [id]: convertedSchema.typeDeclaration
+            };
         }
     }
 
