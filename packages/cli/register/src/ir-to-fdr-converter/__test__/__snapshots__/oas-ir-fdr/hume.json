@@ -4665,8 +4665,8 @@
         ]
       }
     },
-    "subscribeEvent": {
-      "name": "subscribeEvent",
+    "ChatSubscribe": {
+      "name": "ChatSubscribe",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4743,8 +4743,8 @@
         ]
       }
     },
-    "publishEvent": {
-      "name": "publishEvent",
+    "ChatPublish": {
+      "name": "ChatPublish",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -5085,9 +5085,9 @@
       "types": [],
       "subpackages": []
     },
-    "/chat": {
-      "subpackageId": "/chat",
-      "name": "/chat",
+    "subpackage_chat": {
+      "subpackageId": "subpackage_chat",
+      "name": "chat",
       "endpoints": [],
       "webhooks": [],
       "websockets": [
@@ -5101,7 +5101,7 @@
               "baseUrl": "wss://api.hume.ai/v0/evi"
             }
           ],
-          "id": "/chat",
+          "id": "chat",
           "name": "/chat",
           "path": {
             "pathParameters": [],
@@ -5169,26 +5169,26 @@
           ],
           "messages": [
             {
-              "type": "subscribeEvent",
-              "displayName": "subscribeEvent",
+              "type": "subscribe",
+              "displayName": "subscribe",
               "origin": "server",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "subscribeEvent"
+                  "value": "ChatSubscribe"
                 }
               }
             },
             {
-              "type": "publishEvent",
-              "displayName": "publishEvent",
+              "type": "publish",
+              "displayName": "publish",
               "origin": "client",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "publishEvent"
+                  "value": "ChatPublish"
                 }
               }
             }
@@ -5207,14 +5207,14 @@
               "headers": {},
               "messages": [
                 {
-                  "type": "publishEvent",
+                  "type": "publish",
                   "body": {
                     "type": "audio_input",
                     "data": "data"
                   }
                 },
                 {
-                  "type": "subscribeEvent",
+                  "type": "subscribe",
                   "body": {
                     "type": "assistant_end"
                   }
@@ -6097,7 +6097,7 @@
     ],
     "subpackages": [
       "Get Job Predictions",
-      "/chat"
+      "subpackage_chat"
     ]
   },
   "auth": {
