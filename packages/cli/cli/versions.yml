@@ -1,5 +1,15 @@
 - changelogEntry: 
   - summary: |
+      Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 
+      definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC 
+      specification. Parameters defined with this extension are properly converted to the Fern IR format and included in 
+      endpoint definitions, enabling more complete API representations when importing from OpenRPC sources.
+    type: feat
+  irVersion: 57
+  version: 0.60.4
+
+- changelogEntry: 
+  - summary: |
       Query parameter and path parameter generation in the new OpenAPI parser now respects the skipOptionalProperties flag. This ensures that optional
       parameters are properly handled during example generation, resulting in cleaner and more accurate examples that better reflect real-world API usage.
     type: feat

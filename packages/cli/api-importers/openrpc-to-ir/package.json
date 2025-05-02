@@ -30,7 +30,8 @@
     "@fern-api/v2-importer-commons": "workspace:*",
     "openapi-types": "^12.1.3",
     "@open-rpc/meta-schema": "^1.14.9",
-    "@fern-api/ir-utils": "workspace:*"
+    "@fern-api/ir-utils": "workspace:*",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "18.15.3",
