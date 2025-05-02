@@ -18,6 +18,13 @@
 
 - changelogEntry:
   - summary: |
+      Fix a bug where the v3 parser would throw an error upon receiving an object property schema that is not an object.
+    type: fix
+  irVersion: 57
+  version: 0.60.2
+
+- changelogEntry:
+  - summary: |
       Fix an issue where example generation would not correctly merge allOf schemas with parent object schemas.
     type: fix
   irVersion: 57
