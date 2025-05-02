@@ -29527,7 +29527,10 @@
                     "buildId": 42
                   },
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }

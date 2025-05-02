@@ -2015,9 +2015,27 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "name": "foo",
+                "sample": "foo",
+                "consent": "foo"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "name": {
+                    "type": "json",
+                    "value": "foo"
+                  },
+                  "sample": {
+                    "type": "filename",
+                    "value": "foo"
+                  },
+                  "consent": {
+                    "type": "json",
+                    "value": "foo"
+                  }
+                }
               },
               "responseStatusCode": 200
             }
