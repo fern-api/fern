@@ -386,11 +386,7 @@ function convertMessageToSchema({
         if (isReferenceObject(message.payload)) {
             resolvedSchema = context.resolveSchemaReference(message.payload);
         }
-        if (!isReferenceObject(resolvedSchema)) {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        } else {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        }
+        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
     }
     return undefined;
 }

@@ -420,7 +420,7 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "testChannel": {
+    "subpackage_testChannel": {
       "name": {
         "originalName": "testChannel",
         "camelCase": {
@@ -486,10 +486,10 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannel",
+      "websocket": "channel_testChannel",
       "hasEndpointsInTree": false
     },
-    "testChannel2": {
+    "subpackage_testChannel2": {
       "name": {
         "originalName": "testChannel2",
         "camelCase": {
@@ -555,12 +555,12 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannel2",
+      "websocket": "channel_testChannel2",
       "hasEndpointsInTree": false
     }
   },
   "websocketChannels": {
-    "testChannel": {
+    "channel_testChannel": {
       "name": {
         "originalName": "testChannel",
         "camelCase": {
@@ -694,7 +694,7 @@
         "userSpecifiedExamples": {}
       }
     },
-    "testChannel2": {
+    "channel_testChannel2": {
       "name": {
         "originalName": "testChannel2",
         "camelCase": {
@@ -837,8 +837,8 @@
     ],
     "errors": [],
     "subpackages": [
-      "testChannel",
-      "testChannel2"
+      "subpackage_testChannel",
+      "subpackage_testChannel2"
     ],
     "fernFilepath": {
       "allParts": [],
