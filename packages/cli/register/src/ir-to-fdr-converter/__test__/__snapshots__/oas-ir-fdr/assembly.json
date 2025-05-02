@@ -4391,14 +4391,7 @@
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 10,
-                "status": null,
-                "created_on": "foo",
-                "before_id": "foo",
-                "after_id": "foo",
-                "throttled_only": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -4515,10 +4508,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "audio_url": "foo"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "audio_url": "foo"
+                }
               },
               "responseStatusCode": 201,
               "responseBody": {
@@ -5825,9 +5822,7 @@
                 "transcript_id": "foo",
                 "subtitle_format": "srt"
               },
-              "queryParameters": {
-                "chars_per_caption": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }

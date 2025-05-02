@@ -114,17 +114,10 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         let jsonResponseBody: JsonResponseBody | undefined = undefined;
         if (this.method.result != null) {
-            let resolvedResult: ContentDescriptorObject | undefined = undefined;
-            if (this.context.isReferenceObject(this.method.result)) {
-                const resolvedResultResponse = await this.context.resolveReference<ContentDescriptorObject>(
-                    this.method.result
-                );
-                if (resolvedResultResponse.resolved) {
-                    resolvedResult = resolvedResultResponse.value;
-                }
-            } else {
-                resolvedResult = this.method.result;
-            }
+            const resolvedResult = await this.context.resolveMaybeReference<ContentDescriptorObject>({
+                schemaOrReference: this.method.result,
+                breadcrumbs: [...this.breadcrumbs, "result"]
+            });
 
             if (resolvedResult != null) {
                 const resultSchemaConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({

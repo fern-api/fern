@@ -24,7 +24,7 @@ func do() () {
         &fern.CreateRequest{
             Decimal: 2.2,
             Even: 100,
-            Name: "foo",
+            Name: "fern",
             Shape: fern.ShapeSquare,
         },
     )

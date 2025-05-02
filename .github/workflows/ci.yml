@@ -54,7 +54,7 @@ jobs:
       - name: lint:eslint
         run: pnpm lint:eslint
 
-  check:
+  test:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
     steps:
@@ -78,6 +78,31 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  test-ete:
+    if: github.repository == 'fern-api/fern'
+    runs-on: Test
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+          cache-dependency-path: generators/go/go.sum
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run ETE tests
         env:

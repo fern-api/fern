@@ -7438,10 +7438,7 @@
             "description": "",
             "path": "/transactions",
             "pathParameters": {},
-            "queryParameters": {
-              "validateOriginUserId": "foo",
-              "validateDestinationUserId": "foo"
-            },
+            "queryParameters": {},
             "headers": {},
             "requestBody": {
               "transactionId": "foo",

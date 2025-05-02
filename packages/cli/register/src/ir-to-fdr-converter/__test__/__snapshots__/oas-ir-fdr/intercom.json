@@ -17986,9 +17986,7 @@
               "path": "/me",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -18166,9 +18164,7 @@
                 "id": 42
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "away_mode_enabled": true,
                 "away_mode_reassign": true
@@ -18307,9 +18303,7 @@
                 "created_at_after": "1677253093",
                 "created_at_before": "1677861493"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -18464,9 +18458,7 @@
               "path": "/admins",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -18598,9 +18590,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -18711,9 +18701,7 @@
               "path": "/articles",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -18863,9 +18851,7 @@
               "path": "/articles",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "title": "Thanks for everything",
                 "author_id": 1295
@@ -18888,7 +18874,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "42",
+                  "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                  "title": "Thanks for everything",
+                  "description": "Description of the Article",
+                  "body": "<p class=\"no-margin\">Body of the Article</p>",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "created_at": 1719492710,
+                  "updated_at": 1719492710,
+                  "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                  "parent_id": 145,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -18901,7 +18901,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "42",
+                  "workspace_id": "this_is_an_id37_that_should_be_at_least_4",
+                  "title": "Thanks for everything",
+                  "description": "Description of the Article",
+                  "body": "<p class=\"no-margin\">Body of the Article</p>",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "created_at": 1719492710,
+                  "updated_at": 1719492710,
+                  "url": "http://help-center.test/myapp-37/en/articles/42-thanks-for-everything",
+                  "parent_id": 145,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -18998,9 +19012,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -19012,7 +19024,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "45",
+                  "workspace_id": "this_is_an_id43_that_should_be_at_least_4",
+                  "title": "This is the article title",
+                  "description": "",
+                  "body": "",
+                  "author_id": 991267412,
+                  "state": "published",
+                  "created_at": 1719492712,
+                  "updated_at": 1719492712,
+                  "url": "http://help-center.test/myapp-43/en/articles/45-this-is-the-article-title",
+                  "parent_id": 148,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -19025,7 +19051,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "45",
+                  "workspace_id": "this_is_an_id43_that_should_be_at_least_4",
+                  "title": "This is the article title",
+                  "description": "",
+                  "body": "",
+                  "author_id": 991267412,
+                  "state": "published",
+                  "created_at": 1719492712,
+                  "updated_at": 1719492712,
+                  "url": "http://help-center.test/myapp-43/en/articles/45-this-is-the-article-title",
+                  "parent_id": 148,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -19135,9 +19175,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -19154,7 +19192,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "48",
+                  "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                  "title": "Christmas is here!",
+                  "description": "",
+                  "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                  "author_id": 991267418,
+                  "state": "published",
+                  "created_at": 1719492714,
+                  "updated_at": 1719492714,
+                  "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                  "parent_id": 151,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               },
               "responseBodyV3": {
@@ -19167,7 +19219,21 @@
                     "happy_reaction_percentage": 0,
                     "neutral_reaction_percentage": 0,
                     "sad_reaction_percentage": 0
-                  }
+                  },
+                  "type": "article",
+                  "id": "48",
+                  "workspace_id": "this_is_an_id49_that_should_be_at_least_4",
+                  "title": "Christmas is here!",
+                  "description": "",
+                  "body": "<p class=\"no-margin\">New gifts in store for the jolly season</p>",
+                  "author_id": 991267418,
+                  "state": "published",
+                  "created_at": 1719492714,
+                  "updated_at": 1719492714,
+                  "url": "http://help-center.test/myapp-49/en/articles/48-christmas-is-here",
+                  "parent_id": 151,
+                  "parent_ids": [],
+                  "parent_type": "collection"
                 }
               }
             }
@@ -19264,9 +19330,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -19415,9 +19479,7 @@
                 "help_center_id": 123,
                 "highlight": false
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -19426,7 +19488,22 @@
                   "total_count": 1,
                   "data": {
                     "articles": [
-                      {}
+                      {
+                        "type": "article",
+                        "id": "55",
+                        "workspace_id": "this_is_an_id61_that_should_be_at_least_4",
+                        "title": "Title 1",
+                        "description": "",
+                        "body": "",
+                        "author_id": 991267431,
+                        "state": "draft",
+                        "created_at": 1719492719,
+                        "updated_at": 1719492719,
+                        "url": null,
+                        "parent_id": null,
+                        "parent_ids": [],
+                        "parent_type": null
+                      }
                     ],
                     "highlights": []
                   },
@@ -19445,7 +19522,22 @@
                   "total_count": 1,
                   "data": {
                     "articles": [
-                      {}
+                      {
+                        "type": "article",
+                        "id": "55",
+                        "workspace_id": "this_is_an_id61_that_should_be_at_least_4",
+                        "title": "Title 1",
+                        "description": "",
+                        "body": "",
+                        "author_id": 991267431,
+                        "state": "draft",
+                        "created_at": 1719492719,
+                        "updated_at": 1719492719,
+                        "url": null,
+                        "parent_id": null,
+                        "parent_ids": [],
+                        "parent_type": null
+                      }
                     ],
                     "highlights": []
                   },
@@ -19540,9 +19632,7 @@
               "path": "/help_center/collections",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -19712,9 +19802,7 @@
               "path": "/help_center/collections",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "name": "collection 51"
               },
@@ -19851,9 +19939,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -19994,9 +20080,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -20129,9 +20213,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -20243,9 +20325,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -20344,9 +20424,7 @@
               "path": "/help_center/help_centers",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -20531,9 +20609,7 @@
                 "page": 1,
                 "per_page": 15
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -20697,9 +20773,7 @@
               "path": "/companies",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -20856,9 +20930,7 @@
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21006,9 +21078,7 @@
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21156,9 +21226,7 @@
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21270,9 +21338,7 @@
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21396,9 +21462,7 @@
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21531,9 +21595,7 @@
                 "per_page": 15,
                 "order": "desc"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21697,12 +21759,8 @@
               "description": "",
               "path": "/companies/scroll",
               "pathParameters": {},
-              "queryParameters": {
-                "scroll_param": "foo"
-              },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "queryParameters": {},
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21886,9 +21944,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "id": "667d608d8a68186f43bafd70"
               },
@@ -22064,9 +22120,7 @@
                 "id": "58a430d35458202d41b1e65b"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22224,9 +22278,7 @@
                 "id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22350,9 +22402,7 @@
                 "contact_id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22480,9 +22530,7 @@
                 "contact_id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22678,9 +22726,7 @@
                 "contact_id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22802,9 +22848,7 @@
                 "id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -23053,9 +23097,7 @@
                 "id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -23296,9 +23338,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -23404,9 +23444,7 @@
               "path": "/contacts/merge",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -23639,9 +23677,7 @@
               "path": "/contacts/search",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "query": {}
               },
@@ -23753,9 +23789,7 @@
               "path": "/contacts",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -23871,13 +23905,11 @@
               "path": "/contacts",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
-              "requestBody": {},
+              "headers": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -24114,9 +24146,7 @@
                 "id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -24230,9 +24260,7 @@
                 "id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -24356,9 +24384,7 @@
                 "id": 42
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -24640,9 +24666,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "body": "Hello",
                 "contact_id": "667d60978a68186f43bafd9e",
@@ -24793,9 +24817,7 @@
                 "id": 1
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -24975,9 +24997,7 @@
                 "contact_id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "id": "108",
                 "consent_type": "opt_in"
@@ -25151,9 +25171,7 @@
                 "id": "37846"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -25276,9 +25294,7 @@
               "path": "/subscription_types",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -25464,9 +25480,7 @@
                 "contact_id": "63a07ddf05a32042dffac965"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "id": "94"
               },
@@ -25606,9 +25620,7 @@
                 "id": "7522907"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -25752,9 +25764,7 @@
                 "conversation_id": "64619700005694"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "id": "99",
                 "admin_id": "991267526"
@@ -25918,9 +25928,7 @@
                 "id": "7522907"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "admin_id": "991267530"
               },
@@ -26020,9 +26028,7 @@
               "path": "/tags",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -26136,9 +26142,7 @@
               "path": "/tags",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "name": "Independent"
               },
@@ -26259,9 +26263,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -26362,9 +26364,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -26492,9 +26492,7 @@
                 "ticket_id": "64619700005694"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "id": "134",
                 "admin_id": "991267844"
@@ -26658,9 +26656,7 @@
                 "id": "7522907"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "admin_id": "991267853"
               },
@@ -26798,13 +26794,8 @@
               "description": "",
               "path": "/conversations",
               "pathParameters": {},
-              "queryParameters": {
-                "per_page": 20,
-                "starting_after": "foo"
-              },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "queryParameters": {},
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -26918,9 +26909,7 @@
               "path": "/conversations",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "from": {
                   "type": "lead",
@@ -27071,9 +27060,7 @@
               "queryParameters": {
                 "display_as": "plaintext"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -27322,9 +27309,7 @@
               "queryParameters": {
                 "display_as": "plaintext"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -27625,9 +27610,7 @@
               "path": "/conversations/search",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "query": {}
               },
@@ -27883,16 +27866,20 @@
                 "id": "123 or \"last\""
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
-                "intercom_user_id": "foo"
+                "intercom_user_id": "foo",
+                "message_type": "comment",
+                "type": "user",
+                "body": "foo"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo"
+                  "intercom_user_id": "foo",
+                  "message_type": "comment",
+                  "type": "user",
+                  "body": "foo"
                 }
               },
               "responseStatusCode": 200,
@@ -28177,9 +28164,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "message_type": "close",
                 "type": "admin",
@@ -28452,9 +28437,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -28733,9 +28716,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -28876,9 +28857,7 @@
                 "contact_id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "admin_id": "5017690"
               },
@@ -28983,9 +28962,7 @@
               "path": "/conversations/redact",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "type": "conversation_part",
                 "conversation_id": "19894788788",
@@ -29281,9 +29258,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "ticket_type_id": "1234"
               },
@@ -29583,9 +29558,7 @@
                 "model": "company",
                 "include_archived": false
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -30173,9 +30146,7 @@
               "path": "/data_attributes",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "name": "My Data Attribute",
                 "model": "contact",
@@ -30337,9 +30308,7 @@
                 "id": 1
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -30510,13 +30479,12 @@
               "path": "/events",
               "pathParameters": {},
               "queryParameters": {
-                "filter": {},
-                "type": "foo",
-                "summary": true
+                "filter": {
+                  "user_id": "foo"
+                },
+                "type": "foo"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -30613,13 +30581,11 @@
               "path": "/events",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
-              "requestBody": {},
+              "headers": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200
             }
@@ -30697,9 +30663,7 @@
               "path": "/events/summaries",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -30802,9 +30766,7 @@
               "path": "/export/content/data",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "created_at_after": 1527811200,
                 "created_at_before": 1527811200
@@ -30927,9 +30889,7 @@
                 "job_identifier": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -31041,9 +31001,7 @@
                 "job_identifier": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -31144,9 +31102,7 @@
                 "job_identifier": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -31244,13 +31200,11 @@
               "path": "/messages",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
-              "requestBody": {},
+              "headers": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -31358,9 +31312,7 @@
               "path": "/news/news_items",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -31562,9 +31514,7 @@
               "path": "/news/news_items",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "title": "Halloween is here!",
                 "sender_id": 123
@@ -31733,9 +31683,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -31901,9 +31849,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "title": "Halloween is here!",
                 "sender_id": 123
@@ -32054,9 +32000,7 @@
                 "id": 123
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32168,9 +32112,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32273,9 +32215,7 @@
               "path": "/news/newsfeeds",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32429,9 +32369,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32552,9 +32490,7 @@
               "queryParameters": {
                 "include_count": true
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32698,9 +32634,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -32820,9 +32754,7 @@
               "path": "/phone_call_redirects",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "phone": "+1 1234567890"
               },
@@ -32928,9 +32860,7 @@
               "path": "/teams",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -33040,9 +32970,7 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -33179,9 +33107,7 @@
                 "ticket_type_id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "name": "Bug Priority",
                 "description": "Priority level of the bug",
@@ -33370,9 +33296,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -33504,9 +33428,7 @@
               "path": "/ticket_types",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -33606,9 +33528,7 @@
               "path": "/ticket_types",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "name": "Bug"
               },
@@ -33749,9 +33669,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -33896,9 +33814,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -34057,16 +33973,20 @@
                 "id": "123"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
-                "intercom_user_id": "foo"
+                "intercom_user_id": "foo",
+                "message_type": "comment",
+                "type": "user",
+                "body": "foo"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo"
+                  "intercom_user_id": "foo",
+                  "message_type": "comment",
+                  "type": "user",
+                  "body": "foo"
                 }
               },
               "responseStatusCode": 200,
@@ -34194,13 +34114,13 @@
               "path": "/tickets",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "ticket_type_id": "1234",
                 "contacts": [
-                  {}
+                  {
+                    "id": "foo"
+                  }
                 ]
               },
               "requestBodyV3": {
@@ -34208,7 +34128,9 @@
                 "value": {
                   "ticket_type_id": "1234",
                   "contacts": [
-                    {}
+                    {
+                      "id": "foo"
+                    }
                   ]
                 }
               },
@@ -34459,9 +34381,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -34722,9 +34642,7 @@
                 "id": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
@@ -35133,9 +35051,7 @@
               "path": "/tickets/search",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "query": {}
               },
@@ -35418,9 +35334,7 @@
               "queryParameters": {
                 "user_id": "foo"
               },
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -35612,13 +35526,11 @@
               "path": "/visitors",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
-              "requestBody": {},
+              "headers": {},
+              "requestBody": null,
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": null
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -35811,20 +35723,18 @@
               "path": "/visitors/convert",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Intercom-Version": "2.11"
-              },
+              "headers": {},
               "requestBody": {
                 "type": "user",
-                "user": {},
-                "visitor": {}
+                "user": null,
+                "visitor": null
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "user",
-                  "user": {},
-                  "visitor": {}
+                  "user": null,
+                  "visitor": null
                 }
               },
               "responseStatusCode": 200,

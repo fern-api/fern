@@ -16679,7 +16679,9 @@
                 },
                 "contract": {
                   "employment_type": "PART_TIME",
-                  "part_time_percentage": 42
+                  "part_time_percentage": 42,
+                  "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                  "start_date": "1999-12-31"
                 }
               },
               "requestBodyV3": {
@@ -16707,7 +16709,9 @@
                   },
                   "contract": {
                     "employment_type": "PART_TIME",
-                    "part_time_percentage": 42
+                    "part_time_percentage": 42,
+                    "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                    "start_date": "1999-12-31"
                   }
                 }
               },
@@ -16739,7 +16743,11 @@
                     },
                     "contract": {
                       "employment_type": "PART_TIME",
-                      "part_time_percentage": 42
+                      "part_time_percentage": 42,
+                      "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                      "start_date": "1999-12-31",
+                      "employee_number": 42,
+                      "end_date": "1999-12-31"
                     },
                     "vacation_info": {
                       "vacation_accrual_start_date": "foo",
@@ -16776,7 +16784,11 @@
                     },
                     "contract": {
                       "employment_type": "PART_TIME",
-                      "part_time_percentage": 42
+                      "part_time_percentage": 42,
+                      "contract_oid": "pdcMQe0cXCCXWTkqkdytw",
+                      "start_date": "1999-12-31",
+                      "employee_number": 42,
+                      "end_date": "1999-12-31"
                     },
                     "vacation_info": {
                       "vacation_accrual_start_date": "foo",
@@ -19008,9 +19020,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "templateId": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -19502,9 +19512,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19724,27 +19732,7 @@
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
-              "queryParameters": {
-                "after_cursor": "foo",
-                "limit": 42,
-                "order_direction": "asc",
-                "types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "new"
-                ],
-                "team_id": 42,
-                "external_id": "foo",
-                "countries": [
-                  "US"
-                ],
-                "currencies": [
-                  "USD"
-                ],
-                "search": "foo",
-                "sort_by": "contract_title"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21131,12 +21119,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "end_date": "1999-12-31",
-                "calculation_type": "CUSTOM_AMOUNT",
-                "workweek_start": "foo",
-                "workweek_end": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22079,9 +22062,7 @@
                 "contract_id": "37nex2x",
                 "task_id": "foo"
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22275,17 +22256,8 @@
                 "contract_id": "37nex2x"
               },
               "queryParameters": {
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "reporter_id": 42,
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "limit": 99,
-                "offset": 0
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -22558,18 +22530,8 @@
               "path": "/timesheets",
               "pathParameters": {},
               "queryParameters": {
-                "contract_id": "foo",
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "reporter_id": 42,
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "limit": 99,
-                "offset": 0
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23098,9 +23060,7 @@
               "pathParameters": {
                 "timesheet_id": 42
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24899,7 +24859,43 @@
                             }
                           }
                         }
-                      ]
+                      ],
+                      "reason": "I have a doctors appointment",
+                      "type": "VACATION",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "denial_reason": "No time off available",
+                      "has_multiple_dates": true,
+                      "status": "REQUESTED",
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "pic_url": "foo",
+                        "profile_type": "client",
+                        "is_employee": true
+                      },
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "pic_url": "foo",
+                        "profile_type": "client",
+                        "is_employee": true
+                      },
+                      "days_used_start_year": "2.00",
+                      "days_used_end_year": "2.00",
+                      "total_days_used": "4.00",
+                      "start_date_is_half_day": true,
+                      "end_date_is_half_day": true,
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "date_is_half_day": true,
+                      "attachments": {
+                        "0": {
+                          "id": 42,
+                          "label": "foo",
+                          "file_extension": "foo"
+                        }
+                      }
                     }
                   ]
                 }
@@ -24994,7 +24990,43 @@
                             }
                           }
                         }
-                      ]
+                      ],
+                      "reason": "I have a doctors appointment",
+                      "type": "VACATION",
+                      "requested_at": "2022-05-24T09:38:46.235Z",
+                      "reviewed_at": "2022-05-24T09:38:46.235Z",
+                      "denial_reason": "No time off available",
+                      "has_multiple_dates": true,
+                      "status": "REQUESTED",
+                      "other_timeoff_name": "This is time off for a doctor's appointment",
+                      "requester": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "pic_url": "foo",
+                        "profile_type": "client",
+                        "is_employee": true
+                      },
+                      "reviewer": {
+                        "id": 409222,
+                        "name": "Mr. Rogers",
+                        "pic_url": "foo",
+                        "profile_type": "client",
+                        "is_employee": true
+                      },
+                      "days_used_start_year": "2.00",
+                      "days_used_end_year": "2.00",
+                      "total_days_used": "4.00",
+                      "start_date_is_half_day": true,
+                      "end_date_is_half_day": true,
+                      "single_date": "2022-05-24T09:38:46.235Z",
+                      "date_is_half_day": true,
+                      "attachments": {
+                        "0": {
+                          "id": 42,
+                          "label": "foo",
+                          "file_extension": "foo"
+                        }
+                      }
                     }
                   ]
                 }
@@ -25199,7 +25231,43 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "reason": "I have a doctors appointment",
+                    "type": "VACATION",
+                    "requested_at": "2022-05-24T09:38:46.235Z",
+                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                    "denial_reason": "No time off available",
+                    "has_multiple_dates": true,
+                    "status": "REQUESTED",
+                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                    "requester": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "reviewer": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "days_used_start_year": "2.00",
+                    "days_used_end_year": "2.00",
+                    "total_days_used": "4.00",
+                    "start_date_is_half_day": true,
+                    "end_date_is_half_day": true,
+                    "single_date": "2022-05-24T09:38:46.235Z",
+                    "date_is_half_day": true,
+                    "attachments": {
+                      "0": {
+                        "id": 42,
+                        "label": "foo",
+                        "file_extension": "foo"
+                      }
+                    }
                   }
                 }
               },
@@ -25292,7 +25360,43 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "reason": "I have a doctors appointment",
+                    "type": "VACATION",
+                    "requested_at": "2022-05-24T09:38:46.235Z",
+                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                    "denial_reason": "No time off available",
+                    "has_multiple_dates": true,
+                    "status": "REQUESTED",
+                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                    "requester": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "reviewer": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "days_used_start_year": "2.00",
+                    "days_used_end_year": "2.00",
+                    "total_days_used": "4.00",
+                    "start_date_is_half_day": true,
+                    "end_date_is_half_day": true,
+                    "single_date": "2022-05-24T09:38:46.235Z",
+                    "date_is_half_day": true,
+                    "attachments": {
+                      "0": {
+                        "id": 42,
+                        "label": "foo",
+                        "file_extension": "foo"
+                      }
+                    }
                   }
                 }
               }
@@ -25515,7 +25619,43 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "reason": "I have a doctors appointment",
+                    "type": "VACATION",
+                    "requested_at": "2022-05-24T09:38:46.235Z",
+                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                    "denial_reason": "No time off available",
+                    "has_multiple_dates": true,
+                    "status": "REQUESTED",
+                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                    "requester": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "reviewer": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "days_used_start_year": "2.00",
+                    "days_used_end_year": "2.00",
+                    "total_days_used": "4.00",
+                    "start_date_is_half_day": true,
+                    "end_date_is_half_day": true,
+                    "single_date": "2022-05-24T09:38:46.235Z",
+                    "date_is_half_day": true,
+                    "attachments": {
+                      "0": {
+                        "id": 42,
+                        "label": "foo",
+                        "file_extension": "foo"
+                      }
+                    }
                   }
                 }
               },
@@ -25608,7 +25748,43 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "reason": "I have a doctors appointment",
+                    "type": "VACATION",
+                    "requested_at": "2022-05-24T09:38:46.235Z",
+                    "reviewed_at": "2022-05-24T09:38:46.235Z",
+                    "denial_reason": "No time off available",
+                    "has_multiple_dates": true,
+                    "status": "REQUESTED",
+                    "other_timeoff_name": "This is time off for a doctor's appointment",
+                    "requester": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "reviewer": {
+                      "id": 409222,
+                      "name": "Mr. Rogers",
+                      "pic_url": "foo",
+                      "profile_type": "client",
+                      "is_employee": true
+                    },
+                    "days_used_start_year": "2.00",
+                    "days_used_end_year": "2.00",
+                    "total_days_used": "4.00",
+                    "start_date_is_half_day": true,
+                    "end_date_is_half_day": true,
+                    "single_date": "2022-05-24T09:38:46.235Z",
+                    "date_is_half_day": true,
+                    "attachments": {
+                      "0": {
+                        "id": 42,
+                        "label": "foo",
+                        "file_extension": "foo"
+                      }
+                    }
                   }
                 }
               }
@@ -25965,15 +26141,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26000,15 +26176,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26022,7 +26198,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26057,15 +26269,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26092,15 +26304,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26114,7 +26326,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26149,15 +26397,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26184,15 +26432,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26206,7 +26454,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26258,15 +26542,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26293,15 +26577,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26315,7 +26599,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26350,15 +26670,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26385,15 +26705,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26407,7 +26727,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26442,15 +26798,15 @@
                                   "requester": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "reviewer": {
                                     "id": 409222,
                                     "name": "Mr. Rogers",
-                                    "pic_url": null,
-                                    "profile_type": null,
+                                    "pic_url": {},
+                                    "profile_type": {},
                                     "is_employee": true
                                   },
                                   "days_used_start_year": "2.00",
@@ -26477,15 +26833,15 @@
                                     "requester": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "reviewer": {
                                       "id": 409222,
                                       "name": "Mr. Rogers",
-                                      "pic_url": null,
-                                      "profile_type": null,
+                                      "pic_url": {},
+                                      "profile_type": {},
                                       "is_employee": true
                                     },
                                     "days_used_start_year": "2.00",
@@ -26499,7 +26855,43 @@
                                       "0": {}
                                     }
                                   }
-                                ]
+                                ],
+                                "reason": "I have a doctors appointment",
+                                "type": "VACATION",
+                                "requested_at": "2022-05-24T09:38:46.235Z",
+                                "reviewed_at": "2022-05-24T09:38:46.235Z",
+                                "denial_reason": "No time off available",
+                                "has_multiple_dates": true,
+                                "status": "REQUESTED",
+                                "other_timeoff_name": "This is time off for a doctor's appointment",
+                                "requester": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "reviewer": {
+                                  "id": 409222,
+                                  "name": "Mr. Rogers",
+                                  "pic_url": "foo",
+                                  "profile_type": "client",
+                                  "is_employee": true
+                                },
+                                "days_used_start_year": "2.00",
+                                "days_used_end_year": "2.00",
+                                "total_days_used": "4.00",
+                                "start_date_is_half_day": true,
+                                "end_date_is_half_day": true,
+                                "single_date": "2022-05-24T09:38:46.235Z",
+                                "date_is_half_day": true,
+                                "attachments": {
+                                  "0": {
+                                    "id": 42,
+                                    "label": "foo",
+                                    "file_extension": "foo"
+                                  }
+                                }
                               }
                             ]
                           }
@@ -26836,23 +27228,7 @@
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
-              "queryParameters": {
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "types": [
-                  "accrued_holiday"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "invoice_id": 42,
-                "reporter_id": 42,
-                "date_from": "1999-12-31",
-                "date_to": "1999-12-31",
-                "limit": 10,
-                "offset": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27153,24 +27529,7 @@
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
-              "queryParameters": {
-                "contract_id": "foo",
-                "contract_types": [
-                  "ongoing_time_based"
-                ],
-                "types": [
-                  "accrued_holiday"
-                ],
-                "statuses": [
-                  "approved"
-                ],
-                "invoice_id": 42,
-                "reporter_id": 42,
-                "date_from": "1999-12-31",
-                "date_to": "1999-12-31",
-                "limit": 10,
-                "offset": 0
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27505,9 +27864,7 @@
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
-              "queryParameters": {
-                "reason": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28240,9 +28597,7 @@
               "path": "/agreements",
               "pathParameters": {},
               "queryParameters": {
-                "contract_id": "37nex2x",
-                "limit": "50",
-                "offset": "0"
+                "contract_id": "37nex2x"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28577,10 +28932,7 @@
               "description": "",
               "path": "/lookups/job-titles",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 99,
-                "after_cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28683,9 +29035,7 @@
               "description": "",
               "path": "/lookups/seniorities",
               "pathParameters": {},
-              "queryParameters": {
-                "limit": 50
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29020,16 +29370,7 @@
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
-              "queryParameters": {
-                "issued_from_date": "foo",
-                "issued_to_date": "foo",
-                "statuses": [
-                  "pending"
-                ],
-                "entities": [
-                  "individual"
-                ]
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29421,16 +29762,7 @@
               "pathParameters": {},
               "queryParameters": {
                 "date_from": "2022-01-01",
-                "date_to": "2022-12-01",
-                "currencies": [
-                  "USD"
-                ],
-                "statuses": [
-                  "paid"
-                ],
-                "entities": [
-                  "individual"
-                ]
+                "date_to": "2022-12-01"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -29742,10 +30074,7 @@
               "description": "",
               "path": "/people",
               "pathParameters": {},
-              "queryParameters": {
-                "offset": 0,
-                "limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

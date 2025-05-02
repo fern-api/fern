@@ -310,18 +310,8 @@
               "deprecated_ref_id": "foo",
               "x-fern-availability_path_param": "foo"
             },
-            "queryParameters": {
-              "deprecated_lang": "foo",
-              "active_lang": "foo",
-              "deprecated_ref_lang": "foo",
-              "x-fern-availability_query_param": "foo"
-            },
-            "headers": {
-              "X-Deprecated-Header": "foo",
-              "X-Active-Header": "foo",
-              "X-Deprecated-Ref-Header": "foo",
-              "x-fern-availability_header": "foo"
-            },
+            "queryParameters": {},
+            "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
               "type": "json",

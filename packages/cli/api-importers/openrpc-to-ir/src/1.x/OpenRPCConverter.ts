@@ -103,15 +103,12 @@ export class OpenRPCConverter extends AbstractConverter<OpenRPCConverterContext3
         });
 
         for (const method of this.context.spec.methods ?? []) {
-            let resolvedMethod: MethodObject;
-            if (this.context.isReferenceObject(method)) {
-                const resolvedMethodResponse = await this.context.resolveReference<MethodObject>(method);
-                if (!resolvedMethodResponse.resolved) {
-                    continue;
-                }
-                resolvedMethod = resolvedMethodResponse.value;
-            } else {
-                resolvedMethod = method;
+            const resolvedMethod = await this.context.resolveMaybeReference<MethodObject>({
+                schemaOrReference: method,
+                breadcrumbs: ["methods"]
+            });
+            if (resolvedMethod == null) {
+                continue;
             }
 
             const methodConverter = new MethodConverter({

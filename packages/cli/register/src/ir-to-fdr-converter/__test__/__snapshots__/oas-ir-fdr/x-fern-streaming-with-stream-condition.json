@@ -199,10 +199,7 @@
             "path": "/v2/chats",
             "pathParameters": {},
             "queryParameters": {},
-            "headers": {
-              "Request-Timeout": 42,
-              "Request-Timeout-Millis": 42
-            },
+            "headers": {},
             "requestBody": {
               "query": "How can I use the Vectara platform?"
             },

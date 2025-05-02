@@ -1902,13 +1902,10 @@
             "description": "An array containing a page of transaction items.",
             "key": "items",
             "valueType": {
-              "type": "optional",
+              "type": "list",
               "itemType": {
-                "type": "list",
-                "itemType": {
-                  "type": "id",
-                  "value": "transactionItem"
-                }
+                "type": "id",
+                "value": "transactionItem"
               }
             }
           },
@@ -2255,11 +2252,8 @@
             "description": "When the transfer should occur and any recurrence.",
             "key": "schedule",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "transferSchedule"
-              }
+              "type": "id",
+              "value": "transferSchedule"
             }
           }
         ]
@@ -3496,42 +3490,32 @@
               "description": "",
               "path": "/accounts",
               "pathParameters": {},
-              "queryParameters": {
-                "productType": [
-                  "savings"
-                ],
-                "location": "internal",
-                "allows": [
-                  "billPay"
-                ],
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
-                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
-                      "nickname": "Payroll Checking",
                       "label": "Payroll Checking *1008",
+                      "nickname": "Payroll Checking",
+                      "maskedNumber": "*1008",
                       "product": {
                         "type": "checking",
                         "code": "DDA",
                         "label": "Business Checking",
                         "description": "Basic business checking accounts"
                       },
-                      "maskedNumber": "*1008",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": true,
                         "billPay": false,
                         "mobileCheckDeposit": true,
+                        "transferFrom": false,
+                        "transferTo": true,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
@@ -3539,52 +3523,53 @@
                     },
                     {
                       "id": "b78d27691e8bf23bc970",
-                      "nickname": "College CD",
                       "label": "College CD *2017",
+                      "nickname": "College CD",
+                      "maskedNumber": "*2017",
                       "product": {
                         "type": "cd",
                         "code": "CDA",
                         "label": "24 Month CD",
                         "description": "24 Month certificate of deposit"
                       },
-                      "maskedNumber": "*2017",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": false,
                         "billPay": false,
                         "mobileCheckDeposit": false,
+                        "transferFrom": false,
+                        "transferTo": false,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
                       }
                     }
-                  ]
+                  ],
+                  "count": 6
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
-                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
-                      "nickname": "Payroll Checking",
                       "label": "Payroll Checking *1008",
+                      "nickname": "Payroll Checking",
+                      "maskedNumber": "*1008",
                       "product": {
                         "type": "checking",
                         "code": "DDA",
                         "label": "Business Checking",
                         "description": "Basic business checking accounts"
                       },
-                      "maskedNumber": "*1008",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": true,
                         "billPay": false,
                         "mobileCheckDeposit": true,
+                        "transferFrom": false,
+                        "transferTo": true,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
@@ -3592,27 +3577,28 @@
                     },
                     {
                       "id": "b78d27691e8bf23bc970",
-                      "nickname": "College CD",
                       "label": "College CD *2017",
+                      "nickname": "College CD",
+                      "maskedNumber": "*2017",
                       "product": {
                         "type": "cd",
                         "code": "CDA",
                         "label": "24 Month CD",
                         "description": "24 Month certificate of deposit"
                       },
-                      "maskedNumber": "*2017",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": false,
                         "billPay": false,
                         "mobileCheckDeposit": false,
+                        "transferFrom": false,
+                        "transferTo": false,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
                       }
                     }
-                  ]
+                  ],
+                  "count": 6
                 }
               }
             }
@@ -3683,8 +3669,8 @@
                 "type": "json",
                 "value": {
                   "id": "bf23bc970b78d27691e8",
-                  "nickname": "Payroll Checking",
                   "label": "Payroll Checking *1008",
+                  "nickname": "Payroll Checking",
                   "maskedNumber": "*1008",
                   "product": {
                     "type": "checking",
@@ -3694,14 +3680,15 @@
                   },
                   "location": "internal",
                   "allows": {
-                    "transferFrom": false,
-                    "transferTo": true,
                     "billPay": false,
                     "mobileCheckDeposit": true,
+                    "transferFrom": false,
+                    "transferTo": true,
                     "view": true,
                     "viewCards": true,
                     "manageCards": false,
-                    "manageJointOwners": true
+                    "manageJointOwners": true,
+                    "manageOverdraftAccounts": true
                   },
                   "electronicStatements": true
                 }
@@ -3710,8 +3697,8 @@
                 "type": "json",
                 "value": {
                   "id": "bf23bc970b78d27691e8",
-                  "nickname": "Payroll Checking",
                   "label": "Payroll Checking *1008",
+                  "nickname": "Payroll Checking",
                   "maskedNumber": "*1008",
                   "product": {
                     "type": "checking",
@@ -3721,14 +3708,15 @@
                   },
                   "location": "internal",
                   "allows": {
-                    "transferFrom": false,
-                    "transferTo": true,
                     "billPay": false,
                     "mobileCheckDeposit": true,
+                    "transferFrom": false,
+                    "transferTo": true,
                     "view": true,
                     "viewCards": true,
                     "manageCards": false,
-                    "manageJointOwners": true
+                    "manageJointOwners": true,
+                    "manageOverdraftAccounts": true
                   },
                   "electronicStatements": true
                 }
@@ -3813,12 +3801,7 @@
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
-              "queryParameters": {
-                "accounts": [
-                  "foo"
-                ],
-                "retryCount": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3829,16 +3812,16 @@
                       "id": "05d00d7d-d630",
                       "available": "3208.20",
                       "current": "3448.72",
-                      "currentWithPending": "3448.72",
                       "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "3448.72",
                       "incomplete": false
                     },
                     {
                       "id": "cb5d67ea-a5c3",
                       "available": "1750.80",
                       "current": "1956.19",
-                      "currentWithPending": "1956.19",
                       "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "1956.19",
                       "incomplete": false
                     }
                   ]
@@ -3852,16 +3835,16 @@
                       "id": "05d00d7d-d630",
                       "available": "3208.20",
                       "current": "3448.72",
-                      "currentWithPending": "3448.72",
                       "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "3448.72",
                       "incomplete": false
                     },
                     {
                       "id": "cb5d67ea-a5c3",
                       "available": "1750.80",
                       "current": "1956.19",
-                      "currentWithPending": "1956.19",
                       "updatedAt": "2022-05-02T06:51:19.375Z",
+                      "currentWithPending": "1956.19",
                       "incomplete": false
                     }
                   ]
@@ -3986,36 +3969,33 @@
                 "allows": [
                   "billPay"
                 ],
-                "secCode": "arc",
-                "customerId": "foo",
-                "start": "",
-                "limit": 100
+                "secCode": "arc"
               },
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
-                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
-                      "nickname": "Payroll Checking",
                       "label": "Payroll Checking *1008",
+                      "nickname": "Payroll Checking",
+                      "maskedNumber": "*1008",
                       "product": {
                         "type": "checking",
                         "code": "DDA",
                         "label": "Business Checking",
                         "description": "Basic business checking accounts"
                       },
-                      "maskedNumber": "*1008",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": true,
                         "billPay": false,
                         "mobileCheckDeposit": true,
+                        "transferFrom": false,
+                        "transferTo": true,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
@@ -4023,52 +4003,53 @@
                     },
                     {
                       "id": "b78d27691e8bf23bc970",
-                      "nickname": "College CD",
                       "label": "College CD *2017",
+                      "nickname": "College CD",
+                      "maskedNumber": "*2017",
                       "product": {
                         "type": "cd",
                         "code": "CDA",
                         "label": "24 Month CD",
                         "description": "24 Month certificate of deposit"
                       },
-                      "maskedNumber": "*2017",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": false,
                         "billPay": false,
                         "mobileCheckDeposit": false,
+                        "transferFrom": false,
+                        "transferTo": false,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
                       }
                     }
-                  ]
+                  ],
+                  "count": 6
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
+                  "limit": 100,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts?start=641f62296ecbf1882c84?limit=100?allows=view",
-                  "count": 6,
                   "items": [
                     {
                       "id": "bf23bc970b78d27691e8",
-                      "nickname": "Payroll Checking",
                       "label": "Payroll Checking *1008",
+                      "nickname": "Payroll Checking",
+                      "maskedNumber": "*1008",
                       "product": {
                         "type": "checking",
                         "code": "DDA",
                         "label": "Business Checking",
                         "description": "Basic business checking accounts"
                       },
-                      "maskedNumber": "*1008",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": true,
                         "billPay": false,
                         "mobileCheckDeposit": true,
+                        "transferFrom": false,
+                        "transferTo": true,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
@@ -4076,27 +4057,28 @@
                     },
                     {
                       "id": "b78d27691e8bf23bc970",
-                      "nickname": "College CD",
                       "label": "College CD *2017",
+                      "nickname": "College CD",
+                      "maskedNumber": "*2017",
                       "product": {
                         "type": "cd",
                         "code": "CDA",
                         "label": "24 Month CD",
                         "description": "24 Month certificate of deposit"
                       },
-                      "maskedNumber": "*2017",
                       "location": "internal",
                       "allows": {
-                        "transferFrom": false,
-                        "transferTo": false,
                         "billPay": false,
                         "mobileCheckDeposit": false,
+                        "transferFrom": false,
+                        "transferTo": false,
                         "view": true,
                         "viewCards": true,
                         "manageCards": false
                       }
                     }
-                  ]
+                  ],
+                  "count": 6
                 }
               }
             }
@@ -4318,50 +4300,25 @@
               "pathParameters": {
                 "accountId": "foo"
               },
-              "queryParameters": {
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "items": [
-                    {
-                      "id": "da1331a9e9168ea91346",
-                      "label": "Checking *3456",
-                      "maskedNumber": "*3456"
-                    },
-                    {
-                      "id": "5c9b4e50a0401ef4eb2e",
-                      "label": "Premiere Savings *1234",
-                      "maskedNumber": "*1234"
-                    }
-                  ],
-                  "maximumOverdraftAccounts": 1,
                   "limit": 100,
-                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100"
+                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
+                  "items": null,
+                  "maximumOverdraftAccounts": 1
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "items": [
-                    {
-                      "id": "da1331a9e9168ea91346",
-                      "label": "Checking *3456",
-                      "maskedNumber": "*3456"
-                    },
-                    {
-                      "id": "5c9b4e50a0401ef4eb2e",
-                      "label": "Premiere Savings *1234",
-                      "maskedNumber": "*1234"
-                    }
-                  ],
-                  "maximumOverdraftAccounts": 1,
                   "limit": 100,
-                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100"
+                  "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
+                  "items": null,
+                  "maximumOverdraftAccounts": 1
                 }
               }
             }
@@ -4775,8 +4732,7 @@
               "queryParameters": {
                 "locator": "foo",
                 "locatorType": "abaRoutingNumber",
-                "countryCode": "US",
-                "includeIntermediaryInstitutions": true
+                "countryCode": "US"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4789,8 +4745,8 @@
                     "address": {
                       "address1": "239 West Princess Ave.",
                       "locality": "Andalasia",
-                      "regionCode": "NC",
                       "countryCode": "US",
+                      "regionCode": "NC",
                       "postalCode": "28407"
                     },
                     "locator": "503000196",
@@ -4807,8 +4763,8 @@
                     "address": {
                       "address1": "239 West Princess Ave.",
                       "locality": "Andalasia",
-                      "regionCode": "NC",
                       "countryCode": "US",
+                      "regionCode": "NC",
                       "postalCode": "28407"
                     },
                     "locator": "503000196",
@@ -4948,9 +4904,7 @@
               },
               "queryParameters": {
                 "startsOn": "2022-07-04",
-                "endsOn": "2022-07-04",
                 "direction": "debit",
-                "count": 6,
                 "frequency": "once"
               },
               "headers": {},
@@ -5116,12 +5070,8 @@
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
-              "queryParameters": {
-                "timeZoneId": "America/New_York"
-              },
-              "headers": {
-                "If-None-Match": "foo"
-              },
+              "queryParameters": {},
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -5294,12 +5244,7 @@
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
-              "queryParameters": {
-                "startsOn": "2022-07-04",
-                "endsOn": "2022-07-04",
-                "type": "internal",
-                "risk": "early"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5691,35 +5636,15 @@
               "pathParameters": {
                 "accountId": "foo"
               },
-              "queryParameters": {
-                "start": "",
-                "limit": 100,
-                "occurredOn": "2023-05-19",
-                "posted": true,
-                "createdOn": "2022-05-19",
-                "postedOn": "2022-05-19",
-                "category": [
-                  "foo"
-                ],
-                "type": [
-                  "balance"
-                ],
-                "subtype": [
-                  "check"
-                ],
-                "amount": "[1000.00,1200.00)",
-                "checkNumber": "[1000,1200)",
-                "retryCount": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "limit": 10,
-                  "count": 2381,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "items": [
                     {
                       "id": "d62c0701-0d74",
@@ -5754,16 +5679,16 @@
                         "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
                       }
                     }
-                  ]
+                  ],
+                  "count": 2381
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "limit": 10,
-                  "count": 2381,
                   "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "items": [
                     {
                       "id": "d62c0701-0d74",
@@ -5798,7 +5723,8 @@
                         "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content"
                       }
                     }
-                  ]
+                  ],
+                  "count": 2381
                 }
               }
             }
@@ -5880,9 +5806,7 @@
               "path": "/transactionCategories",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "If-None-Match": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -6069,22 +5993,15 @@
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
-              "queryParameters": {
-                "scheduledOn": "2022-05-19",
-                "debitsOn": "2022-05-19",
-                "creditsOn": "2022-05-19",
-                "historical": true,
-                "start": "",
-                "limit": 100
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "limit": 10,
                   "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "items": [
                     {
                       "amount": "275.00",
@@ -6142,9 +6059,9 @@
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "limit": 10,
                   "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
+                  "start": "d1b48af913464aa49fcb07065dcc0616",
                   "items": [
                     {
                       "amount": "275.00",
@@ -6280,9 +6197,7 @@
               "path": "/transfers",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Challenge": "foo"
-              },
+              "headers": {},
               "requestBody": {
                 "amount": "275.00",
                 "sourceAccount": {
@@ -6645,9 +6560,7 @@
                 "transferId": "foo"
               },
               "queryParameters": {},
-              "headers": {
-                "Challenge": "foo"
-              },
+              "headers": {},
               "requestBody": {
                 "amount": "275.00",
                 "targetAccount": {

@@ -27,6 +27,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/auth": "workspace:*",
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",

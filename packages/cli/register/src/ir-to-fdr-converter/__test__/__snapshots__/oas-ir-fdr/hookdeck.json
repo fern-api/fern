@@ -18299,16 +18299,7 @@
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
-              "queryParameters": {
-                "name": "foo",
-                "type": "delivery",
-                "disabled_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19693,14 +19684,7 @@
               "description": "",
               "path": "/attempts",
               "pathParameters": {},
-              "queryParameters": {
-                "event_id": "foo",
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20139,19 +20123,7 @@
               "description": "",
               "path": "/bookmarks",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": "foo",
-                "webhook_id": "foo",
-                "event_data_id": "foo",
-                "label": "foo",
-                "last_used_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21297,19 +21269,7 @@
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": {},
-                "archived": true,
-                "archived_at": {},
-                "url": "foo",
-                "cli_path": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22812,34 +22772,7 @@
               "description": "",
               "path": "/events",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "status": "SCHEDULED",
-                "issue_id": "foo",
-                "webhook_id": "foo",
-                "destination_id": "foo",
-                "source_id": "foo",
-                "attempts": {},
-                "response_status": {},
-                "successful_at": {},
-                "created_at": {},
-                "error_code": "foo",
-                "cli_id": {},
-                "cli_user_id": "foo",
-                "last_attempt_at": {},
-                "event_data_id": "foo",
-                "headers": {},
-                "body": {},
-                "parsed_query": {},
-                "bulk_retry_id": "foo",
-                "path": "foo",
-                "include": "data",
-                "order_by": "last_attempt_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23798,20 +23731,7 @@
               "description": "",
               "path": "/bulk/events/retry",
               "pathParameters": {},
-              "queryParameters": {
-                "cancelled_at": {},
-                "completed_at": {},
-                "created_at": {},
-                "id": "foo",
-                "query": {},
-                "query_partial_match": true,
-                "in_progress": true,
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24114,9 +24034,7 @@
               "description": "",
               "path": "/bulk/events/retry/plan",
               "pathParameters": {},
-              "queryParameters": {
-                "query": {}
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24637,20 +24555,7 @@
               "description": "",
               "path": "/bulk/ignored-events/retry",
               "pathParameters": {},
-              "queryParameters": {
-                "cancelled_at": {},
-                "completed_at": {},
-                "created_at": {},
-                "id": "foo",
-                "query": {},
-                "query_partial_match": true,
-                "in_progress": true,
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24953,9 +24858,7 @@
               "description": "",
               "path": "/bulk/ignored-events/retry/plan",
               "pathParameters": {},
-              "queryParameters": {
-                "query": {}
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25364,10 +25267,7 @@
               "description": "",
               "path": "/integrations",
               "pathParameters": {},
-              "queryParameters": {
-                "label": "foo",
-                "provider": "twitter"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26616,23 +26516,7 @@
               "description": "",
               "path": "/issues",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "iss_YXKv5OdJXCiVwkPhGy",
-                "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
-                "type": "delivery",
-                "status": "OPENED",
-                "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
-                "aggregation_keys": {},
-                "created_at": {},
-                "first_seen_at": {},
-                "last_seen_at": {},
-                "dismissed_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27069,23 +26953,7 @@
               "description": "",
               "path": "/issues/count",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "iss_YXKv5OdJXCiVwkPhGy",
-                "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
-                "type": "delivery",
-                "status": "OPENED",
-                "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
-                "aggregation_keys": {},
-                "created_at": {},
-                "first_seen_at": {},
-                "last_seen_at": {},
-                "dismissed_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28035,28 +27903,7 @@
               "description": "",
               "path": "/requests",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "status": "accepted",
-                "rejection_cause": {},
-                "ignored_count": {},
-                "events_count": {},
-                "source_id": "foo",
-                "verified": true,
-                "headers": {},
-                "body": {},
-                "parsed_query": {},
-                "path": "foo",
-                "created_at": {},
-                "ingested_at": {},
-                "bulk_retry_id": "foo",
-                "include": "data",
-                "order_by": "ingested_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29042,34 +28889,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "id": "foo",
-                "status": "SCHEDULED",
-                "issue_id": "foo",
-                "webhook_id": "foo",
-                "destination_id": "foo",
-                "source_id": "foo",
-                "attempts": {},
-                "response_status": {},
-                "successful_at": {},
-                "created_at": {},
-                "error_code": "foo",
-                "cli_id": {},
-                "cli_user_id": "foo",
-                "last_attempt_at": {},
-                "event_data_id": "foo",
-                "headers": {},
-                "body": {},
-                "parsed_query": {},
-                "bulk_retry_id": "foo",
-                "path": "foo",
-                "include": "data",
-                "order_by": "last_attempt_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29326,14 +29146,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "id": "foo",
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29608,20 +29421,7 @@
               "description": "",
               "path": "/bulk/requests/retry",
               "pathParameters": {},
-              "queryParameters": {
-                "cancelled_at": {},
-                "completed_at": {},
-                "created_at": {},
-                "id": "foo",
-                "in_progress": true,
-                "query": {},
-                "query_partial_match": true,
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29924,9 +29724,7 @@
               "description": "",
               "path": "/bulk/requests/retry/plan",
               "pathParameters": {},
-              "queryParameters": {
-                "query": {}
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -30415,17 +30213,7 @@
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": {},
-                "archived": true,
-                "archived_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31685,18 +31473,7 @@
               "description": "",
               "path": "/sources",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": {},
-                "archived": true,
-                "archived_at": {},
-                "integration_id": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33027,15 +32804,7 @@
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": "foo",
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34142,17 +33911,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "log_level": "debug",
-                "webhook_id": "foo",
-                "issue_id": "foo",
-                "created_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34679,21 +34438,7 @@
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
-              "queryParameters": {
-                "id": "foo",
-                "name": {},
-                "destination_id": "foo",
-                "source_id": "foo",
-                "archived": true,
-                "archived_at": {},
-                "full_name": "foo",
-                "paused_at": {},
-                "order_by": "created_at",
-                "dir": "asc",
-                "limit": 42,
-                "next": "foo",
-                "prev": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
