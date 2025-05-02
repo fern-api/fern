@@ -7016,29 +7016,11 @@
         "originalEndpointId": "getAccountInfo",
         "name": "getAccountInfo",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7093,10 +7075,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7133,29 +7113,11 @@
         "originalEndpointId": "getBalance",
         "name": "getBalance",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7212,10 +7174,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7252,29 +7212,11 @@
         "originalEndpointId": "getBlock",
         "name": "getBlock",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7329,10 +7271,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7369,29 +7309,11 @@
         "originalEndpointId": "getBlockCommitment",
         "name": "getBlockCommitment",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7438,10 +7360,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7478,29 +7398,11 @@
         "originalEndpointId": "getBlockHeight",
         "name": "getBlockHeight",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7547,10 +7449,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7587,29 +7487,11 @@
         "originalEndpointId": "getBlockProduction",
         "name": "getBlockProduction",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7654,10 +7536,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7694,29 +7574,11 @@
         "originalEndpointId": "getBlocks",
         "name": "getBlocks",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7786,10 +7648,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7830,29 +7690,11 @@
         "originalEndpointId": "getBlocksWithLimit",
         "name": "getBlocksWithLimit",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -7922,10 +7764,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -7966,29 +7806,11 @@
         "originalEndpointId": "getBlockTime",
         "name": "getBlockTime",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8035,10 +7857,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -8075,29 +7895,11 @@
         "originalEndpointId": "getClusterNodes",
         "name": "getClusterNodes",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8125,10 +7927,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8166,29 +7966,11 @@
         "originalEndpointId": "getEpochInfo",
         "name": "getEpochInfo",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8233,10 +8015,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -8273,29 +8053,11 @@
         "originalEndpointId": "getEpochSchedule",
         "name": "getEpochSchedule",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8320,10 +8082,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8357,29 +8117,11 @@
         "originalEndpointId": "getFeeForMessage",
         "name": "getFeeForMessage",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8434,10 +8176,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -8474,29 +8214,11 @@
         "originalEndpointId": "getFirstAvailableBlock",
         "name": "getFirstAvailableBlock",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8523,10 +8245,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8560,29 +8280,11 @@
         "originalEndpointId": "getGenesisHash",
         "name": "getGenesisHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8609,10 +8311,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8646,29 +8346,11 @@
         "originalEndpointId": "getHealth",
         "name": "getHealth",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8693,10 +8375,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8730,29 +8410,11 @@
         "originalEndpointId": "getHighestSnapshotSlot",
         "name": "getHighestSnapshotSlot",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8777,10 +8439,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8814,29 +8474,11 @@
         "originalEndpointId": "getIdentity",
         "name": "getIdentity",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8861,10 +8503,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -8898,29 +8538,11 @@
         "originalEndpointId": "getInflationGovernor",
         "name": "getInflationGovernor",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -8965,10 +8587,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9005,29 +8625,11 @@
         "originalEndpointId": "getInflationRate",
         "name": "getInflationRate",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9052,10 +8654,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -9089,29 +8689,11 @@
         "originalEndpointId": "getInflationReward",
         "name": "getInflationReward",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9159,10 +8741,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9203,29 +8783,11 @@
         "originalEndpointId": "getLargestAccounts",
         "name": "getLargestAccounts",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9273,10 +8835,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9317,29 +8877,11 @@
         "originalEndpointId": "getLatestBlockhash",
         "name": "getLatestBlockhash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9384,10 +8926,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9424,29 +8964,11 @@
         "originalEndpointId": "getMaxRetransmitSlot",
         "name": "getMaxRetransmitSlot",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9473,10 +8995,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -9510,29 +9030,11 @@
         "originalEndpointId": "getMaxShredInsertSlot",
         "name": "getMaxShredInsertSlot",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9559,10 +9061,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -9596,29 +9096,11 @@
         "originalEndpointId": "getMinimumBalanceForRentExemption",
         "name": "getMinimumBalanceForRentExemption",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9673,10 +9155,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9713,29 +9193,11 @@
         "originalEndpointId": "getMultipleAccounts",
         "name": "getMultipleAccounts",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9796,10 +9258,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9840,29 +9300,11 @@
         "originalEndpointId": "getProgramAccounts",
         "name": "getProgramAccounts",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -9920,10 +9362,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -9964,29 +9404,11 @@
         "originalEndpointId": "getRecentPerformanceSamples",
         "name": "getRecentPerformanceSamples",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10036,10 +9458,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10080,29 +9500,11 @@
         "originalEndpointId": "getRecentPrioritizationFees",
         "name": "getRecentPrioritizationFees",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10155,10 +9557,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10199,29 +9599,11 @@
         "originalEndpointId": "getSignaturesForAddress",
         "name": "getSignaturesForAddress",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10279,10 +9661,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10323,29 +9703,11 @@
         "originalEndpointId": "getSignatureStatuses",
         "name": "getSignatureStatuses",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10406,10 +9768,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10450,29 +9810,11 @@
         "originalEndpointId": "getSlot",
         "name": "getSlot",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10519,10 +9861,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10559,29 +9899,11 @@
         "originalEndpointId": "getSlotLeader",
         "name": "getSlotLeader",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10628,10 +9950,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10668,29 +9988,11 @@
         "originalEndpointId": "getSlotLeaders",
         "name": "getSlotLeaders",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10752,10 +10054,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10796,29 +10096,11 @@
         "originalEndpointId": "getSupply",
         "name": "getSupply",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10863,10 +10145,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -10903,29 +10183,11 @@
         "originalEndpointId": "getTokenAccountBalance",
         "name": "getTokenAccountBalance",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -10980,10 +10242,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11020,29 +10280,11 @@
         "originalEndpointId": "getTokenAccountsByOwner",
         "name": "getTokenAccountsByOwner",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11108,10 +10350,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11152,29 +10392,11 @@
         "originalEndpointId": "getTokenSupply",
         "name": "getTokenSupply",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11229,10 +10451,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11269,29 +10489,11 @@
         "originalEndpointId": "getTransaction",
         "name": "getTransaction",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11346,10 +10548,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11386,29 +10586,11 @@
         "originalEndpointId": "getVersion",
         "name": "getVersion",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11433,10 +10615,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -11470,29 +10650,11 @@
         "originalEndpointId": "getVoteAccounts",
         "name": "getVoteAccounts",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11537,10 +10699,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11577,29 +10737,11 @@
         "originalEndpointId": "isBlockhashValid",
         "name": "isBlockhashValid",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11656,10 +10798,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11696,29 +10836,11 @@
         "originalEndpointId": "minimumLedgerSlot",
         "name": "minimumLedgerSlot",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11745,10 +10867,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -11782,29 +10902,11 @@
         "originalEndpointId": "requestAirdrop",
         "name": "requestAirdrop",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11871,10 +10973,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -11911,29 +11011,11 @@
         "originalEndpointId": "sendTransaction",
         "name": "sendTransaction",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -11990,10 +11072,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -12030,29 +11110,11 @@
         "originalEndpointId": "simulateTransaction",
         "name": "simulateTransaction",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -12107,10 +11169,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {

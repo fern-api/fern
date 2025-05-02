@@ -2125,29 +2125,11 @@
         "originalEndpointId": "web3_clientVersion",
         "name": "web3_clientVersion",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2174,10 +2156,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -2212,29 +2192,11 @@
         "originalEndpointId": "web3_sha3",
         "name": "web3_sha3",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2328,29 +2290,11 @@
         "originalEndpointId": "net_listening",
         "name": "net_listening",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2415,29 +2359,11 @@
         "originalEndpointId": "net_peerCount",
         "name": "net_peerCount",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2464,10 +2390,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -2502,29 +2426,11 @@
         "originalEndpointId": "net_version",
         "name": "net_version",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2552,10 +2458,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -2589,29 +2493,11 @@
         "originalEndpointId": "eth_blockNumber",
         "name": "eth_blockNumber",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2635,10 +2521,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -2672,29 +2556,11 @@
         "originalEndpointId": "eth_call",
         "name": "eth_call",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2745,10 +2611,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -2770,29 +2634,11 @@
         "originalEndpointId": "eth_chainId",
         "name": "eth_chainId",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2820,10 +2666,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -2857,29 +2701,11 @@
         "originalEndpointId": "eth_coinbase",
         "name": "eth_coinbase",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2904,10 +2730,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -2925,29 +2749,11 @@
         "originalEndpointId": "eth_estimateGas",
         "name": "eth_estimateGas",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -2991,10 +2797,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3015,29 +2819,11 @@
         "originalEndpointId": "eth_gasPrice",
         "name": "eth_gasPrice",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3061,10 +2847,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -3082,29 +2866,11 @@
         "originalEndpointId": "eth_getBalance",
         "name": "eth_getBalance",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3156,10 +2922,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3180,29 +2944,11 @@
         "originalEndpointId": "eth_getBlockByHash",
         "name": "eth_getBlockByHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3255,10 +3001,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3279,29 +3023,11 @@
         "originalEndpointId": "eth_getBlockByNumber",
         "name": "eth_getBlockByNumber",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3354,10 +3080,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3378,29 +3102,11 @@
         "originalEndpointId": "eth_getBlockTransactionCountByHash",
         "name": "eth_getBlockTransactionCountByHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3444,10 +3150,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3468,29 +3172,11 @@
         "originalEndpointId": "eth_getBlockTransactionCountByNumber",
         "name": "eth_getBlockTransactionCountByNumber",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3534,10 +3220,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3558,29 +3242,11 @@
         "originalEndpointId": "eth_getCode",
         "name": "eth_getCode",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3632,10 +3298,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3656,29 +3320,11 @@
         "originalEndpointId": "eth_getFilterChanges",
         "name": "eth_getFilterChanges",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3724,10 +3370,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3768,29 +3412,11 @@
         "originalEndpointId": "eth_getFilterLogs",
         "name": "eth_getFilterLogs",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3837,10 +3463,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3881,29 +3505,11 @@
         "originalEndpointId": "eth_getRawTransactionByHash",
         "name": "eth_getRawTransactionByHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -3947,10 +3553,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -3971,29 +3575,11 @@
         "originalEndpointId": "eth_getRawTransactionByBlockHashAndIndex",
         "name": "eth_getRawTransactionByBlockHashAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4045,10 +3631,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4069,29 +3653,11 @@
         "originalEndpointId": "eth_getRawTransactionByBlockNumberAndIndex",
         "name": "eth_getRawTransactionByBlockNumberAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4143,10 +3709,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4167,29 +3731,11 @@
         "originalEndpointId": "eth_getLogs",
         "name": "eth_getLogs",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4236,10 +3782,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4280,29 +3824,11 @@
         "originalEndpointId": "eth_getStorageAt",
         "name": "eth_getStorageAt",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4359,10 +3885,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4383,29 +3907,11 @@
         "originalEndpointId": "eth_getTransactionByBlockHashAndIndex",
         "name": "eth_getTransactionByBlockHashAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4488,29 +3994,11 @@
         "originalEndpointId": "eth_getTransactionByBlockNumberAndIndex",
         "name": "eth_getTransactionByBlockNumberAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4562,10 +4050,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4610,29 +4096,11 @@
         "originalEndpointId": "eth_getTransactionByHash",
         "name": "eth_getTransactionByHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4676,10 +4144,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4724,29 +4190,11 @@
         "originalEndpointId": "eth_getTransactionCount",
         "name": "eth_getTransactionCount",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4796,10 +4244,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4836,29 +4282,11 @@
         "originalEndpointId": "eth_getTransactionReceipt",
         "name": "eth_getTransactionReceipt",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -4902,10 +4330,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -4970,29 +4396,11 @@
         "originalEndpointId": "eth_getUncleByBlockHashAndIndex",
         "name": "eth_getUncleByBlockHashAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5043,10 +4451,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5067,29 +4473,11 @@
         "originalEndpointId": "eth_getUncleByBlockNumberAndIndex",
         "name": "eth_getUncleByBlockNumberAndIndex",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5173,29 +4561,11 @@
         "originalEndpointId": "eth_getUncleCountByBlockHash",
         "name": "eth_getUncleCountByBlockHash",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5239,10 +4609,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5263,29 +4631,11 @@
         "originalEndpointId": "eth_getUncleCountByBlockNumber",
         "name": "eth_getUncleCountByBlockNumber",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5329,10 +4679,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5353,29 +4701,11 @@
         "originalEndpointId": "eth_getProof",
         "name": "eth_getProof",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5426,10 +4756,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5466,29 +4794,11 @@
         "originalEndpointId": "eth_getWork",
         "name": "eth_getWork",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5514,10 +4824,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -5555,29 +4863,11 @@
         "originalEndpointId": "eth_hashrate",
         "name": "eth_hashrate",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5602,10 +4892,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -5623,29 +4911,11 @@
         "originalEndpointId": "eth_mining",
         "name": "eth_mining",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5672,10 +4942,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -5709,29 +4977,11 @@
         "originalEndpointId": "eth_newBlockFilter",
         "name": "eth_newBlockFilter",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5755,10 +5005,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -5776,29 +5024,11 @@
         "originalEndpointId": "eth_newFilter",
         "name": "eth_newFilter",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5842,10 +5072,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -5866,29 +5094,11 @@
         "originalEndpointId": "eth_newPendingTransactionFilter",
         "name": "eth_newPendingTransactionFilter",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5912,10 +5122,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -5933,29 +5141,11 @@
         "originalEndpointId": "eth_pendingTransactions",
         "name": "eth_pendingTransactions",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -5979,10 +5169,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -6000,29 +5188,11 @@
         "originalEndpointId": "eth_protocolVersion",
         "name": "eth_protocolVersion",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6047,10 +5217,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200
@@ -6068,29 +5236,11 @@
         "originalEndpointId": "eth_sendRawTransaction",
         "name": "eth_sendRawTransaction",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6135,10 +5285,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -6159,29 +5307,11 @@
         "originalEndpointId": "eth_submitHashrate",
         "name": "eth_submitHashrate",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6235,10 +5365,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
@@ -6275,29 +5403,11 @@
         "originalEndpointId": "eth_submitWork",
         "name": "eth_submitWork",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6390,29 +5500,11 @@
         "originalEndpointId": "eth_syncing",
         "name": "eth_syncing",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6436,10 +5528,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
@@ -6473,29 +5563,11 @@
         "originalEndpointId": "eth_uninstallFilter",
         "name": "eth_uninstallFilter",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -6541,10 +5613,8 @@
           {
             "name": "",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBodyV3": {
