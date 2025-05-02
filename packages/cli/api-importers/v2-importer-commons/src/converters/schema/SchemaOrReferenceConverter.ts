@@ -108,10 +108,6 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 availability
             };
         }
-        this.context.errorCollector.collect({
-            message: `Failed to convert schema object: ${JSON.stringify(schema, null, 2)}`,
-            path: this.breadcrumbs
-        });
         return undefined;
     }
 
