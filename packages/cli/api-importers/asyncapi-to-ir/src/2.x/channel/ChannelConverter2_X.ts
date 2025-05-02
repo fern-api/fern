@@ -1,3 +1,4 @@
+import { camelCase, startCase } from "lodash-es";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import {
@@ -15,6 +16,8 @@ import { AsyncAPIV2 } from "..";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 
 export declare namespace ChannelConverter2_X {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV2.ChannelV2> {}
@@ -32,7 +35,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayName = this.group ? this.group.join(".") : this.channelPath;
+        const displayNameExtension = new DisplayNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
             await this.convertQueryParameters({
@@ -57,10 +65,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         if (this.channel.subscribe != null) {
             subscribeMessage = await this.convertMessage({
                 context: this.context,
-                origin: "server",
                 operation: this.channel.subscribe,
-                defaultId: "subscribeEvent",
-                breadcrumbName: "subscribeEvent"
+                origin: "server"
             });
         }
 
@@ -68,10 +74,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         if (this.channel.publish != null) {
             publishMessage = await this.convertMessage({
                 context: this.context,
-                origin: "client",
                 operation: this.channel.publish,
-                defaultId: "publishEvent",
-                breadcrumbName: "publishEvent"
+                origin: "client"
             });
         }
 
@@ -83,12 +87,19 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             messages.push(publishMessage);
         }
 
+        const channelAddressExtension = new ChannelAddressExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const channelAddress = channelAddressExtension.convert();
         const baseUrl = this.channel.servers?.[0] ?? Object.keys(this.context.spec.servers ?? {})[0];
-        const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
+        const pathHead = channelAddress != null ? channelAddress : this.transformToValidPath(this.channelPath);
+        const groupName = camelCase(this.channelPath);
 
         return {
             channel: {
-                name: this.context.casingsGenerator.generateName(displayName),
+                name: this.context.casingsGenerator.generateName(groupName),
                 displayName,
                 baseUrl,
                 path: {
@@ -120,33 +131,33 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
     private async convertMessage({
         context,
-        origin,
         operation,
-        defaultId,
-        breadcrumbName
+        origin
     }: {
         context: AsyncAPIConverterContext;
-        origin: "server" | "client";
         operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
-        defaultId: string;
-        breadcrumbName: string;
+        origin: "server" | "client";
     }): Promise<WebSocketMessage | undefined> {
         let convertedSchema: TypeDeclaration | undefined = undefined;
+        const action = origin === "server" ? "subscribe" : "publish";
+        const breadcrumbs = [...this.breadcrumbs, action];
 
         const resolvedMessage = await context.resolveMaybeReference<OpenAPIV3.SchemaObject | AsyncAPIV2.MessageV2>({
             schemaOrReference: operation.message,
-            breadcrumbs: [...this.breadcrumbs, breadcrumbName]
+            breadcrumbs
         });
         if (resolvedMessage != null) {
             operation.message = resolvedMessage;
         }
 
+        const schemaId = startCase(camelCase(`${this.channelPath}_${action}`)).replace(/ /g, "");
+
         if ("oneOf" in operation.message) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                 context: this.context,
-                breadcrumbs: [...this.breadcrumbs, breadcrumbName],
+                breadcrumbs,
                 schemaOrReference: operation.message,
-                schemaIdOverride: operation.operationId ?? defaultId
+                schemaIdOverride: schemaId
             });
             const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert();
             if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -159,14 +170,14 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         } else if (context.isMessageWithPayload(operation.message)) {
             const payloadSchema = await context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
                 schemaOrReference: operation.message.payload,
-                breadcrumbs: [...this.breadcrumbs, breadcrumbName]
+                breadcrumbs
             });
             if (payloadSchema != null) {
                 const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
                     context: this.context,
-                    breadcrumbs: [...this.breadcrumbs, breadcrumbName],
+                    breadcrumbs,
                     schemaOrReference: payloadSchema,
-                    schemaIdOverride: operation.operationId ?? defaultId
+                    schemaIdOverride: schemaId
                 });
                 const schemaOrReferenceConverterOutput = await schemaOrReferenceConverter.convert();
                 if (schemaOrReferenceConverterOutput != null && schemaOrReferenceConverterOutput.schema != null) {
@@ -195,9 +206,10 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 docs: operation.description
             });
 
+            const messageType = origin === "server" ? "subscribe" : "publish";
             return {
-                type: convertedTypeDeclaration.name.typeId,
-                displayName: convertedTypeDeclaration.name.name.originalName,
+                type: messageType,
+                displayName: messageType,
                 origin,
                 body,
                 availability: await context.getAvailability({
