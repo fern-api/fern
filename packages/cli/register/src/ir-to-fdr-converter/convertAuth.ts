@@ -20,13 +20,13 @@ export function convertAuth(
                     type: "basicAuth",
                     passwordName: scheme.password.originalName,
                     usernameName: scheme.username.originalName,
-                    description: auth.docs,
+                    description: auth.docs
                 };
             case "bearer":
                 return {
                     type: "bearerAuth",
                     tokenName: scheme.token.originalName,
-                    description: auth.docs,
+                    description: auth.docs
                 };
             case "header":
                 return {
@@ -34,7 +34,7 @@ export function convertAuth(
                     headerWireValue: scheme.name.wireValue,
                     nameOverride: scheme.name.name.originalName,
                     prefix: scheme.prefix,
-                    description: auth.docs,
+                    description: auth.docs
                 };
             case "oauth": {
                 const tokenPath =
@@ -55,14 +55,14 @@ export function convertAuth(
                                   accessTokenLocator: FdrCjsSdk.JqString(tokenPath),
                                   headerName: scheme.configuration.tokenHeader,
                                   tokenPrefix: scheme.configuration.tokenPrefix,
-                                  description: auth.docs,
+                                  description: auth.docs
                               }
-                          },
+                          }
                       }
                     : {
                           type: "bearerAuth",
                           tokenName: "token",
-                          description: auth.docs,
+                          description: auth.docs
                       };
             }
             default:
