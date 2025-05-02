@@ -3,8 +3,6 @@ name: Label Issues and PRs
 on:
   issues:
     types: [opened, reopened]
-  pull_request:
-    types: [opened, reopened]
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
   workflow_dispatch:  # Allow manual triggering
