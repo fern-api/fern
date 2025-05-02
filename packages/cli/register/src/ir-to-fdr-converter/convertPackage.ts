@@ -142,6 +142,7 @@ function convertService(
             }
         }
         const endpoint: FdrCjsSdk.api.v1.register.EndpointDefinition = {
+            slug: undefined,
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
