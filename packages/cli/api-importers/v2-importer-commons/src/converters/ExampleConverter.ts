@@ -105,7 +105,19 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 ]
             };
         }
-
+        if (typeof resolvedSchema !== "object") {
+            return {
+                isValid: false,
+                coerced: false,
+                validExample: null,
+                errors: [
+                    {
+                        message: `Schema should be an object: ${JSON.stringify(resolvedSchema, null, 2)}`,
+                        path: this.breadcrumbs
+                    }
+                ]
+            };
+        }
         if ("nullable" in resolvedSchema && resolvedSchema.nullable === true && this.example === null) {
             return {
                 isValid: true,
@@ -500,6 +512,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const resultsByKey = await Promise.all(
             Object.entries(resolvedSchema.properties ?? {}).map(async ([key, property]) => {
+                if (typeof property !== "object") {
+                    return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                }
                 const isOmittedFromExample =
                     !(key in exampleObj) ||
                     (!("nullable" in property) && exampleObj[key] == null) ||

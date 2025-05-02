@@ -1,10 +1,9 @@
 import { OpenAPIV3 } from "openapi-types";
+import { z } from "zod";
 
 import { AbstractConverterContext, AbstractExtension } from "@fern-api/v2-importer-commons";
 
 const REQUEST_PREFIX = "$request.";
-
-import { z } from "zod";
 
 const ParameterBaseObjectSchema = z.object({
     description: z.string().optional(),
@@ -27,14 +26,12 @@ const ParameterObjectSchema = ParameterBaseObjectSchema.extend({
 
 const FernParametersExtensionSchema = z.array(ParameterObjectSchema);
 
-
-
 export declare namespace FernParametersExtension {
     export interface Args extends AbstractExtension.Args {
         operation: object;
     }
 
-    export type Output = OpenAPIV3.ParameterObject[]
+    export type Output = OpenAPIV3.ParameterObject[];
 }
 
 export class FernParametersExtension extends AbstractExtension<FernParametersExtension.Output> {
@@ -57,7 +54,7 @@ export class FernParametersExtension extends AbstractExtension<FernParametersExt
         } catch (error) {
             this.context.errorCollector.collect({
                 message: `Failed to parse x-fern-parameters extension: ${error instanceof Error ? error.message : String(error)}`,
-                path: this.breadcrumbs,
+                path: this.breadcrumbs
             });
             return undefined;
         }
