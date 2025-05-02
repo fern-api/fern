@@ -105,7 +105,7 @@ export async function downloadBundle({
             logger.debug("ETag is different. Downloading latest preview bundle");
             if (app) {
                 logger.info(
-                    "Setting up beta docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
+                    "Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
                 );
             }
         }
