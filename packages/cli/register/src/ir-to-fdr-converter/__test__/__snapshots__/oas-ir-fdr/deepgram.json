@@ -18559,8 +18559,8 @@
               "baseUrl": "wss://api.deepgram.com"
             }
           ],
-          "id": "textToSpeech",
-          "name": "textToSpeech",
+          "id": "speak",
+          "name": "speak",
           "path": {
             "pathParameters": [],
             "parts": [
@@ -18728,8 +18728,8 @@
               "baseUrl": "wss://api.deepgram.com"
             }
           ],
-          "id": "speechToText",
-          "name": "speechToText",
+          "id": "listen",
+          "name": "listen",
           "path": {
             "pathParameters": [],
             "parts": [
@@ -19193,8 +19193,8 @@
       "types": [],
       "subpackages": []
     },
-    "agent": {
-      "subpackageId": "agent",
+    "subpackage_agent": {
+      "subpackageId": "subpackage_agent",
       "name": "agent",
       "endpoints": [],
       "webhooks": [],
@@ -19563,7 +19563,7 @@
       "Management API",
       "textToSpeech",
       "speechToText",
-      "agent"
+      "subpackage_agent"
     ]
   },
   "auth": {

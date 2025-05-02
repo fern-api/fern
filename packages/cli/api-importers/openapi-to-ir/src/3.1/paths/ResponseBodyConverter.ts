@@ -38,15 +38,6 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public async convert(): Promise<ResponseBodyConverter.Output | undefined> {
-        // TODO: Handle 204 in a first-class manner
-        if (!this.responseBody.content && this.statusCode !== "204") {
-            this.context.errorCollector.collect({
-                message: `Response body content is missing for status code ${this.statusCode}`,
-                path: this.breadcrumbs
-            });
-            return undefined;
-        }
-
         const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         for (const contentType of [...jsonContentTypes]) {

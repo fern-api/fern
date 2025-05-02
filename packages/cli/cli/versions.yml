@@ -1,5 +1,19 @@
 - changelogEntry: 
   - summary: |
+      Enable v2 example injection for multipart form upload endpoints.
+    type: feat
+  irVersion: 57
+  version: 0.60.6
+
+- changelogEntry: 
+  - summary: |
+      Several improvements to AsyncAPI package and channel generation. Add support for 2.x specific extensions.
+    type: feat
+  irVersion: 57
+  version: 0.60.5
+
+- changelogEntry: 
+  - summary: |
       Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 
       definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC 
       specification. Parameters defined with this extension are properly converted to the Fern IR format and included in 
@@ -25,6 +39,13 @@
     type: feat
   irVersion: 57
   version: 0.60.2    
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the v3 parser would throw an error upon receiving an object property schema that is not an object.
+    type: fix
+  irVersion: 57
+  version: 0.60.2
 
 - changelogEntry:
   - summary: |

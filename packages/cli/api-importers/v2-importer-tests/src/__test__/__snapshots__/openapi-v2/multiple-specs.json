@@ -481,7 +481,10 @@
                   },
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }

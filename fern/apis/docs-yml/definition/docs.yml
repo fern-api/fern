@@ -137,7 +137,10 @@ types:
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
+      # Deprecated
       "ai-chat": optional<AIChatConfig>
+      
+      "ai-search": optional<AIChatConfig>
 
       # seo
       metadata: optional<MetadataConfig>

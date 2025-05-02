@@ -1,4 +1,3 @@
-import { appendFileSync } from "fs";
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";

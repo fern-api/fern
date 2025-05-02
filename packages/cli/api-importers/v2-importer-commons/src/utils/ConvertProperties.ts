@@ -23,6 +23,13 @@ export async function convertProperties({
     let inlinedTypesFromProperties: Record<TypeId, TypeDeclaration> = {};
     for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
         const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName];
+        if (typeof propertySchema !== "object") {
+            errorCollector.collect({
+                message: `Schema property ${propertyName} should be an object`,
+                path: propertyBreadcrumbs
+            });
+            continue;
+        }
         const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
         const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
