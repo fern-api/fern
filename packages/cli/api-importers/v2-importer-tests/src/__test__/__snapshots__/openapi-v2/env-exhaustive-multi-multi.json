@@ -1041,7 +1041,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "testChannel": {
+    "subpackage_testChannel": {
       "name": {
         "originalName": "testChannel",
         "camelCase": {
@@ -1107,10 +1107,10 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannel",
+      "websocket": "channel_testChannel",
       "hasEndpointsInTree": false
     },
-    "testChannel2": {
+    "subpackage_testChannel2": {
       "name": {
         "originalName": "testChannel2",
         "camelCase": {
@@ -1176,7 +1176,7 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannel2",
+      "websocket": "channel_testChannel2",
       "hasEndpointsInTree": false
     },
     "beta": {
@@ -1248,7 +1248,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "testChannels": {
+    "subpackage_testChannels": {
       "name": {
         "originalName": "testChannels",
         "camelCase": {
@@ -1314,10 +1314,10 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannels",
+      "websocket": "channel_testChannels",
       "hasEndpointsInTree": false
     },
-    "testChannels2": {
+    "subpackage_testChannels2": {
       "name": {
         "originalName": "testChannels2",
         "camelCase": {
@@ -1383,12 +1383,12 @@
       "types": [],
       "errors": [],
       "subpackages": [],
-      "websocket": "testChannels2",
+      "websocket": "channel_testChannels2",
       "hasEndpointsInTree": false
     }
   },
   "websocketChannels": {
-    "testChannel": {
+    "channel_testChannel": {
       "name": {
         "originalName": "testChannel",
         "camelCase": {
@@ -1522,7 +1522,7 @@
         "userSpecifiedExamples": {}
       }
     },
-    "testChannel2": {
+    "channel_testChannel2": {
       "name": {
         "originalName": "testChannel2",
         "camelCase": {
@@ -1656,7 +1656,7 @@
         "userSpecifiedExamples": {}
       }
     },
-    "testChannels": {
+    "channel_testChannels": {
       "name": {
         "originalName": "testChannels",
         "camelCase": {
@@ -1790,7 +1790,7 @@
         "userSpecifiedExamples": {}
       }
     },
-    "testChannels2": {
+    "channel_testChannels2": {
       "name": {
         "originalName": "testChannels2",
         "camelCase": {
@@ -1935,11 +1935,11 @@
     "errors": [],
     "subpackages": [
       "alpha",
-      "testChannel",
-      "testChannel2",
+      "subpackage_testChannel",
+      "subpackage_testChannel2",
       "beta",
-      "testChannels",
-      "testChannels2"
+      "subpackage_testChannels",
+      "subpackage_testChannels2"
     ],
     "fernFilepath": {
       "allParts": [],

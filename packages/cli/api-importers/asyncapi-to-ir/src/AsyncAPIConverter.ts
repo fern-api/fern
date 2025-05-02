@@ -1,3 +1,4 @@
+import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -193,6 +194,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 context: this.context
             });
             const group = groupNameExtension.convert()?.groups;
+            const channelName = `channel_${camelCase(channelPath)}`;
 
             if (this.isAsyncAPIV3(this.context)) {
                 const spec = this.context.spec as AsyncAPIV3.DocumentV3;
@@ -210,7 +212,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [group ? group.join(".") : channelPath]: convertedChannel.channel
+                        [group ? group.join(".") : channelName]: convertedChannel.channel
                     };
                     this.ir.types = {
                         ...this.ir.types,
@@ -229,7 +231,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 if (convertedChannel != null) {
                     this.ir.websocketChannels = {
                         ...this.ir.websocketChannels,
-                        [group ? group.join(".") : channelPath]: convertedChannel.channel
+                        [group ? group.join(".") : channelName]: convertedChannel.channel
                     };
                     this.ir.types = {
                         ...this.ir.types,
@@ -250,18 +252,20 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             return;
         }
 
-        for (const [channelPath, _] of Object.entries(websocketChannels)) {
-            if (channelPath !== "") {
-                if (this.ir.subpackages[channelPath] == null) {
-                    this.ir.subpackages[channelPath] = {
+        for (const [websocketChannelName, _] of Object.entries(websocketChannels)) {
+            if (websocketChannelName !== "") {
+                const channelPath = websocketChannelName.replace("channel_", "");
+                const channelSubpackageName = websocketChannelName.replace("channel_", "subpackage_");
+                if (this.ir.subpackages[channelSubpackageName] == null) {
+                    this.ir.subpackages[channelSubpackageName] = {
                         name: this.context.casingsGenerator.generateName(channelPath),
                         ...this.context.createPackage({ name: channelPath })
                     };
                 }
-                this.ir.subpackages[channelPath].websocket = channelPath;
-                this.ir.rootPackage.subpackages.push(channelPath);
+                this.ir.subpackages[channelSubpackageName].websocket = websocketChannelName;
+                this.ir.rootPackage.subpackages.push(channelSubpackageName);
             } else {
-                this.ir.rootPackage.websocket = channelPath;
+                this.ir.rootPackage.websocket = "";
             }
         }
     }

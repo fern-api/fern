@@ -12,6 +12,7 @@ import {
 import { AsyncAPIV3 } from "..";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -42,7 +43,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayName = this.group ? this.group.join(".") : this.channelPath;
+        const displayNameExtension = new DisplayNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
             await this.convertChannelParameters({

@@ -4128,8 +4128,8 @@
         ]
       }
     },
-    "receiveMessage": {
-      "name": "receiveMessage",
+    "UserIdSubscribe": {
+      "name": "UserIdSubscribe",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4171,8 +4171,8 @@
         ]
       }
     },
-    "sendMessage": {
-      "name": "sendMessage",
+    "UserIdPublish": {
+      "name": "UserIdPublish",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -6938,9 +6938,9 @@
       "types": [],
       "subpackages": []
     },
-    "/{userId}": {
-      "subpackageId": "/{userId}",
-      "name": "/{userId}",
+    "subpackage_userId": {
+      "subpackageId": "subpackage_userId",
+      "name": "userId",
       "endpoints": [],
       "webhooks": [],
       "websockets": [
@@ -6953,7 +6953,7 @@
               "baseUrl": "wss://api.assemblyai.com/v2/realtime/ws"
             }
           ],
-          "id": "/{userId}",
+          "id": "userId",
           "name": "/{userId}",
           "path": {
             "pathParameters": [],
@@ -7020,27 +7020,27 @@
           ],
           "messages": [
             {
-              "type": "receiveMessage",
-              "displayName": "receiveMessage",
+              "type": "subscribe",
+              "displayName": "subscribe",
               "origin": "server",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "receiveMessage"
+                  "value": "UserIdSubscribe"
                 }
               },
               "description": "Receive messages from the WebSocket"
             },
             {
-              "type": "sendMessage",
-              "displayName": "sendMessage",
+              "type": "publish",
+              "displayName": "publish",
               "origin": "client",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "sendMessage"
+                  "value": "UserIdPublish"
                 }
               },
               "description": "Send messages to the WebSocket"
@@ -7061,13 +7061,13 @@
               },
               "messages": [
                 {
-                  "type": "sendMessage",
+                  "type": "publish",
                   "body": {
                     "audio_data": "audio_data"
                   }
                 },
                 {
-                  "type": "receiveMessage",
+                  "type": "subscribe",
                   "body": {
                     "message_type": "SessionBegins",
                     "session_id": "session_id",
@@ -7173,7 +7173,7 @@
       "transcript",
       "realtime",
       "lemur",
-      "/{userId}"
+      "subpackage_userId"
     ]
   },
   "auth": {
