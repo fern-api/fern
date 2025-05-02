@@ -138,9 +138,23 @@
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "file": "foo"
+            },
             "requestBodyV3": {
               "type": "form",
-              "value": {}
+              "value": {
+                "metadata": {
+                  "type": "json"
+                },
+                "filename": {
+                  "type": "json"
+                },
+                "file": {
+                  "type": "filename",
+                  "value": "foo"
+                }
+              }
             },
             "responseStatusCode": 201,
             "responseBody": {

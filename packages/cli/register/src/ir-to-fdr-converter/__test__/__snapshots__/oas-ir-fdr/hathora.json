@@ -3021,9 +3021,17 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
               },
               "responseStatusCode": 200
             }

@@ -452,7 +452,10 @@
                     "corpus_key": "foo"
                   },
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {
                   "statusCode": 201,
