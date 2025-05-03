@@ -611,6 +611,7 @@ navigation:
           path: ./pages/ai-search/getting-started/overview.mdx
         - page: AI Search Customer Showcase
           icon: fa-regular fa-star
+          slug: customer-showcase
           path: ./pages/ai-search/getting-started/customer-showcase.mdx
     - section: Features 
       contents:
@@ -781,5 +782,16 @@ redirects:
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
-    
+  - source: /learn/ai-search/getting-started/overview
+    destination: /learn/ai-search/overview
+    permanent: true
+  - source: /learn/ai-search/getting-started/ai-search-customer-showcase
+    destination: /learn/ai-search/customer-showcase
+    permanent: true
+  - source: /learn/ai-search/features/custom-prompting
+    destination: /learn/ai-search/custom-prompting
+    permanent: true
+  - source: /learn/ai-search/features/citations
+    destination: /learn/ai-search/citations
+    permanent: true
 
