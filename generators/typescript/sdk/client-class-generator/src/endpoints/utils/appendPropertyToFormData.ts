@@ -209,10 +209,12 @@ export function appendPropertyToFormData({
                             )
                         );
                     }
-                    const condition = conditions.reduce((a, b) =>
-                        ts.factory.createBinaryExpression(a, ts.factory.createToken(ts.SyntaxKind.BarBarToken), b)
-                    );
-                    statement = ts.factory.createIfStatement(condition, statement);
+                    if (conditions.length > 0) {
+                        const condition = conditions.reduce((a, b) =>
+                            ts.factory.createBinaryExpression(a, ts.factory.createToken(ts.SyntaxKind.BarBarToken), b)
+                        );
+                        statement = ts.factory.createIfStatement(condition, statement);
+                    }
                 }
             } else {
                 statement = context.coreUtilities.formDataUtils.append({
