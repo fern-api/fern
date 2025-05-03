@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../ir-sdk" },
     { "path": "../core-utils" },
-    { "path": "../casings-generator" }
+    { "path": "../casings-generator" },
+    { "path": "../../cli/fern-definition/schema" }
   ]
 }

@@ -8922,9 +8922,15 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../cli/fern-definition/schema
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -8932,6 +8938,9 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
