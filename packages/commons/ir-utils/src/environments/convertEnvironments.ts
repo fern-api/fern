@@ -15,7 +15,7 @@ export function convertEnvironments({
     rawApiFileSchema: { "default-environment": defaultEnvironment, environments },
     casingsGenerator
 }: {
-    rawApiFileSchema: RawSchemas.RootApiFileSchema;
+    rawApiFileSchema: RawSchemas.WithEnvironmentsSchema;
     casingsGenerator: CasingsGenerator;
 }): EnvironmentsConfig | undefined {
     if (environments == null) {

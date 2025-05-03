@@ -8922,6 +8922,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../cli/fern-definition/schema
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk

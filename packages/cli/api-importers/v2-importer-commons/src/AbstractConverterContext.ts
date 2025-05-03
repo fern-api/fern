@@ -22,6 +22,7 @@ import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
 import { ErrorCollector } from "./ErrorCollector";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -33,6 +34,9 @@ export declare namespace Spec {
         smartCasing: boolean;
         namespace?: string;
         exampleGenerationArgs: ExampleGenerationArgs;
+        authOverrides?: RawSchemas.WithAuthSchema;
+        environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+        globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
     }
 }
 
@@ -50,6 +54,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly casingsGenerator: CasingsGenerator;
     public readonly namespace?: string;
     public readonly exampleGenerationArgs: ExampleGenerationArgs;
+    public readonly authOverrides?: RawSchemas.WithAuthSchema;
+    public readonly environmentOverrides?: RawSchemas.WithEnvironmentsSchema;
+    public readonly globalHeaderOverrides?: RawSchemas.WithHeadersSchema;
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -65,6 +72,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
             smartCasing: args.smartCasing
         });
         this.exampleGenerationArgs = args.exampleGenerationArgs;
+        this.authOverrides = args.authOverrides;
+        this.environmentOverrides = args.environmentOverrides;
+        this.globalHeaderOverrides = args.globalHeaderOverrides;
     }
 
     private static BREADCRUMBS_TO_IGNORE = ["properties", "allOf", "anyOf"];

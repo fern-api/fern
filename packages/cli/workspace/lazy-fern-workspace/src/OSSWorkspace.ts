@@ -113,56 +113,90 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
+
+        const authOverrides = this.generatorsConfiguration?.api?.auth != null
+            ? { ...this.generatorsConfiguration?.api }
+            : undefined;
+        if (authOverrides) {
+            context.logger.trace("Using auth overrides from generators configuration");
+        }
+        
+        const environmentOverrides = this.generatorsConfiguration?.api?.environments != null
+            ? { ...this.generatorsConfiguration?.api }
+            : undefined;
+        if (environmentOverrides) {
+            context.logger.trace("Using environment overrides from generators configuration");
+        }
+        
+        const globalHeaderOverrides = this.generatorsConfiguration?.api?.headers != null
+            ? { ...this.generatorsConfiguration?.api }
+            : undefined;
+        if (globalHeaderOverrides) {
+            context.logger.trace("Using global header overrides from generators configuration");
+        }
+        
         let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
             const errorCollector = new ErrorCollector({ logger: context.logger });
             let result: IntermediateRepresentation | undefined = undefined;
-            if (document.type === "openapi") {
-                const converterContext = new OpenAPIConverterContext3_1({
-                    namespace: document.namespace,
-                    generationLanguage: "typescript",
-                    logger: context.logger,
-                    smartCasing: false,
-                    spec: document.value as OpenAPIV3_1.Document,
-                    exampleGenerationArgs: { disabled: false },
-                    errorCollector
-                });
-                const converter = new OpenAPI3_1Converter({ context: converterContext });
-                result = await converter.convert();
-            } else if (document.type === "asyncapi") {
-                const converterContext = new AsyncAPIConverterContext({
-                    namespace: document.namespace,
-                    generationLanguage: "typescript",
-                    logger: context.logger,
-                    smartCasing: false,
-                    spec: document.value,
-                    exampleGenerationArgs: { disabled: false },
-                    errorCollector
-                });
-                const converter = new AsyncAPIConverter({ context: converterContext });
-                result = await converter.convert();
-            } else {
-                errorCollector.collect({
-                    message: `Unsupported document type: ${document}`,
-                    path: []
-                });
+            
+            switch (document.type) {
+                case "openapi": {
+                    const converterContext = new OpenAPIConverterContext3_1({
+                        namespace: document.namespace,
+                        generationLanguage: "typescript",
+                        logger: context.logger,
+                        smartCasing: false,
+                        spec: document.value as OpenAPIV3_1.Document,
+                        exampleGenerationArgs: { disabled: false },
+                        errorCollector,
+                        authOverrides,
+                        environmentOverrides,
+                        globalHeaderOverrides
+                    });
+                    const converter = new OpenAPI3_1Converter({ context: converterContext });
+                    result = await converter.convert();
+                    break;
+                }
+                case "asyncapi": {
+                    const converterContext = new AsyncAPIConverterContext({
+                        namespace: document.namespace,
+                        generationLanguage: "typescript",
+                        logger: context.logger,
+                        smartCasing: false,
+                        spec: document.value,
+                        exampleGenerationArgs: { disabled: false },
+                        errorCollector
+                    });
+                    const converter = new AsyncAPIConverter({ context: converterContext });
+                    result = await converter.convert();
+                    break;
+                }
+                default:
+                    errorCollector.collect({
+                        message: `Unsupported document type: ${document}`,
+                        path: []
+                    });
+                    break;
             }
+
             if (errorCollector.hasErrors()) {
                 context.logger.info(
                     `${document.type === "openapi" ? "OpenAPI" : "AsyncAPI"} Importer encountered errors:`
                 );
                 errorCollector.logErrors();
             }
+
             const casingsGenerator = constructCasingsGenerator({
                 generationLanguage: "typescript",
                 keywords: undefined,
                 smartCasing: false
             });
+            
             if (result != null) {
-                mergedIr =
-                    mergedIr === undefined
-                        ? result
-                        : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+                mergedIr = mergedIr === undefined 
+                    ? result 
+                    : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
             }
         }
         for (const spec of this.allSpecs) {
