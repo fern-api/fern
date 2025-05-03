@@ -1,3 +1,94 @@
+- changelogEntry: 
+  - summary: |
+      Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements, 
+      which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication 
+      methods directly within the documentation.
+    type: feat
+  irVersion: 57
+  version: 0.60.7
+
+- changelogEntry: 
+  - summary: |
+      Enable v2 example injection for multipart form upload endpoints.
+    type: feat
+  irVersion: 57
+  version: 0.60.6
+
+- changelogEntry: 
+  - summary: |
+      Several improvements to AsyncAPI package and channel generation. Add support for 2.x specific extensions.
+    type: feat
+  irVersion: 57
+  version: 0.60.5
+
+- changelogEntry: 
+  - summary: |
+      Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 
+      definitions to specify path parameters, query parameters, and headers that aren't natively supported in the OpenRPC 
+      specification. Parameters defined with this extension are properly converted to the Fern IR format and included in 
+      endpoint definitions, enabling more complete API representations when importing from OpenRPC sources.
+    type: feat
+  irVersion: 57
+  version: 0.60.4
+
+- changelogEntry: 
+  - summary: |
+      Query parameter and path parameter generation in the new OpenAPI parser now respects the skipOptionalProperties flag. This ensures that optional
+      parameters are properly handled during example generation, resulting in cleaner and more accurate examples that better reflect real-world API usage.
+    type: feat
+  irVersion: 57
+  version: 0.60.3
+
+- changelogEntry: 
+  - summary: |
+      Fix OpenAPI parser to avoid recreating endpoint headers that clash with auth headers. Previously, the parser would 
+      generate duplicate header definitions when an endpoint used the same header that was already defined as an auth header. 
+      This could lead to conflicts in the generated SDKs. The parser now properly checks for existing auth headers and 
+      avoids creating duplicates, resulting in cleaner and more consistent API definitions.
+    type: feat
+  irVersion: 57
+  version: 0.60.2    
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the v3 parser would throw an error upon receiving an object property schema that is not an object.
+    type: fix
+  irVersion: 57
+  version: 0.60.2
+
+- changelogEntry:
+  - summary: |
+      Fix an issue where example generation would not correctly merge allOf schemas with parent object schemas.
+    type: fix
+  irVersion: 57
+  version: 0.60.1
+
+- changelogEntry:
+  - summary: |
+      Promotes `fern docs dev --beta` to `fern docs dev`; local development now better reflects the production version of docs. To use the legacy version, use the `--legacy` flag.
+    type: feat
+  irVersion: 57
+  version: 0.60.0
+
+- changelogEntry:
+  - summary: |
+      Add support for local SDK generation with a Fern token. When a valid Fern token is provided, 
+      users can now generate complete SDKs locally using Docker, without requiring remote generation. 
+      This enhancement improves the development workflow by allowing for faster iteration and testing 
+      of SDK changes in local environments.
+    type: fix
+  irVersion: 57
+  version: 0.59.6
+
+- changelogEntry:
+  - summary: |
+      Enhance OpenAPI -> IR conversion to properly handle default values in schemas. The converter now correctly extracts 
+      and preserves default values from OpenAPI schemas, ensuring they are properly represented in the generated SDKs. 
+      This improvement allows API providers to specify meaningful defaults that will be respected in client implementations.
+    type: fix
+  irVersion: 57
+  version: 0.59.4
+
 - changelogEntry:
   - summary: |
       Improve OpenRPC importer to generate more unique schema IDs for request parameters by combining method name, 

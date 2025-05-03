@@ -39,12 +39,10 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
     protected async parseMediaTypeObject({
         mediaTypeObject,
-        schemaId,
-        contentType
+        schemaId
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         schemaId: string;
-        contentType: string;
     }): Promise<MediaTypeObject | undefined> {
         if (mediaTypeObject == null) {
             return undefined;
@@ -129,16 +127,19 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
     protected async generateOrValidateExample({
         schema,
-        ignoreErrors,
         example,
+        ignoreErrors,
         generateOptionalProperties
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        example: unknown;
         ignoreErrors?: boolean;
+        example: unknown;
         generateOptionalProperties?: boolean;
     }): Promise<unknown> {
-        const resolvedSchema = await this.context.resolveToSchema(schema);
+        const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: schema,
+            breadcrumbs: this.breadcrumbs
+        });
         if (resolvedSchema == null) {
             return undefined;
         }

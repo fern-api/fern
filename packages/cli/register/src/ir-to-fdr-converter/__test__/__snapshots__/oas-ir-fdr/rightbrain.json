@@ -8209,6 +8209,173 @@
         ]
       }
     },
+    "org_organization_iam_list_members_Response_403": {
+      "name": "org_organization_iam_list_members_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_organization_get_member_Response_403": {
+      "name": "org_organization_get_member_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_organization_iam_update_member_roles_Response_400": {
+      "name": "org_organization_iam_update_member_roles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_organization_iam_update_member_roles_Response_403": {
+      "name": "org_organization_iam_update_member_roles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_organization_iam_test_permissions_Response_400": {
+      "name": "org_organization_iam_test_permissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_organization_iam_test_permissions_Response_403": {
+      "name": "org_organization_iam_test_permissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgGetParametersSchema": {
       "name": "OrgGetParametersSchema",
       "shape": {
@@ -8219,6 +8386,72 @@
         "properties": []
       }
     },
+    "org_getOrgOrgIdGet_Response_403": {
+      "name": "org_getOrgOrgIdGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_updateOrgOrgIdPost_Response_403": {
+      "name": "org_updateOrgOrgIdPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_joinOrgOrgIdJoinPost_Response_403": {
+      "name": "org_joinOrgOrgIdJoinPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdInviteGetParametersSchema": {
       "name": "OrgOrgIdInviteGetParametersSchema",
       "shape": {
@@ -8227,6 +8460,321 @@
           "OrgInviteShow"
         ],
         "properties": []
+      }
+    },
+    "org_invitesListOrgOrgIdInviteGet_Response_403": {
+      "name": "org_invitesListOrgOrgIdInviteGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_invitesCreateOrgOrgIdInvitePost_Response_400": {
+      "name": "org_invitesCreateOrgOrgIdInvitePost_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "OrganizationInviteAlreadyExistsErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "OrganizationInviteAlreadyExistsErrorResponse"
+            }
+          },
+          {
+            "typeName": "OrganizationMemberAlreadyExistsErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "OrganizationMemberAlreadyExistsErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_invitesCreateOrgOrgIdInvitePost_Response_403": {
+      "name": "org_invitesCreateOrgOrgIdInvitePost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_invitesDeleteOrgOrgIdInviteOrgInviteIdDelete_Response_403": {
+      "name": "org_invitesDeleteOrgOrgIdInviteOrgInviteIdDelete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_domainsListOrgOrgIdDomainsGet_Response_403": {
+      "name": "org_domainsListOrgOrgIdDomainsGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_domainsPostOrgOrgIdDomainsPost_Response_403": {
+      "name": "org_domainsPostOrgOrgIdDomainsPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_domainDeleteOrgOrgIdDomainsDomainIdDelete_Response_403": {
+      "name": "org_domainDeleteOrgOrgIdDomainsDomainIdDelete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "org_updateAvatarOrgOrgIdAvatarPost_Response_403": {
+      "name": "org_updateAvatarOrgOrgIdAvatarPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_list_project_org__org_id__project_get_Response_403": {
+      "name": "project_list_project_org__org_id__project_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_create_project_org__org_id__project_post_Response_403": {
+      "name": "project_create_project_org__org_id__project_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_get_project_org__org_id__project__project_id__get_Response_403": {
+      "name": "project_get_project_org__org_id__project__project_id__get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_update_project_org__org_id__project__project_id__post_Response_403": {
+      "name": "project_update_project_org__org_id__project__project_id__post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_set_project_config_org__org_id__project__project_id__config_post_Response_403": {
+      "name": "project_set_project_config_org__org_id__project__project_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_updateAvatarOrgOrgIdProjectProjectIdAvatarPost_Response_403": {
+      "name": "project_updateAvatarOrgOrgIdProjectProjectIdAvatarPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
       }
     },
     "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema": {
@@ -8246,6 +8794,283 @@
         ]
       }
     },
+    "project_iamListMembers_Response_403": {
+      "name": "project_iamListMembers_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_getMember_Response_403": {
+      "name": "project_getMember_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_iamUpdateMemberRoles_Response_400": {
+      "name": "project_iamUpdateMemberRoles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_iamUpdateMemberRoles_Response_403": {
+      "name": "project_iamUpdateMemberRoles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_iamTestPermissions_Response_400": {
+      "name": "project_iamTestPermissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "project_iamTestPermissions_Response_403": {
+      "name": "project_iamTestPermissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_list_collections_org__org_id__project__project_id__collection_get_Response_403": {
+      "name": "collection_list_collections_org__org_id__project__project_id__collection_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_create_collection_org__org_id__project__project_id__collection_post_Response_403": {
+      "name": "collection_create_collection_org__org_id__project__project_id__collection_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_get_collection_org__org_id__project__project_id__collection__collection_id__get_Response_403": {
+      "name": "collection_get_collection_org__org_id__project__project_id__collection__collection_id__get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_editOrgOrgIdProjectProjectIdCollectionCollectionIdPost_Response_403": {
+      "name": "collection_editOrgOrgIdProjectProjectIdCollectionCollectionIdPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet_Response_403": {
+      "name": "collection_statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema",
       "shape": {
@@ -8254,6 +9079,116 @@
           "CollectionChatShow"
         ],
         "properties": []
+      }
+    },
+    "collection_list_chats_org__org_id__project__project_id__collection__collection_id__chat_get_Response_403": {
+      "name": "collection_list_chats_org__org_id__project__project_id__collection__collection_id__chat_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_query_collection_org__org_id__project__project_id__collection__collection_id__query_post_Response_403": {
+      "name": "collection_query_collection_org__org_id__project__project_id__collection__collection_id__query_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post_Response_403": {
+      "name": "collection_update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost_Response_403": {
+      "name": "collection_addOrgOrgIdProjectProjectIdCollectionCollectionIdAddPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost_Response_403": {
+      "name": "collection_removeOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
       }
     },
     "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema": {
@@ -8269,6 +9204,173 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "collection_iamListMembers_Response_403": {
+      "name": "collection_iamListMembers_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_getMember_Response_403": {
+      "name": "collection_getMember_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_iamUpdateMemberRoles_Response_400": {
+      "name": "collection_iamUpdateMemberRoles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_iamUpdateMemberRoles_Response_403": {
+      "name": "collection_iamUpdateMemberRoles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_iamTestPermissions_Response_400": {
+      "name": "collection_iamTestPermissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "collection_iamTestPermissions_Response_403": {
+      "name": "collection_iamTestPermissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8308,6 +9410,204 @@
         ]
       }
     },
+    "document_listOrgOrgIdProjectProjectIdDocumentGet_Response_403": {
+      "name": "document_listOrgOrgIdProjectProjectIdDocumentGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_createOrgOrgIdProjectProjectIdDocumentPost_Response_403": {
+      "name": "document_createOrgOrgIdProjectProjectIdDocumentPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_uploadOrgOrgIdProjectProjectIdDocumentUploadPost_Response_403": {
+      "name": "document_uploadOrgOrgIdProjectProjectIdDocumentUploadPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_task_status_org__org_id__project__project_id__document_create_status__group_id__get_Response_403": {
+      "name": "document_task_status_org__org_id__project__project_id__document_create_status__group_id__get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet_Response_403": {
+      "name": "document_queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet_Response_403": {
+      "name": "document_fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost_Response_403": {
+      "name": "document_updateOrgOrgIdProjectProjectIdDocumentDocumentIdPost_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete_Response_403": {
+      "name": "document_deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDelete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet_Response_403": {
+      "name": "document_embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGet_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema",
       "shape": {
@@ -8321,6 +9621,305 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "document_iamListMembers_Response_403": {
+      "name": "document_iamListMembers_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_getMember_Response_403": {
+      "name": "document_getMember_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_iamUpdateMemberRoles_Response_400": {
+      "name": "document_iamUpdateMemberRoles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_iamUpdateMemberRoles_Response_403": {
+      "name": "document_iamUpdateMemberRoles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_iamTestPermissions_Response_400": {
+      "name": "document_iamTestPermissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "document_iamTestPermissions_Response_403": {
+      "name": "document_iamTestPermissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_get_chat_chat__chat_id__get_Response_403": {
+      "name": "chat_get_chat_chat__chat_id__get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_update_chat_chat__chat_id__post_Response_403": {
+      "name": "chat_update_chat_chat__chat_id__post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_get_chat_config_chat__chat_id__config_get_Response_403": {
+      "name": "chat_get_chat_config_chat__chat_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_set_chat_config_chat__chat_id__config_post_Response_403": {
+      "name": "chat_set_chat_config_chat__chat_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_create_chat_chat_post_Response_403": {
+      "name": "chat_create_chat_chat_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_query_chat_chat__chat_id__query_get_Response_403": {
+      "name": "chat_query_chat_chat__chat_id__query_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8342,6 +9941,1515 @@
         ]
       }
     },
+    "chat_iamListMembers_Response_403": {
+      "name": "chat_iamListMembers_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_getMember_Response_403": {
+      "name": "chat_getMember_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_iamUpdateMemberRoles_Response_400": {
+      "name": "chat_iamUpdateMemberRoles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_iamUpdateMemberRoles_Response_403": {
+      "name": "chat_iamUpdateMemberRoles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_iamTestPermissions_Response_400": {
+      "name": "chat_iamTestPermissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "chat_iamTestPermissions_Response_403": {
+      "name": "chat_iamTestPermissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_authorize_org__org_id__project__project_id__datasource_box_authorize_get_Response_403": {
+      "name": "datasource - box_authorize_org__org_id__project__project_id__datasource_box_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get_Response_403": {
+      "name": "datasource - box_authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_delete_org__org_id__project__project_id__datasource_box__connection_id__delete_Response_403": {
+      "name": "datasource - box_delete_org__org_id__project__project_id__datasource_box__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get_Response_403": {
+      "name": "datasource - box_list_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get_Response_403": {
+      "name": "datasource - box_check_status_org__org_id__project__project_id__datasource_box__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get_Response_403": {
+      "name": "datasource - box_get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - box_set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post_Response_403": {
+      "name": "datasource - box_set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_authorize_org__org_id__project__project_id__datasource_confluence_authorize_get_Response_403": {
+      "name": "datasource - confluence_authorize_org__org_id__project__project_id__datasource_confluence_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get_Response_403": {
+      "name": "datasource - confluence_authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete_Response_403": {
+      "name": "datasource - confluence_delete_org__org_id__project__project_id__datasource_confluence__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get_Response_403": {
+      "name": "datasource - confluence_list_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get_Response_403": {
+      "name": "datasource - confluence_check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get_Response_403": {
+      "name": "datasource - confluence_get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - confluence_set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post_Response_403": {
+      "name": "datasource - confluence_set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get_Response_403": {
+      "name": "datasource - dropbox_authorize_org__org_id__project__project_id__datasource_dropbox_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get_Response_403": {
+      "name": "datasource - dropbox_authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete_Response_403": {
+      "name": "datasource - dropbox_delete_org__org_id__project__project_id__datasource_dropbox__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get_Response_403": {
+      "name": "datasource - dropbox_list_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get_Response_403": {
+      "name": "datasource - dropbox_check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get_Response_403": {
+      "name": "datasource - dropbox_get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - dropbox_set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post_Response_403": {
+      "name": "datasource - dropbox_set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get_Response_403": {
+      "name": "datasource - gdrive_authorize_org__org_id__project__project_id__datasource_gdrive_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get_Response_403": {
+      "name": "datasource - gdrive_authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete_Response_403": {
+      "name": "datasource - gdrive_delete_org__org_id__project__project_id__datasource_gdrive__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get_Response_403": {
+      "name": "datasource - gdrive_list_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get_Response_403": {
+      "name": "datasource - gdrive_check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get_Response_403": {
+      "name": "datasource - gdrive_get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - gdrive_set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post_Response_403": {
+      "name": "datasource - gdrive_set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_authorize_org__org_id__project__project_id__datasource_notion_authorize_get_Response_403": {
+      "name": "datasource - notion_authorize_org__org_id__project__project_id__datasource_notion_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get_Response_403": {
+      "name": "datasource - notion_authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_delete_org__org_id__project__project_id__datasource_notion__connection_id__delete_Response_403": {
+      "name": "datasource - notion_delete_org__org_id__project__project_id__datasource_notion__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get_Response_403": {
+      "name": "datasource - notion_list_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get_Response_403": {
+      "name": "datasource - notion_check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get_Response_403": {
+      "name": "datasource - notion_get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - notion_set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post_Response_403": {
+      "name": "datasource - notion_set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get_Response_403": {
+      "name": "datasource - onedrive_authorize_org__org_id__project__project_id__datasource_onedrive_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get_Response_403": {
+      "name": "datasource - onedrive_authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete_Response_403": {
+      "name": "datasource - onedrive_delete_org__org_id__project__project_id__datasource_onedrive__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get_Response_403": {
+      "name": "datasource - onedrive_list_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get_Response_403": {
+      "name": "datasource - onedrive_check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get_Response_403": {
+      "name": "datasource - onedrive_get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - onedrive_set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post_Response_403": {
+      "name": "datasource - onedrive_set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get_Response_403": {
+      "name": "datasource - sharepoint_authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get_Response_403": {
+      "name": "datasource - sharepoint_authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete_Response_403": {
+      "name": "datasource - sharepoint_delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__delete_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get_Response_403": {
+      "name": "datasource - sharepoint_list_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get_Response_403": {
+      "name": "datasource - sharepoint_check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get_Response_403": {
+      "name": "datasource - sharepoint_get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_get_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "datasource - sharepoint_set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post_Response_403": {
+      "name": "datasource - sharepoint_set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "internal_register_oauth_client_internal_project__project_id__register_oauth_client_post_Response_403": {
+      "name": "internal_register_oauth_client_internal_project__project_id__register_oauth_client_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "compose_initialise_org__org_id__project__project_id__compose_post_Response_403": {
+      "name": "compose_initialise_org__org_id__project__project_id__compose_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "compose_generate_org__org_id__project__project_id__compose_generate_post_Response_403": {
+      "name": "compose_generate_org__org_id__project__project_id__compose_generate_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "compose_update_section_org__org_id__project__project_id__compose_update_section_post_Response_403": {
+      "name": "compose_update_section_org__org_id__project__project_id__compose_update_section_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "compose_section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post_Response_403": {
+      "name": "compose_section_talking_points_org__org_id__project__project_id__compose_section_talking_points_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "compose_topic_org__org_id__project__project_id__compose_topic_post_Response_403": {
+      "name": "compose_topic_org__org_id__project__project_id__compose_topic_post_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_getAllTasks_Response_403": {
+      "name": "tasks_getAllTasks_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_createTask_Response_403": {
+      "name": "tasks_createTask_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_getTask_Response_403": {
+      "name": "tasks_getTask_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_editTask_Response_403": {
+      "name": "tasks_editTask_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_getTaskRuns_Response_403": {
+      "name": "tasks_getTaskRuns_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_runTask_Response_403": {
+      "name": "tasks_runTask_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema",
       "shape": {
@@ -8355,6 +11463,305 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "tasks_task_iam_list_members_Response_403": {
+      "name": "tasks_task_iam_list_members_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_task_get_member_Response_403": {
+      "name": "tasks_task_get_member_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_task_iam_update_member_roles_Response_400": {
+      "name": "tasks_task_iam_update_member_roles_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_task_iam_update_member_roles_Response_403": {
+      "name": "tasks_task_iam_update_member_roles_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_task_iam_test_permissions_Response_400": {
+      "name": "tasks_task_iam_test_permissions_Response_400",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_task_iam_test_permissions_Response_403": {
+      "name": "tasks_task_iam_test_permissions_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "task forwarders_getAllTaskForwarders_Response_403": {
+      "name": "task forwarders_getAllTaskForwarders_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "task forwarders_createTaskForwarder_Response_403": {
+      "name": "task forwarders_createTaskForwarder_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "task forwarders_getTaskForwarder_Response_403": {
+      "name": "task forwarders_getTaskForwarder_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "task forwarders_updateTaskForwarder_Response_403": {
+      "name": "task forwarders_updateTaskForwarder_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "tasks_getTaskRun_Response_403": {
+      "name": "tasks_getTaskRun_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "listings_getAllModels_Response_403": {
+      "name": "listings_getAllModels_Response_403",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8440,9 +11847,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -8461,7 +11866,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -8482,7 +11887,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -8584,7 +11989,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -8596,7 +12001,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -8714,7 +12119,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -8726,7 +12131,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -8917,11 +12322,7 @@
               "description": "",
               "path": "/org",
               "pathParameters": {},
-              "queryParameters": {
-                "membership": "active",
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -9283,7 +12684,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -9295,7 +12696,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -9403,11 +12804,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "show": "all",
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -10371,10 +13768,7 @@
               "pathParameters": {
                 "org_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -10883,9 +14277,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -10901,15 +14295,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -10925,7 +14319,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -11037,9 +14431,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -11055,15 +14449,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 4,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -11079,7 +14473,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -11289,9 +14683,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -11310,7 +14702,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -11331,7 +14723,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -11451,7 +14843,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -11463,7 +14855,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -11599,7 +14991,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -11611,7 +15003,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -11884,11 +15276,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "title": "foo",
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12676,11 +16064,7 @@
                 "project_id": "foo",
                 "collection_id": "foo"
               },
-              "queryParameters": {
-                "show": "all",
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12701,7 +16085,7 @@
                       "created_by_user_id": "foo",
                       "last_message": "foo",
                       "id": "foo",
-                      "documents_have_been_modified": true
+                      "documents_have_been_modified": false
                     }
                   ]
                 }
@@ -12724,7 +16108,7 @@
                       "created_by_user_id": "foo",
                       "last_message": "foo",
                       "id": "foo",
-                      "documents_have_been_modified": true
+                      "documents_have_been_modified": false
                     }
                   ]
                 }
@@ -13431,9 +16815,7 @@
                 "project_id": "foo",
                 "collection_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -13452,7 +16834,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -13473,7 +16855,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -13611,7 +16993,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -13623,7 +17005,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -13777,7 +17159,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -13789,7 +17171,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -14142,15 +17524,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "title": "foo",
-                "cursor": "foo",
-                "collection_id": "foo",
-                "page_limit": 42,
-                "source": "upload",
-                "strategy": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15296,10 +18670,7 @@
                 "project_id": "foo",
                 "document_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15590,9 +18961,7 @@
                 "project_id": "foo",
                 "document_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15611,7 +18980,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -15632,7 +19001,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -15770,7 +19139,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -15782,7 +19151,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -15936,7 +19305,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -15948,7 +19317,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -16176,9 +19545,7 @@
               "description": "",
               "path": "/chat/recent",
               "pathParameters": {},
-              "queryParameters": {
-                "project_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -16193,7 +19560,7 @@
                     "created_by_user_id": "foo",
                     "last_message": "foo",
                     "id": "foo",
-                    "documents_have_been_modified": true
+                    "documents_have_been_modified": false
                   }
                 ]
               },
@@ -16209,7 +19576,7 @@
                     "created_by_user_id": "foo",
                     "last_message": "foo",
                     "id": "foo",
-                    "documents_have_been_modified": true
+                    "documents_have_been_modified": false
                   }
                 ]
               }
@@ -16293,7 +19660,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16307,7 +19674,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16412,7 +19779,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16426,7 +19793,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16501,9 +19868,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16519,15 +19886,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16543,7 +19910,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -16636,9 +20003,9 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16654,15 +20021,15 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "llm": "gpt-4o",
-                  "temperature": 42,
-                  "knn": 42,
+                  "llm": "gpt-3.5-turbo",
+                  "temperature": 0.5,
+                  "knn": 5,
                   "chat_system_commands": [
                     "foo"
                   ],
@@ -16678,7 +20045,7 @@
                       }
                     ]
                   },
-                  "query_expansion": true
+                  "query_expansion": false
                 }
               }
             }
@@ -16762,7 +20129,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               },
               "responseBodyV3": {
@@ -16776,7 +20143,7 @@
                   "created_by_user_id": "foo",
                   "last_message": "foo",
                   "id": "foo",
-                  "documents_have_been_modified": true
+                  "documents_have_been_modified": false
                 }
               }
             }
@@ -16964,9 +20331,7 @@
               "pathParameters": {
                 "chat_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -16985,7 +20350,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -17006,7 +20371,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -17108,7 +20473,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -17120,7 +20485,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -17238,7 +20603,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -17250,7 +20615,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -17495,9 +20860,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -17506,7 +20869,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -17524,7 +20887,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -17683,7 +21046,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -17703,7 +21066,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -17815,10 +21178,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -17933,9 +21293,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -18167,10 +21525,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18194,7 +21549,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -18223,7 +21578,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -18363,7 +21718,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -18383,7 +21738,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -18697,10 +22052,7 @@
               "description": "",
               "path": "/datasource/box/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -18831,9 +22183,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18842,7 +22192,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -18860,7 +22210,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -19019,7 +22369,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19039,7 +22389,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19151,10 +22501,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -19269,9 +22616,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -19503,10 +22848,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19530,7 +22872,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -19559,7 +22901,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -19699,7 +23041,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -19719,7 +23061,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20033,10 +23375,7 @@
               "description": "",
               "path": "/datasource/confluence/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -20167,9 +23506,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20178,7 +23515,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -20196,7 +23533,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -20355,7 +23692,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20375,7 +23712,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -20487,10 +23824,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -20605,9 +23939,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -20839,10 +24171,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20866,7 +24195,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -20895,7 +24224,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -21035,7 +24364,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21055,7 +24384,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21369,10 +24698,7 @@
               "description": "",
               "path": "/datasource/dropbox/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -21503,9 +24829,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21514,7 +24838,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -21532,7 +24856,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -21691,7 +25015,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21711,7 +25035,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -21823,10 +25147,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -21941,9 +25262,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -22175,10 +25494,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22202,7 +25518,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -22231,7 +25547,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -22371,7 +25687,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -22391,7 +25707,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -22705,10 +26021,7 @@
               "description": "",
               "path": "/datasource/gdrive/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -22839,9 +26152,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22850,7 +26161,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -22868,7 +26179,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -23027,7 +26338,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23047,7 +26358,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23159,10 +26470,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -23277,9 +26585,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -23511,10 +26817,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23538,7 +26841,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -23567,7 +26870,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -23707,7 +27010,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -23727,7 +27030,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24041,10 +27344,7 @@
               "description": "",
               "path": "/datasource/notion/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24175,9 +27475,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24186,7 +27484,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -24204,7 +27502,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -24363,7 +27661,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24383,7 +27681,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -24495,10 +27793,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24613,9 +27908,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -24847,10 +28140,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24874,7 +28164,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -24903,7 +28193,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -25043,7 +28333,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25063,7 +28353,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25377,10 +28667,7 @@
               "description": "",
               "path": "/datasource/onedrive/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -25511,9 +28798,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "parent_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -25522,7 +28807,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -25540,7 +28825,7 @@
                   {
                     "id": "foo",
                     "name": "foo",
-                    "synced": true,
+                    "synced": false,
                     "size": "foo",
                     "mimeType": "foo",
                     "createdTime": "foo",
@@ -25699,7 +28984,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25719,7 +29004,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -25831,10 +29116,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "connection_id": "foo",
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -25949,9 +29231,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "redirect_to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26183,10 +29463,7 @@
                 "project_id": "foo",
                 "connection_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26210,7 +29487,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -26239,7 +29516,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -26379,7 +29656,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -26399,7 +29676,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -26713,10 +29990,7 @@
               "description": "",
               "path": "/datasource/sharepoint/callback",
               "pathParameters": {},
-              "queryParameters": {
-                "code": "foo",
-                "state": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -26898,7 +30172,7 @@
                   ],
                   "client_id": "foo",
                   "client_secret": "foo",
-                  "scope": "foo"
+                  "scope": ""
                 }
               },
               "responseBodyV3": {
@@ -26910,7 +30184,7 @@
                   ],
                   "client_id": "foo",
                   "client_secret": "foo",
-                  "scope": "foo"
+                  "scope": ""
                 }
               }
             }
@@ -27338,7 +30612,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27358,7 +30632,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27482,7 +30756,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27502,7 +30776,7 @@
                     "project_id": "foo",
                     "datasource_id": "foo",
                     "config": {},
-                    "token": "foo",
+                    "token": "",
                     "created_by": "foo",
                     "id": "foo"
                   }
@@ -27621,10 +30895,7 @@
                 "org_id": "foo",
                 "project_id": "foo"
               },
-              "queryParameters": {
-                "cursor": "foo",
-                "page_limit": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27648,7 +30919,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -27677,7 +30948,7 @@
                         "project_id": "foo",
                         "datasource_id": "foo",
                         "config": {},
-                        "token": "foo",
+                        "token": "",
                         "created_by": "foo",
                         "id": "foo"
                       }
@@ -28390,11 +31661,7 @@
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
               },
-              "queryParameters": {
-                "name": "foo",
-                "page_limit": 42,
-                "cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28420,7 +31687,7 @@
                           "user_prompt": null,
                           "llm_model": "gpt-4o",
                           "llm_config": {
-                            "temperature": 42
+                            "temperature": 0.2
                           },
                           "output_format": {},
                           "task_forwarder_id": "foo",
@@ -28428,11 +31695,11 @@
                             "collection_id": "foo",
                             "rag_param": "foo"
                           },
-                          "image_required": true,
+                          "image_required": false,
                           "id": "foo",
                           "created": "foo",
                           "modified": "foo",
-                          "active": true
+                          "active": false
                         }
                       ]
                     }
@@ -28462,7 +31729,7 @@
                           "user_prompt": null,
                           "llm_model": "gpt-4o",
                           "llm_config": {
-                            "temperature": 42
+                            "temperature": 0.2
                           },
                           "output_format": {},
                           "task_forwarder_id": "foo",
@@ -28470,11 +31737,11 @@
                             "collection_id": "foo",
                             "rag_param": "foo"
                           },
-                          "image_required": true,
+                          "image_required": false,
                           "id": "foo",
                           "created": "foo",
                           "modified": "foo",
-                          "active": true
+                          "active": false
                         }
                       ]
                     }
@@ -28599,7 +31866,7 @@
                   },
                   "rationale": "str"
                 },
-                "image_required": true,
+                "image_required": false,
                 "name": "Fintech Pre-Triage",
                 "description": "A task to pre-triage user onboarding before IDV.",
                 "enabled": true
@@ -28621,7 +31888,7 @@
                     },
                     "rationale": "str"
                   },
-                  "image_required": true,
+                  "image_required": false,
                   "name": "Fintech Pre-Triage",
                   "description": "A task to pre-triage user onboarding before IDV.",
                   "enabled": true
@@ -28644,7 +31911,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28652,11 +31919,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28677,7 +31944,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28685,11 +31952,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28820,7 +32087,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28828,11 +32095,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -28853,7 +32120,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -28861,11 +32128,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29014,7 +32281,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -29022,11 +32289,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29047,7 +32314,7 @@
                       "user_prompt": null,
                       "llm_model": "gpt-4o",
                       "llm_config": {
-                        "temperature": 42
+                        "temperature": 0.2
                       },
                       "output_format": {},
                       "task_forwarder_id": "foo",
@@ -29055,11 +32322,11 @@
                         "collection_id": "foo",
                         "rag_param": "foo"
                       },
-                      "image_required": true,
+                      "image_required": false,
                       "id": "foo",
                       "created": "foo",
                       "modified": "foo",
-                      "active": true
+                      "active": false
                     }
                   ]
                 }
@@ -29227,8 +32494,6 @@
                 "task_id": "01909843-3596-da54-4756-28af46917e74"
               },
               "queryParameters": {
-                "page_limit": 42,
-                "cursor": "foo",
                 "task_revision_id": "0190a234-8dc6-6d08-aea9-928fcecad8f1"
               },
               "headers": {},
@@ -29554,9 +32819,7 @@
                 "project_id": "foo",
                 "task_id": "foo"
               },
-              "queryParameters": {
-                "type": "user"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29575,7 +32838,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -29596,7 +32859,7 @@
                       ],
                       "name": "foo",
                       "avatar_url": "foo",
-                      "total_subjects": 42
+                      "total_subjects": 1
                     }
                   ]
                 }
@@ -29734,7 +32997,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -29746,7 +33009,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -29900,7 +33163,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               },
               "responseBodyV3": {
@@ -29912,7 +33175,7 @@
                   ],
                   "name": "foo",
                   "avatar_url": "foo",
-                  "total_subjects": 42
+                  "total_subjects": 1
                 }
               }
             }
@@ -30376,10 +33639,7 @@
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
               },
-              "queryParameters": {
-                "page_limit": 42,
-                "cursor": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

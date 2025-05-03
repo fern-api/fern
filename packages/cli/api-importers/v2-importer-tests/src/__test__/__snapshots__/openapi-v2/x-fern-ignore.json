@@ -1894,10 +1894,7 @@
                     "path": "/list"
                   },
                   "pathParameters": {},
-                  "queryParameters": {
-                    "pageNumber": 42,
-                    "limit": 42
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

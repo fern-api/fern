@@ -12,6 +12,8 @@ types:
     properties: 
       owner: string
       repo: string
+      uri: optional<string>
+      token: optional<string>
       target: PublishTarget
   
   DirectPublish: 
@@ -21,9 +23,16 @@ types:
   PublishTarget: 
     union: 
       postman: PostmanPublishTarget
+      npm: NpmPublishTarget
   
   PostmanPublishTarget: 
     properties: 
       apiKey: string
       workspaceId: string
       collectionId: optional<string>
+  
+  NpmPublishTarget:
+    properties:
+      packageName: optional<string>
+      tokenEnvironmentVariable: string
+      registry: optional<string>

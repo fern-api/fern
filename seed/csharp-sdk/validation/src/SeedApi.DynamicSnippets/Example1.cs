@@ -16,7 +16,7 @@ public class Example1
             new GetRequest{
                 Decimal = 2.2,
                 Even = 100,
-                Name = "foo"
+                Name = "fern"
             }
         );
     }

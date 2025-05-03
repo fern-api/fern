@@ -67,7 +67,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
             const { convertedProperties: allOfProperties, inlinedTypesFromProperties: inlinedTypesFromAllOf } =
                 await convertProperties({
                     properties: allOfSchema.properties ?? {},
-                    required: allOfSchema.required ?? [],
+                    required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
                     breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],
                     context: this.context,
                     errorCollector: this.context.errorCollector

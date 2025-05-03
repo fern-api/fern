@@ -4665,8 +4665,8 @@
         ]
       }
     },
-    "subscribeEvent": {
-      "name": "subscribeEvent",
+    "ChatSubscribe": {
+      "name": "ChatSubscribe",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4743,8 +4743,8 @@
         ]
       }
     },
-    "publishEvent": {
-      "name": "publishEvent",
+    "ChatPublish": {
+      "name": "ChatPublish",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -4963,13 +4963,44 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
-                    "models": null,
-                    "transcription": null,
+                    "models": {
+                      "face": {
+                        "fps_pred": 3,
+                        "prob_threshold": 0.99,
+                        "identify_faces": false,
+                        "min_face_size": 60,
+                        "facs": null,
+                        "descriptions": null,
+                        "save_faces": false
+                      },
+                      "burst": null,
+                      "prosody": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "window": {
+                          "length": 4,
+                          "step": 1
+                        }
+                      },
+                      "language": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "sentiment": null,
+                        "toxicity": null
+                      },
+                      "ner": {
+                        "identify_speakers": false
+                      },
+                      "facemesh": null
+                    },
+                    "transcription": {
+                      "language": "zh"
+                    },
                     "urls": [
                       "foo"
                     ],
                     "callback_url": "foo",
-                    "notify": true,
+                    "notify": false,
                     "files": [
                       {
                         "filename": "foo",
@@ -4978,7 +5009,10 @@
                       }
                     ]
                   },
-                  "state": {}
+                  "state": {
+                    "status": "QUEUED",
+                    "created_timestamp_ms": 42
+                  }
                 }
               },
               "responseBodyV3": {
@@ -4987,13 +5021,44 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
-                    "models": null,
-                    "transcription": null,
+                    "models": {
+                      "face": {
+                        "fps_pred": 3,
+                        "prob_threshold": 0.99,
+                        "identify_faces": false,
+                        "min_face_size": 60,
+                        "facs": null,
+                        "descriptions": null,
+                        "save_faces": false
+                      },
+                      "burst": null,
+                      "prosody": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "window": {
+                          "length": 4,
+                          "step": 1
+                        }
+                      },
+                      "language": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "sentiment": null,
+                        "toxicity": null
+                      },
+                      "ner": {
+                        "identify_speakers": false
+                      },
+                      "facemesh": null
+                    },
+                    "transcription": {
+                      "language": "zh"
+                    },
                     "urls": [
                       "foo"
                     ],
                     "callback_url": "foo",
-                    "notify": true,
+                    "notify": false,
                     "files": [
                       {
                         "filename": "foo",
@@ -5002,7 +5067,10 @@
                       }
                     ]
                   },
-                  "state": {}
+                  "state": {
+                    "status": "QUEUED",
+                    "created_timestamp_ms": 42
+                  }
                 }
               }
             }
@@ -5017,9 +5085,9 @@
       "types": [],
       "subpackages": []
     },
-    "/chat": {
-      "subpackageId": "/chat",
-      "name": "/chat",
+    "subpackage_chat": {
+      "subpackageId": "subpackage_chat",
+      "name": "chat",
       "endpoints": [],
       "webhooks": [],
       "websockets": [
@@ -5033,7 +5101,7 @@
               "baseUrl": "wss://api.hume.ai/v0/evi"
             }
           ],
-          "id": "/chat",
+          "id": "chat",
           "name": "/chat",
           "path": {
             "pathParameters": [],
@@ -5101,26 +5169,26 @@
           ],
           "messages": [
             {
-              "type": "subscribeEvent",
-              "displayName": "subscribeEvent",
+              "type": "subscribe",
+              "displayName": "subscribe",
               "origin": "server",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "subscribeEvent"
+                  "value": "ChatSubscribe"
                 }
               }
             },
             {
-              "type": "publishEvent",
-              "displayName": "publishEvent",
+              "type": "publish",
+              "displayName": "publish",
               "origin": "client",
               "body": {
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "publishEvent"
+                  "value": "ChatPublish"
                 }
               }
             }
@@ -5139,14 +5207,14 @@
               "headers": {},
               "messages": [
                 {
-                  "type": "publishEvent",
+                  "type": "publish",
                   "body": {
                     "type": "audio_input",
                     "data": "data"
                   }
                 },
                 {
-                  "type": "subscribeEvent",
+                  "type": "subscribe",
                   "body": {
                     "type": "assistant_end"
                   }
@@ -5287,16 +5355,7 @@
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
-            "queryParameters": {
-              "limit": 42,
-              "status": [
-                "QUEUED"
-              ],
-              "when": "created_before",
-              "timestamp_ms": 42,
-              "sort_by": "created",
-              "direction": "asc"
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
@@ -5306,13 +5365,44 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
-                    "models": null,
-                    "transcription": null,
+                    "models": {
+                      "face": {
+                        "fps_pred": 3,
+                        "prob_threshold": 0.99,
+                        "identify_faces": false,
+                        "min_face_size": 60,
+                        "facs": null,
+                        "descriptions": null,
+                        "save_faces": false
+                      },
+                      "burst": null,
+                      "prosody": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "window": {
+                          "length": 4,
+                          "step": 1
+                        }
+                      },
+                      "language": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "sentiment": null,
+                        "toxicity": null
+                      },
+                      "ner": {
+                        "identify_speakers": false
+                      },
+                      "facemesh": null
+                    },
+                    "transcription": {
+                      "language": "zh"
+                    },
                     "urls": [
                       "foo"
                     ],
                     "callback_url": "foo",
-                    "notify": true,
+                    "notify": false,
                     "files": [
                       {
                         "filename": "foo",
@@ -5321,7 +5411,10 @@
                       }
                     ]
                   },
-                  "state": {}
+                  "state": {
+                    "status": "QUEUED",
+                    "created_timestamp_ms": 42
+                  }
                 }
               ]
             },
@@ -5332,13 +5425,44 @@
                   "user_id": "foo",
                   "job_id": "foo",
                   "request": {
-                    "models": null,
-                    "transcription": null,
+                    "models": {
+                      "face": {
+                        "fps_pred": 3,
+                        "prob_threshold": 0.99,
+                        "identify_faces": false,
+                        "min_face_size": 60,
+                        "facs": null,
+                        "descriptions": null,
+                        "save_faces": false
+                      },
+                      "burst": null,
+                      "prosody": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "window": {
+                          "length": 4,
+                          "step": 1
+                        }
+                      },
+                      "language": {
+                        "granularity": "word",
+                        "identify_speakers": false,
+                        "sentiment": null,
+                        "toxicity": null
+                      },
+                      "ner": {
+                        "identify_speakers": false
+                      },
+                      "facemesh": null
+                    },
+                    "transcription": {
+                      "language": "zh"
+                    },
                     "urls": [
                       "foo"
                     ],
                     "callback_url": "foo",
-                    "notify": true,
+                    "notify": false,
                     "files": [
                       {
                         "filename": "foo",
@@ -5347,7 +5471,10 @@
                       }
                     ]
                   },
-                  "state": {}
+                  "state": {
+                    "status": "QUEUED",
+                    "created_timestamp_ms": 42
+                  }
                 }
               ]
             }
@@ -5521,18 +5648,152 @@
               "type": "json",
               "value": [
                 {
-                  "source": {},
+                  "source": {
+                    "type": "url",
+                    "url": "foo"
+                  },
                   "results": {
                     "predictions": [
                       {
                         "file": "foo",
                         "models": {
-                          "face": null,
-                          "burst": null,
-                          "prosody": null,
-                          "language": null,
-                          "ner": null,
-                          "facemesh": null
+                          "face": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "frame": 42,
+                                    "time": 42,
+                                    "prob": 42,
+                                    "box": {},
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "facs": [
+                                      null
+                                    ],
+                                    "descriptions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "burst": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "time": {},
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "descriptions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "prosody": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "text": "foo",
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "language": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "text": "foo",
+                                    "position": {},
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "sentiment": [
+                                      null
+                                    ],
+                                    "toxicity": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "ner": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "entity": "foo",
+                                    "position": {},
+                                    "entity_confidence": 42,
+                                    "support": 42,
+                                    "uri": "foo",
+                                    "link_word": "foo",
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "facemesh": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         }
                       }
                     ],
@@ -5551,18 +5812,152 @@
               "type": "json",
               "value": [
                 {
-                  "source": {},
+                  "source": {
+                    "type": "url",
+                    "url": "foo"
+                  },
                   "results": {
                     "predictions": [
                       {
                         "file": "foo",
                         "models": {
-                          "face": null,
-                          "burst": null,
-                          "prosody": null,
-                          "language": null,
-                          "ner": null,
-                          "facemesh": null
+                          "face": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "frame": 42,
+                                    "time": 42,
+                                    "prob": 42,
+                                    "box": {},
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "facs": [
+                                      null
+                                    ],
+                                    "descriptions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "burst": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "time": {},
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "descriptions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "prosody": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "text": "foo",
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "language": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "text": "foo",
+                                    "position": {},
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ],
+                                    "sentiment": [
+                                      null
+                                    ],
+                                    "toxicity": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "ner": {
+                            "metadata": {
+                              "confidence": 42,
+                              "detected_language": "zh"
+                            },
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "entity": "foo",
+                                    "position": {},
+                                    "entity_confidence": 42,
+                                    "support": 42,
+                                    "uri": "foo",
+                                    "link_word": "foo",
+                                    "time": {},
+                                    "confidence": 42,
+                                    "speaker_confidence": 42,
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "facemesh": {
+                            "metadata": {},
+                            "grouped_predictions": [
+                              {
+                                "id": "foo",
+                                "predictions": [
+                                  {
+                                    "emotions": [
+                                      null
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         }
                       }
                     ],
@@ -5702,7 +6097,7 @@
     ],
     "subpackages": [
       "Get Job Predictions",
-      "/chat"
+      "subpackage_chat"
     ]
   },
   "auth": {

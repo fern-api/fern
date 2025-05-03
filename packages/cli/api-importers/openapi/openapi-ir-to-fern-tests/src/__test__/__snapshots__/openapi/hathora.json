@@ -2416,12 +2416,6 @@ service:
                 "appId": "root.AppId",
               },
               "request": {
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
                 "name": "CreatePrivateLobbyDeprecatedRequest",
                 "query-parameters": {
                   "local": {
@@ -2471,12 +2465,6 @@ service:
                 "appId": "root.AppId",
               },
               "request": {
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
                 "name": "CreatePublicLobbyDeprecatedRequest",
                 "query-parameters": {
                   "local": {
@@ -2539,12 +2527,6 @@ service:
                 "appId": "root.AppId",
               },
               "request": {
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
                 "name": "ListActivePublicLobbiesDeprecatedRequest",
                 "query-parameters": {
                   "local": {
@@ -2590,10 +2572,6 @@ service:
           local:
             type: optional<boolean>
             default: false
-        headers:
-          Authorization:
-            type: string
-            name: authorization
       response:
         docs: Ok
         type: root.RoomId
@@ -2627,10 +2605,6 @@ service:
           local:
             type: optional<boolean>
             default: false
-        headers:
-          Authorization:
-            type: string
-            name: authorization
       response:
         docs: Ok
         type: root.RoomId
@@ -2664,10 +2638,6 @@ service:
             type: optional<boolean>
             default: false
           region: optional<root.Region>
-        headers:
-          Authorization:
-            type: string
-            name: authorization
       response:
         docs: Ok
         type: list<root.Lobby>
@@ -2767,12 +2737,7 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
+                "headers": undefined,
                 "name": "CreateLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2846,12 +2811,7 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
+                "headers": undefined,
                 "name": "CreateLocalLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2925,12 +2885,7 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
+                "headers": undefined,
                 "name": "CreatePrivateLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3004,12 +2959,7 @@ service:
                   },
                 },
                 "content-type": "application/json",
-                "headers": {
-                  "Authorization": {
-                    "name": "authorization",
-                    "type": "string",
-                  },
-                },
+                "headers": undefined,
                 "name": "CreatePublicLobbyRequest",
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3224,10 +3174,6 @@ service:
         name: CreatePrivateLobbyRequest
         query-parameters:
           roomId: optional<root.RoomId>
-        headers:
-          Authorization:
-            type: string
-            name: authorization
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3278,10 +3224,6 @@ service:
         name: CreatePublicLobbyRequest
         query-parameters:
           roomId: optional<root.RoomId>
-        headers:
-          Authorization:
-            type: string
-            name: authorization
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3332,10 +3274,6 @@ service:
         name: CreateLocalLobbyRequest
         query-parameters:
           roomId: optional<root.RoomId>
-        headers:
-          Authorization:
-            type: string
-            name: authorization
         body:
           properties:
             initialConfig: map<string, unknown>
@@ -3386,10 +3324,6 @@ service:
         name: CreateLobbyRequest
         query-parameters:
           roomId: optional<root.RoomId>
-        headers:
-          Authorization:
-            type: string
-            name: authorization
         body:
           properties:
             visibility: CreateLobbyRequestVisibility

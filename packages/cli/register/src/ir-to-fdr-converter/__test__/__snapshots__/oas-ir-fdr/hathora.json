@@ -3021,9 +3021,17 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
               },
               "responseStatusCode": 200
             }
@@ -3768,10 +3776,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle",
-                "local": true
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -3893,10 +3898,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle",
-                "local": true
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4021,10 +4023,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "local": true,
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4193,9 +4192,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4361,9 +4358,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4529,9 +4524,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4703,9 +4696,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4839,9 +4830,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5253,11 +5242,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42,
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -5363,10 +5348,7 @@
                 "appId": "foo",
                 "processId": "foo"
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -5472,10 +5454,7 @@
                 "appId": "foo",
                 "deploymentId": 42
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -5629,14 +5608,7 @@
                 "appId": "foo",
                 "processId": "foo"
               },
-              "queryParameters": {
-                "metrics": [
-                  "cpu"
-                ],
-                "end": 42,
-                "start": 42,
-                "step": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5795,9 +5767,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5942,9 +5912,7 @@
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

@@ -11097,21 +11097,10 @@
               "path": "/bank-info",
               "pathParameters": {},
               "queryParameters": {
-                "account_type": "CHECKING",
-                "bank_name": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "order_by": "-remote_created_at",
-                "page_size": 42,
                 "remote_fields": "account_type",
-                "remote_id": "foo",
                 "show_enum_origins": "account_type"
               },
               "headers": {
@@ -11312,7 +11301,6 @@
               },
               "queryParameters": {
                 "expand": "employee",
-                "include_remote_data": true,
                 "remote_fields": "account_type",
                 "show_enum_origins": "account_type"
               },
@@ -11589,17 +11577,9 @@
               "path": "/benefits",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
-                "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "expand": "employee"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -11778,8 +11758,7 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "employee",
-                "include_remote_data": true
+                "expand": "employee"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -12032,15 +12011,7 @@
               "path": "/companies",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -12203,9 +12174,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "include_remote_data": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -12618,22 +12587,10 @@
               "path": "/employee-payroll-runs",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
-                "ended_after": "foo",
-                "ended_before": "foo",
                 "expand": "employee,payroll_run",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "payroll_run_id": "foo",
-                "remote_id": "foo",
-                "started_after": "foo",
-                "started_before": "foo"
+                "payroll_run_id": "foo"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -12924,8 +12881,7 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "employee,payroll_run",
-                "include_remote_data": true
+                "expand": "employee,payroll_run"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -13549,33 +13505,13 @@
               "pathParameters": {},
               "queryParameters": {
                 "company_id": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "display_full_name": "foo",
-                "employment_status": "ACTIVE",
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                "first_name": "foo",
-                "groups": "foo",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "include_sensitive_fields": true,
-                "last_name": "foo",
                 "manager_id": "foo",
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "pay_group_id": "foo",
-                "personal_email": "foo",
                 "remote_fields": "employment_status,ethnicity,gender,marital_status",
-                "remote_id": "foo",
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status",
-                "started_after": "foo",
-                "started_before": "foo",
                 "team_id": "foo",
-                "terminated_after": "foo",
-                "terminated_before": "foo",
-                "work_email": "foo",
                 "work_location_id": "foo"
               },
               "headers": {
@@ -13798,10 +13734,7 @@
               "description": "",
               "path": "/employees",
               "pathParameters": {},
-              "queryParameters": {
-                "is_debug_mode": true,
-                "run_async": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -14128,8 +14061,6 @@
               },
               "queryParameters": {
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                "include_remote_data": true,
-                "include_sensitive_fields": true,
                 "remote_fields": "employment_status,ethnicity,gender,marital_status",
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status"
               },
@@ -14695,19 +14626,10 @@
               "path": "/employments",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee,pay_group",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "order_by": "-effective_date",
-                "page_size": 42,
                 "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
-                "remote_id": "foo",
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
               "headers": {
@@ -14916,7 +14838,6 @@
               },
               "queryParameters": {
                 "expand": "employee,pay_group",
-                "include_remote_data": true,
                 "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
@@ -15318,18 +15239,9 @@
               "path": "/groups",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "type",
-                "remote_id": "foo",
-                "show_enum_origins": "type",
-                "types": "foo"
+                "show_enum_origins": "type"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -15511,7 +15423,6 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "type",
                 "show_enum_origins": "type"
               },
@@ -15794,19 +15705,7 @@
               "path": "/issues",
               "pathParameters": {},
               "queryParameters": {
-                "account_token": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "end_date": "foo",
-                "end_user_organization_name": "foo",
-                "first_incident_time_after": "foo",
-                "first_incident_time_before": "foo",
-                "include_muted": "foo",
-                "integration_name": "foo",
-                "last_incident_time_after": "foo",
-                "last_incident_time_before": "foo",
-                "page_size": 42,
-                "start_date": "foo",
-                "status": "ONGOING"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16317,19 +16216,7 @@
               "path": "/linked-accounts",
               "pathParameters": {},
               "queryParameters": {
-                "category": "accounting",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "end_user_email_address": "foo",
-                "end_user_organization_name": "foo",
-                "end_user_origin_id": "foo",
-                "end_user_origin_ids": "foo",
-                "id": "foo",
-                "ids": "foo",
-                "include_duplicates": true,
-                "integration_name": "foo",
-                "is_test_account": "foo",
-                "page_size": 42,
-                "status": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16646,16 +16533,8 @@
               "path": "/locations",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "location_type",
-                "remote_id": "foo",
                 "show_enum_origins": "location_type"
               },
               "headers": {
@@ -16850,7 +16729,6 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "location_type",
                 "show_enum_origins": "location_type"
               },
@@ -17240,15 +17118,7 @@
               "path": "/pay-groups",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -17403,9 +17273,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "include_remote_data": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -17734,22 +17602,9 @@
               "path": "/payroll-runs",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "ended_after": "foo",
-                "ended_before": "foo",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "run_state,run_type",
-                "remote_id": "foo",
-                "run_type": "CORRECTION",
-                "show_enum_origins": "run_state,run_type",
-                "started_after": "foo",
-                "started_before": "foo"
+                "show_enum_origins": "run_state,run_type"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -17935,7 +17790,6 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "run_state,run_type",
                 "show_enum_origins": "run_state,run_type"
               },
@@ -18471,9 +18325,7 @@
               "path": "/selective-sync/meta",
               "pathParameters": {},
               "queryParameters": {
-                "common_model": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "page_size": 42
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -18639,8 +18491,7 @@
               "path": "/sync-status",
               "pathParameters": {},
               "queryParameters": {
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "page_size": 42
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19021,17 +18872,9 @@
               "path": "/teams",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "expand": "parent_team",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "parent_team_id": "foo",
-                "remote_id": "foo"
+                "parent_team_id": "foo"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19200,8 +19043,7 @@
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "parent_team",
-                "include_remote_data": true
+                "expand": "parent_team"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19526,21 +19368,11 @@
               "pathParameters": {},
               "queryParameters": {
                 "approver_id": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee,approver",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "request_type,status,units",
-                "remote_id": "foo",
-                "request_type": "BEREAVEMENT",
-                "show_enum_origins": "request_type,status,units",
-                "status": "APPROVED"
+                "show_enum_origins": "request_type,status,units"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19716,10 +19548,7 @@
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
-              "queryParameters": {
-                "is_debug_mode": true,
-                "run_async": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -19987,7 +19816,6 @@
               },
               "queryParameters": {
                 "expand": "employee,approver",
-                "include_remote_data": true,
                 "remote_fields": "request_type,status,units",
                 "show_enum_origins": "request_type,status,units"
               },
@@ -20402,19 +20230,10 @@
               "path": "/time-off-balances",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "policy_type": "BEREAVEMENT",
                 "remote_fields": "policy_type",
-                "remote_id": "foo",
                 "show_enum_origins": "policy_type"
               },
               "headers": {
@@ -20611,7 +20430,6 @@
               },
               "queryParameters": {
                 "expand": "employee",
-                "include_remote_data": true,
                 "remote_fields": "policy_type",
                 "show_enum_origins": "policy_type"
               },

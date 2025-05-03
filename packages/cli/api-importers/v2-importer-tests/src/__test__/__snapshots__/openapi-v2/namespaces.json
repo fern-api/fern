@@ -12730,9 +12730,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "status": "available"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -16968,11 +16966,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "tags": [
-                      "foo"
-                    ]
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -21565,10 +21559,7 @@
                   "pathParameters": {
                     "petId": 42
                   },
-                  "queryParameters": {
-                    "name": "foo",
-                    "status": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -21845,9 +21836,7 @@
                     "petId": 42
                   },
                   "queryParameters": {},
-                  "headers": {
-                    "api_key": "foo"
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -22590,9 +22579,7 @@
                   "pathParameters": {
                     "petId": 42
                   },
-                  "queryParameters": {
-                    "additionalMetadata": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -31735,10 +31722,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "username": "foo",
-                    "password": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -44819,9 +44803,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "status": "available"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -49057,11 +49039,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "tags": [
-                      "foo"
-                    ]
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -53654,10 +53632,7 @@
                   "pathParameters": {
                     "petId": 42
                   },
-                  "queryParameters": {
-                    "name": "foo",
-                    "status": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -53934,9 +53909,7 @@
                     "petId": 42
                   },
                   "queryParameters": {},
-                  "headers": {
-                    "api_key": "foo"
-                  }
+                  "headers": {}
                 },
                 "response": {}
               }
@@ -54679,9 +54652,7 @@
                   "pathParameters": {
                     "petId": 42
                   },
-                  "queryParameters": {
-                    "additionalMetadata": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {
@@ -63824,10 +63795,7 @@
                   },
                   "environment": "/api/v3",
                   "pathParameters": {},
-                  "queryParameters": {
-                    "username": "foo",
-                    "password": "foo"
-                  },
+                  "queryParameters": {},
                   "headers": {}
                 },
                 "response": {

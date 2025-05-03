@@ -25570,6 +25570,516 @@
         ]
       }
     },
+    "ApiLinksPostResponsesSchemaItems": {
+      "name": "ApiLinksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksPatchResponsesSchemaItems": {
+      "name": "ApiLinksPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksIdPutResponsesSchemaItems": {
+      "name": "ApiLinksIdPutResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiLinksIdPatchResponsesSchemaItems": {
+      "name": "ApiLinksIdPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiAccountsPostResponsesSchemaItems": {
+      "name": "ApiAccountsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiAccountsPatchResponsesSchemaItems": {
+      "name": "ApiAccountsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "ApiTransactionsPostParametersSchema": {
       "description": "Recommended header parameter to make your POST request to retrieve transactions asynchronous (thus preventing timeouts).\n\nWhen you make a asynchronous request, Belvo responds with a `202 - Accepted` payload, including the `request_id`. Once we have retrieved the transaction information, you will receive a `new_transactions_available` webhook with the link and request IDs.\n\n\n**Note**: This parameter is case sensitive (in other words, if you write `ASYNC`, then Belvo will default to a synchronous call).\n",
       "name": "ApiTransactionsPostParametersSchema",
@@ -25582,23 +26092,596 @@
         ]
       }
     },
+    "ApiTransactionsPostResponsesSchemaItems": {
+      "name": "ApiTransactionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTransactionsPatchResponsesSchemaItems": {
+      "name": "ApiTransactionsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiBalancesPostResponsesSchemaItems": {
+      "name": "ApiBalancesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiBalancesPatchResponsesSchemaItems": {
+      "name": "ApiBalancesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiOwnersPostResponsesSchemaItems": {
+      "name": "ApiOwnersPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiOwnersPatchResponsesSchemaItems": {
+      "name": "ApiOwnersPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "ApiInvoicesPostResponsesSchemaItems": {
       "name": "ApiInvoicesPostResponsesSchemaItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "InvoiceWithIdSat",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "InvoiceWithIdSat"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "InvoiceDian",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "InvoiceDian"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25610,17 +26693,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "InvoiceWithIdSat",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "InvoiceWithIdSat"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "InvoiceDian",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "InvoiceDian"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25712,31 +26858,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TaxReturnPersonal",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "TaxReturnPersonal"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "TaxReturnPersonalMonthly",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "TaxReturnPersonalMonthly"
+              "value": "TooManySessionsError"
             }
           },
           {
-            "typeName": "TaxReturnBusiness",
+            "typeName": "LoginError",
             "type": {
               "type": "id",
-              "value": "TaxReturnBusiness"
+              "value": "LoginError"
             }
           },
           {
-            "typeName": "TaxReturnBusinessMonthly",
+            "typeName": "SessionExpiredError",
             "type": {
               "type": "id",
-              "value": "TaxReturnBusinessMonthly"
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25800,6 +26995,91 @@
         ]
       }
     },
+    "ApiTaxStatusPostResponsesSchemaItems": {
+      "name": "ApiTaxStatusPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Tax status_DetailTaxStatus_Response_200": {
       "name": "Tax status_DetailTaxStatus_Response_200",
       "shape": {
@@ -25817,6 +27097,941 @@
             "type": {
               "type": "id",
               "value": "TaxStatusDian"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTaxComplianceStatusPostResponsesSchemaItems": {
+      "name": "ApiTaxComplianceStatusPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiIncomesPostResponsesSchemaItems": {
+      "name": "ApiIncomesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiIncomesPatchResponsesSchemaItems": {
+      "name": "ApiIncomesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRecurringExpensesPostResponsesSchemaItems": {
+      "name": "ApiRecurringExpensesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRecurringExpensesPatchResponsesSchemaItems": {
+      "name": "ApiRecurringExpensesPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "InvestmentsPortfoliosPostResponsesSchemaItems": {
+      "name": "InvestmentsPortfoliosPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "InvestmentsPortfoliosPatchResponsesSchemaItems": {
+      "name": "InvestmentsPortfoliosPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ReceivablesTransactionsPostResponsesSchemaItems": {
+      "name": "ReceivablesTransactionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRiskInsightsPostResponsesSchemaItems": {
+      "name": "ApiRiskInsightsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiRiskInsightsPatchResponsesSchemaItems": {
+      "name": "ApiRiskInsightsPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiTaxRetentionsPostResponsesSchemaItems": {
+      "name": "ApiTaxRetentionsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25850,17 +28065,80 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TaxDeclarationBusiness",
+            "typeName": "InvalidAccessMode",
             "type": {
               "type": "id",
-              "value": "TaxDeclarationBusiness"
+              "value": "InvalidAccessMode"
             }
           },
           {
-            "typeName": "TaxDeclarationIndividual",
+            "typeName": "TooManySessionsError",
             "type": {
               "type": "id",
-              "value": "TaxDeclarationIndividual"
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25883,6 +28161,431 @@
             "type": {
               "type": "id",
               "value": "TaxDeclarationBusiness"
+            }
+          }
+        ]
+      }
+    },
+    "ApiEmploymentRecordsPostResponsesSchemaItems": {
+      "name": "ApiEmploymentRecordsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiEnrichIncomesPostResponsesSchemaItems": {
+      "name": "ApiEnrichIncomesPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "ApiCategorizationPostResponsesSchemaItems": {
+      "name": "ApiCategorizationPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsSecretKeysPostResponsesSchemaItems": {
+      "name": "PaymentsSecretKeysPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsWebhooksPostResponsesSchemaItems": {
+      "name": "PaymentsWebhooksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25927,6 +28630,91 @@
             "type": {
               "type": "id",
               "value": "CustomerPse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsCustomersPostResponsesSchemaItems": {
+      "name": "PaymentsCustomersPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -25993,6 +28781,91 @@
             "type": {
               "type": "id",
               "value": "BankAccountPseResponse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsBankAccountsPostResponsesSchemaItems": {
+      "name": "PaymentsBankAccountsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -26078,6 +28951,91 @@
         ]
       }
     },
+    "PaymentsPaymentLinksPostResponsesSchemaItems": {
+      "name": "PaymentsPaymentLinksPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Payment Links_DetailCreatePaymentlink_Response_200": {
       "name": "Payment Links_DetailCreatePaymentlink_Response_200",
       "shape": {
@@ -26130,6 +29088,91 @@
         ]
       }
     },
+    "PaymentsPaymentIntentsPostResponsesSchemaItems": {
+      "name": "PaymentsPaymentIntentsPostResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
+            }
+          }
+        ]
+      }
+    },
     "Payment Intents_DetailPaymentIntent_Response_200": {
       "name": "Payment Intents_DetailPaymentIntent_Response_200",
       "shape": {
@@ -26155,6 +29198,91 @@
             "type": {
               "type": "id",
               "value": "PaymentIntentPse"
+            }
+          }
+        ]
+      }
+    },
+    "PaymentsPaymentIntentsIdPatchResponsesSchemaItems": {
+      "name": "PaymentsPaymentIntentsIdPatchResponsesSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidAccessMode",
+            "type": {
+              "type": "id",
+              "value": "InvalidAccessMode"
+            }
+          },
+          {
+            "typeName": "TooManySessionsError",
+            "type": {
+              "type": "id",
+              "value": "TooManySessionsError"
+            }
+          },
+          {
+            "typeName": "LoginError",
+            "type": {
+              "type": "id",
+              "value": "LoginError"
+            }
+          },
+          {
+            "typeName": "SessionExpiredError",
+            "type": {
+              "type": "id",
+              "value": "SessionExpiredError"
+            }
+          },
+          {
+            "typeName": "ValidationError",
+            "type": {
+              "type": "id",
+              "value": "ValidationError"
+            }
+          },
+          {
+            "typeName": "InstitutionDownError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionDownError"
+            }
+          },
+          {
+            "typeName": "InstitutionUnavailableError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionUnavailableError"
+            }
+          },
+          {
+            "typeName": "InstitutionInactiveError",
+            "type": {
+              "type": "id",
+              "value": "InstitutionInactiveError"
+            }
+          },
+          {
+            "typeName": "UnsupportedOperationError",
+            "type": {
+              "type": "id",
+              "value": "UnsupportedOperationError"
+            }
+          },
+          {
+            "typeName": "InvalidLinkError",
+            "type": {
+              "type": "id",
+              "value": "InvalidLinkError"
+            }
+          },
+          {
+            "typeName": "UnconfirmedLinkError",
+            "type": {
+              "type": "id",
+              "value": "UnconfirmedLinkError"
             }
           }
         ]
@@ -26524,31 +29652,7 @@
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "access_mode": "single",
-                "created_at": "2022-05-01",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "created_by__not_in": "578947e2-3c9a-4401-bbad-59b2f2d2b91b,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
-                "external_id": "InternalUser4000",
-                "external_id__in": "InternalUser4000,InternalUser4001",
-                "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
-                "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
-                "institution": "erebor_mx_retail",
-                "institution__in": "erebor_mx_retail,gringotts_co_retail",
-                "institution_user_id": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=",
-                "institution_user_id__in": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=,YwuTM0uEEh1BbVgDZBcNpa_-Tm3l2q8ZkZNrlhp-pNA=",
-                "refresh_rate": "24h",
-                "status": "invalid",
-                "status__in": "invalid,unconfirmed"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26568,7 +29672,7 @@
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "status": "valid",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                      "refresh_rate": "6h"
+                      "refresh_rate": "7d"
                     }
                   ]
                 }
@@ -26590,7 +29694,7 @@
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "status": "valid",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                      "refresh_rate": "6h"
+                      "refresh_rate": "7d"
                     }
                   ]
                 }
@@ -26696,10 +29800,7 @@
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "institution": "erebor_mx_retail",
@@ -26725,7 +29826,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -26740,7 +29841,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -26844,10 +29945,7 @@
               "description": "",
               "path": "/api/links/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -26873,7 +29971,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -26888,7 +29986,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27001,10 +30099,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -27019,7 +30114,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27034,7 +30129,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27160,10 +30255,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "password": "password"
@@ -27187,7 +30279,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27202,7 +30294,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -27403,18 +30495,15 @@
               "pathParameters": {
                 "id": "e4bb1afb-4a4f-4dd6-8be0-e615d233185b"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "access_mode": "single"
+                "access_mode": "recurrent"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "access_mode": "single"
+                  "access_mode": "recurrent"
                 }
               },
               "responseStatusCode": 200,
@@ -27430,7 +30519,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               },
               "responseBodyV3": {
@@ -27445,7 +30534,7 @@
                   "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                   "status": "valid",
                   "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
-                  "refresh_rate": "6h"
+                  "refresh_rate": "7d"
                 }
               }
             }
@@ -28018,46 +31107,7 @@
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "balance__available": "4000.00",
-                "balance__available__lt": "6000.00",
-                "balance__available__lte": "5999.00",
-                "balance__available__gt": "2000.00",
-                "balance__available__gte": "1999.00",
-                "balance__available__range": "3000.00,4350.00",
-                "balance__current": "4000.00",
-                "balance__current__lt": "6000.00",
-                "balance__current__lte": "5999.00",
-                "balance__current__gt": "2000.00",
-                "balance__current__gte": "1999.00",
-                "balance__current__range": "3000.00,4350.00",
-                "category": "CREDIT_ACCOUNT",
-                "category__in": "CHECKING_ACCOUNT,SAVINGS_ACCOUNT",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "currency": "COP",
-                "currency__in": "COP,MXN",
-                "id": "24ccab1d-3a86-4136-a6eb-e04bf52b356f",
-                "id__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
-                "institution": "erebor_mx_retail",
-                "institution__in": "erebor_mx_retail,gringotts_mx_retail",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
-                "name": "Cuenta Perfiles- M.N. - MXN-666",
-                "name__icontains": "Perfiles",
-                "number": "4057068115181",
-                "number__in": "4057068115181,7809346821648",
-                "public_identification_name": "CLABE",
-                "public_identification_value": "150194683119900273",
-                "type": "Cuentas de efectivo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -28372,10 +31422,7 @@
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -28557,10 +31604,7 @@
               "description": "",
               "path": "/api/accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -28750,10 +31794,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29722,64 +32763,7 @@
               "path": "/api/transactions/",
               "pathParameters": {},
               "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
-                "account__balance__available": "4000.00",
-                "account__balance__available__lt": "6000.00",
-                "account__balance__available__lte": "5999.00",
-                "account__balance__available__range": "3000.00,4350.00",
-                "account__balance__current": "4000.00",
-                "account__balance__current__gt": "4020.00",
-                "account__balance__current__gte": "4019.00",
-                "account__balance__current__lt": "3000.00",
-                "account__balance__current__lte": "2999.00",
-                "account__balance__current__range": "2999.00,4000.00",
-                "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
-                "account_type": "Cuentas de efectivo",
-                "account_type__in": "Cuentas de efectivo,Depositos Ahorro",
-                "accounting_date": "2022-05-05",
-                "accounting_date__gt": "2022-05-06",
-                "accounting_date__gte": "2022-05-04",
-                "accounting_date__lt": "2022-03-02",
-                "accounting_date__lte": "2022-03-01",
-                "accounting_date__range": "2022-03-01,2022-05-06",
-                "amount": "1000.00",
-                "amount__gt": "520.00",
-                "amount__gte": "519.00",
-                "amount__lt": "540.00",
-                "amount__lte": "541.00",
-                "amount__range": "519.00,541.00",
-                "collected_at": "2022-05-01",
-                "collected_at__gt": "2022-05-05",
-                "collected_at__gte": "2022-05-04",
-                "collected_at__lt": "2022-04-01",
-                "collected_at__lte": "2022-03-30",
-                "collected_at__range": "2022-03-03,2022-05-04",
-                "created_at": "2022-05-01",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "credit_card_data__bill_name__in": "maio-2022,feb-2022",
-                "currency": "COP",
-                "currency__in": "COP,MXN",
-                "reference": "085904452810319225",
-                "reference__in": "085904452810319225,8703",
-                "status": "PENDING",
-                "status__in": "PENDING,PROCESSED",
-                "type": "OUTFLOW",
-                "type__in": "INFLOW,OUTFLOW",
-                "value_date": "2022-05-05",
-                "value_date__gt": "2022-05-06",
-                "value_date__gte": "2022-05-04",
-                "value_date__lt": "2022-03-02",
-                "value_date__lte": "2022-03-01",
-                "value_date__range": "2022-03-01,2022-05-06"
+                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -30018,13 +33002,8 @@
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
-              "headers": {
-                "X-Belvo-Request-Mode": "async"
-              },
+              "queryParameters": {},
+              "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                 "date_from": "2020-08-05",
@@ -30253,10 +33232,7 @@
               "description": "",
               "path": "/api/transactions/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -30490,10 +33466,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31118,36 +34091,7 @@
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
-                "account__type": "Cuentas de efectivo",
-                "account__type__in": "Cuentas de efectivo,Credito",
-                "balance": "530.00",
-                "balance__lt": "540.00",
-                "balance__lte": "541.00",
-                "balance__gt": "520.00",
-                "balance__gte": "519.00",
-                "balance__range": "519.00,541.00",
-                "currency": "COP",
-                "currency__in": "COP,MXN",
-                "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
-                "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
-                "institution": "erebor_mx_retail",
-                "institution__in": "erebor_mx_retail,gringotts_mx_retail",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
-                "value_date": "2022-05-05",
-                "value_date__gt": "2022-05-06",
-                "value_date__gte": "2022-05-04",
-                "value_date__lt": "2022-03-02",
-                "value_date__lte": "2022-03-01",
-                "value_date__range": "2022-03-01,2022-05-06"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31344,10 +34288,7 @@
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
@@ -31547,10 +34488,7 @@
               "description": "",
               "path": "/api/balances/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -31754,10 +34692,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32180,23 +35115,7 @@
               "description": "",
               "path": "/api/institutions/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "country_code": "MX",
-                "country_code__in": "CO,BR",
-                "display_name": "Erebor Bank",
-                "name": "foo",
-                "name__in": "erebor_br_retail,gotham_co_business",
-                "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
-                "status": "healthy",
-                "status__in": "healthy,down",
-                "type": "fiscal",
-                "type__in": "fiscal,bank",
-                "website": "https://www.erebor.mx"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32417,10 +35336,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32787,23 +35703,7 @@
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "display_name__icontains": "Daniela",
-                "email": "lopes.d@gmail.com",
-                "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
-                "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32964,10 +35864,7 @@
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -33129,10 +36026,7 @@
               "description": "",
               "path": "/api/owners/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -33302,10 +36196,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -33904,39 +36795,7 @@
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
-                "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
-                "invoice_date": "2022-05-05",
-                "invoice_date__lt": "2022-03-02",
-                "invoice_date__lte": "2022-03-01",
-                "invoice_date__gt": "2022-05-06",
-                "invoice_date__gte": "2022-05-04",
-                "invoice_date__range": "2022-03-01,2022-05-06",
-                "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
-                "invoice_identification__in": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840,992B9918-3G6H-4E0B-DAI9-2BE2D833B833",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
-                "status": "Vigente",
-                "status__in": "Vigente,Cancelado",
-                "total_amount": "1000.00",
-                "total_amount__lt": "540.00",
-                "total_amount__lte": "541.00",
-                "total_amount__gt": "520.00",
-                "total_amount__gte": "519.00",
-                "total_amount__range": "519.00,541.00",
-                "type": "OUTFLOW",
-                "type__in": "OUTFLOW,INFLOW"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34177,10 +37036,7 @@
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
@@ -34426,10 +37282,7 @@
               "description": "",
               "path": "/api/invoices/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -34769,10 +37622,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -35319,29 +38169,7 @@
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "ejercicio": "2018",
-                "ejercicio__lt": "2020",
-                "ejercicio__lte": "2021",
-                "ejercicio__gt": "2019",
-                "ejercicio__gte": "2017",
-                "ejercicio__range": "2015,2021",
-                "tipo_declaracion": "Normal",
-                "tipo_declaracion__in": "Normal,Commercial",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -35876,14 +38704,11 @@
               "description": "",
               "path": "/api/tax-returns/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                "type": "foo",
+                "type": "monthly",
                 "date_from": "2018-01-01",
                 "date_to": "2019-01-01"
               },
@@ -35891,7 +38716,7 @@
                 "type": "json",
                 "value": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "type": "foo",
+                  "type": "monthly",
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01"
                 }
@@ -36425,10 +39250,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37165,21 +39987,7 @@
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37449,10 +40257,7 @@
               "description": "",
               "path": "/api/tax-status/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57"
@@ -37726,10 +40531,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38204,21 +41006,7 @@
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38360,10 +41148,7 @@
               "description": "",
               "path": "/api/tax-compliance-status/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57"
@@ -38509,10 +41294,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38794,16 +41576,7 @@
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
-                "link": "73694155-b871-41ec-94e3-37d17ff62b5d",
-                "link__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39011,10 +41784,7 @@
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -39220,10 +41990,7 @@
               "description": "",
               "path": "/api/incomes/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -39444,10 +42211,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39826,18 +42590,7 @@
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account_in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -40186,10 +42939,7 @@
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -40537,10 +43287,7 @@
               "description": "",
               "path": "/api/recurring-expenses/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -40898,10 +43645,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -41423,19 +44167,7 @@
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "foo",
-                "created_at__gte": "foo",
-                "created_at__lt": "foo",
-                "created_at__lte": "foo",
-                "created_at__range": "foo",
-                "link__in": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -41659,10 +44391,7 @@
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -41881,10 +44610,7 @@
               "description": "",
               "path": "/investments/portfolios/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -42114,10 +44840,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -42625,27 +45348,7 @@
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
-                "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
-                "value_date": "2022-05-05",
-                "value_date__gt": "2022-05-06",
-                "value_date__gte": "2022-05-04",
-                "value_date__lt": "2022-03-02",
-                "value_date__lte": "2022-03-01",
-                "value_date__range": "2022-03-01,2022-05-06"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -42829,10 +45532,7 @@
               "description": "",
               "path": "/receivables/transactions/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
@@ -43024,10 +45724,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -43351,16 +46048,7 @@
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -43378,15 +46066,15 @@
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
-                        "num_transactions_1w": 39,
-                        "num_transactions_1m": 39,
-                        "num_transactions_3m": 39,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_3m": 19,
+                        "num_transactions_1w": 0,
+                        "num_transactions_1m": 0,
+                        "num_transactions_3m": 0,
+                        "num_incoming_transactions_1w": 0,
+                        "num_incoming_transactions_1m": 0,
+                        "num_incoming_transactions_3m": 0,
+                        "num_outgoing_transactions_1w": 0,
+                        "num_outgoing_transactions_1m": 0,
+                        "num_outgoing_transactions_3m": 0,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -43463,15 +46151,15 @@
                       ],
                       "created_at": "2022-02-01T20:25:47.307911Z",
                       "transactions_metrics": {
-                        "num_transactions_1w": 39,
-                        "num_transactions_1m": 39,
-                        "num_transactions_3m": 39,
-                        "num_incoming_transactions_1w": 20,
-                        "num_incoming_transactions_1m": 20,
-                        "num_incoming_transactions_3m": 20,
-                        "num_outgoing_transactions_1w": 19,
-                        "num_outgoing_transactions_1m": 19,
-                        "num_outgoing_transactions_3m": 19,
+                        "num_transactions_1w": 0,
+                        "num_transactions_1m": 0,
+                        "num_transactions_3m": 0,
+                        "num_incoming_transactions_1w": 0,
+                        "num_incoming_transactions_1m": 0,
+                        "num_incoming_transactions_3m": 0,
+                        "num_outgoing_transactions_1w": 0,
+                        "num_outgoing_transactions_1m": 0,
+                        "num_outgoing_transactions_3m": 0,
                         "sum_incoming_amount_1w": 10022.01,
                         "sum_incoming_amount_1m": 10022.01,
                         "sum_incoming_amount_3m": 10022.01,
@@ -43637,10 +46325,7 @@
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717"
@@ -43663,15 +46348,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -43743,15 +46428,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -43916,10 +46601,7 @@
               "description": "",
               "path": "/api/risk-insights/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -43944,15 +46626,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44024,15 +46706,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44206,10 +46888,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -44223,15 +46902,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44303,15 +46982,15 @@
                     ],
                     "created_at": "2022-02-01T20:25:47.307911Z",
                     "transactions_metrics": {
-                      "num_transactions_1w": 39,
-                      "num_transactions_1m": 39,
-                      "num_transactions_3m": 39,
-                      "num_incoming_transactions_1w": 20,
-                      "num_incoming_transactions_1m": 20,
-                      "num_incoming_transactions_3m": 20,
-                      "num_outgoing_transactions_1w": 19,
-                      "num_outgoing_transactions_1m": 19,
-                      "num_outgoing_transactions_3m": 19,
+                      "num_transactions_1w": 0,
+                      "num_transactions_1m": 0,
+                      "num_transactions_3m": 0,
+                      "num_incoming_transactions_1w": 0,
+                      "num_incoming_transactions_1m": 0,
+                      "num_incoming_transactions_3m": 0,
+                      "num_outgoing_transactions_1w": 0,
+                      "num_outgoing_transactions_1m": 0,
+                      "num_outgoing_transactions_3m": 0,
                       "sum_incoming_amount_1w": 10022.01,
                       "sum_incoming_amount_1m": 10022.01,
                       "sum_incoming_amount_3m": 10022.01,
@@ -44666,19 +47345,7 @@
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -44865,10 +47532,7 @@
               "description": "",
               "path": "/api/tax-retentions/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
@@ -45066,10 +47730,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -45536,27 +48197,7 @@
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account",
-                "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
-                "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
-                "created_at__gt": "2022-05-05",
-                "created_at__gte": "2022-05-04",
-                "created_at__lt": "2022-04-01",
-                "created_at__lte": "2022-03-30",
-                "created_at__range": "2022-03-03,2022-05-04",
-                "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
-                "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
-                "year": "2021",
-                "year__gt": "2020",
-                "year__gte": "2019",
-                "year__lt": "2018",
-                "year__lte": "2017",
-                "year__range": "2017,2021"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -45833,10 +48474,7 @@
               "description": "",
               "path": "/api/tax-declarations/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
@@ -46104,10 +48742,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -46468,12 +49103,7 @@
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -46718,10 +49348,7 @@
               "description": "",
               "path": "/api/employment-records/",
               "pathParameters": {},
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2"
@@ -46971,10 +49598,7 @@
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "omit": "link,balance",
-                "fields": "link,balance,account"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -48461,17 +51085,7 @@
               "description": "",
               "path": "/payments/institutions/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "country": "COL",
-                "country__in": "COL,BRA",
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -48924,18 +51538,7 @@
               "description": "",
               "path": "/payments/customers/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20",
-                "customer__type": "INDIVIDUAL",
-                "search": "car"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -49523,23 +52126,7 @@
               "description": "",
               "path": "/payments/bank-accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20",
-                "number": "1231564526",
-                "number__in": "1231564526,15648325",
-                "customer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "institution": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "holder__type": "INDIVIDUAL",
-                "holder__type__in": "INDIVIDUAL,BUSINESS",
-                "providers": "payments_way"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -50114,19 +52701,7 @@
               "description": "",
               "path": "/payments/payment-links/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "page_size": 100,
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20",
-                "status": "ACTIVE",
-                "ordering": "created_at",
-                "search": "trai"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -51281,27 +53856,7 @@
               "description": "",
               "path": "/payments/payment-intents/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20",
-                "provider": "payments_way",
-                "payment_method_type": "pse",
-                "customer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "customer__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "amount": "1000.00",
-                "amount__gt": "1000.00",
-                "amount__gte": "1000.00",
-                "amount__lt": "1000.00",
-                "amount__lte": "1000.00",
-                "status": "SUCCEEDED",
-                "status__in": "PROCESSING,SUCCEEDED"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -53473,31 +56028,7 @@
               "description": "",
               "path": "/payments/transactions/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 1,
-                "id__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "created_at": "2022-09-15",
-                "created_at__gt": "2022-09-15",
-                "created_at__gte": "2022-09-15",
-                "created_at__lt": "2022-09-15",
-                "created_at__lte": "2022-09-15",
-                "created_at__range": "2022-09-15,2022-09-20",
-                "charge": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "charge__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "beneficiary": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "beneficiary__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "payer": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
-                "payer__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
-                "transaction__type": "INFLOW",
-                "currency": "COP",
-                "description": "Training shoes",
-                "amount": "1000.00",
-                "amount__gt": "1000.00",
-                "amount__gte": "1000.00",
-                "amount__lt": "1000.00",
-                "amount__lte": "1000.00",
-                "amount__range": "1001.00,2000.00"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {

@@ -6944,8 +6944,7 @@
                     "userId": "foo"
                   },
                   "queryParameters": {
-                    "activated": "foo",
-                    "email": "foo"
+                    "activated": "foo"
                   },
                   "headers": {}
                 },

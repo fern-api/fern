@@ -149,6 +149,16 @@
         }
       ]
     },
+    "ai-search": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {

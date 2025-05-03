@@ -1826,10 +1826,7 @@
               "path": "/auth",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "x-session-id": "foo",
-                "x-call-type": "foo"
-              },
+              "headers": {},
               "responseStatusCode": 200
             }
           ],
@@ -3683,8 +3680,6 @@
                 "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
               },
               "queryParameters": {
-                "includeNavigationBar": true,
-                "disableResize": true,
                 "Screen resolution": "1920x1080"
               },
               "headers": {},

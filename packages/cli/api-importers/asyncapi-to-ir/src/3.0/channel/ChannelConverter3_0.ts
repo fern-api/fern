@@ -12,6 +12,7 @@ import {
 import { AsyncAPIV3 } from "..";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
 import { ParameterConverter } from "../../converters/ParameterConverter";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -42,7 +43,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
 
-        const displayName = this.group ? this.group.join(".") : this.channelPath;
+        const displayNameExtension = new DisplayNameExtension({
+            breadcrumbs: this.breadcrumbs,
+            channel: this.channel,
+            context: this.context
+        });
+        const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
             await this.convertChannelParameters({
@@ -137,14 +143,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         headers: HttpHeader[];
     }): Promise<void> {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
-            let parameterObject: OpenAPIV3.ParameterObject = parameter;
-            if (this.context.isReferenceObject(parameter)) {
-                const resolvedReference = await this.context.resolveReference<OpenAPIV3_1.ParameterObject>(parameter);
-                if (resolvedReference.resolved) {
-                    parameterObject = resolvedReference.value;
-                } else {
-                    continue;
-                }
+            const parameterObject = await this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+                schemaOrReference: parameter,
+                breadcrumbs: [...this.breadcrumbs, "parameters"]
+            });
+            if (parameterObject == null) {
+                continue;
             }
             const location = this.convertChannelParameterLocation(parameter.location);
             if (location == null) {
