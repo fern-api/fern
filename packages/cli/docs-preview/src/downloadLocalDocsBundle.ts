@@ -170,6 +170,20 @@ export async function downloadBundle({
     logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
 
     if (app) {
+        // check if pnpm exists
+        logger.debug("Checking if pnpm is installed");
+        try {
+            await loggingExeca(logger, "which", ["pnpm"], {
+                cwd: absolutePathToBundleFolder,
+                doNotPipeOutput: true
+            });
+        } catch (error) {
+            logger.debug("pnpm not found, installing pnpm");
+            await loggingExeca(logger, "npm", ["install", "-g", "pnpm"], {
+                doNotPipeOutput: true
+            });
+        }
+
         // install esbuild
         logger.debug("Installing esbuild");
         await loggingExeca(logger, "pnpm", ["i", "esbuild"], {
