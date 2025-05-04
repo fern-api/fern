@@ -5,6 +5,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     AvailabilityStatus,
@@ -22,7 +23,6 @@ import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
 import { ErrorCollector } from "./ErrorCollector";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -185,6 +185,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         let fragment: string | undefined;
         let externalRef: boolean = false;
         let externalDoc: unknown | null = null;
+        let baseUrl: string | undefined;
 
         if (this.isExternalReference(reference.$ref)) {
             externalRef = true;
@@ -195,6 +196,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             if (!url) {
                 return { resolved: false };
             }
+            baseUrl = url;
 
             const response = await fetch(url);
 
@@ -240,7 +242,15 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
-            resolvedReference = await this.resolveNestedExternalReferences(resolvedReference, externalDoc);
+            const visitedRefs = new Set<string>();
+            visitedRefs.add(reference.$ref);
+
+            resolvedReference = await this.resolveNestedExternalReferences(
+                resolvedReference,
+                externalDoc,
+                visitedRefs,
+                baseUrl
+            );
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
@@ -252,7 +262,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @param rootDoc The root document to resolve against
      * @returns The resolved object
      */
-    private async resolveNestedExternalReferences(obj: unknown, rootDoc: unknown): Promise<unknown> {
+    private async resolveNestedExternalReferences(
+        obj: unknown,
+        rootDoc: unknown,
+        visitedRefs: Set<string>,
+        baseUrl: string | undefined
+    ): Promise<unknown> {
         if (obj === null || typeof obj !== "object") {
             return obj;
         }
@@ -260,7 +275,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (Array.isArray(obj)) {
             const result = [];
             for (const item of obj) {
-                result.push(await this.resolveNestedExternalReferences(item, rootDoc));
+                result.push(await this.resolveNestedExternalReferences(item, rootDoc, visitedRefs, baseUrl));
             }
             return result;
         }
@@ -268,11 +283,22 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (this.isReferenceObject(obj)) {
             const refValue = obj.$ref;
             if (this.isExternalReference(refValue)) {
+                if (visitedRefs.has(refValue)) {
+                    return obj;
+                }
+                visitedRefs.add(refValue);
                 const refResult = await this.resolveReference({ $ref: refValue });
+                visitedRefs.delete(refValue);
                 if (refResult.resolved) {
                     return refResult.value;
                 }
             } else {
+                const fullRef = `${baseUrl}${refValue}`;
+                if (visitedRefs.has(fullRef)) {
+                    return obj;
+                }
+                visitedRefs.add(fullRef);
+
                 let tempRef = rootDoc;
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
@@ -288,12 +314,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 }
 
                 if (tempRef !== undefined && tempRef !== null) {
-                    const resolvedNested = await this.resolveNestedExternalReferences(tempRef, rootDoc);
+                    const resolvedNested = await this.resolveNestedExternalReferences(
+                        tempRef,
+                        rootDoc,
+                        visitedRefs,
+                        baseUrl
+                    );
+                    visitedRefs.delete(refValue);
                     return resolvedNested;
                 }
+                visitedRefs.delete(refValue);
             }
-
-            // Resolution failed, keep the original ref
             return obj;
         }
 
@@ -301,7 +332,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         const result: Record<string, unknown> = {};
         for (const [key, value] of Object.entries(obj)) {
             if (typeof value === "object" && value !== null) {
-                result[key] = await this.resolveNestedExternalReferences(value, rootDoc);
+                result[key] = await this.resolveNestedExternalReferences(value, rootDoc, visitedRefs, baseUrl);
             } else {
                 result[key] = value;
             }
