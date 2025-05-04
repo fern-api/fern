@@ -173,7 +173,7 @@ export async function downloadBundle({
         // check if pnpm exists
         logger.debug("Checking if pnpm is installed");
         try {
-            await loggingExeca(logger, "which", ["pnpm"], {
+            await loggingExeca(logger, process.platform === "win32" ? "where" : "which", ["pnpm"], {
                 cwd: absolutePathToBundleFolder,
                 doNotPipeOutput: true
             });
