@@ -9,6 +9,7 @@ import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
+    private _cli: GeneratorAgentClient;
 
     public constructor({
         logger,
@@ -21,6 +22,9 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     }) {
         super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
+        this._cli = new GeneratorAgentClient({
+            logger
+        });
     }
 
     public getReadmeConfig(
@@ -37,4 +41,18 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     public getLanguage(): FernGeneratorCli.Language {
         return FernGeneratorCli.Language.Csharp;
     }
+
+    // public generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+    //     const githubConfig = this.getGitHubConfig();
+    //     return github.push();
+    // }
+
+    // private getGitHubConfig(): FernGeneratorCli.GitHubConfig {
+    //     return {
+    //         sourceDirectory: "/Volumes/git/fern/seed/csharp-sdk/exhaustive/experimental-additional-properties",
+    //         uri: "https://github.com/fern-api/test-generate-cli-github.git",
+    //         token: "TOKEN",
+    //         branch: "jsklan/csharp_sdk_push_test"
+    //     };
+    // }
 }
