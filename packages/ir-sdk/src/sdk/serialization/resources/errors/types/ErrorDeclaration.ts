@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { DeclaredErrorName } from "./DeclaredErrorName";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { ExampleError } from "./ExampleError";
+import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const ErrorDeclaration: core.serialization.ObjectSchema<
@@ -20,6 +21,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
         type: core.serialization.lazy(() => serializers.TypeReference).optional(),
         statusCode: core.serialization.number(),
         examples: core.serialization.list(ExampleError),
+        v2Examples: V2SchemaExamples.optional(),
     })
     .extend(WithDocs);
 
@@ -30,5 +32,6 @@ export declare namespace ErrorDeclaration {
         type?: serializers.TypeReference.Raw | null;
         statusCode: number;
         examples: ExampleError.Raw[];
+        v2Examples?: V2SchemaExamples.Raw | null;
     }
 }

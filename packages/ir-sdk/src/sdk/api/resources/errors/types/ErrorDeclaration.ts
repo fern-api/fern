@@ -10,4 +10,5 @@ export interface ErrorDeclaration extends FernIr.WithDocs {
     type: FernIr.TypeReference | undefined;
     statusCode: number;
     examples: FernIr.ExampleError[];
+    v2Examples: FernIr.V2SchemaExamples | undefined;
 }

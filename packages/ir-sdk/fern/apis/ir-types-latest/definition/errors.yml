@@ -3,6 +3,7 @@
 imports:
   commons: commons.yml
   types: types.yml
+  examples: examples.yml
 
 types:
   ErrorDeclaration:
@@ -13,6 +14,7 @@ types:
       type: optional<types.TypeReference>
       statusCode: integer
       examples: list<ExampleError>
+      v2Examples: optional<examples.V2SchemaExamples>
   ErrorDeclarationDiscriminantValue:
     union:
       property: commons.NameAndWireValue
