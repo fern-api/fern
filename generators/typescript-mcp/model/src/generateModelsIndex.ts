@@ -4,6 +4,9 @@ import { TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
+const SUBDIRECTORY_NAME = "";
+const FILENAME = "index.ts";
+
 export function generateModelsIndex(context: ModelGeneratorContext): void {
     const exportStrings = Object.values(context.ir.types).map((typeDeclaration) => {
         return `export { default as ${typeDeclaration.name.name.camelCase.safeName} } from "./${typeDeclaration.name.name.camelCase.safeName}";`;
@@ -14,8 +17,8 @@ export function generateModelsIndex(context: ModelGeneratorContext): void {
                 writer.writeLine(exportString);
             });
         }),
-        directory: RelativeFilePath.of(""),
-        filename: "index.ts",
+        directory: RelativeFilePath.of(SUBDIRECTORY_NAME),
+        filename: FILENAME,
         customConfig: context.customConfig
     });
     if (file != null) {

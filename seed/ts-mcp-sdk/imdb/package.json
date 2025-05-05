@@ -1,6 +1,6 @@
 {
   "name": "@seed/seed-mcp-server",
-  "description": "Model Context Protocol (MCP) server for seed.",
+  "description": "Model Context Protocol (MCP) server for seed's api.",
   "version": "0.0.1",
   "keywords": [
     "seed",

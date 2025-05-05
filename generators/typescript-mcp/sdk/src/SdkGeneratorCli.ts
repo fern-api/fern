@@ -1,14 +1,13 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractTypescriptMcpGeneratorCli } from "@fern-api/typescript-mcp-base";
-import { generateModels, generateModelsIndex } from "@fern-api/typescript-mcp-model";
+import { generateModels } from "@fern-api/typescript-mcp-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { ReadmeGenerator } from "./readme/ReadmeGenerator";
 import { ServerGenerator } from "./server/ServerGenerator";
 import { ToolsGenerator } from "./tools/ToolsGenerator";
 
@@ -52,13 +51,9 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         generateModels(context);
-        generateModelsIndex(context);
         this.generateServer(context);
         this.generateTools(context);
-        await this.generateReadme({
-            context,
-            endpointSnippets: []
-        });
+        this.generateReadme(context);
         await context.project.persist();
     }
 
@@ -72,21 +67,8 @@ export class SdkGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
         context.project.addToolsFile(tools.generate());
     }
 
-    private async generateReadme({
-        context,
-        endpointSnippets
-    }: {
-        context: SdkGeneratorContext;
-        endpointSnippets: Endpoint[];
-    }): Promise<void> {
-        // if (endpointSnippets.length === 0) {
-        //     context.logger.debug("No snippets were produced; skipping README.md generation.");
-        //     return;
-        // }
-
-        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
-        context.project.addRawFiles(
-            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
-        );
+    private async generateReadme(context: SdkGeneratorContext) {
+        const readme = new ReadmeGenerator(context);
+        context.project.addSrcFile(readme.generate());
     }
 }

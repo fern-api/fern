@@ -6,7 +6,6 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { generateModels } from "./generateModels";
-import { generateModelsIndex } from "./generateModelsIndex";
 
 export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
     TypescriptCustomConfigSchema,
@@ -44,7 +43,6 @@ export class ModelGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
 
     protected async generate(context: ModelGeneratorContext): Promise<void> {
         generateModels(context);
-        generateModelsIndex(context);
         await context.project.persist();
     }
 }

@@ -3,6 +3,7 @@ import { TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { AliasGenerator } from "./alias/AliasGenerator";
 import { EnumGenerator } from "./enum/EnumGenerator";
+import { generateModelsIndex } from "./generateModelsIndex";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { UnionGenerator } from "./union/UnionGenerator";
 
@@ -28,4 +29,5 @@ export function generateModels(context: ModelGeneratorContext): void {
             context.project.addSchemasFile(file);
         }
     }
+    generateModelsIndex(context);
 }

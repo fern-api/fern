@@ -1,9 +1,13 @@
-import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
+const SUBDIRECTORY_NAME = "";
+const FILENAME = "index.ts";
 
 export class ToolsGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -13,45 +17,70 @@ export class ToolsGenerator extends FileGenerator<
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine("import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';");
-                writer.writeLine("import { ImdbClient } from '@imdb/client';");
-                writer.writeLine("import * as schemas from '../schemas';");
-                writer.writeLine("\n");
-                writer.writeLine("const client = new ImdbClient();");
-                writer.writeLine(
-                    Object.entries(this.context.ir.services)
-                        .map(([_, service]) => {
-                            return service.endpoints
-                                .map((endpoint) => {
-                                    return `
-export const ${endpoint.name.camelCase.safeName} = {
-  register: function(server: McpServer) {
-    return server.tool(
-      "${endpoint.name.snakeCase.safeName}",
-      ${endpoint.docs ? `"${endpoint.docs}"` : "undefined"},
-      ${endpoint.method === "POST" ? `schemas.${endpoint.name.camelCase.safeName}Request` : "undefined"},
-      async (params) => {
-        const result = await client.${endpoint.name.camelCase.safeName}(params);
-        return {
-          content: [{ type: "text", text: result }],
-        };
-    }
-    );
-  }
-}`;
-                                })
-                                .join("\n\n");
-                        })
-                        .join("\n")
-                );
+                this.writeImportsBlock(writer);
+                writer.newLine();
+                this.writeClientInitializationBlock(writer);
+                writer.newLine();
+                Object.values(this.context.ir.services).forEach((service) => {
+                    service.endpoints.forEach((endpoint) => {
+                        this.writeToolDefinitionsBlock(writer, service, endpoint);
+                        writer.newLine();
+                    });
+                });
             }),
-            directory: RelativeFilePath.of(""),
-            filename: "index.ts",
+            directory: this.getSubdirectory(),
+            filename: FILENAME,
             customConfig: this.context.customConfig
         });
     }
 
+    private getSubdirectory(): RelativeFilePath {
+        return join(RelativeFilePath.of(SUBDIRECTORY_NAME));
+    }
+
     protected getFilepath(): RelativeFilePath {
-        return join(RelativeFilePath.of("tools"));
+        return join(this.getSubdirectory(), RelativeFilePath.of(FILENAME));
+    }
+
+    private writeImportsBlock(writer: ts.Writer) {
+        writer.writeLine("import { McpServer } from \"@modelcontextprotocol/sdk/server/mcp.js\";");
+        writer.writeLine(
+            `import { ${this.context.project.sdkClientName} } from "${this.context.project.sdkPackageName}";`
+        );
+        writer.writeLine("import * as schemas from \"../schemas\";");
+    }
+
+    private writeClientInitializationBlock(writer: ts.Writer) {
+        writer.writeLine(`const client = new ${this.context.project.sdkClientName}();`);
+    }
+
+    private writeToolDefinitionsBlock(writer: ts.Writer, service: HttpService, endpoint: HttpEndpoint) {
+        const toolId = endpoint.name.camelCase.safeName;
+        const toolName = endpoint.name.snakeCase.safeName;
+        const toolDescription = endpoint.docs;
+        const toolParamId = endpoint.method === "POST" ? `${toolId}Request` : undefined;
+
+        // TODO: handle this in a more realistic way
+        const sdkMethodId = endpoint.name.camelCase.safeName;
+
+        writer.writeLine(`export const ${toolId} = {`);
+        writer.writeLine("    register: function(server: McpServer) {");
+        writer.writeLine("        return server.tool(");
+        writer.writeLine(`            "${toolName}",`);
+        if (toolDescription) {
+            writer.writeLine(`            "${toolDescription}",`);
+        }
+        if (toolParamId) {
+            writer.writeLine(`            schemas.${toolParamId}.shape,`);
+        }
+        writer.writeLine("            async (params) => {");
+        writer.writeLine(`                const result = await client.${sdkMethodId}(params);`);
+        writer.writeLine("                return {");
+        writer.writeLine("                    content: [{ type: \"text\", text: result }]");
+        writer.writeLine("                };");
+        writer.writeLine("            }");
+        writer.writeLine("        );");
+        writer.writeLine("    }");
+        writer.writeLine("};");
     }
 }

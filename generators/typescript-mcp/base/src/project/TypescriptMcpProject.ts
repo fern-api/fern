@@ -26,10 +26,18 @@ export class TypescriptMcpProject extends AbstractProject<
     private schemasFiles: File[] = [];
     private toolsFiles: File[] = [];
     public readonly filepaths: TypescriptMcpProjectFilepaths;
+    public readonly packageJson: PackageJson;
+    public readonly sdkPackageName: string;
+    public readonly sdkClientName: string;
 
     public constructor({ context }: { context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> }) {
         super(context);
         this.filepaths = new TypescriptMcpProjectFilepaths();
+        this.packageJson = new PackageJson({ context });
+
+        // TODO: handle this in a more realistic way
+        this.sdkPackageName = `@${context.config.organization}/${context.config.organization}-sdk`;
+        this.sdkClientName = `${context.config.organization.charAt(0).toUpperCase() + context.config.organization.slice(1)}Client`;
     }
 
     public addSrcFile(file: File): void {
@@ -69,10 +77,7 @@ export class TypescriptMcpProject extends AbstractProject<
     }
 
     private async createPackageJson(): Promise<void> {
-        const packageJson = new PackageJson({
-            context: this.context
-        });
-        const packageJsonContent = packageJson.toString();
+        const packageJsonContent = this.packageJson.toString();
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(PACKAGE_JSON_FILENAME)),
             packageJsonContent
@@ -142,15 +147,20 @@ declare namespace PackageJson {
 
 class PackageJson {
     private context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
+    public readonly name: string;
+    public readonly description: string;
 
     public constructor({ context }: PackageJson.Args) {
         this.context = context;
+        // TODO: review if this is indeed the best convention for name and description
+        this.name = `@${this.context.config.organization}/${this.context.config.organization}-mcp-server`;
+        this.description = `Model Context Protocol (MCP) server for ${this.context.config.organization}'s ${this.context.config.workspaceName}.`;
     }
 
     private build(): Record<string, unknown> {
         const packageJson: Record<string, unknown> = {
-            name: `@${this.context.config.organization}/${this.context.config.organization}-mcp-server`,
-            description: `Model Context Protocol (MCP) server for ${this.context.config.organization}.`,
+            name: this.name,
+            description: this.description,
             version: this.context.version ?? "0.0.0",
             keywords: [this.context.config.organization, "mcp", "server"],
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
