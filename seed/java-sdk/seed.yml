@@ -178,6 +178,7 @@ allowedFailures:
   - java-inline-types:inline
   - java-inline-types:no-inline
   - java-inline-types:no-wrapped-aliases
+  - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
   - oauth-client-credentials
@@ -189,6 +190,5 @@ allowedFailures:
   - path-parameters
   - query-parameters
   - streaming
-  - unions
+  - undiscriminated-unions
   - variables
-

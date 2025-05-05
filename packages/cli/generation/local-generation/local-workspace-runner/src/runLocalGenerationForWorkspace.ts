@@ -4,9 +4,13 @@ import path from "path";
 import tmp from "tmp-promise";
 
 import { FernToken } from "@fern-api/auth";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { TaskContext } from "@fern-api/task-context";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
@@ -34,17 +38,52 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    if (token == null || token.type === "organization") {
-                        interactiveTaskContext.failWithoutThrowing("Fern token is required.");
-                        return;
-                    }
-                }
-
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
+
+                let organization;
+                let intermediateRepresentation;
+
+                if (generatorInvocation.absolutePathToLocalOutput == null) {
+                    if (token == null || token.type === "user") {
+                        interactiveTaskContext.failWithoutThrowing("Fern token is required.");
+                        return;
+                    }
+                    const venus = createVenusService({ token: token?.value });
+
+                    organization = await venus.organization.get(
+                        FernVenusApi.OrganizationId(projectConfig.organization)
+                    );
+                    if (!organization.ok) {
+                        interactiveTaskContext.failWithoutThrowing(
+                            `Failed to load details for organization ${projectConfig.organization}.`
+                        );
+                        return;
+                    }
+
+                    intermediateRepresentation = generateIntermediateRepresentation({
+                        workspace: fernWorkspace,
+                        audiences: generatorGroup.audiences,
+                        generationLanguage: generatorInvocation.language,
+                        keywords: generatorInvocation.keywords,
+                        smartCasing: generatorInvocation.smartCasing,
+                        exampleGeneration: {
+                            includeOptionalRequestPropertyExamples: false,
+                            disabled: generatorInvocation.disableExamples
+                        },
+                        readme: generatorInvocation.readme,
+                        version: undefined,
+                        packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                        context,
+                        sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    });
+
+                    if (organization.body.selfHostedSdKs) {
+                        intermediateRepresentation.selfHosted = true;
+                    }
+                }
 
                 const absolutePathToLocalOutput =
                     generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
@@ -63,10 +102,12 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: undefined,
-                    writeUnitTests: false,
-                    generateOauthClients: false,
-                    generatePaginatedClients: false
+                    writeUnitTests: organization?.body.snippetUnitTestsEnabled ?? false,
+                    generateOauthClients: organization?.body.oauthClientEnabled ?? false,
+                    generatePaginatedClients: organization?.body.paginationEnabled ?? false,
+                    ir: intermediateRepresentation
                 });
+
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
             });
         })

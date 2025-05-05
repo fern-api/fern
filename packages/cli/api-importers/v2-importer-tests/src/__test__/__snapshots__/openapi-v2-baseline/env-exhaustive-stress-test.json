@@ -1,4 +1,5 @@
 {
+  "selfHosted": false,
   "apiName": {
     "originalName": "api",
     "camelCase": {

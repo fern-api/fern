@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": []
   },
+  "selfHosted": false,
   "types": {
     "PartyAccount": {
       "name": {
