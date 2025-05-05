@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -33,6 +33,7 @@ export class GeneratorAgentClient {
         });
         const args = ["github", "push", "--config", githubConfigFilepath];
         const cli = await this.getOrInstall();
+
         const content = await cli(args);
         return content.stdout;
     }

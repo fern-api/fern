@@ -41,11 +41,24 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.GitHubConfig {
+        const randomString = Math.random().toString(36).substring(2, 15);
+        const now = new Date();
+        const gitFriendlyDate =
+            now.getUTCFullYear() +
+            String(now.getUTCMonth() + 1).padStart(2, "0") +
+            String(now.getUTCDate()).padStart(2, "0") +
+            "-" +
+            String(now.getUTCHours()).padStart(2, "0") +
+            String(now.getUTCMinutes()).padStart(2, "0") +
+            String(now.getUTCSeconds()).padStart(2, "0") +
+            String(now.getUTCMilliseconds()).padStart(3, "0") +
+            "_" +
+            randomString;
         return {
-            sourceDirectory: "/Volumes/git/fern/seed/csharp-sdk/exhaustive/experimental-additional-properties",
+            sourceDirectory: "fern/output",
             uri: "https://github.com/fern-api/test-generate-cli-github.git",
             token: "token",
-            branch: "jsklan/csharp_sdk_push_test/" + args.context.getNamespace().toString()
+            branch: "jsklan/csharp_sdk_push_test/" + gitFriendlyDate
         };
     }
 }
