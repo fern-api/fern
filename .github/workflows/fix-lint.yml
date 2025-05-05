@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - dak/ci/automated-lint-fixes
+      - dak/ci/auto-lint-fix
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -50,6 +50,7 @@ jobs:
           commit-message: "fix(lint): auto-fix lint issues"
           title: "cfix(lint): auto-fix lint issues"
           branch: automated-lint-fixes
+          base: main
           delete-branch: true
 
       - name: Enable Pull Request Automerge
@@ -58,7 +59,6 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          base: main
           merge-method: squash
 
       # - name: Approve PR
