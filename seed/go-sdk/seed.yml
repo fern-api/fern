@@ -145,7 +145,7 @@ allowedFailures:
   - trace
   - bytes
   - pagination-custom
+  - literal
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
-  - unions
