@@ -64,7 +64,7 @@ export class ToolsGenerator extends FileGenerator<
         const sdkMethodId = endpoint.name.camelCase.safeName;
 
         writer.writeLine(`export const ${toolId} = {`);
-        writer.writeLine("    register: function(server: McpServer) {");
+        writer.writeLine("    register(server: McpServer) {");
         writer.writeLine("        return server.tool(");
         writer.writeLine(`            "${toolName}",`);
         if (toolDescription) {
