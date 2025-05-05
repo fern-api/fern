@@ -281,7 +281,7 @@ importers:
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
-        version: 57.0.0
+        version: 57.12.0(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -570,8 +570,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
-        specifier: ^57.0.0
-        version: 57.0.0
+        specifier: ^57.12.0
+        version: 57.12.0(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -10831,6 +10831,9 @@ packages:
   '@fern-fern/ir-sdk@57.0.0':
     resolution: {integrity: sha512-FD7MWhlfcSYTpjd1r4FCqFVSGotsD7S+frKDeUA4bGobJIFlMNyjFsCeNtUxuggUrw45B28ZUMaQbaO0iG5hGQ==}
 
+  '@fern-fern/ir-sdk@57.12.0':
+    resolution: {integrity: sha512-TZfERyp9l6lLhs5doH5McPqoNvP263wovKbjQ1k2XJ8itVKOuWpaYcyJF69uxX+scL3a07kyY1k/2HKLUpA6KQ==}
+
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
 
@@ -18860,6 +18863,16 @@ snapshots:
   '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@57.0.0': {}
+
+  '@fern-fern/ir-sdk@57.12.0(encoding@0.1.13)':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0(encoding@0.1.13)
+      qs: 6.14.0
+      readable-stream: 4.5.2
+    transitivePeerDependencies:
+      - encoding
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 

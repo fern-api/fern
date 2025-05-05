@@ -681,6 +681,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return httpEndpoint;
     }
 
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
+    }
+
     public getNameForField(name: NameAndWireValue): string {
         return name.name.pascalCase.safeName;
     }

@@ -40,7 +40,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.23",
     "@fern-fern/generator-exec-sdk": "^0.0.1021",
-    "@fern-fern/ir-sdk": "^57.0.0",
+    "@fern-fern/ir-sdk": "^57.12.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.1",
     "@types/jest": "^29.5.14",
     "@types/lodash-es": "^4.17.12",

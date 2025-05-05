@@ -84,9 +84,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-        // if (context.config.generateGitHub) {
-        // eslint-disable-next-line no-constant-condition
-        if (true) {
+        if (context.isSelfHosted()) {
             await this.generateGitHub({ context });
         }
     }
