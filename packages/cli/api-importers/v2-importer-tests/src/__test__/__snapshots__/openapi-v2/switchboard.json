@@ -15266,7 +15266,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unprocessable Entity"
+            }
+          ],
           "auth": false,
           "docs": "Get an extension by ID",
           "userSpecifiedExamples": [],
@@ -24465,7 +24524,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unprocessable Entity"
+            }
+          ],
           "auth": false,
           "docs": "Get a profile by ID",
           "userSpecifiedExamples": [],
@@ -27535,7 +27653,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unprocessable Entity"
+            }
+          ],
           "auth": false,
           "docs": "Get a list of sessions by ID",
           "userSpecifiedExamples": [],
@@ -38194,7 +38371,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unprocessable Entity"
+            }
+          ],
           "auth": false,
           "docs": "Get a session by ID",
           "userSpecifiedExamples": [],
@@ -42385,7 +42621,66 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+                  }
+                },
+                "errorId": "ErrorEnvelope",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unprocessable Entity"
+            }
+          ],
           "auth": false,
           "docs": "Get a session event stream for a given session ID",
           "userSpecifiedExamples": [],
