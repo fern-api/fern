@@ -87,10 +87,10 @@ fixtures:
       outputFolder: retain-original-casing
 allowedFailures:
   - bytes
-  - enum
   - file-download
   - file-upload
   - plain-text
+  - public-object
   - streaming
   - streaming-parameter
   - server-sent-events
