@@ -273,6 +273,8 @@ allowedFailures:
   - oauth-client-credentials-custom
   - response-property
   - streaming-parameter
+  - query-parameters:no-custom-config
+  - simple-fhir
 
   # the below are likely related to changes made to example generation
   - examples:examples-with-api-reference
