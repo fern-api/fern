@@ -85,11 +85,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-        //     // if (context.config.generateGitHub) {
-        //     // eslint-disable-next-line no-constant-condition
-        //     if (true) {
-        //         await this.generateGitHub(context);
-        //     }
+        // if (context.config.generateGitHub) {
+        // eslint-disable-next-line no-constant-condition
+        if (true) {
+            await this.generateGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -279,7 +279,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         );
     }
 
-    // private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-    //     const githubConfig = context.generatorAgent.getGitHubConfig();
-    // }
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.generateGitHub({ context });
+    }
 }

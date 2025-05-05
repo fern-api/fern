@@ -38,17 +38,12 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
         return FernGeneratorCli.Language.Csharp;
     }
 
-    // public generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-    //     const githubConfig = this.getGitHubConfig();
-    //     return github.push();
-    // }
-
-    // private getGitHubConfig(): FernGeneratorCli.GitHubConfig {
-    //     return {
-    //         sourceDirectory: "/Volumes/git/fern/seed/csharp-sdk/exhaustive/experimental-additional-properties",
-    //         uri: "https://github.com/fern-api/test-generate-cli-github.git",
-    //         token: "TOKEN",
-    //         branch: "jsklan/csharp_sdk_push_test"
-    //     };
-    // }
+    public getGitHubConfig(): FernGeneratorCli.GitHubConfig {
+        return {
+            sourceDirectory: "/Volumes/git/fern/seed/csharp-sdk/exhaustive/experimental-additional-properties",
+            uri: "https://github.com/fern-api/test-generate-cli-github.git",
+            token: "token",
+            branch: "jsklan/csharp_sdk_push_test"
+        };
+    }
 }
