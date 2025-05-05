@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dsinghvi/get-it-working-for-java
     paths:
       - "generators/java/sdk/versions.yml"
   workflow_dispatch:

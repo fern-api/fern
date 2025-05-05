@@ -1,5 +1,13 @@
 - changelogEntry:
     - summary: |
+        Alpha support for GitHub enterprise.
+      type: feat
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.35.0-rc0
+
+- changelogEntry:
+    - summary: |
         (Corrected from 2.33.2) Use non-deprecated method to create request body
       type: fix
   createdAt: '2025-04-28'
