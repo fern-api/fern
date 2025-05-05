@@ -35,8 +35,13 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         this.generatorAgent = new JavaGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            publishConfig: this.ir.publishConfig,
         });
+    }
+
+    public getIsSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
     }
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
@@ -68,7 +73,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                     default:
                         assertNever(responseBody.value);
                 }
-                break;
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":
