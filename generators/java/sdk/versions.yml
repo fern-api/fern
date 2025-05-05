@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Support pushing to GitHub enterprise.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.0
+- changelogEntry:
+    - summary: |
         Upgrade to irV57
       type: fix
   createdAt: '2025-05-01'
