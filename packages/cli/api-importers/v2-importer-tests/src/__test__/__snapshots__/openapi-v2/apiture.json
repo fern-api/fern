@@ -45,6 +45,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "accountIds": {
       "name": {

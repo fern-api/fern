@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": []
   },
+  "selfHosted": false,
   "types": {
     "e_t_h___b_l_o_c_k_N_u_m_b_e_r_Result": {
       "name": {

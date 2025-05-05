@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": []
   },
+  "selfHosted": false,
   "types": {
     "getTest_Response_200": {
       "name": {
