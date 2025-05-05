@@ -932,8 +932,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-fern/ir-sdk':
-        specifier: ^57.0.0
-        version: 57.0.0
+        specifier: ^57.13.0
+        version: 57.13.0(encoding@0.1.13)
       zod:
         specifier: ^3.22.3
         version: 3.23.8
@@ -981,8 +981,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: ^57.0.0
-        version: 57.0.0
+        specifier: ^57.13.0
+        version: 57.13.0(encoding@0.1.13)
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1104,8 +1104,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
-        specifier: 57.12.0
-        version: 57.12.0(encoding@0.1.13)
+        specifier: ^57.13.0
+        version: 57.13.0(encoding@0.1.13)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -10834,6 +10834,9 @@ packages:
   '@fern-fern/ir-sdk@57.12.0':
     resolution: {integrity: sha512-TZfERyp9l6lLhs5doH5McPqoNvP263wovKbjQ1k2XJ8itVKOuWpaYcyJF69uxX+scL3a07kyY1k/2HKLUpA6KQ==}
 
+  '@fern-fern/ir-sdk@57.13.0':
+    resolution: {integrity: sha512-CSgVhW20OlnI+3Z19nON5lbdUiGgSO/xjXfO/+UiPBS9tOEX/3QgiiB7s+kQiG9uPJrfW9dwmD6g5Kd+orUdQA==}
+
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
 
@@ -18865,6 +18868,16 @@ snapshots:
   '@fern-fern/ir-sdk@57.0.0': {}
 
   '@fern-fern/ir-sdk@57.12.0(encoding@0.1.13)':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0(encoding@0.1.13)
+      qs: 6.14.0
+      readable-stream: 4.5.2
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@57.13.0(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
