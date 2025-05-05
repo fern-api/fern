@@ -9,6 +9,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -83,6 +84,12 @@ export async function runLocalGenerationForWorkspace({
                     if (organization.body.selfHostedSdKs) {
                         intermediateRepresentation.selfHosted = true;
                     }
+
+                    // Set the publish config on the intermediateRepresentation if available
+                    const publishConfig = getPublishConfig({ generatorInvocation });
+                    if (publishConfig != null) {
+                        intermediateRepresentation.publishConfig = publishConfig;
+                    }
                 }
 
                 const absolutePathToLocalOutput =
@@ -125,4 +132,45 @@ export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
         tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
         prefix: "fern"
     });
+}
+
+function getPublishConfig({
+    generatorInvocation
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): FernIr.PublishingConfig | undefined {
+    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        return FernIr.PublishingConfig.github({
+            owner: "",
+            repo: "",
+            uri: generatorInvocation.raw.github.uri,
+            token: generatorInvocation.raw.github.token,
+            target: FernIr.PublishTarget.postman({
+                apiKey: "",
+                workspaceId: "",
+                collectionId: undefined
+            })
+        });
+    }
+
+    return generatorInvocation.outputMode._visit({
+        downloadFiles: () => undefined,
+        github: () => undefined,
+        githubV2: () => undefined,
+        publish: () => undefined,
+        publishV2: () => undefined,
+        _other: () => undefined
+    });
+}
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
 }
