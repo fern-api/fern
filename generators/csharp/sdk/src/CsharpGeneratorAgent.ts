@@ -5,27 +5,27 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { GitHubConfigBuilder } from "./github/GitHubConfigBuilder";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
+import { PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private githubConfigBuilder: GitHubConfigBuilder;
+    private publishConfig: PublishingConfig;
 
     public constructor({
         logger,
         config,
         readmeConfigBuilder,
-        githubConfigBuilder
+        publishConfig,
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        githubConfigBuilder: GitHubConfigBuilder;
+        publishConfig: PublishingConfig;
     }) {
         super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
-        this.githubConfigBuilder = githubConfigBuilder;
+        this.publishConfig = publishConfig;
     }
 
     public getReadmeConfig(
@@ -46,16 +46,24 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.GitHubConfig {
-        return this.githubConfigBuilder.build({
-            context: args.context,
-            remote: args.remote,
-            branch: args.branch
-        });
-    }
+        args.context.logger.info("Validating publishing config...");
 
-    public hardCodedTestGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
+        if (this.publishConfig == null) {
+            args.context.logger.error("Publishing config is missing");
+            throw new Error("Publishing config is required for GitHub actions");
+        }
+
+        if (this.publishConfig.type !== "github") {
+            args.context.logger.error(`Publishing type ${this.publishConfig.type} is not supported`);
+            throw new Error("Only GitHub publishing is supported");
+        }
+
+        if (this.publishConfig.uri == null || this.publishConfig.token == null) {
+            args.context.logger.error("GitHub URI or token is missing in publishing config");
+            throw new Error("GitHub URI and token are required in publishing config");
+        }
+
+        args.context.logger.info("Generating GitHub branch name...");
         const randomString = Math.random().toString(36).substring(2, 15);
         const now = new Date();
         const gitFriendlyDate =
@@ -69,11 +77,16 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
             String(now.getUTCMilliseconds()).padStart(3, "0") +
             "_" +
             randomString;
+
+        const branchName = "jsklan/csharp_sdk_push_test/" + gitFriendlyDate;
+        args.context.logger.info(`Using branch name: ${branchName}`);
+
         return {
             sourceDirectory: "fern/output",
-            uri: "https://github.com/fern-api/test-generate-cli-github.git",
-            token: "token",
-            branch: "jsklan/csharp_sdk_push_test/" + gitFriendlyDate
+            uri: this.publishConfig.uri,
+            token: this.publishConfig.token,
+            branch: branchName
         };
     }
+
 }
