@@ -4,6 +4,7 @@ import path from "path";
 import tmp from "tmp-promise";
 
 import { FernToken } from "@fern-api/auth";
+import { getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
@@ -16,7 +17,6 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
-import { getAccessToken } from "@fern-api/auth";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
