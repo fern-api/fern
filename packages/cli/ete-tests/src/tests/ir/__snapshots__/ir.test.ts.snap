@@ -15235,7 +15235,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             }
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -15254,7 +15255,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                     }
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {
@@ -16003,7 +16005,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             }
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -16022,7 +16025,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                     }
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {
@@ -17976,7 +17980,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -18052,7 +18057,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                     "inline": null
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {
@@ -20239,7 +20245,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -20315,7 +20322,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                     "inline": null
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {
@@ -30113,7 +30121,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -30189,7 +30198,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "inline": null
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {
@@ -30717,7 +30727,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -30793,7 +30804,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "inline": null
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {

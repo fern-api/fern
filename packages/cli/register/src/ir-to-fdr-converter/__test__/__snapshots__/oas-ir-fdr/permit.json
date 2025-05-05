@@ -22247,8 +22247,22 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {
+                  "role": "foo",
+                  "tenant": "foo",
+                  "user": "foo"
+                }
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {
+                    "role": "foo",
+                    "tenant": "foo",
+                    "user": "foo"
+                  }
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -22373,8 +22387,22 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {
+                  "role": "foo",
+                  "tenant": "foo",
+                  "user": "foo"
+                }
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {
+                    "role": "foo",
+                    "tenant": "foo",
+                    "user": "foo"
+                  }
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
