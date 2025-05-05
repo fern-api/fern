@@ -47,7 +47,7 @@ export async function runLocalGenerationForWorkspace({
 
                 const venus = createVenusService({ token: token?.value });
 
-                const organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization))
+                const organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
                 if (!organization.ok) {
                     interactiveTaskContext.failWithoutThrowing(`Failed to load detals for organization ${projectConfig.organization}.`);
                     return;
