@@ -66,6 +66,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "AgentLlm": {
       "name": {
@@ -2823,7 +2824,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Create a new agent",
           "userSpecifiedExamples": [],
@@ -3475,7 +3506,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific agent",
           "userSpecifiedExamples": [],
@@ -3680,7 +3741,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific agent",
           "userSpecifiedExamples": [],
@@ -3918,7 +4009,37 @@
             },
             "type": "inlinedRequestBody"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Patch a specific agent",
           "userSpecifiedExamples": [],
@@ -4161,7 +4282,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Invoke a specific agent",
           "userSpecifiedExamples": [],
@@ -4606,7 +4757,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": false,
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
@@ -4887,7 +5068,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": false,
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
@@ -5469,7 +5680,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": false,
           "userSpecifiedExamples": [],
           "autogeneratedExamples": [
@@ -5797,7 +6038,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Create a new API token",
           "userSpecifiedExamples": [],
@@ -6027,7 +6298,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific API token",
           "userSpecifiedExamples": [],
@@ -6232,7 +6533,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific API token",
           "userSpecifiedExamples": [],
@@ -6561,7 +6892,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Create a new document",
           "userSpecifiedExamples": [],
@@ -7227,7 +7588,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific document",
           "userSpecifiedExamples": [],
@@ -7432,7 +7823,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific document",
           "userSpecifiedExamples": [],
@@ -7761,7 +8182,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Create a new prompt",
           "userSpecifiedExamples": [],
@@ -8159,7 +8610,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific prompt",
           "userSpecifiedExamples": [],
@@ -8364,7 +8845,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific prompt",
           "userSpecifiedExamples": [],
@@ -8602,7 +9113,37 @@
             },
             "type": "inlinedRequestBody"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Patch a specific prompt",
           "userSpecifiedExamples": [],
@@ -8937,7 +9478,37 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Create a new tool",
           "userSpecifiedExamples": [],
@@ -9317,7 +9888,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific tool",
           "userSpecifiedExamples": [],
@@ -9522,7 +10123,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+                  }
+                },
+                "errorId": "HTTPValidationError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Validation Error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific tool",
           "userSpecifiedExamples": [],

@@ -114,32 +114,31 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
 
-        const authOverrides = this.generatorsConfiguration?.api?.auth != null
-            ? { ...this.generatorsConfiguration?.api }
-            : undefined;
+        const authOverrides =
+            this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;
         if (authOverrides) {
             context.logger.trace("Using auth overrides from generators configuration");
         }
-        
-        const environmentOverrides = this.generatorsConfiguration?.api?.environments != null
-            ? { ...this.generatorsConfiguration?.api }
-            : undefined;
+
+        const environmentOverrides =
+            this.generatorsConfiguration?.api?.environments != null
+                ? { ...this.generatorsConfiguration?.api }
+                : undefined;
         if (environmentOverrides) {
             context.logger.trace("Using environment overrides from generators configuration");
         }
-        
-        const globalHeaderOverrides = this.generatorsConfiguration?.api?.headers != null
-            ? { ...this.generatorsConfiguration?.api }
-            : undefined;
+
+        const globalHeaderOverrides =
+            this.generatorsConfiguration?.api?.headers != null ? { ...this.generatorsConfiguration?.api } : undefined;
         if (globalHeaderOverrides) {
             context.logger.trace("Using global header overrides from generators configuration");
         }
-        
+
         let mergedIr: IntermediateRepresentation | undefined;
         for (const document of documents) {
             const errorCollector = new ErrorCollector({ logger: context.logger });
             let result: IntermediateRepresentation | undefined = undefined;
-            
+
             switch (document.type) {
                 case "openapi": {
                     const converterContext = new OpenAPIConverterContext3_1({
@@ -192,11 +191,12 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 keywords: undefined,
                 smartCasing: false
             });
-            
+
             if (result != null) {
-                mergedIr = mergedIr === undefined 
-                    ? result 
-                    : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
+                mergedIr =
+                    mergedIr === undefined
+                        ? result
+                        : mergeIntermediateRepresentation(mergedIr, result, casingsGenerator);
             }
         }
         for (const spec of this.allSpecs) {

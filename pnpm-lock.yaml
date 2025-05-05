@@ -5475,8 +5475,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.10.2
-        version: 0.10.2(encoding@0.1.13)
+        specifier: 0.14.3-1-g14981f0
+        version: 0.14.3-1-g14981f0(encoding@0.1.13)
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -5635,8 +5635,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-api/venus-api-sdk':
-        specifier: 0.10.2
-        version: 0.10.2(encoding@0.1.13)
+        specifier: 0.14.3-1-g14981f0
+        version: 0.14.3-1-g14981f0(encoding@0.1.13)
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -7303,6 +7303,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
+      '@fern-api/core':
+        specifier: workspace:*
+        version: link:../../../../core
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../../commons/core-utils
@@ -7348,6 +7351,9 @@ importers:
       '@fern-api/typescript-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
+      '@fern-api/venus-api-sdk':
+        specifier: 0.14.3-1-g14981f0
+        version: 0.14.3-1-g14981f0(encoding@0.1.13)
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -7445,43 +7451,6 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/protoc-gen-fern/bin: {}
-
-  packages/cli/generation/protoc-gen-fern/dist/cjs:
-    dependencies:
-      '@bufbuild/protobuf':
-        specifier: ^2.2.5
-        version: 2.2.5
-      '@bufbuild/protoplugin':
-        specifier: 2.2.5
-        version: 2.2.5
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../../../../../configs
-    devDependencies:
-      '@trivago/prettier-plugin-sort-imports':
-        specifier: ^5.2.1
-        version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
-      '@types/jest':
-        specifier: ^29.5.14
-        version: 29.5.14
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: ^8.56.0
-        version: 8.56.0
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.9
-        version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/generation/remote-generation/remote-workspace-runner:
     dependencies:
@@ -9066,8 +9035,8 @@ importers:
   packages/core:
     dependencies:
       '@fern-api/venus-api-sdk':
-        specifier: 0.10.2
-        version: 0.10.2(encoding@0.1.13)
+        specifier: 0.14.3-1-g14981f0
+        version: 0.14.3-1-g14981f0(encoding@0.1.13)
       '@fern-fern/fdr-cjs-sdk':
         specifier: 0.136.0-eff7d5b45
         version: 0.136.0-eff7d5b45(encoding@0.1.13)
@@ -10826,8 +10795,8 @@ packages:
   '@fern-api/ui-core-utils@0.136.0-eff7d5b45':
     resolution: {integrity: sha512-09UGwFw6N1fy9l9+PdL1MLCCwBVhozZ4uxWBq2PB7ob6BhCNTBx+nfqFdwwqBJL68j/N7beiDilfc3V/S6YMTw==}
 
-  '@fern-api/venus-api-sdk@0.10.2':
-    resolution: {integrity: sha512-BD18ZNJeWYvztRXSUWY2lfZ8jFUbNAfHWctvIsWyXgI7C8EL3N0+CWUGD5cZ1QqRnq42nm6XJdWRKhny3yrz4g==}
+  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0':
+    resolution: {integrity: sha512-sOQH36HUDznonYxtdPvXiGrURqLcSBE4DvY5CMfbLd+qCxgkuGQnx88VUB8AXKdr5g04NqJsh4OWs48fgt4Lag==}
 
   '@fern-fern/docs-config@0.0.80':
     resolution: {integrity: sha512-wAZCNxwM4qIPn3idoIihPP65KWPjNuoTSfdP4+5f8K2jJLgs5cdkY0pm4cQlGWvi5K6b+lfbUWDaslnXscJ2gQ==}
@@ -18800,13 +18769,13 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.37
 
-  '@fern-api/venus-api-sdk@0.10.2(encoding@0.1.13)':
+  '@fern-api/venus-api-sdk@0.14.3-1-g14981f0(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
-      js-base64: 3.7.2
+      js-base64: 3.7.7
       node-fetch: 2.7.0(encoding@0.1.13)
-      qs: 6.11.2
+      qs: 6.14.0
       readable-stream: 4.5.2
       url-join: 4.0.1
     transitivePeerDependencies:

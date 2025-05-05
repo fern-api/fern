@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: Add v2Examples and displayName property for Errors.
 
+## [v57.11.0] - 2024-05-04
+
+- Feature: Add a top level selfHosted attribute to the IR.
+
 ## [v57.11.0] - 2024-05-01
 
 - Feature: Add support for GitHub publishing configuration in the IR, for self-hosted.

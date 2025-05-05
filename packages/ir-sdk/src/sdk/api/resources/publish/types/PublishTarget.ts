@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export type PublishTarget = FernIr.PublishTarget.Postman | FernIr.PublishTarget.Npm;
+export type PublishTarget = FernIr.PublishTarget.Postman | FernIr.PublishTarget.Npm | FernIr.PublishTarget.Maven;
 
 export namespace PublishTarget {
     export interface Postman extends FernIr.PostmanPublishTarget, _Utils {
@@ -15,6 +15,10 @@ export namespace PublishTarget {
         type: "npm";
     }
 
+    export interface Maven extends FernIr.MavenPublishTarget, _Utils {
+        type: "maven";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.PublishTarget._Visitor<_Result>) => _Result;
     }
@@ -22,6 +26,7 @@ export namespace PublishTarget {
     export interface _Visitor<_Result> {
         postman: (value: FernIr.PostmanPublishTarget) => _Result;
         npm: (value: FernIr.NpmPublishTarget) => _Result;
+        maven: (value: FernIr.MavenPublishTarget) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -53,12 +58,27 @@ export const PublishTarget = {
         };
     },
 
+    maven: (value: FernIr.MavenPublishTarget): FernIr.PublishTarget.Maven => {
+        return {
+            ...value,
+            type: "maven",
+            _visit: function <_Result>(
+                this: FernIr.PublishTarget.Maven,
+                visitor: FernIr.PublishTarget._Visitor<_Result>,
+            ) {
+                return FernIr.PublishTarget._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.PublishTarget, visitor: FernIr.PublishTarget._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "postman":
                 return visitor.postman(value);
             case "npm":
                 return visitor.npm(value);
+            case "maven":
+                return visitor.maven(value);
             default:
                 return visitor._other(value as any);
         }

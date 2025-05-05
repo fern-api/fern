@@ -24,6 +24,7 @@ types:
     union: 
       postman: PostmanPublishTarget
       npm: NpmPublishTarget
+      maven: MavenPublishTarget
   
   PostmanPublishTarget: 
     properties: 
@@ -33,6 +34,14 @@ types:
   
   NpmPublishTarget:
     properties:
+      version: optional<string>
       packageName: optional<string>
       tokenEnvironmentVariable: string
-      registry: optional<string>
+  
+  MavenPublishTarget:
+    properties:
+      coordinate: optional<string>
+      version: optional<string>
+      usernameEnvironmentVariable: string
+      passwordEnvironmentVariable: string
+      mavenUrlEnvironmentVariable: string

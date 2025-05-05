@@ -1,4 +1,5 @@
 {
+  "selfHosted": false,
   "apiVersion": {
     "header": {
       "name": {
