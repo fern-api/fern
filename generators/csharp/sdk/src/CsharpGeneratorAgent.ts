@@ -46,8 +46,6 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.GitHubConfig {
-        args.context.logger.info("Validating publishing config...");
-
         if (this.publishConfig == null) {
             args.context.logger.error("Publishing config is missing");
             throw new Error("Publishing config is required for GitHub actions");
@@ -63,29 +61,10 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
             throw new Error("GitHub URI and token are required in publishing config");
         }
 
-        args.context.logger.info("Generating GitHub branch name...");
-        const randomString = Math.random().toString(36).substring(2, 15);
-        const now = new Date();
-        const gitFriendlyDate =
-            now.getUTCFullYear() +
-            String(now.getUTCMonth() + 1).padStart(2, "0") +
-            String(now.getUTCDate()).padStart(2, "0") +
-            "-" +
-            String(now.getUTCHours()).padStart(2, "0") +
-            String(now.getUTCMinutes()).padStart(2, "0") +
-            String(now.getUTCSeconds()).padStart(2, "0") +
-            String(now.getUTCMilliseconds()).padStart(3, "0") +
-            "_" +
-            randomString;
-
-        const branchName = "jsklan/csharp_sdk_push_test/" + gitFriendlyDate;
-        args.context.logger.info(`Using branch name: ${branchName}`);
-
         return {
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
-            token: this.publishConfig.token,
-            branch: branchName
+            token: this.publishConfig.token
         };
     }
 }
