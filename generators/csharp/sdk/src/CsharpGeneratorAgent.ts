@@ -9,7 +9,6 @@ import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private _cli: GeneratorAgentClient;
 
     public constructor({
         logger,
@@ -22,9 +21,6 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     }) {
         super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
-        this._cli = new GeneratorAgentClient({
-            logger
-        });
     }
 
     public getReadmeConfig(

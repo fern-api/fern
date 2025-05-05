@@ -39,7 +39,7 @@
     "@fern-api/dynamic-ir-sdk": "^57.0.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.0.17",
+    "@fern-fern/generator-cli-sdk": "0.0.23",
     "@fern-fern/generator-exec-sdk": "^0.0.1021",
     "@fern-fern/ir-sdk": "^57.0.0",
     "@types/node": "18.15.3",

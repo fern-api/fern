@@ -1098,8 +1098,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/cli/logger
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.17
-        version: 0.0.17
+        specifier: 0.0.23
+        version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
@@ -3791,8 +3791,8 @@ importers:
         specifier: workspace:*
         version: link:../../../typescript-v2/ast
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.17
-        version: 0.0.17
+        specifier: 0.0.23
+        version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
