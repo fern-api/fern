@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Bump Java generator to use v57 of IR. 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc1
+
+- changelogEntry: 
+  - summary: |
       Adding alpha support for SDK generation to GitHub Enterprise (self hosted). 
     type: feat
   irVersion: 57
