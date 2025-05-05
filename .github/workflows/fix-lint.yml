@@ -43,4 +43,26 @@ jobs:
 
       - name: Open PR with fixes
         if: steps.check-for-changes.outputs.lint-fixes == 'true'
-        run: echo "changes to commit"
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          commit-message: "fix(lint): auto-fix lint issues"
+          title: "cfix(lint): auto-fix lint issues"
+          branch: automated-lint-fixes
+          delete-branch: true
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
