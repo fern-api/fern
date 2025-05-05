@@ -11,8 +11,12 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import { createVenusService } from "@fern-api/core";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
+import { FernVenusApi } from "@fern-api/venus-api-sdk";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -35,10 +39,18 @@ export async function runLocalGenerationForWorkspace({
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    if (token == null || token.type === "organization") {
+                    if (token == null || token.type === "user") {
                         interactiveTaskContext.failWithoutThrowing("Fern token is required.");
                         return;
                     }
+                }
+
+                const venus = createVenusService({ token: token?.value });
+
+                const organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization))
+                if (!organization.ok) {
+                    interactiveTaskContext.failWithoutThrowing(`Failed to load detals for organization ${projectConfig.organization}.`);
+                    return;
                 }
 
                 const fernWorkspace = await workspace.toFernWorkspace(
@@ -48,6 +60,24 @@ export async function runLocalGenerationForWorkspace({
 
                 const absolutePathToLocalOutput =
                     generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
+
+                const intermediateRepresentation = generateIntermediateRepresentation({
+                    workspace: fernWorkspace,
+                    audiences: generatorGroup.audiences,
+                    generationLanguage: generatorInvocation.language,
+                    keywords: generatorInvocation.keywords,
+                    smartCasing: generatorInvocation.smartCasing,
+                    exampleGeneration: { includeOptionalRequestPropertyExamples: false, disabled: generatorInvocation.disableExamples },
+                    readme: generatorInvocation.readme,
+                    version: undefined,
+                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    context,
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                });    
+
+                if (organization.body.selfHostedSdKs) {
+                    intermediateRepresentation.selfHosted = true;
+                }
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
@@ -63,10 +93,11 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: undefined,
-                    writeUnitTests: false,
-                    generateOauthClients: false,
-                    generatePaginatedClients: false
+                    writeUnitTests: organization.body.snippetUnitTestsEnabled,
+                    generateOauthClients: organization.body.oauthClientEnabled,
+                    generatePaginatedClients: organization.body.paginationEnabled
                 });
+                
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
             });
         })

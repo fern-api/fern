@@ -25,7 +25,8 @@ export async function getIntermediateRepresentation({
     version,
     packageName,
     sourceConfig,
-    includeOptionalRequestPropertyExamples
+    includeOptionalRequestPropertyExamples,
+    ir
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -36,8 +37,9 @@ export async function getIntermediateRepresentation({
     packageName: string | undefined;
     sourceConfig: SourceConfig | undefined;
     includeOptionalRequestPropertyExamples?: boolean;
+    ir?: IntermediateRepresentation;
 }): Promise<getIntermediateRepresentation.Return> {
-    const intermediateRepresentation = generateIntermediateRepresentation({
+    const intermediateRepresentation = ir ?? generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,

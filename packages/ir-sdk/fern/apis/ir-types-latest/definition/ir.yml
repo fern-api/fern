@@ -63,6 +63,7 @@ types:
       sourceConfig: optional<SourceConfig>
       publishConfig: optional<publish.PublishingConfig>
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
+      selfHosted: optional<boolean>
 
   ReadmeConfig:
     docs: |
