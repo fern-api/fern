@@ -1,7 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { ResponseError } from "@fern-api/ir-sdk";
-import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 export declare namespace ResponseErrorConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
@@ -41,11 +41,25 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             if (convertedSchema == null) {
                 continue;
             }
-            if (contentType.includes("json") && convertedSchema.schema != null) {
+            if (convertedSchema.schema != null) {
                 const error = {
                     error: {
                         ...convertedSchema.schema?.name,
                         errorId: convertedSchema.schema?.name.typeId
+                    },
+                    docs: this.responseError.description
+                };
+                return {
+                    error,
+                    inlinedTypes: convertedSchema.inlinedTypes,
+                    examples: convertedSchema.examples
+                };
+            } else if (convertedSchema.type.type === "named") {
+                const error = {
+                    error: {
+                        name: convertedSchema.type.name,
+                        errorId: convertedSchema.type.typeId,
+                        fernFilepath: convertedSchema.type.fernFilepath
                     },
                     docs: this.responseError.description
                 };
