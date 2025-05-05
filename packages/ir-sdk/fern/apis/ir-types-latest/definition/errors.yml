@@ -10,6 +10,7 @@ types:
     extends: commons.WithDocs
     properties:
       name: DeclaredErrorName
+      displayName: optional<string>
       discriminantValue: commons.NameAndWireValue
       type: optional<types.TypeReference>
       statusCode: integer
