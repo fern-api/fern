@@ -56,4 +56,14 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
             rootDir: ""
         };
     }
+
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): FernGeneratorCli.GitHubConfig {
+        // TODO: get from env
+        return {
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
+        };
+    }
 }

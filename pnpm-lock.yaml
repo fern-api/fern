@@ -878,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.0.17
-        version: 0.0.17
+        specifier: 0.0.23
+        version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
@@ -10810,9 +10810,6 @@ packages:
   '@fern-fern/fiddle-sdk@0.0.584':
     resolution: {integrity: sha512-92z/Pwo7EDV7PCLwNdxtZiTQpaUpbeXCqKWSLUQwTwFAQEAp+8QKYAA6VJXVQtHLrZg0NqPTXEnE5XF8NbluYA==}
 
-  '@fern-fern/generator-cli-sdk@0.0.17':
-    resolution: {integrity: sha512-uu+Oi9b2KrFo3tj5vqmEShi9CH3FKqNboDtm+3wYO8Z1LAuqo9wZIsxew8EI/bpxc9Xi6gpHi7CLKweKPxjz/Q==}
-
   '@fern-fern/generator-cli-sdk@0.0.23':
     resolution: {integrity: sha512-UGJWwnN1h4fcuRiu5XREE3vHiyuSgob6/4Sr6PNODFNC1wHczF2/2eqEWejC6mzmBdcDziPhk0ecZqZDuLkXVg==}
 
@@ -18817,8 +18814,6 @@ snapshots:
       url-join: 4.0.1
     transitivePeerDependencies:
       - encoding
-
-  '@fern-fern/generator-cli-sdk@0.0.17': {}
 
   '@fern-fern/generator-cli-sdk@0.0.23(encoding@0.1.13)':
     dependencies:
