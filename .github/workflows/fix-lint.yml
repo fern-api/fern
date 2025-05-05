@@ -48,7 +48,7 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           commit-message: "fix(lint): auto-fix lint issues"
-          title: "cfix(lint): auto-fix lint issues"
+          title: "fix(lint): auto-fix lint issues"
           branch: automated-lint-fixes
           base: main
           delete-branch: true
@@ -61,9 +61,10 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
-      # - name: Approve PR
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: ./.github/actions/auto-approve
-      #   with:
-      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}      
+          enforced-checks: lint
