@@ -49,7 +49,7 @@ export async function runLocalGenerationForWorkspace({
 
                 const organization = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
                 if (!organization.ok) {
-                    interactiveTaskContext.failWithoutThrowing(`Failed to load detals for organization ${projectConfig.organization}.`);
+                    interactiveTaskContext.failWithoutThrowing(`Failed to load details for organization ${projectConfig.organization}.`);
                     return;
                 }
 
