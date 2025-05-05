@@ -31,7 +31,6 @@ import { CsharpGeneratorAgent } from "./CsharpGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
 import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
-import { GitHubConfigBuilder } from "./github/GitHubConfigBuilder";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { IDEMPOTENT_REQUEST_OPTIONS_CLASS_NAME } from "./options/IdempotentRequestOptionsGenerator";
@@ -71,7 +70,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
-            githubConfigBuilder: new GitHubConfigBuilder()
+            publishConfig: this.ir.publishConfig
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }

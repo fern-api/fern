@@ -3,25 +3,25 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private publishConfig: PublishingConfig;
+    private publishConfig: PublishingConfig | undefined;
 
     public constructor({
         logger,
         config,
         readmeConfigBuilder,
-        publishConfig,
+        publishConfig
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        publishConfig: PublishingConfig;
+        publishConfig: PublishingConfig | undefined;
     }) {
         super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
@@ -88,5 +88,4 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
             branch: branchName
         };
     }
-
 }

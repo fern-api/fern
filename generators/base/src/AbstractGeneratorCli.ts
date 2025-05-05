@@ -47,11 +47,12 @@ export abstract class AbstractGeneratorCli<
                     await this.publishPackage(context);
                     break;
                 case "github":
+                case "downloadFiles":
                     await this.writeForGithub(context);
                     break;
-                case "downloadFiles":
-                    await this.writeForDownload(context);
-                    break;
+                // case "downloadFiles":
+                //     await this.writeForDownload(context);
+                //     break;
                 default:
                     assertNever(config.output.mode);
             }
