@@ -10,6 +10,4 @@ RUN yarn add \
 
 COPY generators/typescript-mcp/server/dist /dist
 
-COPY generators/typescript-mcp/server/features.yml /assets/features.yml
-
 ENTRYPOINT ["node", "/dist/cli.cjs"]

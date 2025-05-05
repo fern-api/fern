@@ -1,4 +1,0 @@
-features:
-  - id: USAGE
-    description: |
-      Install dependencies and start the development server.
