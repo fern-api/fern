@@ -59,6 +59,7 @@ export function convertErrorDeclaration({
         statusCode: errorDeclaration["status-code"],
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
-        v2Examples: undefined
+        v2Examples: undefined,
+        displayName: undefined
     };
 }

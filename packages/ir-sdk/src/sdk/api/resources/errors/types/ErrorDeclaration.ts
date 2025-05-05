@@ -6,6 +6,7 @@ import * as FernIr from "../../../index";
 
 export interface ErrorDeclaration extends FernIr.WithDocs {
     name: FernIr.DeclaredErrorName;
+    displayName: string | undefined;
     discriminantValue: FernIr.NameAndWireValue;
     type: FernIr.TypeReference | undefined;
     statusCode: number;

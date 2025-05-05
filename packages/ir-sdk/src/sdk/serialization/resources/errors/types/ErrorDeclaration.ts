@@ -17,6 +17,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: DeclaredErrorName,
+        displayName: core.serialization.string().optional(),
         discriminantValue: NameAndWireValue,
         type: core.serialization.lazy(() => serializers.TypeReference).optional(),
         statusCode: core.serialization.number(),
@@ -28,6 +29,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
 export declare namespace ErrorDeclaration {
     export interface Raw extends WithDocs.Raw {
         name: DeclaredErrorName.Raw;
+        displayName?: string | null;
         discriminantValue: NameAndWireValue.Raw;
         type?: serializers.TypeReference.Raw | null;
         statusCode: number;
