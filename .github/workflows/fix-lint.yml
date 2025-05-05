@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - dak/ci/auto-lint-fix
 
 # Cancel previous workflows on previous push
 concurrency:
