@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Fix `fern generate --local` to ask for `FERN_TOKEN` if trying to output to GitHub Enterprise.
+    type: fix
+  irVersion: 57
+  version: 0.60.11
+
+- changelogEntry: 
+  - summary: |
       Local development mode no longer depends on `pnpm` being pre-installed.
     type: fix
   irVersion: 57

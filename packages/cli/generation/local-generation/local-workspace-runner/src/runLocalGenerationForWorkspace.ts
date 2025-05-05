@@ -16,6 +16,7 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import { getAccessToken } from "@fern-api/auth";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 
@@ -48,7 +49,8 @@ export async function runLocalGenerationForWorkspace({
                 let intermediateRepresentation;
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    if (token == null || token.type === "user") {
+                    token = await getAccessToken();
+                    if (token == null) {
                         interactiveTaskContext.failWithoutThrowing("Fern token is required.");
                         return;
                     }
