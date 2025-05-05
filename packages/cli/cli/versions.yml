@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Adding alpha support for SDK generation to GitHub Enterprise (self hosted). 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc0
+
+- changelogEntry: 
+  - summary: |
       Prettify `ir` output in the `fern ir` command; correctly extract error schemas from converted error responses.
     type: feat
   irVersion: 57
