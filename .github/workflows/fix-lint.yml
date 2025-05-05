@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - dak/ci/auto-fix-lint
+      - dak/ci/automated-lint-fixes
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -58,6 +58,7 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          base: main
           merge-method: squash
 
       # - name: Approve PR
