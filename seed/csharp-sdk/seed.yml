@@ -170,36 +170,21 @@ fixtures:
         experimental-additional-properties: true
       outputFolder: experimental-additional-properties
 allowedFailures:
-  ## COMPILE FAILURES
-  - alias-extends
-  - any-auth
-  - enum:forward-compatible-enums
-  - enum:plain-enums
-  - examples:no-custom-config
-  - examples:readme-config
-  - extends
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - objects-with-imports
-  - mixed-file-directory
-  ## WIRE TEST FAILURES
-  - unknown # issue with example object
-  # - package-yml # user-provided example path not coming in properly
-  # - simple-fhir # nested generated examples are wonky
-  # - enum # failing because of oneof's as header values
-  # - trace # failing because we don't call stringify on enums path params
-  # - undiscriminated-unions # failing because of union type as dictionary key
-  # - exhaustive:explicit-namespaces # single test failing because we don't support discriminated unions properly
-  # - exhaustive:no-root-namespace-for-core-classes
-  # - exhaustive:no-generate-error-types
-  ## MORE Failures
+  - imdb:exported-client-class-name
   - literal
   - oauth-client-credentials-custom
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
+
+  ## COMPILE FAILURES
+  - alias-extends
+  - any-auth
+  - examples:no-custom-config
+  - examples:readme-config
+  - extends
+  - objects-with-imports
+  - mixed-file-directory
 
   ## Dynamic snippets
   - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
