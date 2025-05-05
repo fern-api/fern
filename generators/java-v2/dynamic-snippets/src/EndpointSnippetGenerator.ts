@@ -279,6 +279,7 @@ export class EndpointSnippetGenerator {
                     return [];
                 }
                 return this.getRootClientOAuthArgs({ auth, values });
+                
             default:
                 assertNever(auth);
         }

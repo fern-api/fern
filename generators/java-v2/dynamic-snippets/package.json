@@ -27,6 +27,7 @@
     "dist": "pnpm compile && node build.cjs"
   },
   "devDependencies": {
+    "@fern-api/dynamic-ir-sdk": "^57.0.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
