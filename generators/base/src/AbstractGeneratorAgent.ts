@@ -65,9 +65,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * Runs the GitHub action using the given generator context.
      * TODO: Maybe rename to `triggerGitHub` since nothing is generated per se?
      */
-    public async generateGitHub({ context }: { context: GeneratorContext }): Promise<string> {
+    public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
         const githubConfig = this.getGitHubConfig({ context });
-        return this.cli.generateGitHub({ githubConfig });
+        return this.cli.pushToGitHub({ githubConfig });
     }
 
     /**

@@ -27,7 +27,7 @@ export class GeneratorAgentClient {
         return content.stdout;
     }
 
-    public async generateGitHub<GitHubConfig>({ githubConfig }: { githubConfig: GitHubConfig }): Promise<string> {
+    public async pushToGitHub<GitHubConfig>({ githubConfig }: { githubConfig: GitHubConfig }): Promise<string> {
         const githubConfigFilepath = await this.writeConfig({
             config: githubConfig
         });
