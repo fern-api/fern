@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Local development mode no longer depends on `pnpm` being pre-installed.
+    type: fix
+  irVersion: 57
+  version: 0.60.10
+
+- changelogEntry: 
+  - summary: |
       Bump Java generator to use v57 of IR. 
     type: feat
   irVersion: 57
