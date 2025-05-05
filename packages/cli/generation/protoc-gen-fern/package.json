@@ -20,14 +20,15 @@
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --project tsconfig.json --outDir ./dist/cjs",
+    "compile": "tsc --build",
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "dist": "tsc --project build.tsconfig.json --outDir ./dist/cjs"
   },
   "dependencies": {
     "@fern-api/configs": "workspace:*",
