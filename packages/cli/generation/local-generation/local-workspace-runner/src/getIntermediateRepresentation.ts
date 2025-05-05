@@ -39,19 +39,24 @@ export async function getIntermediateRepresentation({
     includeOptionalRequestPropertyExamples?: boolean;
     ir?: IntermediateRepresentation;
 }): Promise<getIntermediateRepresentation.Return> {
-    const intermediateRepresentation = ir ?? generateIntermediateRepresentation({
-        workspace,
-        audiences,
-        generationLanguage: generatorInvocation.language,
-        keywords: generatorInvocation.keywords,
-        smartCasing: generatorInvocation.smartCasing,
-        exampleGeneration: { includeOptionalRequestPropertyExamples, disabled: generatorInvocation.disableExamples },
-        readme: generatorInvocation.readme,
-        version,
-        packageName,
-        context,
-        sourceResolver: new SourceResolverImpl(context, workspace)
-    });
+    const intermediateRepresentation =
+        ir ??
+        generateIntermediateRepresentation({
+            workspace,
+            audiences,
+            generationLanguage: generatorInvocation.language,
+            keywords: generatorInvocation.keywords,
+            smartCasing: generatorInvocation.smartCasing,
+            exampleGeneration: {
+                includeOptionalRequestPropertyExamples,
+                disabled: generatorInvocation.disableExamples
+            },
+            readme: generatorInvocation.readme,
+            version,
+            packageName,
+            context,
+            sourceResolver: new SourceResolverImpl(context, workspace)
+        });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;
     }
