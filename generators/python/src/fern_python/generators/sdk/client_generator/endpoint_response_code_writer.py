@@ -496,19 +496,23 @@ class EndpointResponseCodeWriter:
                     writer.write_node(
                         AST.ClassInstantiation(
                             class_=self._context.get_reference_to_error(error.error),
-                            args=(
-                                [
+                            kwargs=[
+                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                                (
+                                    "body",
                                     self._context.core_utilities.get_construct(
                                         self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                             error_declaration.type
                                         ),
                                         AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
-                                    )
-                                ]
-                                if error_declaration.type is not None
-                                else []
-                            ),
-                        )
+                                    ),
+                                ),
+                            ]
+                            if error_declaration.type is not None
+                            else [
+                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                            ],
+                        ),
                     )
                     writer.write_newline_if_last_line_not()
 
@@ -606,8 +610,10 @@ class EndpointResponseCodeWriter:
                         writer.write_node(
                             AST.ClassInstantiation(
                                 class_=self._context.get_reference_to_error(error.error),
-                                args=(
-                                    [
+                                kwargs=[
+                                    ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                                    (
+                                        "body",
                                         self._context.core_utilities.get_construct(
                                             self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                                 error_declaration.type
@@ -615,12 +621,14 @@ class EndpointResponseCodeWriter:
                                             AST.Expression(
                                                 f'{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}["{strategy.content_property.wire_value}"]'
                                             ),
-                                        )
-                                    ]
-                                    if error_declaration.type is not None
-                                    else []
-                                ),
-                            )
+                                        ),
+                                    ),
+                                ]
+                                if error_declaration.type is not None
+                                else [
+                                    ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                                ],
+                            ),
                         )
                         writer.write_newline_if_last_line_not()
 

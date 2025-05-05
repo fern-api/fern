@@ -41,7 +41,7 @@ class RawMigrationClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[Migration],
@@ -51,7 +51,7 @@ class RawMigrationClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawMigrationClient:
@@ -84,7 +84,7 @@ class AsyncRawMigrationClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[Migration],
@@ -94,4 +94,4 @@ class AsyncRawMigrationClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
