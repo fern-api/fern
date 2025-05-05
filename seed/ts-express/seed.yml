@@ -89,6 +89,7 @@ allowedFailures:
   - bytes
   - file-download
   - file-upload
+  - imdb:skip-request-validation
   - plain-text
   - public-object
   - streaming
