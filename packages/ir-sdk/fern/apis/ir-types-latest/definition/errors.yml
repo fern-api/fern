@@ -3,16 +3,19 @@
 imports:
   commons: commons.yml
   types: types.yml
+  examples: examples.yml
 
 types:
   ErrorDeclaration:
     extends: commons.WithDocs
     properties:
       name: DeclaredErrorName
+      displayName: optional<string>
       discriminantValue: commons.NameAndWireValue
       type: optional<types.TypeReference>
       statusCode: integer
       examples: list<ExampleError>
+      v2Examples: optional<examples.V2SchemaExamples>
   ErrorDeclarationDiscriminantValue:
     union:
       property: commons.NameAndWireValue
