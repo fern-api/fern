@@ -5,6 +5,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
     AvailabilityStatus,
@@ -22,7 +23,6 @@ import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
 import { ErrorCollector } from "./ErrorCollector";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 export declare namespace Spec {
     export interface Args<T> {
