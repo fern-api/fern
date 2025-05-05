@@ -9,6 +9,7 @@ import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
@@ -17,7 +18,6 @@ import {
 } from "@fern-api/workspace-loader";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
-import { FernIr } from "@fern-api/ir-sdk";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -152,7 +152,6 @@ function getPublishConfig({
             })
         });
     }
-    
 
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => undefined,
@@ -175,4 +174,3 @@ function isGithubSelfhosted(
     }
     return "uri" in github && "token" in github;
 }
-
