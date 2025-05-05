@@ -22,6 +22,8 @@ export declare namespace AbstractGeneratorAgent {
 
     interface GitHubConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
         context: GeneratorContext;
+        remote: FernGeneratorCli.Remote.Github;
+        branch?: string;
     }
 }
 
@@ -66,7 +68,11 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * TODO: Maybe rename to `triggerGitHub` since nothing is generated per se?
      */
     public async pushToGithub({ context }: { context: GeneratorContext }): Promise<string> {
-        const githubConfig = this.getGitHubConfig({ context });
+        const remote = this.getRemote();
+        if (remote === undefined) {
+            throw new Error("No remote found, unable to run GitHub actions");
+        }
+        const githubConfig = this.getGitHubConfig({ context, remote });
         return this.cli.generateGitHub({ githubConfig });
     }
 

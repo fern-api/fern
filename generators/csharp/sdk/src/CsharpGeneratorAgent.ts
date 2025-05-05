@@ -5,22 +5,27 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { GitHubConfigBuilder } from "./github/GitHubConfigBuilder";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 
 export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
+    private githubConfigBuilder: GitHubConfigBuilder;
 
     public constructor({
         logger,
         config,
-        readmeConfigBuilder
+        readmeConfigBuilder,
+        githubConfigBuilder
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
+        githubConfigBuilder: GitHubConfigBuilder;
     }) {
         super({ logger, config });
         this.readmeConfigBuilder = readmeConfigBuilder;
+        this.githubConfigBuilder = githubConfigBuilder;
     }
 
     public getReadmeConfig(
@@ -39,6 +44,16 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     }
 
     public getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
+    ): FernGeneratorCli.GitHubConfig {
+        return this.githubConfigBuilder.build({
+            context: args.context,
+            remote: args.remote,
+            branch: args.branch
+        });
+    }
+
+    public hardCodedTestGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.GitHubConfig {
         const randomString = Math.random().toString(36).substring(2, 15);

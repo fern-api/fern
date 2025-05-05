@@ -84,6 +84,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
+        // TODO: should we also check if the github config is valid? or do that within the generate function?
         if (context.isSelfHosted()) {
             await this.generateGitHub({ context });
         }
