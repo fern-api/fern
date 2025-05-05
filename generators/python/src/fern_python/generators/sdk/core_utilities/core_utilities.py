@@ -295,7 +295,11 @@ class CoreUtilities:
         body: Optional[AST.Expression],
     ) -> AST.AstNode:
         return self._instantiate_api_error(
-            constructor=AST.Expression("super().__init__"), headers=headers, status_code=status_code, body=body
+            constructor=AST.Expression("super().__init__"),
+            status_code=status_code,
+            body=body,
+            headers=headers,
+            wrap_headers_in_dict=False,
         )
 
     def _instantiate_api_error(
@@ -305,18 +309,24 @@ class CoreUtilities:
         headers: Optional[AST.Expression],
         status_code: Optional[AST.Expression],
         body: Optional[AST.Expression],
+        wrap_headers_in_dict: bool = True,
     ) -> AST.AstNode:
         def _write(writer: AST.NodeWriter) -> None:
             writer.write_node(constructor)
             writer.write("(")
-            if headers is not None:
-                writer.write("headers=dict(")
-                writer.write_node(headers)
-                writer.write("), ")
             if status_code is not None:
                 writer.write("status_code=")
                 writer.write_node(status_code)
                 writer.write(", ")
+            if headers is not None:
+                if wrap_headers_in_dict:
+                    writer.write("headers=dict(")
+                    writer.write_node(headers)
+                    writer.write("), ")
+                else:
+                    writer.write("headers=")
+                    writer.write_node(headers)
+                    writer.write(", ")
             if body is not None:
                 writer.write("body=")
                 writer.write_node(body)

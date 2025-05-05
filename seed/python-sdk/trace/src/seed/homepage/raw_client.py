@@ -39,7 +39,7 @@ class RawHomepageClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[ProblemId],
@@ -49,7 +49,7 @@ class RawHomepageClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
@@ -78,8 +78,8 @@ class RawHomepageClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawHomepageClient:
@@ -107,7 +107,7 @@ class AsyncRawHomepageClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[ProblemId],
@@ -117,7 +117,7 @@ class AsyncRawHomepageClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def set_homepage_problems(
         self, *, request: typing.Sequence[ProblemId], request_options: typing.Optional[RequestOptions] = None
@@ -146,5 +146,5 @@ class AsyncRawHomepageClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

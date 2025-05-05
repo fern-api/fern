@@ -72,9 +72,9 @@ class RawDummyClient:
                     _response_json = _response.json()
                 except JSONDecodeError:
                     raise ApiError(
-                        headers=dict(_response.headers), status_code=_response.status_code, body=_response.text
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
-                raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield stream()
 
@@ -115,8 +115,8 @@ class RawDummyClient:
                 return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawDummyClient:
@@ -175,9 +175,9 @@ class AsyncRawDummyClient:
                     _response_json = _response.json()
                 except JSONDecodeError:
                     raise ApiError(
-                        headers=dict(_response.headers), status_code=_response.status_code, body=_response.text
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
-                raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await stream()
 
@@ -218,5 +218,5 @@ class AsyncRawDummyClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

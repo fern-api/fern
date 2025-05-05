@@ -43,8 +43,8 @@ class RawSyspropClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_num_warm_instances(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -67,7 +67,7 @@ class RawSyspropClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Dict[Language, int],
@@ -77,7 +77,7 @@ class RawSyspropClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawSyspropClient:
@@ -111,8 +111,8 @@ class AsyncRawSyspropClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_num_warm_instances(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -135,7 +135,7 @@ class AsyncRawSyspropClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Dict[Language, int],
@@ -145,4 +145,4 @@ class AsyncRawSyspropClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

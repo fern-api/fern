@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.17.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where response `headers` were not available in the strongly typed error classes.
+
 - version: 4.17.0
   irVersion: 57
   changelogEntry:
