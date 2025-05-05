@@ -226,52 +226,8 @@ function newDummyPublishOutputConfig(
     }
 
     return {
-        mode: FernGeneratorExec.OutputMode.publish({
-            registries: {
-                maven: {
-                    group: "",
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? ""
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    scope: "",
-                    token: (outputMode as NpmOutput)?.token ?? ""
-                }
-            },
-            publishTarget: undefined,
-            registriesV2: {
-                maven: {
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? "",
-                    coordinate: (outputMode as MavenOutput)?.coordinate ?? "",
-                    signature: (outputMode as MavenOutput)?.signature
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    token: (outputMode as NpmOutput)?.token ?? "",
-                    packageName: (outputMode as NpmOutput)?.packageName ?? ""
-                },
-                pypi: {
-                    packageName: (outputMode as PypiOutput)?.coordinate ?? "",
-                    password: (outputMode as PypiOutput)?.password ?? "",
-                    registryUrl: (outputMode as PypiOutput)?.registryUrl ?? "",
-                    username: (outputMode as PypiOutput)?.username ?? "",
-                    pypiMetadata: (outputMode as PypiOutput)?.pypiMetadata
-                },
-                rubygems: {
-                    registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as RubyGemsOutput)?.apiKey ?? "",
-                    packageName: (outputMode as RubyGemsOutput)?.packageName ?? ""
-                },
-                nuget: {
-                    registryUrl: (outputMode as NugetOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as NugetOutput)?.apiKey ?? "",
-                    packageName: (outputMode as NugetOutput)?.packageName ?? ""
-                }
-            },
+        mode: FernGeneratorExec.OutputMode.github({
+            repoUrl: "",
             version
         }),
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
