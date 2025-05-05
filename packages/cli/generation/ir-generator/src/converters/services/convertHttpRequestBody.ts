@@ -153,7 +153,8 @@ export function convertReferenceHttpRequestBody({
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
-        contentType
+        contentType,
+        v2Examples: undefined
     };
 }
 

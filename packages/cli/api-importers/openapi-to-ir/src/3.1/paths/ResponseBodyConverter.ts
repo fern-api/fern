@@ -49,6 +49,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             if (convertedSchema == null) {
                 continue;
             }
+
             if (contentType.includes("json")) {
                 const responseBody = HttpResponseBody.json(
                     JsonResponse.response({
@@ -56,7 +57,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
-                            generateOptionalProperties: true
+                            generateOptionalProperties: true,
+                            exampleGenerationStrategy: "response"
                         })
                     })
                 );
@@ -86,7 +88,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         docs: this.responseBody.description,
                         v2Examples: await this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
-                            generateOptionalProperties: true
+                            generateOptionalProperties: true,
+                            exampleGenerationStrategy: "response"
                         })
                     });
                     return {
@@ -98,7 +101,8 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     docs: this.responseBody.description,
                     v2Examples: await this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
-                        generateOptionalProperties: true
+                        generateOptionalProperties: true,
+                        exampleGenerationStrategy: "response"
                     })
                 });
                 return {

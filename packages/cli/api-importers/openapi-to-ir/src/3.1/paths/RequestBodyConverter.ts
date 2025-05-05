@@ -63,7 +63,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                         return this.convertRequestBodyProperty({ property, contentType });
                     }),
                     v2Examples: await this.convertMediaTypeObjectExamples({
-                        mediaTypeObject
+                        mediaTypeObject,
+                        exampleGenerationStrategy: "request"
                     })
                 });
                 return {
@@ -115,7 +116,8 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 properties: convertedSchema.schema?.shape.properties,
                 extraProperties: convertedSchema.schema?.shape.extraProperties,
                 v2Examples: await this.convertMediaTypeObjectExamples({
-                    mediaTypeObject
+                    mediaTypeObject,
+                    exampleGenerationStrategy: "request"
                 })
             });
 
@@ -130,7 +132,11 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             const requestBody = HttpRequestBody.reference({
                 contentType,
                 docs: this.requestBody.description,
-                requestBodyType: convertedSchema.type
+                requestBodyType: convertedSchema.type,
+                v2Examples: await this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    exampleGenerationStrategy: "request"
+                })
             });
 
             return {

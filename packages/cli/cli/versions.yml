@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Correctly support `readOnly` and `writeOnly` object properties during request and response example generation.
+    type: feat
+  irVersion: 57
+  version: 0.60.10
+
+- changelogEntry: 
+  - summary: |
       Prettify `ir` output in the `fern ir` command; correctly extract error schemas from converted error responses.
     type: feat
   irVersion: 57
