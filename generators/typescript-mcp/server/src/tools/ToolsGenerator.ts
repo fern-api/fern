@@ -43,11 +43,11 @@ export class ToolsGenerator extends FileGenerator<
     }
 
     private writeImportsBlock(writer: ts.Writer) {
-        writer.writeLine("import { McpServer } from \"@modelcontextprotocol/sdk/server/mcp.js\";");
+        writer.writeLine('import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";');
         writer.writeLine(
             `import { ${this.context.project.sdkClientName} } from "${this.context.project.sdkPackageName}";`
         );
-        writer.writeLine("import * as schemas from \"../schemas\";");
+        writer.writeLine('import * as schemas from "../schemas";');
     }
 
     private writeClientInitializationBlock(writer: ts.Writer) {
@@ -76,7 +76,7 @@ export class ToolsGenerator extends FileGenerator<
         writer.writeLine("            async (params) => {");
         writer.writeLine(`                const result = await client.${sdkMethodId}(params);`);
         writer.writeLine("                return {");
-        writer.writeLine("                    content: [{ type: \"text\", text: result }]");
+        writer.writeLine('                    content: [{ type: "text", text: result }]');
         writer.writeLine("                };");
         writer.writeLine("            }");
         writer.writeLine("        );");

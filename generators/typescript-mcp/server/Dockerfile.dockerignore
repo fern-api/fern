@@ -1,0 +1,3 @@
+*
+!generators/typescript-mcp/server/dist
+!generators/typescript-mcp/server/features.yml

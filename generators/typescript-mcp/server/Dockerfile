@@ -8,8 +8,8 @@ RUN yarn init --yes
 RUN yarn add \
   typescript@~5.7.2
 
-COPY generators/typescript-mcp/sdk/dist /dist
+COPY generators/typescript-mcp/server/dist /dist
 
-COPY generators/typescript-mcp/sdk/features.yml /assets/features.yml
+COPY generators/typescript-mcp/server/features.yml /assets/features.yml
 
 ENTRYPOINT ["node", "/dist/cli.cjs"]
