@@ -5,6 +5,59 @@
   irVersion: 57
   version: 0.60.10
 
+      Bump Java generator to use v57 of IR. 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc1
+
+- changelogEntry: 
+  - summary: |
+      Adding alpha support for SDK generation to GitHub Enterprise (self hosted). 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc0
+
+- changelogEntry: 
+  - summary: |
+      Prettify `ir` output in the `fern ir` command; correctly extract error schemas from converted error responses.
+    type: feat
+  irVersion: 57
+  version: 0.60.9
+
+- changelogEntry: 
+  - summary: |
+      Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications, 
+      the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override 
+      the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in 
+      customizing imported APIs without modifying the original OpenAPI specification, allowing for environment-specific configurations 
+      and standardized authentication schemes across different API versions.
+    type: feat
+  irVersion: 57
+  version: 0.60.8
+
+- changelogEntry: 
+  - summary: |
+      Add support for auth descriptions in generated documentation. Auth schemes can now include descriptive text that explains authentication requirements, 
+      which is properly displayed in the generated documentation. This enhancement improves API usability by providing clearer guidance on authentication 
+      methods directly within the documentation.
+    type: feat
+  irVersion: 57
+  version: 0.60.7
+
+- changelogEntry: 
+  - summary: |
+      Enable v2 example injection for multipart form upload endpoints.
+    type: feat
+  irVersion: 57
+  version: 0.60.6
+
+- changelogEntry: 
+  - summary: |
+      Several improvements to AsyncAPI package and channel generation. Add support for 2.x specific extensions.
+    type: feat
+  irVersion: 57
+  version: 0.60.5
+
 - changelogEntry: 
   - summary: |
       Add support for custom parameters in OpenRPC through the `x-fern-parameters` extension. This extension allows OpenRPC 

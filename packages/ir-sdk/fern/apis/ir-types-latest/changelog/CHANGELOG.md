@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v57.11.0] - 2024-04-23
+## [v57.13.0] - 2024-05-05
+
+- Feature: Add v2Examples and displayName property for Errors.
+
+## [v57.12.0] - 2024-05-04
+
+- Feature: Add a top level selfHosted attribute to the IR.
+
+## [v57.11.0] - 2024-05-01
 
 - Feature: Add support for GitHub publishing configuration in the IR, for self-hosted.
 

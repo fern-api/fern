@@ -4,24 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.http.BytesResponse;
-import com.fern.ir.model.http.CursorPagination;
-import com.fern.ir.model.http.FileDownloadResponse;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpResponseBody;
-import com.fern.ir.model.http.JsonResponse;
-import com.fern.ir.model.http.JsonResponseBody;
-import com.fern.ir.model.http.JsonResponseBodyWithProperty;
-import com.fern.ir.model.http.JsonStreamChunk;
-import com.fern.ir.model.http.OffsetPagination;
-import com.fern.ir.model.http.Pagination;
-import com.fern.ir.model.http.QueryParameter;
-import com.fern.ir.model.http.RequestPropertyValue;
-import com.fern.ir.model.http.SseStreamChunk;
-import com.fern.ir.model.http.StreamParameterResponse;
-import com.fern.ir.model.http.StreamingResponse;
-import com.fern.ir.model.http.TextResponse;
-import com.fern.ir.model.http.TextStreamChunk;
+import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.AliasTypeDeclaration;
 import com.fern.ir.model.types.DeclaredTypeName;
 import com.fern.ir.model.types.EnumTypeDeclaration;
@@ -269,6 +252,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                                         clientGeneratorContext
                                                 .getPoetTypeNameMapper()
                                                 .convertToTypeName(true, resultUnderlyingType));
+                            }
+
+                            @Override
+                            public TypeName visitCustom(CustomPagination customPagination) {
+                                throw new RuntimeException("Unknown pagination type custom");
                             }
 
                             @Override
@@ -1274,6 +1262,11 @@ public abstract class AbstractHttpResponseParserGenerator {
                             getNextPageGetter(endpointName, methodParameters)));
             endpointMethodBuilder.returns(responseType);
             return null;
+        }
+
+        @Override
+        public Void visitCustom(CustomPagination customPagination) {
+            throw new RuntimeException("Unknown pagination type custom");
         }
 
         @Override

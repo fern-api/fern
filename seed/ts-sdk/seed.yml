@@ -264,30 +264,16 @@ scripts:
       - yarn build
       - if grep -q '"test"' package.json && grep -q 'exhaustive' package.json; then yarn test --passWithNoTests --testPathPattern='exhaustive.*\.test\.ts$'; fi
 allowedFailures:
-  - response-property
-  - plain-text
-  - alias
-  - api-wide-base-path
-  - cross-package-type-names
-  - exhaustive:bundle
-  - exhaustive:dev-dependencies
-  - audiences:no-custom-config
-  - enum # throws b/c of undiscriminated union examples
-  - streaming-parameter
-  - imdb:noScripts
+  - bytes
   - circular-references
+  - cross-package-type-names
+  - idempotency-headers
+  - imdb:noScripts
+  - nullable
   - oauth-client-credentials-custom
+  - response-property
+  - streaming-parameter
+
   # the below are likely related to changes made to example generation
-  - multi-url-environment-no-default
-  - objects-with-imports
-  - reserved-keywords
   - examples:examples-with-api-reference
   - examples:retain-original-casing
-  # on 12/16/2024 noticed 5 failures related to fixtures below
-  - exhaustive:custom-package-json
-  - idempotency-headers
-  - oauth-client-credentials-nested-root:never-throw-errors
-  - trace:no-zurg-no-throwing
-  - trace:exhaustive
-  # Dynamic snippets
-  - unions # Required base properties need to be included in the example generator.

@@ -1458,6 +1458,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
       "userAgent": null,
     },
   },
+  "selfHosted": false,
   "serviceTypeReferenceInfo": {
     "sharedTypes": [],
     "typesReferencedOnlyByService": {

@@ -86,6 +86,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "APIKey": {
       "name": {
@@ -10029,7 +10030,12 @@
                   "environment": "https://api.sws.speechify.com",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "name": "foo",
+                    "sample": "foo",
+                    "consent": "foo"
+                  }
                 },
                 "response": {}
               }

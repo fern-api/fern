@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": []
   },
+  "selfHosted": false,
   "types": {
     "UploadWithContentTypePostRequestBodySchemaMetadata": {
       "name": {
@@ -303,7 +304,10 @@
                   },
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }
@@ -459,7 +463,12 @@
                   },
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "list_file": [
+                      "foo"
+                    ]
+                  }
                 },
                 "response": {}
               }
@@ -748,7 +757,10 @@
                   },
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }

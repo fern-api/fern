@@ -1,5 +1,3 @@
-import { appendFileSync } from "fs";
-
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
@@ -45,6 +43,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                 requirement: FernIr.AuthSchemesRequirement.All,
                 schemes: []
             },
+            selfHosted: false,
             types: {},
             services: {},
             errors: {},

@@ -36148,9 +36148,15 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
               },
               "responseStatusCode": 201,
               "responseBody": {
@@ -36703,9 +36709,15 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -37324,9 +37336,15 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -39018,9 +39036,15 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {

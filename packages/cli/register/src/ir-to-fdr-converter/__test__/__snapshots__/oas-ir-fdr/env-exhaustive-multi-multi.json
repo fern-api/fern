@@ -137,8 +137,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel": {
-      "subpackageId": "testChannel",
+    "subpackage_testChannel": {
+      "subpackageId": "subpackage_testChannel",
       "name": "testChannel",
       "endpoints": [],
       "webhooks": [],
@@ -210,8 +210,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel2": {
-      "subpackageId": "testChannel2",
+    "subpackage_testChannel2": {
+      "subpackageId": "subpackage_testChannel2",
       "name": "testChannel2",
       "endpoints": [],
       "webhooks": [],
@@ -370,8 +370,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannels": {
-      "subpackageId": "testChannels",
+    "subpackage_testChannels": {
+      "subpackageId": "subpackage_testChannels",
       "name": "testChannels",
       "endpoints": [],
       "webhooks": [],
@@ -443,8 +443,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannels2": {
-      "subpackageId": "testChannels2",
+    "subpackage_testChannels2": {
+      "subpackageId": "subpackage_testChannels2",
       "name": "testChannels2",
       "endpoints": [],
       "webhooks": [],
@@ -529,11 +529,11 @@
     ],
     "subpackages": [
       "alpha",
-      "testChannel",
-      "testChannel2",
+      "subpackage_testChannel",
+      "subpackage_testChannel2",
       "beta",
-      "testChannels",
-      "testChannels2"
+      "subpackage_testChannels",
+      "subpackage_testChannels2"
     ]
   },
   "snippetsConfiguration": {},

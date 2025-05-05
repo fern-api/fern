@@ -69,6 +69,7 @@ jobs:
             python:
               - 'generators/python/**'
               - 'seed/pydantic/**'
+              - 'seed/pydantic-v2/**'
               - 'seed/python-sdk/**'
               - 'seed/fastapi/**'
             postman:

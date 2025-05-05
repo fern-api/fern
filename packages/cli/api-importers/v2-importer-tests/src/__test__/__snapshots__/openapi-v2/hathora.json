@@ -26,6 +26,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "Record_string.never_": {
       "name": {
@@ -29527,7 +29528,10 @@
                     "buildId": 42
                   },
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }

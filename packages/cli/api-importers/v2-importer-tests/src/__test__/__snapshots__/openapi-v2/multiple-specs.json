@@ -18,6 +18,7 @@
       "safeName": ""
     }
   },
+  "selfHosted": false,
   "auth": {
     "requirement": "ALL",
     "schemes": []
@@ -481,7 +482,10 @@
                   },
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "file": "foo"
+                  }
                 },
                 "response": {}
               }

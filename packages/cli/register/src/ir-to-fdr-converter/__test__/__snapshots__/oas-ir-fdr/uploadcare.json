@@ -2624,9 +2624,40 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2823,9 +2854,49 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "filename": "myfile.mp4",
+                "size": 27796904,
+                "content_type": "video/mp4"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "filename": {
+                    "type": "json",
+                    "value": "myfile.mp4"
+                  },
+                  "size": {
+                    "type": "json",
+                    "value": 27796904
+                  },
+                  "part_size": {
+                    "type": "json"
+                  },
+                  "content_type": {
+                    "type": "json",
+                    "value": "video/mp4"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2989,9 +3060,22 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "uuid": {
+                    "type": "json",
+                    "value": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -3304,9 +3388,43 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "source_url": "https://source.unsplash.com/featured"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "source_url": {
+                    "type": "json",
+                    "value": "https://source.unsplash.com/featured"
+                  },
+                  "store": {
+                    "type": "json"
+                  },
+                  "filename": {
+                    "type": "json"
+                  },
+                  "check_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "save_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -3735,9 +3853,34 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "files[]": [
+                  "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                  "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "files[]": {
+                    "type": "json",
+                    "value": [
+                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                    ]
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {

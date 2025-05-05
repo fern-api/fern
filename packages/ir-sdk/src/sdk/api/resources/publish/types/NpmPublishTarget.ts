@@ -3,7 +3,7 @@
  */
 
 export interface NpmPublishTarget {
+    version: string | undefined;
     packageName: string | undefined;
     tokenEnvironmentVariable: string;
-    registry: string | undefined;
 }

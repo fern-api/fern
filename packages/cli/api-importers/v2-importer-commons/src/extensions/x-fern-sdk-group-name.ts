@@ -1,10 +1,8 @@
-import { OpenAPIV3_1 } from "openapi-types";
-
 import { AbstractExtension } from "../AbstractExtension";
 
 export declare namespace SdkGroupNameExtension {
     export interface Args extends AbstractExtension.Args {
-        operation: OpenAPIV3_1.SchemaObject;
+        operation: object;
     }
 
     export interface Output {
@@ -13,7 +11,7 @@ export declare namespace SdkGroupNameExtension {
 }
 
 export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtension.Output> {
-    private readonly operation: OpenAPIV3_1.OperationObject;
+    private readonly operation: object;
     public readonly key = "x-fern-sdk-group-name";
 
     constructor({ breadcrumbs, operation, context }: SdkGroupNameExtension.Args) {

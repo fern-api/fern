@@ -7,12 +7,14 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PostmanPublishTarget } from "./PostmanPublishTarget";
 import { NpmPublishTarget } from "./NpmPublishTarget";
+import { MavenPublishTarget } from "./MavenPublishTarget";
 
 export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.Raw, FernIr.PublishTarget> =
     core.serialization
         .union("type", {
             postman: PostmanPublishTarget,
             npm: NpmPublishTarget,
+            maven: MavenPublishTarget,
         })
         .transform<FernIr.PublishTarget>({
             transform: (value) => {
@@ -21,6 +23,8 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
                         return FernIr.PublishTarget.postman(value);
                     case "npm":
                         return FernIr.PublishTarget.npm(value);
+                    case "maven":
+                        return FernIr.PublishTarget.maven(value);
                     default:
                         return value as FernIr.PublishTarget;
                 }
@@ -29,7 +33,7 @@ export const PublishTarget: core.serialization.Schema<serializers.PublishTarget.
         });
 
 export declare namespace PublishTarget {
-    export type Raw = PublishTarget.Postman | PublishTarget.Npm;
+    export type Raw = PublishTarget.Postman | PublishTarget.Npm | PublishTarget.Maven;
 
     export interface Postman extends PostmanPublishTarget.Raw {
         type: "postman";
@@ -37,5 +41,9 @@ export declare namespace PublishTarget {
 
     export interface Npm extends NpmPublishTarget.Raw {
         type: "npm";
+    }
+
+    export interface Maven extends MavenPublishTarget.Raw {
+        type: "maven";
     }
 }

@@ -3,6 +3,7 @@
     "requirement": "ALL",
     "schemes": []
   },
+  "selfHosted": false,
   "types": {
     "signatureType": {
       "name": {
@@ -12701,7 +12702,14 @@
                   "environment": "Production server",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                    "UPLOADCARE_STORE": "auto",
+                    "{filename}": [
+                      "foo"
+                    ]
+                  }
                 },
                 "response": {
                   "statusCode": 200,
@@ -13357,7 +13365,14 @@
                   "environment": "Production server",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                    "UPLOADCARE_STORE": "auto",
+                    "filename": "myfile.mp4",
+                    "size": 27796904,
+                    "content_type": "video/mp4"
+                  }
                 },
                 "response": {
                   "statusCode": 200,
@@ -13758,7 +13773,11 @@
                   "environment": "Production server",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                    "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  }
                 },
                 "response": {
                   "statusCode": 200,
@@ -14512,7 +14531,11 @@
                   "environment": "Production server",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "pub_key": "YOUR_PUBLIC_KEY",
+                    "source_url": "https://source.unsplash.com/featured"
+                  }
                 },
                 "response": {
                   "statusCode": 200,
@@ -22978,7 +23001,14 @@
                   "environment": "Production server",
                   "pathParameters": {},
                   "queryParameters": {},
-                  "headers": {}
+                  "headers": {},
+                  "requestBody": {
+                    "pub_key": "YOUR_PUBLIC_KEY",
+                    "files[]": [
+                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                    ]
+                  }
                 },
                 "response": {
                   "statusCode": 200,

@@ -45,6 +45,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "getUser_Response_200": {
       "name": {

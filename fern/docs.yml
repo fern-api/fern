@@ -604,7 +604,8 @@ navigation:
 
   - tab: ai-search
     layout:
-    - section: Getting Started 
+    - section: Getting Started
+      skip-slug: true
       contents:
         - page: Overview
           icon: fa-regular fa-book-open
@@ -613,6 +614,7 @@ navigation:
           icon: fa-regular fa-star
           path: ./pages/ai-search/getting-started/customer-showcase.mdx
     - section: Features 
+      skip-slug: true
       contents:
         - page: Custom Prompting
           icon: fa-regular fa-gear
