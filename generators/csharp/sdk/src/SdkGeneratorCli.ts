@@ -278,6 +278,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
-        await context.generatorAgent.generateGitHub({ context });
+        await context.generatorAgent.pushToGithub({ context });
     }
 }
