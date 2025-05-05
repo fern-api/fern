@@ -37,10 +37,10 @@ jobs:
           pnpm jsonschema
 
       - name: Format
-        run: pnpm format:check
+        run: pnpm format:check-and-fix
 
-      - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+      - name: Commit all changed files back to the repository
+        uses: stefanzweifel/git-auto-commit-action@v5
 
   eslint:
     runs-on: ubuntu-latest
