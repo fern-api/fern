@@ -19,6 +19,10 @@ export declare namespace AbstractGeneratorAgent {
         featureConfig: FernGeneratorCli.FeatureConfig;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }
+
+    interface GitHubConfigArgs<GeneratorContext extends AbstractGeneratorContext> {
+        context: GeneratorContext;
+    }
 }
 
 export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
@@ -58,6 +62,15 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     }
 
     /**
+     * Runs the GitHub action using the given generator context.
+     * TODO: Maybe rename to `triggerGitHub` since nothing is generated per se?
+     */
+    public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
+        const githubConfig = this.getGitHubConfig({ context });
+        return this.cli.pushToGitHub({ githubConfig });
+    }
+
+    /**
      * Generates the reference.md content using the given builder.
      */
     public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
@@ -76,6 +89,13 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     protected abstract getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<GeneratorContext>
     ): FernGeneratorCli.ReadmeConfig;
+
+    /**
+     * Gets the GitHub configuration.
+     */
+    protected abstract getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
+    ): FernGeneratorCli.GitHubConfig;
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");

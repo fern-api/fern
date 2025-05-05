@@ -37,4 +37,16 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
     public getLanguage(): FernGeneratorCli.Language {
         return FernGeneratorCli.Language.Java;
     }
+
+    public getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
+    ): FernGeneratorCli.GitHubConfig {
+        // TODO: get from env
+        return {
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
+        };
+    }
 }
