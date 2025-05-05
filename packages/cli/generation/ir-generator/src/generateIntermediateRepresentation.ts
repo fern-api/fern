@@ -121,6 +121,7 @@ export function generateIntermediateRepresentation({
     const variableResolver = new VariableResolverImpl();
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
+        selfHosted: false,
         fdrApiDefinitionId,
         apiVersion: convertApiVersionScheme({
             file: rootApiFileContext,
