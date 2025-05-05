@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade to irV57
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.34.0
+- changelogEntry:
+    - summary: |
         (Corrected from 2.33.2) Use non-deprecated method to create request body
       type: fix
   createdAt: '2025-04-28'
