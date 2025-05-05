@@ -31,7 +31,7 @@ export class GeneratorAgentClient {
         const githubConfigFilepath = await this.writeConfig({
             config: githubConfig
         });
-        const args = ["generate", "github", "--config", githubConfigFilepath];
+        const args = ["github", "push", "--config", githubConfigFilepath];
         const cli = await this.getOrInstall();
         const content = await cli(args);
         return content.stdout;

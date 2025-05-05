@@ -11,7 +11,6 @@ import {
 } from "@fern-api/fern-csharp-model";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
-import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";

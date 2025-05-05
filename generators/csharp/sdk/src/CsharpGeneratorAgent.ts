@@ -38,12 +38,14 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
         return FernGeneratorCli.Language.Csharp;
     }
 
-    public getGitHubConfig(): FernGeneratorCli.GitHubConfig {
+    public getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
+    ): FernGeneratorCli.GitHubConfig {
         return {
             sourceDirectory: "/Volumes/git/fern/seed/csharp-sdk/exhaustive/experimental-additional-properties",
             uri: "https://github.com/fern-api/test-generate-cli-github.git",
             token: "token",
-            branch: "jsklan/csharp_sdk_push_test"
+            branch: "jsklan/csharp_sdk_push_test/" + args.context.getNamespace().toString()
         };
     }
 }
