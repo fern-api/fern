@@ -1,0 +1,46 @@
+name: Fix Lint
+
+on:
+  push:
+    branches:
+      - main
+      - dak/ci/auto-fix-lint
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+jobs:
+  fix-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Lint
+        run: pnpm lint:style:fix
+
+      - name: Format
+        run: pnpm format
+
+      - name: Ensure no changes to git-tracked files
+        id: check-for-changes
+        run: |
+          if git diff --exit-code; then
+            echo "No changes to commit."
+            echo "lint-fixes=false" >> $GITHUB_OUTPUT
+          else
+            echo "lint-fixes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Open PR with fixes
+        if: steps.check-for-changes.outputs.lint-fixes == 'true'
+        run: echo "changes to commit"
