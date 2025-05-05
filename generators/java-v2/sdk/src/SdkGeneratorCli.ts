@@ -169,7 +169,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
         );
     }
-    
+
     private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
         await context.generatorAgent.pushToGitHub({ context });
     }
