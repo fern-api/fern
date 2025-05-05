@@ -8,6 +8,7 @@ A simple test case is setup for running the plugin in the `tests` directory. You
 installed to run the test:
 
 ```sh
+pnpm dist
 cd tests/simple
 buf generate
 ```
