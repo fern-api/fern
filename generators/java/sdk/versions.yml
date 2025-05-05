@@ -4,6 +4,14 @@
       type: feat
   createdAt: '2025-04-28'
   irVersion: 55
+  version: 2.35.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Alpha support for GitHub enterprise.
+      type: feat
+  createdAt: '2025-04-28'
+  irVersion: 55
   version: 2.35.0-rc1
 
 - changelogEntry:

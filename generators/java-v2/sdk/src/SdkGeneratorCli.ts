@@ -44,7 +44,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         if (context.getIsSelfHosted()) {
-            
+            await this.pushToGithub({ context });
         }
         await this.generate(context);
     }
