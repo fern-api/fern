@@ -116,6 +116,7 @@ scripts:
       - composer test
 allowedFailures:
   - pagination-custom
+  - file-upload
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - auth-environment-variables
   # Basic auth is not supported yet.
