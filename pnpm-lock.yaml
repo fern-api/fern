@@ -1614,8 +1614,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: 57.0.0
-        version: 57.0.0
+        specifier: 57.13.0
+        version: 57.13.0(encoding@0.1.13)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1843,8 +1843,8 @@ importers:
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
-        specifier: 57.0.0
-        version: 57.0.0
+        specifier: 57.13.0
+        version: 57.13.0(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
@@ -1887,15 +1887,21 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../../packages/cli/logger
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.23
+        version: 0.0.23(encoding@0.1.13)
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1021
         version: 0.0.1021(encoding@0.1.13)
       '@fern-fern/ir-sdk':
-        specifier: 57.0.0
-        version: 57.0.0
+        specifier: 57.13.0
+        version: 57.13.0(encoding@0.1.13)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)
