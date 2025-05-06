@@ -1,3 +1,4 @@
 api:
   - path: ../openapi.yml
-  - path: ../asyncapi.yml
+  - path: ../asyncapi-2.6.0.yml
+  - path: ../asyncapi-3.0.0.yml

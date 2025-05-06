@@ -35,6 +35,6 @@ components:
     schemas:
       PetOwner:
         allOf:
-          - $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/User'
-          - $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Pet'
-          - $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Tag'
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/User'
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Pet'
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Tag'
