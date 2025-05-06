@@ -461,7 +461,14 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                 return [
                     self._endpoint_snippet_map[endpoint_id].async_client for endpoint_id in async_client_endpoint_ids
                 ]
-            return [self._endpoint_snippet_map[self._default_endpoint_id].async_client]
+            # Check if async_client exists for the default endpoint
+            if self._default_endpoint_id in self._endpoint_snippet_map:
+                async_client = self._endpoint_snippet_map[self._default_endpoint_id].async_client
+                # Add a new line if it doesn't already end with one
+                if not async_client.endswith('\n'):
+                    async_client += '\n'
+                return [async_client]
+            return []
         except Exception as e:
             print(f"Failed to generage async client snippets with exception {e}")
             return []

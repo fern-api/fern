@@ -1,4 +1,11 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.18.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README g
+
 - version: 4.18.1
   irVersion: 57
   changelogEntry:
