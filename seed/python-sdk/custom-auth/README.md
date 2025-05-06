@@ -37,7 +37,8 @@ client = AsyncSeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_
 async def main() -> None:
     await client.custom_auth.post_with_custom_auth(request={'key': 'value'}
     , )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

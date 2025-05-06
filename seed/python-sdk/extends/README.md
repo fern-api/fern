@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedExtends(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.extended_inline_request_body(unique='unique', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

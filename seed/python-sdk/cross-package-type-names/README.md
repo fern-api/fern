@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

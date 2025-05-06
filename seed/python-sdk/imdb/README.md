@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedApi(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.imdb.create_movie(title='title', rating=1.1, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

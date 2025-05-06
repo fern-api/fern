@@ -37,7 +37,8 @@ client = AsyncSeedObjectsWithImports(base_url="https://yourhost.com/path/to/api"
 async def main() -> None:
     await client.optional.send_optional_body(request={'string': {'key': 'value'}
     }, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

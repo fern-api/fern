@@ -39,7 +39,8 @@ async def main() -> None:
     response = await client.dummy.generate_stream(num_events=1, )
     async for chunk in response.data:
         yield chunk
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedPlainText(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.get_text()
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

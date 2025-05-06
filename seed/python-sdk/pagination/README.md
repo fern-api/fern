@@ -50,7 +50,8 @@ async def main() -> None:
     # alternatively, you can paginate page-by-page
     async for page in response.iter_pages():
         yield page
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

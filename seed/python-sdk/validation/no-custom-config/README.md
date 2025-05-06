@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.create(decimal=2.2, even=100, name='fern', shape="SQUARE", )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 
