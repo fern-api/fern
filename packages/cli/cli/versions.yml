@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Dont clear tmp dir with generated code in self hosted mode.
+    type: fix
+  irVersion: 57
+  version: 0.60.14
+
+- changelogEntry: 
+  - summary: |
       Set snippet output filepath in generated SDKs. 
     type: fix
   irVersion: 57
