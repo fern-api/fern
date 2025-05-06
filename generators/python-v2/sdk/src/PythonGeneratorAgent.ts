@@ -22,7 +22,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
         super({ logger, config });
         this.publishConfig = publishConfig;
     }
-    
+
     public getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.ReadmeConfig {
