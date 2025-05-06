@@ -1,4 +1,3 @@
-import { appendFileSync } from "fs";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";

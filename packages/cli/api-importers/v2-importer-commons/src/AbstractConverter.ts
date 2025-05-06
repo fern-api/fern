@@ -1,3 +1,5 @@
+import { camelCase } from "lodash-es";
+
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
@@ -216,8 +218,9 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
 
         let pkg = this.ir.rootPackage;
         for (let i = 0; i < groupParts.length; i++) {
-            const name = groupParts[i];
-            const subpackageId = groupParts.slice(0, i + 1).join(".");
+            const name = camelCase(groupParts[i]);
+            const camelCasedGroupParts = groupParts.slice(0, i + 1).map((part) => camelCase(part));
+            const subpackageId = `subpackage_${camelCasedGroupParts.join(".")}`;
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
