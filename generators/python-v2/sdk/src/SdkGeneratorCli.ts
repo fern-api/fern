@@ -34,8 +34,11 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         return this.generate(context);
     }
 
-    protected writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        return this.generate(context);
+    protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
+        await this.generate(context);
+        if (context.isSelfHosted()) {
+            this.generateGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -44,5 +47,9 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         await context.project.persist();
+    }
+
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.pushToGitHub({ context });
     }
 }

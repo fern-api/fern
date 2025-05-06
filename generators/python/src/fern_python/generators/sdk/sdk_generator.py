@@ -276,6 +276,10 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
+        # Print the output mode
+        output_mode = generator_config.output.mode.get_as_union().type
+        print(f"Output mode: {output_mode}")
+
         if generator_config.output.mode.get_as_union().type != "downloadFiles":
             generator_cli = GeneratorCli(
                 organization=generator_config.organization,
