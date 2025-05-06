@@ -182,16 +182,16 @@ export abstract class AbstractConverterContext<Spec extends object> {
         $ref: string;
     }): Promise<{ resolved: true; value: T } | { resolved: false }> {
         let resolvedReference: unknown = this.spec;
-        let fragment: string | undefined;
-        let externalRef: boolean = false;
+        let referencePath: string | undefined;
+        let isExternalRef: boolean = false;
         let externalDoc: unknown | null = null;
         let baseUrl: string | undefined;
 
         if (this.isExternalReference(reference.$ref)) {
-            externalRef = true;
+            isExternalRef = true;
             const splitReference = reference.$ref.split("#");
             const url = splitReference[0];
-            fragment = splitReference[1];
+            referencePath = splitReference[1];
 
             if (!url) {
                 return { resolved: false };
@@ -219,12 +219,12 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 return { resolved: false };
             }
 
-            if (!fragment) {
+            if (!referencePath) {
                 return { resolved: true, value: resolvedReference as T };
             }
         }
 
-        const keys = (fragment ?? reference.$ref)
+        const keys = (referencePath ?? reference.$ref)
             .replace(/^(?:(?:https?:\/\/)?|#?\/?)?/, "")
             .split("/")
             .map((key) => key.replace(/~1/g, "/"));
@@ -241,7 +241,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
             return { resolved: false };
         }
 
-        if (externalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
+        if (isExternalRef && typeof resolvedReference === "object" && resolvedReference !== null) {
             const visitedRefs = new Set<string>();
             visitedRefs.add(reference.$ref);
 
