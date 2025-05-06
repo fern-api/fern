@@ -51694,7 +51694,7 @@
                 "name": "Caetano Veloso",
                 "country": "BRA",
                 "email": "caetano.veloso@musicabrazil.br",
-                "identifier": "1018760936",
+                "identifier": "231.002.999-00",
                 "identifier_type": "CPF"
               },
               "requestBodyV3": {
@@ -51704,7 +51704,7 @@
                   "name": "Caetano Veloso",
                   "country": "BRA",
                   "email": "caetano.veloso@musicabrazil.br",
-                  "identifier": "1018760936",
+                  "identifier": "231.002.999-00",
                   "identifier_type": "CPF"
                 }
               },
@@ -52270,11 +52270,11 @@
               "requestBody": {
                 "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                 "holder": {
-                  "type": "INDIVIDUAL",
+                  "type": "BUSINESS",
                   "information": {
-                    "name": "Caetano Veloso Entertainment Universe",
-                    "identifier_type": "CPF",
-                    "identifier": "231.002.999-00"
+                    "name": "Music Production Brazil",
+                    "identifier_type": "CNPJ",
+                    "identifier": "00.000.000/0001-91"
                   }
                 },
                 "details": {
@@ -52289,11 +52289,11 @@
                 "value": {
                   "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                   "holder": {
-                    "type": "INDIVIDUAL",
+                    "type": "BUSINESS",
                     "information": {
-                      "name": "Caetano Veloso Entertainment Universe",
-                      "identifier_type": "CPF",
-                      "identifier": "231.002.999-00"
+                      "name": "Music Production Brazil",
+                      "identifier_type": "CNPJ",
+                      "identifier": "00.000.000/0001-91"
                     }
                   },
                   "details": {

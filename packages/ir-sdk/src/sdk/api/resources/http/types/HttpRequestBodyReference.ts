@@ -4,6 +4,6 @@
 
 import * as FernIr from "../../../index";
 
-export interface HttpRequestBodyReference extends FernIr.WithDocs, FernIr.WithContentType {
+export interface HttpRequestBodyReference extends FernIr.WithDocs, FernIr.WithContentType, FernIr.WithV2Examples {
     requestBodyType: FernIr.TypeReference;
 }

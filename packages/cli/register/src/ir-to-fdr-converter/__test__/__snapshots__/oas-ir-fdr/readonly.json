@@ -9,24 +9,27 @@
           {
             "key": "name",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "email",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
@@ -52,70 +55,61 @@
           {
             "key": "id",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "name",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "email",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "password",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "createdAt",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
             }
           },
           {
             "key": "settings",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "UserSettings"
-              }
+              "type": "id",
+              "value": "UserSettings"
             }
           },
           {
             "key": "stats",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "id",
-                "value": "UserStats"
-              }
+              "type": "id",
+              "value": "UserStats"
             }
           }
         ]
@@ -130,37 +124,37 @@
           {
             "key": "theme",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           },
           {
             "key": "notifications",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
               }
             }
           },
           {
             "key": "lastModified",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          {
+            "key": "apiKey",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
               }
             }
           }
@@ -193,35 +187,89 @@
           {
             "key": "totalLogins",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "integer"
               }
             }
           },
           {
             "key": "lastLoginTime",
             "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "format": "date-time"
-                }
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
               }
             }
           },
           {
             "key": "accountStatus",
             "valueType": {
+              "type": "id",
+              "value": "UserStatsAccountStatus"
+            }
+          },
+          {
+            "key": "securityScore",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "validateAUserObject_Response_200": {
+      "name": "validateAUserObject_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "success",
+            "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "UserStatsAccountStatus"
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "validateAUserObject_Response_400": {
+      "name": "validateAUserObject_Response_400",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "success",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
@@ -286,10 +334,18 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
-            "requestBody": {},
+            "requestBody": {
+              "name": "foo",
+              "email": "foo",
+              "password": "foo"
+            },
             "requestBodyV3": {
               "type": "json",
-              "value": {}
+              "value": {
+                "name": "foo",
+                "email": "foo",
+                "password": "foo"
+              }
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -434,6 +490,110 @@
                   "lastLoginTime": "foo",
                   "accountStatus": "active"
                 }
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "method": "POST",
+        "id": "validateAUserObject",
+        "originalEndpointId": "validateAUserObject",
+        "name": "Validate a user object",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/users/validate"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "request": {
+          "type": {
+            "type": "json",
+            "contentType": "application/json",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
+            }
+          }
+        },
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "validateAUserObject_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "User object validated successfully"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/users/validate",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "name": "foo",
+              "email": "foo",
+              "password": "foo",
+              "settings": {
+                "theme": "foo",
+                "notifications": true,
+                "apiKey": "foo"
+              },
+              "stats": {
+                "accountStatus": "active",
+                "securityScore": 42
+              }
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "name": "foo",
+                "email": "foo",
+                "password": "foo",
+                "settings": {
+                  "theme": "foo",
+                  "notifications": true,
+                  "apiKey": "foo"
+                },
+                "stats": {
+                  "accountStatus": "active",
+                  "securityScore": 42
+                }
+              }
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "success": true
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "success": true
               }
             }
           }

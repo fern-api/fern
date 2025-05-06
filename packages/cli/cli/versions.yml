@@ -1,5 +1,11 @@
 - changelogEntry: 
   - summary: |
+      Correctly support `readOnly` and `writeOnly` object properties during request and response example generation.
+    type: feat
+  irVersion: 57
+  version: 0.60.15
+ - changelogEntry: 
+  - summary: |
       Dont clear tmp dir with generated code in self hosted mode.
     type: fix
   irVersion: 57
