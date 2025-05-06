@@ -5544,6 +5544,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -6469,6 +6472,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -8259,6 +8265,9 @@ importers:
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../../cli-logger
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader

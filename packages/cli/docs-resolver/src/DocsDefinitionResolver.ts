@@ -757,7 +757,10 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         if (this.parsedDocsConfig.experimental?.openapiParserV3) {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
-            ir = await workspace.getIntermediateRepresentation({ context: this.taskContext });
+            ir = await workspace.getIntermediateRepresentation({
+                context: this.taskContext,
+                audiences: item.audiences
+            });
         } else {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
                 { context: this.taskContext },

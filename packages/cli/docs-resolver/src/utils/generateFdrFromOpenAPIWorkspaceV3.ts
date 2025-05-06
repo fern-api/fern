@@ -1,4 +1,5 @@
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { Audiences } from "@fern-api/configuration";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -7,7 +8,8 @@ import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
 export async function generateFdrFromOpenApiWorkspaceV3(
     workspace: AbstractAPIWorkspace<unknown>,
-    context: TaskContext
+    context: TaskContext,
+    audiences: Audiences
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition | undefined> {
     if (workspace instanceof LazyFernWorkspace) {
         context.logger.info("Skipping, API is specified as a Fern Definition.");
@@ -17,7 +19,8 @@ export async function generateFdrFromOpenApiWorkspaceV3(
     }
 
     const intermediateRepresentation = await workspace.getIntermediateRepresentation({
-        context
+        context,
+        audiences
     });
 
     return convertIrToFdrApi({

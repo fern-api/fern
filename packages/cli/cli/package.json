@@ -43,6 +43,7 @@
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-migrations": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
