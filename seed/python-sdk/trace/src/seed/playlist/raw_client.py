@@ -77,7 +77,7 @@ class RawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 Playlist,
@@ -87,7 +87,7 @@ class RawPlaylistClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_playlists(
         self,
@@ -142,7 +142,7 @@ class RawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[Playlist],
@@ -152,7 +152,7 @@ class RawPlaylistClient:
                 ),
             )
             return HttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
@@ -181,7 +181,7 @@ class RawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 Playlist,
@@ -194,17 +194,18 @@ class RawPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PlaylistIdNotFoundErrorBody,
                         parse_obj_as(
                             type_=PlaylistIdNotFoundErrorBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
             if _response_json["errorName"] == "UnauthorizedError":
-                raise UnauthorizedError()
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+                raise UnauthorizedError(headers=dict(_response.headers))
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update_playlist(
         self,
@@ -244,7 +245,7 @@ class RawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Optional[Playlist],
@@ -257,15 +258,16 @@ class RawPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PlaylistIdNotFoundErrorBody,
                         parse_obj_as(
                             type_=PlaylistIdNotFoundErrorBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
@@ -296,8 +298,8 @@ class RawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawPlaylistClient:
@@ -353,7 +355,7 @@ class AsyncRawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 Playlist,
@@ -363,7 +365,7 @@ class AsyncRawPlaylistClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_playlists(
         self,
@@ -418,7 +420,7 @@ class AsyncRawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.List[Playlist],
@@ -428,7 +430,7 @@ class AsyncRawPlaylistClient:
                 ),
             )
             return AsyncHttpResponse(response=_response, data=_data)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
@@ -457,7 +459,7 @@ class AsyncRawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 Playlist,
@@ -470,17 +472,18 @@ class AsyncRawPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PlaylistIdNotFoundErrorBody,
                         parse_obj_as(
                             type_=PlaylistIdNotFoundErrorBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
             if _response_json["errorName"] == "UnauthorizedError":
-                raise UnauthorizedError()
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+                raise UnauthorizedError(headers=dict(_response.headers))
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update_playlist(
         self,
@@ -520,7 +523,7 @@ class AsyncRawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 typing.Optional[Playlist],
@@ -533,15 +536,16 @@ class AsyncRawPlaylistClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PlaylistIdNotFoundErrorBody,
                         parse_obj_as(
                             type_=PlaylistIdNotFoundErrorBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
@@ -572,5 +576,5 @@ class AsyncRawPlaylistClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response.text)
-        raise ApiError(headers=dict(_response.headers), status_code=_response.status_code, body=_response_json)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

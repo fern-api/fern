@@ -26,6 +26,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "EndUserProfileMetadata": {
       "name": {
@@ -3593,7 +3594,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Too Many Requests"
+            }
+          ],
           "auth": true,
           "docs": "Get a specific end user",
           "userSpecifiedExamples": [],
@@ -6376,7 +6465,153 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Bad Request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Content Too Large"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Too Many Requests"
+            }
+          ],
           "auth": true,
           "docs": "Update an end user. Request data is limited to 4KB in size total.",
           "userSpecifiedExamples": [],
@@ -9713,7 +9948,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Bad Request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "Errors",
+                  "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                  }
+                },
+                "errorId": "Errors",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": "Too Many Requests"
+            }
+          ],
           "auth": true,
           "docs": "Get multiple end users",
           "userSpecifiedExamples": [],

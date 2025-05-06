@@ -27,6 +27,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "UserLinks": {
       "name": {

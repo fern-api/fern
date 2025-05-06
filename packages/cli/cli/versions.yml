@@ -1,5 +1,47 @@
 - changelogEntry: 
   - summary: |
+      Rerelease the Fern CLI. 
+    type: fix
+  irVersion: 57
+  version: 0.60.12
+  
+- changelogEntry: 
+  - summary: |
+      Fix `fern generate --local` to ask for `FERN_TOKEN` if trying to output to GitHub Enterprise.
+    type: fix
+  irVersion: 57
+  version: 0.60.11
+
+- changelogEntry: 
+  - summary: |
+      Local development mode no longer depends on `pnpm` being pre-installed.
+    type: fix
+  irVersion: 57
+  version: 0.60.10
+
+- changelogEntry: 
+  - summary: |
+      Bump Java generator to use v57 of IR. 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc1
+
+- changelogEntry: 
+  - summary: |
+      Adding alpha support for SDK generation to GitHub Enterprise (self hosted). 
+    type: feat
+  irVersion: 57
+  version: 0.60.10-rc0
+
+- changelogEntry: 
+  - summary: |
+      Prettify `ir` output in the `fern ir` command; correctly extract error schemas from converted error responses.
+    type: feat
+  irVersion: 57
+  version: 0.60.9
+
+- changelogEntry: 
+  - summary: |
       Add support for environment and auth overrides from generators.yml in the OpenAPI parser. When importing OpenAPI specifications, 
       the parser now checks for environment and auth configurations in the generators.yml file and uses these settings to override 
       the environments and authentication schemes defined in the OpenAPI document. This enhancement provides more flexibility in 

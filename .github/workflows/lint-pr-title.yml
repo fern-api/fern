@@ -38,6 +38,7 @@ jobs:
             seed
             postman
             ci
+            lint
             fastapi
             spring
             express

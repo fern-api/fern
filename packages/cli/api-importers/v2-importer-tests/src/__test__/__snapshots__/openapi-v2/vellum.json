@@ -45,6 +45,7 @@
       }
     ]
   },
+  "selfHosted": false,
   "types": {
     "BlockTypeEnum": {
       "name": {
@@ -36439,7 +36440,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadDocumentErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "uploadDocumentErrorResponse",
+                    "safeName": "uploadDocumentErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_document_error_response",
+                    "safeName": "upload_document_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
+                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadDocumentErrorResponse",
+                    "safeName": "UploadDocumentErrorResponse"
+                  }
+                },
+                "errorId": "UploadDocumentErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadDocumentErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "uploadDocumentErrorResponse",
+                    "safeName": "uploadDocumentErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_document_error_response",
+                    "safeName": "upload_document_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
+                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadDocumentErrorResponse",
+                    "safeName": "UploadDocumentErrorResponse"
+                  }
+                },
+                "errorId": "UploadDocumentErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",
           "userSpecifiedExamples": [],
@@ -39393,7 +39453,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
           "userSpecifiedExamples": [],
@@ -44981,7 +45129,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GenerateErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "generateErrorResponse",
+                    "safeName": "generateErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "generate_error_response",
+                    "safeName": "generate_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GENERATE_ERROR_RESPONSE",
+                    "safeName": "GENERATE_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GenerateErrorResponse",
+                    "safeName": "GenerateErrorResponse"
+                  }
+                },
+                "errorId": "GenerateErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
           "userSpecifiedExamples": [],
@@ -47809,7 +48045,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "SearchErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "searchErrorResponse",
+                    "safeName": "searchErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "search_error_response",
+                    "safeName": "search_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SEARCH_ERROR_RESPONSE",
+                    "safeName": "SEARCH_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SearchErrorResponse",
+                    "safeName": "SearchErrorResponse"
+                  }
+                },
+                "errorId": "SearchErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "SearchErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "searchErrorResponse",
+                    "safeName": "searchErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "search_error_response",
+                    "safeName": "search_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SEARCH_ERROR_RESPONSE",
+                    "safeName": "SEARCH_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SearchErrorResponse",
+                    "safeName": "SearchErrorResponse"
+                  }
+                },
+                "errorId": "SearchErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
           "userSpecifiedExamples": [],
@@ -49663,7 +49958,66 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "SubmitCompletionActualsErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "submitCompletionActualsErrorResponse",
+                    "safeName": "submitCompletionActualsErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "submit_completion_actuals_error_response",
+                    "safeName": "submit_completion_actuals_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
+                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SubmitCompletionActualsErrorResponse",
+                    "safeName": "SubmitCompletionActualsErrorResponse"
+                  }
+                },
+                "errorId": "SubmitCompletionActualsErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "SubmitCompletionActualsErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "submitCompletionActualsErrorResponse",
+                    "safeName": "submitCompletionActualsErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "submit_completion_actuals_error_response",
+                    "safeName": "submit_completion_actuals_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
+                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SubmitCompletionActualsErrorResponse",
+                    "safeName": "SubmitCompletionActualsErrorResponse"
+                  }
+                },
+                "errorId": "SubmitCompletionActualsErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
           "userSpecifiedExamples": [],
@@ -58077,7 +58431,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "RegisterPromptErrorResponse",
+                  "camelCase": {
+                    "unsafeName": "registerPromptErrorResponse",
+                    "safeName": "registerPromptErrorResponse"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "register_prompt_error_response",
+                    "safeName": "register_prompt_error_response"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REGISTER_PROMPT_ERROR_RESPONSE",
+                    "safeName": "REGISTER_PROMPT_ERROR_RESPONSE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RegisterPromptErrorResponse",
+                    "safeName": "RegisterPromptErrorResponse"
+                  }
+                },
+                "errorId": "RegisterPromptErrorResponse",
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                }
+              },
+              "docs": ""
+            }
+          ],
           "auth": true,
           "docs": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
           "userSpecifiedExamples": [],

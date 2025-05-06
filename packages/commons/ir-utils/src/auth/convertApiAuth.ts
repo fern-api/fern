@@ -1,11 +1,17 @@
-import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, PrimitiveTypeV1, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
-
 import { CasingsGenerator } from "@fern-api/casings-generator";
+import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
+import {
+    ApiAuth,
+    AuthScheme,
+    AuthSchemesRequirement,
+    PrimitiveTypeV1,
+    PrimitiveTypeV2,
+    TypeReference
+} from "@fern-api/ir-sdk";
 
 export function convertApiAuth({
     rawApiFileSchema,
-    casingsGenerator,
+    casingsGenerator
 }: {
     rawApiFileSchema: RawSchemas.WithAuthSchema;
     casingsGenerator: CasingsGenerator;
@@ -24,7 +30,7 @@ export function convertApiAuth({
             const schemaReference = convertSchemeReference({
                 reference: authScheme,
                 authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                casingsGenerator,
+                casingsGenerator
             });
             return {
                 docs,
@@ -39,7 +45,7 @@ export function convertApiAuth({
                 convertSchemeReference({
                     reference: schemeReference,
                     authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
-                    casingsGenerator,
+                    casingsGenerator
                 })
             )
         })
@@ -49,7 +55,7 @@ export function convertApiAuth({
 function convertSchemeReference({
     reference,
     authSchemeDeclarations,
-    casingsGenerator,
+    casingsGenerator
 }: {
     reference: RawSchemas.AuthSchemeReferenceSchema | string;
     authSchemeDeclarations: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined;
@@ -68,7 +74,10 @@ function convertSchemeReference({
                         name: rawHeader.name ?? reference,
                         wireValue: rawHeader.header
                     }),
-                    valueType: TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })}),
+                    valueType: TypeReference.primitive({
+                        v1: PrimitiveTypeV1.String,
+                        v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                    }),
                     prefix: rawHeader.prefix,
                     headerEnvVar: rawHeader.env
                 }),
@@ -89,7 +98,7 @@ function convertSchemeReference({
                     casingsGenerator,
                     docs,
                     rawScheme: undefined
-                }),
+                })
         });
     };
 

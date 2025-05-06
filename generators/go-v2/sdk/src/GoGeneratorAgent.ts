@@ -37,4 +37,16 @@ export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext
     public getLanguage(): FernGeneratorCli.Language {
         return FernGeneratorCli.Language.Go;
     }
+
+    public getGitHubConfig(
+        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
+    ): FernGeneratorCli.GitHubConfig {
+        // TODO: get from env
+        return {
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
+        };
+    }
 }

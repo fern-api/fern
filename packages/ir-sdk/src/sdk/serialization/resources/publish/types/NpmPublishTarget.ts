@@ -10,15 +10,15 @@ export const NpmPublishTarget: core.serialization.ObjectSchema<
     serializers.NpmPublishTarget.Raw,
     FernIr.NpmPublishTarget
 > = core.serialization.objectWithoutOptionalProperties({
+    version: core.serialization.string().optional(),
     packageName: core.serialization.string().optional(),
     tokenEnvironmentVariable: core.serialization.string(),
-    registry: core.serialization.string().optional(),
 });
 
 export declare namespace NpmPublishTarget {
     export interface Raw {
+        version?: string | null;
         packageName?: string | null;
         tokenEnvironmentVariable: string;
-        registry?: string | null;
     }
 }

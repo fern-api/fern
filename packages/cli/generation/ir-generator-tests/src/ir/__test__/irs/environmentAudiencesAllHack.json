@@ -1,4 +1,5 @@
 {
+    "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
@@ -866,6 +867,8 @@
                 "inline": null
             },
             "examples": [],
+            "v2Examples": null,
+            "displayName": null,
             "docs": null
         }
     },

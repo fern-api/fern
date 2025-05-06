@@ -43,6 +43,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                 requirement: FernIr.AuthSchemesRequirement.All,
                 schemes: []
             },
+            selfHosted: false,
             types: {},
             services: {},
             errors: {},

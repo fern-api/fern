@@ -182,21 +182,6 @@ function getPublishConfig({
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
 }): FernIr.PublishingConfig | undefined {
-    // HACKHACK: come back and make this exhaustive
-    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
-        return FernIr.PublishingConfig.github({
-            owner: "",
-            repo: "",
-            token: generatorInvocation.raw.github.token,
-            uri: generatorInvocation.raw.github.uri,
-            target: FernIr.PublishTarget.npm({
-                packageName: undefined,
-                tokenEnvironmentVariable: "NPM_TOKEN",
-                registry: undefined
-            })
-        });
-    }
-
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => undefined,
         github: () => undefined,

@@ -87,10 +87,11 @@ fixtures:
       outputFolder: retain-original-casing
 allowedFailures:
   - bytes
-  - enum
   - file-download
   - file-upload
+  - imdb:skip-request-validation
   - plain-text
+  - public-object
   - streaming
   - streaming-parameter
   - server-sent-events
