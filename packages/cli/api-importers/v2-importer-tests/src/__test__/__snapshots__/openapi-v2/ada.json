@@ -15620,14 +15620,14 @@
     ],
     "errors": [],
     "subpackages": [
-      "End users"
+      "subpackage_endUsers"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "End users": {
+    "subpackage_endUsers": {
       "name": {
-        "originalName": "End users",
+        "originalName": "endUsers",
         "camelCase": {
           "unsafeName": "endUsers",
           "safeName": "endUsers"
@@ -15648,7 +15648,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "End users",
+            "originalName": "endUsers",
             "camelCase": {
               "unsafeName": "endUsers",
               "safeName": "endUsers"
@@ -15669,7 +15669,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "End users",
+          "originalName": "endUsers",
           "camelCase": {
             "unsafeName": "endUsers",
             "safeName": "endUsers"

@@ -66723,7 +66723,7 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "petsV1": {
+    "subpackage_petsV1": {
       "name": {
         "originalName": "petsV1",
         "camelCase": {
@@ -66828,14 +66828,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "petsV1.petsV1",
-        "petsV1.pet",
-        "petsV1.store",
-        "petsV1.user"
+        "subpackage_petsV1.petsV1",
+        "subpackage_petsV1.pet",
+        "subpackage_petsV1.store",
+        "subpackage_petsV1.user"
       ],
       "hasEndpointsInTree": false
     },
-    "petsV1.petsV1": {
+    "subpackage_petsV1.petsV1": {
       "name": {
         "originalName": "petsV1",
         "camelCase": {
@@ -66949,7 +66949,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV1.pet": {
+    "subpackage_petsV1.pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -67057,7 +67057,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV1.store": {
+    "subpackage_petsV1.store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -67165,7 +67165,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV1.user": {
+    "subpackage_petsV1.user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -67273,7 +67273,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV2": {
+    "subpackage_petsV2": {
       "name": {
         "originalName": "petsV2",
         "camelCase": {
@@ -67378,14 +67378,14 @@
       "types": [],
       "errors": [],
       "subpackages": [
-        "petsV2.petsV2",
-        "petsV2.pet",
-        "petsV2.store",
-        "petsV2.user"
+        "subpackage_petsV2.petsV2",
+        "subpackage_petsV2.pet",
+        "subpackage_petsV2.store",
+        "subpackage_petsV2.user"
       ],
       "hasEndpointsInTree": false
     },
-    "petsV2.petsV2": {
+    "subpackage_petsV2.petsV2": {
       "name": {
         "originalName": "petsV2",
         "camelCase": {
@@ -67499,7 +67499,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV2.pet": {
+    "subpackage_petsV2.pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -67607,7 +67607,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV2.store": {
+    "subpackage_petsV2.store": {
       "name": {
         "originalName": "store",
         "camelCase": {
@@ -67715,7 +67715,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "petsV2.user": {
+    "subpackage_petsV2.user": {
       "name": {
         "originalName": "user",
         "camelCase": {
@@ -67829,8 +67829,8 @@
     "types": [],
     "errors": [],
     "subpackages": [
-      "petsV1",
-      "petsV2"
+      "subpackage_petsV1",
+      "subpackage_petsV2"
     ],
     "fernFilepath": {
       "allParts": [

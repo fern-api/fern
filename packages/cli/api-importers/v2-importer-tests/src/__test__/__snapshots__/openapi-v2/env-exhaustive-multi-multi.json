@@ -973,7 +973,7 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "alpha": {
+    "subpackage_alpha": {
       "name": {
         "originalName": "alpha",
         "camelCase": {
@@ -1180,7 +1180,7 @@
       "websocket": "channel_testChannel2",
       "hasEndpointsInTree": false
     },
-    "beta": {
+    "subpackage_beta": {
       "name": {
         "originalName": "beta",
         "camelCase": {
@@ -1935,10 +1935,10 @@
     ],
     "errors": [],
     "subpackages": [
-      "alpha",
+      "subpackage_alpha",
       "subpackage_testChannel",
       "subpackage_testChannel2",
-      "beta",
+      "subpackage_beta",
       "subpackage_testChannels",
       "subpackage_testChannels2"
     ],

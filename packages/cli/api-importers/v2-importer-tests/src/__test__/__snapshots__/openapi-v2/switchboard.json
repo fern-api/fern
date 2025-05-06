@@ -56867,18 +56867,18 @@
     ],
     "errors": [],
     "subpackages": [
-      "Auth",
-      "Extensions",
-      "Profiles",
-      "Sessions",
-      "Windows"
+      "subpackage_auth",
+      "subpackage_extensions",
+      "subpackage_profiles",
+      "subpackage_sessions",
+      "subpackage_windows"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "Auth": {
+    "subpackage_auth": {
       "name": {
-        "originalName": "Auth",
+        "originalName": "auth",
         "camelCase": {
           "unsafeName": "auth",
           "safeName": "auth"
@@ -56899,7 +56899,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Auth",
+            "originalName": "auth",
             "camelCase": {
               "unsafeName": "auth",
               "safeName": "auth"
@@ -56920,7 +56920,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Auth",
+          "originalName": "auth",
           "camelCase": {
             "unsafeName": "auth",
             "safeName": "auth"
@@ -56945,9 +56945,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Extensions": {
+    "subpackage_extensions": {
       "name": {
-        "originalName": "Extensions",
+        "originalName": "extensions",
         "camelCase": {
           "unsafeName": "extensions",
           "safeName": "extensions"
@@ -56968,7 +56968,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Extensions",
+            "originalName": "extensions",
             "camelCase": {
               "unsafeName": "extensions",
               "safeName": "extensions"
@@ -56989,7 +56989,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Extensions",
+          "originalName": "extensions",
           "camelCase": {
             "unsafeName": "extensions",
             "safeName": "extensions"
@@ -57014,9 +57014,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Profiles": {
+    "subpackage_profiles": {
       "name": {
-        "originalName": "Profiles",
+        "originalName": "profiles",
         "camelCase": {
           "unsafeName": "profiles",
           "safeName": "profiles"
@@ -57037,7 +57037,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Profiles",
+            "originalName": "profiles",
             "camelCase": {
               "unsafeName": "profiles",
               "safeName": "profiles"
@@ -57058,7 +57058,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Profiles",
+          "originalName": "profiles",
           "camelCase": {
             "unsafeName": "profiles",
             "safeName": "profiles"
@@ -57083,9 +57083,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Sessions": {
+    "subpackage_sessions": {
       "name": {
-        "originalName": "Sessions",
+        "originalName": "sessions",
         "camelCase": {
           "unsafeName": "sessions",
           "safeName": "sessions"
@@ -57106,7 +57106,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Sessions",
+            "originalName": "sessions",
             "camelCase": {
               "unsafeName": "sessions",
               "safeName": "sessions"
@@ -57127,7 +57127,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Sessions",
+          "originalName": "sessions",
           "camelCase": {
             "unsafeName": "sessions",
             "safeName": "sessions"
@@ -57152,9 +57152,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Windows": {
+    "subpackage_windows": {
       "name": {
-        "originalName": "Windows",
+        "originalName": "windows",
         "camelCase": {
           "unsafeName": "windows",
           "safeName": "windows"
@@ -57175,7 +57175,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Windows",
+            "originalName": "windows",
             "camelCase": {
               "unsafeName": "windows",
               "safeName": "windows"
@@ -57196,7 +57196,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Windows",
+          "originalName": "windows",
           "camelCase": {
             "unsafeName": "windows",
             "safeName": "windows"

@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://delta.spscommerce.com
+- url: https://delta.testapi.com
   description: prod
 paths:
   /delta:

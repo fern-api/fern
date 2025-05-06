@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://mu.spscommerce.com
+- url: https://mu.testapi.com
   description: prod
 paths:
   /mu:

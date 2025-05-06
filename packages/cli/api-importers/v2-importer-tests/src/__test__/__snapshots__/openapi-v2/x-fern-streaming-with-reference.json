@@ -740,12 +740,12 @@
     ],
     "errors": [],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "chatCompletions": {
+    "subpackage_chatCompletions": {
       "name": {
         "originalName": "chatCompletions",
         "camelCase": {
