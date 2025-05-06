@@ -14,7 +14,7 @@ import { generateGeneratorChangelog } from "./commands/generate/generateGenerato
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { publishCli } from "./commands/publish/publishCli";
-import { publishGenerator } from "./commands/publish/publishGenerator";
+import { buildGenerator, publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
@@ -42,7 +42,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
-    addRegisterCommands(cli);
+    addBuildCommand(cli), addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
     addLatestCommands(cli);
@@ -222,6 +222,49 @@ function addRunCommand(cli: Argv) {
                 logLevel: argv["log-level"],
                 audience: argv.audience,
                 skipScripts: argv.skipScripts
+            });
+        }
+    );
+}
+
+function addBuildCommand(cli: Argv) {
+    cli.command(
+        "build",
+        "Build and tag generator",
+        (yargs) =>
+            yargs
+                .option("tag", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Tag applied to the image after building."
+                })
+                .option("generator", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Name of the generator to build (i.e. ts-sdk)."
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const context = taskContextFactory.create("Build");
+
+            await buildGenerator({
+                generator,
+                tag: argv.tag,
+                context
             });
         }
     );
