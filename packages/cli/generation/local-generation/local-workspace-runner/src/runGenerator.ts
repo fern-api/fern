@@ -118,25 +118,34 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
-    const { generatorConfig } = await runGenerator({
-        absolutePathToOutput: absolutePathToTmpOutputDirectory,
-        absolutePathToSnippet: absolutePathToTmpSnippetJSON,
-        absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
-        absolutePathToIr,
-        absolutePathToWriteConfigJson,
-        workspaceName: workspace.definition.rootApiFile.contents.name,
-        organization,
-        outputVersion: outputVersionOverride,
-        keepDocker,
-        generatorInvocation,
-        context,
-        writeUnitTests,
-        generateOauthClients,
-        generatePaginatedClients,
-        sources: workspace.getSources()
-    });
+    try {
+        const { generatorConfig } = await runGenerator({
+            absolutePathToOutput: absolutePathToTmpOutputDirectory,
+            absolutePathToSnippet: absolutePathToTmpSnippetJSON,
+            absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
+            absolutePathToIr,
+            absolutePathToWriteConfigJson,
+            workspaceName: workspace.definition.rootApiFile.contents.name,
+            organization,
+            outputVersion: outputVersionOverride,
+            keepDocker,
+            generatorInvocation,
+            context,
+            writeUnitTests,
+            generateOauthClients,
+            generatePaginatedClients,
+            sources: workspace.getSources()
+        });
 
-    if (!ir?.selfHosted) {
+        return {
+            absolutePathToIr,
+            absolutePathToConfigJson: absolutePathToWriteConfigJson,
+            ir: latest,
+            generatorConfig
+        };
+    } catch (e) {
+        throw e;
+    } finally {
         const taskHandler = new LocalTaskHandler({
             context,
             absolutePathToLocalOutput,
@@ -148,13 +157,6 @@ export async function writeFilesToDiskAndRunGenerator({
         });
         await taskHandler.copyGeneratedFiles();
     }
-
-    return {
-        absolutePathToIr,
-        absolutePathToConfigJson: absolutePathToWriteConfigJson,
-        ir: latest,
-        generatorConfig
-    };
 }
 
 async function writeIrToFile({

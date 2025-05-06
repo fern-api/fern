@@ -1,5 +1,19 @@
 - changelogEntry: 
   - summary: |
+      If a local directory is not specified, generate the SDK in the workspace path. 
+    type: feat
+  irVersion: 57
+  version: 0.60.18
+
+- changelogEntry: 
+  - summary: |
+      Add `--local` flag to `fern check` command to reduce RPC calls when validating workspaces locally.
+    type: feat
+  irVersion: 57
+  version: 0.60.17
+
+- changelogEntry: 
+  - summary: |
       Support environment variable substitution in self-hosted mode for GitHub configurations.
     type: feat
   irVersion: 57

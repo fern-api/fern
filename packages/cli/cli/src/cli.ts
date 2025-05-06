@@ -55,7 +55,8 @@ void runCli();
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
-    const cliContext = new CliContext(process.stdout);
+    const isLocal = process.argv.includes("--local");
+    const cliContext = new CliContext(process.stdout, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
@@ -865,6 +866,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                    default: false
+                })
+                .option("local", {
+                    boolean: true,
+                    description: "Run validation locally without sending data to Fern API.",
                     default: false
                 }),
         async (argv) => {
