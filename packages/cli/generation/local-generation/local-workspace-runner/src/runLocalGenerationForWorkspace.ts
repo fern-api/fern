@@ -9,7 +9,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -101,7 +101,7 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 const absolutePathToLocalOutput =
-                    generatorInvocation.absolutePathToLocalOutput ?? AbsoluteFilePath.of(workspaceTempDir.path);
+                    generatorInvocation.absolutePathToLocalOutput ?? join(workspace.absoluteFilePath, RelativeFilePath.of("sdks"), RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name));
 
                 await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
