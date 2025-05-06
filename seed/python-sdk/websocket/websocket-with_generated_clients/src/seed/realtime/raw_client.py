@@ -58,13 +58,13 @@ class RawRealtimeClient:
             status_code: int = exc.status_code
             if status_code == 401:
                 raise ApiError(
-                    headers=dict(headers),
                     status_code=status_code,
+                    headers=dict(headers),
                     body="Websocket initialized with invalid credentials.",
                 )
             raise ApiError(
-                headers=dict(headers),
                 status_code=status_code,
+                headers=dict(headers),
                 body="Unexpected error when initializing websocket connection.",
             )
 
@@ -115,12 +115,12 @@ class AsyncRawRealtimeClient:
             status_code: int = exc.status_code
             if status_code == 401:
                 raise ApiError(
-                    headers=dict(headers),
                     status_code=status_code,
+                    headers=dict(headers),
                     body="Websocket initialized with invalid credentials.",
                 )
             raise ApiError(
-                headers=dict(headers),
                 status_code=status_code,
+                headers=dict(headers),
                 body="Unexpected error when initializing websocket connection.",
             )

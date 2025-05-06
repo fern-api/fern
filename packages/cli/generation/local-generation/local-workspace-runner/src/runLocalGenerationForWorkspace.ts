@@ -4,6 +4,7 @@ import path from "path";
 import tmp from "tmp-promise";
 
 import { FernToken } from "@fern-api/auth";
+import { getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
@@ -48,7 +49,8 @@ export async function runLocalGenerationForWorkspace({
                 let intermediateRepresentation;
 
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
-                    if (token == null || token.type === "user") {
+                    token = await getAccessToken();
+                    if (token == null) {
                         interactiveTaskContext.failWithoutThrowing("Fern token is required.");
                         return;
                     }

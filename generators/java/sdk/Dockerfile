@@ -24,6 +24,9 @@ COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
 RUN chmod +x /bin/java-v2
 
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
+
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
 ENTRYPOINT ["sh", "/init.sh"]

@@ -136,16 +136,18 @@ export async function writeFilesToDiskAndRunGenerator({
         sources: workspace.getSources()
     });
 
-    const taskHandler = new LocalTaskHandler({
-        context,
-        absolutePathToLocalOutput,
-        absolutePathToTmpOutputDirectory,
-        absolutePathToLocalSnippetJSON,
-        absolutePathToLocalSnippetTemplateJSON,
-        absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
-    });
-    await taskHandler.copyGeneratedFiles();
+    if (!ir?.selfHosted) {
+        const taskHandler = new LocalTaskHandler({
+            context,
+            absolutePathToLocalOutput,
+            absolutePathToTmpOutputDirectory,
+            absolutePathToLocalSnippetJSON,
+            absolutePathToLocalSnippetTemplateJSON,
+            absolutePathToTmpSnippetJSON,
+            absolutePathToTmpSnippetTemplatesJSON
+        });
+        await taskHandler.copyGeneratedFiles();
+    }
 
     return {
         absolutePathToIr,
