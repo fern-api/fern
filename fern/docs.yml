@@ -782,9 +782,3 @@ redirects:
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
-  - source: /learn/ai-search/getting-started/:slug*
-    destination: /learn/ai-search/:slug*
-    permanent: true
-  - source: /learn/ai-search/features/:slug*
-    destination: /learn/ai-search/:slug*
-    permanent: true
