@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Self hosted github user defaults to `fern-api[bot]`.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.1
+- changelogEntry:
+    - summary: |
         Support pushing to GitHub enterprise.
       type: fix
   createdAt: '2025-05-01'
