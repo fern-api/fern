@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedVersion(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.user.get_user(user_id='userId', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

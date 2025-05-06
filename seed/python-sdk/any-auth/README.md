@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedAnyAuth(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
 async def main() -> None:
     await client.auth.get_token(client_id='client_id', client_secret='client_secret', scope='scope', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedUnions(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.bigunion.get(id='id', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

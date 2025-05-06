@@ -39,7 +39,8 @@ import asyncio
 client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 async def main() -> None:
     await client.admin.update_test_submission_status(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=TestSubmissionStatus(), )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

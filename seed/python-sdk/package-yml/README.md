@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedPackageYml(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

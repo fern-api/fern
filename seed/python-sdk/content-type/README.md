@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedContentTypes(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.patch(application='application', require_auth=True, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

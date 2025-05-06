@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.get_with_bearer_token()
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

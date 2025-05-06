@@ -37,7 +37,8 @@ import asyncio
 client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
 async def main() -> None:
     await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

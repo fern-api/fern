@@ -37,7 +37,8 @@ client = AsyncSeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", 
 async def main() -> None:
     await client.basic_auth.post_with_basic_auth(request={'key': 'value'}
     , )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

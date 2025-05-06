@@ -37,7 +37,8 @@ import asyncio
 client = AsyncSeedSingleUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
 async def main() -> None:
     await client.dummy.get_dummy()
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

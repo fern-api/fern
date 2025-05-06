@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.union.get(request='string', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 
