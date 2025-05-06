@@ -1,0 +1,49 @@
+asyncapi: 3.0.0
+info:
+  title: Petstore Events
+  version: 1.0.0
+  description: AsyncAPI spec generated from REST endpoints for pet and order operations.
+
+servers:
+  production:
+    host: mqtt.petstore.com
+    protocol: mqtt
+
+channels:
+  pet/updated:
+    address: pet/updated
+    messages:
+      petUpdated:
+        $ref: '#/components/messages/PetUpdated'
+
+  order/fetched:
+    $ref: '#/components/channels/OrderFetchedChannel'
+
+components:
+  channels:
+    PetUpdatedChannel:
+      address: pet/updated
+      messages:
+        petUpdated:
+          $ref: '#/components/messages/PetUpdated'
+
+    OrderFetchedChannel:
+      address: order/fetched
+      messages:
+        orderFetched:
+          $ref: '#/components/messages/OrderFetched'
+
+  messages:
+    PetUpdated:
+      name: PetUpdated
+      title: Pet Updated Event
+      contentType: application/json
+      payload:
+        $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Pet'
+
+    OrderFetched:
+      name: OrderFetched
+      title: Order Fetched Event
+      contentType: application/json
+      payload:
+        $ref: 'https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Order'
