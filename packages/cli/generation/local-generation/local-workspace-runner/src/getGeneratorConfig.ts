@@ -116,12 +116,14 @@ export function getGeneratorConfig({
         publish: (value) => {
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value),
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         publishV2: (value) => {
             return {
                 ...newDummyPublishOutputConfig(outputVersion, value),
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
@@ -129,6 +131,7 @@ export function getGeneratorConfig({
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },

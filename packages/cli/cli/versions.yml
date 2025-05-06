@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Set snippet output filepath in generated SDKs. 
+    type: fix
+  irVersion: 57
+  version: 0.60.13
+
+- changelogEntry: 
+  - summary: |
       Rerelease the Fern CLI. 
     type: fix
   irVersion: 57
