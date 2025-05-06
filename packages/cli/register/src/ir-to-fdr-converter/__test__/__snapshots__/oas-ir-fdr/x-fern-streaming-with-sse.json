@@ -74,8 +74,8 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "subpackageId": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "subpackageId": "subpackage_chatCompletions",
       "name": "chatCompletions",
       "endpoints": [
         {
@@ -175,7 +175,7 @@
       "CompletionChunk"
     ],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ]
   },
   "snippetsConfiguration": {},

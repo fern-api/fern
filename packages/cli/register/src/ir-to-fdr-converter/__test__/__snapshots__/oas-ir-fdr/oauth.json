@@ -78,8 +78,8 @@
     }
   },
   "subpackages": {
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
       "name": "auth",
       "endpoints": [
         {
@@ -261,7 +261,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "auth"
+      "subpackage_auth"
     ]
   },
   "auth": {

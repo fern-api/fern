@@ -10441,9 +10441,9 @@
     }
   },
   "subpackages": {
-    "account-details": {
-      "subpackageId": "account-details",
-      "name": "account-details",
+    "subpackage_accountDetails": {
+      "subpackageId": "subpackage_accountDetails",
+      "name": "accountDetails",
       "endpoints": [
         {
           "auth": true,
@@ -10554,9 +10554,9 @@
       "types": [],
       "subpackages": []
     },
-    "account-token": {
-      "subpackageId": "account-token",
-      "name": "account-token",
+    "subpackage_accountToken": {
+      "subpackageId": "subpackage_accountToken",
+      "name": "accountToken",
       "endpoints": [
         {
           "auth": true,
@@ -10680,9 +10680,9 @@
       "types": [],
       "subpackages": []
     },
-    "available-actions": {
-      "subpackageId": "available-actions",
-      "name": "available-actions",
+    "subpackage_availableActions": {
+      "subpackageId": "subpackage_availableActions",
+      "name": "availableActions",
       "endpoints": [
         {
           "auth": true,
@@ -10827,9 +10827,9 @@
       "types": [],
       "subpackages": []
     },
-    "bank-info": {
-      "subpackageId": "bank-info",
-      "name": "bank-info",
+    "subpackage_bankInfo": {
+      "subpackageId": "subpackage_bankInfo",
+      "name": "bankInfo",
       "endpoints": [
         {
           "auth": true,
@@ -11364,8 +11364,8 @@
       "types": [],
       "subpackages": []
     },
-    "benefits": {
-      "subpackageId": "benefits",
+    "subpackage_benefits": {
+      "subpackageId": "subpackage_benefits",
       "name": "benefits",
       "endpoints": [
         {
@@ -11822,8 +11822,8 @@
       "types": [],
       "subpackages": []
     },
-    "companies": {
-      "subpackageId": "companies",
+    "subpackage_companies": {
+      "subpackageId": "subpackage_companies",
       "name": "companies",
       "endpoints": [
         {
@@ -12233,9 +12233,9 @@
       "types": [],
       "subpackages": []
     },
-    "delete-account": {
-      "subpackageId": "delete-account",
-      "name": "delete-account",
+    "subpackage_deleteAccount": {
+      "subpackageId": "subpackage_deleteAccount",
+      "name": "deleteAccount",
       "endpoints": [
         {
           "auth": true,
@@ -12305,9 +12305,9 @@
       "types": [],
       "subpackages": []
     },
-    "employee-payroll-runs": {
-      "subpackageId": "employee-payroll-runs",
-      "name": "employee-payroll-runs",
+    "subpackage_employeePayrollRuns": {
+      "subpackageId": "subpackage_employeePayrollRuns",
+      "name": "employeePayrollRuns",
       "endpoints": [
         {
           "auth": true,
@@ -13057,8 +13057,8 @@
       "types": [],
       "subpackages": []
     },
-    "employees": {
-      "subpackageId": "employees",
+    "subpackage_employees": {
+      "subpackageId": "subpackage_employees",
       "name": "employees",
       "endpoints": [
         {
@@ -14380,8 +14380,8 @@
       "types": [],
       "subpackages": []
     },
-    "employments": {
-      "subpackageId": "employments",
+    "subpackage_employments": {
+      "subpackageId": "subpackage_employments",
       "name": "employments",
       "endpoints": [
         {
@@ -14909,9 +14909,9 @@
       "types": [],
       "subpackages": []
     },
-    "generate-key": {
-      "subpackageId": "generate-key",
-      "name": "generate-key",
+    "subpackage_generateKey": {
+      "subpackageId": "subpackage_generateKey",
+      "name": "generateKey",
       "endpoints": [
         {
           "auth": true,
@@ -15015,8 +15015,8 @@
       "types": [],
       "subpackages": []
     },
-    "groups": {
-      "subpackageId": "groups",
+    "subpackage_groups": {
+      "subpackageId": "subpackage_groups",
       "name": "groups",
       "endpoints": [
         {
@@ -15480,8 +15480,8 @@
       "types": [],
       "subpackages": []
     },
-    "issues": {
-      "subpackageId": "issues",
+    "subpackage_issues": {
+      "subpackageId": "subpackage_issues",
       "name": "issues",
       "endpoints": [
         {
@@ -15874,9 +15874,9 @@
       "types": [],
       "subpackages": []
     },
-    "link-token": {
-      "subpackageId": "link-token",
-      "name": "link-token",
+    "subpackage_linkToken": {
+      "subpackageId": "subpackage_linkToken",
+      "name": "linkToken",
       "endpoints": [
         {
           "auth": true,
@@ -15992,9 +15992,9 @@
       "types": [],
       "subpackages": []
     },
-    "linked-accounts": {
-      "subpackageId": "linked-accounts",
-      "name": "linked-accounts",
+    "subpackage_linkedAccounts": {
+      "subpackageId": "subpackage_linkedAccounts",
+      "name": "linkedAccounts",
       "endpoints": [
         {
           "auth": true,
@@ -16322,8 +16322,8 @@
       "types": [],
       "subpackages": []
     },
-    "locations": {
-      "subpackageId": "locations",
+    "subpackage_locations": {
+      "subpackageId": "subpackage_locations",
       "name": "locations",
       "endpoints": [
         {
@@ -16798,8 +16798,8 @@
       "types": [],
       "subpackages": []
     },
-    "passthrough": {
-      "subpackageId": "passthrough",
+    "subpackage_passthrough": {
+      "subpackageId": "subpackage_passthrough",
       "name": "passthrough",
       "endpoints": [
         {
@@ -16929,9 +16929,9 @@
       "types": [],
       "subpackages": []
     },
-    "pay-groups": {
-      "subpackageId": "pay-groups",
-      "name": "pay-groups",
+    "subpackage_payGroups": {
+      "subpackageId": "subpackage_payGroups",
+      "name": "payGroups",
       "endpoints": [
         {
           "auth": true,
@@ -17324,9 +17324,9 @@
       "types": [],
       "subpackages": []
     },
-    "payroll-runs": {
-      "subpackageId": "payroll-runs",
-      "name": "payroll-runs",
+    "subpackage_payrollRuns": {
+      "subpackageId": "subpackage_payrollRuns",
+      "name": "payrollRuns",
       "endpoints": [
         {
           "auth": true,
@@ -17851,9 +17851,9 @@
       "types": [],
       "subpackages": []
     },
-    "regenerate-key": {
-      "subpackageId": "regenerate-key",
-      "name": "regenerate-key",
+    "subpackage_regenerateKey": {
+      "subpackageId": "subpackage_regenerateKey",
+      "name": "regenerateKey",
       "endpoints": [
         {
           "auth": true,
@@ -17957,9 +17957,9 @@
       "types": [],
       "subpackages": []
     },
-    "selective-sync": {
-      "subpackageId": "selective-sync",
-      "name": "selective-sync",
+    "subpackage_selectiveSync": {
+      "subpackageId": "subpackage_selectiveSync",
+      "name": "selectiveSync",
       "endpoints": [
         {
           "auth": true,
@@ -18397,9 +18397,9 @@
       "types": [],
       "subpackages": []
     },
-    "sync-status": {
-      "subpackageId": "sync-status",
-      "name": "sync-status",
+    "subpackage_syncStatus": {
+      "subpackageId": "subpackage_syncStatus",
+      "name": "syncStatus",
       "endpoints": [
         {
           "auth": true,
@@ -18545,9 +18545,9 @@
       "types": [],
       "subpackages": []
     },
-    "force-resync": {
-      "subpackageId": "force-resync",
-      "name": "force-resync",
+    "subpackage_forceResync": {
+      "subpackageId": "subpackage_forceResync",
+      "name": "forceResync",
       "endpoints": [
         {
           "auth": true,
@@ -18659,8 +18659,8 @@
       "types": [],
       "subpackages": []
     },
-    "teams": {
-      "subpackageId": "teams",
+    "subpackage_teams": {
+      "subpackageId": "subpackage_teams",
       "name": "teams",
       "endpoints": [
         {
@@ -19097,9 +19097,9 @@
       "types": [],
       "subpackages": []
     },
-    "time-off": {
-      "subpackageId": "time-off",
-      "name": "time-off",
+    "subpackage_timeOff": {
+      "subpackageId": "subpackage_timeOff",
+      "name": "timeOff",
       "endpoints": [
         {
           "auth": true,
@@ -19984,9 +19984,9 @@
       "types": [],
       "subpackages": []
     },
-    "time-off-balances": {
-      "subpackageId": "time-off-balances",
-      "name": "time-off-balances",
+    "subpackage_timeOffBalances": {
+      "subpackageId": "subpackage_timeOffBalances",
+      "name": "timeOffBalances",
       "endpoints": [
         {
           "auth": true,
@@ -20489,9 +20489,9 @@
       "types": [],
       "subpackages": []
     },
-    "webhook-receivers": {
-      "subpackageId": "webhook-receivers",
-      "name": "webhook-receivers",
+    "subpackage_webhookReceivers": {
+      "subpackageId": "subpackage_webhookReceivers",
+      "name": "webhookReceivers",
       "endpoints": [
         {
           "auth": true,
@@ -20824,33 +20824,33 @@
       "WebhookReceiverRequest"
     ],
     "subpackages": [
-      "account-details",
-      "account-token",
-      "available-actions",
-      "bank-info",
-      "benefits",
-      "companies",
-      "delete-account",
-      "employee-payroll-runs",
-      "employees",
-      "employments",
-      "generate-key",
-      "groups",
-      "issues",
-      "link-token",
-      "linked-accounts",
-      "locations",
-      "passthrough",
-      "pay-groups",
-      "payroll-runs",
-      "regenerate-key",
-      "selective-sync",
-      "sync-status",
-      "force-resync",
-      "teams",
-      "time-off",
-      "time-off-balances",
-      "webhook-receivers"
+      "subpackage_accountDetails",
+      "subpackage_accountToken",
+      "subpackage_availableActions",
+      "subpackage_bankInfo",
+      "subpackage_benefits",
+      "subpackage_companies",
+      "subpackage_deleteAccount",
+      "subpackage_employeePayrollRuns",
+      "subpackage_employees",
+      "subpackage_employments",
+      "subpackage_generateKey",
+      "subpackage_groups",
+      "subpackage_issues",
+      "subpackage_linkToken",
+      "subpackage_linkedAccounts",
+      "subpackage_locations",
+      "subpackage_passthrough",
+      "subpackage_payGroups",
+      "subpackage_payrollRuns",
+      "subpackage_regenerateKey",
+      "subpackage_selectiveSync",
+      "subpackage_syncStatus",
+      "subpackage_forceResync",
+      "subpackage_teams",
+      "subpackage_timeOff",
+      "subpackage_timeOffBalances",
+      "subpackage_webhookReceivers"
     ]
   },
   "auth": {

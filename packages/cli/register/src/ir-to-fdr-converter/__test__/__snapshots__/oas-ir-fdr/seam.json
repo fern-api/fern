@@ -16904,9 +16904,9 @@
     }
   },
   "subpackages": {
-    "access_codes": {
-      "subpackageId": "access_codes",
-      "name": "access_codes",
+    "subpackage_accessCodes": {
+      "subpackageId": "subpackage_accessCodes",
+      "name": "accessCodes",
       "endpoints": [
         {
           "auth": true,
@@ -18676,13 +18676,13 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "access_codes.simulate",
-        "access_codes.unmanaged"
+        "subpackage_accessCodes.simulate",
+        "subpackage_accessCodes.unmanaged"
       ]
     },
-    "action_attempts": {
-      "subpackageId": "action_attempts",
-      "name": "action_attempts",
+    "subpackage_actionAttempts": {
+      "subpackageId": "subpackage_actionAttempts",
+      "name": "actionAttempts",
       "endpoints": [
         {
           "auth": true,
@@ -18925,9 +18925,9 @@
       "types": [],
       "subpackages": []
     },
-    "client_sessions": {
-      "subpackageId": "client_sessions",
-      "name": "client_sessions",
+    "subpackage_clientSessions": {
+      "subpackageId": "subpackage_clientSessions",
+      "name": "clientSessions",
       "endpoints": [
         {
           "auth": false,
@@ -20026,9 +20026,9 @@
       "types": [],
       "subpackages": []
     },
-    "connect_webviews": {
-      "subpackageId": "connect_webviews",
-      "name": "connect_webviews",
+    "subpackage_connectWebviews": {
+      "subpackageId": "subpackage_connectWebviews",
+      "name": "connectWebviews",
       "endpoints": [
         {
           "auth": true,
@@ -20704,9 +20704,9 @@
       "types": [],
       "subpackages": []
     },
-    "connected_accounts": {
-      "subpackageId": "connected_accounts",
-      "name": "connected_accounts",
+    "subpackage_connectedAccounts": {
+      "subpackageId": "subpackage_connectedAccounts",
+      "name": "connectedAccounts",
       "endpoints": [
         {
           "auth": true,
@@ -21253,8 +21253,8 @@
       "types": [],
       "subpackages": []
     },
-    "devices": {
-      "subpackageId": "devices",
+    "subpackage_devices": {
+      "subpackageId": "subpackage_devices",
       "name": "devices",
       "endpoints": [
         {
@@ -22159,12 +22159,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "devices.simulate",
-        "devices.unmanaged"
+        "subpackage_devices.simulate",
+        "subpackage_devices.unmanaged"
       ]
     },
-    "events": {
-      "subpackageId": "events",
+    "subpackage_events": {
+      "subpackageId": "subpackage_events",
       "name": "events",
       "endpoints": [
         {
@@ -22576,8 +22576,8 @@
       "types": [],
       "subpackages": []
     },
-    "locks": {
-      "subpackageId": "locks",
+    "subpackage_locks": {
+      "subpackageId": "subpackage_locks",
       "name": "locks",
       "endpoints": [
         {
@@ -23522,8 +23522,8 @@
       "types": [],
       "subpackages": []
     },
-    "networks": {
-      "subpackageId": "networks",
+    "subpackage_networks": {
+      "subpackageId": "subpackage_networks",
       "name": "networks",
       "endpoints": [
         {
@@ -23741,8 +23741,8 @@
       "types": [],
       "subpackages": []
     },
-    "phones": {
-      "subpackageId": "phones",
+    "subpackage_phones": {
+      "subpackageId": "subpackage_phones",
       "name": "phones",
       "endpoints": [
         {
@@ -24042,11 +24042,11 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "phones.simulate"
+        "subpackage_phones.simulate"
       ]
     },
-    "thermostats": {
-      "subpackageId": "thermostats",
+    "subpackage_thermostats": {
+      "subpackageId": "subpackage_thermostats",
       "name": "thermostats",
       "endpoints": [
         {
@@ -25432,12 +25432,12 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "thermostats.climate_setting_schedules"
+        "subpackage_thermostats.climateSettingSchedules"
       ]
     },
-    "user_identities": {
-      "subpackageId": "user_identities",
-      "name": "user_identities",
+    "subpackage_userIdentities": {
+      "subpackageId": "subpackage_userIdentities",
+      "name": "userIdentities",
       "endpoints": [
         {
           "auth": true,
@@ -27106,11 +27106,11 @@
       "websockets": [],
       "types": [],
       "subpackages": [
-        "user_identities.enrollment_automations"
+        "subpackage_userIdentities.enrollmentAutomations"
       ]
     },
-    "webhooks": {
-      "subpackageId": "webhooks",
+    "subpackage_webhooks": {
+      "subpackageId": "subpackage_webhooks",
       "name": "webhooks",
       "endpoints": [
         {
@@ -27660,8 +27660,8 @@
       "types": [],
       "subpackages": []
     },
-    "workspaces": {
-      "subpackageId": "workspaces",
+    "subpackage_workspaces": {
+      "subpackageId": "subpackage_workspaces",
       "name": "workspaces",
       "endpoints": [
         {
@@ -28091,8 +28091,8 @@
       "types": [],
       "subpackages": []
     },
-    "access_codes.simulate": {
-      "subpackageId": "access_codes.simulate",
+    "subpackage_accessCodes.simulate": {
+      "subpackageId": "subpackage_accessCodes.simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -28252,8 +28252,8 @@
       "types": [],
       "subpackages": []
     },
-    "access_codes.unmanaged": {
-      "subpackageId": "access_codes.unmanaged",
+    "subpackage_accessCodes.unmanaged": {
+      "subpackageId": "subpackage_accessCodes.unmanaged",
       "name": "unmanaged",
       "endpoints": [
         {
@@ -28971,26 +28971,26 @@
       "types": [],
       "subpackages": []
     },
-    "acs": {
-      "subpackageId": "acs",
+    "subpackage_acs": {
+      "subpackageId": "subpackage_acs",
       "name": "acs",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "acs.access_groups",
-        "acs.credential_pools",
-        "acs.credential_provisioning_automations",
-        "acs.credentials",
-        "acs.entrances",
-        "acs.systems",
-        "acs.users"
+        "subpackage_acs.accessGroups",
+        "subpackage_acs.credentialPools",
+        "subpackage_acs.credentialProvisioningAutomations",
+        "subpackage_acs.credentials",
+        "subpackage_acs.entrances",
+        "subpackage_acs.systems",
+        "subpackage_acs.users"
       ]
     },
-    "acs.access_groups": {
-      "subpackageId": "acs.access_groups",
-      "name": "access_groups",
+    "subpackage_acs.accessGroups": {
+      "subpackageId": "subpackage_acs.accessGroups",
+      "name": "accessGroups",
       "endpoints": [
         {
           "auth": true,
@@ -29626,9 +29626,9 @@
       "types": [],
       "subpackages": []
     },
-    "acs.credential_pools": {
-      "subpackageId": "acs.credential_pools",
-      "name": "credential_pools",
+    "subpackage_acs.credentialPools": {
+      "subpackageId": "subpackage_acs.credentialPools",
+      "name": "credentialPools",
       "endpoints": [
         {
           "auth": true,
@@ -29756,9 +29756,9 @@
       "types": [],
       "subpackages": []
     },
-    "acs.credential_provisioning_automations": {
-      "subpackageId": "acs.credential_provisioning_automations",
-      "name": "credential_provisioning_automations",
+    "subpackage_acs.credentialProvisioningAutomations": {
+      "subpackageId": "subpackage_acs.credentialProvisioningAutomations",
+      "name": "credentialProvisioningAutomations",
       "endpoints": [
         {
           "auth": true,
@@ -29928,8 +29928,8 @@
       "types": [],
       "subpackages": []
     },
-    "acs.credentials": {
-      "subpackageId": "acs.credentials",
+    "subpackage_acs.credentials": {
+      "subpackageId": "subpackage_acs.credentials",
       "name": "credentials",
       "endpoints": [
         {
@@ -31453,8 +31453,8 @@
       "types": [],
       "subpackages": []
     },
-    "acs.entrances": {
-      "subpackageId": "acs.entrances",
+    "subpackage_acs.entrances": {
+      "subpackageId": "subpackage_acs.entrances",
       "name": "entrances",
       "endpoints": [
         {
@@ -32098,8 +32098,8 @@
       "types": [],
       "subpackages": []
     },
-    "acs.systems": {
-      "subpackageId": "acs.systems",
+    "subpackage_acs.systems": {
+      "subpackageId": "subpackage_acs.systems",
       "name": "systems",
       "endpoints": [
         {
@@ -32583,8 +32583,8 @@
       "types": [],
       "subpackages": []
     },
-    "acs.users": {
-      "subpackageId": "acs.users",
+    "subpackage_acs.users": {
+      "subpackageId": "subpackage_acs.users",
       "name": "users",
       "endpoints": [
         {
@@ -34106,8 +34106,8 @@
       "types": [],
       "subpackages": []
     },
-    "devices.simulate": {
-      "subpackageId": "devices.simulate",
+    "subpackage_devices.simulate": {
+      "subpackageId": "subpackage_devices.simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -34410,8 +34410,8 @@
       "types": [],
       "subpackages": []
     },
-    "devices.unmanaged": {
-      "subpackageId": "devices.unmanaged",
+    "subpackage_devices.unmanaged": {
+      "subpackageId": "subpackage_devices.unmanaged",
       "name": "unmanaged",
       "endpoints": [
         {
@@ -35143,21 +35143,21 @@
       "types": [],
       "subpackages": []
     },
-    "noise_sensors": {
-      "subpackageId": "noise_sensors",
-      "name": "noise_sensors",
+    "subpackage_noiseSensors": {
+      "subpackageId": "subpackage_noiseSensors",
+      "name": "noiseSensors",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "noise_sensors.noise_thresholds",
-        "noise_sensors.simulate"
+        "subpackage_noiseSensors.noiseThresholds",
+        "subpackage_noiseSensors.simulate"
       ]
     },
-    "noise_sensors.noise_thresholds": {
-      "subpackageId": "noise_sensors.noise_thresholds",
-      "name": "noise_thresholds",
+    "subpackage_noiseSensors.noiseThresholds": {
+      "subpackageId": "subpackage_noiseSensors.noiseThresholds",
+      "name": "noiseThresholds",
       "endpoints": [
         {
           "auth": true,
@@ -35948,8 +35948,8 @@
       "types": [],
       "subpackages": []
     },
-    "noise_sensors.simulate": {
-      "subpackageId": "noise_sensors.simulate",
+    "subpackage_noiseSensors.simulate": {
+      "subpackageId": "subpackage_noiseSensors.simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -36056,8 +36056,8 @@
       "types": [],
       "subpackages": []
     },
-    "phones.simulate": {
-      "subpackageId": "phones.simulate",
+    "subpackage_phones.simulate": {
+      "subpackageId": "subpackage_phones.simulate",
       "name": "simulate",
       "endpoints": [
         {
@@ -36290,9 +36290,9 @@
       "types": [],
       "subpackages": []
     },
-    "thermostats.climate_setting_schedules": {
-      "subpackageId": "thermostats.climate_setting_schedules",
-      "name": "climate_setting_schedules",
+    "subpackage_thermostats.climateSettingSchedules": {
+      "subpackageId": "subpackage_thermostats.climateSettingSchedules",
+      "name": "climateSettingSchedules",
       "endpoints": [
         {
           "auth": true,
@@ -37239,9 +37239,9 @@
       "types": [],
       "subpackages": []
     },
-    "user_identities.enrollment_automations": {
-      "subpackageId": "user_identities.enrollment_automations",
-      "name": "enrollment_automations",
+    "subpackage_userIdentities.enrollmentAutomations": {
+      "subpackageId": "subpackage_userIdentities.enrollmentAutomations",
+      "name": "enrollmentAutomations",
       "endpoints": [
         {
           "auth": true,
@@ -37773,22 +37773,22 @@
       "network"
     ],
     "subpackages": [
-      "access_codes",
-      "action_attempts",
-      "client_sessions",
-      "connect_webviews",
-      "connected_accounts",
-      "devices",
-      "events",
-      "locks",
-      "networks",
-      "phones",
-      "thermostats",
-      "user_identities",
-      "webhooks",
-      "workspaces",
-      "acs",
-      "noise_sensors"
+      "subpackage_accessCodes",
+      "subpackage_actionAttempts",
+      "subpackage_clientSessions",
+      "subpackage_connectWebviews",
+      "subpackage_connectedAccounts",
+      "subpackage_devices",
+      "subpackage_events",
+      "subpackage_locks",
+      "subpackage_networks",
+      "subpackage_phones",
+      "subpackage_thermostats",
+      "subpackage_userIdentities",
+      "subpackage_webhooks",
+      "subpackage_workspaces",
+      "subpackage_acs",
+      "subpackage_noiseSensors"
     ]
   },
   "snippetsConfiguration": {},

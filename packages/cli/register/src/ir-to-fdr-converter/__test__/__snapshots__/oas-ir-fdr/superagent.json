@@ -517,9 +517,9 @@
     }
   },
   "subpackages": {
-    "Agent": {
-      "subpackageId": "Agent",
-      "name": "Agent",
+    "subpackage_agent": {
+      "subpackageId": "subpackage_agent",
+      "name": "agent",
       "endpoints": [
         {
           "auth": true,
@@ -897,9 +897,9 @@
       "types": [],
       "subpackages": []
     },
-    "Auth": {
-      "subpackageId": "Auth",
-      "name": "Auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
+      "name": "auth",
       "endpoints": [
         {
           "auth": false,
@@ -1029,9 +1029,9 @@
       "types": [],
       "subpackages": []
     },
-    "User": {
-      "subpackageId": "User",
-      "name": "User",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
+      "name": "user",
       "endpoints": [
         {
           "auth": true,
@@ -1133,9 +1133,9 @@
       "types": [],
       "subpackages": []
     },
-    "Api token": {
-      "subpackageId": "Api token",
-      "name": "Api token",
+    "subpackage_apiToken": {
+      "subpackageId": "subpackage_apiToken",
+      "name": "apiToken",
       "endpoints": [
         {
           "auth": true,
@@ -1357,9 +1357,9 @@
       "types": [],
       "subpackages": []
     },
-    "Documents": {
-      "subpackageId": "Documents",
-      "name": "Documents",
+    "subpackage_documents": {
+      "subpackageId": "subpackage_documents",
+      "name": "documents",
       "endpoints": [
         {
           "auth": true,
@@ -1585,9 +1585,9 @@
       "types": [],
       "subpackages": []
     },
-    "Prompts": {
-      "subpackageId": "Prompts",
-      "name": "Prompts",
+    "subpackage_prompts": {
+      "subpackageId": "subpackage_prompts",
+      "name": "prompts",
       "endpoints": [
         {
           "auth": true,
@@ -1891,9 +1891,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tools": {
-      "subpackageId": "Tools",
-      "name": "Tools",
+    "subpackage_tools": {
+      "subpackageId": "subpackage_tools",
+      "name": "tools",
       "endpoints": [
         {
           "auth": true,
@@ -2117,9 +2117,9 @@
       "types": [],
       "subpackages": []
     },
-    "Traces": {
-      "subpackageId": "Traces",
-      "name": "Traces",
+    "subpackage_traces": {
+      "subpackageId": "subpackage_traces",
+      "name": "traces",
       "endpoints": [
         {
           "auth": true,
@@ -2183,14 +2183,14 @@
       "ValidationError"
     ],
     "subpackages": [
-      "Agent",
-      "Auth",
-      "User",
-      "Api token",
-      "Documents",
-      "Prompts",
-      "Tools",
-      "Traces"
+      "subpackage_agent",
+      "subpackage_auth",
+      "subpackage_user",
+      "subpackage_apiToken",
+      "subpackage_documents",
+      "subpackage_prompts",
+      "subpackage_tools",
+      "subpackage_traces"
     ]
   },
   "snippetsConfiguration": {},

@@ -72,8 +72,8 @@
     }
   },
   "subpackages": {
-    "user": {
-      "subpackageId": "user",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
       "name": "user",
       "endpoints": [
         {
@@ -199,7 +199,7 @@
       "StreamUser"
     ],
     "subpackages": [
-      "user"
+      "subpackage_user"
     ]
   },
   "snippetsConfiguration": {},

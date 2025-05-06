@@ -1179,9 +1179,9 @@
     }
   },
   "subpackages": {
-    "Ignition": {
-      "subpackageId": "Ignition",
-      "name": "Ignition",
+    "subpackage_ignition": {
+      "subpackageId": "subpackage_ignition",
+      "name": "ignition",
       "endpoints": [
         {
           "auth": false,
@@ -1364,9 +1364,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tokens": {
-      "subpackageId": "Tokens",
-      "name": "Tokens",
+    "subpackage_tokens": {
+      "subpackageId": "subpackage_tokens",
+      "name": "tokens",
       "endpoints": [
         {
           "auth": false,
@@ -1516,9 +1516,9 @@
       "types": [],
       "subpackages": []
     },
-    "Accounts": {
-      "subpackageId": "Accounts",
-      "name": "Accounts",
+    "subpackage_accounts": {
+      "subpackageId": "subpackage_accounts",
+      "name": "accounts",
       "endpoints": [
         {
           "auth": false,
@@ -1684,9 +1684,9 @@
       "types": [],
       "subpackages": []
     },
-    "Policies": {
-      "subpackageId": "Policies",
-      "name": "Policies",
+    "subpackage_policies": {
+      "subpackageId": "subpackage_policies",
+      "name": "policies",
       "endpoints": [
         {
           "auth": false,
@@ -1968,9 +1968,9 @@
       "types": [],
       "subpackages": []
     },
-    "Carriers": {
-      "subpackageId": "Carriers",
-      "name": "Carriers",
+    "subpackage_carriers": {
+      "subpackageId": "subpackage_carriers",
+      "name": "carriers",
       "endpoints": [
         {
           "auth": false,
@@ -2278,11 +2278,11 @@
       "Error"
     ],
     "subpackages": [
-      "Ignition",
-      "Tokens",
-      "Accounts",
-      "Policies",
-      "Carriers"
+      "subpackage_ignition",
+      "subpackage_tokens",
+      "subpackage_accounts",
+      "subpackage_policies",
+      "subpackage_carriers"
     ]
   },
   "auth": {

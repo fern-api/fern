@@ -7372,9 +7372,9 @@
     }
   },
   "subpackages": {
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": true,
@@ -7975,9 +7975,9 @@
       "types": [],
       "subpackages": []
     },
-    "Projects": {
-      "subpackageId": "Projects",
-      "name": "Projects",
+    "subpackage_projects": {
+      "subpackageId": "subpackage_projects",
+      "name": "projects",
       "endpoints": [
         {
           "auth": true,
@@ -8518,9 +8518,9 @@
       "types": [],
       "subpackages": []
     },
-    "Environments": {
-      "subpackageId": "Environments",
-      "name": "Environments",
+    "subpackage_environments": {
+      "subpackageId": "subpackage_environments",
+      "name": "environments",
       "endpoints": [
         {
           "auth": true,
@@ -9639,9 +9639,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resources": {
-      "subpackageId": "Resources",
-      "name": "Resources",
+    "subpackage_resources": {
+      "subpackageId": "subpackage_resources",
+      "name": "resources",
       "endpoints": [
         {
           "auth": true,
@@ -10811,9 +10811,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Actions": {
-      "subpackageId": "Resource Actions",
-      "name": "Resource Actions",
+    "subpackage_resourceActions": {
+      "subpackageId": "subpackage_resourceActions",
+      "name": "resourceActions",
       "endpoints": [
         {
           "auth": true,
@@ -11659,9 +11659,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Action Groups": {
-      "subpackageId": "Resource Action Groups",
-      "name": "Resource Action Groups",
+    "subpackage_resourceActionGroups": {
+      "subpackageId": "subpackage_resourceActionGroups",
+      "name": "resourceActionGroups",
       "endpoints": [
         {
           "auth": true,
@@ -12533,9 +12533,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Roles": {
-      "subpackageId": "Resource Roles",
-      "name": "Resource Roles",
+    "subpackage_resourceRoles": {
+      "subpackageId": "subpackage_resourceRoles",
+      "name": "resourceRoles",
       "endpoints": [
         {
           "auth": true,
@@ -14213,9 +14213,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Attributes": {
-      "subpackageId": "Resource Attributes",
-      "name": "Resource Attributes",
+    "subpackage_resourceAttributes": {
+      "subpackageId": "subpackage_resourceAttributes",
+      "name": "resourceAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -15099,9 +15099,9 @@
       "types": [],
       "subpackages": []
     },
-    "User Attributes": {
-      "subpackageId": "User Attributes",
-      "name": "User Attributes",
+    "subpackage_userAttributes": {
+      "subpackageId": "subpackage_userAttributes",
+      "name": "userAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -15958,9 +15958,9 @@
       "types": [],
       "subpackages": []
     },
-    "Roles": {
-      "subpackageId": "Roles",
-      "name": "Roles",
+    "subpackage_roles": {
+      "subpackageId": "subpackage_roles",
+      "name": "roles",
       "endpoints": [
         {
           "auth": true,
@@ -17483,9 +17483,9 @@
       "types": [],
       "subpackages": []
     },
-    "Condition Sets": {
-      "subpackageId": "Condition Sets",
-      "name": "Condition Sets",
+    "subpackage_conditionSets": {
+      "subpackageId": "subpackage_conditionSets",
+      "name": "conditionSets",
       "endpoints": [
         {
           "auth": true,
@@ -18931,9 +18931,9 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": true,
@@ -20490,9 +20490,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tenants": {
-      "subpackageId": "Tenants",
-      "name": "Tenants",
+    "subpackage_tenants": {
+      "subpackageId": "subpackage_tenants",
+      "name": "tenants",
       "endpoints": [
         {
           "auth": true,
@@ -21668,9 +21668,9 @@
       "types": [],
       "subpackages": []
     },
-    "Role Assignments": {
-      "subpackageId": "Role Assignments",
-      "name": "Role Assignments",
+    "subpackage_roleAssignments": {
+      "subpackageId": "subpackage_roleAssignments",
+      "name": "roleAssignments",
       "endpoints": [
         {
           "auth": true,
@@ -22429,9 +22429,9 @@
       "types": [],
       "subpackages": []
     },
-    "Condition Set Rules": {
-      "subpackageId": "Condition Set Rules",
-      "name": "Condition Set Rules",
+    "subpackage_conditionSetRules": {
+      "subpackageId": "subpackage_conditionSetRules",
+      "name": "conditionSetRules",
       "endpoints": [
         {
           "auth": true,
@@ -22913,9 +22913,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Instances": {
-      "subpackageId": "Resource Instances",
-      "name": "Resource Instances",
+    "subpackage_resourceInstances": {
+      "subpackageId": "subpackage_resourceInstances",
+      "name": "resourceInstances",
       "endpoints": [
         {
           "auth": true,
@@ -23704,9 +23704,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bulk Operations": {
-      "subpackageId": "Bulk Operations",
-      "name": "Bulk Operations",
+    "subpackage_bulkOperations": {
+      "subpackageId": "subpackage_bulkOperations",
+      "name": "bulkOperations",
       "endpoints": [
         {
           "auth": true,
@@ -24482,23 +24482,23 @@
       "ValidationError"
     ],
     "subpackages": [
-      "Organizations",
-      "Projects",
-      "Environments",
-      "Resources",
-      "Resource Actions",
-      "Resource Action Groups",
-      "Resource Roles",
-      "Resource Attributes",
-      "User Attributes",
-      "Roles",
-      "Condition Sets",
-      "Users",
-      "Tenants",
-      "Role Assignments",
-      "Condition Set Rules",
-      "Resource Instances",
-      "Bulk Operations"
+      "subpackage_organizations",
+      "subpackage_projects",
+      "subpackage_environments",
+      "subpackage_resources",
+      "subpackage_resourceActions",
+      "subpackage_resourceActionGroups",
+      "subpackage_resourceRoles",
+      "subpackage_resourceAttributes",
+      "subpackage_userAttributes",
+      "subpackage_roles",
+      "subpackage_conditionSets",
+      "subpackage_users",
+      "subpackage_tenants",
+      "subpackage_roleAssignments",
+      "subpackage_conditionSetRules",
+      "subpackage_resourceInstances",
+      "subpackage_bulkOperations"
     ]
   },
   "auth": {

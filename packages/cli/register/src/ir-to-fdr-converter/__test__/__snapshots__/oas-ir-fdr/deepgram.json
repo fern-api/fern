@@ -12988,9 +12988,9 @@
     }
   },
   "subpackages": {
-    "Speech to Text": {
-      "subpackageId": "Speech to Text",
-      "name": "Speech to Text",
+    "subpackage_speechToText": {
+      "subpackageId": "subpackage_speechToText",
+      "name": "speechToText",
       "endpoints": [
         {
           "auth": true,
@@ -13963,9 +13963,9 @@
       "types": [],
       "subpackages": []
     },
-    "Text Intelligence": {
-      "subpackageId": "Text Intelligence",
-      "name": "Text Intelligence",
+    "subpackage_textIntelligence": {
+      "subpackageId": "subpackage_textIntelligence",
+      "name": "textIntelligence",
       "endpoints": [
         {
           "auth": true,
@@ -14368,9 +14368,9 @@
       "types": [],
       "subpackages": []
     },
-    "Text to Speech": {
-      "subpackageId": "Text to Speech",
-      "name": "Text to Speech",
+    "subpackage_textToSpeech": {
+      "subpackageId": "subpackage_textToSpeech",
+      "name": "textToSpeech",
       "endpoints": [
         {
           "auth": true,
@@ -14528,9 +14528,9 @@
       "types": [],
       "subpackages": []
     },
-    "Management API": {
-      "subpackageId": "Management API",
-      "name": "Management API",
+    "subpackage_managementApi": {
+      "subpackageId": "subpackage_managementApi",
+      "name": "managementApi",
       "endpoints": [
         {
           "auth": true,
@@ -19557,10 +19557,10 @@
       "agent_agentErrorResponse"
     ],
     "subpackages": [
-      "Speech to Text",
-      "Text Intelligence",
-      "Text to Speech",
-      "Management API",
+      "subpackage_speechToText",
+      "subpackage_textIntelligence",
+      "subpackage_textToSpeech",
+      "subpackage_managementApi",
       "textToSpeech",
       "speechToText",
       "subpackage_agent"

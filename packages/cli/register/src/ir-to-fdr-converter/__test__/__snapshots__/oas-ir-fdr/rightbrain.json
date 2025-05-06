@@ -11768,8 +11768,8 @@
     }
   },
   "subpackages": {
-    "org": {
-      "subpackageId": "org",
+    "subpackage_org": {
+      "subpackageId": "subpackage_org",
       "name": "org",
       "endpoints": [
         {
@@ -13441,8 +13441,8 @@
       "types": [],
       "subpackages": []
     },
-    "user": {
-      "subpackageId": "user",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
       "name": "user",
       "endpoints": [
         {
@@ -13675,8 +13675,8 @@
       "types": [],
       "subpackages": []
     },
-    "project": {
-      "subpackageId": "project",
+    "subpackage_project": {
+      "subpackageId": "subpackage_project",
       "name": "project",
       "endpoints": [
         {
@@ -15150,8 +15150,8 @@
       "types": [],
       "subpackages": []
     },
-    "collection": {
-      "subpackageId": "collection",
+    "subpackage_collection": {
+      "subpackageId": "subpackage_collection",
       "name": "collection",
       "endpoints": [
         {
@@ -17336,8 +17336,8 @@
       "types": [],
       "subpackages": []
     },
-    "document": {
-      "subpackageId": "document",
+    "subpackage_document": {
+      "subpackageId": "subpackage_document",
       "name": "document",
       "endpoints": [
         {
@@ -19482,8 +19482,8 @@
       "types": [],
       "subpackages": []
     },
-    "chat": {
-      "subpackageId": "chat",
+    "subpackage_chat": {
+      "subpackageId": "subpackage_chat",
       "name": "chat",
       "endpoints": [
         {
@@ -20744,9 +20744,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - box": {
-      "subpackageId": "datasource - box",
-      "name": "datasource - box",
+    "subpackage_datasourceBox": {
+      "subpackageId": "subpackage_datasourceBox",
+      "name": "datasourceBox",
       "endpoints": [
         {
           "auth": true,
@@ -22067,9 +22067,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - confluence": {
-      "subpackageId": "datasource - confluence",
-      "name": "datasource - confluence",
+    "subpackage_datasourceConfluence": {
+      "subpackageId": "subpackage_datasourceConfluence",
+      "name": "datasourceConfluence",
       "endpoints": [
         {
           "auth": true,
@@ -23390,9 +23390,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - dropbox": {
-      "subpackageId": "datasource - dropbox",
-      "name": "datasource - dropbox",
+    "subpackage_datasourceDropbox": {
+      "subpackageId": "subpackage_datasourceDropbox",
+      "name": "datasourceDropbox",
       "endpoints": [
         {
           "auth": true,
@@ -24713,9 +24713,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - gdrive": {
-      "subpackageId": "datasource - gdrive",
-      "name": "datasource - gdrive",
+    "subpackage_datasourceGdrive": {
+      "subpackageId": "subpackage_datasourceGdrive",
+      "name": "datasourceGdrive",
       "endpoints": [
         {
           "auth": true,
@@ -26036,9 +26036,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - notion": {
-      "subpackageId": "datasource - notion",
-      "name": "datasource - notion",
+    "subpackage_datasourceNotion": {
+      "subpackageId": "subpackage_datasourceNotion",
+      "name": "datasourceNotion",
       "endpoints": [
         {
           "auth": true,
@@ -27359,9 +27359,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - onedrive": {
-      "subpackageId": "datasource - onedrive",
-      "name": "datasource - onedrive",
+    "subpackage_datasourceOnedrive": {
+      "subpackageId": "subpackage_datasourceOnedrive",
+      "name": "datasourceOnedrive",
       "endpoints": [
         {
           "auth": true,
@@ -28682,9 +28682,9 @@
       "types": [],
       "subpackages": []
     },
-    "datasource - sharepoint": {
-      "subpackageId": "datasource - sharepoint",
-      "name": "datasource - sharepoint",
+    "subpackage_datasourceSharepoint": {
+      "subpackageId": "subpackage_datasourceSharepoint",
+      "name": "datasourceSharepoint",
       "endpoints": [
         {
           "auth": true,
@@ -30005,8 +30005,8 @@
       "types": [],
       "subpackages": []
     },
-    "internal": {
-      "subpackageId": "internal",
+    "subpackage_internal": {
+      "subpackageId": "subpackage_internal",
       "name": "internal",
       "endpoints": [
         {
@@ -30411,8 +30411,8 @@
       "types": [],
       "subpackages": []
     },
-    "scrape": {
-      "subpackageId": "scrape",
+    "subpackage_scrape": {
+      "subpackageId": "subpackage_scrape",
       "name": "scrape",
       "endpoints": [
         {
@@ -30968,8 +30968,8 @@
       "types": [],
       "subpackages": []
     },
-    "compose": {
-      "subpackageId": "compose",
+    "subpackage_compose": {
+      "subpackageId": "subpackage_compose",
       "name": "compose",
       "endpoints": [
         {
@@ -31523,8 +31523,8 @@
       "types": [],
       "subpackages": []
     },
-    "tasks": {
-      "subpackageId": "tasks",
+    "subpackage_tasks": {
+      "subpackageId": "subpackage_tasks",
       "name": "tasks",
       "endpoints": [
         {
@@ -33517,9 +33517,9 @@
       "types": [],
       "subpackages": []
     },
-    "task forwarders": {
-      "subpackageId": "task forwarders",
-      "name": "task forwarders",
+    "subpackage_taskForwarders": {
+      "subpackageId": "subpackage_taskForwarders",
+      "name": "taskForwarders",
       "endpoints": [
         {
           "auth": true,
@@ -34173,8 +34173,8 @@
       "types": [],
       "subpackages": []
     },
-    "listings": {
-      "subpackageId": "listings",
+    "subpackage_listings": {
+      "subpackageId": "subpackage_listings",
       "name": "listings",
       "endpoints": [
         {
@@ -34788,25 +34788,25 @@
       "ValidationError"
     ],
     "subpackages": [
-      "org",
-      "user",
-      "project",
-      "collection",
-      "document",
-      "chat",
-      "datasource - box",
-      "datasource - confluence",
-      "datasource - dropbox",
-      "datasource - gdrive",
-      "datasource - notion",
-      "datasource - onedrive",
-      "datasource - sharepoint",
-      "internal",
-      "scrape",
-      "compose",
-      "tasks",
-      "task forwarders",
-      "listings"
+      "subpackage_org",
+      "subpackage_user",
+      "subpackage_project",
+      "subpackage_collection",
+      "subpackage_document",
+      "subpackage_chat",
+      "subpackage_datasourceBox",
+      "subpackage_datasourceConfluence",
+      "subpackage_datasourceDropbox",
+      "subpackage_datasourceGdrive",
+      "subpackage_datasourceNotion",
+      "subpackage_datasourceOnedrive",
+      "subpackage_datasourceSharepoint",
+      "subpackage_internal",
+      "subpackage_scrape",
+      "subpackage_compose",
+      "subpackage_tasks",
+      "subpackage_taskForwarders",
+      "subpackage_listings"
     ]
   },
   "auth": {

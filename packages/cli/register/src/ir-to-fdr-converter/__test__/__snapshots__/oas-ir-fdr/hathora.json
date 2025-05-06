@@ -1610,9 +1610,9 @@
     }
   },
   "subpackages": {
-    "AppV1": {
-      "subpackageId": "AppV1",
-      "name": "AppV1",
+    "subpackage_appV1": {
+      "subpackageId": "subpackage_appV1",
+      "name": "appV1",
       "endpoints": [
         {
           "auth": true,
@@ -2211,9 +2211,9 @@
       "types": [],
       "subpackages": []
     },
-    "AuthV1": {
-      "subpackageId": "AuthV1",
-      "name": "AuthV1",
+    "subpackage_authV1": {
+      "subpackageId": "subpackage_authV1",
+      "name": "authV1",
       "endpoints": [
         {
           "auth": true,
@@ -2548,9 +2548,9 @@
       "types": [],
       "subpackages": []
     },
-    "BuildV1": {
-      "subpackageId": "BuildV1",
-      "name": "BuildV1",
+    "subpackage_buildV1": {
+      "subpackageId": "subpackage_buildV1",
+      "name": "buildV1",
       "endpoints": [
         {
           "auth": true,
@@ -3128,9 +3128,9 @@
       "types": [],
       "subpackages": []
     },
-    "DeploymentV1": {
-      "subpackageId": "DeploymentV1",
-      "name": "DeploymentV1",
+    "subpackage_deploymentV1": {
+      "subpackageId": "subpackage_deploymentV1",
+      "name": "deploymentV1",
       "endpoints": [
         {
           "auth": true,
@@ -3580,9 +3580,9 @@
       "types": [],
       "subpackages": []
     },
-    "DiscoveryV1": {
-      "subpackageId": "DiscoveryV1",
-      "name": "DiscoveryV1",
+    "subpackage_discoveryV1": {
+      "subpackageId": "subpackage_discoveryV1",
+      "name": "discoveryV1",
       "endpoints": [
         {
           "auth": true,
@@ -3669,9 +3669,9 @@
       "types": [],
       "subpackages": []
     },
-    "LobbyV1": {
-      "subpackageId": "LobbyV1",
-      "name": "LobbyV1",
+    "subpackage_lobbyV1": {
+      "subpackageId": "subpackage_lobbyV1",
+      "name": "lobbyV1",
       "endpoints": [
         {
           "availability": "Deprecated",
@@ -4072,9 +4072,9 @@
       "types": [],
       "subpackages": []
     },
-    "LobbyV2": {
-      "subpackageId": "LobbyV2",
-      "name": "LobbyV2",
+    "subpackage_lobbyV2": {
+      "subpackageId": "subpackage_lobbyV2",
+      "name": "lobbyV2",
       "endpoints": [
         {
           "availability": "Deprecated",
@@ -5147,9 +5147,9 @@
       "types": [],
       "subpackages": []
     },
-    "LogV1": {
-      "subpackageId": "LogV1",
-      "name": "LogV1",
+    "subpackage_logV1": {
+      "subpackageId": "subpackage_logV1",
+      "name": "logV1",
       "endpoints": [
         {
           "auth": true,
@@ -5469,9 +5469,9 @@
       "types": [],
       "subpackages": []
     },
-    "MetricsV1": {
-      "subpackageId": "MetricsV1",
-      "name": "MetricsV1",
+    "subpackage_metricsV1": {
+      "subpackageId": "subpackage_metricsV1",
+      "name": "metricsV1",
       "endpoints": [
         {
           "auth": true,
@@ -5681,9 +5681,9 @@
       "types": [],
       "subpackages": []
     },
-    "ProcessesV1": {
-      "subpackageId": "ProcessesV1",
-      "name": "ProcessesV1",
+    "subpackage_processesV1": {
+      "subpackageId": "subpackage_processesV1",
+      "name": "processesV1",
       "endpoints": [
         {
           "auth": true,
@@ -6108,9 +6108,9 @@
       "types": [],
       "subpackages": []
     },
-    "RoomV1": {
-      "subpackageId": "RoomV1",
-      "name": "RoomV1",
+    "subpackage_roomV1": {
+      "subpackageId": "subpackage_roomV1",
+      "name": "roomV1",
       "endpoints": [
         {
           "auth": true,
@@ -6895,17 +6895,17 @@
       "ConnectionInfo"
     ],
     "subpackages": [
-      "AppV1",
-      "AuthV1",
-      "BuildV1",
-      "DeploymentV1",
-      "DiscoveryV1",
-      "LobbyV1",
-      "LobbyV2",
-      "LogV1",
-      "MetricsV1",
-      "ProcessesV1",
-      "RoomV1"
+      "subpackage_appV1",
+      "subpackage_authV1",
+      "subpackage_buildV1",
+      "subpackage_deploymentV1",
+      "subpackage_discoveryV1",
+      "subpackage_lobbyV1",
+      "subpackage_lobbyV2",
+      "subpackage_logV1",
+      "subpackage_metricsV1",
+      "subpackage_processesV1",
+      "subpackage_roomV1"
     ]
   },
   "auth": {

@@ -22561,9 +22561,9 @@
     }
   },
   "subpackages": {
-    "BookingAmendment": {
-      "subpackageId": "BookingAmendment",
-      "name": "BookingAmendment",
+    "subpackage_bookingAmendment": {
+      "subpackageId": "subpackage_bookingAmendment",
+      "name": "bookingAmendment",
       "endpoints": [
         {
           "auth": false,
@@ -22992,9 +22992,9 @@
       "types": [],
       "subpackages": []
     },
-    "BookingLineItem": {
-      "subpackageId": "BookingLineItem",
-      "name": "BookingLineItem",
+    "subpackage_bookingLineItem": {
+      "subpackageId": "subpackage_bookingLineItem",
+      "name": "bookingLineItem",
       "endpoints": [
         {
           "auth": false,
@@ -23461,9 +23461,9 @@
       "types": [],
       "subpackages": []
     },
-    "Booking": {
-      "subpackageId": "Booking",
-      "name": "Booking",
+    "subpackage_booking": {
+      "subpackageId": "subpackage_booking",
+      "name": "booking",
       "endpoints": [
         {
           "auth": false,
@@ -25424,9 +25424,9 @@
       "types": [],
       "subpackages": []
     },
-    "Carbon Calculation": {
-      "subpackageId": "Carbon Calculation",
-      "name": "Carbon Calculation",
+    "subpackage_carbonCalculation": {
+      "subpackageId": "subpackage_carbonCalculation",
+      "name": "carbonCalculation",
       "endpoints": [
         {
           "auth": false,
@@ -25562,9 +25562,9 @@
       "types": [],
       "subpackages": []
     },
-    "Commercial Invoices": {
-      "subpackageId": "Commercial Invoices",
-      "name": "Commercial Invoices",
+    "subpackage_commercialInvoices": {
+      "subpackageId": "subpackage_commercialInvoices",
+      "name": "commercialInvoices",
       "endpoints": [
         {
           "auth": false,
@@ -26711,9 +26711,9 @@
       "types": [],
       "subpackages": []
     },
-    "Customs Entries": {
-      "subpackageId": "Customs Entries",
-      "name": "Customs Entries",
+    "subpackage_customsEntries": {
+      "subpackageId": "subpackage_customsEntries",
+      "name": "customsEntries",
       "endpoints": [
         {
           "auth": false,
@@ -26995,9 +26995,9 @@
       "types": [],
       "subpackages": []
     },
-    "Document": {
-      "subpackageId": "Document",
-      "name": "Document",
+    "subpackage_document": {
+      "subpackageId": "subpackage_document",
+      "name": "document",
       "endpoints": [
         {
           "auth": false,
@@ -27568,9 +27568,9 @@
       "types": [],
       "subpackages": []
     },
-    "Event": {
-      "subpackageId": "Event",
-      "name": "Event",
+    "subpackage_event": {
+      "subpackageId": "subpackage_event",
+      "name": "event",
       "endpoints": [
         {
           "auth": false,
@@ -30994,9 +30994,9 @@
       "types": [],
       "subpackages": []
     },
-    "Invoices": {
-      "subpackageId": "Invoices",
-      "name": "Invoices",
+    "subpackage_invoices": {
+      "subpackageId": "subpackage_invoices",
+      "name": "invoices",
       "endpoints": [
         {
           "auth": false,
@@ -32298,9 +32298,9 @@
       "types": [],
       "subpackages": []
     },
-    "Company": {
-      "subpackageId": "Company",
-      "name": "Company",
+    "subpackage_company": {
+      "subpackageId": "subpackage_company",
+      "name": "company",
       "endpoints": [
         {
           "auth": false,
@@ -33238,9 +33238,9 @@
       "types": [],
       "subpackages": []
     },
-    "CompanyEntity": {
-      "subpackageId": "CompanyEntity",
-      "name": "CompanyEntity",
+    "subpackage_companyEntity": {
+      "subpackageId": "subpackage_companyEntity",
+      "name": "companyEntity",
       "endpoints": [
         {
           "auth": false,
@@ -33911,9 +33911,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contact": {
-      "subpackageId": "Contact",
-      "name": "Contact",
+    "subpackage_contact": {
+      "subpackageId": "subpackage_contact",
+      "name": "contact",
       "endpoints": [
         {
           "auth": false,
@@ -34522,9 +34522,9 @@
       "types": [],
       "subpackages": []
     },
-    "Location": {
-      "subpackageId": "Location",
-      "name": "Location",
+    "subpackage_location": {
+      "subpackageId": "subpackage_location",
+      "name": "location",
       "endpoints": [
         {
           "auth": false,
@@ -35261,9 +35261,9 @@
       "types": [],
       "subpackages": []
     },
-    "ContainerLeg": {
-      "subpackageId": "ContainerLeg",
-      "name": "ContainerLeg",
+    "subpackage_containerLeg": {
+      "subpackageId": "subpackage_containerLeg",
+      "name": "containerLeg",
       "endpoints": [
         {
           "auth": false,
@@ -35599,9 +35599,9 @@
       "types": [],
       "subpackages": []
     },
-    "Container": {
-      "subpackageId": "Container",
-      "name": "Container",
+    "subpackage_container": {
+      "subpackageId": "subpackage_container",
+      "name": "container",
       "endpoints": [
         {
           "auth": false,
@@ -36091,9 +36091,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ports": {
-      "subpackageId": "Ports",
-      "name": "Ports",
+    "subpackage_ports": {
+      "subpackageId": "subpackage_ports",
+      "name": "ports",
       "endpoints": [
         {
           "auth": false,
@@ -36364,9 +36364,9 @@
       "types": [],
       "subpackages": []
     },
-    "Product": {
-      "subpackageId": "Product",
-      "name": "Product",
+    "subpackage_product": {
+      "subpackageId": "subpackage_product",
+      "name": "product",
       "endpoints": [
         {
           "auth": false,
@@ -37068,9 +37068,9 @@
       "types": [],
       "subpackages": []
     },
-    "PurchaseOrderLineItem": {
-      "subpackageId": "PurchaseOrderLineItem",
-      "name": "PurchaseOrderLineItem",
+    "subpackage_purchaseOrderLineItem": {
+      "subpackageId": "subpackage_purchaseOrderLineItem",
+      "name": "purchaseOrderLineItem",
       "endpoints": [
         {
           "auth": false,
@@ -37754,9 +37754,9 @@
       "types": [],
       "subpackages": []
     },
-    "PurchaseOrder": {
-      "subpackageId": "PurchaseOrder",
-      "name": "PurchaseOrder",
+    "subpackage_purchaseOrder": {
+      "subpackageId": "subpackage_purchaseOrder",
+      "name": "purchaseOrder",
       "endpoints": [
         {
           "auth": false,
@@ -39102,9 +39102,9 @@
       "types": [],
       "subpackages": []
     },
-    "ShipmentLeg": {
-      "subpackageId": "ShipmentLeg",
-      "name": "ShipmentLeg",
+    "subpackage_shipmentLeg": {
+      "subpackageId": "subpackage_shipmentLeg",
+      "name": "shipmentLeg",
       "endpoints": [
         {
           "auth": false,
@@ -39877,9 +39877,9 @@
       "types": [],
       "subpackages": []
     },
-    "Shipment": {
-      "subpackageId": "Shipment",
-      "name": "Shipment",
+    "subpackage_shipment": {
+      "subpackageId": "subpackage_shipment",
+      "name": "shipment",
       "endpoints": [
         {
           "auth": false,
@@ -42386,27 +42386,27 @@
       "UpdateShipment"
     ],
     "subpackages": [
-      "BookingAmendment",
-      "BookingLineItem",
-      "Booking",
-      "Carbon Calculation",
-      "Commercial Invoices",
-      "Customs Entries",
-      "Document",
-      "Event",
-      "Invoices",
-      "Company",
-      "CompanyEntity",
-      "Contact",
-      "Location",
-      "ContainerLeg",
-      "Container",
-      "Ports",
-      "Product",
-      "PurchaseOrderLineItem",
-      "PurchaseOrder",
-      "ShipmentLeg",
-      "Shipment"
+      "subpackage_bookingAmendment",
+      "subpackage_bookingLineItem",
+      "subpackage_booking",
+      "subpackage_carbonCalculation",
+      "subpackage_commercialInvoices",
+      "subpackage_customsEntries",
+      "subpackage_document",
+      "subpackage_event",
+      "subpackage_invoices",
+      "subpackage_company",
+      "subpackage_companyEntity",
+      "subpackage_contact",
+      "subpackage_location",
+      "subpackage_containerLeg",
+      "subpackage_container",
+      "subpackage_ports",
+      "subpackage_product",
+      "subpackage_purchaseOrderLineItem",
+      "subpackage_purchaseOrder",
+      "subpackage_shipmentLeg",
+      "subpackage_shipment"
     ]
   },
   "snippetsConfiguration": {},

@@ -1757,9 +1757,9 @@
     }
   },
   "subpackages": {
-    "Auth": {
-      "subpackageId": "Auth",
-      "name": "Auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
+      "name": "auth",
       "endpoints": [
         {
           "auth": false,
@@ -1840,9 +1840,9 @@
       "types": [],
       "subpackages": []
     },
-    "Extensions": {
-      "subpackageId": "Extensions",
-      "name": "Extensions",
+    "subpackage_extensions": {
+      "subpackageId": "subpackage_extensions",
+      "name": "extensions",
       "endpoints": [
         {
           "auth": false,
@@ -2310,9 +2310,9 @@
       "types": [],
       "subpackages": []
     },
-    "Profiles": {
-      "subpackageId": "Profiles",
-      "name": "Profiles",
+    "subpackage_profiles": {
+      "subpackageId": "subpackage_profiles",
+      "name": "profiles",
       "endpoints": [
         {
           "auth": false,
@@ -2831,9 +2831,9 @@
       "types": [],
       "subpackages": []
     },
-    "Sessions": {
-      "subpackageId": "Sessions",
-      "name": "Sessions",
+    "subpackage_sessions": {
+      "subpackageId": "subpackage_sessions",
+      "name": "sessions",
       "endpoints": [
         {
           "auth": false,
@@ -3548,9 +3548,9 @@
       "types": [],
       "subpackages": []
     },
-    "Windows": {
-      "subpackageId": "Windows",
-      "name": "Windows",
+    "subpackage_windows": {
+      "subpackageId": "subpackage_windows",
+      "name": "windows",
       "endpoints": [
         {
           "auth": false,
@@ -4342,11 +4342,11 @@
       "WindowEnvelopeDefaultMetaWrapper"
     ],
     "subpackages": [
-      "Auth",
-      "Extensions",
-      "Profiles",
-      "Sessions",
-      "Windows"
+      "subpackage_auth",
+      "subpackage_extensions",
+      "subpackage_profiles",
+      "subpackage_sessions",
+      "subpackage_windows"
     ]
   },
   "auth": {

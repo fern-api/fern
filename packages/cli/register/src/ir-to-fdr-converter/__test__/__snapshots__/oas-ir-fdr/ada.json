@@ -783,9 +783,9 @@
     }
   },
   "subpackages": {
-    "End users": {
-      "subpackageId": "End users",
-      "name": "End users",
+    "subpackage_endUsers": {
+      "subpackageId": "subpackage_endUsers",
+      "name": "endUsers",
       "endpoints": [
         {
           "auth": true,
@@ -1293,7 +1293,7 @@
       "EndUserUpdatedWebhookPayload"
     ],
     "subpackages": [
-      "End users"
+      "subpackage_endUsers"
     ]
   },
   "auth": {

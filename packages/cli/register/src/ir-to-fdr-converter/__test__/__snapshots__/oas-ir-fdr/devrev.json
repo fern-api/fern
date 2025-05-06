@@ -7843,8 +7843,8 @@
     }
   },
   "subpackages": {
-    "artifacts": {
-      "subpackageId": "artifacts",
+    "subpackage_artifacts": {
+      "subpackageId": "subpackage_artifacts",
       "name": "artifacts",
       "endpoints": [
         {
@@ -8040,9 +8040,9 @@
       "types": [],
       "subpackages": []
     },
-    "auth-tokens": {
-      "subpackageId": "auth-tokens",
-      "name": "auth-tokens",
+    "subpackage_authTokens": {
+      "subpackageId": "subpackage_authTokens",
+      "name": "authTokens",
       "endpoints": [
         {
           "auth": true,
@@ -8789,9 +8789,9 @@
       "types": [],
       "subpackages": []
     },
-    "auth-connection": {
-      "subpackageId": "auth-connection",
-      "name": "auth-connection",
+    "subpackage_authConnection": {
+      "subpackageId": "subpackage_authConnection",
+      "name": "authConnection",
       "endpoints": [
         {
           "auth": true,
@@ -9258,9 +9258,9 @@
       "types": [],
       "subpackages": []
     },
-    "dev-users": {
-      "subpackageId": "dev-users",
-      "name": "dev-users",
+    "subpackage_devUsers": {
+      "subpackageId": "subpackage_devUsers",
+      "name": "devUsers",
       "endpoints": [
         {
           "auth": true,
@@ -9668,8 +9668,8 @@
       "types": [],
       "subpackages": []
     },
-    "parts": {
-      "subpackageId": "parts",
+    "subpackage_parts": {
+      "subpackageId": "subpackage_parts",
       "name": "parts",
       "endpoints": [
         {
@@ -10675,9 +10675,9 @@
       "types": [],
       "subpackages": []
     },
-    "rev-orgs": {
-      "subpackageId": "rev-orgs",
-      "name": "rev-orgs",
+    "subpackage_revOrgs": {
+      "subpackageId": "subpackage_revOrgs",
+      "name": "revOrgs",
       "endpoints": [
         {
           "auth": true,
@@ -11514,8 +11514,8 @@
       "types": [],
       "subpackages": []
     },
-    "tags": {
-      "subpackageId": "tags",
+    "subpackage_tags": {
+      "subpackageId": "subpackage_tags",
       "name": "tags",
       "endpoints": [
         {
@@ -12257,9 +12257,9 @@
       "types": [],
       "subpackages": []
     },
-    "timeline-entries": {
-      "subpackageId": "timeline-entries",
-      "name": "timeline-entries",
+    "subpackage_timelineEntries": {
+      "subpackageId": "subpackage_timelineEntries",
+      "name": "timelineEntries",
       "endpoints": [
         {
           "auth": true,
@@ -12950,8 +12950,8 @@
       "types": [],
       "subpackages": []
     },
-    "webhooks": {
-      "subpackageId": "webhooks",
+    "subpackage_webhooks": {
+      "subpackageId": "subpackage_webhooks",
       "name": "webhooks",
       "endpoints": [
         {
@@ -13659,8 +13659,8 @@
       "types": [],
       "subpackages": []
     },
-    "works": {
-      "subpackageId": "works",
+    "subpackage_works": {
+      "subpackageId": "subpackage_works",
       "name": "works",
       "endpoints": [
         {
@@ -15537,16 +15537,16 @@
       "works-update-response"
     ],
     "subpackages": [
-      "artifacts",
-      "auth-tokens",
-      "auth-connection",
-      "dev-users",
-      "parts",
-      "rev-orgs",
-      "tags",
-      "timeline-entries",
-      "webhooks",
-      "works"
+      "subpackage_artifacts",
+      "subpackage_authTokens",
+      "subpackage_authConnection",
+      "subpackage_devUsers",
+      "subpackage_parts",
+      "subpackage_revOrgs",
+      "subpackage_tags",
+      "subpackage_timelineEntries",
+      "subpackage_webhooks",
+      "subpackage_works"
     ]
   },
   "auth": {
