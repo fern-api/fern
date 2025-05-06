@@ -750,6 +750,40 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return resolvedSchema.required?.includes(key) ?? false;
     }
 
+    private shouldSkipExampleGeneration({
+        property,
+        isRequiredProperty,
+        propertyIsDefinedInExampleObject
+    }: {
+        property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        isRequiredProperty: boolean;
+        propertyIsDefinedInExampleObject: boolean;
+    }): boolean {
+        // Handle read-only and write-only scenarios
+        const isReadOnly = "readOnly" in property && property.readOnly === true;
+        const isWriteOnly = "writeOnly" in property && property.writeOnly === true;
+
+        if (isReadOnly && isWriteOnly) {
+            return true;
+        }
+
+        // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
+        if (isReadOnly && this.exampleGenerationStrategy === "request") {
+            return true;
+        }
+
+        if (isWriteOnly && this.exampleGenerationStrategy === "response") {
+            return true;
+        }
+
+        // If the property is not in the example object and is optional, skip example generation
+        if (!propertyIsDefinedInExampleObject && !isRequiredProperty) {
+            return true;
+        }
+
+        return false;
+    }
+
     private async getExampleForProperty({
         key,
         property,
@@ -771,42 +805,27 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             generateOptionalProperties: this.generateOptionalProperties
         };
 
-        const propertyIsDefinedInExampleObject = exampleObject && key in exampleObject && exampleObject[key];
+        const propertyIsDefinedInExampleObject = exampleObject && key in exampleObject && exampleObject[key] != null;
 
-        // Handle read-only and write-only scenarios
-        const isReadOnly = "readOnly" in property && property.readOnly === true;
-        const isWriteOnly = "writeOnly" in property && property.writeOnly === true;
-
-        if (isReadOnly && isWriteOnly) {
+        if (this.shouldSkipExampleGeneration({ property, isRequiredProperty, propertyIsDefinedInExampleObject })) {
             return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
         }
 
-        // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
-        if (isReadOnly && this.exampleGenerationStrategy === "request") {
-            return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
-        }
+        // If this.example is defined, and the property is not included in this.example, and
+        // the property is required or optional, generate an example
+        if (
+            exampleObject &&
+            !propertyIsDefinedInExampleObject &&
+            (isRequiredProperty || this.generateOptionalProperties)
+        ) {
+            const exampleConverter = new ExampleConverter({
+                ...exampleContext,
+                example: undefined
+            });
 
-        if (isWriteOnly && this.exampleGenerationStrategy === "response") {
-            return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
-        }
+            const result = await exampleConverter.convert();
 
-        // If this.example is defined, and the property is not included in this.example, return an example
-        // if (the property is required) or (the property is optional and we must generate optional examples)
-        if (exampleObject && !propertyIsDefinedInExampleObject) {
-            // if (the property is required) or (the property is optional and we must generate optional examples)
-            if (isRequiredProperty || this.generateOptionalProperties) {
-                const exampleConverter = new ExampleConverter({
-                    ...exampleContext,
-                    example: undefined
-                });
-
-                const result = await exampleConverter.convert();
-
-                return { key, result };
-            }
-
-            // Otherwise, if the property is not in this.example and is optional, return an empty example
-            return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+            return { key, result };
         }
 
         // If the property is included in this.example, validate the example and return
