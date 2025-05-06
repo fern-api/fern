@@ -8,6 +8,7 @@ import { getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
@@ -40,6 +41,11 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const substituteEnvVars = <T>(stringOrObject: T) =>
+                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+
+                generatorInvocation = substituteEnvVars(generatorInvocation);
+
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)

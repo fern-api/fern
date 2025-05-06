@@ -50327,52 +50327,30 @@
               },
               "headers": {},
               "requestBody": {
-                "id": "6596da6045e56dee495bcbba",
-                "siteId": "6258612d1ee792848f805dcf",
                 "title": "Guide to the Galaxy",
                 "slug": "guide-to-the-galaxy",
-                "createdOn": "2024-03-11T10:42:00.000Z",
-                "lastUpdated": "2024-03-11T10:42:42.000Z",
-                "archived": false,
-                "draft": false,
-                "canBranch": true,
                 "seo": {
                   "title": "The Ultimate Hitchhiker's Guide to the Galaxy",
                   "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels."
                 },
                 "openGraph": {
                   "title": "Explore the Cosmos with The Ultimate Guide",
-                  "titleCopied": false,
-                  "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
-                  "descriptionCopied": false
-                },
-                "localeId": "653fd9af6a07fc9cfd7a5e57",
-                "publishedPath": "/en-us/guide-to-the-galaxy"
+                  "description": "Dive deep into the mysteries of the universe with your guide to everything galactic."
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "6596da6045e56dee495bcbba",
-                  "siteId": "6258612d1ee792848f805dcf",
                   "title": "Guide to the Galaxy",
                   "slug": "guide-to-the-galaxy",
-                  "createdOn": "2024-03-11T10:42:00.000Z",
-                  "lastUpdated": "2024-03-11T10:42:42.000Z",
-                  "archived": false,
-                  "draft": false,
-                  "canBranch": true,
                   "seo": {
                     "title": "The Ultimate Hitchhiker's Guide to the Galaxy",
                     "description": "Everything you need to know about the galaxy, from avoiding Vogon poetry to the importance of towels."
                   },
                   "openGraph": {
                     "title": "Explore the Cosmos with The Ultimate Guide",
-                    "titleCopied": false,
-                    "description": "Dive deep into the mysteries of the universe with your guide to everything galactic.",
-                    "descriptionCopied": false
-                  },
-                  "localeId": "653fd9af6a07fc9cfd7a5e57",
-                  "publishedPath": "/en-us/guide-to-the-galaxy"
+                    "description": "Dive deep into the mysteries of the universe with your guide to everything galactic."
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -53246,11 +53224,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "42b720ef280c7a7a3be8cabe",
                 "cmsLocaleId": "653ad57de882f528b32e810e",
-                "lastPublished": "2022-11-29T16:22:43.159Z",
-                "lastUpdated": "2022-11-17T17:19:43.282Z",
-                "createdOn": "2022-11-17T17:11:57.148Z",
                 "isArchived": false,
                 "isDraft": false,
                 "fieldData": {
@@ -53261,11 +53235,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "42b720ef280c7a7a3be8cabe",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2022-11-29T16:22:43.159Z",
-                  "lastUpdated": "2022-11-17T17:19:43.282Z",
-                  "createdOn": "2022-11-17T17:11:57.148Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
@@ -53757,11 +53727,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "42b720ef280c7a7a3be8cabe",
                 "cmsLocaleId": "653ad57de882f528b32e810e",
-                "lastPublished": "2022-11-29T16:22:43.159Z",
-                "lastUpdated": "2022-11-17T17:19:43.282Z",
-                "createdOn": "2022-11-17T17:11:57.148Z",
                 "isArchived": false,
                 "isDraft": false,
                 "fieldData": {
@@ -53772,11 +53738,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "42b720ef280c7a7a3be8cabe",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2022-11-29T16:22:43.159Z",
-                  "lastUpdated": "2022-11-17T17:19:43.282Z",
-                  "createdOn": "2022-11-17T17:11:57.148Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
@@ -54017,14 +53979,10 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {
-                "id": "580e64008c9a982ac9b8b754"
-              },
+              "requestBody": {},
               "requestBodyV3": {
                 "type": "json",
-                "value": {
-                  "id": "580e64008c9a982ac9b8b754"
-                }
+                "value": {}
               },
               "responseStatusCode": 202,
               "responseBody": {
@@ -54498,11 +54456,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "42b720ef280c7a7a3be8cabe",
                 "cmsLocaleId": "653ad57de882f528b32e810e",
-                "lastPublished": "2022-11-29T16:22:43.159Z",
-                "lastUpdated": "2022-11-17T17:19:43.282Z",
-                "createdOn": "2022-11-17T17:11:57.148Z",
                 "isArchived": false,
                 "isDraft": false,
                 "fieldData": {
@@ -54513,11 +54467,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "42b720ef280c7a7a3be8cabe",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2022-11-29T16:22:43.159Z",
-                  "lastUpdated": "2022-11-17T17:19:43.282Z",
-                  "createdOn": "2022-11-17T17:11:57.148Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
@@ -55018,11 +54968,7 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "42b720ef280c7a7a3be8cabe",
                 "cmsLocaleId": "653ad57de882f528b32e810e",
-                "lastPublished": "2022-11-29T16:22:43.159Z",
-                "lastUpdated": "2022-11-17T17:19:43.282Z",
-                "createdOn": "2022-11-17T17:11:57.148Z",
                 "isArchived": false,
                 "isDraft": false,
                 "fieldData": {
@@ -55033,11 +54979,7 @@
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "42b720ef280c7a7a3be8cabe",
                   "cmsLocaleId": "653ad57de882f528b32e810e",
-                  "lastPublished": "2022-11-29T16:22:43.159Z",
-                  "lastUpdated": "2022-11-17T17:19:43.282Z",
-                  "createdOn": "2022-11-17T17:11:57.148Z",
                   "isArchived": false,
                   "isDraft": false,
                   "fieldData": {
@@ -58823,24 +58765,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "id": "582266e0cd48de0f0e3c6d8b",
                 "triggerType": "form_submission",
-                "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f",
-                "workspaceId": "4f4e46fd476ea8c507000001",
-                "siteId": "562ac0395358780a1f5e6fbd",
-                "lastTriggered": "2023-02-08T23:59:28.572Z",
-                "createdOn": "2022-11-08T23:59:28.572Z"
+                "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "id": "582266e0cd48de0f0e3c6d8b",
                   "triggerType": "form_submission",
-                  "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f",
-                  "workspaceId": "4f4e46fd476ea8c507000001",
-                  "siteId": "562ac0395358780a1f5e6fbd",
-                  "lastTriggered": "2023-02-08T23:59:28.572Z",
-                  "createdOn": "2022-11-08T23:59:28.572Z"
+                  "url": "https://webhook.site/7f7f7f7f-7f7f-7f7f-7f7f-7f7f7f7f7f7f"
                 }
               },
               "responseStatusCode": 201,

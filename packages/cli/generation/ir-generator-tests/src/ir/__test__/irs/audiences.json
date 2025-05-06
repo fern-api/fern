@@ -610,7 +610,8 @@
                             "inline": null
                         },
                         "docs": null,
-                        "contentType": null
+                        "contentType": null,
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -686,7 +687,8 @@
                                     "inline": null
                                 },
                                 "docs": null,
-                                "contentType": null
+                                "contentType": null,
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {

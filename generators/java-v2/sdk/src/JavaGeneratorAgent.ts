@@ -61,7 +61,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         }
 
         return {
-            sourceDirectory: "fern/output",
+            sourceDirectory: "/fern/output",
             uri: this.publishConfig.uri,
             token: this.publishConfig.token
         };

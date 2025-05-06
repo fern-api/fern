@@ -310,17 +310,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             },
@@ -330,17 +327,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }
@@ -418,17 +412,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             },
@@ -438,17 +429,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }

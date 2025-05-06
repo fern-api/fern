@@ -157,8 +157,10 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "foo",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "foo"
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -310,8 +312,10 @@
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "foo",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "foo"
             },
             "responseStatusCode": 200,
             "responseBody": {

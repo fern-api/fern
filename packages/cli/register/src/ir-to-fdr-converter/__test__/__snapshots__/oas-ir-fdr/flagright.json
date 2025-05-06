@@ -7441,14 +7441,108 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "transactionId": "foo",
-              "timestamp": 42
+              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              "timestamp": 1641654664000,
+              "originUserId": "8650a2611d0771cba03310f74bf6",
+              "destinationUserId": "9350a2611e0771cba03310f74bf6",
+              "originAmountDetails": {
+                "transactionAmount": 800,
+                "transactionCurrency": "EUR",
+                "country": "DE"
+              },
+              "destinationAmountDetails": {
+                "transactionAmount": 68351.34,
+                "transactionCurrency": "INR",
+                "country": "IN"
+              },
+              "originPaymentDetails": {
+                "method": "CARD",
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "US",
+                "transactionReferenceField": "Deposit",
+                "3dsDone": true
+              },
+              "destinationPaymentDetails": {
+                "method": "CARD",
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "IN",
+                "transactionReferenceField": "Deposit",
+                "3dsDone": true
+              },
+              "promotionCodeUsed": true,
+              "reference": "loan repayment",
+              "deviceData": {
+                "batteryLevel": 95,
+                "deviceLatitude": 13.0033,
+                "deviceLongitude": 76.1004,
+                "ipAddress": "10.23.191.2",
+                "deviceIdentifier": "3c49f915d04485e34caba",
+                "vpnUsed": false,
+                "operatingSystem": "Android 11.2",
+                "deviceMaker": "ASUS",
+                "deviceModel": "Zenphone M2 Pro Max",
+                "deviceYear": "2018",
+                "appVersion": "1.1.0"
+              },
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue"
+                }
+              ]
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "transactionId": "foo",
-                "timestamp": 42
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                "timestamp": 1641654664000,
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "originAmountDetails": {
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                  "country": "DE"
+                },
+                "destinationAmountDetails": {
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                  "country": "IN"
+                },
+                "originPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "destinationPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "deviceData": {
+                  "batteryLevel": 95,
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "ipAddress": "10.23.191.2",
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "vpnUsed": false,
+                  "operatingSystem": "Android 11.2",
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "appVersion": "1.1.0"
+                },
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue"
+                  }
+                ]
               }
             },
             "responseStatusCode": 201,
@@ -7796,16 +7890,34 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "transactionState": "CREATED",
-              "timestamp": 42,
-              "transactionId": "foo"
+              "transactionState": "SUCCESSFUL",
+              "timestamp": 1431231244001,
+              "transactionId": "443dea26147a406b957d9ee3a1247b11",
+              "eventId": "aaeeb166147a406b957dd9147a406b957",
+              "eventDescription": "Transaction created",
+              "metaData": {
+                "batteryLevel": 76.3,
+                "deviceLatitude": 13.009711,
+                "deviceLongitude": 76.102898,
+                "ipAddress": "79.144.2.20",
+                "vpnUsed": true
+              }
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "transactionState": "CREATED",
-                "timestamp": 42,
-                "transactionId": "foo"
+                "transactionState": "SUCCESSFUL",
+                "timestamp": 1431231244001,
+                "transactionId": "443dea26147a406b957d9ee3a1247b11",
+                "eventId": "aaeeb166147a406b957dd9147a406b957",
+                "eventDescription": "Transaction created",
+                "metaData": {
+                  "batteryLevel": 76.3,
+                  "deviceLatitude": 13.009711,
+                  "deviceLongitude": 76.102898,
+                  "ipAddress": "79.144.2.20",
+                  "vpnUsed": true
+                }
               }
             },
             "responseStatusCode": 201,

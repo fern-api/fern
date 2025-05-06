@@ -19714,7 +19714,6 @@
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "imageUrl": "http://192.168.56.101/img/logo.jpg",
                 "label": "Bob",
@@ -19732,7 +19731,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "imageUrl": "http://192.168.56.101/img/logo.jpg",
                   "label": "Bob",
@@ -22974,7 +22972,6 @@
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "label": "Request to connect with Bob"
               },
@@ -22982,7 +22979,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "label": "Request to connect with Bob"
                 }

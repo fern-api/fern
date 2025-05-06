@@ -17666,8 +17666,32 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {
+                  "instruction": "foo",
+                  "market": "BTC-USD-PERP",
+                  "price": "29500.12",
+                  "side": "BUY",
+                  "signature": "foo",
+                  "signature_timestamp": 42,
+                  "size": "1.213",
+                  "type": "MARKET"
+                }
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {
+                    "instruction": "foo",
+                    "market": "BTC-USD-PERP",
+                    "price": "29500.12",
+                    "side": "BUY",
+                    "signature": "foo",
+                    "signature_timestamp": 42,
+                    "size": "1.213",
+                    "type": "MARKET"
+                  }
+                ]
               },
               "responseStatusCode": 201,
               "responseBody": {

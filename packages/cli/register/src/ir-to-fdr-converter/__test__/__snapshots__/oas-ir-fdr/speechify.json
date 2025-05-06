@@ -1865,8 +1865,10 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": "foo",
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": "foo"
               },
               "responseStatusCode": 200
             }

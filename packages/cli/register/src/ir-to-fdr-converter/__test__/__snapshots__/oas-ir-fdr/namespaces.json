@@ -1934,8 +1934,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -3873,8 +3879,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
