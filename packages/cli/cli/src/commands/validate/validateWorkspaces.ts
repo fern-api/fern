@@ -11,13 +11,15 @@ export async function validateWorkspaces({
     cliContext,
     logWarnings,
     brokenLinks,
-    errorOnBrokenLinks
+    errorOnBrokenLinks,
+    isLocal
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
     brokenLinks: boolean;
     errorOnBrokenLinks: boolean;
+    isLocal?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
