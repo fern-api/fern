@@ -39,9 +39,11 @@ export class CliContext {
     private ttyAwareLogger: TtyAwareLogger;
 
     private logLevel: LogLevel = LogLevel.Info;
+    private isLocal: boolean;
 
-    constructor(stream: NodeJS.WriteStream) {
+    constructor(stream: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
         this.ttyAwareLogger = new TtyAwareLogger(stream);
+        this.isLocal = isLocal ?? false;
 
         const packageName = this.getPackageName();
         const packageVersion = this.getPackageVersion();
@@ -100,7 +102,7 @@ export class CliContext {
     }
 
     public async exit(): Promise<never> {
-        if (!this._suppressUpgradeMessage) {
+        if (!this._suppressUpgradeMessage || !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
@@ -202,7 +204,9 @@ export class CliContext {
     }
 
     public async instrumentPostHogEvent(event: PosthogEvent): Promise<void> {
-        (await getPosthogManager()).sendEvent(event);
+        if (!this.isLocal) {
+            (await getPosthogManager()).sendEvent(event);
+        }
     }
 
     public readonly logger = createLogger(this.log.bind(this));
