@@ -3,5 +3,4 @@
 # isort: skip_file
 
 from .types import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, SendEvent, SendEvent2
-
 __all__ = ["ReceiveEvent", "ReceiveEvent2", "ReceiveEvent3", "SendEvent", "SendEvent2"]
