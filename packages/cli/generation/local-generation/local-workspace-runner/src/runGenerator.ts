@@ -143,6 +143,7 @@ export async function writeFilesToDiskAndRunGenerator({
             ir: latest,
             generatorConfig
         };
+        /* eslint-disable-next-line no-useless-catch */
     } catch (e) {
         throw e;
     } finally {
