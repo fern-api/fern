@@ -19,6 +19,7 @@ import {
 } from "@fern-api/workspace-loader";
 
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -40,6 +41,14 @@ export async function runLocalGenerationForWorkspace({
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const substituteEnvVars = <T>(stringOrObject: T) =>
+                    replaceEnvVariables(
+                        stringOrObject,
+                        { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+                    );
+            
+                generatorInvocation = substituteEnvVars(generatorInvocation);
+
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
