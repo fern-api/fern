@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.organization.create(name='name', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.headers.send(query='What is the weather today', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

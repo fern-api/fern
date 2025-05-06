@@ -37,7 +37,8 @@ import asyncio
 client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
 async def main() -> None:
     await client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

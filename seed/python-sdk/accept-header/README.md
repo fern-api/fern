@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedAccept(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.endpoint()
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

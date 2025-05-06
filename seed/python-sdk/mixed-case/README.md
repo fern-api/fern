@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedMixedCase(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.get_resource(resource_id='rsc-xyz', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

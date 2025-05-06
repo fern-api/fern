@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.dummy.generate(stream=False, num_events=5, )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.property_based_error.throw_error()
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

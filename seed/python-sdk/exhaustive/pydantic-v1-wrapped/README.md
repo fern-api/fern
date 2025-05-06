@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 
