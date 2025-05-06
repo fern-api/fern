@@ -77,7 +77,6 @@
       "type": "singleBaseUrl"
     }
   },
-  "selfHosted": false,
   "types": {
     "MammalOneOf0Category": {
       "name": {
