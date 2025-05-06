@@ -1327,8 +1327,8 @@
     }
   },
   "subpackages": {
-    "audio": {
-      "subpackageId": "audio",
+    "subpackage_audio": {
+      "subpackageId": "subpackage_audio",
       "name": "audio",
       "endpoints": [
         {
@@ -1554,8 +1554,8 @@
       "types": [],
       "subpackages": []
     },
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
       "name": "auth",
       "endpoints": [
         {
@@ -1631,8 +1631,8 @@
       "types": [],
       "subpackages": []
     },
-    "apikey": {
-      "subpackageId": "apikey",
+    "subpackage_apikey": {
+      "subpackageId": "subpackage_apikey",
       "name": "apikey",
       "endpoints": [
         {
@@ -1883,8 +1883,8 @@
       "types": [],
       "subpackages": []
     },
-    "voices": {
-      "subpackageId": "voices",
+    "subpackage_voices": {
+      "subpackageId": "subpackage_voices",
       "name": "voices",
       "endpoints": [
         {
@@ -2145,10 +2145,10 @@
       "SpeechMarks"
     ],
     "subpackages": [
-      "audio",
-      "auth",
-      "apikey",
-      "voices"
+      "subpackage_audio",
+      "subpackage_auth",
+      "subpackage_apikey",
+      "subpackage_voices"
     ]
   },
   "snippetsConfiguration": {},

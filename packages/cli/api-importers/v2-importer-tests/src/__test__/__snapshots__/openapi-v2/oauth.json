@@ -1606,12 +1606,12 @@
     "types": [],
     "errors": [],
     "subpackages": [
-      "auth"
+      "subpackage_auth"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "auth": {
+    "subpackage_auth": {
       "name": {
         "originalName": "auth",
         "camelCase": {

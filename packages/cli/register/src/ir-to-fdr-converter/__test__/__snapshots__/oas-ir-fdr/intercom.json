@@ -17915,9 +17915,9 @@
     }
   },
   "subpackages": {
-    "Admins": {
-      "subpackageId": "Admins",
-      "name": "Admins",
+    "subpackage_admins": {
+      "subpackageId": "subpackage_admins",
+      "name": "admins",
       "endpoints": [
         {
           "auth": true,
@@ -18630,9 +18630,9 @@
       "types": [],
       "subpackages": []
     },
-    "Articles": {
-      "subpackageId": "Articles",
-      "name": "Articles",
+    "subpackage_articles": {
+      "subpackageId": "subpackage_articles",
+      "name": "articles",
       "endpoints": [
         {
           "auth": true,
@@ -19595,9 +19595,9 @@
       "types": [],
       "subpackages": []
     },
-    "Help Center": {
-      "subpackageId": "Help Center",
-      "name": "Help Center",
+    "subpackage_helpCenter": {
+      "subpackageId": "subpackage_helpCenter",
+      "name": "helpCenter",
       "endpoints": [
         {
           "auth": true,
@@ -20490,9 +20490,9 @@
       "types": [],
       "subpackages": []
     },
-    "Companies": {
-      "subpackageId": "Companies",
-      "name": "Companies",
+    "subpackage_companies": {
+      "subpackageId": "subpackage_companies",
+      "name": "companies",
       "endpoints": [
         {
           "auth": true,
@@ -22232,9 +22232,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contacts": {
-      "subpackageId": "Contacts",
-      "name": "Contacts",
+    "subpackage_contacts": {
+      "subpackageId": "subpackage_contacts",
+      "name": "contacts",
       "endpoints": [
         {
           "auth": true,
@@ -24372,9 +24372,9 @@
       "types": [],
       "subpackages": []
     },
-    "Notes": {
-      "subpackageId": "Notes",
-      "name": "Notes",
+    "subpackage_notes": {
+      "subpackageId": "subpackage_notes",
+      "name": "notes",
       "endpoints": [
         {
           "auth": true,
@@ -24953,9 +24953,9 @@
       "types": [],
       "subpackages": []
     },
-    "Subscription Types": {
-      "subpackageId": "Subscription Types",
-      "name": "Subscription Types",
+    "subpackage_subscriptionTypes": {
+      "subpackageId": "subpackage_subscriptionTypes",
+      "name": "subscriptionTypes",
       "endpoints": [
         {
           "auth": true,
@@ -25446,9 +25446,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tags": {
-      "subpackageId": "Tags",
-      "name": "Tags",
+    "subpackage_tags": {
+      "subpackageId": "subpackage_tags",
+      "name": "tags",
       "endpoints": [
         {
           "auth": true,
@@ -26775,9 +26775,9 @@
       "types": [],
       "subpackages": []
     },
-    "Conversations": {
-      "subpackageId": "Conversations",
-      "name": "Conversations",
+    "subpackage_conversations": {
+      "subpackageId": "subpackage_conversations",
+      "name": "conversations",
       "endpoints": [
         {
           "auth": true,
@@ -29587,9 +29587,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Attributes": {
-      "subpackageId": "Data Attributes",
-      "name": "Data Attributes",
+    "subpackage_dataAttributes": {
+      "subpackageId": "subpackage_dataAttributes",
+      "name": "dataAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -30519,9 +30519,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Events": {
-      "subpackageId": "Data Events",
-      "name": "Data Events",
+    "subpackage_dataEvents": {
+      "subpackageId": "subpackage_dataEvents",
+      "name": "dataEvents",
       "endpoints": [
         {
           "auth": true,
@@ -30824,9 +30824,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Export": {
-      "subpackageId": "Data Export",
-      "name": "Data Export",
+    "subpackage_dataExport": {
+      "subpackageId": "subpackage_dataExport",
+      "name": "dataExport",
       "endpoints": [
         {
           "auth": true,
@@ -31258,9 +31258,9 @@
       "types": [],
       "subpackages": []
     },
-    "Messages": {
-      "subpackageId": "Messages",
-      "name": "Messages",
+    "subpackage_messages": {
+      "subpackageId": "subpackage_messages",
+      "name": "messages",
       "endpoints": [
         {
           "auth": true,
@@ -31381,9 +31381,9 @@
       "types": [],
       "subpackages": []
     },
-    "News": {
-      "subpackageId": "News",
-      "name": "News",
+    "subpackage_news": {
+      "subpackageId": "subpackage_news",
+      "name": "news",
       "endpoints": [
         {
           "auth": true,
@@ -32589,9 +32589,9 @@
       "types": [],
       "subpackages": []
     },
-    "Segments": {
-      "subpackageId": "Segments",
-      "name": "Segments",
+    "subpackage_segments": {
+      "subpackageId": "subpackage_segments",
+      "name": "segments",
       "endpoints": [
         {
           "auth": true,
@@ -32856,9 +32856,9 @@
       "types": [],
       "subpackages": []
     },
-    "Switch": {
-      "subpackageId": "Switch",
-      "name": "Switch",
+    "subpackage_switch": {
+      "subpackageId": "subpackage_switch",
+      "name": "switch",
       "endpoints": [
         {
           "auth": true,
@@ -32983,9 +32983,9 @@
       "types": [],
       "subpackages": []
     },
-    "Teams": {
-      "subpackageId": "Teams",
-      "name": "Teams",
+    "subpackage_teams": {
+      "subpackageId": "subpackage_teams",
+      "name": "teams",
       "endpoints": [
         {
           "auth": true,
@@ -33196,9 +33196,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ticket Type Attributes": {
-      "subpackageId": "Ticket Type Attributes",
-      "name": "Ticket Type Attributes",
+    "subpackage_ticketTypeAttributes": {
+      "subpackageId": "subpackage_ticketTypeAttributes",
+      "name": "ticketTypeAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -33557,9 +33557,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ticket Types": {
-      "subpackageId": "Ticket Types",
-      "name": "Ticket Types",
+    "subpackage_ticketTypes": {
+      "subpackageId": "subpackage_ticketTypes",
+      "name": "ticketTypes",
       "endpoints": [
         {
           "auth": true,
@@ -34079,9 +34079,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tickets": {
-      "subpackageId": "Tickets",
-      "name": "Tickets",
+    "subpackage_tickets": {
+      "subpackageId": "subpackage_tickets",
+      "name": "tickets",
       "endpoints": [
         {
           "auth": true,
@@ -35516,9 +35516,9 @@
       "types": [],
       "subpackages": []
     },
-    "Visitors": {
-      "subpackageId": "Visitors",
-      "name": "Visitors",
+    "subpackage_visitors": {
+      "subpackageId": "subpackage_visitors",
+      "name": "visitors",
       "endpoints": [
         {
           "auth": true,
@@ -36334,27 +36334,27 @@
       "visitor_deleted_object"
     ],
     "subpackages": [
-      "Admins",
-      "Articles",
-      "Help Center",
-      "Companies",
-      "Contacts",
-      "Notes",
-      "Subscription Types",
-      "Tags",
-      "Conversations",
-      "Data Attributes",
-      "Data Events",
-      "Data Export",
-      "Messages",
-      "News",
-      "Segments",
-      "Switch",
-      "Teams",
-      "Ticket Type Attributes",
-      "Ticket Types",
-      "Tickets",
-      "Visitors"
+      "subpackage_admins",
+      "subpackage_articles",
+      "subpackage_helpCenter",
+      "subpackage_companies",
+      "subpackage_contacts",
+      "subpackage_notes",
+      "subpackage_subscriptionTypes",
+      "subpackage_tags",
+      "subpackage_conversations",
+      "subpackage_dataAttributes",
+      "subpackage_dataEvents",
+      "subpackage_dataExport",
+      "subpackage_messages",
+      "subpackage_news",
+      "subpackage_segments",
+      "subpackage_switch",
+      "subpackage_teams",
+      "subpackage_ticketTypeAttributes",
+      "subpackage_ticketTypes",
+      "subpackage_tickets",
+      "subpackage_visitors"
     ]
   },
   "auth": {

@@ -23,8 +23,8 @@
     }
   },
   "subpackages": {
-    "generativelanguage": {
-      "subpackageId": "generativelanguage",
+    "subpackage_generativelanguage": {
+      "subpackageId": "subpackage_generativelanguage",
       "name": "generativelanguage",
       "endpoints": [
         {
@@ -98,7 +98,7 @@
       "GenerateContentResponse"
     ],
     "subpackages": [
-      "generativelanguage"
+      "subpackage_generativelanguage"
     ]
   },
   "snippetsConfiguration": {},

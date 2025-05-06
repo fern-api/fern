@@ -69892,18 +69892,18 @@
     ],
     "errors": [],
     "subpackages": [
-      "deployments",
-      "document-indexes",
-      "documents",
-      "model-versions",
-      "registered-prompts",
-      "sandboxes",
-      "test-suites"
+      "subpackage_deployments",
+      "subpackage_documentIndexes",
+      "subpackage_documents",
+      "subpackage_modelVersions",
+      "subpackage_registeredPrompts",
+      "subpackage_sandboxes",
+      "subpackage_testSuites"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "deployments": {
+    "subpackage_deployments": {
       "name": {
         "originalName": "deployments",
         "camelCase": {
@@ -69972,9 +69972,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "document-indexes": {
+    "subpackage_documentIndexes": {
       "name": {
-        "originalName": "document-indexes",
+        "originalName": "documentIndexes",
         "camelCase": {
           "unsafeName": "documentIndexes",
           "safeName": "documentIndexes"
@@ -69995,7 +69995,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "document-indexes",
+            "originalName": "documentIndexes",
             "camelCase": {
               "unsafeName": "documentIndexes",
               "safeName": "documentIndexes"
@@ -70016,7 +70016,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "document-indexes",
+          "originalName": "documentIndexes",
           "camelCase": {
             "unsafeName": "documentIndexes",
             "safeName": "documentIndexes"
@@ -70041,7 +70041,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "documents": {
+    "subpackage_documents": {
       "name": {
         "originalName": "documents",
         "camelCase": {
@@ -70110,9 +70110,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "model-versions": {
+    "subpackage_modelVersions": {
       "name": {
-        "originalName": "model-versions",
+        "originalName": "modelVersions",
         "camelCase": {
           "unsafeName": "modelVersions",
           "safeName": "modelVersions"
@@ -70133,7 +70133,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "model-versions",
+            "originalName": "modelVersions",
             "camelCase": {
               "unsafeName": "modelVersions",
               "safeName": "modelVersions"
@@ -70154,7 +70154,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "model-versions",
+          "originalName": "modelVersions",
           "camelCase": {
             "unsafeName": "modelVersions",
             "safeName": "modelVersions"
@@ -70179,9 +70179,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "registered-prompts": {
+    "subpackage_registeredPrompts": {
       "name": {
-        "originalName": "registered-prompts",
+        "originalName": "registeredPrompts",
         "camelCase": {
           "unsafeName": "registeredPrompts",
           "safeName": "registeredPrompts"
@@ -70202,7 +70202,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "registered-prompts",
+            "originalName": "registeredPrompts",
             "camelCase": {
               "unsafeName": "registeredPrompts",
               "safeName": "registeredPrompts"
@@ -70223,7 +70223,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "registered-prompts",
+          "originalName": "registeredPrompts",
           "camelCase": {
             "unsafeName": "registeredPrompts",
             "safeName": "registeredPrompts"
@@ -70248,7 +70248,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "sandboxes": {
+    "subpackage_sandboxes": {
       "name": {
         "originalName": "sandboxes",
         "camelCase": {
@@ -70317,9 +70317,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "test-suites": {
+    "subpackage_testSuites": {
       "name": {
-        "originalName": "test-suites",
+        "originalName": "testSuites",
         "camelCase": {
           "unsafeName": "testSuites",
           "safeName": "testSuites"
@@ -70340,7 +70340,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "test-suites",
+            "originalName": "testSuites",
             "camelCase": {
               "unsafeName": "testSuites",
               "safeName": "testSuites"
@@ -70361,7 +70361,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "test-suites",
+          "originalName": "testSuites",
           "camelCase": {
             "unsafeName": "testSuites",
             "safeName": "testSuites"

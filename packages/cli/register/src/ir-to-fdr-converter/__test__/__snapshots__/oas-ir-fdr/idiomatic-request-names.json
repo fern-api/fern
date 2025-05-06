@@ -252,9 +252,9 @@
     }
   },
   "subpackages": {
-    "OrganizationUsers": {
-      "subpackageId": "OrganizationUsers",
-      "name": "OrganizationUsers",
+    "subpackage_organizationUsers": {
+      "subpackageId": "subpackage_organizationUsers",
+      "name": "organizationUsers",
       "endpoints": [
         {
           "auth": false,
@@ -401,9 +401,9 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": false,
@@ -650,8 +650,8 @@
       "UserStats"
     ],
     "subpackages": [
-      "OrganizationUsers",
-      "Users"
+      "subpackage_organizationUsers",
+      "subpackage_users"
     ]
   },
   "snippetsConfiguration": {},

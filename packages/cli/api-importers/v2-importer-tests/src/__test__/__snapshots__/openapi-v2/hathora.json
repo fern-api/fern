@@ -72145,24 +72145,24 @@
     ],
     "errors": [],
     "subpackages": [
-      "AppV1",
-      "AuthV1",
-      "BuildV1",
-      "DeploymentV1",
-      "DiscoveryV1",
-      "LobbyV1",
-      "LobbyV2",
-      "LogV1",
-      "MetricsV1",
-      "ProcessesV1",
-      "RoomV1"
+      "subpackage_appV1",
+      "subpackage_authV1",
+      "subpackage_buildV1",
+      "subpackage_deploymentV1",
+      "subpackage_discoveryV1",
+      "subpackage_lobbyV1",
+      "subpackage_lobbyV2",
+      "subpackage_logV1",
+      "subpackage_metricsV1",
+      "subpackage_processesV1",
+      "subpackage_roomV1"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "AppV1": {
+    "subpackage_appV1": {
       "name": {
-        "originalName": "AppV1",
+        "originalName": "appV1",
         "camelCase": {
           "unsafeName": "appV1",
           "safeName": "appV1"
@@ -72183,7 +72183,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "AppV1",
+            "originalName": "appV1",
             "camelCase": {
               "unsafeName": "appV1",
               "safeName": "appV1"
@@ -72204,7 +72204,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "AppV1",
+          "originalName": "appV1",
           "camelCase": {
             "unsafeName": "appV1",
             "safeName": "appV1"
@@ -72229,9 +72229,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "AuthV1": {
+    "subpackage_authV1": {
       "name": {
-        "originalName": "AuthV1",
+        "originalName": "authV1",
         "camelCase": {
           "unsafeName": "authV1",
           "safeName": "authV1"
@@ -72252,7 +72252,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "AuthV1",
+            "originalName": "authV1",
             "camelCase": {
               "unsafeName": "authV1",
               "safeName": "authV1"
@@ -72273,7 +72273,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "AuthV1",
+          "originalName": "authV1",
           "camelCase": {
             "unsafeName": "authV1",
             "safeName": "authV1"
@@ -72298,9 +72298,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "BuildV1": {
+    "subpackage_buildV1": {
       "name": {
-        "originalName": "BuildV1",
+        "originalName": "buildV1",
         "camelCase": {
           "unsafeName": "buildV1",
           "safeName": "buildV1"
@@ -72321,7 +72321,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "BuildV1",
+            "originalName": "buildV1",
             "camelCase": {
               "unsafeName": "buildV1",
               "safeName": "buildV1"
@@ -72342,7 +72342,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "BuildV1",
+          "originalName": "buildV1",
           "camelCase": {
             "unsafeName": "buildV1",
             "safeName": "buildV1"
@@ -72367,9 +72367,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "DeploymentV1": {
+    "subpackage_deploymentV1": {
       "name": {
-        "originalName": "DeploymentV1",
+        "originalName": "deploymentV1",
         "camelCase": {
           "unsafeName": "deploymentV1",
           "safeName": "deploymentV1"
@@ -72390,7 +72390,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "DeploymentV1",
+            "originalName": "deploymentV1",
             "camelCase": {
               "unsafeName": "deploymentV1",
               "safeName": "deploymentV1"
@@ -72411,7 +72411,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "DeploymentV1",
+          "originalName": "deploymentV1",
           "camelCase": {
             "unsafeName": "deploymentV1",
             "safeName": "deploymentV1"
@@ -72436,9 +72436,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "DiscoveryV1": {
+    "subpackage_discoveryV1": {
       "name": {
-        "originalName": "DiscoveryV1",
+        "originalName": "discoveryV1",
         "camelCase": {
           "unsafeName": "discoveryV1",
           "safeName": "discoveryV1"
@@ -72459,7 +72459,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "DiscoveryV1",
+            "originalName": "discoveryV1",
             "camelCase": {
               "unsafeName": "discoveryV1",
               "safeName": "discoveryV1"
@@ -72480,7 +72480,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "DiscoveryV1",
+          "originalName": "discoveryV1",
           "camelCase": {
             "unsafeName": "discoveryV1",
             "safeName": "discoveryV1"
@@ -72505,9 +72505,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "LobbyV1": {
+    "subpackage_lobbyV1": {
       "name": {
-        "originalName": "LobbyV1",
+        "originalName": "lobbyV1",
         "camelCase": {
           "unsafeName": "lobbyV1",
           "safeName": "lobbyV1"
@@ -72528,7 +72528,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "LobbyV1",
+            "originalName": "lobbyV1",
             "camelCase": {
               "unsafeName": "lobbyV1",
               "safeName": "lobbyV1"
@@ -72549,7 +72549,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "LobbyV1",
+          "originalName": "lobbyV1",
           "camelCase": {
             "unsafeName": "lobbyV1",
             "safeName": "lobbyV1"
@@ -72574,9 +72574,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "LobbyV2": {
+    "subpackage_lobbyV2": {
       "name": {
-        "originalName": "LobbyV2",
+        "originalName": "lobbyV2",
         "camelCase": {
           "unsafeName": "lobbyV2",
           "safeName": "lobbyV2"
@@ -72597,7 +72597,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "LobbyV2",
+            "originalName": "lobbyV2",
             "camelCase": {
               "unsafeName": "lobbyV2",
               "safeName": "lobbyV2"
@@ -72618,7 +72618,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "LobbyV2",
+          "originalName": "lobbyV2",
           "camelCase": {
             "unsafeName": "lobbyV2",
             "safeName": "lobbyV2"
@@ -72643,9 +72643,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "LogV1": {
+    "subpackage_logV1": {
       "name": {
-        "originalName": "LogV1",
+        "originalName": "logV1",
         "camelCase": {
           "unsafeName": "logV1",
           "safeName": "logV1"
@@ -72666,7 +72666,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "LogV1",
+            "originalName": "logV1",
             "camelCase": {
               "unsafeName": "logV1",
               "safeName": "logV1"
@@ -72687,7 +72687,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "LogV1",
+          "originalName": "logV1",
           "camelCase": {
             "unsafeName": "logV1",
             "safeName": "logV1"
@@ -72712,9 +72712,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "MetricsV1": {
+    "subpackage_metricsV1": {
       "name": {
-        "originalName": "MetricsV1",
+        "originalName": "metricsV1",
         "camelCase": {
           "unsafeName": "metricsV1",
           "safeName": "metricsV1"
@@ -72735,7 +72735,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "MetricsV1",
+            "originalName": "metricsV1",
             "camelCase": {
               "unsafeName": "metricsV1",
               "safeName": "metricsV1"
@@ -72756,7 +72756,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "MetricsV1",
+          "originalName": "metricsV1",
           "camelCase": {
             "unsafeName": "metricsV1",
             "safeName": "metricsV1"
@@ -72781,9 +72781,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "ProcessesV1": {
+    "subpackage_processesV1": {
       "name": {
-        "originalName": "ProcessesV1",
+        "originalName": "processesV1",
         "camelCase": {
           "unsafeName": "processesV1",
           "safeName": "processesV1"
@@ -72804,7 +72804,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "ProcessesV1",
+            "originalName": "processesV1",
             "camelCase": {
               "unsafeName": "processesV1",
               "safeName": "processesV1"
@@ -72825,7 +72825,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "ProcessesV1",
+          "originalName": "processesV1",
           "camelCase": {
             "unsafeName": "processesV1",
             "safeName": "processesV1"
@@ -72850,9 +72850,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "RoomV1": {
+    "subpackage_roomV1": {
       "name": {
-        "originalName": "RoomV1",
+        "originalName": "roomV1",
         "camelCase": {
           "unsafeName": "roomV1",
           "safeName": "roomV1"
@@ -72873,7 +72873,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "RoomV1",
+            "originalName": "roomV1",
             "camelCase": {
               "unsafeName": "roomV1",
               "safeName": "roomV1"
@@ -72894,7 +72894,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "RoomV1",
+          "originalName": "roomV1",
           "camelCase": {
             "unsafeName": "roomV1",
             "safeName": "roomV1"

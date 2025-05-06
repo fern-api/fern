@@ -10371,15 +10371,15 @@
     ],
     "errors": [],
     "subpackages": [
-      "audio",
-      "auth",
-      "apikey",
-      "voices"
+      "subpackage_audio",
+      "subpackage_auth",
+      "subpackage_apikey",
+      "subpackage_voices"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "audio": {
+    "subpackage_audio": {
       "name": {
         "originalName": "audio",
         "camelCase": {
@@ -10448,7 +10448,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "auth": {
+    "subpackage_auth": {
       "name": {
         "originalName": "auth",
         "camelCase": {
@@ -10517,7 +10517,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "apikey": {
+    "subpackage_apikey": {
       "name": {
         "originalName": "apikey",
         "camelCase": {
@@ -10586,7 +10586,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "voices": {
+    "subpackage_voices": {
       "name": {
         "originalName": "voices",
         "camelCase": {

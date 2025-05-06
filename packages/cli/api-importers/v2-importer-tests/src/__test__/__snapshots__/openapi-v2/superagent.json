@@ -10529,21 +10529,21 @@
     ],
     "errors": [],
     "subpackages": [
-      "Agent",
-      "Auth",
-      "User",
-      "Api token",
-      "Documents",
-      "Prompts",
-      "Tools",
-      "Traces"
+      "subpackage_agent",
+      "subpackage_auth",
+      "subpackage_user",
+      "subpackage_apiToken",
+      "subpackage_documents",
+      "subpackage_prompts",
+      "subpackage_tools",
+      "subpackage_traces"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "Agent": {
+    "subpackage_agent": {
       "name": {
-        "originalName": "Agent",
+        "originalName": "agent",
         "camelCase": {
           "unsafeName": "agent",
           "safeName": "agent"
@@ -10564,7 +10564,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Agent",
+            "originalName": "agent",
             "camelCase": {
               "unsafeName": "agent",
               "safeName": "agent"
@@ -10585,7 +10585,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Agent",
+          "originalName": "agent",
           "camelCase": {
             "unsafeName": "agent",
             "safeName": "agent"
@@ -10610,9 +10610,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Auth": {
+    "subpackage_auth": {
       "name": {
-        "originalName": "Auth",
+        "originalName": "auth",
         "camelCase": {
           "unsafeName": "auth",
           "safeName": "auth"
@@ -10633,7 +10633,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Auth",
+            "originalName": "auth",
             "camelCase": {
               "unsafeName": "auth",
               "safeName": "auth"
@@ -10654,7 +10654,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Auth",
+          "originalName": "auth",
           "camelCase": {
             "unsafeName": "auth",
             "safeName": "auth"
@@ -10679,9 +10679,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "User": {
+    "subpackage_user": {
       "name": {
-        "originalName": "User",
+        "originalName": "user",
         "camelCase": {
           "unsafeName": "user",
           "safeName": "user"
@@ -10702,7 +10702,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "User",
+            "originalName": "user",
             "camelCase": {
               "unsafeName": "user",
               "safeName": "user"
@@ -10723,7 +10723,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "User",
+          "originalName": "user",
           "camelCase": {
             "unsafeName": "user",
             "safeName": "user"
@@ -10748,9 +10748,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Api token": {
+    "subpackage_apiToken": {
       "name": {
-        "originalName": "Api token",
+        "originalName": "apiToken",
         "camelCase": {
           "unsafeName": "apiToken",
           "safeName": "apiToken"
@@ -10771,7 +10771,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Api token",
+            "originalName": "apiToken",
             "camelCase": {
               "unsafeName": "apiToken",
               "safeName": "apiToken"
@@ -10792,7 +10792,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Api token",
+          "originalName": "apiToken",
           "camelCase": {
             "unsafeName": "apiToken",
             "safeName": "apiToken"
@@ -10817,9 +10817,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Documents": {
+    "subpackage_documents": {
       "name": {
-        "originalName": "Documents",
+        "originalName": "documents",
         "camelCase": {
           "unsafeName": "documents",
           "safeName": "documents"
@@ -10840,7 +10840,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Documents",
+            "originalName": "documents",
             "camelCase": {
               "unsafeName": "documents",
               "safeName": "documents"
@@ -10861,7 +10861,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Documents",
+          "originalName": "documents",
           "camelCase": {
             "unsafeName": "documents",
             "safeName": "documents"
@@ -10886,9 +10886,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Prompts": {
+    "subpackage_prompts": {
       "name": {
-        "originalName": "Prompts",
+        "originalName": "prompts",
         "camelCase": {
           "unsafeName": "prompts",
           "safeName": "prompts"
@@ -10909,7 +10909,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Prompts",
+            "originalName": "prompts",
             "camelCase": {
               "unsafeName": "prompts",
               "safeName": "prompts"
@@ -10930,7 +10930,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Prompts",
+          "originalName": "prompts",
           "camelCase": {
             "unsafeName": "prompts",
             "safeName": "prompts"
@@ -10955,9 +10955,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Tools": {
+    "subpackage_tools": {
       "name": {
-        "originalName": "Tools",
+        "originalName": "tools",
         "camelCase": {
           "unsafeName": "tools",
           "safeName": "tools"
@@ -10978,7 +10978,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Tools",
+            "originalName": "tools",
             "camelCase": {
               "unsafeName": "tools",
               "safeName": "tools"
@@ -10999,7 +10999,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Tools",
+          "originalName": "tools",
           "camelCase": {
             "unsafeName": "tools",
             "safeName": "tools"
@@ -11024,9 +11024,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Traces": {
+    "subpackage_traces": {
       "name": {
-        "originalName": "Traces",
+        "originalName": "traces",
         "camelCase": {
           "unsafeName": "traces",
           "safeName": "traces"
@@ -11047,7 +11047,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Traces",
+            "originalName": "traces",
             "camelCase": {
               "unsafeName": "traces",
               "safeName": "traces"
@@ -11068,7 +11068,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Traces",
+          "originalName": "traces",
           "camelCase": {
             "unsafeName": "traces",
             "safeName": "traces"

@@ -228,14 +228,14 @@
             }
           },
           "urls": {
-            "Base": "https://alpha.spscommerce.com",
-            "prod-1": "https://beta.spscommerce.com",
-            "prod": "https://gamma.spscommerce.com",
-            "prod-2": "https://delta.spscommerce.com",
-            "prod-3": "https://mu.spscommerce.com",
-            "prod-4": "https://omega.spscommerce.com",
-            "prod-5": "https://zeta.spscommerce.com",
-            "prod-6": "https://eta.spscommerce.com"
+            "Base": "https://alpha.testapi.com",
+            "prod-1": "https://beta.testapi.com",
+            "prod": "https://gamma.testapi.com",
+            "prod-2": "https://delta.testapi.com",
+            "prod-3": "https://mu.testapi.com",
+            "prod-4": "https://omega.testapi.com",
+            "prod-5": "https://zeta.testapi.com",
+            "prod-6": "https://eta.testapi.com"
           }
         }
       ],
@@ -1712,7 +1712,7 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "alpha": {
+    "subpackage_alpha": {
       "name": {
         "originalName": "alpha",
         "camelCase": {
@@ -1781,7 +1781,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "beta": {
+    "subpackage_beta": {
       "name": {
         "originalName": "beta",
         "camelCase": {
@@ -1850,7 +1850,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "gamma": {
+    "subpackage_gamma": {
       "name": {
         "originalName": "gamma",
         "camelCase": {
@@ -1919,7 +1919,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "delta": {
+    "subpackage_delta": {
       "name": {
         "originalName": "delta",
         "camelCase": {
@@ -1988,7 +1988,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "mu": {
+    "subpackage_mu": {
       "name": {
         "originalName": "mu",
         "camelCase": {
@@ -2057,7 +2057,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "omega": {
+    "subpackage_omega": {
       "name": {
         "originalName": "omega",
         "camelCase": {
@@ -2126,7 +2126,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "zeta": {
+    "subpackage_zeta": {
       "name": {
         "originalName": "zeta",
         "camelCase": {
@@ -2195,7 +2195,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "eta": {
+    "subpackage_eta": {
       "name": {
         "originalName": "eta",
         "camelCase": {
@@ -2270,14 +2270,14 @@
     "types": [],
     "errors": [],
     "subpackages": [
-      "alpha",
-      "beta",
-      "gamma",
-      "delta",
-      "mu",
-      "omega",
-      "zeta",
-      "eta"
+      "subpackage_alpha",
+      "subpackage_beta",
+      "subpackage_gamma",
+      "subpackage_delta",
+      "subpackage_mu",
+      "subpackage_omega",
+      "subpackage_zeta",
+      "subpackage_eta"
     ],
     "fernFilepath": {
       "allParts": [],

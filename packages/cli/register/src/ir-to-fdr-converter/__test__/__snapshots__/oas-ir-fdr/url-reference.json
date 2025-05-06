@@ -1206,8 +1206,8 @@
     }
   },
   "subpackages": {
-    "pet": {
-      "subpackageId": "pet",
+    "subpackage_pet": {
+      "subpackageId": "subpackage_pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1457,8 +1457,8 @@
       "types": [],
       "subpackages": []
     },
-    "order": {
-      "subpackageId": "order",
+    "subpackage_order": {
+      "subpackageId": "subpackage_order",
       "name": "order",
       "endpoints": [
         {
@@ -1706,8 +1706,8 @@
       "testChannel_sendMessage2"
     ],
     "subpackages": [
-      "pet",
-      "order",
+      "subpackage_pet",
+      "subpackage_order",
       "subpackage_petowners",
       "subpackage_testChannel"
     ]

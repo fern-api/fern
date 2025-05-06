@@ -65,9 +65,9 @@
     }
   },
   "subpackages": {
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": false,
@@ -379,7 +379,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "Organizations"
+      "subpackage_organizations"
     ]
   },
   "snippetsConfiguration": {},

@@ -1932,14 +1932,14 @@
     "types": [],
     "errors": [],
     "subpackages": [
-      "Organizations"
+      "subpackage_organizations"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "Organizations": {
+    "subpackage_organizations": {
       "name": {
-        "originalName": "Organizations",
+        "originalName": "organizations",
         "camelCase": {
           "unsafeName": "organizations",
           "safeName": "organizations"
@@ -1960,7 +1960,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Organizations",
+            "originalName": "organizations",
             "camelCase": {
               "unsafeName": "organizations",
               "safeName": "organizations"
@@ -1981,7 +1981,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Organizations",
+          "originalName": "organizations",
           "camelCase": {
             "unsafeName": "organizations",
             "safeName": "organizations"

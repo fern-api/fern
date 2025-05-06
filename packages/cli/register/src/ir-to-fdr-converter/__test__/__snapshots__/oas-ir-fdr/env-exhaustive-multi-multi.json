@@ -50,8 +50,8 @@
     }
   },
   "subpackages": {
-    "alpha": {
-      "subpackageId": "alpha",
+    "subpackage_alpha": {
+      "subpackageId": "subpackage_alpha",
       "name": "alpha",
       "endpoints": [
         {
@@ -283,8 +283,8 @@
       "types": [],
       "subpackages": []
     },
-    "beta": {
-      "subpackageId": "beta",
+    "subpackage_beta": {
+      "subpackageId": "subpackage_beta",
       "name": "beta",
       "endpoints": [
         {
@@ -528,10 +528,10 @@
       "testChannels2_sendMessage"
     ],
     "subpackages": [
-      "alpha",
+      "subpackage_alpha",
       "subpackage_testChannel",
       "subpackage_testChannel2",
-      "beta",
+      "subpackage_beta",
       "subpackage_testChannels",
       "subpackage_testChannels2"
     ]

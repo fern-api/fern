@@ -8723,7 +8723,7 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "pet": {
+    "subpackage_pet": {
       "name": {
         "originalName": "pet",
         "camelCase": {
@@ -8792,7 +8792,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "order": {
+    "subpackage_order": {
       "name": {
         "originalName": "order",
         "camelCase": {
@@ -9538,8 +9538,8 @@
     ],
     "errors": [],
     "subpackages": [
-      "pet",
-      "order",
+      "subpackage_pet",
+      "subpackage_order",
       "subpackage_petowners",
       "subpackage_testChannel"
     ],

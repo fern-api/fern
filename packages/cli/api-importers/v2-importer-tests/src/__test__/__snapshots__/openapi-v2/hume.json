@@ -51614,9 +51614,9 @@
   },
   "webhookGroups": {},
   "subpackages": {
-    "Get Job Predictions": {
+    "subpackage_getJobPredictions": {
       "name": {
-        "originalName": "Get Job Predictions",
+        "originalName": "getJobPredictions",
         "camelCase": {
           "unsafeName": "getJobPredictions",
           "safeName": "getJobPredictions"
@@ -51637,7 +51637,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Get Job Predictions",
+            "originalName": "getJobPredictions",
             "camelCase": {
               "unsafeName": "getJobPredictions",
               "safeName": "getJobPredictions"
@@ -51658,7 +51658,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Get Job Predictions",
+          "originalName": "getJobPredictions",
           "camelCase": {
             "unsafeName": "getJobPredictions",
             "safeName": "getJobPredictions"
@@ -52901,7 +52901,7 @@
     ],
     "errors": [],
     "subpackages": [
-      "Get Job Predictions",
+      "subpackage_getJobPredictions",
       "subpackage_chat"
     ],
     "fernFilepath": {

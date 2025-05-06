@@ -404,12 +404,12 @@
     ],
     "errors": [],
     "subpackages": [
-      "generativelanguage"
+      "subpackage_generativelanguage"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "generativelanguage": {
+    "subpackage_generativelanguage": {
       "name": {
         "originalName": "generativelanguage",
         "camelCase": {

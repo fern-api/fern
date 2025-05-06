@@ -58942,19 +58942,19 @@
     ],
     "errors": [],
     "subpackages": [
-      "search",
-      "alias",
-      "me",
-      "blobs",
-      "users",
-      "sqlite",
-      "vals",
-      "emails"
+      "subpackage_search",
+      "subpackage_alias",
+      "subpackage_me",
+      "subpackage_blobs",
+      "subpackage_users",
+      "subpackage_sqlite",
+      "subpackage_vals",
+      "subpackage_emails"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "search": {
+    "subpackage_search": {
       "name": {
         "originalName": "search",
         "camelCase": {
@@ -59023,7 +59023,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "alias": {
+    "subpackage_alias": {
       "name": {
         "originalName": "alias",
         "camelCase": {
@@ -59092,7 +59092,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "me": {
+    "subpackage_me": {
       "name": {
         "originalName": "me",
         "camelCase": {
@@ -59161,7 +59161,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "blobs": {
+    "subpackage_blobs": {
       "name": {
         "originalName": "blobs",
         "camelCase": {
@@ -59230,7 +59230,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "users": {
+    "subpackage_users": {
       "name": {
         "originalName": "users",
         "camelCase": {
@@ -59299,7 +59299,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "sqlite": {
+    "subpackage_sqlite": {
       "name": {
         "originalName": "sqlite",
         "camelCase": {
@@ -59368,7 +59368,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "vals": {
+    "subpackage_vals": {
       "name": {
         "originalName": "vals",
         "camelCase": {
@@ -59437,7 +59437,7 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "emails": {
+    "subpackage_emails": {
       "name": {
         "originalName": "emails",
         "camelCase": {

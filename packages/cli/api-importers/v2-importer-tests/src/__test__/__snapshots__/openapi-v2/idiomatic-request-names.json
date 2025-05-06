@@ -8769,15 +8769,15 @@
     ],
     "errors": [],
     "subpackages": [
-      "OrganizationUsers",
-      "Users"
+      "subpackage_organizationUsers",
+      "subpackage_users"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "OrganizationUsers": {
+    "subpackage_organizationUsers": {
       "name": {
-        "originalName": "OrganizationUsers",
+        "originalName": "organizationUsers",
         "camelCase": {
           "unsafeName": "organizationUsers",
           "safeName": "organizationUsers"
@@ -8798,7 +8798,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "OrganizationUsers",
+            "originalName": "organizationUsers",
             "camelCase": {
               "unsafeName": "organizationUsers",
               "safeName": "organizationUsers"
@@ -8819,7 +8819,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "OrganizationUsers",
+          "originalName": "organizationUsers",
           "camelCase": {
             "unsafeName": "organizationUsers",
             "safeName": "organizationUsers"
@@ -8844,9 +8844,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Users": {
+    "subpackage_users": {
       "name": {
-        "originalName": "Users",
+        "originalName": "users",
         "camelCase": {
           "unsafeName": "users",
           "safeName": "users"
@@ -8867,7 +8867,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Users",
+            "originalName": "users",
             "camelCase": {
               "unsafeName": "users",
               "safeName": "users"
@@ -8888,7 +8888,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Users",
+          "originalName": "users",
           "camelCase": {
             "unsafeName": "users",
             "safeName": "users"
