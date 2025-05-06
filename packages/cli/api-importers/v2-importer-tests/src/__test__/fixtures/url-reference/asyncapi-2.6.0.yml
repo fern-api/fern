@@ -1,0 +1,40 @@
+asyncapi: 2.6.0
+info:
+    title: WebSocket channels
+    version: 1.0.0
+    description: Channels for real-time updates.
+channels:
+  /petowners:
+    description: Private websocket channel for receiving updates about pet owners and their pets
+    subscribe:
+      message:
+        name: petUpdate
+        title: PetOwnerUpdate
+        summary: Private websocket channel for receiving updates about pet owners and their pets
+        description: Subscribe to receive updates whenever a pet owner's information or pet data changes.
+        tags:
+          - name: petowners
+        payload:
+          type: object
+          properties:
+            params:
+              type: object
+              properties:
+                channel:
+                  type: string
+                  const: "petowners"
+                data:
+                  type: object
+                  properties:
+                    petOwner:
+                      $ref: '#/components/schemas/PetOwner'
+                  required:
+                    - petOwner
+                    - pet
+components:
+    schemas:
+      PetOwner:
+        allOf:
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/User'
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Pet'
+          - $ref: 'https://raw.githubusercontent.com/fern-api/external-ref-fixture-specs/refs/heads/main/asyncapi-2.6.0/spec.yaml#/components/schemas/Tag'

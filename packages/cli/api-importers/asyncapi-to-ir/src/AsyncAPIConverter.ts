@@ -33,6 +33,11 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             context: this.context
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
+        this.context.spec = (await this.resolveExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
+
         if (this.isAsyncAPIV3(this.context)) {
             await this.convertChannelMessages();
         } else {
