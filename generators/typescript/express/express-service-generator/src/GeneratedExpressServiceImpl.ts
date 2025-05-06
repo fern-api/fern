@@ -692,9 +692,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             )
         );
 
-        // call next()
         statements.push(
-            ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))
+            ts.factory.createIfStatement(
+                ts.factory.createPropertyAccessExpression(expressResponse, "writableEnded"),
+                ts.factory.createBlock(
+                    [ts.factory.createExpressionStatement(ts.factory.createCallExpression(next, undefined, undefined))],
+                    true
+                )
+            )
         );
 
         return statements;
