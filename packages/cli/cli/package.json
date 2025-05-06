@@ -59,6 +59,7 @@
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-to-jsonschema": "workspace:*",
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",

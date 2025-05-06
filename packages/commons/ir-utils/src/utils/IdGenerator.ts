@@ -1,6 +1,6 @@
 import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
 
-import { ResolvedEndpoint } from "./resolvers/ResolvedEndpoint";
+import { stringifyFernFilepath } from "./stringifyFernFilepath";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
@@ -31,11 +31,6 @@ export const IdGenerator = {
         const endpointId = httpEndpoint.name.originalName;
         return `endpoint_${joinedFernFilePath}.${endpointId}`;
     },
-    generateEndpointIdFromResolvedEndpoint: (resolvedEndpoint: ResolvedEndpoint): string => {
-        const joinedFernFilePath = stringifyFernFilepath(resolvedEndpoint.file.fernFilepath);
-        const endpointId = resolvedEndpoint.endpointId;
-        return `endpoint_${joinedFernFilePath}.${endpointId}`;
-    },
     generateWebhookGroupId: (fernFilepath: FernFilepath): string => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `webhooks_${joinedFernFilePath}`;
@@ -49,7 +44,3 @@ export const IdGenerator = {
         return `channel_${joinedFernFilePath}`;
     }
 };
-
-function stringifyFernFilepath(fernFilepath: FernFilepath): string {
-    return fernFilepath.allParts.map((part) => part.originalName).join("/");
-}

@@ -8,7 +8,7 @@ import {
     TypeId
 } from "@fern-api/ir-sdk";
 
-import { isOptional } from "../utils/isTypeReferenceOptional";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
@@ -304,7 +304,7 @@ function generateObjectDeclarationExample({
         });
         if (
             propertyExample.type === "failure" &&
-            !isOptional({ typeDeclarations, typeReference: property.valueType })
+            !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
         ) {
             return {
                 type: "failure",

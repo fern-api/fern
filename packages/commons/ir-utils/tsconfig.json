@@ -6,6 +6,7 @@
     { "path": "../../ir-sdk" },
     { "path": "../core-utils" },
     { "path": "../casings-generator" },
-    { "path": "../../cli/fern-definition/schema" }
+    { "path": "../../cli/fern-definition/schema" },
+    { "path": "../../cli/configuration" }
   ]
 }
