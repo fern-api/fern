@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import os
 import re
-from abc import ABC, abstractmethod
 import textwrap
+from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
 from .publisher import Publisher
@@ -53,7 +53,10 @@ class AbstractGenerator(ABC):
             user_defined_toml = generator_config.custom_config.get("pyproject_toml")
 
         exclude_types_from_init_exports = False
-        if generator_config.custom_config is not None and "exclude_types_from_init_exports" in generator_config.custom_config:
+        if (
+            generator_config.custom_config is not None
+            and "exclude_types_from_init_exports" in generator_config.custom_config
+        ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
         with Project(
@@ -127,6 +130,10 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
+
+        self.postrun(
+            generator_exec_wrapper=generator_exec_wrapper,
+        )
 
     # We're trying not to change the casing more than we need to, so here
     # we're using the same casing as is given but just removing `-` and other special characters as
@@ -301,6 +308,13 @@ def test_client() -> None:
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project: Project,
+    ) -> None: ...
+
+    @abstractmethod
+    def postrun(
+        self,
+        *,
+        generator_exec_wrapper: GeneratorExecWrapper,
     ) -> None: ...
 
     @abstractmethod

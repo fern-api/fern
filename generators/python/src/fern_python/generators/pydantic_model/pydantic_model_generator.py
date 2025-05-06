@@ -96,6 +96,9 @@ class PydanticModelGenerator(AbstractGenerator):
         )
         context.core_utilities.copy_to_project(project=project)
 
+    def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
+        pass
+
     def generate_types(
         self,
         *,
