@@ -19,9 +19,9 @@ import {
     ExampleTypeShape,
     PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext";
-import { IdGenerator } from "../../IdGenerator";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";

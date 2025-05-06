@@ -29,6 +29,7 @@
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/cli-logger": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/conjure-to-fern": "workspace:*",
     "@fern-api/core": "workspace:*",

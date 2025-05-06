@@ -88,7 +88,7 @@ async function getIntermediateRepresentation({
 }): Promise<unknown> {
     let intermediateRepresentation;
     if (directFromOpenapi && workspace instanceof OSSWorkspace) {
-        intermediateRepresentation = await workspace.getIntermediateRepresentation({ context });
+        intermediateRepresentation = await workspace.getIntermediateRepresentation({ context, audiences });
     } else {
         const fernWorkspace = await workspace.toFernWorkspace({ context });
 

@@ -1,13 +1,13 @@
 import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
-export declare namespace isOptional {
+export declare namespace isTypeReferenceOptional {
     interface Args {
         typeReference: TypeReference;
         typeDeclarations?: Record<TypeId, TypeDeclaration>;
     }
 }
 
-export function isOptional({ typeReference, typeDeclarations }: isOptional.Args): boolean {
+export function isTypeReferenceOptional({ typeReference, typeDeclarations }: isTypeReferenceOptional.Args): boolean {
     if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return true;
     }

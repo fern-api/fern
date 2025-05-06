@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",

@@ -8,7 +8,7 @@ import {
     Webhook
 } from "@fern-api/ir-sdk";
 
-import { IdGenerator } from "../IdGenerator";
+import { IdGenerator } from "../utils/IdGenerator";
 import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {

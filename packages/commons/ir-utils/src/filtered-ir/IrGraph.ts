@@ -22,11 +22,10 @@ import {
     WebhookPayload
 } from "@fern-api/ir-sdk";
 
-import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
-import { isReferencedWebhookPayloadSchema } from "../converters/convertWebhookGroup";
-import { getPropertiesByAudience } from "../utils/getPropertiesByAudience";
+import { IdGenerator } from "../utils/IdGenerator";
+import { isReferencedWebhookPayloadSchema } from "../utils/isReferencedWebhookPayloadSchema";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
+import { getPropertiesByAudience } from "./getPropertiesByAudience";
 import {
     AudienceId,
     ChannelNode,
@@ -303,7 +302,7 @@ export class IrGraph {
         }
     }
 
-    public addWebhook(file: FernFileContext, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
+    public addWebhook(filepath: FernFilepath, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
         const webhookId = webhook.id;
         if (webhookId == null) {
             return;
@@ -340,7 +339,7 @@ export class IrGraph {
                 }
             });
         }
-        referencedSubpackages.add(file.fernFilepath);
+        referencedSubpackages.add(filepath);
         this.webhooks[webhookId] = {
             webhookId,
             referencedTypes,
@@ -348,7 +347,7 @@ export class IrGraph {
         };
     }
 
-    public markWebhookForAudiences(file: FernFileContext, webhook: Webhook, audiences: AudienceId[]): void {
+    public markWebhookForAudiences(filepath: FernFilepath, webhook: Webhook, audiences: AudienceId[]): void {
         const webhookId = webhook.id;
         if (webhookId == null) {
             return;
@@ -356,12 +355,12 @@ export class IrGraph {
 
         if (this.hasAudience(audiences)) {
             this.webhooksNeededForAudience.add(webhookId);
-            this.addSubpackages(file.fernFilepath);
+            this.addSubpackages(filepath);
         }
     }
 
     public addChannel(
-        file: FernFileContext,
+        filepath: FernFilepath,
         channelId: string,
         channel: WebSocketChannel,
         rawChannel?: RawSchemas.WebSocketChannelSchema
@@ -389,7 +388,7 @@ export class IrGraph {
             });
         }
 
-        referencedSubpackages.add(file.fernFilepath);
+        referencedSubpackages.add(filepath);
         this.channels[channelId] = {
             channelId,
             referencedTypes,
@@ -398,7 +397,7 @@ export class IrGraph {
     }
 
     public markChannelForAudiences(
-        file: FernFileContext,
+        filepath: FernFilepath,
         channelId: WebSocketChannelId,
         audiences: AudienceId[]
     ): void {
@@ -408,7 +407,7 @@ export class IrGraph {
 
         if (this.hasAudience(audiences)) {
             this.channelsNeededForAudience.add(channelId);
-            this.addSubpackages(file.fernFilepath);
+            this.addSubpackages(filepath);
         }
     }
 

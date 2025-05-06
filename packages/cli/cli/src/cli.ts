@@ -753,7 +753,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
                     directFromOpenapi: false,
-                    cliContext
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else if (argv.fromOpenapi) {
                 await generateOpenApiToFdrApiDefinitionForWorkspaces({
@@ -763,7 +764,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }),
                     outputFilepath: resolve(cwd(), argv.pathToOutput),
                     directFromOpenapi: true,
-                    cliContext
+                    cliContext,
+                    audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
                 });
             } else {
                 await generateFdrApiDefinitionForWorkspaces({

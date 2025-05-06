@@ -15,9 +15,7 @@ import {
     WebSocketChannelId,
     WebhookGroupId
 } from "@fern-api/ir-sdk";
-
-import { IdGenerator } from "./IdGenerator";
-import { FilteredIr } from "./filtered-ir/FilteredIr";
+import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
 type UnprocessedSubpackage = Omit<Subpackage, "hasEndpointsInTree">;

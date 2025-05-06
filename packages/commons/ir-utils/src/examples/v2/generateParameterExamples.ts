@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
 
-import { isOptional } from "../utils/isTypeReferenceOptional";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { getFirstExamples } from "./getFirstExamples";
 
 export function generateParameterExamples({
@@ -44,7 +44,10 @@ export function generateParameterExamples({
         if (userExample !== undefined) {
             result.queryParameters[parameter.name.name.originalName] = userExample;
         } else if (autoExample !== undefined) {
-            if (skipOptionalRequestProperties && isOptional({ typeReference: parameter.valueType, typeDeclarations })) {
+            if (
+                skipOptionalRequestProperties &&
+                isTypeReferenceOptional({ typeReference: parameter.valueType, typeDeclarations })
+            ) {
                 continue;
             }
 
@@ -58,7 +61,10 @@ export function generateParameterExamples({
         if (userExample !== undefined) {
             result.headers[parameter.name.name.originalName] = userExample;
         } else if (autoExample !== undefined) {
-            if (skipOptionalRequestProperties && isOptional({ typeReference: parameter.valueType, typeDeclarations })) {
+            if (
+                skipOptionalRequestProperties &&
+                isTypeReferenceOptional({ typeReference: parameter.valueType, typeDeclarations })
+            ) {
                 continue;
             }
 
