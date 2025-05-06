@@ -1,33 +1,44 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { SeedClient } from "@seed/seed-sdk";
+import { SeedApiClient } from "seed-api/dist";
 import * as schemas from "../schemas";
 
-const client = new SeedClient();
+const client = new SeedApiClient({
+    environment: () => ""
+});
 
-export const createMovie = {
+// request
+// typeReference: named: imdb
+// request
+// undefined
+export const imdbCreateMovie = {
     register(server: McpServer) {
         return server.tool(
-            "create_movie",
+            "imdb_create_movie",
             "Add a movie to the database using the movies/* /... path.",
-            schemas.createMovieRequest.shape,
+            schemas.imdbCreateMovieRequest.shape,
             async (params) => {
-                const result = await client.createMovie(params);
+                const result = await client.imdb.createMovie(params);
                 return {
-                    content: [{ type: "text", text: result }]
+                    content: [{ type: "text", text: JSON.stringify(result) }]
                 };
             }
         );
     }
 };
 
-export const getMovie = {
+// undefined
+// undefined
+// undefined
+// undefined
+export const imdbGetMovie = {
     register(server: McpServer) {
         return server.tool(
-            "get_movie",
+            "imdb_get_movie",
+            { movieId: schemas.movieId },
             async (params) => {
-                const result = await client.getMovie(params);
+                const result = await client.imdb.getMovie(params);
                 return {
-                    content: [{ type: "text", text: result }]
+                    content: [{ type: "text", text: JSON.stringify(result) }]
                 };
             }
         );

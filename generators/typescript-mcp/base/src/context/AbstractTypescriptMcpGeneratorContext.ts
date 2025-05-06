@@ -15,6 +15,7 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
     CustomConfig extends TypescriptCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: TypescriptMcpProject;
+    public publishConfig?: FernGeneratorExec.NpmGithubPublishInfo;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -25,6 +26,16 @@ export abstract class AbstractTypescriptMcpGeneratorContext<
         super(config, generatorNotificationService);
         this.project = new TypescriptMcpProject({
             context: this
+        });
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "npm") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
         });
     }
 

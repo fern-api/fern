@@ -12,11 +12,11 @@ export class ReadmeGenerator extends FileGenerator<
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine(`# ${this.context.project.packageJson.name}`);
+                writer.writeLine(`# ${this.context.project.helpers.packageName}`);
                 writer.newLine();
                 this.writeFernShield(writer);
                 writer.newLine();
-                writer.writeLine(this.context.project.packageJson.description);
+                writer.writeLine(this.context.project.helpers.description);
             }),
             directory: this.getFilepath(),
             filename: "README.md",
@@ -29,7 +29,7 @@ export class ReadmeGenerator extends FileGenerator<
     }
 
     private writeFernShield(writer: ts.Writer) {
-        const utmSource = encodeURIComponent(this.context.project.packageJson.name);
+        const utmSource = encodeURIComponent(this.context.project.helpers.packageName);
         writer.writeLine(
             `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=${utmSource})`
         );

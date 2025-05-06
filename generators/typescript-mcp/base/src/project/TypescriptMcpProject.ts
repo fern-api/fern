@@ -1,10 +1,12 @@
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { cloneDeep, isArray, mergeWith } from "lodash-es";
+import { mkdir, readFile, symlink, writeFile } from "fs/promises";
+import { capitalize, kebabCase } from "lodash-es";
 import path from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
+
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
 import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";
 
@@ -26,18 +28,15 @@ export class TypescriptMcpProject extends AbstractProject<
     private schemasFiles: File[] = [];
     private toolsFiles: File[] = [];
     public readonly filepaths: TypescriptMcpProjectFilepaths;
-    public readonly packageJson: PackageJson;
-    public readonly sdkPackageName: string;
-    public readonly sdkClientName: string;
+
+    public readonly helpers: TypescriptMcpProjectHelpers;
+    private packageJson: PackageJson;
 
     public constructor({ context }: { context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> }) {
         super(context);
         this.filepaths = new TypescriptMcpProjectFilepaths();
+        this.helpers = new TypescriptMcpProjectHelpers({ context });
         this.packageJson = new PackageJson({ context });
-
-        // TODO: handle this in a more realistic way
-        this.sdkPackageName = `@${context.config.organization}/${context.config.organization}-sdk`;
-        this.sdkClientName = `${context.config.organization.charAt(0).toUpperCase() + context.config.organization.slice(1)}Client`;
     }
 
     public addSrcFile(file: File): void {
@@ -139,6 +138,55 @@ class TypescriptMcpProjectFilepaths {
     }
 }
 
+declare namespace TypescriptMcpProjectHelpers {
+    interface Args {
+        context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
+    }
+}
+
+class TypescriptMcpProjectHelpers {
+    public readonly packageName: string;
+    public readonly description: string;
+    public readonly generatedSdkPackageName: string;
+    public readonly generatedSdkClientName: string;
+
+    constructor({ context }: TypescriptMcpProjectHelpers.Args) {
+        const organization = context.config.organization;
+        const workspaceName = context.config.workspaceName;
+        this.packageName = context.publishConfig?.packageName ?? `${organization}-mcp-server`;
+        this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
+        this.generatedSdkPackageName = `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
+        this.generatedSdkClientName = `${capitalize(organization)}${capitalize(workspaceName)}Client`;
+    }
+
+    public fullyQualifiedMethodPath(service: HttpService, endpoint: HttpEndpoint): string {
+        const namespace = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join(".");
+        const name = endpoint.name.camelCase.safeName;
+        return `${namespace}.${name}`;
+    }
+
+    public fullyQualifiedToolIdentifier(service: HttpService, endpoint: HttpEndpoint): string {
+        const namespace = service.name.fernFilepath.allParts
+            .map((part, index) => (index > 0 ? part.pascalCase.safeName : part.camelCase.safeName))
+            .join("");
+        const name =
+            service.name.fernFilepath.allParts.length > 0
+                ? endpoint.name.pascalCase.safeName
+                : endpoint.name.camelCase.safeName;
+        return `${namespace}${name}`;
+    }
+
+    public fullyQualifiedSchemaIdentifier(service: HttpService, endpoint: HttpEndpoint): string {
+        return this.fullyQualifiedToolIdentifier(service, endpoint);
+    }
+
+    public fullyQualifiedToolName(service: HttpService, endpoint: HttpEndpoint): string {
+        const namespace = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("_");
+        const name = endpoint.name.snakeCase.safeName;
+        return `${namespace}_${name}`;
+    }
+}
+
 declare namespace PackageJson {
     interface Args {
         context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
@@ -147,20 +195,15 @@ declare namespace PackageJson {
 
 class PackageJson {
     private context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
-    public readonly name: string;
-    public readonly description: string;
 
     public constructor({ context }: PackageJson.Args) {
         this.context = context;
-        // TODO: review if this is indeed the best convention for name and description
-        this.name = `@${this.context.config.organization}/${this.context.config.organization}-mcp-server`;
-        this.description = `Model Context Protocol (MCP) server for ${this.context.config.organization}'s ${this.context.config.workspaceName}.`;
     }
 
     private build(): Record<string, unknown> {
         const packageJson: Record<string, unknown> = {
-            name: this.name,
-            description: this.description,
+            name: this.context.project.helpers.packageName,
+            description: this.context.project.helpers.description,
             version: this.context.version ?? "0.0.0",
             keywords: [this.context.config.organization, "mcp", "server"],
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
@@ -173,6 +216,7 @@ class PackageJson {
             },
             dependencies: {
                 "@modelcontextprotocol/sdk": "^1.8.0",
+                [this.context.project.helpers.generatedSdkPackageName]: "file:./sdk",
                 zod: "^3.24.2"
             },
             devDependencies: {

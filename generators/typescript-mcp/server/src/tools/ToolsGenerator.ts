@@ -45,38 +45,74 @@ export class ToolsGenerator extends FileGenerator<
     private writeImportsBlock(writer: ts.Writer) {
         writer.writeLine('import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";');
         writer.writeLine(
-            `import { ${this.context.project.sdkClientName} } from "${this.context.project.sdkPackageName}";`
+            `import { ${this.context.project.helpers.generatedSdkClientName} } from "${this.context.project.helpers.generatedSdkPackageName}/dist";`
         );
         writer.writeLine('import * as schemas from "../schemas";');
     }
 
     private writeClientInitializationBlock(writer: ts.Writer) {
-        writer.writeLine(`const client = new ${this.context.project.sdkClientName}();`);
+        writer.writeLine(`const client = new ${this.context.project.helpers.generatedSdkClientName}({`);
+        writer.writeLine("    environment: () => \"\"");
+        writer.writeLine("});");
     }
-
     private writeToolDefinitionsBlock(writer: ts.Writer, service: HttpService, endpoint: HttpEndpoint) {
-        const toolId = endpoint.name.camelCase.safeName;
-        const toolName = endpoint.name.snakeCase.safeName;
+        const toolIdentifier = this.context.project.helpers.fullyQualifiedToolIdentifier(service, endpoint);
+        const toolName = this.context.project.helpers.fullyQualifiedToolName(service, endpoint);
         const toolDescription = endpoint.docs;
-        const toolParamId = endpoint.method === "POST" ? `${toolId}Request` : undefined;
 
-        // TODO: handle this in a more realistic way
-        const sdkMethodId = endpoint.name.camelCase.safeName;
+        let toolParamRef;
+        switch (endpoint.method) {
+            case "GET":
+                toolParamRef = `{ ${endpoint.path.parts.map((part) => `${part.pathParameter}: schemas.${part.pathParameter}`).join(", ")} }`;
+                break;
+            case "DELETE":
+            case "PATCH":
+            case "POST":
+            case "PUT":
+                toolParamRef = `schemas.${this.context.project.helpers.fullyQualifiedSchemaIdentifier(service, endpoint)}Request.shape`;
+                break;
+            default:
+                break;
+        }
 
-        writer.writeLine(`export const ${toolId} = {`);
+        const sdkMethodPath = this.context.project.helpers.fullyQualifiedMethodPath(service, endpoint);
+
+        writer.writeLine(`// ${endpoint.sdkRequest?.requestParameterName.originalName}`);
+        writer.writeLine(
+            `// ${endpoint.sdkRequest?.shape._visit({
+                justRequestBody: (value) =>
+                    value._visit({
+                        typeReference: (value) =>
+                            `typeReference: ${value.requestBodyType._visit({
+                                container: (value) => `container: ${value._visit}`,
+                                named: (value) => `named: ${value.fernFilepath.file?.originalName}`,
+                                primitive: (value) => `primitive: ${value.v1}`,
+                                unknown: () => "unknown",
+                                _other: () => "other"
+                            })}`,
+                        bytes: (value) => `bytes: ${value.contentType}`,
+                        _other: (value) => `other: ${value.type}`
+                    }),
+                wrapper: (value) => `wrapper: ${value.wrapperName.originalName}`,
+                _other: (value) => `other: ${value.type}`
+            })}`
+        );
+        writer.writeLine(`// ${endpoint.sdkRequest?.requestParameterName.originalName}`);
+        writer.writeLine(`// ${endpoint.sdkRequest?.streamParameter?.property.name.name.originalName}`);
+        writer.writeLine(`export const ${toolIdentifier} = {`);
         writer.writeLine("    register: function(server: McpServer) {");
         writer.writeLine("        return server.tool(");
         writer.writeLine(`            "${toolName}",`);
         if (toolDescription) {
             writer.writeLine(`            "${toolDescription}",`);
         }
-        if (toolParamId) {
-            writer.writeLine(`            schemas.${toolParamId}.shape,`);
+        if (toolParamRef) {
+            writer.writeLine(`            ${toolParamRef},`);
         }
         writer.writeLine("            async (params) => {");
-        writer.writeLine(`                const result = await client.${sdkMethodId}(params);`);
+        writer.writeLine(`                const result = await client.${sdkMethodPath}(params);`);
         writer.writeLine("                return {");
-        writer.writeLine('                    content: [{ type: "text", text: result }]');
+        writer.writeLine('                    content: [{ type: "text", text: JSON.stringify(result) }]');
         writer.writeLine("                };");
         writer.writeLine("            }");
         writer.writeLine("        );");

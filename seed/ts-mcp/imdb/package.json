@@ -1,5 +1,5 @@
 {
-  "name": "@seed/seed-mcp-server",
+  "name": "seed-mcp-server",
   "description": "Model Context Protocol (MCP) server for seed's api.",
   "version": "0.0.1",
   "keywords": [
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
+    "seed-api": "file:./sdk",
     "zod": "^3.24.2"
   },
   "devDependencies": {
