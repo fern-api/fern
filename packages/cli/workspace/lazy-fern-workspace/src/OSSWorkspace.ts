@@ -22,7 +22,6 @@ import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/opena
 import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { ErrorCollector } from "@fern-api/v2-importer-commons";
-import { V3ParserSettings } from "@fern-api/v2-importer-commons";
 
 import { constructCasingsGenerator } from "../../../../commons/casings-generator/src/CasingsGenerator";
 import { loadOpenRpc } from "./loaders";
@@ -109,12 +108,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
      */
     public async getIntermediateRepresentation({
         context,
-        audiences,
-        v3ParserSettings
+        audiences
     }: {
         context: TaskContext;
         audiences: Audiences;
-        v3ParserSettings: V3ParserSettings;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
@@ -151,7 +148,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         namespace: document.namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
-                        v3ParserSettings,
                         smartCasing: false,
                         spec: document.value as OpenAPIV3_1.Document,
                         exampleGenerationArgs: { disabled: false },
@@ -169,7 +165,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                         namespace: document.namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
-                        v3ParserSettings,
                         smartCasing: false,
                         spec: document.value,
                         exampleGenerationArgs: { disabled: false },
@@ -214,7 +209,6 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     namespace: spec.namespace,
                     generationLanguage: "typescript",
                     logger: context.logger,
-                    v3ParserSettings,
                     smartCasing: false,
                     spec: await loadOpenRpc({
                         context,
