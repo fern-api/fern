@@ -78,7 +78,12 @@ export class GeneratorAgentClient {
             logger: this.logger
         });
         this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`);
-        await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+        try {
+            await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+        } catch (error) {
+            this.logger.debug(`Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`);
+            // Continue execution as the package might already be installed
+        }
 
         const cli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
