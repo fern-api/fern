@@ -24,7 +24,8 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         this.generatorAgent = new GoGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
     }
 }

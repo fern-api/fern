@@ -1,45 +1,68 @@
+import { readFile } from "fs/promises";
 import semver from "semver";
 
-import { Project } from "@fern-api/project-loader";
+import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils";
+import { resolve } from "@fern-api/fs-utils";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api";
+import { IntermediateRepresentation as Serialize } from "@fern-api/ir-sdk/src/sdk/serialization";
+import { FernCliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../../cli-context/CliContext";
+import { IntermediateRepresentationChangeDetector } from "../utils/IntermediateRepresentationChangeDetector";
 
-export async function getSdkVersion({
-    project,
-    context,
-    group,
-    from,
-    fromVersion
-}: {
-    project: Project;
-    context: CliContext;
-    group: string;
-    from: string;
-    fromVersion: string;
-}): Promise<void> {
-    if (!isGitSha({ value: from })) {
-        context.failAndThrow(`Invalid --from argument: ${from}; expected a valid git SHA`);
-        return;
-    }
-    // TODO: For now, we always bump the minor version.
-    const nextVersion = semver.inc(fromVersion, "minor");
-    if (!nextVersion) {
-        context.failAndThrow(`Invalid current version: ${fromVersion}`);
-        return;
-    }
-    context.logger.info(nextVersion);
-    return;
+export interface Result {
+    bump: "major" | "minor" | "patch";
+    nextVersion: string;
 }
 
-/**
- * Checks if a string matches the pattern of a git SHA.
- */
-function isGitSha({ value, allowShort = true }: { value: string; allowShort?: boolean }): boolean {
-    if (/^[0-9a-f]{40}$/i.test(value)) {
-        return true;
+export async function getSdkVersion({
+    context,
+    from,
+    to,
+    fromVersion
+}: {
+    context: CliContext;
+    from: string;
+    to: string;
+    fromVersion: string;
+}): Promise<Result> {
+    const detector = new IntermediateRepresentationChangeDetector(context);
+    const change = await detector.detectChanges({
+        from: await readIr({ context, filepath: from, flagName: "from" }),
+        to: await readIr({ context, filepath: to, flagName: "to" })
+    });
+    const nextVersion = semver.inc(fromVersion, change.bump);
+    if (!nextVersion) {
+        context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
+        throw new FernCliError();
     }
-    if (allowShort && /^[0-9a-f]{7,10}$/i.test(value)) {
-        return true;
+    return {
+        bump: change.bump,
+        nextVersion
+    };
+}
+
+async function readIr({
+    context,
+    filepath,
+    flagName
+}: {
+    context: CliContext;
+    filepath: string;
+    flagName: string;
+}): Promise<IntermediateRepresentation> {
+    const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath));
+    if (!(await doesPathExist(absoluteFilepath, "file"))) {
+        context.failWithoutThrowing(`File not found: ${absoluteFilepath}`);
+        throw new FernCliError();
     }
-    return false;
+    const ir = await readFile(absoluteFilepath, "utf-8");
+    const parsed = Serialize.parse(ir);
+    if (!parsed.ok) {
+        context.failWithoutThrowing(
+            `Invalid --${flagName}; expected a filepath containing a valid IR: ${JSON.stringify(parsed.errors)}`
+        );
+        throw new FernCliError();
+    }
+    return parsed.value;
 }
