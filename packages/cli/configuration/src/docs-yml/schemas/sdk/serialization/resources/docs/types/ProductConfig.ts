@@ -15,10 +15,9 @@ export const ProductConfig: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         displayName: core.serialization.property("display-name", core.serialization.string()),
-        subtitle: core.serialization.string().optional(),
-        icon: core.serialization.string(),
-        value: core.serialization.string(),
         path: core.serialization.string(),
+        subtitle: core.serialization.string().optional(),
+        icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         versions: core.serialization.list(VersionConfig).optional(),
     })
@@ -28,10 +27,9 @@ export const ProductConfig: core.serialization.ObjectSchema<
 export declare namespace ProductConfig {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
-        subtitle?: string | null;
-        icon: string;
-        value: string;
         path: string;
+        subtitle?: string | null;
+        icon?: string | null;
         slug?: string | null;
         versions?: VersionConfig.Raw[] | null;
     }

@@ -865,6 +865,9 @@
         "display-name": {
           "type": "string"
         },
+        "path": {
+          "type": "string"
+        },
         "subtitle": {
           "oneOf": [
             {
@@ -876,13 +879,14 @@
           ]
         },
         "icon": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "slug": {
           "oneOf": [
@@ -910,8 +914,6 @@
       },
       "required": [
         "display-name",
-        "icon",
-        "value",
         "path"
       ],
       "additionalProperties": false
