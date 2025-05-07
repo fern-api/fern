@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      OpenAPI V3 parser handles converting converting schemas that have a singular non-object `allOf`.
+    type: chore
+  irVersion: 57
+  version: 0.60.21
+
+- changelogEntry: 
+  - summary: |
       Move subset of customers off of legacy docs development pin and onto latest. 
     type: chore
   irVersion: 57
