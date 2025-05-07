@@ -4341,11 +4341,21 @@
     "OAuthClientCreateProfile": {
       "name": "OAuthClientCreateProfile",
       "shape": {
-        "type": "object",
-        "extends": [
-          "OAuthClientProfile"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "rightbrain_docs"
+          },
+          {
+            "value": "rightbrain_tasks"
+          },
+          {
+            "value": "user_defined"
+          },
+          {
+            "value": "zendesk"
+          }
+        ]
       }
     },
     "OAuthClientCreate": {
@@ -8379,11 +8389,21 @@
     "OrgGetParametersSchema": {
       "name": "OrgGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "OrgMembership"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "active"
+          },
+          {
+            "value": "joinable"
+          },
+          {
+            "value": "joinable_by_domain"
+          },
+          {
+            "value": "joinable_by_invite"
+          }
+        ]
       }
     },
     "org_getOrgOrgIdGet_Response_403": {
@@ -8455,11 +8475,18 @@
     "OrgOrgIdInviteGetParametersSchema": {
       "name": "OrgOrgIdInviteGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "OrgInviteShow"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "all"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "accepted"
+          }
+        ]
       }
     },
     "org_invitesListOrgOrgIdInviteGet_Response_403": {
@@ -9074,11 +9101,15 @@
     "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdChatGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "CollectionChatShow"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "all"
+          },
+          {
+            "value": "viewable"
+          }
+        ]
       }
     },
     "collection_list_chats_org__org_id__project__project_id__collection__collection_id__chat_get_Response_403": {

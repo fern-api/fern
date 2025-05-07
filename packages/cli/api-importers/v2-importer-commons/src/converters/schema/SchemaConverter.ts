@@ -75,11 +75,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         }
 
         // Check if there is a single allOf that is not an object
-        if (this.schema.allOf?.length === 1 && this.schemaOnlyHasAllowedKeys(['allOf']) && this.schema.allOf[0] != null) {
+        if (
+            this.schema.allOf?.length === 1 &&
+            this.schemaOnlyHasAllowedKeys(["allOf"]) &&
+            this.schema.allOf[0] != null
+        ) {
             let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
-            
+
             if (this.context.isReferenceObject(this.schema.allOf[0])) {
-                const resolvedAllOfSchemaResponse = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(this.schema.allOf[0]);
+                const resolvedAllOfSchemaResponse = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(
+                    this.schema.allOf[0]
+                );
                 if (resolvedAllOfSchemaResponse.resolved) {
                     allOfSchema = resolvedAllOfSchemaResponse.value;
                 }
@@ -95,9 +101,9 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     id: this.id,
                     inlined: true
                 });
-                
+
                 const allOfResult = await allOfConverter.convert();
-                
+
                 if (allOfResult?.typeDeclaration?.shape.type !== "object") {
                     return allOfResult;
                 }
@@ -272,23 +278,23 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private schemaOnlyHasAllowedKeys(allowedKeys: string[]): boolean {
         // These are common schema properties that don't affect the type
         const defaultAllowedKeys = [
-            'description', 
-            'example', 
-            'title', 
-            'default', 
-            'deprecated', 
-            'readOnly', 
-            'writeOnly', 
-            'xml', 
-            'externalDocs', 
-            'extensions'
+            "description",
+            "example",
+            "title",
+            "default",
+            "deprecated",
+            "readOnly",
+            "writeOnly",
+            "xml",
+            "externalDocs",
+            "extensions"
         ];
-        
+
         // Combine default allowed keys with any additional allowed keys
         const allAllowedKeys = [...defaultAllowedKeys, ...allowedKeys];
-        
+
         const schemaKeys = Object.keys(this.schema);
-        return schemaKeys.every(key => allAllowedKeys.includes(key));
+        return schemaKeys.every((key) => allAllowedKeys.includes(key));
     }
 
     private async createTypeDeclarationFromFernType({

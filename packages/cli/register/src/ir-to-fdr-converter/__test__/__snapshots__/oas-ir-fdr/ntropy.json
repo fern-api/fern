@@ -111,14 +111,18 @@
       }
     },
     "AccountHolderCreateType": {
-      "description": "The type of the account holder. ",
+      "description": "An enumeration.",
       "name": "AccountHolderCreateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AccountHolderType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "consumer"
+          },
+          {
+            "value": "business"
+          }
+        ]
       }
     },
     "AccountHolderCreate": {
@@ -163,14 +167,18 @@
       }
     },
     "AccountHolderExternalType": {
-      "description": "The type of the account holder. ",
+      "description": "An enumeration.",
       "name": "AccountHolderExternalType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AccountHolderType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "consumer"
+          },
+          {
+            "value": "business"
+          }
+        ]
       }
     },
     "AccountHolderExternal": {
@@ -674,25 +682,477 @@
       }
     },
     "BankStatementTransactionEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
+      "description": "An enumeration.",
       "name": "BankStatementTransactionEntryType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "incoming"
+          },
+          {
+            "value": "outgoing"
+          }
+        ]
       }
     },
     "BankStatementTransactionCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
+      "description": "An enumeration.",
       "name": "BankStatementTransactionCurrency",
       "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "EUR"
+          },
+          {
+            "value": "AED"
+          },
+          {
+            "value": "AFN"
+          },
+          {
+            "value": "XCD"
+          },
+          {
+            "value": "ALL"
+          },
+          {
+            "value": "AMD"
+          },
+          {
+            "value": "AOA"
+          },
+          {
+            "value": "ARS"
+          },
+          {
+            "value": "USD"
+          },
+          {
+            "value": "AUD"
+          },
+          {
+            "value": "AWG"
+          },
+          {
+            "value": "AZN"
+          },
+          {
+            "value": "BAM"
+          },
+          {
+            "value": "BBD"
+          },
+          {
+            "value": "BDT"
+          },
+          {
+            "value": "XOF"
+          },
+          {
+            "value": "BGN"
+          },
+          {
+            "value": "BHD"
+          },
+          {
+            "value": "BIF"
+          },
+          {
+            "value": "BMD"
+          },
+          {
+            "value": "BND"
+          },
+          {
+            "value": "BOB"
+          },
+          {
+            "value": "BRL"
+          },
+          {
+            "value": "BSD"
+          },
+          {
+            "value": "INR"
+          },
+          {
+            "value": "NOK"
+          },
+          {
+            "value": "BWP"
+          },
+          {
+            "value": "BYR"
+          },
+          {
+            "value": "BZD"
+          },
+          {
+            "value": "CAD"
+          },
+          {
+            "value": "CDF"
+          },
+          {
+            "value": "XAF"
+          },
+          {
+            "value": "CHF"
+          },
+          {
+            "value": "NZD"
+          },
+          {
+            "value": "CLP"
+          },
+          {
+            "value": "CNY"
+          },
+          {
+            "value": "COP"
+          },
+          {
+            "value": "CRC"
+          },
+          {
+            "value": "CUP"
+          },
+          {
+            "value": "CVE"
+          },
+          {
+            "value": "ANG"
+          },
+          {
+            "value": "CZK"
+          },
+          {
+            "value": "DJF"
+          },
+          {
+            "value": "DKK"
+          },
+          {
+            "value": "DOP"
+          },
+          {
+            "value": "DZD"
+          },
+          {
+            "value": "EGP"
+          },
+          {
+            "value": "MAD"
+          },
+          {
+            "value": "ERN"
+          },
+          {
+            "value": "ETB"
+          },
+          {
+            "value": "FJD"
+          },
+          {
+            "value": "FKP"
+          },
+          {
+            "value": "GBP"
+          },
+          {
+            "value": "GEL"
+          },
+          {
+            "value": "GHS"
+          },
+          {
+            "value": "GIP"
+          },
+          {
+            "value": "GMD"
+          },
+          {
+            "value": "GNF"
+          },
+          {
+            "value": "GTQ"
+          },
+          {
+            "value": "GYD"
+          },
+          {
+            "value": "HKD"
+          },
+          {
+            "value": "HNL"
+          },
+          {
+            "value": "HUF"
+          },
+          {
+            "value": "IDR"
+          },
+          {
+            "value": "ILS"
+          },
+          {
+            "value": "IQD"
+          },
+          {
+            "value": "IRR"
+          },
+          {
+            "value": "ISK"
+          },
+          {
+            "value": "JMD"
+          },
+          {
+            "value": "JOD"
+          },
+          {
+            "value": "JPY"
+          },
+          {
+            "value": "KES"
+          },
+          {
+            "value": "KGS"
+          },
+          {
+            "value": "KHR"
+          },
+          {
+            "value": "KMF"
+          },
+          {
+            "value": "KPW"
+          },
+          {
+            "value": "KRW"
+          },
+          {
+            "value": "KWD"
+          },
+          {
+            "value": "KYD"
+          },
+          {
+            "value": "KZT"
+          },
+          {
+            "value": "LAK"
+          },
+          {
+            "value": "LBP"
+          },
+          {
+            "value": "LKR"
+          },
+          {
+            "value": "LRD"
+          },
+          {
+            "value": "ZAR"
+          },
+          {
+            "value": "LYD"
+          },
+          {
+            "value": "MDL"
+          },
+          {
+            "value": "MGA"
+          },
+          {
+            "value": "MKD"
+          },
+          {
+            "value": "MMK"
+          },
+          {
+            "value": "MNT"
+          },
+          {
+            "value": "MOP"
+          },
+          {
+            "value": "MRO"
+          },
+          {
+            "value": "MUR"
+          },
+          {
+            "value": "MVR"
+          },
+          {
+            "value": "MWK"
+          },
+          {
+            "value": "MXN"
+          },
+          {
+            "value": "MYR"
+          },
+          {
+            "value": "MZN"
+          },
+          {
+            "value": "XPF"
+          },
+          {
+            "value": "NGN"
+          },
+          {
+            "value": "NIO"
+          },
+          {
+            "value": "NPR"
+          },
+          {
+            "value": "OMR"
+          },
+          {
+            "value": "PEN"
+          },
+          {
+            "value": "PGK"
+          },
+          {
+            "value": "PHP"
+          },
+          {
+            "value": "PKR"
+          },
+          {
+            "value": "PLN"
+          },
+          {
+            "value": "PYG"
+          },
+          {
+            "value": "QAR"
+          },
+          {
+            "value": "RON"
+          },
+          {
+            "value": "RSD"
+          },
+          {
+            "value": "RUB"
+          },
+          {
+            "value": "RWF"
+          },
+          {
+            "value": "SAR"
+          },
+          {
+            "value": "SBD"
+          },
+          {
+            "value": "SCR"
+          },
+          {
+            "value": "SDG"
+          },
+          {
+            "value": "SEK"
+          },
+          {
+            "value": "SGD"
+          },
+          {
+            "value": "SHP"
+          },
+          {
+            "value": "SLL"
+          },
+          {
+            "value": "SOS"
+          },
+          {
+            "value": "SRD"
+          },
+          {
+            "value": "SSP"
+          },
+          {
+            "value": "STD"
+          },
+          {
+            "value": "SYP"
+          },
+          {
+            "value": "SZL"
+          },
+          {
+            "value": "THB"
+          },
+          {
+            "value": "TJS"
+          },
+          {
+            "value": "TMT"
+          },
+          {
+            "value": "TND"
+          },
+          {
+            "value": "TOP"
+          },
+          {
+            "value": "TRY"
+          },
+          {
+            "value": "TTD"
+          },
+          {
+            "value": "TWD"
+          },
+          {
+            "value": "TZS"
+          },
+          {
+            "value": "UAH"
+          },
+          {
+            "value": "UGX"
+          },
+          {
+            "value": "UYU"
+          },
+          {
+            "value": "UZS"
+          },
+          {
+            "value": "VEF"
+          },
+          {
+            "value": "VND"
+          },
+          {
+            "value": "VUV"
+          },
+          {
+            "value": "WST"
+          },
+          {
+            "value": "YER"
+          },
+          {
+            "value": "ZMW"
+          },
+          {
+            "value": "ZWL"
+          },
+          {
+            "value": "HRK"
+          }
+        ]
       }
     },
     "BankStatementTransaction": {
@@ -867,14 +1327,21 @@
       }
     },
     "BatchResultStatus": {
-      "description": "The current status of the batch job.",
+      "description": "An enumeration.",
       "name": "BatchResultStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "BatchStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
+          }
+        ]
       }
     },
     "BatchResult": {
@@ -960,14 +1427,27 @@
       }
     },
     "CategoriesAccounting": {
-      "description": "The corresponding accounting category. Only available for `business` transactions.",
+      "description": "An enumeration.",
       "name": "CategoriesAccounting",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AccountingCategory"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "operational expenses"
+          },
+          {
+            "value": "cost of goods sold"
+          },
+          {
+            "value": "revenue"
+          },
+          {
+            "value": "financing"
+          },
+          {
+            "value": "taxes"
+          }
+        ]
       }
     },
     "Categories": {
@@ -2933,14 +3413,744 @@
       }
     },
     "LocationInputCountry": {
-      "description": "The country where the transaction was made in ISO 3166-2 format",
+      "description": "An enumeration.",
       "name": "LocationInputCountry",
       "shape": {
-        "type": "object",
-        "extends": [
-          "Country"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "AD"
+          },
+          {
+            "value": "AE"
+          },
+          {
+            "value": "AF"
+          },
+          {
+            "value": "AG"
+          },
+          {
+            "value": "AI"
+          },
+          {
+            "value": "AL"
+          },
+          {
+            "value": "AM"
+          },
+          {
+            "value": "AO"
+          },
+          {
+            "value": "AR"
+          },
+          {
+            "value": "AS"
+          },
+          {
+            "value": "AT"
+          },
+          {
+            "value": "AU"
+          },
+          {
+            "value": "AW"
+          },
+          {
+            "value": "AZ"
+          },
+          {
+            "value": "BA"
+          },
+          {
+            "value": "BB"
+          },
+          {
+            "value": "BD"
+          },
+          {
+            "value": "BE"
+          },
+          {
+            "value": "BF"
+          },
+          {
+            "value": "BG"
+          },
+          {
+            "value": "BH"
+          },
+          {
+            "value": "BI"
+          },
+          {
+            "value": "BJ"
+          },
+          {
+            "value": "BL"
+          },
+          {
+            "value": "BM"
+          },
+          {
+            "value": "BN"
+          },
+          {
+            "value": "BO"
+          },
+          {
+            "value": "BQ"
+          },
+          {
+            "value": "BR"
+          },
+          {
+            "value": "BS"
+          },
+          {
+            "value": "BT"
+          },
+          {
+            "value": "BV"
+          },
+          {
+            "value": "BW"
+          },
+          {
+            "value": "BY"
+          },
+          {
+            "value": "BZ"
+          },
+          {
+            "value": "CA"
+          },
+          {
+            "value": "CC"
+          },
+          {
+            "value": "CD"
+          },
+          {
+            "value": "CF"
+          },
+          {
+            "value": "CG"
+          },
+          {
+            "value": "CH"
+          },
+          {
+            "value": "CI"
+          },
+          {
+            "value": "CK"
+          },
+          {
+            "value": "CL"
+          },
+          {
+            "value": "CM"
+          },
+          {
+            "value": "CN"
+          },
+          {
+            "value": "CO"
+          },
+          {
+            "value": "CR"
+          },
+          {
+            "value": "CU"
+          },
+          {
+            "value": "CV"
+          },
+          {
+            "value": "CW"
+          },
+          {
+            "value": "CX"
+          },
+          {
+            "value": "CY"
+          },
+          {
+            "value": "CZ"
+          },
+          {
+            "value": "DE"
+          },
+          {
+            "value": "DJ"
+          },
+          {
+            "value": "DK"
+          },
+          {
+            "value": "DM"
+          },
+          {
+            "value": "DO"
+          },
+          {
+            "value": "DZ"
+          },
+          {
+            "value": "EC"
+          },
+          {
+            "value": "EE"
+          },
+          {
+            "value": "EG"
+          },
+          {
+            "value": "EH"
+          },
+          {
+            "value": "ER"
+          },
+          {
+            "value": "ES"
+          },
+          {
+            "value": "ET"
+          },
+          {
+            "value": "FI"
+          },
+          {
+            "value": "FJ"
+          },
+          {
+            "value": "FK"
+          },
+          {
+            "value": "FM"
+          },
+          {
+            "value": "FR"
+          },
+          {
+            "value": "GA"
+          },
+          {
+            "value": "GB"
+          },
+          {
+            "value": "GD"
+          },
+          {
+            "value": "GE"
+          },
+          {
+            "value": "GF"
+          },
+          {
+            "value": "GG"
+          },
+          {
+            "value": "GH"
+          },
+          {
+            "value": "GI"
+          },
+          {
+            "value": "GL"
+          },
+          {
+            "value": "GM"
+          },
+          {
+            "value": "GN"
+          },
+          {
+            "value": "GP"
+          },
+          {
+            "value": "GQ"
+          },
+          {
+            "value": "GR"
+          },
+          {
+            "value": "GS"
+          },
+          {
+            "value": "GT"
+          },
+          {
+            "value": "GU"
+          },
+          {
+            "value": "GW"
+          },
+          {
+            "value": "GY"
+          },
+          {
+            "value": "HK"
+          },
+          {
+            "value": "HM"
+          },
+          {
+            "value": "HN"
+          },
+          {
+            "value": "HR"
+          },
+          {
+            "value": "HT"
+          },
+          {
+            "value": "HU"
+          },
+          {
+            "value": "ID"
+          },
+          {
+            "value": "IE"
+          },
+          {
+            "value": "IL"
+          },
+          {
+            "value": "IM"
+          },
+          {
+            "value": "IN"
+          },
+          {
+            "value": "IO"
+          },
+          {
+            "value": "IQ"
+          },
+          {
+            "value": "IR"
+          },
+          {
+            "value": "IS"
+          },
+          {
+            "value": "IT"
+          },
+          {
+            "value": "JE"
+          },
+          {
+            "value": "JM"
+          },
+          {
+            "value": "JO"
+          },
+          {
+            "value": "JP"
+          },
+          {
+            "value": "KE"
+          },
+          {
+            "value": "KG"
+          },
+          {
+            "value": "KH"
+          },
+          {
+            "value": "KI"
+          },
+          {
+            "value": "KM"
+          },
+          {
+            "value": "KN"
+          },
+          {
+            "value": "KP"
+          },
+          {
+            "value": "KR"
+          },
+          {
+            "value": "KW"
+          },
+          {
+            "value": "KY"
+          },
+          {
+            "value": "KZ"
+          },
+          {
+            "value": "LA"
+          },
+          {
+            "value": "LB"
+          },
+          {
+            "value": "LC"
+          },
+          {
+            "value": "LI"
+          },
+          {
+            "value": "LK"
+          },
+          {
+            "value": "LR"
+          },
+          {
+            "value": "LS"
+          },
+          {
+            "value": "LT"
+          },
+          {
+            "value": "LU"
+          },
+          {
+            "value": "LV"
+          },
+          {
+            "value": "LY"
+          },
+          {
+            "value": "MA"
+          },
+          {
+            "value": "MC"
+          },
+          {
+            "value": "MD"
+          },
+          {
+            "value": "ME"
+          },
+          {
+            "value": "MF"
+          },
+          {
+            "value": "MG"
+          },
+          {
+            "value": "MH"
+          },
+          {
+            "value": "MK"
+          },
+          {
+            "value": "ML"
+          },
+          {
+            "value": "MM"
+          },
+          {
+            "value": "MN"
+          },
+          {
+            "value": "MO"
+          },
+          {
+            "value": "MP"
+          },
+          {
+            "value": "MQ"
+          },
+          {
+            "value": "MR"
+          },
+          {
+            "value": "MS"
+          },
+          {
+            "value": "MT"
+          },
+          {
+            "value": "MU"
+          },
+          {
+            "value": "MV"
+          },
+          {
+            "value": "MW"
+          },
+          {
+            "value": "MX"
+          },
+          {
+            "value": "MY"
+          },
+          {
+            "value": "MZ"
+          },
+          {
+            "value": "NA"
+          },
+          {
+            "value": "NC"
+          },
+          {
+            "value": "NE"
+          },
+          {
+            "value": "NF"
+          },
+          {
+            "value": "NG"
+          },
+          {
+            "value": "NI"
+          },
+          {
+            "value": "NL"
+          },
+          {
+            "value": "NO"
+          },
+          {
+            "value": "NP"
+          },
+          {
+            "value": "NR"
+          },
+          {
+            "value": "NU"
+          },
+          {
+            "value": "NZ"
+          },
+          {
+            "value": "OM"
+          },
+          {
+            "value": "PA"
+          },
+          {
+            "value": "PE"
+          },
+          {
+            "value": "PF"
+          },
+          {
+            "value": "PG"
+          },
+          {
+            "value": "PH"
+          },
+          {
+            "value": "PK"
+          },
+          {
+            "value": "PL"
+          },
+          {
+            "value": "PM"
+          },
+          {
+            "value": "PN"
+          },
+          {
+            "value": "PR"
+          },
+          {
+            "value": "PS"
+          },
+          {
+            "value": "PT"
+          },
+          {
+            "value": "PW"
+          },
+          {
+            "value": "PY"
+          },
+          {
+            "value": "QA"
+          },
+          {
+            "value": "RE"
+          },
+          {
+            "value": "RO"
+          },
+          {
+            "value": "RS"
+          },
+          {
+            "value": "RU"
+          },
+          {
+            "value": "RW"
+          },
+          {
+            "value": "SA"
+          },
+          {
+            "value": "SB"
+          },
+          {
+            "value": "SC"
+          },
+          {
+            "value": "SD"
+          },
+          {
+            "value": "SE"
+          },
+          {
+            "value": "SG"
+          },
+          {
+            "value": "SH"
+          },
+          {
+            "value": "SI"
+          },
+          {
+            "value": "SJ"
+          },
+          {
+            "value": "SK"
+          },
+          {
+            "value": "SL"
+          },
+          {
+            "value": "SM"
+          },
+          {
+            "value": "SN"
+          },
+          {
+            "value": "SO"
+          },
+          {
+            "value": "SR"
+          },
+          {
+            "value": "SS"
+          },
+          {
+            "value": "ST"
+          },
+          {
+            "value": "SV"
+          },
+          {
+            "value": "SX"
+          },
+          {
+            "value": "SY"
+          },
+          {
+            "value": "SZ"
+          },
+          {
+            "value": "TC"
+          },
+          {
+            "value": "TD"
+          },
+          {
+            "value": "TG"
+          },
+          {
+            "value": "TH"
+          },
+          {
+            "value": "TJ"
+          },
+          {
+            "value": "TK"
+          },
+          {
+            "value": "TL"
+          },
+          {
+            "value": "TM"
+          },
+          {
+            "value": "TN"
+          },
+          {
+            "value": "TO"
+          },
+          {
+            "value": "TR"
+          },
+          {
+            "value": "TT"
+          },
+          {
+            "value": "TV"
+          },
+          {
+            "value": "TW"
+          },
+          {
+            "value": "TZ"
+          },
+          {
+            "value": "UA"
+          },
+          {
+            "value": "UG"
+          },
+          {
+            "value": "UM"
+          },
+          {
+            "value": "US"
+          },
+          {
+            "value": "UY"
+          },
+          {
+            "value": "UZ"
+          },
+          {
+            "value": "VC"
+          },
+          {
+            "value": "VE"
+          },
+          {
+            "value": "VG"
+          },
+          {
+            "value": "VI"
+          },
+          {
+            "value": "VN"
+          },
+          {
+            "value": "VU"
+          },
+          {
+            "value": "WF"
+          },
+          {
+            "value": "WS"
+          },
+          {
+            "value": "YE"
+          },
+          {
+            "value": "YT"
+          },
+          {
+            "value": "ZA"
+          },
+          {
+            "value": "ZM"
+          },
+          {
+            "value": "ZW"
+          }
+        ]
       }
     },
     "LocationInput": {
@@ -3182,14 +4392,39 @@
       }
     },
     "RecurrenceGroupPeriodicity": {
-      "description": "A human-readable description of the transaction frequency",
+      "description": "An enumeration.",
       "name": "RecurrenceGroupPeriodicity",
       "shape": {
-        "type": "object",
-        "extends": [
-          "RecurrencePeriodicity"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "daily"
+          },
+          {
+            "value": "weekly"
+          },
+          {
+            "value": "bi_weekly"
+          },
+          {
+            "value": "monthly"
+          },
+          {
+            "value": "bi_monthly"
+          },
+          {
+            "value": "quarterly"
+          },
+          {
+            "value": "semi_yearly"
+          },
+          {
+            "value": "yearly"
+          },
+          {
+            "value": "other"
+          }
+        ]
       }
     },
     "RecurrenceGroupCounterparty": {
@@ -3617,25 +4852,477 @@
       }
     },
     "TransactionEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
+      "description": "An enumeration.",
       "name": "TransactionEntryType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "incoming"
+          },
+          {
+            "value": "outgoing"
+          }
+        ]
       }
     },
     "TransactionCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
+      "description": "An enumeration.",
       "name": "TransactionCurrency",
       "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "EUR"
+          },
+          {
+            "value": "AED"
+          },
+          {
+            "value": "AFN"
+          },
+          {
+            "value": "XCD"
+          },
+          {
+            "value": "ALL"
+          },
+          {
+            "value": "AMD"
+          },
+          {
+            "value": "AOA"
+          },
+          {
+            "value": "ARS"
+          },
+          {
+            "value": "USD"
+          },
+          {
+            "value": "AUD"
+          },
+          {
+            "value": "AWG"
+          },
+          {
+            "value": "AZN"
+          },
+          {
+            "value": "BAM"
+          },
+          {
+            "value": "BBD"
+          },
+          {
+            "value": "BDT"
+          },
+          {
+            "value": "XOF"
+          },
+          {
+            "value": "BGN"
+          },
+          {
+            "value": "BHD"
+          },
+          {
+            "value": "BIF"
+          },
+          {
+            "value": "BMD"
+          },
+          {
+            "value": "BND"
+          },
+          {
+            "value": "BOB"
+          },
+          {
+            "value": "BRL"
+          },
+          {
+            "value": "BSD"
+          },
+          {
+            "value": "INR"
+          },
+          {
+            "value": "NOK"
+          },
+          {
+            "value": "BWP"
+          },
+          {
+            "value": "BYR"
+          },
+          {
+            "value": "BZD"
+          },
+          {
+            "value": "CAD"
+          },
+          {
+            "value": "CDF"
+          },
+          {
+            "value": "XAF"
+          },
+          {
+            "value": "CHF"
+          },
+          {
+            "value": "NZD"
+          },
+          {
+            "value": "CLP"
+          },
+          {
+            "value": "CNY"
+          },
+          {
+            "value": "COP"
+          },
+          {
+            "value": "CRC"
+          },
+          {
+            "value": "CUP"
+          },
+          {
+            "value": "CVE"
+          },
+          {
+            "value": "ANG"
+          },
+          {
+            "value": "CZK"
+          },
+          {
+            "value": "DJF"
+          },
+          {
+            "value": "DKK"
+          },
+          {
+            "value": "DOP"
+          },
+          {
+            "value": "DZD"
+          },
+          {
+            "value": "EGP"
+          },
+          {
+            "value": "MAD"
+          },
+          {
+            "value": "ERN"
+          },
+          {
+            "value": "ETB"
+          },
+          {
+            "value": "FJD"
+          },
+          {
+            "value": "FKP"
+          },
+          {
+            "value": "GBP"
+          },
+          {
+            "value": "GEL"
+          },
+          {
+            "value": "GHS"
+          },
+          {
+            "value": "GIP"
+          },
+          {
+            "value": "GMD"
+          },
+          {
+            "value": "GNF"
+          },
+          {
+            "value": "GTQ"
+          },
+          {
+            "value": "GYD"
+          },
+          {
+            "value": "HKD"
+          },
+          {
+            "value": "HNL"
+          },
+          {
+            "value": "HUF"
+          },
+          {
+            "value": "IDR"
+          },
+          {
+            "value": "ILS"
+          },
+          {
+            "value": "IQD"
+          },
+          {
+            "value": "IRR"
+          },
+          {
+            "value": "ISK"
+          },
+          {
+            "value": "JMD"
+          },
+          {
+            "value": "JOD"
+          },
+          {
+            "value": "JPY"
+          },
+          {
+            "value": "KES"
+          },
+          {
+            "value": "KGS"
+          },
+          {
+            "value": "KHR"
+          },
+          {
+            "value": "KMF"
+          },
+          {
+            "value": "KPW"
+          },
+          {
+            "value": "KRW"
+          },
+          {
+            "value": "KWD"
+          },
+          {
+            "value": "KYD"
+          },
+          {
+            "value": "KZT"
+          },
+          {
+            "value": "LAK"
+          },
+          {
+            "value": "LBP"
+          },
+          {
+            "value": "LKR"
+          },
+          {
+            "value": "LRD"
+          },
+          {
+            "value": "ZAR"
+          },
+          {
+            "value": "LYD"
+          },
+          {
+            "value": "MDL"
+          },
+          {
+            "value": "MGA"
+          },
+          {
+            "value": "MKD"
+          },
+          {
+            "value": "MMK"
+          },
+          {
+            "value": "MNT"
+          },
+          {
+            "value": "MOP"
+          },
+          {
+            "value": "MRO"
+          },
+          {
+            "value": "MUR"
+          },
+          {
+            "value": "MVR"
+          },
+          {
+            "value": "MWK"
+          },
+          {
+            "value": "MXN"
+          },
+          {
+            "value": "MYR"
+          },
+          {
+            "value": "MZN"
+          },
+          {
+            "value": "XPF"
+          },
+          {
+            "value": "NGN"
+          },
+          {
+            "value": "NIO"
+          },
+          {
+            "value": "NPR"
+          },
+          {
+            "value": "OMR"
+          },
+          {
+            "value": "PEN"
+          },
+          {
+            "value": "PGK"
+          },
+          {
+            "value": "PHP"
+          },
+          {
+            "value": "PKR"
+          },
+          {
+            "value": "PLN"
+          },
+          {
+            "value": "PYG"
+          },
+          {
+            "value": "QAR"
+          },
+          {
+            "value": "RON"
+          },
+          {
+            "value": "RSD"
+          },
+          {
+            "value": "RUB"
+          },
+          {
+            "value": "RWF"
+          },
+          {
+            "value": "SAR"
+          },
+          {
+            "value": "SBD"
+          },
+          {
+            "value": "SCR"
+          },
+          {
+            "value": "SDG"
+          },
+          {
+            "value": "SEK"
+          },
+          {
+            "value": "SGD"
+          },
+          {
+            "value": "SHP"
+          },
+          {
+            "value": "SLL"
+          },
+          {
+            "value": "SOS"
+          },
+          {
+            "value": "SRD"
+          },
+          {
+            "value": "SSP"
+          },
+          {
+            "value": "STD"
+          },
+          {
+            "value": "SYP"
+          },
+          {
+            "value": "SZL"
+          },
+          {
+            "value": "THB"
+          },
+          {
+            "value": "TJS"
+          },
+          {
+            "value": "TMT"
+          },
+          {
+            "value": "TND"
+          },
+          {
+            "value": "TOP"
+          },
+          {
+            "value": "TRY"
+          },
+          {
+            "value": "TTD"
+          },
+          {
+            "value": "TWD"
+          },
+          {
+            "value": "TZS"
+          },
+          {
+            "value": "UAH"
+          },
+          {
+            "value": "UGX"
+          },
+          {
+            "value": "UYU"
+          },
+          {
+            "value": "UZS"
+          },
+          {
+            "value": "VEF"
+          },
+          {
+            "value": "VND"
+          },
+          {
+            "value": "VUV"
+          },
+          {
+            "value": "WST"
+          },
+          {
+            "value": "YER"
+          },
+          {
+            "value": "ZMW"
+          },
+          {
+            "value": "ZWL"
+          },
+          {
+            "value": "HRK"
+          }
+        ]
       }
     },
     "Transaction": {
@@ -3824,25 +5511,477 @@
       }
     },
     "TransactionInputEntryType": {
-      "description": "The direction of the flow of the money from the perspective of the account holder. `outgoing` to represent money leaving the account, such as purchases or fees, while `incoming` represents money entering the account, such as income or refunds.",
+      "description": "An enumeration.",
       "name": "TransactionInputEntryType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "EntryType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "incoming"
+          },
+          {
+            "value": "outgoing"
+          }
+        ]
       }
     },
     "TransactionInputCurrency": {
-      "description": "The currency of the transaction in ISO 4217 format",
+      "description": "An enumeration.",
       "name": "TransactionInputCurrency",
       "shape": {
-        "type": "object",
-        "extends": [
-          "Currency"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "EUR"
+          },
+          {
+            "value": "AED"
+          },
+          {
+            "value": "AFN"
+          },
+          {
+            "value": "XCD"
+          },
+          {
+            "value": "ALL"
+          },
+          {
+            "value": "AMD"
+          },
+          {
+            "value": "AOA"
+          },
+          {
+            "value": "ARS"
+          },
+          {
+            "value": "USD"
+          },
+          {
+            "value": "AUD"
+          },
+          {
+            "value": "AWG"
+          },
+          {
+            "value": "AZN"
+          },
+          {
+            "value": "BAM"
+          },
+          {
+            "value": "BBD"
+          },
+          {
+            "value": "BDT"
+          },
+          {
+            "value": "XOF"
+          },
+          {
+            "value": "BGN"
+          },
+          {
+            "value": "BHD"
+          },
+          {
+            "value": "BIF"
+          },
+          {
+            "value": "BMD"
+          },
+          {
+            "value": "BND"
+          },
+          {
+            "value": "BOB"
+          },
+          {
+            "value": "BRL"
+          },
+          {
+            "value": "BSD"
+          },
+          {
+            "value": "INR"
+          },
+          {
+            "value": "NOK"
+          },
+          {
+            "value": "BWP"
+          },
+          {
+            "value": "BYR"
+          },
+          {
+            "value": "BZD"
+          },
+          {
+            "value": "CAD"
+          },
+          {
+            "value": "CDF"
+          },
+          {
+            "value": "XAF"
+          },
+          {
+            "value": "CHF"
+          },
+          {
+            "value": "NZD"
+          },
+          {
+            "value": "CLP"
+          },
+          {
+            "value": "CNY"
+          },
+          {
+            "value": "COP"
+          },
+          {
+            "value": "CRC"
+          },
+          {
+            "value": "CUP"
+          },
+          {
+            "value": "CVE"
+          },
+          {
+            "value": "ANG"
+          },
+          {
+            "value": "CZK"
+          },
+          {
+            "value": "DJF"
+          },
+          {
+            "value": "DKK"
+          },
+          {
+            "value": "DOP"
+          },
+          {
+            "value": "DZD"
+          },
+          {
+            "value": "EGP"
+          },
+          {
+            "value": "MAD"
+          },
+          {
+            "value": "ERN"
+          },
+          {
+            "value": "ETB"
+          },
+          {
+            "value": "FJD"
+          },
+          {
+            "value": "FKP"
+          },
+          {
+            "value": "GBP"
+          },
+          {
+            "value": "GEL"
+          },
+          {
+            "value": "GHS"
+          },
+          {
+            "value": "GIP"
+          },
+          {
+            "value": "GMD"
+          },
+          {
+            "value": "GNF"
+          },
+          {
+            "value": "GTQ"
+          },
+          {
+            "value": "GYD"
+          },
+          {
+            "value": "HKD"
+          },
+          {
+            "value": "HNL"
+          },
+          {
+            "value": "HUF"
+          },
+          {
+            "value": "IDR"
+          },
+          {
+            "value": "ILS"
+          },
+          {
+            "value": "IQD"
+          },
+          {
+            "value": "IRR"
+          },
+          {
+            "value": "ISK"
+          },
+          {
+            "value": "JMD"
+          },
+          {
+            "value": "JOD"
+          },
+          {
+            "value": "JPY"
+          },
+          {
+            "value": "KES"
+          },
+          {
+            "value": "KGS"
+          },
+          {
+            "value": "KHR"
+          },
+          {
+            "value": "KMF"
+          },
+          {
+            "value": "KPW"
+          },
+          {
+            "value": "KRW"
+          },
+          {
+            "value": "KWD"
+          },
+          {
+            "value": "KYD"
+          },
+          {
+            "value": "KZT"
+          },
+          {
+            "value": "LAK"
+          },
+          {
+            "value": "LBP"
+          },
+          {
+            "value": "LKR"
+          },
+          {
+            "value": "LRD"
+          },
+          {
+            "value": "ZAR"
+          },
+          {
+            "value": "LYD"
+          },
+          {
+            "value": "MDL"
+          },
+          {
+            "value": "MGA"
+          },
+          {
+            "value": "MKD"
+          },
+          {
+            "value": "MMK"
+          },
+          {
+            "value": "MNT"
+          },
+          {
+            "value": "MOP"
+          },
+          {
+            "value": "MRO"
+          },
+          {
+            "value": "MUR"
+          },
+          {
+            "value": "MVR"
+          },
+          {
+            "value": "MWK"
+          },
+          {
+            "value": "MXN"
+          },
+          {
+            "value": "MYR"
+          },
+          {
+            "value": "MZN"
+          },
+          {
+            "value": "XPF"
+          },
+          {
+            "value": "NGN"
+          },
+          {
+            "value": "NIO"
+          },
+          {
+            "value": "NPR"
+          },
+          {
+            "value": "OMR"
+          },
+          {
+            "value": "PEN"
+          },
+          {
+            "value": "PGK"
+          },
+          {
+            "value": "PHP"
+          },
+          {
+            "value": "PKR"
+          },
+          {
+            "value": "PLN"
+          },
+          {
+            "value": "PYG"
+          },
+          {
+            "value": "QAR"
+          },
+          {
+            "value": "RON"
+          },
+          {
+            "value": "RSD"
+          },
+          {
+            "value": "RUB"
+          },
+          {
+            "value": "RWF"
+          },
+          {
+            "value": "SAR"
+          },
+          {
+            "value": "SBD"
+          },
+          {
+            "value": "SCR"
+          },
+          {
+            "value": "SDG"
+          },
+          {
+            "value": "SEK"
+          },
+          {
+            "value": "SGD"
+          },
+          {
+            "value": "SHP"
+          },
+          {
+            "value": "SLL"
+          },
+          {
+            "value": "SOS"
+          },
+          {
+            "value": "SRD"
+          },
+          {
+            "value": "SSP"
+          },
+          {
+            "value": "STD"
+          },
+          {
+            "value": "SYP"
+          },
+          {
+            "value": "SZL"
+          },
+          {
+            "value": "THB"
+          },
+          {
+            "value": "TJS"
+          },
+          {
+            "value": "TMT"
+          },
+          {
+            "value": "TND"
+          },
+          {
+            "value": "TOP"
+          },
+          {
+            "value": "TRY"
+          },
+          {
+            "value": "TTD"
+          },
+          {
+            "value": "TWD"
+          },
+          {
+            "value": "TZS"
+          },
+          {
+            "value": "UAH"
+          },
+          {
+            "value": "UGX"
+          },
+          {
+            "value": "UYU"
+          },
+          {
+            "value": "UZS"
+          },
+          {
+            "value": "VEF"
+          },
+          {
+            "value": "VND"
+          },
+          {
+            "value": "VUV"
+          },
+          {
+            "value": "WST"
+          },
+          {
+            "value": "YER"
+          },
+          {
+            "value": "ZMW"
+          },
+          {
+            "value": "ZWL"
+          },
+          {
+            "value": "HRK"
+          }
+        ]
       }
     },
     "TransactionInput": {
@@ -5240,36 +7379,63 @@
       }
     },
     "V3BatchesGetParametersSchema": {
-      "description": "If specified, only return batches with this status",
+      "description": "An enumeration.",
       "name": "V3BatchesGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "BatchStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "processing"
+          },
+          {
+            "value": "completed"
+          },
+          {
+            "value": "error"
+          }
+        ]
       }
     },
     "V3BankStatementsGetParametersSchema": {
-      "description": "If specified, only return bank statements with this status",
+      "description": "An enumeration.",
       "name": "V3BankStatementsGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "DocumentStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "queued"
+          },
+          {
+            "value": "processing"
+          },
+          {
+            "value": "processed"
+          },
+          {
+            "value": "failed"
+          }
+        ]
       }
     },
     "V3ReportsGetParametersSchema": {
-      "description": "If specified, only return reports with this status",
+      "description": "An enumeration.",
       "name": "V3ReportsGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ReportStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "open"
+          },
+          {
+            "value": "pending"
+          },
+          {
+            "value": "resolved"
+          },
+          {
+            "value": "rejected"
+          }
+        ]
       }
     }
   },

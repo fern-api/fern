@@ -153,14 +153,30 @@
       }
     },
     "AttributeBlockEditableType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "AttributeBlockEditableType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "AttributeBlockEditable": {
@@ -194,14 +210,30 @@
       }
     },
     "AttributeBlockReadType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "AttributeBlockReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "AttributeBlockRead": {
@@ -330,14 +362,18 @@
       }
     },
     "ConditionSetCreateType": {
-      "description": "the type of the set: UserSet or ResourceSet",
+      "description": "An enumeration.",
       "name": "ConditionSetCreateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
+          }
+        ]
       }
     },
     "ConditionSetCreateResourceId0": {
@@ -548,14 +584,18 @@
       }
     },
     "ConditionSetReadType": {
-      "description": "the type of the set: UserSet or ResourceSet",
+      "description": "An enumeration.",
       "name": "ConditionSetReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
+          }
+        ]
       }
     },
     "ConditionSetReadResourceId0": {
@@ -2074,25 +2114,45 @@
       }
     },
     "InviteReadRole": {
-      "description": "The role the member will be assigned with",
+      "description": "An enumeration.",
       "name": "InviteReadRole",
       "shape": {
-        "type": "object",
-        "extends": [
-          "MemberAccessLevel"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "admin"
+          },
+          {
+            "value": "write"
+          },
+          {
+            "value": "read"
+          },
+          {
+            "value": "no_access"
+          }
+        ]
       }
     },
     "InviteReadStatus": {
-      "description": "The status of the invite (pending, failed, etc)",
+      "description": "An enumeration.",
       "name": "InviteReadStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "InviteStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "pending"
+          },
+          {
+            "value": "accepted"
+          },
+          {
+            "value": "failed"
+          },
+          {
+            "value": "canceled"
+          }
+        ]
       }
     },
     "InviteRead": {
@@ -2327,14 +2387,36 @@
       }
     },
     "OrgMemberReadWithGrantsOnboardingStep": {
-      "description": "the step the user is currently going through in onboarding",
+      "description": "An enumeration.",
       "name": "OrgMemberReadWithGrantsOnboardingStep",
       "shape": {
-        "type": "object",
-        "extends": [
-          "OnboardingStep"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "create_organization"
+          },
+          {
+            "value": "create_project"
+          },
+          {
+            "value": "create_resource"
+          },
+          {
+            "value": "create_actions"
+          },
+          {
+            "value": "assign_permissions"
+          },
+          {
+            "value": "assign_user_roles"
+          },
+          {
+            "value": "connect_sdk"
+          },
+          {
+            "value": "done"
+          }
+        ]
       }
     },
     "OrgMemberReadWithGrantsSettings": {
@@ -4225,14 +4307,30 @@
       }
     },
     "ResourceAttributeCreateType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeCreateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeCreate": {
@@ -4277,14 +4375,30 @@
       }
     },
     "ResourceAttributeReadType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeRead": {
@@ -4425,14 +4539,30 @@
       }
     },
     "ResourceAttributeUpdateType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeUpdateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeUpdate": {
@@ -6738,14 +6868,18 @@
       }
     },
     "UserInTenantStatus": {
-      "description": "Whether the user has signed in or not",
+      "description": "An enumeration.",
       "name": "UserInTenantStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "UserStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "active"
+          },
+          {
+            "value": "pending"
+          }
+        ]
       }
     },
     "UserInTenant": {
@@ -7290,14 +7424,18 @@
       }
     },
     "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema": {
-      "description": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
+      "description": "An enumeration.",
       "name": "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
+          }
+        ]
       }
     },
     "ConditionSetsListConditionSetsResponse2001": {
