@@ -74,6 +74,42 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
+        // Check if there is a single allOf that is not an object
+        if (
+            this.schema.allOf?.length === 1 &&
+            this.schemaOnlyHasAllowedKeys(["allOf"]) &&
+            this.schema.allOf[0] != null
+        ) {
+            let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
+
+            if (this.context.isReferenceObject(this.schema.allOf[0])) {
+                const resolvedAllOfSchemaResponse = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(
+                    this.schema.allOf[0]
+                );
+                if (resolvedAllOfSchemaResponse.resolved) {
+                    allOfSchema = resolvedAllOfSchemaResponse.value;
+                }
+            } else {
+                allOfSchema = this.schema.allOf[0];
+            }
+
+            if (allOfSchema != null) {
+                const allOfConverter = new SchemaConverter({
+                    context: this.context,
+                    breadcrumbs: [...this.breadcrumbs, "allOf", "0"],
+                    schema: allOfSchema,
+                    id: this.id,
+                    inlined: true
+                });
+
+                const allOfResult = await allOfConverter.convert();
+
+                if (allOfResult?.typeDeclaration?.shape.type !== "object") {
+                    return allOfResult;
+                }
+            }
+        }
+
         const primitiveConverter = new PrimitiveSchemaConverter({ context: this.context, schema: this.schema });
         const primitiveType = primitiveConverter.convert();
         if (primitiveType != null) {
@@ -232,6 +268,33 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             fernFilepath: this.context.createFernFilepath(),
             name: this.context.casingsGenerator.generateName(this.id)
         };
+    }
+
+    /**
+     * Checks if the schema only has the specified keys
+     * @param allowedKeys - List of keys that are allowed in the schema
+     * @returns true if the schema only has the specified keys, false otherwise
+     */
+    private schemaOnlyHasAllowedKeys(allowedKeys: string[]): boolean {
+        // These are common schema properties that don't affect the type
+        const defaultAllowedKeys = [
+            "description",
+            "example",
+            "title",
+            "default",
+            "deprecated",
+            "readOnly",
+            "writeOnly",
+            "xml",
+            "externalDocs",
+            "extensions"
+        ];
+
+        // Combine default allowed keys with any additional allowed keys
+        const allAllowedKeys = [...defaultAllowedKeys, ...allowedKeys];
+
+        const schemaKeys = Object.keys(this.schema);
+        return schemaKeys.every((key) => allAllowedKeys.includes(key));
     }
 
     private async createTypeDeclarationFromFernType({

@@ -43,25 +43,49 @@
       }
     },
     "RequestsAlgoOrderRequestSide": {
-      "description": "Algo order side",
       "name": "RequestsAlgoOrderRequestSide",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderSide"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
       }
     },
     "RequestsAlgoOrderRequestType": {
-      "description": "Algo order type, only MARKET is supported",
       "name": "RequestsAlgoOrderRequestType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "MARKET"
+          },
+          {
+            "value": "LIMIT"
+          },
+          {
+            "value": "STOP_LIMIT"
+          },
+          {
+            "value": "STOP_MARKET"
+          },
+          {
+            "value": "TAKE_PROFIT_LIMIT"
+          },
+          {
+            "value": "TAKE_PROFIT_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_LIMIT"
+          }
+        ]
       }
     },
     "requests.AlgoOrderRequest": {
@@ -428,25 +452,49 @@
       }
     },
     "RequestsOrderRequestSide": {
-      "description": "Order side",
       "name": "RequestsOrderRequestSide",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderSide"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
       }
     },
     "RequestsOrderRequestType": {
-      "description": "Order type",
       "name": "RequestsOrderRequestType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "MARKET"
+          },
+          {
+            "value": "LIMIT"
+          },
+          {
+            "value": "STOP_LIMIT"
+          },
+          {
+            "value": "STOP_MARKET"
+          },
+          {
+            "value": "TAKE_PROFIT_LIMIT"
+          },
+          {
+            "value": "TAKE_PROFIT_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_MARKET"
+          },
+          {
+            "value": "STOP_LOSS_LIMIT"
+          }
+        ]
       }
     },
     "requests.OrderRequest": {
@@ -740,14 +788,26 @@
       }
     },
     "ResponsesAccountInfoResponseKind": {
-      "description": "Account kind",
       "name": "ResponsesAccountInfoResponseKind",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.AccountKind"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "main"
+          },
+          {
+            "value": "subaccount"
+          },
+          {
+            "value": "vault_operator"
+          },
+          {
+            "value": "vault_sub_operator"
+          }
+        ]
       }
     },
     "responses.AccountInfoResponse": {
@@ -1260,36 +1320,51 @@
       }
     },
     "ResponsesAlgoOrderRespAlgoType": {
-      "description": "Algo type",
       "name": "ResponsesAlgoOrderRespAlgoType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.AlgoType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": ""
+          },
+          {
+            "value": "TWAP"
+          }
+        ]
       }
     },
     "ResponsesAlgoOrderRespSide": {
-      "description": "Algo side",
       "name": "ResponsesAlgoOrderRespSide",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderSide"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "BUY"
+          },
+          {
+            "value": "SELL"
+          }
+        ]
       }
     },
     "ResponsesAlgoOrderRespStatus": {
-      "description": "Algo status",
       "name": "ResponsesAlgoOrderRespStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.OrderStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "NEW"
+          },
+          {
+            "value": "UNTRIGGERED"
+          },
+          {
+            "value": "OPEN"
+          },
+          {
+            "value": "CLOSED"
+          }
+        ]
       }
     },
     "responses.AlgoOrderResp": {
@@ -1479,14 +1554,197 @@
       }
     },
     "ResponsesApiErrorError": {
-      "description": "unique immutable string identifier for specific error",
       "name": "ResponsesApiErrorError",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.ErrorCode"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "VALIDATION_ERROR"
+          },
+          {
+            "value": "BINDING_ERROR"
+          },
+          {
+            "value": "INTERNAL_ERROR"
+          },
+          {
+            "value": "NOT_FOUND"
+          },
+          {
+            "value": "SERVICE_UNAVAILABLE"
+          },
+          {
+            "value": "INVALID_REQUEST_PARAMETER"
+          },
+          {
+            "value": "ORDER_ID_NOT_FOUND"
+          },
+          {
+            "value": "ORDER_IS_CLOSED"
+          },
+          {
+            "value": "ORDER_IS_NOT_OPEN"
+          },
+          {
+            "value": "INVALID_ORDER_SIZE"
+          },
+          {
+            "value": "CLIENT_ORDER_ID_NOT_FOUND"
+          },
+          {
+            "value": "DUPLICATED_CLIENT_ID"
+          },
+          {
+            "value": "INVALID_PRICE_PRECISION"
+          },
+          {
+            "value": "INVALID_SYMBOL"
+          },
+          {
+            "value": "INVALID_TOKEN"
+          },
+          {
+            "value": "INVALID_ETHEREUM_ADDRESS"
+          },
+          {
+            "value": "INVALID_ETHEREUM_SIGNATURE"
+          },
+          {
+            "value": "INVALID_STARKNET_ADDRESS"
+          },
+          {
+            "value": "INVALID_STARKNET_SIGNATURE"
+          },
+          {
+            "value": "STARKNET_SIGNATURE_VERIFICATION_FAILED"
+          },
+          {
+            "value": "BAD_STARKNET_REQUEST"
+          },
+          {
+            "value": "ETHEREUM_SIGNER_MISMATCH"
+          },
+          {
+            "value": "ETHEREUM_HASH_MISMATCH"
+          },
+          {
+            "value": "NOT_ONBOARDED"
+          },
+          {
+            "value": "INVALID_TIMESTAMP"
+          },
+          {
+            "value": "INVALID_SIGNATURE_EXPIRATION"
+          },
+          {
+            "value": "ACCOUNT_NOT_FOUND"
+          },
+          {
+            "value": "INVALID_ORDER_SIGNATURE"
+          },
+          {
+            "value": "PUBLIC_KEY_INVALID"
+          },
+          {
+            "value": "UNAUTHORIZED_ETHEREUM_ADDRESS"
+          },
+          {
+            "value": "UNAUTHORIZED_ERROR"
+          },
+          {
+            "value": "ETHEREUM_ADDRESS_ALREADY_ONBOARDED"
+          },
+          {
+            "value": "MARKET_NOT_FOUND"
+          },
+          {
+            "value": "ALLOWLIST_ENTRY_NOT_FOUND"
+          },
+          {
+            "value": "USERNAME_IN_USE"
+          },
+          {
+            "value": "GEO_IP_BLOCK"
+          },
+          {
+            "value": "ETHEREUM_ADDRESS_BLOCKED"
+          },
+          {
+            "value": "PROGRAM_NOT_FOUND"
+          },
+          {
+            "value": "PROGRAM_NOT_SUPPORTED"
+          },
+          {
+            "value": "INVALID_DASHBOARD"
+          },
+          {
+            "value": "MARKET_NOT_OPEN"
+          },
+          {
+            "value": "INVALID_REFERRAL_CODE"
+          },
+          {
+            "value": "REQUEST_NOT_ALLOWED"
+          },
+          {
+            "value": "PARENT_ADDRESS_ALREADY_ONBOARDED"
+          },
+          {
+            "value": "INVALID_PARENT_ACCOUNT"
+          },
+          {
+            "value": "INVALID_VAULT_OPERATOR_CHAIN"
+          },
+          {
+            "value": "VAULT_OPERATOR_ALREADY_ONBOARDED"
+          },
+          {
+            "value": "VAULT_NAME_IN_USE"
+          },
+          {
+            "value": "VAULT_NOT_FOUND"
+          },
+          {
+            "value": "VAULT_STRATEGY_NOT_FOUND"
+          },
+          {
+            "value": "VAULT_LIMIT_REACHED"
+          },
+          {
+            "value": "BATCH_SIZE_OUT_OF_RANGE"
+          },
+          {
+            "value": "ISOLATED_MARKET_ACCOUNT_MISMATCH"
+          },
+          {
+            "value": "NO_ACCESS_TO_MARKET"
+          },
+          {
+            "value": "POINTS_SUMMARY_NOT_FOUND"
+          },
+          {
+            "value": "ALGO_ID_NOT_FOUND"
+          },
+          {
+            "value": "INVALID_DERIVATION_PATH"
+          },
+          {
+            "value": "PROFILE_STATS_NOT_FOUND"
+          },
+          {
+            "value": "INVALID_CHAIN"
+          },
+          {
+            "value": "INVALID_LAYERSWAP_SWAP"
+          },
+          {
+            "value": "SOCIAL_USERNAME_IN_USE"
+          },
+          {
+            "value": "INVALID_OAUTH_REQUEST"
+          }
+        ]
       }
     },
     "responses.ApiError": {
@@ -2418,14 +2676,23 @@
       }
     },
     "ResponsesFillResultFillType": {
-      "description": "Fill type, can be FILL, LIQUIDATION or TRANSFER",
       "name": "ResponsesFillResultFillType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.FillType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "LIQUIDATION"
+          },
+          {
+            "value": "TRANSFER"
+          },
+          {
+            "value": "FILL"
+          },
+          {
+            "value": "SETTLE_MARKET"
+          }
+        ]
       }
     },
     "ResponsesFillResultLiquidity": {
@@ -5811,14 +6078,20 @@
       }
     },
     "ResponsesSystemStateResponseStatus": {
-      "description": "Status of the system",
       "name": "ResponsesSystemStateResponseStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.SystemStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "ok"
+          },
+          {
+            "value": "maintenance"
+          },
+          {
+            "value": "cancel_only"
+          }
+        ]
       }
     },
     "responses.SystemStateResponse": {
@@ -5896,14 +6169,23 @@
       }
     },
     "ResponsesTradeResultTradeType": {
-      "description": "Trade type, can be FILL or LIQUIDATION",
       "name": "ResponsesTradeResultTradeType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.FillType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "LIQUIDATION"
+          },
+          {
+            "value": "TRANSFER"
+          },
+          {
+            "value": "FILL"
+          },
+          {
+            "value": "SETTLE_MARKET"
+          }
+        ]
       }
     },
     "responses.TradeResult": {
@@ -6880,25 +7162,37 @@
       }
     },
     "ResponsesVaultRespKind": {
-      "description": "Kind of the vault: 'user' for user-defined vaults, 'protocol' for vaults controlled by Paradex",
       "name": "ResponsesVaultRespKind",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.VaultKind"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "user"
+          },
+          {
+            "value": "protocol"
+          }
+        ]
       }
     },
     "ResponsesVaultRespStatus": {
-      "description": "Status of the vault",
       "name": "ResponsesVaultRespStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "responses.VaultStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "INITIALIZING"
+          },
+          {
+            "value": "ACTIVE"
+          },
+          {
+            "value": "CLOSED"
+          },
+          {
+            "value": "FAILED"
+          }
+        ]
       }
     },
     "responses.VaultResp": {

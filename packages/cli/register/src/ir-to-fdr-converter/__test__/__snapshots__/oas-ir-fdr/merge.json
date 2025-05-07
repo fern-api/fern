@@ -148,23 +148,51 @@
       }
     },
     "AccountDetailsAndActionsCategory": {
+      "description": "* `hris` - hris\n* `ats` - ats\n* `accounting` - accounting\n* `ticketing` - ticketing\n* `crm` - crm\n* `mktg` - mktg\n* `filestorage` - filestorage",
       "name": "AccountDetailsAndActionsCategory",
       "shape": {
-        "type": "object",
-        "extends": [
-          "CategoryEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "hris"
+          },
+          {
+            "value": "ats"
+          },
+          {
+            "value": "accounting"
+          },
+          {
+            "value": "ticketing"
+          },
+          {
+            "value": "crm"
+          },
+          {
+            "value": "mktg"
+          },
+          {
+            "value": "filestorage"
+          }
+        ]
       }
     },
     "AccountDetailsAndActionsStatus": {
+      "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED",
       "name": "AccountDetailsAndActionsStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AccountDetailsAndActionsStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "COMPLETE"
+          },
+          {
+            "value": "INCOMPLETE"
+          },
+          {
+            "value": "RELINK_NEEDED"
+          }
+        ]
       }
     },
     "AccountDetailsAndActions": {
@@ -1282,14 +1310,33 @@
       }
     },
     "ConditionSchemaConditionType": {
-      "description": "The type of value(s) that can be set for this condition.\n\n* `BOOLEAN` - BOOLEAN\n* `DATE` - DATE\n* `DATE_TIME` - DATE_TIME\n* `INTEGER` - INTEGER\n* `FLOAT` - FLOAT\n* `STRING` - STRING\n* `LIST_OF_STRINGS` - LIST_OF_STRINGS",
+      "description": "* `BOOLEAN` - BOOLEAN\n* `DATE` - DATE\n* `DATE_TIME` - DATE_TIME\n* `INTEGER` - INTEGER\n* `FLOAT` - FLOAT\n* `STRING` - STRING\n* `LIST_OF_STRINGS` - LIST_OF_STRINGS",
       "name": "ConditionSchemaConditionType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionTypeEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "BOOLEAN"
+          },
+          {
+            "value": "DATE"
+          },
+          {
+            "value": "DATE_TIME"
+          },
+          {
+            "value": "INTEGER"
+          },
+          {
+            "value": "FLOAT"
+          },
+          {
+            "value": "STRING"
+          },
+          {
+            "value": "LIST_OF_STRINGS"
+          }
+        ]
       }
     },
     "ConditionSchema": {
@@ -2170,13 +2217,33 @@
       }
     },
     "DataPassthroughRequestMethod": {
+      "description": "* `GET` - GET\n* `OPTIONS` - OPTIONS\n* `HEAD` - HEAD\n* `POST` - POST\n* `PUT` - PUT\n* `PATCH` - PATCH\n* `DELETE` - DELETE",
       "name": "DataPassthroughRequestMethod",
       "shape": {
-        "type": "object",
-        "extends": [
-          "MethodEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "GET"
+          },
+          {
+            "value": "OPTIONS"
+          },
+          {
+            "value": "HEAD"
+          },
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "PATCH"
+          },
+          {
+            "value": "DELETE"
+          }
+        ]
       }
     },
     "DataPassthroughRequestHeaders": {
@@ -5031,13 +5098,21 @@
       }
     },
     "IgnoreCommonModelRequestReason": {
+      "description": "* `GENERAL_CUSTOMER_REQUEST` - GENERAL_CUSTOMER_REQUEST\n* `GDPR` - GDPR\n* `OTHER` - OTHER",
       "name": "IgnoreCommonModelRequestReason",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ReasonEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "GENERAL_CUSTOMER_REQUEST"
+          },
+          {
+            "value": "GDPR"
+          },
+          {
+            "value": "OTHER"
+          }
+        ]
       }
     },
     "IgnoreCommonModelRequest": {
@@ -5071,14 +5146,18 @@
       }
     },
     "IssueStatus": {
-      "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
+      "description": "* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
       "name": "IssueStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "IssueStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "ONGOING"
+          },
+          {
+            "value": "RESOLVED"
+          }
+        ]
       }
     },
     "IssueEndUser": {
@@ -8376,13 +8455,18 @@
       }
     },
     "RemoteResponseResponseType": {
+      "description": "* `JSON` - JSON\n* `BASE64_GZIP` - BASE64_GZIP",
       "name": "RemoteResponseResponseType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ResponseTypeEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "JSON"
+          },
+          {
+            "value": "BASE64_GZIP"
+          }
+        ]
       }
     },
     "RemoteResponseHeaders": {
@@ -8584,13 +8668,30 @@
       }
     },
     "SyncStatusStatus": {
+      "description": "* `SYNCING` - SYNCING\n* `DONE` - DONE\n* `FAILED` - FAILED\n* `DISABLED` - DISABLED\n* `PAUSED` - PAUSED\n* `PARTIALLY_SYNCED` - PARTIALLY_SYNCED",
       "name": "SyncStatusStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "SyncStatusStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "SYNCING"
+          },
+          {
+            "value": "DONE"
+          },
+          {
+            "value": "FAILED"
+          },
+          {
+            "value": "DISABLED"
+          },
+          {
+            "value": "PAUSED"
+          },
+          {
+            "value": "PARTIALLY_SYNCED"
+          }
+        ]
       }
     },
     "SyncStatus": {

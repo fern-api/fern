@@ -9322,11 +9322,24 @@
     "EorEntitlementListItemRolloverType": {
       "name": "EorEntitlementListItemRolloverType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "EorHolidaysRolloverType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "EXPIRATION"
+          },
+          {
+            "value": "PAY_OUT"
+          },
+          {
+            "value": "UNLIMITED_ROLLOVER"
+          },
+          {
+            "value": "LIMITED_ROLLOVER"
+          },
+          {
+            "value": "UNSET"
+          }
+        ]
       }
     },
     "EorEntitlementListItem": {
@@ -9655,17 +9668,6 @@
         ]
       }
     },
-    "ContractTerminationResultCompletionDate": {
-      "description": "Date the contract is marked for completion",
-      "name": "ContractTerminationResultCompletionDate",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateString"
-        ],
-        "properties": []
-      }
-    },
     "ContractTerminationResult": {
       "name": "ContractTerminationResult",
       "shape": {
@@ -9691,8 +9693,12 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "ContractTerminationResultCompletionDate"
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date",
+                  "regex": "^\\d{4}-\\d{2}-\\d{2}$"
+                }
               }
             }
           }
@@ -12008,16 +12014,6 @@
         }
       }
     },
-    "EorTimeoffsItemCreatedAt": {
-      "name": "EorTimeoffsItemCreatedAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
     "EorTimeoffsItemUpdatedAt": {
       "name": "EorTimeoffsItemUpdatedAt",
       "shape": {
@@ -12091,8 +12087,11 @@
           {
             "key": "created_at",
             "valueType": {
-              "type": "id",
-              "value": "EorTimeoffsItemCreatedAt"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -12195,25 +12194,20 @@
       }
     },
     "EorTimeoffsBaseItemType": {
-      "description": "The type of time off.",
       "name": "EorTimeoffsBaseItemType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "TimeoffsTypeEnum"
-        ],
-        "properties": []
-      }
-    },
-    "EorTimeoffsBaseItemRequestedAt": {
-      "description": "Timestamp when time off was requested.",
-      "name": "EorTimeoffsBaseItemRequestedAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "VACATION"
+          },
+          {
+            "value": "SICK_LEAVE"
+          },
+          {
+            "value": "OTHER"
+          }
+        ]
       }
     },
     "EorTimeoffsBaseItemReviewedAt": {
@@ -12228,14 +12222,20 @@
       }
     },
     "EorTimeoffsBaseItemStatus": {
-      "description": "Status of the time off request.",
       "name": "EorTimeoffsBaseItemStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "TimeoffsStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "REQUESTED"
+          },
+          {
+            "value": "APPROVED"
+          },
+          {
+            "value": "REJECTED"
+          }
+        ]
       }
     },
     "EorTimeoffsBaseItemRequester": {
@@ -12314,8 +12314,11 @@
             "description": "Timestamp when time off was requested.",
             "key": "requested_at",
             "valueType": {
-              "type": "id",
-              "value": "EorTimeoffsBaseItemRequestedAt"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -12726,11 +12729,27 @@
     "TimeoffsProfileProfileType": {
       "name": "TimeoffsProfileProfileType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ProfileTypeEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "client"
+          },
+          {
+            "value": "contractor"
+          },
+          {
+            "value": "icp"
+          },
+          {
+            "value": "direct_employee"
+          },
+          {
+            "value": "hris_direct_employee"
+          },
+          {
+            "value": "service_account"
+          }
+        ]
       }
     },
     "TimeoffsProfile": {
@@ -13947,28 +13966,6 @@
         ]
       }
     },
-    "PaymentPaidAt": {
-      "description": "Timestamp when payment was paid.",
-      "name": "PaymentPaidAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
-    "PaymentCreatedAt": {
-      "description": "Timestamp when the record was created.",
-      "name": "PaymentCreatedAt",
-      "shape": {
-        "type": "object",
-        "extends": [
-          "DateTimeString"
-        ],
-        "properties": []
-      }
-    },
     "Payment": {
       "name": "Payment",
       "shape": {
@@ -14019,16 +14016,22 @@
             "description": "Timestamp when payment was paid.",
             "key": "paid_at",
             "valueType": {
-              "type": "id",
-              "value": "PaymentPaidAt"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
             "description": "Timestamp when the record was created.",
             "key": "created_at",
             "valueType": {
-              "type": "id",
-              "value": "PaymentCreatedAt"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -16260,11 +16263,27 @@
     "PeopleMeProfileType": {
       "name": "PeopleMeProfileType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ProfileTypeEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "client"
+          },
+          {
+            "value": "contractor"
+          },
+          {
+            "value": "icp"
+          },
+          {
+            "value": "direct_employee"
+          },
+          {
+            "value": "hris_direct_employee"
+          },
+          {
+            "value": "service_account"
+          }
+        ]
       }
     },
     "PeopleMe": {
