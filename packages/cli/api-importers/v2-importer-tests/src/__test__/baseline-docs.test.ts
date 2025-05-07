@@ -11,7 +11,7 @@ const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("f
 const filterFixture = process.env.TEST_FIXTURE;
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-describe("openapi-v2-baseline", async () => {
+describe("openapi-v2-baseline-docs", async () => {
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
         if (!fixture.isDirectory() || (filterFixture && fixture.name !== filterFixture)) {
             continue;
@@ -37,7 +37,10 @@ describe("openapi-v2-baseline", async () => {
 
                 if (workspace.workspace instanceof OSSWorkspace) {
                     try {
-                        const fernWorkspace = await (workspace.workspace as OSSWorkspace).toFernWorkspace({ context });
+                        const fernWorkspace = await (workspace.workspace as OSSWorkspace).toFernWorkspace(
+                            { context },
+                            { enableUniqueErrorsPerEndpoint: true }
+                        );
                         const intermediateRepresentation = generateIntermediateRepresentation({
                             workspace: fernWorkspace,
                             generationLanguage: undefined,
@@ -53,7 +56,7 @@ describe("openapi-v2-baseline", async () => {
                         });
                         // eslint-disable-next-line jest/no-standalone-expect
                         await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
-                            `./__snapshots__/openapi-v2-baseline/${fixture.name}.json`
+                            `./__snapshots__/baseline-docs/${fixture.name}.json`
                         );
                     } catch (error) {
                         console.warn(`Test Failed: Error processing fixture ${fixture.name}:`, error);

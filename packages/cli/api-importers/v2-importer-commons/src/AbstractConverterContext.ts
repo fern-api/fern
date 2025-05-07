@@ -23,12 +23,14 @@ import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
 import { ErrorCollector } from "./ErrorCollector";
+import { V3ParserSettings } from "./V3ParserSettings";
 
 export declare namespace Spec {
     export interface Args<T> {
         spec: T;
         settings?: OpenAPISettings;
         errorCollector: ErrorCollector;
+        v3ParserSettings: V3ParserSettings;
         logger: Logger;
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         smartCasing: boolean;
@@ -48,6 +50,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public spec: Spec;
     public readonly settings?: OpenAPISettings;
     public readonly errorCollector: ErrorCollector;
+    public readonly v3ParserSettings: V3ParserSettings;
     public readonly logger: Logger;
     public readonly generationLanguage: generatorsYml.GenerationLanguage | undefined;
     public readonly smartCasing: boolean;
@@ -62,6 +65,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.spec = args.spec;
         this.settings = args.settings;
         this.errorCollector = args.errorCollector;
+        this.v3ParserSettings = args.v3ParserSettings;
         this.logger = args.logger;
         this.generationLanguage = args.generationLanguage;
         this.smartCasing = args.smartCasing;
