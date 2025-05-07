@@ -5,7 +5,7 @@ import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
-const legacyPin = ["cohere", "deepgram", "payroc", "chainalysis", "devrev", "deriv", "webflow"];
+const legacyPin = ["cohere", "deepgram", "chainalysis", "devrev", "deriv", "webflow"];
 
 export async function previewDocsWorkspace({
     loadProject,
