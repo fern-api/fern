@@ -42,7 +42,8 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
-    addBuildCommand(cli), addRegisterCommands(cli);
+    addBuildAndTagCommand(cli);
+    addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
     addLatestCommands(cli);
@@ -227,9 +228,9 @@ function addRunCommand(cli: Argv) {
     );
 }
 
-function addBuildCommand(cli: Argv) {
+function addBuildAndTagCommand(cli: Argv) {
     cli.command(
-        "build",
+        "tag",
         "Build and tag generator",
         (yargs) =>
             yargs
