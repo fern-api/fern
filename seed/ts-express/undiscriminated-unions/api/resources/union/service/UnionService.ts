@@ -85,7 +85,9 @@ export class UnionService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
@@ -123,7 +125,9 @@ export class UnionService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                     console.warn(
@@ -158,7 +162,9 @@ export class UnionService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
@@ -201,7 +207,9 @@ export class UnionService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
