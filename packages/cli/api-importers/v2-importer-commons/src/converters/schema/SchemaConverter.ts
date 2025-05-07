@@ -75,7 +75,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         }
 
         // Check if there is a single allOf that is not an object
-        if (this.schema.allOf?.length === 1 && Object.keys(this.schema).filter(key => key !== 'allOf').length === 0 && this.schema.allOf[0] != null) {
+        if (this.schema.allOf?.length === 1 && this.schemaOnlyHasAllowedKeys(['allOf']) && this.schema.allOf[0] != null) {
             let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
             
             if (this.context.isReferenceObject(this.schema.allOf[0])) {
@@ -262,6 +262,33 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             fernFilepath: this.context.createFernFilepath(),
             name: this.context.casingsGenerator.generateName(this.id)
         };
+    }
+
+    /**
+     * Checks if the schema only has the specified keys
+     * @param allowedKeys - List of keys that are allowed in the schema
+     * @returns true if the schema only has the specified keys, false otherwise
+     */
+    private schemaOnlyHasAllowedKeys(allowedKeys: string[]): boolean {
+        // These are common schema properties that don't affect the type
+        const defaultAllowedKeys = [
+            'description', 
+            'example', 
+            'title', 
+            'default', 
+            'deprecated', 
+            'readOnly', 
+            'writeOnly', 
+            'xml', 
+            'externalDocs', 
+            'extensions'
+        ];
+        
+        // Combine default allowed keys with any additional allowed keys
+        const allAllowedKeys = [...defaultAllowedKeys, ...allowedKeys];
+        
+        const schemaKeys = Object.keys(this.schema);
+        return schemaKeys.every(key => allAllowedKeys.includes(key));
     }
 
     private async createTypeDeclarationFromFernType({
