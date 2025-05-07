@@ -388,7 +388,7 @@ async function getNavigationConfiguration({
                 navigation,
                 slug: product.slug,
                 subtitle: product.subtitle,
-                icon: product.icon,
+                icon: product.icon || "fa-solid fa-code"
             });
         }
         return {

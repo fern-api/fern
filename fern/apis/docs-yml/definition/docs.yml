@@ -1066,12 +1066,11 @@ types:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
-      subtitle: optional<string>
-      icon: string
-      value: string
       path:
         type: string
         docs: The relative path to the version's docs.yml file.
+      subtitle: optional<string>
+      icon: optional<string>
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
