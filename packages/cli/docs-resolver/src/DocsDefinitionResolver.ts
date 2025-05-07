@@ -759,7 +759,8 @@ export class DocsDefinitionResolver {
             const workspace = this.getOpenApiWorkspaceForApiSection(item);
             ir = await workspace.getIntermediateRepresentation({
                 context: this.taskContext,
-                audiences: item.audiences
+                audiences: item.audiences,
+                enableUniqueErrorsPerEndpoint: true
             });
         } else {
             workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
