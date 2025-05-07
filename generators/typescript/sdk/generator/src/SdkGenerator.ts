@@ -416,7 +416,8 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets
-            })
+            }),
+            ir: intermediateRepresentation
         });
 
         this.FdrClient =

@@ -1048,12 +1048,12 @@
     ],
     "errors": [],
     "subpackages": [
-      "user"
+      "subpackage_user"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "user": {
+    "subpackage_user": {
       "name": {
         "originalName": "user",
         "camelCase": {

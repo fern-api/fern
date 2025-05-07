@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://omega.spscommerce.com
+- url: https://omega.testapi.com
   description: prod
 paths:
   /omega:

@@ -17915,9 +17915,9 @@
     }
   },
   "subpackages": {
-    "Admins": {
-      "subpackageId": "Admins",
-      "name": "Admins",
+    "subpackage_admins": {
+      "subpackageId": "subpackage_admins",
+      "name": "admins",
       "endpoints": [
         {
           "auth": true,
@@ -18630,9 +18630,9 @@
       "types": [],
       "subpackages": []
     },
-    "Articles": {
-      "subpackageId": "Articles",
-      "name": "Articles",
+    "subpackage_articles": {
+      "subpackageId": "subpackage_articles",
+      "name": "articles",
       "endpoints": [
         {
           "auth": true,
@@ -18854,13 +18854,41 @@
               "headers": {},
               "requestBody": {
                 "title": "Thanks for everything",
-                "author_id": 1295
+                "description": "Description of the Article",
+                "body": "Body of the Article",
+                "author_id": 991267407,
+                "state": "published",
+                "parent_id": 145,
+                "parent_type": "collection",
+                "translated_content": {
+                  "fr": {
+                    "title": "Merci pour tout",
+                    "description": "Description de l'article",
+                    "body": "Corps de l'article",
+                    "author_id": 991267407,
+                    "state": "published"
+                  }
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "title": "Thanks for everything",
-                  "author_id": 1295
+                  "description": "Description of the Article",
+                  "body": "Body of the Article",
+                  "author_id": 991267407,
+                  "state": "published",
+                  "parent_id": 145,
+                  "parent_type": "collection",
+                  "translated_content": {
+                    "fr": {
+                      "title": "Merci pour tout",
+                      "description": "Description de l'article",
+                      "body": "Corps de l'article",
+                      "author_id": 991267407,
+                      "state": "published"
+                    }
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -19176,10 +19204,16 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "title": "Christmas is here!",
+                "body": "<p>New gifts in store for the jolly season</p>"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "title": "Christmas is here!",
+                  "body": "<p>New gifts in store for the jolly season</p>"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19561,9 +19595,9 @@
       "types": [],
       "subpackages": []
     },
-    "Help Center": {
-      "subpackageId": "Help Center",
-      "name": "Help Center",
+    "subpackage_helpCenter": {
+      "subpackageId": "subpackage_helpCenter",
+      "name": "helpCenter",
       "endpoints": [
         {
           "auth": true,
@@ -19804,12 +19838,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "collection 51"
+                "name": "Thanks for everything"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "collection 51"
+                  "name": "Thanks for everything"
                 }
               },
               "responseStatusCode": 200,
@@ -20081,10 +20115,14 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "name": "Update collection name"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "Update collection name"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20452,9 +20490,9 @@
       "types": [],
       "subpackages": []
     },
-    "Companies": {
-      "subpackageId": "Companies",
-      "name": "Companies",
+    "subpackage_companies": {
+      "subpackageId": "subpackage_companies",
+      "name": "companies",
       "endpoints": [
         {
           "auth": true,
@@ -20774,10 +20812,18 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "name": "my company",
+                "company_id": "company_remote_id",
+                "remote_created_at": 1374138000
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "my company",
+                  "company_id": "company_remote_id",
+                  "remote_created_at": 1374138000
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -22186,9 +22232,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contacts": {
-      "subpackageId": "Contacts",
-      "name": "Contacts",
+    "subpackage_contacts": {
+      "subpackageId": "subpackage_contacts",
+      "name": "contacts",
       "endpoints": [
         {
           "auth": true,
@@ -23098,10 +23144,16 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "email": "joebloggs@intercom.io",
+                "name": "joe bloggs"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "email": "joebloggs@intercom.io",
+                  "name": "joe bloggs"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -23445,10 +23497,16 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "from": "667d60ac8a68186f43bafdbb",
+                "into": "667d60ac8a68186f43bafdbc"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "from": "667d60ac8a68186f43bafdbb",
+                  "into": "667d60ac8a68186f43bafdbc"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -23679,12 +23737,36 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "query": {}
+                "query": {
+                  "operator": "AND",
+                  "value": [
+                    {
+                      "field": "created_at",
+                      "operator": ">",
+                      "value": "1306054154"
+                    }
+                  ]
+                },
+                "pagination": {
+                  "per_page": 5
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "query": {}
+                  "query": {
+                    "operator": "AND",
+                    "value": [
+                      {
+                        "field": "created_at",
+                        "operator": ">",
+                        "value": "1306054154"
+                      }
+                    ]
+                  },
+                  "pagination": {
+                    "per_page": 5
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -23906,10 +23988,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": null,
               "requestBodyV3": {
-                "type": "json",
-                "value": null
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -24292,9 +24372,9 @@
       "types": [],
       "subpackages": []
     },
-    "Notes": {
-      "subpackageId": "Notes",
-      "name": "Notes",
+    "subpackage_notes": {
+      "subpackageId": "subpackage_notes",
+      "name": "notes",
       "endpoints": [
         {
           "auth": true,
@@ -24873,9 +24953,9 @@
       "types": [],
       "subpackages": []
     },
-    "Subscription Types": {
-      "subpackageId": "Subscription Types",
-      "name": "Subscription Types",
+    "subpackage_subscriptionTypes": {
+      "subpackageId": "subpackage_subscriptionTypes",
+      "name": "subscriptionTypes",
       "endpoints": [
         {
           "auth": true,
@@ -25366,9 +25446,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tags": {
-      "subpackageId": "Tags",
-      "name": "Tags",
+    "subpackage_tags": {
+      "subpackageId": "subpackage_tags",
+      "name": "tags",
       "endpoints": [
         {
           "auth": true,
@@ -26144,12 +26224,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "Independent"
+                "name": "test"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "Independent"
+                  "name": "test"
                 }
               },
               "responseStatusCode": 200,
@@ -26695,9 +26775,9 @@
       "types": [],
       "subpackages": []
     },
-    "Conversations": {
-      "subpackageId": "Conversations",
-      "name": "Conversations",
+    "subpackage_conversations": {
+      "subpackageId": "subpackage_conversations",
+      "name": "conversations",
       "endpoints": [
         {
           "auth": true,
@@ -26912,19 +26992,19 @@
               "headers": {},
               "requestBody": {
                 "from": {
-                  "type": "lead",
-                  "id": "536e564f316c83104c000020"
+                  "type": "user",
+                  "id": "667d60d18a68186f43bafddd"
                 },
-                "body": "Hello"
+                "body": "Hello there"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "from": {
-                    "type": "lead",
-                    "id": "536e564f316c83104c000020"
+                    "type": "user",
+                    "id": "667d60d18a68186f43bafddd"
                   },
-                  "body": "Hello"
+                  "body": "Hello there"
                 }
               },
               "responseStatusCode": 200,
@@ -27310,10 +27390,22 @@
                 "display_as": "plaintext"
               },
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "read": true,
+                "custom_attributes": {
+                  "issue_type": "Billing",
+                  "priority": "High"
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "read": true,
+                  "custom_attributes": {
+                    "issue_type": "Billing",
+                    "priority": "High"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -27612,12 +27704,36 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "query": {}
+                "query": {
+                  "operator": "AND",
+                  "value": [
+                    {
+                      "field": "created_at",
+                      "operator": ">",
+                      "value": "1306054154"
+                    }
+                  ]
+                },
+                "pagination": {
+                  "per_page": 5
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "query": {}
+                  "query": {
+                    "operator": "AND",
+                    "value": [
+                      {
+                        "field": "created_at",
+                        "operator": ">",
+                        "value": "1306054154"
+                      }
+                    ]
+                  },
+                  "pagination": {
+                    "per_page": 5
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -27868,18 +27984,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "intercom_user_id": "foo",
+                "intercom_user_id": "667d60f18a68186f43bafdf4",
                 "message_type": "comment",
                 "type": "user",
-                "body": "foo"
+                "body": "Thanks again :)"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo",
+                  "intercom_user_id": "667d60f18a68186f43bafdf4",
                   "message_type": "comment",
                   "type": "user",
-                  "body": "foo"
+                  "body": "Thanks again :)"
                 }
               },
               "responseStatusCode": 200,
@@ -28168,14 +28284,16 @@
               "requestBody": {
                 "message_type": "close",
                 "type": "admin",
-                "admin_id": "12345"
+                "admin_id": "991267608",
+                "body": "Goodbye :)"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "message_type": "close",
                   "type": "admin",
-                  "admin_id": "12345"
+                  "admin_id": "991267608",
+                  "body": "Goodbye :)"
                 }
               },
               "responseStatusCode": 200,
@@ -28717,10 +28835,20 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "admin_id": "991267631",
+                "customer": {
+                  "intercom_user_id": "667d61168a68186f43bafe0d"
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "admin_id": "991267631",
+                  "customer": {
+                    "intercom_user_id": "667d61168a68186f43bafe0d"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -28859,12 +28987,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "admin_id": "5017690"
+                "admin_id": "991267639"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "admin_id": "5017690"
+                  "admin_id": "991267639"
                 }
               },
               "responseStatusCode": 200,
@@ -28965,15 +29093,15 @@
               "headers": {},
               "requestBody": {
                 "type": "conversation_part",
-                "conversation_id": "19894788788",
-                "conversation_part_id": "19381789428"
+                "conversation_id": "471",
+                "conversation_part_id": "115"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "type": "conversation_part",
-                  "conversation_id": "19894788788",
-                  "conversation_part_id": "19381789428"
+                  "conversation_id": "471",
+                  "conversation_part_id": "115"
                 }
               },
               "responseStatusCode": 200,
@@ -29260,12 +29388,12 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "ticket_type_id": "1234"
+                "ticket_type_id": "79"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "ticket_type_id": "1234"
+                  "ticket_type_id": "79"
                 }
               },
               "responseStatusCode": 200,
@@ -29459,9 +29587,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Attributes": {
-      "subpackageId": "Data Attributes",
-      "name": "Data Attributes",
+    "subpackage_dataAttributes": {
+      "subpackageId": "subpackage_dataAttributes",
+      "name": "dataAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -30148,15 +30276,15 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "My Data Attribute",
-                "model": "contact",
+                "name": "Mithril Shirt",
+                "model": "company",
                 "data_type": "string"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "My Data Attribute",
-                  "model": "contact",
+                  "name": "Mithril Shirt",
+                  "model": "company",
                   "data_type": "string"
                 }
               },
@@ -30309,10 +30437,24 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "archived": false,
+                "description": "Just a plain old ring",
+                "options": [
+                  "foo",
+                  "foo"
+                ]
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "archived": false,
+                  "description": "Just a plain old ring",
+                  "options": [
+                    "foo",
+                    "foo"
+                  ]
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -30377,9 +30519,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Events": {
-      "subpackageId": "Data Events",
-      "name": "Data Events",
+    "subpackage_dataEvents": {
+      "subpackageId": "subpackage_dataEvents",
+      "name": "dataEvents",
       "endpoints": [
         {
           "auth": true,
@@ -30682,9 +30824,9 @@
       "types": [],
       "subpackages": []
     },
-    "Data Export": {
-      "subpackageId": "Data Export",
-      "name": "Data Export",
+    "subpackage_dataExport": {
+      "subpackageId": "subpackage_dataExport",
+      "name": "dataExport",
       "endpoints": [
         {
           "auth": true,
@@ -30768,14 +30910,14 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "created_at_after": 1527811200,
-                "created_at_before": 1527811200
+                "created_at_after": 1719474967,
+                "created_at_before": 1719492967
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "created_at_after": 1527811200,
-                  "created_at_before": 1527811200
+                  "created_at_after": 1719474967,
+                  "created_at_before": 1719492967
                 }
               },
               "responseStatusCode": 200,
@@ -31116,9 +31258,9 @@
       "types": [],
       "subpackages": []
     },
-    "Messages": {
-      "subpackageId": "Messages",
-      "name": "Messages",
+    "subpackage_messages": {
+      "subpackageId": "subpackage_messages",
+      "name": "messages",
       "endpoints": [
         {
           "auth": true,
@@ -31201,10 +31343,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": null,
               "requestBodyV3": {
-                "type": "json",
-                "value": null
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -31241,9 +31381,9 @@
       "types": [],
       "subpackages": []
     },
-    "News": {
-      "subpackageId": "News",
-      "name": "News",
+    "subpackage_news": {
+      "subpackageId": "subpackage_news",
+      "name": "news",
       "endpoints": [
         {
           "auth": true,
@@ -31517,13 +31657,49 @@
               "headers": {},
               "requestBody": {
                 "title": "Halloween is here!",
-                "sender_id": 123
+                "body": "<p>New costumes in store for this spooky season</p>",
+                "sender_id": 991267734,
+                "state": "live",
+                "deliver_silently": true,
+                "labels": [
+                  "Product",
+                  "Update",
+                  "New"
+                ],
+                "reactions": [
+                  "😆",
+                  "😅"
+                ],
+                "newsfeed_assignments": [
+                  {
+                    "newsfeed_id": 53,
+                    "published_at": 1664638214
+                  }
+                ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "title": "Halloween is here!",
-                  "sender_id": 123
+                  "body": "<p>New costumes in store for this spooky season</p>",
+                  "sender_id": 991267734,
+                  "state": "live",
+                  "deliver_silently": true,
+                  "labels": [
+                    "Product",
+                    "Update",
+                    "New"
+                  ],
+                  "reactions": [
+                    "😆",
+                    "😅"
+                  ],
+                  "newsfeed_assignments": [
+                    {
+                      "newsfeed_id": 53,
+                      "published_at": 1664638214
+                    }
+                  ]
                 }
               },
               "responseStatusCode": 200,
@@ -31851,14 +32027,24 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "title": "Halloween is here!",
-                "sender_id": 123
+                "title": "Christmas is here!",
+                "body": "<p>New gifts in store for the jolly season</p>",
+                "sender_id": 991267745,
+                "reactions": [
+                  "😝",
+                  "😂"
+                ]
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "title": "Halloween is here!",
-                  "sender_id": 123
+                  "title": "Christmas is here!",
+                  "body": "<p>New gifts in store for the jolly season</p>",
+                  "sender_id": 991267745,
+                  "reactions": [
+                    "😝",
+                    "😂"
+                  ]
                 }
               },
               "responseStatusCode": 200,
@@ -32403,9 +32589,9 @@
       "types": [],
       "subpackages": []
     },
-    "Segments": {
-      "subpackageId": "Segments",
-      "name": "Segments",
+    "subpackage_segments": {
+      "subpackageId": "subpackage_segments",
+      "name": "segments",
       "endpoints": [
         {
           "auth": true,
@@ -32670,9 +32856,9 @@
       "types": [],
       "subpackages": []
     },
-    "Switch": {
-      "subpackageId": "Switch",
-      "name": "Switch",
+    "subpackage_switch": {
+      "subpackageId": "subpackage_switch",
+      "name": "switch",
       "endpoints": [
         {
           "auth": true,
@@ -32756,12 +32942,20 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "phone": "+1 1234567890"
+                "phone": "+353832345678",
+                "custom_attributes": {
+                  "issue_type": "Billing",
+                  "priority": "High"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "phone": "+1 1234567890"
+                  "phone": "+353832345678",
+                  "custom_attributes": {
+                    "issue_type": "Billing",
+                    "priority": "High"
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -32789,9 +32983,9 @@
       "types": [],
       "subpackages": []
     },
-    "Teams": {
-      "subpackageId": "Teams",
-      "name": "Teams",
+    "subpackage_teams": {
+      "subpackageId": "subpackage_teams",
+      "name": "teams",
       "endpoints": [
         {
           "auth": true,
@@ -33002,9 +33196,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ticket Type Attributes": {
-      "subpackageId": "Ticket Type Attributes",
-      "name": "Ticket Type Attributes",
+    "subpackage_ticketTypeAttributes": {
+      "subpackageId": "subpackage_ticketTypeAttributes",
+      "name": "ticketTypeAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -33109,16 +33303,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "Bug Priority",
-                "description": "Priority level of the bug",
-                "data_type": "string"
+                "name": "Attribute Title",
+                "description": "Attribute Description",
+                "data_type": "string",
+                "required_to_create": false
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "Bug Priority",
-                  "description": "Priority level of the bug",
-                  "data_type": "string"
+                  "name": "Attribute Title",
+                  "description": "Attribute Description",
+                  "data_type": "string",
+                  "required_to_create": false
                 }
               },
               "responseStatusCode": 200,
@@ -33297,10 +33493,14 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "description": "New Attribute Description"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "description": "New Attribute Description"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -33357,9 +33557,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ticket Types": {
-      "subpackageId": "Ticket Types",
-      "name": "Ticket Types",
+    "subpackage_ticketTypes": {
+      "subpackageId": "subpackage_ticketTypes",
+      "name": "ticketTypes",
       "endpoints": [
         {
           "auth": true,
@@ -33530,12 +33730,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "name": "Bug"
+                "name": "Customer Issue",
+                "description": "Customer Report Template",
+                "category": "Customer",
+                "icon": "🎟️"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "name": "Bug"
+                  "name": "Customer Issue",
+                  "description": "Customer Report Template",
+                  "category": "Customer",
+                  "icon": "🎟️"
                 }
               },
               "responseStatusCode": 200,
@@ -33815,10 +34021,14 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "name": "Bug Report 2"
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "Bug Report 2"
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -33869,9 +34079,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tickets": {
-      "subpackageId": "Tickets",
-      "name": "Tickets",
+    "subpackage_tickets": {
+      "subpackageId": "subpackage_tickets",
+      "name": "tickets",
       "endpoints": [
         {
           "auth": true,
@@ -33975,18 +34185,18 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "intercom_user_id": "foo",
+                "intercom_user_id": "667d619d8a68186f43bafe82",
                 "message_type": "comment",
                 "type": "user",
-                "body": "foo"
+                "body": "Thanks again :)"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "intercom_user_id": "foo",
+                  "intercom_user_id": "667d619d8a68186f43bafe82",
                   "message_type": "comment",
                   "type": "user",
-                  "body": "foo"
+                  "body": "Thanks again :)"
                 }
               },
               "responseStatusCode": 200,
@@ -34116,22 +34326,30 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "ticket_type_id": "1234",
+                "ticket_type_id": "106",
                 "contacts": [
                   {
-                    "id": "foo"
+                    "id": "667d61b78a68186f43bafe8d"
                   }
-                ]
+                ],
+                "ticket_attributes": {
+                  "_default_title_": "example",
+                  "_default_description_": "there is a problem"
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "ticket_type_id": "1234",
+                  "ticket_type_id": "106",
                   "contacts": [
                     {
-                      "id": "foo"
+                      "id": "667d61b78a68186f43bafe8d"
                     }
-                  ]
+                  ],
+                  "ticket_attributes": {
+                    "_default_title_": "example",
+                    "_default_description_": "there is a problem"
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -34643,10 +34861,34 @@
               },
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "ticket_attributes": {
+                  "_default_title_": "example",
+                  "_default_description_": "there is a problem"
+                },
+                "state": "in_progress",
+                "open": true,
+                "snoozed_until": 1673609604,
+                "assignment": {
+                  "admin_id": "991267883",
+                  "assignee_id": "991267885"
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "ticket_attributes": {
+                    "_default_title_": "example",
+                    "_default_description_": "there is a problem"
+                  },
+                  "state": "in_progress",
+                  "open": true,
+                  "snoozed_until": 1673609604,
+                  "assignment": {
+                    "admin_id": "991267883",
+                    "assignee_id": "991267885"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -35053,12 +35295,36 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "query": {}
+                "query": {
+                  "operator": "AND",
+                  "value": [
+                    {
+                      "field": "created_at",
+                      "operator": ">",
+                      "value": "1306054154"
+                    }
+                  ]
+                },
+                "pagination": {
+                  "per_page": 5
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "query": {}
+                  "query": {
+                    "operator": "AND",
+                    "value": [
+                      {
+                        "field": "created_at",
+                        "operator": ">",
+                        "value": "1306054154"
+                      }
+                    ]
+                  },
+                  "pagination": {
+                    "per_page": 5
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -35250,9 +35516,9 @@
       "types": [],
       "subpackages": []
     },
-    "Visitors": {
-      "subpackageId": "Visitors",
-      "name": "Visitors",
+    "subpackage_visitors": {
+      "subpackageId": "subpackage_visitors",
+      "name": "visitors",
       "endpoints": [
         {
           "auth": true,
@@ -35527,10 +35793,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": null,
               "requestBodyV3": {
-                "type": "json",
-                "value": null
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -36070,27 +36334,27 @@
       "visitor_deleted_object"
     ],
     "subpackages": [
-      "Admins",
-      "Articles",
-      "Help Center",
-      "Companies",
-      "Contacts",
-      "Notes",
-      "Subscription Types",
-      "Tags",
-      "Conversations",
-      "Data Attributes",
-      "Data Events",
-      "Data Export",
-      "Messages",
-      "News",
-      "Segments",
-      "Switch",
-      "Teams",
-      "Ticket Type Attributes",
-      "Ticket Types",
-      "Tickets",
-      "Visitors"
+      "subpackage_admins",
+      "subpackage_articles",
+      "subpackage_helpCenter",
+      "subpackage_companies",
+      "subpackage_contacts",
+      "subpackage_notes",
+      "subpackage_subscriptionTypes",
+      "subpackage_tags",
+      "subpackage_conversations",
+      "subpackage_dataAttributes",
+      "subpackage_dataEvents",
+      "subpackage_dataExport",
+      "subpackage_messages",
+      "subpackage_news",
+      "subpackage_segments",
+      "subpackage_switch",
+      "subpackage_teams",
+      "subpackage_ticketTypeAttributes",
+      "subpackage_ticketTypes",
+      "subpackage_tickets",
+      "subpackage_visitors"
     ]
   },
   "auth": {

@@ -18485,9 +18485,9 @@
     }
   },
   "subpackages": {
-    "action-menu": {
-      "subpackageId": "action-menu",
-      "name": "action-menu",
+    "subpackage_actionMenu": {
+      "subpackageId": "subpackage_actionMenu",
+      "name": "actionMenu",
       "endpoints": [
         {
           "auth": true,
@@ -18979,8 +18979,8 @@
       "types": [],
       "subpackages": []
     },
-    "connection": {
-      "subpackageId": "connection",
+    "subpackage_connection": {
+      "subpackageId": "subpackage_connection",
       "name": "connection",
       "endpoints": [
         {
@@ -19714,7 +19714,6 @@
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "imageUrl": "http://192.168.56.101/img/logo.jpg",
                 "label": "Bob",
@@ -19732,7 +19731,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "imageUrl": "http://192.168.56.101/img/logo.jpg",
                   "label": "Bob",
@@ -20734,8 +20732,8 @@
       "types": [],
       "subpackages": []
     },
-    "basicmessage": {
-      "subpackageId": "basicmessage",
+    "subpackage_basicmessage": {
+      "subpackageId": "subpackage_basicmessage",
       "name": "basicmessage",
       "endpoints": [
         {
@@ -20850,8 +20848,8 @@
       "types": [],
       "subpackages": []
     },
-    "trustping": {
-      "subpackageId": "trustping",
+    "subpackage_trustping": {
+      "subpackageId": "subpackage_trustping",
       "name": "trustping",
       "endpoints": [
         {
@@ -20970,8 +20968,8 @@
       "types": [],
       "subpackages": []
     },
-    "introduction": {
-      "subpackageId": "introduction",
+    "subpackage_introduction": {
+      "subpackageId": "subpackage_introduction",
       "name": "introduction",
       "endpoints": [
         {
@@ -21090,9 +21088,9 @@
       "types": [],
       "subpackages": []
     },
-    "credential-definition": {
-      "subpackageId": "credential-definition",
-      "name": "credential-definition",
+    "subpackage_credentialDefinition": {
+      "subpackageId": "subpackage_credentialDefinition",
+      "name": "credentialDefinition",
       "endpoints": [
         {
           "auth": true,
@@ -21585,8 +21583,8 @@
       "types": [],
       "subpackages": []
     },
-    "credentials": {
-      "subpackageId": "credentials",
+    "subpackage_credentials": {
+      "subpackageId": "subpackage_credentials",
       "name": "credentials",
       "endpoints": [
         {
@@ -22666,9 +22664,9 @@
       "types": [],
       "subpackages": []
     },
-    "did-exchange": {
-      "subpackageId": "did-exchange",
-      "name": "did-exchange",
+    "subpackage_didExchange": {
+      "subpackageId": "subpackage_didExchange",
+      "name": "didExchange",
       "endpoints": [
         {
           "auth": true,
@@ -22974,7 +22972,6 @@
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "label": "Request to connect with Bob"
               },
@@ -22982,7 +22979,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "label": "Request to connect with Bob"
                 }
@@ -23359,9 +23355,9 @@
       "types": [],
       "subpackages": []
     },
-    "discover-features v2.0": {
-      "subpackageId": "discover-features v2.0",
-      "name": "discover-features v2.0",
+    "subpackage_discoverFeaturesV20": {
+      "subpackageId": "subpackage_discoverFeaturesV20",
+      "name": "discoverFeaturesV20",
       "endpoints": [
         {
           "auth": true,
@@ -23559,9 +23555,9 @@
       "types": [],
       "subpackages": []
     },
-    "discover-features": {
-      "subpackageId": "discover-features",
-      "name": "discover-features",
+    "subpackage_discoverFeatures": {
+      "subpackageId": "subpackage_discoverFeatures",
+      "name": "discoverFeatures",
       "endpoints": [
         {
           "auth": true,
@@ -23775,9 +23771,9 @@
       "types": [],
       "subpackages": []
     },
-    "issue-credential v2.0": {
-      "subpackageId": "issue-credential v2.0",
-      "name": "issue-credential v2.0",
+    "subpackage_issueCredentialV20": {
+      "subpackageId": "subpackage_issueCredentialV20",
+      "name": "issueCredentialV20",
       "endpoints": [
         {
           "auth": true,
@@ -25798,9 +25794,9 @@
       "types": [],
       "subpackages": []
     },
-    "issue-credential v1.0": {
-      "subpackageId": "issue-credential v1.0",
-      "name": "issue-credential v1.0",
+    "subpackage_issueCredentialV10": {
+      "subpackageId": "subpackage_issueCredentialV10",
+      "name": "issueCredentialV10",
       "endpoints": [
         {
           "auth": true,
@@ -27760,8 +27756,8 @@
       "types": [],
       "subpackages": []
     },
-    "jsonld": {
-      "subpackageId": "jsonld",
+    "subpackage_jsonld": {
+      "subpackageId": "subpackage_jsonld",
       "name": "jsonld",
       "endpoints": [
         {
@@ -27978,8 +27974,8 @@
       "types": [],
       "subpackages": []
     },
-    "ledger": {
-      "subpackageId": "ledger",
+    "subpackage_ledger": {
+      "subpackageId": "subpackage_ledger",
       "name": "ledger",
       "endpoints": [
         {
@@ -28804,8 +28800,8 @@
       "types": [],
       "subpackages": []
     },
-    "mediation": {
-      "subpackageId": "mediation",
+    "subpackage_mediation": {
+      "subpackageId": "subpackage_mediation",
       "name": "mediation",
       "endpoints": [
         {
@@ -30572,8 +30568,8 @@
       "types": [],
       "subpackages": []
     },
-    "multitenancy": {
-      "subpackageId": "multitenancy",
+    "subpackage_multitenancy": {
+      "subpackageId": "subpackage_multitenancy",
       "name": "multitenancy",
       "endpoints": [
         {
@@ -31265,9 +31261,9 @@
       "types": [],
       "subpackages": []
     },
-    "out-of-band": {
-      "subpackageId": "out-of-band",
-      "name": "out-of-band",
+    "subpackage_outOfBand": {
+      "subpackageId": "subpackage_outOfBand",
+      "name": "outOfBand",
       "endpoints": [
         {
           "auth": true,
@@ -31760,8 +31756,8 @@
       "types": [],
       "subpackages": []
     },
-    "server": {
-      "subpackageId": "server",
+    "subpackage_server": {
+      "subpackageId": "subpackage_server",
       "name": "server",
       "endpoints": [
         {
@@ -32243,9 +32239,9 @@
       "types": [],
       "subpackages": []
     },
-    "present-proof v2.0": {
-      "subpackageId": "present-proof v2.0",
-      "name": "present-proof v2.0",
+    "subpackage_presentProofV20": {
+      "subpackageId": "subpackage_presentProofV20",
+      "name": "presentProofV20",
       "endpoints": [
         {
           "auth": true,
@@ -33736,9 +33732,9 @@
       "types": [],
       "subpackages": []
     },
-    "present-proof v1.0": {
-      "subpackageId": "present-proof v1.0",
-      "name": "present-proof v1.0",
+    "subpackage_presentProofV10": {
+      "subpackageId": "subpackage_presentProofV10",
+      "name": "presentProofV10",
       "endpoints": [
         {
           "auth": true,
@@ -35475,8 +35471,8 @@
       "types": [],
       "subpackages": []
     },
-    "resolver": {
-      "subpackageId": "resolver",
+    "subpackage_resolver": {
+      "subpackageId": "subpackage_resolver",
       "name": "resolver",
       "endpoints": [
         {
@@ -35576,8 +35572,8 @@
       "types": [],
       "subpackages": []
     },
-    "revocation": {
-      "subpackageId": "revocation",
+    "subpackage_revocation": {
+      "subpackageId": "subpackage_revocation",
       "name": "revocation",
       "endpoints": [
         {
@@ -37859,8 +37855,8 @@
       "types": [],
       "subpackages": []
     },
-    "schema": {
-      "subpackageId": "schema",
+    "subpackage_schema": {
+      "subpackageId": "subpackage_schema",
       "name": "schema",
       "endpoints": [
         {
@@ -38338,9 +38334,9 @@
       "types": [],
       "subpackages": []
     },
-    "endorse-transaction": {
-      "subpackageId": "endorse-transaction",
-      "name": "endorse-transaction",
+    "subpackage_endorseTransaction": {
+      "subpackageId": "subpackage_endorseTransaction",
+      "name": "endorseTransaction",
       "endpoints": [
         {
           "auth": true,
@@ -39714,8 +39710,8 @@
       "types": [],
       "subpackages": []
     },
-    "wallet": {
-      "subpackageId": "wallet",
+    "subpackage_wallet": {
+      "subpackageId": "subpackage_wallet",
       "name": "wallet",
       "endpoints": [
         {
@@ -41016,31 +41012,31 @@
       "VerifyRequest_doc"
     ],
     "subpackages": [
-      "action-menu",
-      "connection",
-      "basicmessage",
-      "trustping",
-      "introduction",
-      "credential-definition",
-      "credentials",
-      "did-exchange",
-      "discover-features v2.0",
-      "discover-features",
-      "issue-credential v2.0",
-      "issue-credential v1.0",
-      "jsonld",
-      "ledger",
-      "mediation",
-      "multitenancy",
-      "out-of-band",
-      "server",
-      "present-proof v2.0",
-      "present-proof v1.0",
-      "resolver",
-      "revocation",
-      "schema",
-      "endorse-transaction",
-      "wallet"
+      "subpackage_actionMenu",
+      "subpackage_connection",
+      "subpackage_basicmessage",
+      "subpackage_trustping",
+      "subpackage_introduction",
+      "subpackage_credentialDefinition",
+      "subpackage_credentials",
+      "subpackage_didExchange",
+      "subpackage_discoverFeaturesV20",
+      "subpackage_discoverFeatures",
+      "subpackage_issueCredentialV20",
+      "subpackage_issueCredentialV10",
+      "subpackage_jsonld",
+      "subpackage_ledger",
+      "subpackage_mediation",
+      "subpackage_multitenancy",
+      "subpackage_outOfBand",
+      "subpackage_server",
+      "subpackage_presentProofV20",
+      "subpackage_presentProofV10",
+      "subpackage_resolver",
+      "subpackage_revocation",
+      "subpackage_schema",
+      "subpackage_endorseTransaction",
+      "subpackage_wallet"
     ]
   },
   "auth": {

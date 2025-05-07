@@ -2488,9 +2488,9 @@
     }
   },
   "subpackages": {
-    "Upload": {
-      "subpackageId": "Upload",
-      "name": "Upload",
+    "subpackage_upload": {
+      "subpackageId": "subpackage_upload",
+      "name": "upload",
       "endpoints": [
         {
           "auth": false,
@@ -3737,9 +3737,9 @@
       "types": [],
       "subpackages": []
     },
-    "Groups": {
-      "subpackageId": "Groups",
-      "name": "Groups",
+    "subpackage_groups": {
+      "subpackageId": "subpackage_groups",
+      "name": "groups",
       "endpoints": [
         {
           "auth": false,
@@ -4117,8 +4117,8 @@
       "metadata"
     ],
     "subpackages": [
-      "Upload",
-      "Groups"
+      "subpackage_upload",
+      "subpackage_groups"
     ]
   },
   "snippetsConfiguration": {},

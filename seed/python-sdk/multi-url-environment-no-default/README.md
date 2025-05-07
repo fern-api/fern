@@ -37,7 +37,8 @@ import asyncio
 client = AsyncSeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
 async def main() -> None:
     await client.ec_2.boot_instance(size='size', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

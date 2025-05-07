@@ -3481,8 +3481,8 @@
     }
   },
   "subpackages": {
-    "search": {
-      "subpackageId": "search",
+    "subpackage_search": {
+      "subpackageId": "subpackage_search",
       "name": "search",
       "endpoints": [
         {
@@ -3653,8 +3653,8 @@
       "types": [],
       "subpackages": []
     },
-    "alias": {
-      "subpackageId": "alias",
+    "subpackage_alias": {
+      "subpackageId": "subpackage_alias",
       "name": "alias",
       "endpoints": [
         {
@@ -3914,8 +3914,8 @@
       "types": [],
       "subpackages": []
     },
-    "me": {
-      "subpackageId": "me",
+    "subpackage_me": {
+      "subpackageId": "subpackage_me",
       "name": "me",
       "endpoints": [
         {
@@ -4510,8 +4510,8 @@
       "types": [],
       "subpackages": []
     },
-    "blobs": {
-      "subpackageId": "blobs",
+    "subpackage_blobs": {
+      "subpackageId": "subpackage_blobs",
       "name": "blobs",
       "endpoints": [
         {
@@ -4761,8 +4761,10 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": "foo",
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": "foo"
               },
               "responseStatusCode": 200
             }
@@ -4845,8 +4847,8 @@
       "types": [],
       "subpackages": []
     },
-    "users": {
-      "subpackageId": "users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
       "name": "users",
       "endpoints": [
         {
@@ -5128,8 +5130,8 @@
       "types": [],
       "subpackages": []
     },
-    "sqlite": {
-      "subpackageId": "sqlite",
+    "subpackage_sqlite": {
+      "subpackageId": "subpackage_sqlite",
       "name": "sqlite",
       "endpoints": [
         {
@@ -5404,8 +5406,8 @@
       "types": [],
       "subpackages": []
     },
-    "vals": {
-      "subpackageId": "vals",
+    "subpackage_vals": {
+      "subpackageId": "subpackage_vals",
       "name": "vals",
       "endpoints": [
         {
@@ -7189,8 +7191,8 @@
       "types": [],
       "subpackages": []
     },
-    "emails": {
-      "subpackageId": "emails",
+    "subpackage_emails": {
+      "subpackageId": "subpackage_emails",
       "name": "emails",
       "endpoints": [
         {
@@ -7413,14 +7415,14 @@
       "PaginationLinks"
     ],
     "subpackages": [
-      "search",
-      "alias",
-      "me",
-      "blobs",
-      "users",
-      "sqlite",
-      "vals",
-      "emails"
+      "subpackage_search",
+      "subpackage_alias",
+      "subpackage_me",
+      "subpackage_blobs",
+      "subpackage_users",
+      "subpackage_sqlite",
+      "subpackage_vals",
+      "subpackage_emails"
     ]
   },
   "auth": {

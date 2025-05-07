@@ -5544,6 +5544,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -5592,6 +5595,9 @@ importers:
       '@fern-api/ir-to-jsonschema':
         specifier: workspace:*
         version: link:../fern-definition/ir-to-jsonschema
+      '@fern-api/ir-utils':
+        specifier: workspace:*
+        version: link:../../commons/ir-utils
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
@@ -6466,6 +6472,9 @@ importers:
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../cli-source-resolver
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
@@ -8256,6 +8265,9 @@ importers:
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../../cli-logger
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../configuration
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader
@@ -8894,6 +8906,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../casings-generator
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../cli/configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../core-utils

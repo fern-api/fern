@@ -12,6 +12,7 @@ import { AsyncAPIV3 } from "./3.0";
 import { ChannelConverter3_0 } from "./3.0/channel/ChannelConverter3_0";
 import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0";
 import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext";
+import { AbstractChannelConverter } from "./converters/AbstractChannelConverter";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -31,6 +32,11 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
             document: this.context.spec,
             context: this.context
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
+
+        this.context.spec = (await this.resolveExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
         if (this.isAsyncAPIV3(this.context)) {
             await this.convertChannelMessages();
@@ -194,8 +200,8 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                 context: this.context
             });
             const group = groupNameExtension.convert()?.groups;
-            const channelName = `channel_${camelCase(channelPath)}`;
 
+            let convertedChannel: AbstractChannelConverter.Output | undefined;
             if (this.isAsyncAPIV3(this.context)) {
                 const spec = this.context.spec as AsyncAPIV3.DocumentV3;
                 const operations = spec.operations ?? {};
@@ -208,17 +214,7 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     operations,
                     group
                 });
-                const convertedChannel = await channelConverter.convert();
-                if (convertedChannel != null) {
-                    this.ir.websocketChannels = {
-                        ...this.ir.websocketChannels,
-                        [group ? group.join(".") : channelName]: convertedChannel.channel
-                    };
-                    this.ir.types = {
-                        ...this.ir.types,
-                        ...convertedChannel.inlinedTypes
-                    };
-                }
+                convertedChannel = await channelConverter.convert();
             } else {
                 const channelConverter = new ChannelConverter2_X({
                     context: this.context,
@@ -227,17 +223,18 @@ export class AsyncAPIConverter extends AbstractConverter<AsyncAPIConverterContex
                     channelPath,
                     group
                 });
-                const convertedChannel = await channelConverter.convert();
-                if (convertedChannel != null) {
-                    this.ir.websocketChannels = {
-                        ...this.ir.websocketChannels,
-                        [group ? group.join(".") : channelName]: convertedChannel.channel
-                    };
-                    this.ir.types = {
-                        ...this.ir.types,
-                        ...convertedChannel.inlinedTypes
-                    };
-                }
+                convertedChannel = await channelConverter.convert();
+            }
+            if (convertedChannel != null) {
+                const channelName = `channel_${camelCase(channelPath)}`;
+                this.ir.websocketChannels = {
+                    ...this.ir.websocketChannels,
+                    [group ? group.join(".") : channelName]: convertedChannel.channel
+                };
+                this.ir.types = {
+                    ...this.ir.types,
+                    ...convertedChannel.inlinedTypes
+                };
             }
         }
         this.addWebsocketsToIr({ websocketChannels: this.ir.websocketChannels });

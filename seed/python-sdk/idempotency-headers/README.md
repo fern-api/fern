@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedIdempotencyHeaders(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.payment.create(amount=1, currency="USD", )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

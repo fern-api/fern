@@ -1,12 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    HttpEndpoint,
-    HttpService,
-    TypeDeclaration,
-    TypeId,
-    V2HttpEndpointRequest,
-    V2SchemaExamples
-} from "@fern-api/ir-sdk";
+import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
 
 import { generateParameterExamples } from "./generateParameterExamples";
 import { getFirstExamples } from "./getFirstExamples";
@@ -59,16 +52,9 @@ export function generateRequestBodyExample({
                 break;
             }
             case "reference": {
-                if (endpoint.requestBody.requestBodyType.type === "named") {
-                    const typeId = endpoint.requestBody.requestBodyType.typeId;
-                    const typeDeclaration = typeDeclarations[typeId];
-                    if (typeDeclaration == null) {
-                        break;
-                    }
-                    const { userExample, autoExample } = getFirstExamples(typeDeclaration.v2Examples);
-                    const example = userExample ?? autoExample;
-                    result.requestBody = example;
-                }
+                const { userExample, autoExample } = getFirstExamples(endpoint.requestBody.v2Examples);
+                const example = userExample ?? autoExample;
+                result.requestBody = example;
                 break;
             }
             default: {

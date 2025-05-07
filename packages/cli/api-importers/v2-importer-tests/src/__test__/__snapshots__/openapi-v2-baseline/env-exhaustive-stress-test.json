@@ -1039,7 +1039,7 @@
               "safeName": "Default"
             }
           },
-          "url": "https://alpha.spscommerce.com"
+          "url": "https://alpha.testapi.com"
         }
       ],
       "type": "singleBaseUrl"
@@ -1712,7 +1712,7 @@
                 "safeName": "Default"
               }
             },
-            "url": "https://alpha.spscommerce.com"
+            "url": "https://alpha.testapi.com"
           }
         ],
         "type": "singleBaseUrl"

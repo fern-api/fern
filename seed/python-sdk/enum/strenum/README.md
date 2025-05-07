@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.inlined_request.send(operand=">", operand_or_color="red", )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

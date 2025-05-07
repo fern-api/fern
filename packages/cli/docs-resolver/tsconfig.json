@@ -16,6 +16,9 @@
       "path": "../../commons/fs-utils"
     },
     {
+      "path": "../configuration"
+    },
+    {
       "path": "../../ir-sdk"
     },
     {

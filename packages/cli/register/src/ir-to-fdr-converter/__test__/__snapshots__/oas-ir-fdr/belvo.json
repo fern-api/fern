@@ -29290,9 +29290,9 @@
     }
   },
   "subpackages": {
-    "Links": {
-      "subpackageId": "Links",
-      "name": "Links",
+    "subpackage_links": {
+      "subpackageId": "subpackage_links",
+      "name": "links",
       "endpoints": [
         {
           "auth": true,
@@ -30549,9 +30549,9 @@
       "types": [],
       "subpackages": []
     },
-    "Accounts": {
-      "subpackageId": "Accounts",
-      "name": "Accounts",
+    "subpackage_accounts": {
+      "subpackageId": "subpackage_accounts",
+      "name": "accounts",
       "endpoints": [
         {
           "auth": true,
@@ -31946,9 +31946,9 @@
       "types": [],
       "subpackages": []
     },
-    "Transactions": {
-      "subpackageId": "Transactions",
-      "name": "Transactions",
+    "subpackage_transactions": {
+      "subpackageId": "subpackage_transactions",
+      "name": "transactions",
       "endpoints": [
         {
           "auth": true,
@@ -33662,9 +33662,9 @@
       "types": [],
       "subpackages": []
     },
-    "Balances": {
-      "subpackageId": "Balances",
-      "name": "Balances",
+    "subpackage_balances": {
+      "subpackageId": "subpackage_balances",
+      "name": "balances",
       "endpoints": [
         {
           "auth": true,
@@ -34858,9 +34858,9 @@
       "types": [],
       "subpackages": []
     },
-    "Institutions": {
-      "subpackageId": "Institutions",
-      "name": "Institutions",
+    "subpackage_institutions": {
+      "subpackageId": "subpackage_institutions",
+      "name": "institutions",
       "endpoints": [
         {
           "auth": true,
@@ -35445,9 +35445,9 @@
       "types": [],
       "subpackages": []
     },
-    "Owners": {
-      "subpackageId": "Owners",
-      "name": "Owners",
+    "subpackage_owners": {
+      "subpackageId": "subpackage_owners",
+      "name": "owners",
       "endpoints": [
         {
           "auth": true,
@@ -36328,9 +36328,9 @@
       "types": [],
       "subpackages": []
     },
-    "Invoices": {
-      "subpackageId": "Invoices",
-      "name": "Invoices",
+    "subpackage_invoices": {
+      "subpackageId": "subpackage_invoices",
+      "name": "invoices",
       "endpoints": [
         {
           "auth": true,
@@ -37832,9 +37832,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tax returns": {
-      "subpackageId": "Tax returns",
-      "name": "Tax returns",
+    "subpackage_taxReturns": {
+      "subpackageId": "subpackage_taxReturns",
+      "name": "taxReturns",
       "endpoints": [
         {
           "auth": true,
@@ -39754,9 +39754,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tax status": {
-      "subpackageId": "Tax status",
-      "name": "Tax status",
+    "subpackage_taxStatus": {
+      "subpackageId": "subpackage_taxStatus",
+      "name": "taxStatus",
       "endpoints": [
         {
           "auth": true,
@@ -40773,9 +40773,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tax compliance status": {
-      "subpackageId": "Tax compliance status",
-      "name": "Tax compliance status",
+    "subpackage_taxComplianceStatus": {
+      "subpackageId": "subpackage_taxComplianceStatus",
+      "name": "taxComplianceStatus",
       "endpoints": [
         {
           "auth": true,
@@ -41408,9 +41408,9 @@
       "types": [],
       "subpackages": []
     },
-    "Incomes": {
-      "subpackageId": "Incomes",
-      "name": "Incomes",
+    "subpackage_incomes": {
+      "subpackageId": "subpackage_incomes",
+      "name": "incomes",
       "endpoints": [
         {
           "auth": true,
@@ -42395,9 +42395,9 @@
       "types": [],
       "subpackages": []
     },
-    "Recurring Expenses": {
-      "subpackageId": "Recurring Expenses",
-      "name": "Recurring Expenses",
+    "subpackage_recurringExpenses": {
+      "subpackageId": "subpackage_recurringExpenses",
+      "name": "recurringExpenses",
       "endpoints": [
         {
           "auth": true,
@@ -43966,9 +43966,9 @@
       "types": [],
       "subpackages": []
     },
-    "Investment Portfolios": {
-      "subpackageId": "Investment Portfolios",
-      "name": "Investment Portfolios",
+    "subpackage_investmentPortfolios": {
+      "subpackageId": "subpackage_investmentPortfolios",
+      "name": "investmentPortfolios",
       "endpoints": [
         {
           "auth": true,
@@ -45036,9 +45036,9 @@
       "types": [],
       "subpackages": []
     },
-    "Receivable Transactions": {
-      "subpackageId": "Receivable Transactions",
-      "name": "Receivable Transactions",
+    "subpackage_receivableTransactions": {
+      "subpackageId": "subpackage_receivableTransactions",
+      "name": "receivableTransactions",
       "endpoints": [
         {
           "auth": true,
@@ -45880,9 +45880,9 @@
       "types": [],
       "subpackages": []
     },
-    "Risk Insights": {
-      "subpackageId": "Risk Insights",
-      "name": "Risk Insights",
+    "subpackage_riskInsights": {
+      "subpackageId": "subpackage_riskInsights",
+      "name": "riskInsights",
       "endpoints": [
         {
           "auth": true,
@@ -47138,9 +47138,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tax retentions": {
-      "subpackageId": "Tax retentions",
-      "name": "Tax retentions",
+    "subpackage_taxRetentions": {
+      "subpackageId": "subpackage_taxRetentions",
+      "name": "taxRetentions",
       "endpoints": [
         {
           "auth": true,
@@ -47886,9 +47886,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tax declarations": {
-      "subpackageId": "Tax declarations",
-      "name": "Tax declarations",
+    "subpackage_taxDeclarations": {
+      "subpackageId": "subpackage_taxDeclarations",
+      "name": "taxDeclarations",
       "endpoints": [
         {
           "auth": true,
@@ -48988,9 +48988,9 @@
       "types": [],
       "subpackages": []
     },
-    "Employment Records": {
-      "subpackageId": "Employment Records",
-      "name": "Employment Records",
+    "subpackage_employmentRecords": {
+      "subpackageId": "subpackage_employmentRecords",
+      "name": "employmentRecords",
       "endpoints": [
         {
           "auth": true,
@@ -49812,9 +49812,9 @@
       "types": [],
       "subpackages": []
     },
-    "Income Verification": {
-      "subpackageId": "Income Verification",
-      "name": "Income Verification",
+    "subpackage_incomeVerification": {
+      "subpackageId": "subpackage_incomeVerification",
+      "name": "incomeVerification",
       "endpoints": [
         {
           "auth": true,
@@ -50073,9 +50073,9 @@
       "types": [],
       "subpackages": []
     },
-    "Categorization": {
-      "subpackageId": "Categorization",
-      "name": "Categorization",
+    "subpackage_categorization": {
+      "subpackageId": "subpackage_categorization",
+      "name": "categorization",
       "endpoints": [
         {
           "auth": true,
@@ -50297,9 +50297,9 @@
       "types": [],
       "subpackages": []
     },
-    "Secret Keys": {
-      "subpackageId": "Secret Keys",
-      "name": "Secret Keys",
+    "subpackage_secretKeys": {
+      "subpackageId": "subpackage_secretKeys",
+      "name": "secretKeys",
       "endpoints": [
         {
           "auth": true,
@@ -50492,9 +50492,9 @@
       "types": [],
       "subpackages": []
     },
-    "Payment Webhooks": {
-      "subpackageId": "Payment Webhooks",
-      "name": "Payment Webhooks",
+    "subpackage_paymentWebhooks": {
+      "subpackageId": "subpackage_paymentWebhooks",
+      "name": "paymentWebhooks",
       "endpoints": [
         {
           "auth": true,
@@ -50908,9 +50908,9 @@
       "types": [],
       "subpackages": []
     },
-    "Payment Institutions": {
-      "subpackageId": "Payment Institutions",
-      "name": "Payment Institutions",
+    "subpackage_paymentInstitutions": {
+      "subpackageId": "subpackage_paymentInstitutions",
+      "name": "paymentInstitutions",
       "endpoints": [
         {
           "auth": true,
@@ -51348,9 +51348,9 @@
       "types": [],
       "subpackages": []
     },
-    "Customers": {
-      "subpackageId": "Customers",
-      "name": "Customers",
+    "subpackage_customers": {
+      "subpackageId": "subpackage_customers",
+      "name": "customers",
       "endpoints": [
         {
           "auth": true,
@@ -51694,7 +51694,7 @@
                 "name": "Caetano Veloso",
                 "country": "BRA",
                 "email": "caetano.veloso@musicabrazil.br",
-                "identifier": "1018760936",
+                "identifier": "231.002.999-00",
                 "identifier_type": "CPF"
               },
               "requestBodyV3": {
@@ -51704,7 +51704,7 @@
                   "name": "Caetano Veloso",
                   "country": "BRA",
                   "email": "caetano.veloso@musicabrazil.br",
-                  "identifier": "1018760936",
+                  "identifier": "231.002.999-00",
                   "identifier_type": "CPF"
                 }
               },
@@ -51871,9 +51871,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bank Accounts": {
-      "subpackageId": "Bank Accounts",
-      "name": "Bank Accounts",
+    "subpackage_bankAccounts": {
+      "subpackageId": "subpackage_bankAccounts",
+      "name": "bankAccounts",
       "endpoints": [
         {
           "auth": true,
@@ -52270,11 +52270,11 @@
               "requestBody": {
                 "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                 "holder": {
-                  "type": "INDIVIDUAL",
+                  "type": "BUSINESS",
                   "information": {
-                    "name": "Caetano Veloso Entertainment Universe",
-                    "identifier_type": "CPF",
-                    "identifier": "231.002.999-00"
+                    "name": "Music Production Brazil",
+                    "identifier_type": "CNPJ",
+                    "identifier": "00.000.000/0001-91"
                   }
                 },
                 "details": {
@@ -52289,11 +52289,11 @@
                 "value": {
                   "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
                   "holder": {
-                    "type": "INDIVIDUAL",
+                    "type": "BUSINESS",
                     "information": {
-                      "name": "Caetano Veloso Entertainment Universe",
-                      "identifier_type": "CPF",
-                      "identifier": "231.002.999-00"
+                      "name": "Music Production Brazil",
+                      "identifier_type": "CNPJ",
+                      "identifier": "00.000.000/0001-91"
                     }
                   },
                   "details": {
@@ -52499,9 +52499,9 @@
       "types": [],
       "subpackages": []
     },
-    "Payment Links": {
-      "subpackageId": "Payment Links",
-      "name": "Payment Links",
+    "subpackage_paymentLinks": {
+      "subpackageId": "subpackage_paymentLinks",
+      "name": "paymentLinks",
       "endpoints": [
         {
           "auth": true,
@@ -53549,9 +53549,9 @@
       "types": [],
       "subpackages": []
     },
-    "Payment Intents": {
-      "subpackageId": "Payment Intents",
-      "name": "Payment Intents",
+    "subpackage_paymentIntents": {
+      "subpackageId": "subpackage_paymentIntents",
+      "name": "paymentIntents",
       "endpoints": [
         {
           "auth": true,
@@ -55669,9 +55669,9 @@
       "types": [],
       "subpackages": []
     },
-    "Payment Transactions": {
-      "subpackageId": "Payment Transactions",
-      "name": "Payment Transactions",
+    "subpackage_paymentTransactions": {
+      "subpackageId": "subpackage_paymentTransactions",
+      "name": "paymentTransactions",
       "endpoints": [
         {
           "auth": true,
@@ -56567,34 +56567,34 @@
       "PaymentsTransactionsPaginatedResponse"
     ],
     "subpackages": [
-      "Links",
-      "Accounts",
-      "Transactions",
-      "Balances",
-      "Institutions",
-      "Owners",
-      "Invoices",
-      "Tax returns",
-      "Tax status",
-      "Tax compliance status",
-      "Incomes",
-      "Recurring Expenses",
-      "Investment Portfolios",
-      "Receivable Transactions",
-      "Risk Insights",
-      "Tax retentions",
-      "Tax declarations",
-      "Employment Records",
-      "Income Verification",
-      "Categorization",
-      "Secret Keys",
-      "Payment Webhooks",
-      "Payment Institutions",
-      "Customers",
-      "Bank Accounts",
-      "Payment Links",
-      "Payment Intents",
-      "Payment Transactions"
+      "subpackage_links",
+      "subpackage_accounts",
+      "subpackage_transactions",
+      "subpackage_balances",
+      "subpackage_institutions",
+      "subpackage_owners",
+      "subpackage_invoices",
+      "subpackage_taxReturns",
+      "subpackage_taxStatus",
+      "subpackage_taxComplianceStatus",
+      "subpackage_incomes",
+      "subpackage_recurringExpenses",
+      "subpackage_investmentPortfolios",
+      "subpackage_receivableTransactions",
+      "subpackage_riskInsights",
+      "subpackage_taxRetentions",
+      "subpackage_taxDeclarations",
+      "subpackage_employmentRecords",
+      "subpackage_incomeVerification",
+      "subpackage_categorization",
+      "subpackage_secretKeys",
+      "subpackage_paymentWebhooks",
+      "subpackage_paymentInstitutions",
+      "subpackage_customers",
+      "subpackage_bankAccounts",
+      "subpackage_paymentLinks",
+      "subpackage_paymentIntents",
+      "subpackage_paymentTransactions"
     ]
   },
   "auth": {

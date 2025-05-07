@@ -22561,9 +22561,9 @@
     }
   },
   "subpackages": {
-    "BookingAmendment": {
-      "subpackageId": "BookingAmendment",
-      "name": "BookingAmendment",
+    "subpackage_bookingAmendment": {
+      "subpackageId": "subpackage_bookingAmendment",
+      "name": "bookingAmendment",
       "endpoints": [
         {
           "auth": false,
@@ -22627,12 +22627,134 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "booking_id": 12345
+                "booking_id": 12345,
+                "new_name": "Valentine's Day - 2020",
+                "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
+                "new_container_counts": {
+                  "twenty_ft": 2,
+                  "forty_ft": 3,
+                  "forty_ft_hc": 4,
+                  "forty_five_ft_hc": 5
+                },
+                "new_wants_pickup_service": false,
+                "new_wants_import_customs_service": false,
+                "new_origin_address_ref": "warehouse_cn",
+                "new_origin_port_loc_code": "CNSZP",
+                "new_cargo_ready_date": "2019-06-30",
+                "new_cargo": {
+                  "volume": {
+                    "value": 472.62,
+                    "unit": "cbm"
+                  },
+                  "weight": {
+                    "value": 2300.4,
+                    "unit": "kg"
+                  },
+                  "marks_and_numbers": "Fragile",
+                  "shipping_units": [
+                    {
+                      "name": "Watches",
+                      "volume": {
+                        "value": 472.62,
+                        "unit": "cbm"
+                      },
+                      "weight": {
+                        "value": 2300.4,
+                        "unit": "kg"
+                      },
+                      "height": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "length": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "width": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "count": 9,
+                      "atomic_count": 9,
+                      "unit_type": "carton"
+                    }
+                  ],
+                  "contains_hazmat": true,
+                  "contains_magnets": true,
+                  "contains_other_dangerous_goods": true,
+                  "contains_li_ion": true,
+                  "contains_non_li_ion_battery": true,
+                  "lithium_batteries_packing_types": [
+                    "packed_loose"
+                  ]
+                },
+                "new_metadata": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "booking_id": 12345
+                  "booking_id": 12345,
+                  "new_name": "Valentine's Day - 2020",
+                  "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
+                  "new_container_counts": {
+                    "twenty_ft": 2,
+                    "forty_ft": 3,
+                    "forty_ft_hc": 4,
+                    "forty_five_ft_hc": 5
+                  },
+                  "new_wants_pickup_service": false,
+                  "new_wants_import_customs_service": false,
+                  "new_origin_address_ref": "warehouse_cn",
+                  "new_origin_port_loc_code": "CNSZP",
+                  "new_cargo_ready_date": "2019-06-30",
+                  "new_cargo": {
+                    "volume": {
+                      "value": 472.62,
+                      "unit": "cbm"
+                    },
+                    "weight": {
+                      "value": 2300.4,
+                      "unit": "kg"
+                    },
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "name": "Watches",
+                        "volume": {
+                          "value": 472.62,
+                          "unit": "cbm"
+                        },
+                        "weight": {
+                          "value": 2300.4,
+                          "unit": "kg"
+                        },
+                        "height": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "length": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "width": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "count": 9,
+                        "atomic_count": 9,
+                        "unit_type": "carton"
+                      }
+                    ],
+                    "contains_hazmat": true,
+                    "contains_magnets": true,
+                    "contains_other_dangerous_goods": true,
+                    "contains_li_ion": true,
+                    "contains_non_li_ion_battery": true,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose"
+                    ]
+                  },
+                  "new_metadata": {}
                 }
               },
               "responseStatusCode": 200,
@@ -22870,9 +22992,9 @@
       "types": [],
       "subpackages": []
     },
-    "BookingLineItem": {
-      "subpackageId": "BookingLineItem",
-      "name": "BookingLineItem",
+    "subpackage_bookingLineItem": {
+      "subpackageId": "subpackage_bookingLineItem",
+      "name": "bookingLineItem",
       "endpoints": [
         {
           "auth": false,
@@ -23137,16 +23259,16 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "purchase_order_line_item_id": 1234,
-                "booking_id": 4321,
-                "units": 234
+                "purchase_order_line_item_id": 112358,
+                "booking_id": 9876,
+                "units": 200
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "purchase_order_line_item_id": 1234,
-                  "booking_id": 4321,
-                  "units": 234
+                  "purchase_order_line_item_id": 112358,
+                  "booking_id": 9876,
+                  "units": 200
                 }
               },
               "responseStatusCode": 200,
@@ -23339,9 +23461,9 @@
       "types": [],
       "subpackages": []
     },
-    "Booking": {
-      "subpackageId": "Booking",
-      "name": "Booking",
+    "subpackage_booking": {
+      "subpackageId": "subpackage_booking",
+      "name": "booking",
       "endpoints": [
         {
           "auth": false,
@@ -24141,25 +24263,163 @@
               "headers": {},
               "requestBody": {
                 "name": "PO 123",
-                "shipper_entity_ref": "shipper_company_name_ltd",
-                "consignee_entity_ref": "consignee_company_name_llc",
-                "origin_address_ref": "id-123456",
-                "destination_address_ref": "id-123456",
+                "shipper_entity_ref": "zoomit-us",
+                "consignee_entity_ref": "zoomit_ref",
+                "ocean_booking": {
+                  "is_lcl": false,
+                  "container_counts": {
+                    "twenty_ft": 2,
+                    "forty_ft": 3,
+                    "forty_ft_hc": 4,
+                    "forty_five_ft_hc": 5
+                  },
+                  "incoterm": "FOB",
+                  "product_descriptions": [
+                    {
+                      "description": "Watches",
+                      "description_for_export_customs": "手表",
+                      "description_for_export_customs_locale": "zh_CN",
+                      "hs_code": "9101.00"
+                    }
+                  ],
+                  "wants_pickup_service": false,
+                  "wants_delivery_service": false
+                },
+                "origin_address_ref": "id-274346",
+                "destination_address_ref": "my-albany-ref",
                 "cargo_ready_date": "2019-06-30",
-                "wants_export_customs_service": false,
-                "cargo": {}
+                "delivery_date": "2019-07-31",
+                "wants_export_customs_service": true,
+                "cargo": {
+                  "volume": {
+                    "value": 472.62,
+                    "unit": "cbm"
+                  },
+                  "weight": {
+                    "value": 2300.4,
+                    "unit": "kg"
+                  },
+                  "marks_and_numbers": "Fragile",
+                  "shipping_units": [
+                    {
+                      "name": "Watches",
+                      "volume": {
+                        "value": 472.62,
+                        "unit": "cbm"
+                      },
+                      "weight": {
+                        "value": 2300.4,
+                        "unit": "kg"
+                      },
+                      "height": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "length": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "width": {
+                        "value": 472.62,
+                        "unit": "cm"
+                      },
+                      "count": 9,
+                      "atomic_count": 9,
+                      "unit_type": "carton"
+                    }
+                  ],
+                  "contains_hazmat": true,
+                  "contains_magnets": true,
+                  "contains_other_dangerous_goods": true,
+                  "contains_li_ion": true,
+                  "contains_non_li_ion_battery": true,
+                  "lithium_batteries_packing_types": [
+                    "packed_loose"
+                  ]
+                },
+                "special_instructions": "Handle carefully",
+                "metadata": {}
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
                   "name": "PO 123",
-                  "shipper_entity_ref": "shipper_company_name_ltd",
-                  "consignee_entity_ref": "consignee_company_name_llc",
-                  "origin_address_ref": "id-123456",
-                  "destination_address_ref": "id-123456",
+                  "shipper_entity_ref": "zoomit-us",
+                  "consignee_entity_ref": "zoomit_ref",
+                  "ocean_booking": {
+                    "is_lcl": false,
+                    "container_counts": {
+                      "twenty_ft": 2,
+                      "forty_ft": 3,
+                      "forty_ft_hc": 4,
+                      "forty_five_ft_hc": 5
+                    },
+                    "incoterm": "FOB",
+                    "product_descriptions": [
+                      {
+                        "description": "Watches",
+                        "description_for_export_customs": "手表",
+                        "description_for_export_customs_locale": "zh_CN",
+                        "hs_code": "9101.00"
+                      }
+                    ],
+                    "wants_pickup_service": false,
+                    "wants_delivery_service": false
+                  },
+                  "origin_address_ref": "id-274346",
+                  "destination_address_ref": "my-albany-ref",
                   "cargo_ready_date": "2019-06-30",
-                  "wants_export_customs_service": false,
-                  "cargo": {}
+                  "delivery_date": "2019-07-31",
+                  "wants_export_customs_service": true,
+                  "cargo": {
+                    "volume": {
+                      "value": 472.62,
+                      "unit": "cbm"
+                    },
+                    "weight": {
+                      "value": 2300.4,
+                      "unit": "kg"
+                    },
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "name": "Watches",
+                        "volume": {
+                          "value": 472.62,
+                          "unit": "cbm"
+                        },
+                        "weight": {
+                          "value": 2300.4,
+                          "unit": "kg"
+                        },
+                        "height": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "length": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "width": {
+                          "value": 472.62,
+                          "unit": "cm"
+                        },
+                        "count": 9,
+                        "atomic_count": 9,
+                        "unit_type": "carton"
+                      }
+                    ],
+                    "contains_hazmat": true,
+                    "contains_magnets": true,
+                    "contains_other_dangerous_goods": true,
+                    "contains_li_ion": true,
+                    "contains_non_li_ion_battery": true,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose"
+                    ]
+                  },
+                  "special_instructions": "Handle carefully",
+                  "metadata": {}
                 }
               },
               "responseStatusCode": 200,
@@ -25164,9 +25424,9 @@
       "types": [],
       "subpackages": []
     },
-    "Carbon Calculation": {
-      "subpackageId": "Carbon Calculation",
-      "name": "Carbon Calculation",
+    "subpackage_carbonCalculation": {
+      "subpackageId": "subpackage_carbonCalculation",
+      "name": "carbonCalculation",
       "endpoints": [
         {
           "auth": false,
@@ -25231,12 +25491,30 @@
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "transportation_mode": "air"
+                "transportation_mode": "air",
+                "weight": {
+                  "value": 40,
+                  "unit": "kg"
+                },
+                "origin_coordinates": {
+                  "latitude": "37.78",
+                  "longitude": "-12.41"
+                },
+                "destination_port": "JFK"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "transportation_mode": "air"
+                  "transportation_mode": "air",
+                  "weight": {
+                    "value": 40,
+                    "unit": "kg"
+                  },
+                  "origin_coordinates": {
+                    "latitude": "37.78",
+                    "longitude": "-12.41"
+                  },
+                  "destination_port": "JFK"
                 }
               },
               "responseStatusCode": 200,
@@ -25284,9 +25562,9 @@
       "types": [],
       "subpackages": []
     },
-    "Commercial Invoices": {
-      "subpackageId": "Commercial Invoices",
-      "name": "Commercial Invoices",
+    "subpackage_commercialInvoices": {
+      "subpackageId": "subpackage_commercialInvoices",
+      "name": "commercialInvoices",
       "endpoints": [
         {
           "auth": false,
@@ -26433,9 +26711,9 @@
       "types": [],
       "subpackages": []
     },
-    "Customs Entries": {
-      "subpackageId": "Customs Entries",
-      "name": "Customs Entries",
+    "subpackage_customsEntries": {
+      "subpackageId": "subpackage_customsEntries",
+      "name": "customsEntries",
       "endpoints": [
         {
           "auth": false,
@@ -26717,9 +26995,9 @@
       "types": [],
       "subpackages": []
     },
-    "Document": {
-      "subpackageId": "Document",
-      "name": "Document",
+    "subpackage_document": {
+      "subpackageId": "subpackage_document",
+      "name": "document",
       "endpoints": [
         {
           "auth": false,
@@ -27290,9 +27568,9 @@
       "types": [],
       "subpackages": []
     },
-    "Event": {
-      "subpackageId": "Event",
-      "name": "Event",
+    "subpackage_event": {
+      "subpackageId": "subpackage_event",
+      "name": "event",
       "endpoints": [
         {
           "auth": false,
@@ -30716,9 +30994,9 @@
       "types": [],
       "subpackages": []
     },
-    "Invoices": {
-      "subpackageId": "Invoices",
-      "name": "Invoices",
+    "subpackage_invoices": {
+      "subpackageId": "subpackage_invoices",
+      "name": "invoices",
       "endpoints": [
         {
           "auth": false,
@@ -32020,9 +32298,9 @@
       "types": [],
       "subpackages": []
     },
-    "Company": {
-      "subpackageId": "Company",
-      "name": "Company",
+    "subpackage_company": {
+      "subpackageId": "subpackage_company",
+      "name": "company",
       "endpoints": [
         {
           "auth": false,
@@ -32960,9 +33238,9 @@
       "types": [],
       "subpackages": []
     },
-    "CompanyEntity": {
-      "subpackageId": "CompanyEntity",
-      "name": "CompanyEntity",
+    "subpackage_companyEntity": {
+      "subpackageId": "subpackage_companyEntity",
+      "name": "companyEntity",
       "endpoints": [
         {
           "auth": false,
@@ -33633,9 +33911,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contact": {
-      "subpackageId": "Contact",
-      "name": "Contact",
+    "subpackage_contact": {
+      "subpackageId": "subpackage_contact",
+      "name": "contact",
       "endpoints": [
         {
           "auth": false,
@@ -34244,9 +34522,9 @@
       "types": [],
       "subpackages": []
     },
-    "Location": {
-      "subpackageId": "Location",
-      "name": "Location",
+    "subpackage_location": {
+      "subpackageId": "subpackage_location",
+      "name": "location",
       "endpoints": [
         {
           "auth": false,
@@ -34983,9 +35261,9 @@
       "types": [],
       "subpackages": []
     },
-    "ContainerLeg": {
-      "subpackageId": "ContainerLeg",
-      "name": "ContainerLeg",
+    "subpackage_containerLeg": {
+      "subpackageId": "subpackage_containerLeg",
+      "name": "containerLeg",
       "endpoints": [
         {
           "auth": false,
@@ -35321,9 +35599,9 @@
       "types": [],
       "subpackages": []
     },
-    "Container": {
-      "subpackageId": "Container",
-      "name": "Container",
+    "subpackage_container": {
+      "subpackageId": "subpackage_container",
+      "name": "container",
       "endpoints": [
         {
           "auth": false,
@@ -35813,9 +36091,9 @@
       "types": [],
       "subpackages": []
     },
-    "Ports": {
-      "subpackageId": "Ports",
-      "name": "Ports",
+    "subpackage_ports": {
+      "subpackageId": "subpackage_ports",
+      "name": "ports",
       "endpoints": [
         {
           "auth": false,
@@ -36086,9 +36364,9 @@
       "types": [],
       "subpackages": []
     },
-    "Product": {
-      "subpackageId": "Product",
-      "name": "Product",
+    "subpackage_product": {
+      "subpackageId": "subpackage_product",
+      "name": "product",
       "endpoints": [
         {
           "auth": false,
@@ -36790,9 +37068,9 @@
       "types": [],
       "subpackages": []
     },
-    "PurchaseOrderLineItem": {
-      "subpackageId": "PurchaseOrderLineItem",
-      "name": "PurchaseOrderLineItem",
+    "subpackage_purchaseOrderLineItem": {
+      "subpackageId": "subpackage_purchaseOrderLineItem",
+      "name": "purchaseOrderLineItem",
       "endpoints": [
         {
           "auth": false,
@@ -37476,9 +37754,9 @@
       "types": [],
       "subpackages": []
     },
-    "PurchaseOrder": {
-      "subpackageId": "PurchaseOrder",
-      "name": "PurchaseOrder",
+    "subpackage_purchaseOrder": {
+      "subpackageId": "subpackage_purchaseOrder",
+      "name": "purchaseOrder",
       "endpoints": [
         {
           "auth": false,
@@ -38163,19 +38441,118 @@
               "headers": {},
               "requestBody": {
                 "name": "PO 123",
+                "memo": "memo",
+                "status": "open",
                 "parties": [
                   {
                     "role": "buyer",
-                    "external_ref": "id-12344"
+                    "external_ref": "id-1232",
+                    "location_ref": "id-1232",
+                    "contacts": [
+                      {
+                        "name": "abc",
+                        "phone": "123456789",
+                        "email": "abc@173.com",
+                        "fax": "123456789",
+                        "department": "a department"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "seller",
+                    "external_ref": "id-321",
+                    "location_ref": "id-432",
+                    "contacts": [
+                      {
+                        "name": "cds",
+                        "phone": "123456789",
+                        "email": "abc@173.com",
+                        "fax": "123456789",
+                        "department": "a department"
+                      }
+                    ]
                   }
                 ],
+                "currency_code": "USD",
+                "origin_port": {
+                  "code": "USFBN",
+                  "code_type": "unlocode"
+                },
+                "destination_port": {
+                  "code": "USFBN",
+                  "code_type": "unlocode"
+                },
+                "must_arrive_date": "2019-07-31",
+                "issue_date": "2019-06-30",
+                "freight_payment_terms": "freight_collect",
+                "cargo_ready_date": "2019-06-30",
+                "transportation_mode": "ocean",
+                "incoterm": "FOB",
+                "origin_location_ref": "id-123456",
+                "destination_location_refs": [
+                  "id-654321",
+                  "id-654322"
+                ],
+                "priority": "standard",
+                "order_class": "purchase_order",
+                "order_type": "Apparel",
                 "line_items": [
                   {
                     "item_key": "item_key_1",
+                    "line_item_number": 1,
                     "product": {
-                      "name": "AC Adapter 12"
+                      "sku": "SKU-123",
+                      "name": "AC Adapter 12",
+                      "product_category": "furniture",
+                      "country_of_origin": "US",
+                      "color": "red",
+                      "dangerous": true,
+                      "ean_ucc_13": "1234567890123",
+                      "ean_ucc_8": "12345678",
+                      "lot_number": "123456789",
+                      "size": "m",
+                      "style": "classic",
+                      "upc": "123456789"
                     },
-                    "units": 100
+                    "origin_port": {
+                      "code": "USFBN",
+                      "code_type": "unlocode"
+                    },
+                    "destination_port": {
+                      "code": "USFBN",
+                      "code_type": "unlocode"
+                    },
+                    "must_arrive_date": "2019-07-31",
+                    "cargo_ready_date": "2019-06-30",
+                    "transportation_mode": "ocean",
+                    "incoterm": "FOB",
+                    "origin_location_ref": "id-123456",
+                    "destination_locations": [
+                      {
+                        "location_ref": "id-654321",
+                        "units": 1
+                      }
+                    ],
+                    "units": 10,
+                    "unit_cost": {
+                      "amount": "100.01",
+                      "currency_code": "USD"
+                    },
+                    "hs_codes": [
+                      {
+                        "code": "6204.62.80.11",
+                        "country_code": "US"
+                      }
+                    ],
+                    "measurements": [
+                      {
+                        "measure_type": "length",
+                        "unit_of_measure": "EA",
+                        "value": "1.0"
+                      }
+                    ],
+                    "assigned_party_ref": "id-12355",
+                    "metadata": {}
                   }
                 ]
               },
@@ -38183,19 +38560,118 @@
                 "type": "json",
                 "value": {
                   "name": "PO 123",
+                  "memo": "memo",
+                  "status": "open",
                   "parties": [
                     {
                       "role": "buyer",
-                      "external_ref": "id-12344"
+                      "external_ref": "id-1232",
+                      "location_ref": "id-1232",
+                      "contacts": [
+                        {
+                          "name": "abc",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
+                    },
+                    {
+                      "role": "seller",
+                      "external_ref": "id-321",
+                      "location_ref": "id-432",
+                      "contacts": [
+                        {
+                          "name": "cds",
+                          "phone": "123456789",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "department": "a department"
+                        }
+                      ]
                     }
                   ],
+                  "currency_code": "USD",
+                  "origin_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode"
+                  },
+                  "destination_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode"
+                  },
+                  "must_arrive_date": "2019-07-31",
+                  "issue_date": "2019-06-30",
+                  "freight_payment_terms": "freight_collect",
+                  "cargo_ready_date": "2019-06-30",
+                  "transportation_mode": "ocean",
+                  "incoterm": "FOB",
+                  "origin_location_ref": "id-123456",
+                  "destination_location_refs": [
+                    "id-654321",
+                    "id-654322"
+                  ],
+                  "priority": "standard",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
                   "line_items": [
                     {
                       "item_key": "item_key_1",
+                      "line_item_number": 1,
                       "product": {
-                        "name": "AC Adapter 12"
+                        "sku": "SKU-123",
+                        "name": "AC Adapter 12",
+                        "product_category": "furniture",
+                        "country_of_origin": "US",
+                        "color": "red",
+                        "dangerous": true,
+                        "ean_ucc_13": "1234567890123",
+                        "ean_ucc_8": "12345678",
+                        "lot_number": "123456789",
+                        "size": "m",
+                        "style": "classic",
+                        "upc": "123456789"
                       },
-                      "units": 100
+                      "origin_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode"
+                      },
+                      "destination_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode"
+                      },
+                      "must_arrive_date": "2019-07-31",
+                      "cargo_ready_date": "2019-06-30",
+                      "transportation_mode": "ocean",
+                      "incoterm": "FOB",
+                      "origin_location_ref": "id-123456",
+                      "destination_locations": [
+                        {
+                          "location_ref": "id-654321",
+                          "units": 1
+                        }
+                      ],
+                      "units": 10,
+                      "unit_cost": {
+                        "amount": "100.01",
+                        "currency_code": "USD"
+                      },
+                      "hs_codes": [
+                        {
+                          "code": "6204.62.80.11",
+                          "country_code": "US"
+                        }
+                      ],
+                      "measurements": [
+                        {
+                          "measure_type": "length",
+                          "unit_of_measure": "EA",
+                          "value": "1.0"
+                        }
+                      ],
+                      "assigned_party_ref": "id-12355",
+                      "metadata": {}
                     }
                   ]
                 }
@@ -38406,19 +38882,98 @@
               "headers": {},
               "requestBody": {
                 "name": "PO 123",
+                "memo": "memo",
+                "status": "open",
                 "parties": [
                   {
                     "role": "buyer",
-                    "external_ref": "id-12344"
+                    "external_ref": "id-1232",
+                    "location_ref": "id-1232"
+                  },
+                  {
+                    "role": "seller",
+                    "external_ref": "id-321",
+                    "location_ref": "id-432"
                   }
                 ],
+                "currency_code": "USD",
+                "origin_port": {
+                  "code": "USLA",
+                  "code_type": "unlocode"
+                },
+                "destination_port": {
+                  "code": "CNSHA",
+                  "code_type": "unlocode"
+                },
+                "must_arrive_date": "2019-07-31",
+                "issue_date": "2019-06-30",
+                "freight_payment_terms": "freight_collect",
+                "cargo_ready_date": "2019-06-30",
+                "transportation_mode": "ocean",
+                "incoterm": "FOB",
+                "origin_location_ref": "id-123456",
+                "destination_location_refs": [
+                  "id-654321",
+                  "id-654322"
+                ],
+                "priority": "standard",
+                "order_class": "purchase_order",
+                "order_type": "Apparel",
                 "line_items": [
                   {
                     "item_key": "item_key_1",
+                    "line_item_number": 1,
                     "product": {
-                      "name": "AC Adapter 12"
+                      "sku": "SKU-123",
+                      "name": "AC Adapter 12",
+                      "product_category": "furniture",
+                      "country_of_origin": "US",
+                      "color": "red",
+                      "dangerous": true,
+                      "ean_ucc_13": "1234567890123",
+                      "ean_ucc_8": "12345678",
+                      "lot_number": "123456789",
+                      "size": "m",
+                      "style": "classic",
+                      "upc": "123456789"
                     },
-                    "units": 100
+                    "origin_port": {
+                      "code": "USLGB",
+                      "code_type": "unlocode"
+                    },
+                    "destination_port": {
+                      "code": "USFBN",
+                      "code_type": "unlocode"
+                    },
+                    "must_arrive_date": "2019-07-31",
+                    "cargo_ready_date": "2019-06-30",
+                    "transportation_mode": "ocean",
+                    "incoterm": "FOB",
+                    "origin_location_ref": "id-123456",
+                    "destination_locations": [
+                      {
+                        "location_ref": "id-1234"
+                      }
+                    ],
+                    "units": 10,
+                    "unit_cost": {
+                      "amount": "100.01",
+                      "currency_code": "USD"
+                    },
+                    "hs_codes": [
+                      {
+                        "code": "6204.62.80.11",
+                        "country_code": "US"
+                      }
+                    ],
+                    "measurements": [
+                      {
+                        "measure_type": "length",
+                        "unit_of_measure": "EA",
+                        "value": "1"
+                      }
+                    ],
+                    "metadata": {}
                   }
                 ]
               },
@@ -38426,19 +38981,98 @@
                 "type": "json",
                 "value": {
                   "name": "PO 123",
+                  "memo": "memo",
+                  "status": "open",
                   "parties": [
                     {
                       "role": "buyer",
-                      "external_ref": "id-12344"
+                      "external_ref": "id-1232",
+                      "location_ref": "id-1232"
+                    },
+                    {
+                      "role": "seller",
+                      "external_ref": "id-321",
+                      "location_ref": "id-432"
                     }
                   ],
+                  "currency_code": "USD",
+                  "origin_port": {
+                    "code": "USLA",
+                    "code_type": "unlocode"
+                  },
+                  "destination_port": {
+                    "code": "CNSHA",
+                    "code_type": "unlocode"
+                  },
+                  "must_arrive_date": "2019-07-31",
+                  "issue_date": "2019-06-30",
+                  "freight_payment_terms": "freight_collect",
+                  "cargo_ready_date": "2019-06-30",
+                  "transportation_mode": "ocean",
+                  "incoterm": "FOB",
+                  "origin_location_ref": "id-123456",
+                  "destination_location_refs": [
+                    "id-654321",
+                    "id-654322"
+                  ],
+                  "priority": "standard",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
                   "line_items": [
                     {
                       "item_key": "item_key_1",
+                      "line_item_number": 1,
                       "product": {
-                        "name": "AC Adapter 12"
+                        "sku": "SKU-123",
+                        "name": "AC Adapter 12",
+                        "product_category": "furniture",
+                        "country_of_origin": "US",
+                        "color": "red",
+                        "dangerous": true,
+                        "ean_ucc_13": "1234567890123",
+                        "ean_ucc_8": "12345678",
+                        "lot_number": "123456789",
+                        "size": "m",
+                        "style": "classic",
+                        "upc": "123456789"
                       },
-                      "units": 100
+                      "origin_port": {
+                        "code": "USLGB",
+                        "code_type": "unlocode"
+                      },
+                      "destination_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode"
+                      },
+                      "must_arrive_date": "2019-07-31",
+                      "cargo_ready_date": "2019-06-30",
+                      "transportation_mode": "ocean",
+                      "incoterm": "FOB",
+                      "origin_location_ref": "id-123456",
+                      "destination_locations": [
+                        {
+                          "location_ref": "id-1234"
+                        }
+                      ],
+                      "units": 10,
+                      "unit_cost": {
+                        "amount": "100.01",
+                        "currency_code": "USD"
+                      },
+                      "hs_codes": [
+                        {
+                          "code": "6204.62.80.11",
+                          "country_code": "US"
+                        }
+                      ],
+                      "measurements": [
+                        {
+                          "measure_type": "length",
+                          "unit_of_measure": "EA",
+                          "value": "1"
+                        }
+                      ],
+                      "metadata": {}
                     }
                   ]
                 }
@@ -38468,9 +39102,9 @@
       "types": [],
       "subpackages": []
     },
-    "ShipmentLeg": {
-      "subpackageId": "ShipmentLeg",
-      "name": "ShipmentLeg",
+    "subpackage_shipmentLeg": {
+      "subpackageId": "subpackage_shipmentLeg",
+      "name": "shipmentLeg",
       "endpoints": [
         {
           "auth": false,
@@ -39243,9 +39877,9 @@
       "types": [],
       "subpackages": []
     },
-    "Shipment": {
-      "subpackageId": "Shipment",
-      "name": "Shipment",
+    "subpackage_shipment": {
+      "subpackageId": "subpackage_shipment",
+      "name": "shipment",
       "endpoints": [
         {
           "auth": false,
@@ -41752,27 +42386,27 @@
       "UpdateShipment"
     ],
     "subpackages": [
-      "BookingAmendment",
-      "BookingLineItem",
-      "Booking",
-      "Carbon Calculation",
-      "Commercial Invoices",
-      "Customs Entries",
-      "Document",
-      "Event",
-      "Invoices",
-      "Company",
-      "CompanyEntity",
-      "Contact",
-      "Location",
-      "ContainerLeg",
-      "Container",
-      "Ports",
-      "Product",
-      "PurchaseOrderLineItem",
-      "PurchaseOrder",
-      "ShipmentLeg",
-      "Shipment"
+      "subpackage_bookingAmendment",
+      "subpackage_bookingLineItem",
+      "subpackage_booking",
+      "subpackage_carbonCalculation",
+      "subpackage_commercialInvoices",
+      "subpackage_customsEntries",
+      "subpackage_document",
+      "subpackage_event",
+      "subpackage_invoices",
+      "subpackage_company",
+      "subpackage_companyEntity",
+      "subpackage_contact",
+      "subpackage_location",
+      "subpackage_containerLeg",
+      "subpackage_container",
+      "subpackage_ports",
+      "subpackage_product",
+      "subpackage_purchaseOrderLineItem",
+      "subpackage_purchaseOrder",
+      "subpackage_shipmentLeg",
+      "subpackage_shipment"
     ]
   },
   "snippetsConfiguration": {},

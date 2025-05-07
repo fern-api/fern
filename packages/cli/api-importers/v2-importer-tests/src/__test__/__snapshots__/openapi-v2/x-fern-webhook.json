@@ -506,13 +506,13 @@
     ],
     "errors": [],
     "subpackages": [
-      "status",
-      "status2"
+      "subpackage_status",
+      "subpackage_status2"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "status": {
+    "subpackage_status": {
       "name": {
         "originalName": "status",
         "camelCase": {
@@ -581,7 +581,7 @@
       "webhooks": "status",
       "hasEndpointsInTree": false
     },
-    "status2": {
+    "subpackage_status2": {
       "name": {
         "originalName": "status2",
         "camelCase": {

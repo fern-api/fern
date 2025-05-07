@@ -373,6 +373,7 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             )
 
+    def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
         pythonv2 = PythonV2Generator(
             coordinator=generator_exec_wrapper,

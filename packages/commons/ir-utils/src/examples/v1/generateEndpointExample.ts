@@ -18,7 +18,7 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { hashJSON } from "../../hashJSON";
-import { isOptional } from "../utils/isTypeReferenceOptional";
+import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
@@ -189,7 +189,7 @@ export function generateEndpointExample({
                     });
                     if (
                         propertyExample.type === "failure" &&
-                        !isOptional({ typeDeclarations, typeReference: property.valueType })
+                        !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
                     ) {
                         return {
                             type: "failure",

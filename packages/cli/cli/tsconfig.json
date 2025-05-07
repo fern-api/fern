@@ -19,6 +19,9 @@
       "path": "../../commons/logging-execa"
     },
     {
+      "path": "../../commons/ir-utils"
+    },
+    {
       "path": "../../core"
     },
     {

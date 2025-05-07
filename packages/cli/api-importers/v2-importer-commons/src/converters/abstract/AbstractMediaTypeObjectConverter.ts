@@ -82,10 +82,12 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
 
     protected async convertMediaTypeObjectExamples({
         mediaTypeObject,
-        generateOptionalProperties
+        generateOptionalProperties,
+        exampleGenerationStrategy
     }: {
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         generateOptionalProperties?: boolean;
+        exampleGenerationStrategy?: "request" | "response";
     }): Promise<V2SchemaExamples> {
         const v2Examples: V2SchemaExamples = {
             userSpecifiedExamples: {},
@@ -104,7 +106,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                 if (schema != null) {
                     v2Examples.userSpecifiedExamples[key] = await this.generateOrValidateExample({
                         schema,
-                        example: resolvedExample
+                        example: resolvedExample,
+                        exampleGenerationStrategy
                     });
                 } else {
                     v2Examples.userSpecifiedExamples[key] = resolvedExample;
@@ -118,7 +121,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
                 schema,
                 example: undefined,
                 ignoreErrors: true,
-                generateOptionalProperties
+                generateOptionalProperties,
+                exampleGenerationStrategy
             });
         }
 
@@ -129,12 +133,14 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         schema,
         example,
         ignoreErrors,
-        generateOptionalProperties
+        generateOptionalProperties,
+        exampleGenerationStrategy
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         ignoreErrors?: boolean;
         example: unknown;
         generateOptionalProperties?: boolean;
+        exampleGenerationStrategy?: "request" | "response";
     }): Promise<unknown> {
         const resolvedSchema = await this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
@@ -154,7 +160,8 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             context: this.context,
             schema: resolvedSchema,
             example: example ?? schemaExamples[0],
-            generateOptionalProperties: generateOptionalProperties ?? false
+            generateOptionalProperties: generateOptionalProperties ?? false,
+            exampleGenerationStrategy
         });
         const { validExample: convertedExample, errors } = await exampleConverter.convert();
         if (!ignoreErrors) {

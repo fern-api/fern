@@ -5274,9 +5274,9 @@
     }
   },
   "subpackages": {
-    "Transactions": {
-      "subpackageId": "Transactions",
-      "name": "Transactions",
+    "subpackage_transactions": {
+      "subpackageId": "subpackage_transactions",
+      "name": "transactions",
       "endpoints": [
         {
           "auth": true,
@@ -6211,9 +6211,9 @@
       "types": [],
       "subpackages": []
     },
-    "Batches": {
-      "subpackageId": "Batches",
-      "name": "Batches",
+    "subpackage_batches": {
+      "subpackageId": "subpackage_batches",
+      "name": "batches",
       "endpoints": [
         {
           "auth": true,
@@ -6799,9 +6799,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bank statements": {
-      "subpackageId": "Bank statements",
-      "name": "Bank statements",
+    "subpackage_bankStatements": {
+      "subpackageId": "subpackage_bankStatements",
+      "name": "bankStatements",
       "endpoints": [
         {
           "auth": true,
@@ -7481,9 +7481,9 @@
       "types": [],
       "subpackages": []
     },
-    "Account Holders": {
-      "subpackageId": "Account Holders",
-      "name": "Account Holders",
+    "subpackage_accountHolders": {
+      "subpackageId": "subpackage_accountHolders",
+      "name": "accountHolders",
       "endpoints": [
         {
           "auth": true,
@@ -7887,9 +7887,9 @@
       "types": [],
       "subpackages": []
     },
-    "Recurrence": {
-      "subpackageId": "Recurrence",
-      "name": "Recurrence",
+    "subpackage_recurrence": {
+      "subpackageId": "subpackage_recurrence",
+      "name": "recurrence",
       "endpoints": [
         {
           "auth": true,
@@ -8038,9 +8038,9 @@
       "types": [],
       "subpackages": []
     },
-    "Webhooks": {
-      "subpackageId": "Webhooks",
-      "name": "Webhooks",
+    "subpackage_webhooks": {
+      "subpackageId": "subpackage_webhooks",
+      "name": "webhooks",
       "endpoints": [
         {
           "auth": true,
@@ -8545,9 +8545,9 @@
       "types": [],
       "subpackages": []
     },
-    "Personalization": {
-      "subpackageId": "Personalization",
-      "name": "Personalization",
+    "subpackage_personalization": {
+      "subpackageId": "subpackage_personalization",
+      "name": "personalization",
       "endpoints": [
         {
           "auth": true,
@@ -9053,9 +9053,9 @@
       "types": [],
       "subpackages": []
     },
-    "Reports": {
-      "subpackageId": "Reports",
-      "name": "Reports",
+    "subpackage_reports": {
+      "subpackageId": "subpackage_reports",
+      "name": "reports",
       "endpoints": [
         {
           "auth": true,
@@ -9505,9 +9505,9 @@
       "types": [],
       "subpackages": []
     },
-    "Categories": {
-      "subpackageId": "Categories",
-      "name": "Categories",
+    "subpackage_categories": {
+      "subpackageId": "subpackage_categories",
+      "name": "categories",
       "endpoints": [
         {
           "auth": true,
@@ -9939,9 +9939,9 @@
       "types": [],
       "subpackages": []
     },
-    "Entities": {
-      "subpackageId": "Entities",
-      "name": "Entities",
+    "subpackage_entities": {
+      "subpackageId": "subpackage_entities",
+      "name": "entities",
       "endpoints": [
         {
           "auth": true,
@@ -10253,16 +10253,16 @@
       "personalization"
     ],
     "subpackages": [
-      "Transactions",
-      "Batches",
-      "Bank statements",
-      "Account Holders",
-      "Recurrence",
-      "Webhooks",
-      "Personalization",
-      "Reports",
-      "Categories",
-      "Entities"
+      "subpackage_transactions",
+      "subpackage_batches",
+      "subpackage_bankStatements",
+      "subpackage_accountHolders",
+      "subpackage_recurrence",
+      "subpackage_webhooks",
+      "subpackage_personalization",
+      "subpackage_reports",
+      "subpackage_categories",
+      "subpackage_entities"
     ]
   },
   "auth": {

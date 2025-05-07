@@ -16585,9 +16585,9 @@
     }
   },
   "subpackages": {
-    "Hris": {
-      "subpackageId": "Hris",
-      "name": "Hris",
+    "subpackage_hris": {
+      "subpackageId": "subpackage_hris",
+      "name": "hris",
       "endpoints": [
         {
           "auth": false,
@@ -16810,9 +16810,9 @@
       "types": [],
       "subpackages": []
     },
-    "EOR": {
-      "subpackageId": "EOR",
-      "name": "EOR",
+    "subpackage_eor": {
+      "subpackageId": "subpackage_eor",
+      "name": "eor",
       "endpoints": [
         {
           "auth": true,
@@ -17253,9 +17253,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contractors": {
-      "subpackageId": "Contractors",
-      "name": "Contractors",
+    "subpackage_contractors": {
+      "subpackageId": "subpackage_contractors",
+      "name": "contractors",
       "endpoints": [
         {
           "auth": true,
@@ -19543,9 +19543,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contracts": {
-      "subpackageId": "Contracts",
-      "name": "Contracts",
+    "subpackage_contracts": {
+      "subpackageId": "subpackage_contracts",
+      "name": "contracts",
       "endpoints": [
         {
           "auth": true,
@@ -21392,9 +21392,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tasks": {
-      "subpackageId": "Tasks",
-      "name": "Tasks",
+    "subpackage_tasks": {
+      "subpackageId": "subpackage_tasks",
+      "name": "tasks",
       "endpoints": [
         {
           "auth": true,
@@ -22093,9 +22093,9 @@
       "types": [],
       "subpackages": []
     },
-    "Timesheets": {
-      "subpackageId": "Timesheets",
-      "name": "Timesheets",
+    "subpackage_timesheets": {
+      "subpackageId": "subpackage_timesheets",
+      "name": "timesheets",
       "endpoints": [
         {
           "auth": true,
@@ -23453,9 +23453,9 @@
       "types": [],
       "subpackages": []
     },
-    "Milestones": {
-      "subpackageId": "Milestones",
-      "name": "Milestones",
+    "subpackage_milestones": {
+      "subpackageId": "subpackage_milestones",
+      "name": "milestones",
       "endpoints": [
         {
           "auth": true,
@@ -24256,9 +24256,9 @@
       "types": [],
       "subpackages": []
     },
-    "Off-cycle Payments": {
-      "subpackageId": "Off-cycle Payments",
-      "name": "Off-cycle Payments",
+    "subpackage_offCyclePayments": {
+      "subpackageId": "subpackage_offCyclePayments",
+      "name": "offCyclePayments",
       "endpoints": [
         {
           "auth": true,
@@ -24690,9 +24690,9 @@
       "types": [],
       "subpackages": []
     },
-    "Time Off": {
-      "subpackageId": "Time Off",
-      "name": "Time Off",
+    "subpackage_timeOff": {
+      "subpackageId": "subpackage_timeOff",
+      "name": "timeOff",
       "endpoints": [
         {
           "auth": true,
@@ -27040,9 +27040,9 @@
       "types": [],
       "subpackages": []
     },
-    "Invoices": {
-      "subpackageId": "Invoices",
-      "name": "Invoices",
+    "subpackage_invoices": {
+      "subpackageId": "subpackage_invoices",
+      "name": "invoices",
       "endpoints": [
         {
           "auth": true,
@@ -28255,9 +28255,9 @@
       "types": [],
       "subpackages": []
     },
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": true,
@@ -28667,9 +28667,9 @@
       "types": [],
       "subpackages": []
     },
-    "Lookups": {
-      "subpackageId": "Lookups",
-      "name": "Lookups",
+    "subpackage_lookups": {
+      "subpackageId": "subpackage_lookups",
+      "name": "lookups",
       "endpoints": [
         {
           "auth": true,
@@ -29150,9 +29150,9 @@
       "types": [],
       "subpackages": []
     },
-    "Attachments": {
-      "subpackageId": "Attachments",
-      "name": "Attachments",
+    "subpackage_attachments": {
+      "subpackageId": "subpackage_attachments",
+      "name": "attachments",
       "endpoints": [
         {
           "auth": true,
@@ -29266,9 +29266,9 @@
       "types": [],
       "subpackages": []
     },
-    "Accounting": {
-      "subpackageId": "Accounting",
-      "name": "Accounting",
+    "subpackage_accounting": {
+      "subpackageId": "subpackage_accounting",
+      "name": "accounting",
       "endpoints": [
         {
           "auth": true,
@@ -29990,9 +29990,9 @@
       "types": [],
       "subpackages": []
     },
-    "Contract": {
-      "subpackageId": "Contract",
-      "name": "Contract",
+    "subpackage_contract": {
+      "subpackageId": "subpackage_contract",
+      "name": "contract",
       "endpoints": [
         {
           "auth": true,
@@ -30398,9 +30398,9 @@
       "types": [],
       "subpackages": []
     },
-    "Webhooks": {
-      "subpackageId": "Webhooks",
-      "name": "Webhooks",
+    "subpackage_webhooks": {
+      "subpackageId": "subpackage_webhooks",
+      "name": "webhooks",
       "endpoints": [
         {
           "auth": true,
@@ -31330,22 +31330,22 @@
       "PublicId"
     ],
     "subpackages": [
-      "Hris",
-      "EOR",
-      "Contractors",
-      "Contracts",
-      "Tasks",
-      "Timesheets",
-      "Milestones",
-      "Off-cycle Payments",
-      "Time Off",
-      "Invoices",
-      "Organizations",
-      "Lookups",
-      "Attachments",
-      "Accounting",
-      "Contract",
-      "Webhooks"
+      "subpackage_hris",
+      "subpackage_eor",
+      "subpackage_contractors",
+      "subpackage_contracts",
+      "subpackage_tasks",
+      "subpackage_timesheets",
+      "subpackage_milestones",
+      "subpackage_offCyclePayments",
+      "subpackage_timeOff",
+      "subpackage_invoices",
+      "subpackage_organizations",
+      "subpackage_lookups",
+      "subpackage_attachments",
+      "subpackage_accounting",
+      "subpackage_contract",
+      "subpackage_webhooks"
     ]
   },
   "snippetsConfiguration": {},

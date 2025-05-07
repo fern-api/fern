@@ -118,41 +118,46 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
-    const { generatorConfig } = await runGenerator({
-        absolutePathToOutput: absolutePathToTmpOutputDirectory,
-        absolutePathToSnippet: absolutePathToTmpSnippetJSON,
-        absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
-        absolutePathToIr,
-        absolutePathToWriteConfigJson,
-        workspaceName: workspace.definition.rootApiFile.contents.name,
-        organization,
-        outputVersion: outputVersionOverride,
-        keepDocker,
-        generatorInvocation,
-        context,
-        writeUnitTests,
-        generateOauthClients,
-        generatePaginatedClients,
-        sources: workspace.getSources()
-    });
+    try {
+        const { generatorConfig } = await runGenerator({
+            absolutePathToOutput: absolutePathToTmpOutputDirectory,
+            absolutePathToSnippet: absolutePathToTmpSnippetJSON,
+            absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
+            absolutePathToIr,
+            absolutePathToWriteConfigJson,
+            workspaceName: workspace.definition.rootApiFile.contents.name,
+            organization,
+            outputVersion: outputVersionOverride,
+            keepDocker,
+            generatorInvocation,
+            context,
+            writeUnitTests,
+            generateOauthClients,
+            generatePaginatedClients,
+            sources: workspace.getSources()
+        });
 
-    const taskHandler = new LocalTaskHandler({
-        context,
-        absolutePathToLocalOutput,
-        absolutePathToTmpOutputDirectory,
-        absolutePathToLocalSnippetJSON,
-        absolutePathToLocalSnippetTemplateJSON,
-        absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
-    });
-    await taskHandler.copyGeneratedFiles();
-
-    return {
-        absolutePathToIr,
-        absolutePathToConfigJson: absolutePathToWriteConfigJson,
-        ir: latest,
-        generatorConfig
-    };
+        return {
+            absolutePathToIr,
+            absolutePathToConfigJson: absolutePathToWriteConfigJson,
+            ir: latest,
+            generatorConfig
+        };
+        /* eslint-disable-next-line no-useless-catch */
+    } catch (e) {
+        throw e;
+    } finally {
+        const taskHandler = new LocalTaskHandler({
+            context,
+            absolutePathToLocalOutput,
+            absolutePathToTmpOutputDirectory,
+            absolutePathToLocalSnippetJSON,
+            absolutePathToLocalSnippetTemplateJSON,
+            absolutePathToTmpSnippetJSON,
+            absolutePathToTmpSnippetTemplatesJSON
+        });
+        await taskHandler.copyGeneratedFiles();
+    }
 }
 
 async function writeIrToFile({

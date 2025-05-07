@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://zeta.spscommerce.com
+- url: https://zeta.testapi.com
   description: prod
 paths:
   /zeta:

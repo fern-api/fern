@@ -430,22 +430,22 @@
     }
   },
   "subpackages": {
-    "petsV1": {
-      "subpackageId": "petsV1",
+    "subpackage_petsV1": {
+      "subpackageId": "subpackage_petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "petsV1.petsV1",
-        "petsV1.pet",
-        "petsV1.store",
-        "petsV1.user"
+        "subpackage_petsV1.petsV1",
+        "subpackage_petsV1.pet",
+        "subpackage_petsV1.store",
+        "subpackage_petsV1.user"
       ]
     },
-    "petsV1.petsV1": {
-      "subpackageId": "petsV1.petsV1",
+    "subpackage_petsV1.petsV1": {
+      "subpackageId": "subpackage_petsV1.petsV1",
       "name": "petsV1",
       "endpoints": [],
       "webhooks": [],
@@ -460,8 +460,8 @@
       ],
       "subpackages": []
     },
-    "petsV1.pet": {
-      "subpackageId": "petsV1.pet",
+    "subpackage_petsV1.pet": {
+      "subpackageId": "subpackage_petsV1.pet",
       "name": "pet",
       "endpoints": [
         {
@@ -1417,8 +1417,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV1.store": {
-      "subpackageId": "petsV1.store",
+    "subpackage_petsV1.store": {
+      "subpackageId": "subpackage_petsV1.store",
       "name": "store",
       "endpoints": [
         {
@@ -1763,8 +1763,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV1.user": {
-      "subpackageId": "petsV1.user",
+    "subpackage_petsV1.user": {
+      "subpackageId": "subpackage_petsV1.user",
       "name": "user",
       "endpoints": [
         {
@@ -1934,8 +1934,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2369,22 +2375,22 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2": {
-      "subpackageId": "petsV2",
+    "subpackage_petsV2": {
+      "subpackageId": "subpackage_petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
       "websockets": [],
       "types": [],
       "subpackages": [
-        "petsV2.petsV2",
-        "petsV2.pet",
-        "petsV2.store",
-        "petsV2.user"
+        "subpackage_petsV2.petsV2",
+        "subpackage_petsV2.pet",
+        "subpackage_petsV2.store",
+        "subpackage_petsV2.user"
       ]
     },
-    "petsV2.petsV2": {
-      "subpackageId": "petsV2.petsV2",
+    "subpackage_petsV2.petsV2": {
+      "subpackageId": "subpackage_petsV2.petsV2",
       "name": "petsV2",
       "endpoints": [],
       "webhooks": [],
@@ -2399,8 +2405,8 @@
       ],
       "subpackages": []
     },
-    "petsV2.pet": {
-      "subpackageId": "petsV2.pet",
+    "subpackage_petsV2.pet": {
+      "subpackageId": "subpackage_petsV2.pet",
       "name": "pet",
       "endpoints": [
         {
@@ -3356,8 +3362,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2.store": {
-      "subpackageId": "petsV2.store",
+    "subpackage_petsV2.store": {
+      "subpackageId": "subpackage_petsV2.store",
       "name": "store",
       "endpoints": [
         {
@@ -3702,8 +3708,8 @@
       "types": [],
       "subpackages": []
     },
-    "petsV2.user": {
-      "subpackageId": "petsV2.user",
+    "subpackage_petsV2.user": {
+      "subpackageId": "subpackage_petsV2.user",
       "name": "user",
       "endpoints": [
         {
@@ -3873,8 +3879,14 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {}
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {}
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -4315,8 +4327,8 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "petsV1",
-      "petsV2"
+      "subpackage_petsV1",
+      "subpackage_petsV2"
     ]
   },
   "snippetsConfiguration": {},

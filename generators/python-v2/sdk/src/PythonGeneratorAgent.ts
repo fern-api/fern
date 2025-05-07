@@ -3,7 +3,7 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { PublishingConfig } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
@@ -13,14 +13,14 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     public constructor({
         logger,
         config,
-        publishConfig
+        ir
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
-        publishConfig: PublishingConfig | undefined;
+        ir: IntermediateRepresentation;
     }) {
-        super({ logger, config });
-        this.publishConfig = publishConfig;
+        super({ logger, config, selfHosted: ir.selfHosted });
+        this.publishConfig = ir.publishConfig;
     }
 
     public getReadmeConfig(

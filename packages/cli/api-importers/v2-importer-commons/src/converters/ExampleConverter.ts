@@ -5,9 +5,10 @@ import { AbstractConverter, AbstractConverterContext, type OpenApiError } from "
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-        generateOptionalProperties?: boolean;
         example: unknown;
         depth?: number;
+        exampleGenerationStrategy?: "request" | "response";
+        generateOptionalProperties?: boolean;
     }
 
     export interface Output {
@@ -67,6 +68,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private readonly schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     private readonly example: unknown;
     private readonly depth: number;
+    private readonly exampleGenerationStrategy: "request" | "response" | undefined;
     private readonly generateOptionalProperties: boolean;
 
     constructor({
@@ -75,12 +77,14 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         schema,
         example,
         depth = 0,
+        exampleGenerationStrategy,
         generateOptionalProperties = false
     }: ExampleConverter.Args) {
         super({ breadcrumbs, context });
         this.example = example;
         this.schema = schema;
         this.depth = depth;
+        this.exampleGenerationStrategy = exampleGenerationStrategy;
         this.generateOptionalProperties = generateOptionalProperties;
     }
 
@@ -482,7 +486,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     schema: resolvedSchema.items,
                     example: item,
                     depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy
                 });
                 return await exampleConverter.convert();
             })
@@ -515,13 +520,36 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 if (typeof property !== "object") {
                     return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
                 }
-                const isOmittedFromExample =
+                if (
+                    "readOnly" in property &&
+                    property.readOnly === true &&
+                    "writeOnly" in property &&
+                    property.writeOnly === true
+                ) {
+                    return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                }
+                // TODO: Do we want to collect an error when the request / response example does not respect the readOnly / writeOnly property?
+                if (
+                    "readOnly" in property &&
+                    property.readOnly === true &&
+                    this.exampleGenerationStrategy === "request"
+                ) {
+                    return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                }
+                if (
+                    "writeOnly" in property &&
+                    property.writeOnly === true &&
+                    this.exampleGenerationStrategy === "response"
+                ) {
+                    return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                }
+                const propertyIsOmittedFromExample =
                     !(key in exampleObj) ||
                     (!("nullable" in property) && exampleObj[key] == null) ||
                     ("nullable" in property && property.nullable === true && exampleObj[key] === undefined);
-                const isOptional = !resolvedSchema.required?.includes(key);
+                const propertyIsOptional = !resolvedSchema.required?.includes(key);
 
-                if (isOmittedFromExample && isOptional) {
+                if (propertyIsOmittedFromExample && propertyIsOptional) {
                     if (this.example === undefined && this.generateOptionalProperties) {
                         const exampleConverter = new ExampleConverter({
                             breadcrumbs: [...this.breadcrumbs, key],
@@ -529,23 +557,25 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                             schema: property,
                             example: undefined,
                             depth: this.depth + 1,
-                            generateOptionalProperties: this.generateOptionalProperties
+                            generateOptionalProperties: this.generateOptionalProperties,
+                            exampleGenerationStrategy: this.exampleGenerationStrategy
                         });
                         return { key, result: await exampleConverter.convert() };
                     }
                     return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
+                } else {
+                    const exampleConverter = new ExampleConverter({
+                        breadcrumbs: [...this.breadcrumbs, key],
+                        context: this.context,
+                        schema: property,
+                        example: exampleObj[key],
+                        depth: this.depth + 1,
+                        generateOptionalProperties: this.generateOptionalProperties,
+                        exampleGenerationStrategy: this.exampleGenerationStrategy
+                    });
+                    const result = await exampleConverter.convert();
+                    return { key, result };
                 }
-
-                const exampleConverter = new ExampleConverter({
-                    breadcrumbs: [...this.breadcrumbs, key],
-                    context: this.context,
-                    schema: property,
-                    example: exampleObj[key],
-                    depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
-                });
-                const result = await exampleConverter.convert();
-                return { key, result };
             })
         );
 
@@ -557,7 +587,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     schema: { ...resolvedSchema, ...subSchema, allOf: undefined },
                     example: this.example,
                     depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy
                 });
                 return await exampleConverter.convert();
             })
@@ -619,7 +650,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 schema: { ...resolvedSchema, type: resolvedSchema.type[0] } as OpenAPIV3_1.SchemaObject,
                 example: this.example,
                 depth: this.depth,
-                generateOptionalProperties: this.generateOptionalProperties
+                generateOptionalProperties: this.generateOptionalProperties,
+                exampleGenerationStrategy: this.exampleGenerationStrategy
             });
             return await exampleConverter.convert();
         }
@@ -631,7 +663,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     schema: { ...resolvedSchema, type: subSchema } as OpenAPIV3_1.SchemaObject,
                     example: this.example,
                     depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy
                 });
                 return await exampleConverter.convert();
             })
@@ -666,7 +699,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     schema: { ...resolvedSchema, ...subSchema, oneOf: undefined },
                     example: this.example,
                     depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy
                 });
                 return await exampleConverter.convert();
             })
@@ -707,7 +741,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     schema: subSchema,
                     example: this.example,
                     depth: this.depth + 1,
-                    generateOptionalProperties: this.generateOptionalProperties
+                    generateOptionalProperties: this.generateOptionalProperties,
+                    exampleGenerationStrategy: this.exampleGenerationStrategy
                 });
                 return await exampleConverter.convert();
             })

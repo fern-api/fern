@@ -22,14 +22,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedExamples
 from seed.environment import SeedExamplesEnvironment
-
-client = SeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
-)
-client.echo(
-    request="Hello world!\\n\\nwith\\n\\tnewlines",
-)
+client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
+client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
 ```
 
 ## Async Client
@@ -37,23 +31,12 @@ client.echo(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedExamples
 from seed.environment import SeedExamplesEnvironment
-
-client = AsyncSeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
-)
-
-
+import asyncio
+client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION, )
 async def main() -> None:
-    await client.echo(
-        request="Hello world!\\n\\nwith\\n\\tnewlines",
-    )
-
-
+    await client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
 asyncio.run(main())
 ```
 
@@ -64,7 +47,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.echo(...)
 except ApiError as e:
@@ -73,6 +55,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedExamples
+client = SeedExamples(..., )
+response = client.with_raw_response.echo(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -101,12 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedExamples
-
-client = SeedExamples(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExamples(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.echo(..., request_options={
@@ -120,17 +110,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-import httpx
 from seed import SeedExamples
-
-client = SeedExamples(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+import httpx
+client = SeedExamples(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Test API
 servers:
-- url: https://beta.spscommerce.com
+- url: https://beta.testapi.com
   description: prod
 paths:
   /beta:

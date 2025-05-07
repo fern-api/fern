@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.get_movie(request='string', )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

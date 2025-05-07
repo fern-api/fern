@@ -35,7 +35,8 @@ import asyncio
 client = AsyncSeedPathParameters(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
-asyncio.run(main())```
+asyncio.run(main())
+```
 
 ## Exception Handling
 

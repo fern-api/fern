@@ -65,7 +65,9 @@ export class CustomAuthService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedCustomAuthError) {
                     switch (error.errorName) {
@@ -102,7 +104,9 @@ export class CustomAuthService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedCustomAuthError) {
                     switch (error.errorName) {

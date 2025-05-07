@@ -4809,9 +4809,9 @@
     }
   },
   "subpackages": {
-    "Get Job Predictions": {
-      "subpackageId": "Get Job Predictions",
-      "name": "Get Job Predictions",
+    "subpackage_getJobPredictions": {
+      "subpackageId": "subpackage_getJobPredictions",
+      "name": "getJobPredictions",
       "endpoints": [
         {
           "auth": true,
@@ -6096,7 +6096,7 @@
       "UserMessage"
     ],
     "subpackages": [
-      "Get Job Predictions",
+      "subpackage_getJobPredictions",
       "subpackage_chat"
     ]
   },

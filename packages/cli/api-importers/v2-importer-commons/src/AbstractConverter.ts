@@ -1,3 +1,5 @@
+import { camelCase } from "lodash-es";
+
 import { FernIr, IntermediateRepresentation, Package } from "@fern-api/ir-sdk";
 
 import { AbstractConverterContext } from "./AbstractConverterContext";
@@ -111,10 +113,7 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
 
     private async resolveExternalRefsInArray(arr: unknown[], context: Context, queue: unknown[]): Promise<void> {
         for (let i = 0; i < arr.length; i++) {
-            const resolvedRefVal = await this.resolveReferenceChain(arr[i], context, queue);
-            if (resolvedRefVal != null) {
-                arr[i] = resolvedRefVal;
-            }
+            arr[i] = await this.resolveReferenceChain(arr[i], context, queue);
         }
     }
 
@@ -124,18 +123,15 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
         queue: unknown[]
     ): Promise<void> {
         for (const [key, value] of Object.entries(obj)) {
-            const resolvedRefVal = await this.resolveReferenceChain(value, context, queue);
-            if (resolvedRefVal != null) {
-                obj[key] = resolvedRefVal;
-            }
+            obj[key] = await this.resolveReferenceChain(value, context, queue);
         }
     }
 
     private async resolveReferenceChain(value: unknown, context: Context, queue: unknown[]): Promise<unknown | null> {
         let resolvedRefVal = value;
-        if (!this.context.isReferenceObject(value)) {
-            queue.push(value);
-            return null;
+        if (!this.context.isReferenceObject(resolvedRefVal)) {
+            queue.push(resolvedRefVal);
+            return value;
         }
 
         while (this.context.isReferenceObject(resolvedRefVal)) {
@@ -147,10 +143,10 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
                     return resolvedRefVal;
                 }
             } else {
-                return null;
+                return value;
             }
         }
-        return null;
+        return value;
     }
 
     protected removeXFernIgnores({
@@ -222,8 +218,9 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
 
         let pkg = this.ir.rootPackage;
         for (let i = 0; i < groupParts.length; i++) {
-            const name = groupParts[i];
-            const subpackageId = groupParts.slice(0, i + 1).join(".");
+            const name = camelCase(groupParts[i]);
+            const camelCasedGroupParts = groupParts.slice(0, i + 1).map((part) => camelCase(part));
+            const subpackageId = `subpackage_${camelCasedGroupParts.join(".")}`;
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -18130,9 +18130,9 @@
     }
   },
   "subpackages": {
-    "Issue Triggers": {
-      "subpackageId": "Issue Triggers",
-      "name": "Issue Triggers",
+    "subpackage_issueTriggers": {
+      "subpackageId": "subpackage_issueTriggers",
+      "name": "issueTriggers",
       "endpoints": [
         {
           "auth": true,
@@ -19538,9 +19538,9 @@
       "types": [],
       "subpackages": []
     },
-    "Attempts": {
-      "subpackageId": "Attempts",
-      "name": "Attempts",
+    "subpackage_attempts": {
+      "subpackageId": "subpackage_attempts",
+      "name": "attempts",
       "endpoints": [
         {
           "auth": true,
@@ -19927,9 +19927,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bookmarks": {
-      "subpackageId": "Bookmarks",
-      "name": "Bookmarks",
+    "subpackage_bookmarks": {
+      "subpackageId": "subpackage_bookmarks",
+      "name": "bookmarks",
       "endpoints": [
         {
           "auth": true,
@@ -21071,9 +21071,9 @@
       "types": [],
       "subpackages": []
     },
-    "Destinations": {
-      "subpackageId": "Destinations",
-      "name": "Destinations",
+    "subpackage_destinations": {
+      "subpackageId": "subpackage_destinations",
+      "name": "destinations",
       "endpoints": [
         {
           "auth": true,
@@ -22424,9 +22424,9 @@
       "types": [],
       "subpackages": []
     },
-    "Events": {
-      "subpackageId": "Events",
-      "name": "Events",
+    "subpackage_events": {
+      "subpackageId": "subpackage_events",
+      "name": "events",
       "endpoints": [
         {
           "auth": true,
@@ -23521,9 +23521,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bulk retry events": {
-      "subpackageId": "Bulk retry events",
-      "name": "Bulk retry events",
+    "subpackage_bulkRetryEvents": {
+      "subpackageId": "subpackage_bulkRetryEvents",
+      "name": "bulkRetryEvents",
       "endpoints": [
         {
           "auth": true,
@@ -24345,9 +24345,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bulk retry ignored events": {
-      "subpackageId": "Bulk retry ignored events",
-      "name": "Bulk retry ignored events",
+    "subpackage_bulkRetryIgnoredEvents": {
+      "subpackageId": "subpackage_bulkRetryIgnoredEvents",
+      "name": "bulkRetryIgnoredEvents",
       "endpoints": [
         {
           "auth": true,
@@ -25169,9 +25169,9 @@
       "types": [],
       "subpackages": []
     },
-    "Integrations": {
-      "subpackageId": "Integrations",
-      "name": "Integrations",
+    "subpackage_integrations": {
+      "subpackageId": "subpackage_integrations",
+      "name": "integrations",
       "endpoints": [
         {
           "auth": true,
@@ -26280,9 +26280,9 @@
       "types": [],
       "subpackages": []
     },
-    "Issues": {
-      "subpackageId": "Issues",
-      "name": "Issues",
+    "subpackage_issues": {
+      "subpackageId": "subpackage_issues",
+      "name": "issues",
       "endpoints": [
         {
           "auth": true,
@@ -27613,9 +27613,9 @@
       "types": [],
       "subpackages": []
     },
-    "Requests": {
-      "subpackageId": "Requests",
-      "name": "Requests",
+    "subpackage_requests": {
+      "subpackageId": "subpackage_requests",
+      "name": "requests",
       "endpoints": [
         {
           "auth": true,
@@ -29211,9 +29211,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bulk retry requests": {
-      "subpackageId": "Bulk retry requests",
-      "name": "Bulk retry requests",
+    "subpackage_bulkRetryRequests": {
+      "subpackageId": "subpackage_bulkRetryRequests",
+      "name": "bulkRetryRequests",
       "endpoints": [
         {
           "auth": true,
@@ -30035,9 +30035,9 @@
       "types": [],
       "subpackages": []
     },
-    "Rulesets": {
-      "subpackageId": "Rulesets",
-      "name": "Rulesets",
+    "subpackage_rulesets": {
+      "subpackageId": "subpackage_rulesets",
+      "name": "rulesets",
       "endpoints": [
         {
           "auth": true,
@@ -31285,9 +31285,9 @@
       "types": [],
       "subpackages": []
     },
-    "Sources": {
-      "subpackageId": "Sources",
-      "name": "Sources",
+    "subpackage_sources": {
+      "subpackageId": "subpackage_sources",
+      "name": "sources",
       "endpoints": [
         {
           "auth": true,
@@ -32481,9 +32481,9 @@
       "types": [],
       "subpackages": []
     },
-    "Notifications": {
-      "subpackageId": "Notifications",
-      "name": "Notifications",
+    "subpackage_notifications": {
+      "subpackageId": "subpackage_notifications",
+      "name": "notifications",
       "endpoints": [
         {
           "auth": true,
@@ -32648,9 +32648,9 @@
       "types": [],
       "subpackages": []
     },
-    "Transformations": {
-      "subpackageId": "Transformations",
-      "name": "Transformations",
+    "subpackage_transformations": {
+      "subpackageId": "subpackage_transformations",
+      "name": "transformations",
       "endpoints": [
         {
           "auth": true,
@@ -34216,9 +34216,9 @@
       "types": [],
       "subpackages": []
     },
-    "Connections": {
-      "subpackageId": "Connections",
-      "name": "Connections",
+    "subpackage_connections": {
+      "subpackageId": "subpackage_connections",
+      "name": "connections",
       "endpoints": [
         {
           "auth": true,
@@ -37051,22 +37051,22 @@
       "ConnectionPaginatedResult"
     ],
     "subpackages": [
-      "Issue Triggers",
-      "Attempts",
-      "Bookmarks",
-      "Destinations",
-      "Events",
-      "Bulk retry events",
-      "Bulk retry ignored events",
-      "Integrations",
-      "Issues",
-      "Requests",
-      "Bulk retry requests",
-      "Rulesets",
-      "Sources",
-      "Notifications",
-      "Transformations",
-      "Connections"
+      "subpackage_issueTriggers",
+      "subpackage_attempts",
+      "subpackage_bookmarks",
+      "subpackage_destinations",
+      "subpackage_events",
+      "subpackage_bulkRetryEvents",
+      "subpackage_bulkRetryIgnoredEvents",
+      "subpackage_integrations",
+      "subpackage_issues",
+      "subpackage_requests",
+      "subpackage_bulkRetryRequests",
+      "subpackage_rulesets",
+      "subpackage_sources",
+      "subpackage_notifications",
+      "subpackage_transformations",
+      "subpackage_connections"
     ]
   },
   "snippetsConfiguration": {},

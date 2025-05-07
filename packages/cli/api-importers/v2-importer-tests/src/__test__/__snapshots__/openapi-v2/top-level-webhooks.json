@@ -448,12 +448,12 @@
     ],
     "errors": [],
     "subpackages": [
-      "status"
+      "subpackage_status"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "status": {
+    "subpackage_status": {
       "name": {
         "originalName": "status",
         "camelCase": {

@@ -11582,8 +11582,8 @@
     }
   },
   "subpackages": {
-    "userManagement": {
-      "subpackageId": "userManagement",
+    "subpackage_userManagement": {
+      "subpackageId": "subpackage_userManagement",
       "name": "userManagement",
       "endpoints": [
         {
@@ -12347,8 +12347,8 @@
       "types": [],
       "subpackages": []
     },
-    "users": {
-      "subpackageId": "users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
       "name": "users",
       "endpoints": [
         {
@@ -12701,8 +12701,8 @@
       "types": [],
       "subpackages": []
     },
-    "translations": {
-      "subpackageId": "translations",
+    "subpackage_translations": {
+      "subpackageId": "subpackage_translations",
       "name": "translations",
       "endpoints": [
         {
@@ -12827,8 +12827,8 @@
       "types": [],
       "subpackages": []
     },
-    "templates": {
-      "subpackageId": "templates",
+    "subpackage_templates": {
+      "subpackageId": "subpackage_templates",
       "name": "templates",
       "endpoints": [
         {
@@ -13012,8 +13012,8 @@
       "types": [],
       "subpackages": []
     },
-    "teams": {
-      "subpackageId": "teams",
+    "subpackage_teams": {
+      "subpackageId": "subpackage_teams",
       "name": "teams",
       "endpoints": [
         {
@@ -13936,8 +13936,8 @@
       "types": [],
       "subpackages": []
     },
-    "statistics": {
-      "subpackageId": "statistics",
+    "subpackage_statistics": {
+      "subpackageId": "subpackage_statistics",
       "name": "statistics",
       "endpoints": [
         {
@@ -14780,8 +14780,8 @@
       "types": [],
       "subpackages": []
     },
-    "search": {
-      "subpackageId": "search",
+    "subpackage_search": {
+      "subpackageId": "subpackage_search",
       "name": "search",
       "endpoints": [
         {
@@ -14905,8 +14905,8 @@
       "types": [],
       "subpackages": []
     },
-    "schemas": {
-      "subpackageId": "schemas",
+    "subpackage_schemas": {
+      "subpackageId": "subpackage_schemas",
       "name": "schemas",
       "endpoints": [
         {
@@ -24466,8 +24466,8 @@
       "types": [],
       "subpackages": []
     },
-    "rules": {
-      "subpackageId": "rules",
+    "subpackage_rules": {
+      "subpackageId": "subpackage_rules",
       "name": "rules",
       "endpoints": [
         {
@@ -26520,8 +26520,8 @@
       "types": [],
       "subpackages": []
     },
-    "plans": {
-      "subpackageId": "plans",
+    "subpackage_plans": {
+      "subpackageId": "subpackage_plans",
       "name": "plans",
       "endpoints": [
         {
@@ -27022,8 +27022,8 @@
       "types": [],
       "subpackages": []
     },
-    "ping": {
-      "subpackageId": "ping",
+    "subpackage_ping": {
+      "subpackageId": "subpackage_ping",
       "name": "ping",
       "endpoints": [
         {
@@ -27206,8 +27206,8 @@
       "types": [],
       "subpackages": []
     },
-    "news": {
-      "subpackageId": "news",
+    "subpackage_news": {
+      "subpackageId": "subpackage_news",
       "name": "news",
       "endpoints": [
         {
@@ -27310,8 +27310,8 @@
       "types": [],
       "subpackages": []
     },
-    "languages": {
-      "subpackageId": "languages",
+    "subpackage_languages": {
+      "subpackageId": "subpackage_languages",
       "name": "languages",
       "endpoints": [
         {
@@ -27399,8 +27399,8 @@
       "types": [],
       "subpackages": []
     },
-    "history": {
-      "subpackageId": "history",
+    "subpackage_history": {
+      "subpackageId": "subpackage_history",
       "name": "history",
       "endpoints": [
         {
@@ -27647,8 +27647,8 @@
       "types": [],
       "subpackages": []
     },
-    "eventConsumers": {
-      "subpackageId": "eventConsumers",
+    "subpackage_eventConsumers": {
+      "subpackageId": "subpackage_eventConsumers",
       "name": "eventConsumers",
       "endpoints": [
         {
@@ -28046,8 +28046,8 @@
       "types": [],
       "subpackages": []
     },
-    "diagnostics": {
-      "subpackageId": "diagnostics",
+    "subpackage_diagnostics": {
+      "subpackageId": "subpackage_diagnostics",
       "name": "diagnostics",
       "endpoints": [
         {
@@ -28144,8 +28144,8 @@
       "types": [],
       "subpackages": []
     },
-    "contents": {
-      "subpackageId": "contents",
+    "subpackage_contents": {
+      "subpackageId": "subpackage_contents",
       "name": "contents",
       "endpoints": [
         {
@@ -32857,8 +32857,8 @@
       "types": [],
       "subpackages": []
     },
-    "comments": {
-      "subpackageId": "comments",
+    "subpackage_comments": {
+      "subpackageId": "subpackage_comments",
       "name": "comments",
       "endpoints": [
         {
@@ -33513,8 +33513,8 @@
       "types": [],
       "subpackages": []
     },
-    "notifications": {
-      "subpackageId": "notifications",
+    "subpackage_notifications": {
+      "subpackageId": "subpackage_notifications",
       "name": "notifications",
       "endpoints": [
         {
@@ -33753,8 +33753,8 @@
       "types": [],
       "subpackages": []
     },
-    "backups": {
-      "subpackageId": "backups",
+    "subpackage_backups": {
+      "subpackageId": "subpackage_backups",
       "name": "backups",
       "endpoints": [
         {
@@ -34360,8 +34360,8 @@
       "types": [],
       "subpackages": []
     },
-    "assets": {
-      "subpackageId": "assets",
+    "subpackage_assets": {
+      "subpackageId": "subpackage_assets",
       "name": "assets",
       "endpoints": [
         {
@@ -37610,8 +37610,8 @@
       "types": [],
       "subpackages": []
     },
-    "apps": {
-      "subpackageId": "apps",
+    "subpackage_apps": {
+      "subpackageId": "subpackage_apps",
       "name": "apps",
       "endpoints": [
         {
@@ -42265,28 +42265,28 @@
       "UpdateWorkflowDto"
     ],
     "subpackages": [
-      "userManagement",
-      "users",
-      "translations",
-      "templates",
-      "teams",
-      "statistics",
-      "search",
-      "schemas",
-      "rules",
-      "plans",
-      "ping",
-      "news",
-      "languages",
-      "history",
-      "eventConsumers",
-      "diagnostics",
-      "contents",
-      "comments",
-      "notifications",
-      "backups",
-      "assets",
-      "apps"
+      "subpackage_userManagement",
+      "subpackage_users",
+      "subpackage_translations",
+      "subpackage_templates",
+      "subpackage_teams",
+      "subpackage_statistics",
+      "subpackage_search",
+      "subpackage_schemas",
+      "subpackage_rules",
+      "subpackage_plans",
+      "subpackage_ping",
+      "subpackage_news",
+      "subpackage_languages",
+      "subpackage_history",
+      "subpackage_eventConsumers",
+      "subpackage_diagnostics",
+      "subpackage_contents",
+      "subpackage_comments",
+      "subpackage_notifications",
+      "subpackage_backups",
+      "subpackage_assets",
+      "subpackage_apps"
     ]
   },
   "snippetsConfiguration": {},

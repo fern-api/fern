@@ -24265,15 +24265,15 @@
     ],
     "errors": [],
     "subpackages": [
-      "Upload",
-      "Groups"
+      "subpackage_upload",
+      "subpackage_groups"
     ],
     "hasEndpointsInTree": false
   },
   "subpackages": {
-    "Upload": {
+    "subpackage_upload": {
       "name": {
-        "originalName": "Upload",
+        "originalName": "upload",
         "camelCase": {
           "unsafeName": "upload",
           "safeName": "upload"
@@ -24294,7 +24294,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Upload",
+            "originalName": "upload",
             "camelCase": {
               "unsafeName": "upload",
               "safeName": "upload"
@@ -24315,7 +24315,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Upload",
+          "originalName": "upload",
           "camelCase": {
             "unsafeName": "upload",
             "safeName": "upload"
@@ -24340,9 +24340,9 @@
       "subpackages": [],
       "hasEndpointsInTree": false
     },
-    "Groups": {
+    "subpackage_groups": {
       "name": {
-        "originalName": "Groups",
+        "originalName": "groups",
         "camelCase": {
           "unsafeName": "groups",
           "safeName": "groups"
@@ -24363,7 +24363,7 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "Groups",
+            "originalName": "groups",
             "camelCase": {
               "unsafeName": "groups",
               "safeName": "groups"
@@ -24384,7 +24384,7 @@
         ],
         "packagePath": [],
         "file": {
-          "originalName": "Groups",
+          "originalName": "groups",
           "camelCase": {
             "unsafeName": "groups",
             "safeName": "groups"

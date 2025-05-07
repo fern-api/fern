@@ -929,16 +929,301 @@
           }
         ]
       }
+    },
+    "ChannelsPetownersSubscribeParamsData": {
+      "name": "ChannelsPetownersSubscribeParamsData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "petOwner",
+            "valueType": {
+              "type": "id",
+              "value": "PetOwner"
+            }
+          }
+        ]
+      }
+    },
+    "ChannelsPetownersSubscribeParams": {
+      "name": "ChannelsPetownersSubscribeParams",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "channel",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "literal",
+                "value": {
+                  "type": "stringLiteral",
+                  "value": "petowners"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ChannelsPetownersSubscribeParamsData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PetownersSubscribe": {
+      "name": "PetownersSubscribe",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "params",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ChannelsPetownersSubscribeParams"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ChannelsTestChannelMessagesSendMessageDataData": {
+      "name": "ChannelsTestChannelMessagesSendMessageDataData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ChannelsTestChannelMessagesSendMessageData": {
+      "name": "ChannelsTestChannelMessagesSendMessageData",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ChannelsTestChannelMessagesSendMessageDataData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "testChannel_sendMessage": {
+      "name": "testChannel_sendMessage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ChannelsTestChannelMessagesSendMessageData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ChannelsTestChannelMessagesSendMessage2Data": {
+      "name": "ChannelsTestChannelMessagesSendMessage2Data",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "age",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "address",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "testChannel_sendMessage2": {
+      "name": "testChannel_sendMessage2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ChannelsTestChannelMessagesSendMessage2Data"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
-    "pet": {
-      "subpackageId": "pet",
+    "subpackage_pet": {
+      "subpackageId": "subpackage_pet",
       "name": "pet",
       "endpoints": [
         {
           "auth": false,
           "method": "PUT",
+          "defaultEnvironment": "websocket",
+          "environments": [
+            {
+              "id": "websocket",
+              "baseUrl": "wss://api.async.com"
+            },
+            {
+              "id": "websocket2",
+              "baseUrl": "wss://api2.async.com"
+            }
+          ],
           "id": "updateAnExistingPet",
           "originalEndpointId": "pet.updateAnExistingPet",
           "name": "Update an existing pet",
@@ -1172,13 +1457,24 @@
       "types": [],
       "subpackages": []
     },
-    "order": {
-      "subpackageId": "order",
+    "subpackage_order": {
+      "subpackageId": "subpackage_order",
       "name": "order",
       "endpoints": [
         {
           "auth": false,
           "method": "GET",
+          "defaultEnvironment": "websocket",
+          "environments": [
+            {
+              "id": "websocket",
+              "baseUrl": "wss://api.async.com"
+            },
+            {
+              "id": "websocket2",
+              "baseUrl": "wss://api2.async.com"
+            }
+          ],
           "id": "getAnOrder",
           "originalEndpointId": "order.getAnOrder",
           "name": "Get an order",
@@ -1251,6 +1547,149 @@
       "websockets": [],
       "types": [],
       "subpackages": []
+    },
+    "subpackage_petowners": {
+      "subpackageId": "subpackage_petowners",
+      "name": "petowners",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": false,
+          "description": "Private websocket channel for receiving updates about pet owners and their pets",
+          "defaultEnvironment": "websocket",
+          "environments": [
+            {
+              "id": "websocket",
+              "baseUrl": "wss://api.async.com"
+            },
+            {
+              "id": "websocket2",
+              "baseUrl": "wss://api2.async.com"
+            }
+          ],
+          "id": "petowners",
+          "name": "/petowners",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/petowners"
+              }
+            ]
+          },
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "subscribe",
+              "displayName": "subscribe",
+              "origin": "server",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "PetownersSubscribe"
+                }
+              }
+            }
+          ],
+          "examples": [
+            {
+              "path": "/petowners",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "subscribe",
+                  "body": {}
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_testChannel": {
+      "subpackageId": "subpackage_testChannel",
+      "name": "testChannel",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [
+        {
+          "auth": false,
+          "defaultEnvironment": "websocket",
+          "environments": [
+            {
+              "id": "websocket",
+              "baseUrl": "wss://api.async.com"
+            },
+            {
+              "id": "websocket2",
+              "baseUrl": "wss://api2.async.com"
+            }
+          ],
+          "id": "testChannel",
+          "name": "testChannel",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/test"
+              }
+            ]
+          },
+          "headers": [],
+          "queryParameters": [],
+          "messages": [
+            {
+              "type": "send",
+              "displayName": "send",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "testChannel_sendMessage"
+                }
+              }
+            },
+            {
+              "type": "send",
+              "displayName": "send",
+              "origin": "client",
+              "body": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "testChannel_sendMessage2"
+                }
+              }
+            }
+          ],
+          "examples": [
+            {
+              "path": "/test",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "messages": [
+                {
+                  "type": "send",
+                  "body": {}
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "subpackages": []
     }
   },
   "rootPackage": {
@@ -1261,11 +1700,16 @@
       "Mammal",
       "Pet",
       "PetOwner",
-      "Order"
+      "Order",
+      "PetOwner",
+      "testChannel_sendMessage",
+      "testChannel_sendMessage2"
     ],
     "subpackages": [
-      "pet",
-      "order"
+      "subpackage_pet",
+      "subpackage_order",
+      "subpackage_petowners",
+      "subpackage_testChannel"
     ]
   },
   "snippetsConfiguration": {},

@@ -1696,8 +1696,8 @@
     }
   },
   "subpackages": {
-    "api": {
-      "subpackageId": "api",
+    "subpackage_api": {
+      "subpackageId": "subpackage_api",
       "name": "api",
       "endpoints": [
         {
@@ -3403,7 +3403,7 @@
       "Photo"
     ],
     "subpackages": [
-      "api"
+      "subpackage_api"
     ]
   },
   "auth": {

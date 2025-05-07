@@ -3368,8 +3368,8 @@
     }
   },
   "subpackages": {
-    "accounts": {
-      "subpackageId": "accounts",
+    "subpackage_accounts": {
+      "subpackageId": "subpackage_accounts",
       "name": "accounts",
       "endpoints": [
         {
@@ -4093,8 +4093,8 @@
       "types": [],
       "subpackages": []
     },
-    "accountJointOwners": {
-      "subpackageId": "accountJointOwners",
+    "subpackage_accountJointOwners": {
+      "subpackageId": "subpackage_accountJointOwners",
       "name": "accountJointOwners",
       "endpoints": [
         {
@@ -4197,8 +4197,8 @@
       "types": [],
       "subpackages": []
     },
-    "overdraftProtection": {
-      "subpackageId": "overdraftProtection",
+    "subpackage_overdraftProtection": {
+      "subpackageId": "subpackage_overdraftProtection",
       "name": "overdraftProtection",
       "endpoints": [
         {
@@ -4505,8 +4505,8 @@
       "types": [],
       "subpackages": []
     },
-    "jointOwners": {
-      "subpackageId": "jointOwners",
+    "subpackage_jointOwners": {
+      "subpackageId": "subpackage_jointOwners",
       "name": "jointOwners",
       "endpoints": [
         {
@@ -4633,8 +4633,8 @@
       "types": [],
       "subpackages": []
     },
-    "institutions": {
-      "subpackageId": "institutions",
+    "subpackage_institutions": {
+      "subpackageId": "subpackage_institutions",
       "name": "institutions",
       "endpoints": [
         {
@@ -5403,8 +5403,8 @@
       "types": [],
       "subpackages": []
     },
-    "transactions": {
-      "subpackageId": "transactions",
+    "subpackage_transactions": {
+      "subpackageId": "subpackage_transactions",
       "name": "transactions",
       "endpoints": [
         {
@@ -5739,8 +5739,8 @@
       "types": [],
       "subpackages": []
     },
-    "transactionCategories": {
-      "subpackageId": "transactionCategories",
+    "subpackage_transactionCategories": {
+      "subpackageId": "subpackage_transactionCategories",
       "name": "transactionCategories",
       "endpoints": [
         {
@@ -5864,8 +5864,8 @@
       "types": [],
       "subpackages": []
     },
-    "transfers": {
-      "subpackageId": "transfers",
+    "subpackage_transfers": {
+      "subpackageId": "subpackage_transfers",
       "name": "transfers",
       "endpoints": [
         {
@@ -6757,14 +6757,14 @@
       "challengePromptId"
     ],
     "subpackages": [
-      "accounts",
-      "accountJointOwners",
-      "overdraftProtection",
-      "jointOwners",
-      "institutions",
-      "transactions",
-      "transactionCategories",
-      "transfers"
+      "subpackage_accounts",
+      "subpackage_accountJointOwners",
+      "subpackage_overdraftProtection",
+      "subpackage_jointOwners",
+      "subpackage_institutions",
+      "subpackage_transactions",
+      "subpackage_transactionCategories",
+      "subpackage_transfers"
     ]
   },
   "auth": {

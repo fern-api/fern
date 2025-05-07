@@ -17093,9 +17093,9 @@
     }
   },
   "subpackages": {
-    "NFT Ownership Endpoints": {
-      "subpackageId": "NFT Ownership Endpoints",
-      "name": "NFT Ownership Endpoints",
+    "subpackage_nftOwnershipEndpoints": {
+      "subpackageId": "subpackage_nftOwnershipEndpoints",
+      "name": "nftOwnershipEndpoints",
       "endpoints": [
         {
           "auth": false,
@@ -19288,9 +19288,9 @@
       "types": [],
       "subpackages": []
     },
-    "NFT Metadata Endpoints": {
-      "subpackageId": "NFT Metadata Endpoints",
-      "name": "NFT Metadata Endpoints",
+    "subpackage_nftMetadataEndpoints": {
+      "subpackageId": "subpackage_nftMetadataEndpoints",
+      "name": "nftMetadataEndpoints",
       "endpoints": [
         {
           "auth": false,
@@ -23477,9 +23477,9 @@
       "types": [],
       "subpackages": []
     },
-    "NFT Spam Endpoints": {
-      "subpackageId": "NFT Spam Endpoints",
-      "name": "NFT Spam Endpoints",
+    "subpackage_nftSpamEndpoints": {
+      "subpackageId": "subpackage_nftSpamEndpoints",
+      "name": "nftSpamEndpoints",
       "endpoints": [
         {
           "auth": false,
@@ -24427,9 +24427,9 @@
       "types": [],
       "subpackages": []
     },
-    "NFT Sales Endpoints": {
-      "subpackageId": "NFT Sales Endpoints",
-      "name": "NFT Sales Endpoints",
+    "subpackage_nftSalesEndpoints": {
+      "subpackageId": "subpackage_nftSalesEndpoints",
+      "name": "nftSalesEndpoints",
       "endpoints": [
         {
           "auth": false,
@@ -25188,9 +25188,9 @@
       "types": [],
       "subpackages": []
     },
-    "NFT API V2 Methods (Older Version)": {
-      "subpackageId": "NFT API V2 Methods (Older Version)",
-      "name": "NFT API V2 Methods (Older Version)",
+    "subpackage_nftApiV2MethodsOlderVersion": {
+      "subpackageId": "subpackage_nftApiV2MethodsOlderVersion",
+      "name": "nftApiV2MethodsOlderVersion",
       "endpoints": [
         {
           "auth": false,
@@ -31490,11 +31490,11 @@
       "contractv3"
     ],
     "subpackages": [
-      "NFT Ownership Endpoints",
-      "NFT Metadata Endpoints",
-      "NFT Spam Endpoints",
-      "NFT Sales Endpoints",
-      "NFT API V2 Methods (Older Version)"
+      "subpackage_nftOwnershipEndpoints",
+      "subpackage_nftMetadataEndpoints",
+      "subpackage_nftSpamEndpoints",
+      "subpackage_nftSalesEndpoints",
+      "subpackage_nftApiV2MethodsOlderVersion"
     ]
   },
   "snippetsConfiguration": {},

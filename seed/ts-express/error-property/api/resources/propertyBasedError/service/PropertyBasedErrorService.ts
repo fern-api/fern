@@ -56,7 +56,9 @@ export class PropertyBasedErrorService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedErrorPropertyError) {
                     switch (error.errorName) {

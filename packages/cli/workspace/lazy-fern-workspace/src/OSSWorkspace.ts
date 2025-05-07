@@ -11,10 +11,11 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
+import { Audiences } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
+import { IrGraph, mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir";
 import { parse } from "@fern-api/openapi-ir-parser";
 import { OpenAPI3_1Converter, OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
@@ -102,17 +103,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     }
 
     /**
-     * @beta This method is in beta and not ready for production use.
      * @internal
      * @owner dsinghvi
      */
     public async getIntermediateRepresentation({
-        context
+        context,
+        audiences
     }: {
         context: TaskContext;
+        audiences: Audiences;
     }): Promise<IntermediateRepresentation> {
         const specs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const documents = await this.loader.loadDocuments({ context, specs });
+        const irGraph = new IrGraph(audiences);
 
         const authOverrides =
             this.generatorsConfiguration?.api?.auth != null ? { ...this.generatorsConfiguration?.api } : undefined;

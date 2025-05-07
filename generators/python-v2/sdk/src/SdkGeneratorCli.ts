@@ -37,7 +37,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
         if (context.isSelfHosted()) {
-            this.generateGitHub({ context });
+            await this.generateGitHub({ context });
         }
     }
 
