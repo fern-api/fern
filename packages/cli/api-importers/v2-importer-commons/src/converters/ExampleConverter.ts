@@ -520,6 +520,18 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 if (typeof property !== "object") {
                     return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
                 }
+
+                // If the property is both deprecated and optional, we will not include the example
+                if (this.isDeprecatedProperty(property)) {
+                    const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema });
+                    if (isOptionalProperty) {
+                        return {
+                            key,
+                            result: { isValid: true, coerced: false, validExample: undefined, errors: [] }
+                        };
+                    }
+                }
+
                 if (
                     "readOnly" in property &&
                     property.readOnly === true &&
@@ -784,5 +796,23 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             return Object.values(resolvedSchema.examples ?? {})[0] as Type;
         }
         return undefined;
+    }
+
+    // Checks if the property is deprecated
+    private isDeprecatedProperty(
+        property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
+        return property != null && "availability" in property && property.availability === "deprecated";
+    }
+
+    // Checks if the property is required
+    private isRequiredProperty({
+        key,
+        resolvedSchema
+    }: {
+        key: string;
+        resolvedSchema: OpenAPIV3_1.SchemaObject;
+    }): boolean {
+        return resolvedSchema.required?.includes(key) ?? false;
     }
 }
