@@ -340,31 +340,35 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                     yargs.option("group", {
                         string: true,
-                        demandOption: true,
                         description: "The group to generate the next semantic version for"
-                    });
-                    yargs.option("from-version", {
-                        string: true,
-                        description: "The previous version of the SDK (e.g. 1.1.0)"
                     });
                     yargs.option("from", {
                         string: true,
                         demandOption: true,
                         description:
-                            "A reference that resolves to the previous version of the API (e.g. a git SHA like 'bac7962')"
+                            "A reference that resolves to the previous version of the API (e.g. a filepath containing the previous version of the API)"
+                    });
+                    yargs.option("to", {
+                        string: true,
+                        demandOption: true, // TODO: We should eventually not require this flag.
+                        description:
+                            "A reference that resolves to the next version of the API (e.g. a filepath containing the current version of the API)"
+                    });
+                    yargs.option("from-version", {
+                        string: true,
+                        demandOption: true, // TODO: We should eventually not require this flag.
+                        description: "The previous version of the SDK (e.g. 1.1.0)"
                     });
                 },
-                async (argv) =>
-                    await getSdkVersion({
-                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                            commandLineApiWorkspace: undefined,
-                            defaultToAllApiWorkspaces: true
-                        }),
+                async (argv) => {
+                    const result = await getSdkVersion({
                         context: cliContext,
-                        group: argv.group as string,
                         from: argv.from as string,
+                        to: argv.to as string,
                         fromVersion: argv.fromVersion as string
-                    })
+                    });
+                    cliContext.logger.info(JSON.stringify(result));
+                }
             )
             .demandCommand(1)
             .help();
