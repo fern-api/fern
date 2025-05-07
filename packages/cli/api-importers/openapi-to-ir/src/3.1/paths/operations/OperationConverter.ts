@@ -85,8 +85,6 @@ export class OperationConverter extends AbstractOperationConverter {
         const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
         const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
-        // TODO: We'll need to perform conversion for the top-level errors as well.
-
         const endpointId = [];
         if (this.context.namespace != null) {
             endpointId.push(this.context.namespace);
