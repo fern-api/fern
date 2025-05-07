@@ -33,12 +33,20 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     private logger: Logger;
     private config: FernGeneratorExec.GeneratorConfig;
     private cli: GeneratorAgentClient;
-
-    public constructor({ logger, config }: { logger: Logger; config: FernGeneratorExec.GeneratorConfig }) {
+    public constructor({
+        logger,
+        config,
+        selfHosted = false
+    }: {
+        logger: Logger;
+        config: FernGeneratorExec.GeneratorConfig;
+        selfHosted?: boolean;
+    }) {
         this.logger = logger;
         this.config = config;
         this.cli = new GeneratorAgentClient({
-            logger
+            logger,
+            selfHosted
         });
     }
 

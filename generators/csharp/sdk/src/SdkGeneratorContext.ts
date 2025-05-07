@@ -70,7 +70,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
-            publishConfig: this.ir.publishConfig
+            ir: this.ir
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }

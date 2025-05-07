@@ -36,7 +36,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
-            publishConfig: this.ir.publishConfig
+            ir: this.ir
         });
     }
 

@@ -20,4 +20,6 @@ COPY generators/typescript/utils/scripts/ /assets/scripts
 
 COPY generators/typescript/sdk/cli/browser-docker/dist/browserCli.cjs /browserCli.cjs
 
+RUN npm install -f -g @fern-api/generator-cli
+
 ENTRYPOINT ["node", "/browserCli.cjs"]

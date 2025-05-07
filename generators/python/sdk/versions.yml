@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.18.3
+  changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+
 - version: 4.18.2
   irVersion: 57
   changelogEntry:
