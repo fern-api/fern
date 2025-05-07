@@ -22,7 +22,7 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
         this.generatorAgent = new PythonGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            publishConfig: this.ir.publishConfig
+            ir: this.ir
         });
     }
 

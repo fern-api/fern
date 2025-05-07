@@ -11,10 +11,12 @@ export class GeneratorAgentClient {
     private logger: Logger;
     private skipInstall: boolean;
     private cli: LoggingExecutable | undefined;
+    private selfHosted: boolean;
 
-    constructor({ logger, skipInstall }: { logger: Logger; skipInstall?: boolean }) {
+    constructor({ logger, skipInstall, selfHosted }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
         this.logger = logger;
         this.skipInstall = skipInstall ?? false;
+        this.selfHosted = selfHosted ?? false;
     }
 
     public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
@@ -81,7 +83,9 @@ export class GeneratorAgentClient {
         try {
             await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
         } catch (error) {
-            this.logger.debug(`Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`);
+            this.logger.debug(
+                `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`
+            );
             // Continue execution as the package might already be installed
         }
 
