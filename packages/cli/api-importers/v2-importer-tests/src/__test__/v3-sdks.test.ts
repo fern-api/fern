@@ -42,7 +42,7 @@ describe("openapi-v2-sdks", async () => {
                     });
                     // eslint-disable-next-line jest/no-standalone-expect
                     await expect(JSON.stringify(intermediateRepresentation, undefined, 2)).toMatchFileSnapshot(
-                        `./__snapshots__/openapi-v2-sdks/${fixture.name}.json`
+                        `./__snapshots__/v3-sdks/${fixture.name}.json`
                     );
                 }
             },
