@@ -2,35 +2,35 @@
 
 # isort: skip_file
 
+from .acai import Acai
+from .animal import Animal
+from .cat import Cat
 from .container_value import ContainerValue, ContainerValue_List, ContainerValue_Optional
+from .dog import Dog
 from .field_name import FieldName
 from .field_value import FieldValue, FieldValue_ContainerValue, FieldValue_ObjectValue, FieldValue_PrimitiveValue
-from .first_union import FirstUnion
-from .first_union_first_element import FirstUnionFirstElement
-from .first_union_second_element import FirstUnionSecondElement
+from .fig import Fig
+from .fruit import Fruit
 from .object_field_value import ObjectFieldValue
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
-from .second_union import SecondUnion
-from .second_union_first_element import SecondUnionFirstElement
-from .second_union_second_element import SecondUnionSecondElement
 
 __all__ = [
+    "Acai",
+    "Animal",
+    "Cat",
     "ContainerValue",
     "ContainerValue_List",
     "ContainerValue_Optional",
+    "Dog",
     "FieldName",
     "FieldValue",
     "FieldValue_ContainerValue",
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
-    "FirstUnion",
-    "FirstUnionFirstElement",
-    "FirstUnionSecondElement",
+    "Fig",
+    "Fruit",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
-    "SecondUnion",
-    "SecondUnionFirstElement",
-    "SecondUnionSecondElement",
 ]
