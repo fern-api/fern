@@ -10,13 +10,6 @@ buildScripts:
   compileScript:
     commands:
       - poetry run mypy .
-  testScript:
-    # TODO: we need to actually run the mock server tests as well
-    # Note: not all versions of the generator have this test directory which brings in the unit tests we write
-    # as a result, the script here only runs pytest if the directory exists, and exits 0 if it does not (e.g. just passes)
-    commands:
-      - export PYTHON_TEST_DIR="./tests/utils"
-      - if [ -d "$PYTHON_TEST_DIR" ]; then poetry run pytest -rP "$PYTHON_TEST_DIR"; else echo "Test directory not found. Skipping tests."; fi
 
 publish:
   workingDirectory: generators/python

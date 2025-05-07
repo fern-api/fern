@@ -65,7 +65,9 @@ export class OrganizationService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedMixedFileDirectoryError) {
                         console.warn(

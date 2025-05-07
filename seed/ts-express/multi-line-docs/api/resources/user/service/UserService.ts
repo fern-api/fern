@@ -69,7 +69,9 @@ export class UserService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedMultiLineDocsError) {
                     console.warn(
@@ -102,7 +104,9 @@ export class UserService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedMultiLineDocsError) {
                         console.warn(

@@ -81,7 +81,9 @@ export class QueryParamService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedEnumError) {
                     console.warn(
@@ -109,7 +111,9 @@ export class QueryParamService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedEnumError) {
                     console.warn(
