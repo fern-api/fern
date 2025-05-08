@@ -3,31 +3,31 @@
 # isort: skip_file
 
 from .types import (
+    Acai,
+    Animal,
+    Cat,
     ContainerValue,
+    Dog,
     FieldName,
     FieldValue,
-    FirstUnion,
-    FirstUnionFirstElement,
-    FirstUnionSecondElement,
+    Fig,
+    Fruit,
     ObjectFieldValue,
     ObjectValue,
     PrimitiveValue,
-    SecondUnion,
-    SecondUnionFirstElement,
-    SecondUnionSecondElement,
 )
 
 __all__ = [
+    "Acai",
+    "Animal",
+    "Cat",
     "ContainerValue",
+    "Dog",
     "FieldName",
     "FieldValue",
-    "FirstUnion",
-    "FirstUnionFirstElement",
-    "FirstUnionSecondElement",
+    "Fig",
+    "Fruit",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
-    "SecondUnion",
-    "SecondUnionFirstElement",
-    "SecondUnionSecondElement",
 ]

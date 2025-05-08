@@ -8,8 +8,8 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class SecondUnionFirstElement(UniversalBaseModel):
-    child: "FirstUnion"
+class Dog(UniversalBaseModel):
+    fruit: "Fruit"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
@@ -19,6 +19,6 @@ class SecondUnionFirstElement(UniversalBaseModel):
             extra = pydantic.Extra.forbid
 
 
-from .first_union import FirstUnion  # noqa: E402, F401, I001
+from .fruit import Fruit  # noqa: E402, F401, I001
 
-update_forward_refs(SecondUnionFirstElement)
+update_forward_refs(Dog)
