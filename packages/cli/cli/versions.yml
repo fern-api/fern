@@ -1,3 +1,11 @@
+
+- changelogEntry: 
+  - summary: |
+      Parse and render errors in the OpenAPI V3 parser.
+    type: chore
+  irVersion: 57
+  version: 0.60.22
+
 - changelogEntry: 
   - summary: |
       OpenAPI V3 parser handles converting converting schemas that have a singular non-object `allOf`.

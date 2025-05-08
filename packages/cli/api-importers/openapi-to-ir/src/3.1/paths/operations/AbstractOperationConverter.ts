@@ -8,7 +8,6 @@ import {
     HttpResponse,
     PathParameter,
     QueryParameter,
-    ResponseErrors,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
@@ -36,14 +35,13 @@ export declare namespace AbstractOperationConverter {
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
-
 interface ConvertedRequestBody {
     value: HttpRequestBody;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 interface ConvertedResponseBody {
     value: HttpResponse | undefined;
-    errors: ResponseErrors;
+    errors: ResponseErrorConverter.Output[];
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -264,8 +262,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     };
                 }
             }
-            // Convert Error Responses (4xx)
-            if (statusCodeNum >= 400 && statusCodeNum < 500) {
+            // Convert Error Responses (4xx and 5xx)
+            if (statusCodeNum >= 400 && statusCodeNum < 600) {
                 const resolvedResponse = await this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
@@ -281,7 +279,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     responseError: resolvedResponse,
                     group: group ?? [],
                     method,
-                    statusCode
+                    statusCode: statusCodeNum
                 });
                 const converted = await responseErrorConverter.convert();
                 if (converted != null) {
@@ -289,7 +287,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
                     };
-                    convertedResponseBody.errors.push(converted.error);
+                    convertedResponseBody.errors.push(converted);
                 }
             }
         }

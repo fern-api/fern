@@ -153,6 +153,7 @@
     }
   },
   "errors": {
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
     "error_:ListRequestBadRequestError": {
       "name": {
         "name": {
@@ -172,12 +173,34 @@
           "pascalCase": {
             "unsafeName": "ListRequestBadRequestError",
             "safeName": "ListRequestBadRequestError"
+=======
+    "error_:BadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
         "errorId": "error_:ListRequestBadRequestError"
       },
       "discriminantValue": {
@@ -201,6 +224,31 @@
           }
         },
         "wireValue": "ListRequestBadRequestError"
+=======
+        "errorId": "error_:BadRequestError"
+      },
+      "discriminantValue": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "wireValue": "BadRequestError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
       },
       "docs": "Bad Request",
       "statusCode": 400,
@@ -340,6 +388,7 @@
         }
       ]
     },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
     "error_:ListRequestUnauthorizedError": {
       "name": {
         "name": {
@@ -359,12 +408,34 @@
           "pascalCase": {
             "unsafeName": "ListRequestUnauthorizedError",
             "safeName": "ListRequestUnauthorizedError"
+=======
+    "error_:UnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
         "errorId": "error_:ListRequestUnauthorizedError"
       },
       "discriminantValue": {
@@ -388,6 +459,31 @@
           }
         },
         "wireValue": "ListRequestUnauthorizedError"
+=======
+        "errorId": "error_:UnauthorizedError"
+      },
+      "discriminantValue": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+          }
+        },
+        "wireValue": "UnauthorizedError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
       },
       "docs": "Unauthorized",
       "statusCode": 401,
@@ -527,6 +623,7 @@
         }
       ]
     },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
     "error_:ListRequestNotFoundError": {
       "name": {
         "name": {
@@ -546,12 +643,34 @@
           "pascalCase": {
             "unsafeName": "ListRequestNotFoundError",
             "safeName": "ListRequestNotFoundError"
+=======
+    "error_:NotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
         "errorId": "error_:ListRequestNotFoundError"
       },
       "discriminantValue": {
@@ -575,6 +694,31 @@
           }
         },
         "wireValue": "ListRequestNotFoundError"
+=======
+        "errorId": "error_:NotFoundError"
+      },
+      "discriminantValue": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+          }
+        },
+        "wireValue": "NotFoundError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
       },
       "docs": "Not Found",
       "statusCode": 404,
@@ -795,6 +939,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                   "originalName": "ListRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "listRequestBadRequestError",
@@ -811,18 +956,41 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestBadRequestError",
                     "safeName": "ListRequestBadRequestError"
+=======
+                  "originalName": "BadRequestError",
+                  "camelCase": {
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                 "errorId": "error_:ListRequestBadRequestError"
+=======
+                "errorId": "error_:BadRequestError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
               }
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                   "originalName": "ListRequestUnauthorizedError",
                   "camelCase": {
                     "unsafeName": "listRequestUnauthorizedError",
@@ -839,18 +1007,41 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestUnauthorizedError",
                     "safeName": "ListRequestUnauthorizedError"
+=======
+                  "originalName": "UnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "unauthorizedError",
+                    "safeName": "unauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "unauthorized_error",
+                    "safeName": "unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UNAUTHORIZED_ERROR",
+                    "safeName": "UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UnauthorizedError",
+                    "safeName": "UnauthorizedError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                 "errorId": "error_:ListRequestUnauthorizedError"
+=======
+                "errorId": "error_:UnauthorizedError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
               }
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                   "originalName": "ListRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "listRequestNotFoundError",
@@ -867,13 +1058,35 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestNotFoundError",
                     "safeName": "ListRequestNotFoundError"
+=======
+                  "originalName": "NotFoundError",
+                  "camelCase": {
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
                 "errorId": "error_:ListRequestNotFoundError"
+=======
+                "errorId": "error_:NotFoundError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
               }
             }
           ],
@@ -1134,9 +1347,15 @@
       "type_:Error"
     ],
     "errors": [
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/baseline-docs/errors.json
       "error_:ListRequestBadRequestError",
       "error_:ListRequestUnauthorizedError",
       "error_:ListRequestNotFoundError"
+=======
+      "error_:BadRequestError",
+      "error_:UnauthorizedError",
+      "error_:NotFoundError"
+>>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/openapi-v2-baseline/errors.json
     ],
     "subpackages": [],
     "hasEndpointsInTree": true
