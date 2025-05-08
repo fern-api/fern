@@ -1,3 +1,9 @@
+- changelogEntry: 
+  - summary: |
+      Auto-detect the `expires_in` property if it exists in the OAuth response.
+    type: chore
+  irVersion: 57
+  version: 0.60.23
 
 - changelogEntry: 
   - summary: |
