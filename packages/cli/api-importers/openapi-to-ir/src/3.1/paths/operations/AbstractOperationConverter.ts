@@ -279,6 +279,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     responseError: resolvedResponse,
                     group: group ?? [],
                     method,
+                    methodName: this.evaluateMethodNameFromOperation(),
                     statusCode: statusCodeNum
                 });
                 const converted = await responseErrorConverter.convert();
@@ -317,27 +318,28 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
+    protected evaluateMethodNameFromOperation(): string {
+        const operationId = this.operation.operationId;
+        if (operationId == null) {
+            return this.operation.summary != null
+                ? camelCase(this.operation.summary)
+                : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
+        }
+        return operationId;
+    }
+
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];
-        const operationId = this.operation.operationId;
-
-        if (operationId == null) {
-            const methodName =
-                this.operation.summary != null
-                    ? camelCase(this.operation.summary)
-                    : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
-
-            return tag != null ? { group: [tag], method: methodName } : { method: methodName };
-        }
+        const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {
-            return { method: operationId };
+            return { method: methodName };
         }
 
         const tagTokens = tokenizeString(tag);
-        const operationIdTokens = tokenizeString(operationId);
+        const methodNameTokens = tokenizeString(methodName);
 
-        if (isEqual(tagTokens, operationIdTokens)) {
+        if (isEqual(tagTokens, methodNameTokens)) {
             return {
                 method: tag
             };
@@ -345,32 +347,32 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return this.computeGroupAndMethodFromTokens({
             tag,
             tagTokens,
-            operationId,
-            operationIdTokens
+            methodName,
+            methodNameTokens
         });
     }
 
     protected computeGroupAndMethodFromTokens({
         tag,
         tagTokens,
-        operationId,
-        operationIdTokens
+        methodName,
+        methodNameTokens
     }: {
         tag: string;
         tagTokens: string[];
-        operationId: string;
-        operationIdTokens: string[];
+        methodName: string;
+        methodNameTokens: string[];
     }): GroupNameAndLocation {
-        const tagIsNotPrefixOfOperationId = tagTokens.some((tagToken, index) => tagToken !== operationIdTokens[index]);
+        const tagIsNotPrefixOfMethodName = tagTokens.some((tagToken, index) => tagToken !== methodNameTokens[index]);
 
-        if (tagIsNotPrefixOfOperationId) {
+        if (tagIsNotPrefixOfMethodName) {
             return {
                 group: [tag],
-                method: operationId
+                method: methodName
             };
         }
 
-        const methodTokens = operationIdTokens.slice(tagTokens.length);
+        const methodTokens = methodNameTokens.slice(tagTokens.length);
         return {
             group: [tag],
             method: camelCase(methodTokens.join("_"))

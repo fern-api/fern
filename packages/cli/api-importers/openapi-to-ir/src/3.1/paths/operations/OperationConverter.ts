@@ -116,7 +116,7 @@ export class OperationConverter extends AbstractOperationConverter {
             const errorId = responseError.error.errorId;
             topLevelErrors[errorId] = {
                 name: responseError.error,
-                displayName: responseError.error.errorId,
+                displayName: convertedError.displayName,
                 discriminantValue: {
                     name: responseError.error.name,
                     wireValue: errorId

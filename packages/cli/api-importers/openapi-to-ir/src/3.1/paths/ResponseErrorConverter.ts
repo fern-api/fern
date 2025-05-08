@@ -6,12 +6,14 @@ import { Converters, ERROR_NAMES_BY_STATUS_CODE } from "@fern-api/v2-importer-co
 export declare namespace ResponseErrorConverter {
     export interface Args extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Args {
         responseError: OpenAPIV3_1.ResponseObject;
+        methodName: string;
         statusCode: number;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         error: ResponseError;
         errorType: TypeReference;
+        displayName: string;
         statusCode: number;
     }
 }
@@ -19,11 +21,21 @@ export declare namespace ResponseErrorConverter {
 export class ResponseErrorConverter extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter {
     private readonly responseError: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: number;
+    private readonly methodName: string;
 
-    constructor({ context, breadcrumbs, responseError, group, method, statusCode }: ResponseErrorConverter.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        responseError,
+        group,
+        method,
+        methodName,
+        statusCode
+    }: ResponseErrorConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.responseError = responseError;
         this.statusCode = statusCode;
+        this.methodName = methodName;
     }
 
     public async convert(): Promise<ResponseErrorConverter.Output | undefined> {
@@ -47,18 +59,22 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             if (convertedSchema == null) {
                 continue;
             }
+            const errorId = this.context.enableUniqueErrorsPerEndpoint
+                ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
+                : errorName;
             if (convertedSchema.schema != null) {
                 const error = {
                     error: {
-                        name: this.context.casingsGenerator.generateName(errorName),
+                        name: this.context.casingsGenerator.generateName(errorId),
                         fernFilepath: convertedSchema.schema.name?.fernFilepath,
-                        errorId: errorName
+                        errorId
                     },
                     docs: this.responseError.description
                 };
                 return {
                     error,
                     errorType: convertedSchema.type,
+                    displayName: errorName,
                     statusCode: this.statusCode,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     examples: convertedSchema.examples
@@ -66,15 +82,16 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             } else if (convertedSchema.type.type === "named") {
                 const error = {
                     error: {
-                        name: this.context.casingsGenerator.generateName(errorName),
+                        name: this.context.casingsGenerator.generateName(errorId),
                         fernFilepath: convertedSchema.type.fernFilepath,
-                        errorId: errorName
+                        errorId
                     },
                     docs: this.responseError.description
                 };
                 return {
                     error,
                     errorType: convertedSchema.type,
+                    displayName: errorName,
                     statusCode: this.statusCode,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     examples: convertedSchema.examples
@@ -83,4 +100,11 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         }
         return undefined;
     }
+}
+
+function uppercaseFirstChar(str: string): string {
+    if (str.length === 0) {
+        return str;
+    }
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

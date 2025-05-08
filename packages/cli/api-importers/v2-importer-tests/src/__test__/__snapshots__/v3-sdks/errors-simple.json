@@ -423,6 +423,35 @@
                 }
               },
               "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
+              },
+              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -584,7 +613,340 @@
       ]
     }
   },
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
   "errors": {},
+=======
+  "errors": {
+    "BadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "BadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "wireValue": "BadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "Bad Request",
+      "examples": []
+    },
+    "UnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+          }
+        },
+        "wireValue": "UnauthorizedError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "NotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "NotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+          }
+        },
+        "wireValue": "NotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "InternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "InternalServerError",
+          "camelCase": {
+            "unsafeName": "internalServerError",
+            "safeName": "internalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "internal_server_error",
+            "safeName": "internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "INTERNAL_SERVER_ERROR",
+            "safeName": "INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "InternalServerError",
+            "safeName": "InternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "InternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "InternalServerError",
+          "camelCase": {
+            "unsafeName": "internalServerError",
+            "safeName": "internalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "internal_server_error",
+            "safeName": "internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "INTERNAL_SERVER_ERROR",
+            "safeName": "INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "InternalServerError",
+            "safeName": "InternalServerError"
+          }
+        },
+        "wireValue": "InternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    }
+  },
+>>>>>>> f3bccdc7ee (respect `enableUniqueErrorsPerEndpoint` key during IR conversion, but render succinct displayName property):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors-simple.json
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
