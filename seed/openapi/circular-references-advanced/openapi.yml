@@ -26,48 +26,48 @@ components:
       properties: {}
       allOf:
         - $ref: '#/components/schemas/RootType'
-    FirstUnion:
-      title: FirstUnion
+    Animal:
+      title: Animal
       oneOf:
-        - $ref: '#/components/schemas/FirstUnionFirstElement'
-        - $ref: '#/components/schemas/FirstUnionSecondElement'
-    SecondUnion:
-      title: SecondUnion
+        - $ref: '#/components/schemas/Cat'
+        - $ref: '#/components/schemas/Dog'
+    Fruit:
+      title: Fruit
       oneOf:
-        - $ref: '#/components/schemas/SecondUnionFirstElement'
-        - $ref: '#/components/schemas/SecondUnionSecondElement'
-    FirstUnionFirstElement:
-      title: FirstUnionFirstElement
+        - $ref: '#/components/schemas/Acai'
+        - $ref: '#/components/schemas/Fig'
+    Cat:
+      title: Cat
       type: object
       properties:
-        child:
-          $ref: '#/components/schemas/SecondUnion'
+        fruit:
+          $ref: '#/components/schemas/Fruit'
       required:
-        - child
-    FirstUnionSecondElement:
-      title: FirstUnionSecondElement
+        - fruit
+    Dog:
+      title: Dog
       type: object
       properties:
-        child:
-          $ref: '#/components/schemas/SecondUnion'
+        fruit:
+          $ref: '#/components/schemas/Fruit'
       required:
-        - child
-    SecondUnionFirstElement:
-      title: SecondUnionFirstElement
+        - fruit
+    Acai:
+      title: Acai
       type: object
       properties:
-        child:
-          $ref: '#/components/schemas/FirstUnion'
+        animal:
+          $ref: '#/components/schemas/Animal'
       required:
-        - child
-    SecondUnionSecondElement:
-      title: SecondUnionSecondElement
+        - animal
+    Fig:
+      title: Fig
       type: object
       properties:
-        child:
-          $ref: '#/components/schemas/FirstUnion'
+        animal:
+          $ref: '#/components/schemas/Animal'
       required:
-        - child
+        - animal
     ContainerValue:
       title: ContainerValue
       oneOf:
