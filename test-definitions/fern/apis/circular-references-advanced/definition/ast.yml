@@ -21,9 +21,12 @@ types:
     properties:
       fruit: Fruit
   Acai:
+    extends: 
+      - Berry
+  Fig:
     properties:
       animal: Animal
-  Fig:
+  Berry:
     properties:
       animal: Animal
   BranchNode:
@@ -55,4 +58,3 @@ types:
     properties:
       name: FieldName
       value: FieldValue
-

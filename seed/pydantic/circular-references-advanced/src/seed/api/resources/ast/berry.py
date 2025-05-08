@@ -8,23 +8,21 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
-class Cat(UniversalBaseModel):
-    fruit: "Fruit"
+class Berry(UniversalBaseModel):
+    animal: "Animal"
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
-            frozen = True
-            smart_union = True
             extra = pydantic.Extra.allow
 
 
 from .acai import Acai  # noqa: E402, F401, I001
-from .berry import Berry  # noqa: E402, F401, I001
+from .cat import Cat  # noqa: E402, F401, I001
 from .dog import Dog  # noqa: E402, F401, I001
 from .fig import Fig  # noqa: E402, F401, I001
-from .fruit import Fruit  # noqa: E402, F401, I001
+from .animal import Animal  # noqa: E402, F401, I001
 
-update_forward_refs(Cat)
+update_forward_refs(Berry)

@@ -8,6 +8,7 @@ from .a import A
 from .ast import (
     Acai,
     Animal,
+    Berry,
     BranchNode,
     Cat,
     ContainerValue,
@@ -36,6 +37,7 @@ __all__ = [
     "Acai",
     "Animal",
     "AsyncSeedApi",
+    "Berry",
     "BranchNode",
     "Cat",
     "ContainerValue",
