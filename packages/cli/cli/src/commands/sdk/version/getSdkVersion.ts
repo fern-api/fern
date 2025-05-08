@@ -5,10 +5,10 @@ import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils";
 import { resolve } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api";
 import { IntermediateRepresentation as Serialize } from "@fern-api/ir-sdk/src/sdk/serialization";
+import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../../cli-context/CliContext";
-import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 
 export interface Result {
     bump: "major" | "minor" | "patch";

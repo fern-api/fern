@@ -137,13 +137,16 @@ export class IntermediateRepresentationChangeDetector {
                 to: to.type
             });
         }
-        return this.areDeclaredErrorNamesCompatible({
-            from: from.name,
-            to: to.name
-        }) && this.areNameAndWireValuesCompatible({
-            from: from.discriminantValue,
-            to: to.discriminantValue
-        });
+        return (
+            this.areDeclaredErrorNamesCompatible({
+                from: from.name,
+                to: to.name
+            }) &&
+            this.areNameAndWireValuesCompatible({
+                from: from.discriminantValue,
+                to: to.discriminantValue
+            })
+        );
     }
 
     private areTypeDeclarationsCompatible({ from, to }: { from: TypeDeclaration; to: TypeDeclaration }): boolean {
@@ -503,13 +506,16 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areNamedTypesCompatible({ from, to }: { from: TypeReference.Named; to: TypeReference.Named }): boolean {
-        return this.areNamesCompatible({
-            from: from.name,
-            to: to.name
-        }) && this.areFernFilepathsCompatible({
-            from: from.fernFilepath,
-            to: to.fernFilepath
-        });
+        return (
+            this.areNamesCompatible({
+                from: from.name,
+                to: to.name
+            }) &&
+            this.areFernFilepathsCompatible({
+                from: from.fernFilepath,
+                to: to.fernFilepath
+            })
+        );
     }
 
     private areDeclaredTypeNamesCompatible({ from, to }: { from: DeclaredTypeName; to: DeclaredTypeName }): boolean {
@@ -537,7 +543,6 @@ export class IntermediateRepresentationChangeDetector {
             })
         );
     }
-
 
     private areNameAndWireValuesCompatible({ from, to }: { from: NameAndWireValue; to: NameAndWireValue }): boolean {
         return (
