@@ -26,11 +26,6 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             context: this.context
         }) as OpenrpcDocument;
 
-        this.context.spec = (await this.resolveAllExternalRefs({
-            spec: this.context.spec,
-            context: this.context
-        })) as OpenrpcDocument;
-
         this.convertServers({});
 
         this.convertSchemas();
