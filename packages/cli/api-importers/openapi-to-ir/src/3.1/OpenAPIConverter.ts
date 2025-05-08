@@ -43,7 +43,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme });
 
-        const defaultUrl = this.convertServers({ endpointLevelServers });
+        const { defaultUrl } = this.convertServers({ endpointLevelServers });
 
         this.updateEndpointsWithDefaultUrl(defaultUrl);
 
@@ -135,17 +135,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return idToAuthScheme;
     }
 
-    private convertServers({
-        endpointLevelServers
-    }: {
-        endpointLevelServers?: OpenAPIV3_1.ServerObject[];
-    }): string | undefined {
+    private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {
+        defaultUrl: string | undefined;
+    } {
         if (this.context.environmentOverrides) {
             this.ir.environments = convertEnvironments({
                 rawApiFileSchema: this.context.environmentOverrides,
                 casingsGenerator: this.context.casingsGenerator
             });
-            return this.context.environmentOverrides["default-url"];
+            return {
+                defaultUrl: this.context.environmentOverrides["default-url"]
+            };
         }
 
         const serversConverter = new ServersConverter({
@@ -158,7 +158,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         if (convertedServers != null) {
             this.ir.environments = convertedServers.value;
         }
-        return convertedServers?.defaultUrl;
+        return {
+            defaultUrl: convertedServers?.defaultUrl
+        };
     }
 
     private updateEndpointsWithDefaultUrl(defaultUrl: string | undefined): void {
