@@ -622,7 +622,6 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        // TODO: we want this to use setProductSlug, but it is not working.
         const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
         let child: FernNavigation.V1.ProductChild;
         switch (product.navigation.type) {
