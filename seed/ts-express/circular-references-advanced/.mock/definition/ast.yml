@@ -1,26 +1,26 @@
 types:
-  FirstUnion:
+  Animal:
     discriminated: false
     union: 
-      - FirstUnionFirstElement
-      - FirstUnionSecondElement
-  SecondUnion:
+      - Cat
+      - Dog
+  Fruit:
     discriminated: false
     union:
-      - SecondUnionFirstElement
-      - SecondUnionSecondElement
-  FirstUnionFirstElement:
+      - Acai
+      - Fig
+  Cat:
     properties:
-      child: SecondUnion
-  FirstUnionSecondElement:
+      fruit: Fruit
+  Dog:
     properties:
-      child: SecondUnion
-  SecondUnionFirstElement:
+      fruit: Fruit
+  Acai:
     properties:
-      child: FirstUnion
-  SecondUnionSecondElement:
+      animal: Animal
+  Fig:
     properties:
-      child: FirstUnion
+      animal: Animal
   ContainerValue:
     union:
       list: list<FieldValue>
