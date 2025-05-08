@@ -2837,29 +2837,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -3519,29 +3519,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -3754,29 +3754,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -4022,29 +4022,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -4303,29 +4303,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -4787,29 +4787,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -5107,29 +5107,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -5719,29 +5719,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -6085,29 +6085,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -6345,29 +6345,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -6580,29 +6580,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -6949,29 +6949,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -7645,29 +7645,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -7880,29 +7880,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -8251,29 +8251,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -8679,29 +8679,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -8914,29 +8914,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -9182,29 +9182,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -9556,29 +9556,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -9966,29 +9966,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -10201,29 +10201,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "HTTPValidationError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Validation Error"
             }
@@ -10497,90 +10497,7 @@
       ]
     }
   },
-  "errors": {
-    "UnprocessableEntityError": {
-      "name": {
-        "name": {
-          "originalName": "UnprocessableEntityError",
-          "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
-          },
-          "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
-          }
-        },
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "errorId": "UnprocessableEntityError"
-      },
-      "displayName": "UnprocessableEntityError",
-      "discriminantValue": {
-        "name": {
-          "originalName": "UnprocessableEntityError",
-          "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
-          },
-          "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
-          }
-        },
-        "wireValue": "UnprocessableEntityError"
-      },
-      "type": {
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "HTTPValidationError",
-          "camelCase": {
-            "unsafeName": "httpValidationError",
-            "safeName": "httpValidationError"
-          },
-          "snakeCase": {
-            "unsafeName": "http_validation_error",
-            "safeName": "http_validation_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "HTTP_VALIDATION_ERROR",
-            "safeName": "HTTP_VALIDATION_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "HttpValidationError",
-            "safeName": "HttpValidationError"
-          }
-        },
-        "typeId": "HTTPValidationError",
-        "inline": false,
-        "type": "named"
-      },
-      "statusCode": 422,
-      "docs": "Validation Error",
-      "examples": []
-    }
-  },
+  "errors": {},
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
