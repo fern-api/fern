@@ -51,7 +51,7 @@ export class OperationConverter extends AbstractOperationConverter {
         });
     }
 
-    public async convert(): Promise<OperationConverter.Output | undefined> {
+    public convert(): OperationConverter.Output | undefined {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -62,18 +62,18 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const streamingExtension = this.streamingExtensionConverter.convert();
 
-        const { headers, pathParameters, queryParameters } = await this.convertParameters({
+        const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const convertedRequestBody = await this.convertRequestBody({
+        const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method
         });
         const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
-        const convertedResponseBody = await this.convertResponseBody({
+        const convertedResponseBody = this.convertResponseBody({
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
             method,
@@ -150,7 +150,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 response,
                 errors,
                 auth: this.operation.security != null || this.context.spec.security != null,
-                availability: await this.context.getAvailability({
+                availability: this.context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs
                 }),

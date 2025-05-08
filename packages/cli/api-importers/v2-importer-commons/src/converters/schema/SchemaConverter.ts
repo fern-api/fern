@@ -37,8 +37,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         this.inlined = inlined;
     }
 
-    public async convert(): Promise<SchemaConverter.Output | undefined> {
-        const maybeFernTypeDeclaration = await this.tryConvertFernTypeDeclaration();
+    public convert(): SchemaConverter.Output | undefined {
+        const maybeFernTypeDeclaration = this.tryConvertFernTypeDeclaration();
         if (maybeFernTypeDeclaration != null) {
             return {
                 typeDeclaration: maybeFernTypeDeclaration,
@@ -48,7 +48,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return this.convertSchema();
     }
 
-    private async convertSchema(): Promise<SchemaConverter.Output | undefined> {
+    private convertSchema(): SchemaConverter.Output | undefined {
         if (this.schema.enum?.length) {
             const fernEnumConverter = new Extensions.FernEnumExtension({
                 breadcrumbs: this.breadcrumbs,
@@ -66,7 +66,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const enumType = enumConverter.convert();
             if (enumType != null) {
                 return {
-                    typeDeclaration: await this.createTypeDeclaration({
+                    typeDeclaration: this.createTypeDeclaration({
                         shape: enumType.type
                     }),
                     inlinedTypes: {}
@@ -83,7 +83,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             let allOfSchema: OpenAPIV3_1.SchemaObject | undefined = undefined;
 
             if (this.context.isReferenceObject(this.schema.allOf[0])) {
-                const resolvedAllOfSchemaResponse = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>(
+                const resolvedAllOfSchemaResponse = this.context.resolveReference<OpenAPIV3_1.SchemaObject>(
                     this.schema.allOf[0]
                 );
                 if (resolvedAllOfSchemaResponse.resolved) {
@@ -102,7 +102,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                     inlined: true
                 });
 
-                const allOfResult = await allOfConverter.convert();
+                const allOfResult = allOfConverter.convert();
 
                 if (allOfResult?.typeDeclaration?.shape.type !== "object") {
                     return allOfResult;
@@ -114,7 +114,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const primitiveType = primitiveConverter.convert();
         if (primitiveType != null) {
             return {
-                typeDeclaration: await this.createTypeDeclaration({
+                typeDeclaration: this.createTypeDeclaration({
                     shape: FernIr.Type.alias({
                         aliasOf: primitiveType,
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -131,10 +131,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const arrayType = await arrayConverter.convert();
+            const arrayType = arrayConverter.convert();
             if (arrayType != null) {
                 return {
-                    typeDeclaration: await this.createTypeDeclaration({
+                    typeDeclaration: this.createTypeDeclaration({
                         shape: FernIr.Type.alias({
                             aliasOf: arrayType.typeReference,
                             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -167,10 +167,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 schema: this.schema,
                 inlinedTypes: {}
             });
-            const oneOfType = await oneOfConverter.convert();
+            const oneOfType = oneOfConverter.convert();
             if (oneOfType != null) {
                 return {
-                    typeDeclaration: await this.createTypeDeclaration({
+                    typeDeclaration: this.createTypeDeclaration({
                         shape: oneOfType.type
                     }),
                     inlinedTypes: oneOfType.inlinedTypes
@@ -189,10 +189,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema.additionalProperties
             });
-            const additionalPropertiesType = await additionalPropertiesConverter.convert();
+            const additionalPropertiesType = additionalPropertiesConverter.convert();
             if (additionalPropertiesType != null) {
                 return {
-                    typeDeclaration: await this.createTypeDeclaration({
+                    typeDeclaration: this.createTypeDeclaration({
                         shape: additionalPropertiesType.type
                     }),
                     inlinedTypes: additionalPropertiesType.inlinedTypes
@@ -206,10 +206,10 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const objectType = await objectConverter.convert();
+            const objectType = objectConverter.convert();
             if (objectType != null) {
                 return {
-                    typeDeclaration: await this.createTypeDeclaration({
+                    typeDeclaration: this.createTypeDeclaration({
                         shape: objectType.type
                     }),
                     inlinedTypes: objectType.inlinedTypes
@@ -224,7 +224,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return undefined;
     }
 
-    private async tryConvertFernTypeDeclaration(): Promise<FernIr.TypeDeclaration | undefined> {
+    private tryConvertFernTypeDeclaration(): FernIr.TypeDeclaration | undefined {
         const fernTypeConverter = new Extensions.FernTypeExtension({
             breadcrumbs: this.breadcrumbs,
             schema: this.schema,
@@ -232,7 +232,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         });
         const fernType = fernTypeConverter.convert();
         if (fernType != null) {
-            const typeDeclaration = await this.createTypeDeclarationFromFernType({
+            const typeDeclaration = this.createTypeDeclarationFromFernType({
                 fernType
             });
             if (typeDeclaration != null) {
@@ -242,15 +242,15 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return undefined;
     }
 
-    public async createTypeDeclaration({ shape }: { shape: FernIr.Type }): Promise<FernIr.TypeDeclaration> {
-        const v2Examples = await this.convertSchemaExamples();
+    public createTypeDeclaration({ shape }: { shape: FernIr.Type }): FernIr.TypeDeclaration {
+        const v2Examples = this.convertSchemaExamples();
         return {
             name: this.convertDeclaredTypeName(),
             shape,
             autogeneratedExamples: [],
             userProvidedExamples: [],
             encoding: undefined,
-            availability: await this.context.getAvailability({
+            availability: this.context.getAvailability({
                 node: this.schema,
                 breadcrumbs: this.breadcrumbs
             }),
@@ -297,11 +297,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return schemaKeys.every((key) => allAllowedKeys.includes(key));
     }
 
-    private async createTypeDeclarationFromFernType({
-        fernType
-    }: {
-        fernType: string;
-    }): Promise<FernIr.TypeDeclaration | undefined> {
+    private createTypeDeclarationFromFernType({ fernType }: { fernType: string }): FernIr.TypeDeclaration | undefined {
         const typeReference = createTypeReferenceFromFernType(fernType);
         if (typeReference == null) {
             return undefined;
@@ -317,7 +313,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             autogeneratedExamples: [],
             userProvidedExamples: [],
             encoding: undefined,
-            availability: await this.context.getAvailability({
+            availability: this.context.getAvailability({
                 node: this.schema,
                 breadcrumbs: this.breadcrumbs
             }),
@@ -332,7 +328,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         };
     }
 
-    private async convertSchemaExamples(): Promise<FernIr.V2SchemaExamples> {
+    private convertSchemaExamples(): FernIr.V2SchemaExamples {
         const v2Examples = {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
@@ -344,7 +340,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         });
 
         if (examples.length === 0) {
-            const convertedExample = await this.generateOrValidateExample({
+            const convertedExample = this.generateOrValidateExample({
                 example: undefined,
                 ignoreErrors: true
             });
@@ -354,16 +350,16 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return v2Examples;
         }
 
-        v2Examples.userSpecifiedExamples = await this.convertUserSpecifiedExamples(examples);
+        v2Examples.userSpecifiedExamples = this.convertUserSpecifiedExamples(examples);
         return v2Examples;
     }
 
-    private async convertUserSpecifiedExamples(examples: unknown[]): Promise<Record<string, unknown>> {
+    private convertUserSpecifiedExamples(examples: unknown[]): Record<string, unknown> {
         const userSpecifiedExamples: Record<string, unknown> = {};
 
         for (const [index, example] of examples.entries()) {
-            const resolvedExample = await this.context.resolveExample(example);
-            const convertedExample = await this.generateOrValidateExample({
+            const resolvedExample = this.context.resolveExample(example);
+            const convertedExample = this.generateOrValidateExample({
                 example: resolvedExample
             });
             userSpecifiedExamples[`${this.id}_example_${index}`] = convertedExample;
@@ -372,20 +368,20 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return userSpecifiedExamples;
     }
 
-    private async generateOrValidateExample({
+    private generateOrValidateExample({
         example,
         ignoreErrors
     }: {
         example: unknown;
         ignoreErrors?: boolean;
-    }): Promise<unknown> {
+    }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             schema: this.schema,
             example
         });
-        const { validExample: convertedExample, errors } = await exampleConverter.convert();
+        const { validExample: convertedExample, errors } = exampleConverter.convert();
         if (!ignoreErrors) {
             errors.forEach((error) => {
                 this.context.errorCollector.collect({

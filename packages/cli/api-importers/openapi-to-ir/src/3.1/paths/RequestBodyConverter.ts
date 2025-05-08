@@ -27,7 +27,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         this.requestBody = requestBody;
     }
 
-    public async convert(): Promise<RequestBodyConverter.Output | undefined> {
+    public convert(): RequestBodyConverter.Output | undefined {
         if (!this.requestBody.content) {
             return undefined;
         }
@@ -46,7 +46,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         for (const contentType of multipartContentTypes) {
             const mediaTypeObject = this.requestBody.content[contentType];
             const schemaId = [...this.group, this.method, "Request"].join("_");
-            const convertedSchema = await this.parseMediaTypeObject({
+            const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId
             });
@@ -62,7 +62,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     properties: convertedSchema.schema?.shape.properties.map((property) => {
                         return this.convertRequestBodyProperty({ property, contentType });
                     }),
-                    v2Examples: await this.convertMediaTypeObjectExamples({
+                    v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         exampleGenerationStrategy: "request"
                     })
@@ -91,14 +91,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         return undefined;
     }
 
-    private async handleJsonOrFormContent({
-        contentType
-    }: {
-        contentType: string;
-    }): Promise<RequestBodyConverter.Output | undefined> {
+    private handleJsonOrFormContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
         const schemaId = [...this.group, this.method, "Request"].join("_");
         const mediaTypeObject = this.requestBody.content[contentType];
-        const convertedSchema = await this.parseMediaTypeObject({
+        const convertedSchema = this.parseMediaTypeObject({
             mediaTypeObject,
             schemaId
         });
@@ -115,7 +111,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 extends: convertedSchema.schema?.shape.extends,
                 properties: convertedSchema.schema?.shape.properties,
                 extraProperties: convertedSchema.schema?.shape.extraProperties,
-                v2Examples: await this.convertMediaTypeObjectExamples({
+                v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     exampleGenerationStrategy: "request"
                 })
@@ -133,7 +129,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 contentType,
                 docs: this.requestBody.description,
                 requestBodyType: convertedSchema.type,
-                v2Examples: await this.convertMediaTypeObjectExamples({
+                v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     exampleGenerationStrategy: "request"
                 })

@@ -27,9 +27,9 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return messageMatch[1];
     }
 
-    public async convertReferenceToTypeReference(
+    public convertReferenceToTypeReference(
         reference: OpenAPIV3_1.ReferenceObject
-    ): Promise<{ ok: true; reference: TypeReference } | { ok: false }> {
+    ): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
         const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
@@ -49,7 +49,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = await this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
         if (!resolvedReference.resolved) {
             return { ok: false };
         }
