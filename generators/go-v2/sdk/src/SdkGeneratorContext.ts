@@ -27,6 +27,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             readmeConfigBuilder: new ReadmeConfigBuilder(),
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             ir
 =======
             ir,
@@ -34,6 +35,12 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 =======
             ir
 >>>>>>> 1b4761ccff (fix(lint): auto-fix lint issues (#7032))
+=======
+            ir
+=======
+            ir,
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
+>>>>>>> bfb7bc7b15 (fix(go): go generator compiles (#7031))
         });
     }
 }

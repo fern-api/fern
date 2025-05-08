@@ -2837,6 +2837,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Create_agent_api_v1_agents_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "createAgentApiV1AgentsPostRequestUnprocessableEntityError",
@@ -2853,13 +2854,36 @@
                   "pascalCase": {
                     "unsafeName": "CreateAgentApiV1AgentsPostRequestUnprocessableEntityError",
                     "safeName": "CreateAgentApiV1AgentsPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Create_agent_api_v1_agents_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -3519,6 +3543,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Get_agent_api_v1_agents__agentId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "getAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError",
@@ -3535,13 +3560,36 @@
                   "pascalCase": {
                     "unsafeName": "GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError",
                     "safeName": "GetAgentApiV1AgentsAgentIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Get_agent_api_v1_agents__agentId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -3754,6 +3802,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Delete_agent_api_v1_agents__agentId__deleteRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "deleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError",
@@ -3770,13 +3819,36 @@
                   "pascalCase": {
                     "unsafeName": "DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError",
                     "safeName": "DeleteAgentApiV1AgentsAgentIdDeleteRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Delete_agent_api_v1_agents__agentId__deleteRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -4022,6 +4094,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Patch_agent_api_v1_agents__agentId__patchRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "patchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError",
@@ -4038,13 +4111,36 @@
                   "pascalCase": {
                     "unsafeName": "PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError",
                     "safeName": "PatchAgentApiV1AgentsAgentIdPatchRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Patch_agent_api_v1_agents__agentId__patchRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -4303,6 +4399,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Prompt_agent_api_v1_agents__agentId__predict_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "promptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError",
@@ -4319,13 +4416,36 @@
                   "pascalCase": {
                     "unsafeName": "PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError",
                     "safeName": "PromptAgentApiV1AgentsAgentIdPredictPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Prompt_agent_api_v1_agents__agentId__predict_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -4787,6 +4907,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sign_in_api_v1_auth_sign_in_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "signInApiV1AuthSignInPostRequestUnprocessableEntityError",
@@ -4803,13 +4924,36 @@
                   "pascalCase": {
                     "unsafeName": "SignInApiV1AuthSignInPostRequestUnprocessableEntityError",
                     "safeName": "SignInApiV1AuthSignInPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sign_in_api_v1_auth_sign_in_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -5107,6 +5251,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sign_up_api_v1_auth_sign_up_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "signUpApiV1AuthSignUpPostRequestUnprocessableEntityError",
@@ -5123,13 +5268,36 @@
                   "pascalCase": {
                     "unsafeName": "SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError",
                     "safeName": "SignUpApiV1AuthSignUpPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sign_up_api_v1_auth_sign_up_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -5719,6 +5887,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Read_user_api_v1_users__userId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "readUserApiV1UsersUserIdGetRequestUnprocessableEntityError",
@@ -5735,13 +5904,36 @@
                   "pascalCase": {
                     "unsafeName": "ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError",
                     "safeName": "ReadUserApiV1UsersUserIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Read_user_api_v1_users__userId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -6085,6 +6277,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Create_API_token_api_v1_api_tokens_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "createApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError",
@@ -6101,13 +6294,36 @@
                   "pascalCase": {
                     "unsafeName": "CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError",
                     "safeName": "CreateApiTokenApiV1ApiTokensPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Create_API_token_api_v1_api_tokens_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -6345,6 +6561,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Get_API_token_api_v1_api_tokens__tokenId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "getApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError",
@@ -6361,13 +6578,36 @@
                   "pascalCase": {
                     "unsafeName": "GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError",
                     "safeName": "GetApiTokenApiV1ApiTokensTokenIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Get_API_token_api_v1_api_tokens__tokenId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -6580,6 +6820,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Delete_API_token_api_v1_api_tokens__tokenId__deleteRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "deleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError",
@@ -6596,13 +6837,36 @@
                   "pascalCase": {
                     "unsafeName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError",
                     "safeName": "DeleteApiTokenApiV1ApiTokensTokenIdDeleteRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Delete_API_token_api_v1_api_tokens__tokenId__deleteRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -6949,6 +7213,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Create_document_api_v1_documents_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "createDocumentApiV1DocumentsPostRequestUnprocessableEntityError",
@@ -6965,13 +7230,36 @@
                   "pascalCase": {
                     "unsafeName": "CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError",
                     "safeName": "CreateDocumentApiV1DocumentsPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Create_document_api_v1_documents_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -7645,6 +7933,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Get_document_api_v1_documents__documentId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "getDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError",
@@ -7661,13 +7950,36 @@
                   "pascalCase": {
                     "unsafeName": "GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError",
                     "safeName": "GetDocumentApiV1DocumentsDocumentIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Get_document_api_v1_documents__documentId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -7880,6 +8192,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Delete_document_api_v1_documents__documentId__deleteRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "deleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError",
@@ -7896,13 +8209,36 @@
                   "pascalCase": {
                     "unsafeName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError",
                     "safeName": "DeleteDocumentApiV1DocumentsDocumentIdDeleteRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Delete_document_api_v1_documents__documentId__deleteRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -8251,6 +8587,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Create_a_prompt_api_v1_prompts_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "createAPromptApiV1PromptsPostRequestUnprocessableEntityError",
@@ -8267,13 +8604,36 @@
                   "pascalCase": {
                     "unsafeName": "CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError",
                     "safeName": "CreateAPromptApiV1PromptsPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Create_a_prompt_api_v1_prompts_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -8679,6 +9039,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Get_prompt_api_v1_prompts__promptId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "getPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError",
@@ -8695,13 +9056,36 @@
                   "pascalCase": {
                     "unsafeName": "GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError",
                     "safeName": "GetPromptApiV1PromptsPromptIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Get_prompt_api_v1_prompts__promptId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -8914,6 +9298,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Delete_prompt_api_v1_prompts__promptId__deleteRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "deletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError",
@@ -8930,13 +9315,36 @@
                   "pascalCase": {
                     "unsafeName": "DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError",
                     "safeName": "DeletePromptApiV1PromptsPromptIdDeleteRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Delete_prompt_api_v1_prompts__promptId__deleteRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -9182,6 +9590,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Patch_prompt_api_v1_prompts__promptId__patchRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "patchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError",
@@ -9198,13 +9607,36 @@
                   "pascalCase": {
                     "unsafeName": "PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError",
                     "safeName": "PatchPromptApiV1PromptsPromptIdPatchRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Patch_prompt_api_v1_prompts__promptId__patchRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -9556,6 +9988,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Create_a_tool_api_v1_tools_postRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "createAToolApiV1ToolsPostRequestUnprocessableEntityError",
@@ -9572,13 +10005,36 @@
                   "pascalCase": {
                     "unsafeName": "CreateAToolApiV1ToolsPostRequestUnprocessableEntityError",
                     "safeName": "CreateAToolApiV1ToolsPostRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Create_a_tool_api_v1_tools_postRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -9966,6 +10422,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Get_tool_api_v1_tools__toolId__getRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "getToolApiV1ToolsToolIdGetRequestUnprocessableEntityError",
@@ -9982,13 +10439,36 @@
                   "pascalCase": {
                     "unsafeName": "GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError",
                     "safeName": "GetToolApiV1ToolsToolIdGetRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Get_tool_api_v1_tools__toolId__getRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -10201,6 +10681,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Delete_tool_api_v1_tools__toolId__deleteRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "deleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError",
@@ -10217,13 +10698,36 @@
                   "pascalCase": {
                     "unsafeName": "DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError",
                     "safeName": "DeleteToolApiV1ToolsToolIdDeleteRequestUnprocessableEntityError"
+=======
+                  "originalName": "HTTPValidationError",
+                  "camelCase": {
+                    "unsafeName": "httpValidationError",
+                    "safeName": "httpValidationError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "http_validation_error",
+                    "safeName": "http_validation_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "HTTP_VALIDATION_ERROR",
+                    "safeName": "HTTP_VALIDATION_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "HttpValidationError",
+                    "safeName": "HttpValidationError"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "HTTPValidationError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Delete_tool_api_v1_tools__toolId__deleteRequestUnprocessableEntityError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Validation Error"
             }
@@ -10497,6 +11001,7 @@
       ]
     }
   },
+<<<<<<< HEAD
   "errors": {
     "Create_agent_api_v1_agents_postRequestUnprocessableEntityError": {
       "name": {
@@ -12221,6 +12726,9 @@
       "examples": []
     }
   },
+=======
+  "errors": {},
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

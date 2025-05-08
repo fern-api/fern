@@ -15278,6 +15278,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Extensions-get-by-idRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "extensionsGetByIdRequestNotFoundError",
@@ -15294,19 +15295,43 @@
                   "pascalCase": {
                     "unsafeName": "ExtensionsGetByIdRequestNotFoundError",
                     "safeName": "ExtensionsGetByIdRequestNotFoundError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Extensions-get-by-idRequestNotFoundError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Extensions-get-by-idRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "extensionsGetByIdRequestUnprocessableEntityError",
@@ -15323,11 +15348,31 @@
                   "pascalCase": {
                     "unsafeName": "ExtensionsGetByIdRequestUnprocessableEntityError",
                     "safeName": "ExtensionsGetByIdRequestUnprocessableEntityError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Extensions-get-by-idRequestUnprocessableEntityError"
               },
@@ -15361,6 +15406,11 @@
                 "errorId": "Extensions-get-by-idRequestInternalServerError"
               },
               "docs": "Internal Server Error"
+=======
+                }
+              },
+              "docs": "Unprocessable Entity"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": false,
@@ -24573,6 +24623,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Profiles-get-by-idRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "profilesGetByIdRequestNotFoundError",
@@ -24589,19 +24640,43 @@
                   "pascalCase": {
                     "unsafeName": "ProfilesGetByIdRequestNotFoundError",
                     "safeName": "ProfilesGetByIdRequestNotFoundError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Profiles-get-by-idRequestNotFoundError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Profiles-get-by-idRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "profilesGetByIdRequestUnprocessableEntityError",
@@ -24618,11 +24693,31 @@
                   "pascalCase": {
                     "unsafeName": "ProfilesGetByIdRequestUnprocessableEntityError",
                     "safeName": "ProfilesGetByIdRequestUnprocessableEntityError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Profiles-get-by-idRequestUnprocessableEntityError"
               },
@@ -24656,6 +24751,11 @@
                 "errorId": "Profiles-get-by-idRequestInternalServerError"
               },
               "docs": "Internal Server Error"
+=======
+                }
+              },
+              "docs": "Unprocessable Entity"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": false,
@@ -27731,6 +27831,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-listRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "sessionsListRequestNotFoundError",
@@ -27747,19 +27848,43 @@
                   "pascalCase": {
                     "unsafeName": "SessionsListRequestNotFoundError",
                     "safeName": "SessionsListRequestNotFoundError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-listRequestNotFoundError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-listRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "sessionsListRequestUnprocessableEntityError",
@@ -27776,11 +27901,31 @@
                   "pascalCase": {
                     "unsafeName": "SessionsListRequestUnprocessableEntityError",
                     "safeName": "SessionsListRequestUnprocessableEntityError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-listRequestUnprocessableEntityError"
               },
@@ -27814,6 +27959,11 @@
                 "errorId": "Sessions-listRequestInternalServerError"
               },
               "docs": "Internal Server Error"
+=======
+                }
+              },
+              "docs": "Unprocessable Entity"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": false,
@@ -38484,6 +38634,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-getInfoRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "sessionsGetInfoRequestNotFoundError",
@@ -38500,19 +38651,43 @@
                   "pascalCase": {
                     "unsafeName": "SessionsGetInfoRequestNotFoundError",
                     "safeName": "SessionsGetInfoRequestNotFoundError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-getInfoRequestNotFoundError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-getInfoRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "sessionsGetInfoRequestUnprocessableEntityError",
@@ -38529,11 +38704,31 @@
                   "pascalCase": {
                     "unsafeName": "SessionsGetInfoRequestUnprocessableEntityError",
                     "safeName": "SessionsGetInfoRequestUnprocessableEntityError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-getInfoRequestUnprocessableEntityError"
               },
@@ -38567,6 +38762,11 @@
                 "errorId": "Sessions-getInfoRequestInternalServerError"
               },
               "docs": "Internal Server Error"
+=======
+                }
+              },
+              "docs": "Unprocessable Entity"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": false,
@@ -42763,6 +42963,7 @@
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-eventsRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "sessionsEventsRequestNotFoundError",
@@ -42779,19 +42980,43 @@
                   "pascalCase": {
                     "unsafeName": "SessionsEventsRequestNotFoundError",
                     "safeName": "SessionsEventsRequestNotFoundError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-eventsRequestNotFoundError"
+=======
+                }
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
+<<<<<<< HEAD
                   "originalName": "Sessions-eventsRequestUnprocessableEntityError",
                   "camelCase": {
                     "unsafeName": "sessionsEventsRequestUnprocessableEntityError",
@@ -42808,11 +43033,31 @@
                   "pascalCase": {
                     "unsafeName": "SessionsEventsRequestUnprocessableEntityError",
                     "safeName": "SessionsEventsRequestUnprocessableEntityError"
+=======
+                  "originalName": "ErrorEnvelope",
+                  "camelCase": {
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
+<<<<<<< HEAD
                 },
                 "errorId": "Sessions-eventsRequestUnprocessableEntityError"
               },
@@ -42846,6 +43091,11 @@
                 "errorId": "Sessions-eventsRequestInternalServerError"
               },
               "docs": "Internal Server Error"
+=======
+                }
+              },
+              "docs": "Unprocessable Entity"
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": false,
@@ -56924,6 +57174,7 @@
       ]
     }
   },
+<<<<<<< HEAD
   "errors": {
     "Extensions-get-by-idRequestNotFoundError": {
       "name": {
@@ -58156,6 +58407,9 @@
       "examples": []
     }
   },
+=======
+  "errors": {},
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
