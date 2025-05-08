@@ -17,26 +17,26 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = FirstUnionSecondElement.Builder.class)
-public final class FirstUnionSecondElement {
-    private final SecondUnion child;
+@JsonDeserialize(builder = Acai.Builder.class)
+public final class Acai {
+    private final Animal animal;
 
     private final Map<String, Object> additionalProperties;
 
-    private FirstUnionSecondElement(SecondUnion child, Map<String, Object> additionalProperties) {
-        this.child = child;
+    private Acai(Animal animal, Map<String, Object> additionalProperties) {
+        this.animal = animal;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("child")
-    public SecondUnion getChild() {
-        return child;
+    @JsonProperty("animal")
+    public Animal getAnimal() {
+        return animal;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof FirstUnionSecondElement && equalTo((FirstUnionSecondElement) other);
+        return other instanceof Acai && equalTo((Acai) other);
     }
 
     @JsonAnyGetter
@@ -44,13 +44,13 @@ public final class FirstUnionSecondElement {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(FirstUnionSecondElement other) {
-        return child.equals(other.child);
+    private boolean equalTo(Acai other) {
+        return animal.equals(other.animal);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.child);
+        return Objects.hash(this.animal);
     }
 
     @java.lang.Override
@@ -58,23 +58,23 @@ public final class FirstUnionSecondElement {
         return ObjectMappers.stringify(this);
     }
 
-    public static ChildStage builder() {
+    public static AnimalStage builder() {
         return new Builder();
     }
 
-    public interface ChildStage {
-        _FinalStage child(@NotNull SecondUnion child);
+    public interface AnimalStage {
+        _FinalStage animal(@NotNull Animal animal);
 
-        Builder from(FirstUnionSecondElement other);
+        Builder from(Acai other);
     }
 
     public interface _FinalStage {
-        FirstUnionSecondElement build();
+        Acai build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ChildStage, _FinalStage {
-        private SecondUnion child;
+    public static final class Builder implements AnimalStage, _FinalStage {
+        private Animal animal;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -82,21 +82,21 @@ public final class FirstUnionSecondElement {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(FirstUnionSecondElement other) {
-            child(other.getChild());
+        public Builder from(Acai other) {
+            animal(other.getAnimal());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("child")
-        public _FinalStage child(@NotNull SecondUnion child) {
-            this.child = Objects.requireNonNull(child, "child must not be null");
+        @JsonSetter("animal")
+        public _FinalStage animal(@NotNull Animal animal) {
+            this.animal = Objects.requireNonNull(animal, "animal must not be null");
             return this;
         }
 
         @java.lang.Override
-        public FirstUnionSecondElement build() {
-            return new FirstUnionSecondElement(child, additionalProperties);
+        public Acai build() {
+            return new Acai(animal, additionalProperties);
         }
     }
 }

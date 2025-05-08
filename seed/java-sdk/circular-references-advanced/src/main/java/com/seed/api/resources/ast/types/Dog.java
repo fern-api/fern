@@ -17,26 +17,26 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = SecondUnionSecondElement.Builder.class)
-public final class SecondUnionSecondElement {
-    private final FirstUnion child;
+@JsonDeserialize(builder = Dog.Builder.class)
+public final class Dog {
+    private final Fruit fruit;
 
     private final Map<String, Object> additionalProperties;
 
-    private SecondUnionSecondElement(FirstUnion child, Map<String, Object> additionalProperties) {
-        this.child = child;
+    private Dog(Fruit fruit, Map<String, Object> additionalProperties) {
+        this.fruit = fruit;
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("child")
-    public FirstUnion getChild() {
-        return child;
+    @JsonProperty("fruit")
+    public Fruit getFruit() {
+        return fruit;
     }
 
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof SecondUnionSecondElement && equalTo((SecondUnionSecondElement) other);
+        return other instanceof Dog && equalTo((Dog) other);
     }
 
     @JsonAnyGetter
@@ -44,13 +44,13 @@ public final class SecondUnionSecondElement {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(SecondUnionSecondElement other) {
-        return child.equals(other.child);
+    private boolean equalTo(Dog other) {
+        return fruit.equals(other.fruit);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.child);
+        return Objects.hash(this.fruit);
     }
 
     @java.lang.Override
@@ -58,23 +58,23 @@ public final class SecondUnionSecondElement {
         return ObjectMappers.stringify(this);
     }
 
-    public static ChildStage builder() {
+    public static FruitStage builder() {
         return new Builder();
     }
 
-    public interface ChildStage {
-        _FinalStage child(@NotNull FirstUnion child);
+    public interface FruitStage {
+        _FinalStage fruit(@NotNull Fruit fruit);
 
-        Builder from(SecondUnionSecondElement other);
+        Builder from(Dog other);
     }
 
     public interface _FinalStage {
-        SecondUnionSecondElement build();
+        Dog build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements ChildStage, _FinalStage {
-        private FirstUnion child;
+    public static final class Builder implements FruitStage, _FinalStage {
+        private Fruit fruit;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -82,21 +82,21 @@ public final class SecondUnionSecondElement {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(SecondUnionSecondElement other) {
-            child(other.getChild());
+        public Builder from(Dog other) {
+            fruit(other.getFruit());
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("child")
-        public _FinalStage child(@NotNull FirstUnion child) {
-            this.child = Objects.requireNonNull(child, "child must not be null");
+        @JsonSetter("fruit")
+        public _FinalStage fruit(@NotNull Fruit fruit) {
+            this.fruit = Objects.requireNonNull(fruit, "fruit must not be null");
             return this;
         }
 
         @java.lang.Override
-        public SecondUnionSecondElement build() {
-            return new SecondUnionSecondElement(child, additionalProperties);
+        public Dog build() {
+            return new Dog(fruit, additionalProperties);
         }
     }
 }
