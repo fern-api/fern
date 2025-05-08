@@ -1,7 +1,7 @@
 - changelogEntry: 
   - summary: |
       Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
-    type: Fix
+    type: fix
   irVersion: 57
   version: 0.60.24
 
