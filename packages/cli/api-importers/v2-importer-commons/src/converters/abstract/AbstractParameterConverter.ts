@@ -1,10 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import {
-    ContainerType,
     HttpHeader,
     PathParameter,
-    PrimitiveTypeV2,
     QueryParameter,
     TypeDeclaration,
     TypeId,
@@ -45,16 +43,6 @@ export declare namespace AbstractParameterConverter {
 export abstract class AbstractParameterConverter<
     TParameter extends OpenAPIV3_1.ParameterObject
 > extends AbstractConverter<AbstractConverterContext<object>, AbstractParameterConverter.Output> {
-    public static STRING = TypeReference.primitive({
-        v1: "STRING",
-        v2: PrimitiveTypeV2.string({
-            default: undefined,
-            validation: undefined
-        })
-    });
-
-    public static OPTIONAL_STRING = TypeReference.container(ContainerType.optional(AbstractParameterConverter.STRING));
-
     protected readonly parameter: TParameter;
 
     constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
@@ -88,7 +76,7 @@ export abstract class AbstractParameterConverter<
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.OPTIONAL_STRING,
+                        valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
                         v2Examples: await this.convertParameterExamples({ schema }),
                         availability
@@ -104,7 +92,7 @@ export abstract class AbstractParameterConverter<
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.OPTIONAL_STRING,
+                        valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
                         v2Examples: await this.convertParameterExamples({ schema }),
                         availability
@@ -117,7 +105,7 @@ export abstract class AbstractParameterConverter<
                     parameter: {
                         name: this.context.casingsGenerator.generateName(this.parameter.name),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.STRING,
+                        valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
                         v2Examples: await this.convertParameterExamples({ schema })

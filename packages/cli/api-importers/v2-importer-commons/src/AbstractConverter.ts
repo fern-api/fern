@@ -15,7 +15,8 @@ export declare namespace AbstractConverter {
 
 /**
  * Interface for converting OpenAPI specifications to a target type
- * @template Output The target type to convert to
+ * @template Context The converter context
+ * @template Output The converted output type
  */
 export abstract class AbstractConverter<Context extends AbstractConverterContext<object>, Output> {
     protected breadcrumbs: string[] = [];
@@ -31,6 +32,13 @@ export abstract class AbstractConverter<Context extends AbstractConverterContext
             validation: undefined
         })
     });
+
+    /**
+     * Optional string type constant
+     */
+    public static OPTIONAL_STRING = FernIr.TypeReference.container(
+        FernIr.ContainerType.optional(AbstractConverter.STRING)
+    );
 
     constructor({ breadcrumbs = [], context }: AbstractConverter.Args<Context>) {
         this.breadcrumbs = breadcrumbs;

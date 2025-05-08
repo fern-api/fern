@@ -19,8 +19,10 @@ export declare namespace AbstractSpecConverter {
 }
 
 /**
- * Interface for converting OpenAPI specifications to a target type
- * @template Output The target type to convert to
+ * Top level spec converter interface.
+ *
+ * @template Context The converter context
+ * @template Output The converted output type
  */
 export abstract class AbstractSpecConverter<
     Context extends AbstractConverterContext<object>,

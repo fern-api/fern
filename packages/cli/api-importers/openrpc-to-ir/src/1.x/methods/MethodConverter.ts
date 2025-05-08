@@ -12,10 +12,8 @@ import {
     JsonResponse,
     JsonResponseBody,
     PathParameter,
-    PrimitiveTypeV2,
     TypeDeclaration,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
@@ -37,14 +35,6 @@ export declare namespace MethodConverter {
 }
 
 export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_1, MethodConverter.Output> {
-    public static STRING = TypeReference.primitive({
-        v1: "STRING",
-        v2: PrimitiveTypeV2.string({
-            default: undefined,
-            validation: undefined
-        })
-    });
-
     private readonly method: MethodObject;
     private readonly pathParameters: PathParameter[];
     private readonly queryParameters: FernIr.QueryParameter[];

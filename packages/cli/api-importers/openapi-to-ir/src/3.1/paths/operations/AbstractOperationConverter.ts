@@ -135,7 +135,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             const exampleName = `${param}_example`;
             pathParameters.push({
                 name: this.context.casingsGenerator.generateName(param),
-                valueType: ParameterConverter.STRING,
+                valueType: AbstractConverter.STRING,
                 docs: undefined,
                 location: "ENDPOINT",
                 variable: undefined,
@@ -214,6 +214,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
         let convertedResponseBody: ConvertedResponseBody | undefined = undefined;
         // TODO: Our existing Parser will only parse the first successful response.
+        // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
