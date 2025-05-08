@@ -464,6 +464,25 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return undefined;
     }
 
+    public async getAudiences({
+        operation,
+        breadcrumbs
+    }: {
+        operation: object;
+        breadcrumbs: string[];
+    }): Promise<string[] | undefined> {
+        const audiencesExtension = new Extensions.AudienceExtension({
+            operation,
+            breadcrumbs,
+            context: this
+        });
+        const audiences = await audiencesExtension.convert();
+        if (audiences == null) {
+            return undefined;
+        }
+        return audiences.audiences;
+    }
+
     public async getAvailability({
         node,
         breadcrumbs

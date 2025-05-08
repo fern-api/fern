@@ -14,7 +14,6 @@ import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
 import { GroupNameAndLocation } from "../../../types/GroupNameAndLocation";
-import { OpenAPIConverter } from "../../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../../OpenAPIConverterContext3_1";
 import { ParameterConverter } from "../ParameterConverter";
 import { RequestBodyConverter } from "../RequestBodyConverter";
@@ -24,7 +23,7 @@ import { ResponseErrorConverter } from "../ResponseErrorConverter";
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
 export declare namespace AbstractOperationConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         operation: OpenAPIV3_1.OperationObject;
         method: OpenAPIV3_1.HttpMethods;
         path: string;

@@ -8,13 +8,12 @@ import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
-import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OperationConverter } from "./operations/OperationConverter";
 import { WebhookConverter } from "./operations/WebhookConverter";
 
 export declare namespace PathConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
         servers?: OpenAPIV3_1.ServerObject[];

@@ -20,11 +20,10 @@ import {
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
-import { OpenRPCConverter } from "../OpenRPCConverter";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
 export declare namespace MethodConverter {
-    export interface Args extends OpenRPCConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenRPCConverterContext3_1> {
         method: MethodObject;
         pathParameters?: PathParameter[];
         queryParameters?: FernIr.QueryParameter[];

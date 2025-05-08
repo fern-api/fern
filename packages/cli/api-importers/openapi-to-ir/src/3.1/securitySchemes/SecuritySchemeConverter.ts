@@ -3,11 +3,10 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { AuthScheme, ContainerType, PrimitiveTypeV2, TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
 
-import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 
 export declare namespace SecuritySchemeConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         securityScheme: OpenAPIV3_1.SecuritySchemeObject;
     }
 }

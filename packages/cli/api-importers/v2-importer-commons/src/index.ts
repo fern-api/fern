@@ -1,6 +1,7 @@
 export { AbstractConverter } from "./AbstractConverter";
 export { AbstractConverterContext, type Spec } from "./AbstractConverterContext";
 export { AbstractExtension } from "./AbstractExtension";
+export { AbstractSpecConverter } from "./AbstractSpecConverter";
 export * from "./converters";
 export * as Converters from "./converters";
 export { SchemaOrReferenceConverter } from "./converters/schema";
