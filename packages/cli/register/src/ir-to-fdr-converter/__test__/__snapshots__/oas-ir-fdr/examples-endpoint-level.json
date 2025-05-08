@@ -322,13 +322,23 @@
             "headers": {},
             "requestBody": {
               "species": "Quercus alba",
-              "height": 25.4
+              "height": 25.4,
+              "age": 50,
+              "location": {
+                "latitude": 40.7128,
+                "longitude": -74.006
+              }
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
                 "species": "Quercus alba",
-                "height": 25.4
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006
+                }
               }
             },
             "responseStatusCode": 201,
