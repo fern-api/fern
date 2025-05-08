@@ -7898,7 +7898,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7983,7 +8075,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8097,7 +8268,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8182,7 +8432,99 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8254,7 +8596,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8440,7 +8874,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8592,7 +9118,99 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8666,7 +9284,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8846,7 +9556,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8921,7 +9710,99 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8997,7 +9878,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9067,7 +10040,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9141,7 +10193,99 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9219,7 +10363,99 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9386,7 +10622,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9548,7 +10863,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9725,7 +11119,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9933,7 +11406,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10017,7 +11582,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10309,7 +11966,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10514,7 +12250,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10732,7 +12560,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10888,7 +12795,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10972,7 +12971,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11250,7 +13341,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11405,7 +13588,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11571,7 +13846,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11729,7 +14083,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11813,7 +14259,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11989,7 +14527,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12146,7 +14763,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12314,7 +15023,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12474,7 +15262,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12668,7 +15548,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12835,7 +15807,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13007,7 +16058,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13167,7 +16297,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13251,7 +16473,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13391,7 +16705,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13546,7 +16939,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13716,7 +17201,86 @@
             "statusCode": 201,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13972,7 +17536,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14197,7 +17853,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14438,7 +18173,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14854,7 +18681,86 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15101,7 +19007,99 @@
             "statusCode": 200,
             "description": "Success."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-bad-request"
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-unauthorized"
+                }
+              },
+              "statusCode": 401,
+              "description": "401 Unauthorized.",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-forbidden"
+                }
+              },
+              "statusCode": 403,
+              "description": "403 Forbidden.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-not-found"
+                }
+              },
+              "statusCode": 404,
+              "description": "404 Not Found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-too-many-requests"
+                }
+              },
+              "statusCode": 429,
+              "description": "429 Too Many Requests.",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-internal-server-error"
+                }
+              },
+              "statusCode": 500,
+              "description": "500 Internal Server Error.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "error-service-unavailable"
+                }
+              },
+              "statusCode": 503,
+              "description": "503 Service Unavailable.",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

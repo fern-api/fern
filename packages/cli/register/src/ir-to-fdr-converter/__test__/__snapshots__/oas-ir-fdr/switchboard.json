@@ -2230,7 +2230,47 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -2747,7 +2787,47 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -2931,7 +3011,47 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -3300,7 +3420,47 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -3524,7 +3684,47 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorEnvelope"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

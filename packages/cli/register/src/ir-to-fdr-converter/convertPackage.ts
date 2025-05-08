@@ -643,7 +643,7 @@ function convertResponseErrorsV2(
                               },
                     statusCode: errorDeclaration.statusCode,
                     description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
                     examples: errorDeclaration.examples.map((irExample) => {
                         return {
@@ -696,7 +696,7 @@ function convertResponseErrorsV2(
                     statusCode: errorDeclaration.statusCode,
                     description: errorDeclaration.docs ?? undefined,
                     availability: undefined,
-                    name: errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     examples: errorDeclaration.examples.map((irExample) => {
                         return {
                             name: irExample.name?.originalName,

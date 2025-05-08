@@ -8,7 +8,6 @@ import {
     HttpResponse,
     PathParameter,
     QueryParameter,
-    ResponseErrors,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
@@ -36,14 +35,13 @@ export declare namespace AbstractOperationConverter {
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }
-
 interface ConvertedRequestBody {
     value: HttpRequestBody;
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 interface ConvertedResponseBody {
     value: HttpResponse | undefined;
-    errors: ResponseErrors;
+    errors: ResponseErrorConverter.Output[];
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
@@ -264,8 +262,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     };
                 }
             }
-            // Convert Error Responses (4xx)
-            if (statusCodeNum >= 400 && statusCodeNum < 500) {
+            // Convert Error Responses (4xx and 5xx)
+            if (statusCodeNum >= 400 && statusCodeNum < 600) {
                 const resolvedResponse = await this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
@@ -281,7 +279,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     responseError: resolvedResponse,
                     group: group ?? [],
                     method,
-                    statusCode
+                    methodName: this.evaluateMethodNameFromOperation(),
+                    statusCode: statusCodeNum
                 });
                 const converted = await responseErrorConverter.convert();
                 if (converted != null) {
@@ -289,7 +288,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
                     };
-                    convertedResponseBody.errors.push(converted.error);
+                    convertedResponseBody.errors.push(converted);
                 }
             }
         }
@@ -319,27 +318,28 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return undefined;
     }
 
+    protected evaluateMethodNameFromOperation(): string {
+        const operationId = this.operation.operationId;
+        if (operationId == null) {
+            return this.operation.summary != null
+                ? camelCase(this.operation.summary)
+                : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
+        }
+        return operationId;
+    }
+
     protected computeGroupNameFromTagAndOperationId(): GroupNameAndLocation {
         const tag = this.operation.tags?.[0];
-        const operationId = this.operation.operationId;
-
-        if (operationId == null) {
-            const methodName =
-                this.operation.summary != null
-                    ? camelCase(this.operation.summary)
-                    : camelCase(`${this.method}_${this.path.split("/").join("_")}`);
-
-            return tag != null ? { group: [tag], method: methodName } : { method: methodName };
-        }
+        const methodName = this.evaluateMethodNameFromOperation();
 
         if (tag == null) {
-            return { method: operationId };
+            return { method: methodName };
         }
 
         const tagTokens = tokenizeString(tag);
-        const operationIdTokens = tokenizeString(operationId);
+        const methodNameTokens = tokenizeString(methodName);
 
-        if (isEqual(tagTokens, operationIdTokens)) {
+        if (isEqual(tagTokens, methodNameTokens)) {
             return {
                 method: tag
             };
@@ -347,32 +347,32 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         return this.computeGroupAndMethodFromTokens({
             tag,
             tagTokens,
-            operationId,
-            operationIdTokens
+            methodName,
+            methodNameTokens
         });
     }
 
     protected computeGroupAndMethodFromTokens({
         tag,
         tagTokens,
-        operationId,
-        operationIdTokens
+        methodName,
+        methodNameTokens
     }: {
         tag: string;
         tagTokens: string[];
-        operationId: string;
-        operationIdTokens: string[];
+        methodName: string;
+        methodNameTokens: string[];
     }): GroupNameAndLocation {
-        const tagIsNotPrefixOfOperationId = tagTokens.some((tagToken, index) => tagToken !== operationIdTokens[index]);
+        const tagIsNotPrefixOfMethodName = tagTokens.some((tagToken, index) => tagToken !== methodNameTokens[index]);
 
-        if (tagIsNotPrefixOfOperationId) {
+        if (tagIsNotPrefixOfMethodName) {
             return {
                 group: [tag],
-                method: operationId
+                method: methodName
             };
         }
 
-        const methodTokens = operationIdTokens.slice(tagTokens.length);
+        const methodTokens = methodNameTokens.slice(tagTokens.length);
         return {
             group: [tag],
             method: camelCase(methodTokens.join("_"))

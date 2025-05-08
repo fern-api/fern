@@ -4239,7 +4239,73 @@
             "statusCode": 200,
             "description": "File uploaded successfully"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -4384,7 +4450,73 @@
             "statusCode": 200,
             "description": "A list of transcripts filtered by `limit` and `status`"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -4499,7 +4631,73 @@
             "statusCode": 201,
             "description": "Transcript created and queued for processing."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -4935,7 +5133,73 @@
             "statusCode": 200,
             "description": "The transcript resource"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -5364,7 +5628,73 @@
             "statusCode": 200,
             "description": "The deleted transcript response."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -5812,7 +6142,73 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -5890,7 +6286,73 @@
             "statusCode": 200,
             "description": "Exported sentences"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6017,7 +6479,73 @@
             "statusCode": 200,
             "description": "Exported paragraphs"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6158,7 +6686,73 @@
             "statusCode": 200,
             "description": "Word search response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6281,7 +6875,73 @@
             "statusCode": 200,
             "description": "The redacted audio object containing the status and URL to the redacted audio."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6378,7 +7038,73 @@
             "statusCode": 200,
             "description": "Temporary authentication token generated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6480,7 +7206,73 @@
             "statusCode": 200,
             "description": "LeMUR summary response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6578,7 +7370,73 @@
             "statusCode": 200,
             "description": "LeMUR question & answer response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6696,7 +7554,73 @@
             "statusCode": 200,
             "description": "LeMUR action items response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6794,7 +7718,73 @@
             "statusCode": 200,
             "description": "LeMUR task response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -6898,7 +7888,73 @@
             "statusCode": 200,
             "description": "LeMUR request data deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Error"
+                }
+              },
+              "statusCode": 500,
+              "description": "An error occurred while processing the request",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

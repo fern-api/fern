@@ -37550,58 +37550,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "UploadDocumentErrorResponse",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "uploadDocumentErrorResponse",
-                    "safeName": "uploadDocumentErrorResponse"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "upload_document_error_response",
-                    "safeName": "upload_document_error_response"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
-                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UploadDocumentErrorResponse",
-                    "safeName": "UploadDocumentErrorResponse"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "UploadDocumentErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UploadDocumentErrorResponse",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "uploadDocumentErrorResponse",
-                    "safeName": "uploadDocumentErrorResponse"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "upload_document_error_response",
-                    "safeName": "upload_document_error_response"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
-                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UploadDocumentErrorResponse",
-                    "safeName": "UploadDocumentErrorResponse"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "UploadDocumentErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
               },
               "docs": ""
             }
@@ -40588,87 +40617,116 @@
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "ForbiddenError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "forbiddenError",
+                    "safeName": "forbiddenError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "forbidden_error",
+                    "safeName": "forbidden_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "FORBIDDEN_ERROR",
+                    "safeName": "FORBIDDEN_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "ForbiddenError",
+                    "safeName": "ForbiddenError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ForbiddenError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
               },
               "docs": ""
             }
@@ -46276,87 +46334,116 @@
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "ForbiddenError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "forbiddenError",
+                    "safeName": "forbiddenError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "forbidden_error",
+                    "safeName": "forbidden_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "FORBIDDEN_ERROR",
+                    "safeName": "FORBIDDEN_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "ForbiddenError",
+                    "safeName": "ForbiddenError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ForbiddenError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "GenerateErrorResponse",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
               },
               "docs": ""
             }
@@ -49200,58 +49287,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "SearchErrorResponse",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "searchErrorResponse",
-                    "safeName": "searchErrorResponse"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "search_error_response",
-                    "safeName": "search_error_response"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_ERROR_RESPONSE",
-                    "safeName": "SEARCH_ERROR_RESPONSE"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "SearchErrorResponse",
-                    "safeName": "SearchErrorResponse"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "SearchErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "SearchErrorResponse",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "searchErrorResponse",
-                    "safeName": "searchErrorResponse"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "search_error_response",
-                    "safeName": "search_error_response"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_ERROR_RESPONSE",
-                    "safeName": "SEARCH_ERROR_RESPONSE"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "SearchErrorResponse",
-                    "safeName": "SearchErrorResponse"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "SearchErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
               },
               "docs": ""
             }
@@ -51123,58 +51239,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "SubmitCompletionActualsErrorResponse",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "submitCompletionActualsErrorResponse",
-                    "safeName": "submitCompletionActualsErrorResponse"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "submit_completion_actuals_error_response",
-                    "safeName": "submit_completion_actuals_error_response"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
-                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "SubmitCompletionActualsErrorResponse",
-                    "safeName": "SubmitCompletionActualsErrorResponse"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "SubmitCompletionActualsErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-                  "originalName": "SubmitCompletionActualsErrorResponse",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "submitCompletionActualsErrorResponse",
-                    "safeName": "submitCompletionActualsErrorResponse"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "submit_completion_actuals_error_response",
-                    "safeName": "submit_completion_actuals_error_response"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
-                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "SubmitCompletionActualsErrorResponse",
-                    "safeName": "SubmitCompletionActualsErrorResponse"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "SubmitCompletionActualsErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": ""
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "InternalServerError",
+                  "camelCase": {
+                    "unsafeName": "internalServerError",
+                    "safeName": "internalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "internal_server_error",
+                    "safeName": "internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "INTERNAL_SERVER_ERROR",
+                    "safeName": "INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "InternalServerError",
+                    "safeName": "InternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "InternalServerError"
               },
               "docs": ""
             }
@@ -59684,29 +59829,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "RegisterPromptErrorResponse",
+                  "originalName": "ConflictError",
                   "camelCase": {
-                    "unsafeName": "registerPromptErrorResponse",
-                    "safeName": "registerPromptErrorResponse"
+                    "unsafeName": "conflictError",
+                    "safeName": "conflictError"
                   },
                   "snakeCase": {
-                    "unsafeName": "register_prompt_error_response",
-                    "safeName": "register_prompt_error_response"
+                    "unsafeName": "conflict_error",
+                    "safeName": "conflict_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "REGISTER_PROMPT_ERROR_RESPONSE",
-                    "safeName": "REGISTER_PROMPT_ERROR_RESPONSE"
+                    "unsafeName": "CONFLICT_ERROR",
+                    "safeName": "CONFLICT_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "RegisterPromptErrorResponse",
-                    "safeName": "RegisterPromptErrorResponse"
+                    "unsafeName": "ConflictError",
+                    "safeName": "ConflictError"
                   }
                 },
-                "errorId": "RegisterPromptErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ConflictError"
               },
               "docs": ""
             }
@@ -70723,7 +70868,418 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "BadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "BadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "wireValue": "BadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "UploadDocumentErrorResponse",
+          "camelCase": {
+            "unsafeName": "uploadDocumentErrorResponse",
+            "safeName": "uploadDocumentErrorResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_document_error_response",
+            "safeName": "upload_document_error_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
+            "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadDocumentErrorResponse",
+            "safeName": "UploadDocumentErrorResponse"
+          }
+        },
+        "typeId": "UploadDocumentErrorResponse",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "",
+      "examples": []
+    },
+    "ForbiddenError": {
+      "name": {
+        "name": {
+          "originalName": "ForbiddenError",
+          "camelCase": {
+            "unsafeName": "forbiddenError",
+            "safeName": "forbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "forbidden_error",
+            "safeName": "forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FORBIDDEN_ERROR",
+            "safeName": "FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ForbiddenError",
+            "safeName": "ForbiddenError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ForbiddenError"
+      },
+      "displayName": "ForbiddenError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ForbiddenError",
+          "camelCase": {
+            "unsafeName": "forbiddenError",
+            "safeName": "forbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "forbidden_error",
+            "safeName": "forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FORBIDDEN_ERROR",
+            "safeName": "FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ForbiddenError",
+            "safeName": "ForbiddenError"
+          }
+        },
+        "wireValue": "ForbiddenError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "GenerateErrorResponse",
+          "camelCase": {
+            "unsafeName": "generateErrorResponse",
+            "safeName": "generateErrorResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "generate_error_response",
+            "safeName": "generate_error_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GENERATE_ERROR_RESPONSE",
+            "safeName": "GENERATE_ERROR_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "GenerateErrorResponse",
+            "safeName": "GenerateErrorResponse"
+          }
+        },
+        "typeId": "GenerateErrorResponse",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 403,
+      "docs": "",
+      "examples": []
+    },
+    "NotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "NotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "NotFoundError",
+          "camelCase": {
+            "unsafeName": "notFoundError",
+            "safeName": "notFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "not_found_error",
+            "safeName": "not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "NOT_FOUND_ERROR",
+            "safeName": "NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "NotFoundError",
+            "safeName": "NotFoundError"
+          }
+        },
+        "wireValue": "NotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "UploadDocumentErrorResponse",
+          "camelCase": {
+            "unsafeName": "uploadDocumentErrorResponse",
+            "safeName": "uploadDocumentErrorResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_document_error_response",
+            "safeName": "upload_document_error_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
+            "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadDocumentErrorResponse",
+            "safeName": "UploadDocumentErrorResponse"
+          }
+        },
+        "typeId": "UploadDocumentErrorResponse",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "",
+      "examples": []
+    },
+    "InternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "InternalServerError",
+          "camelCase": {
+            "unsafeName": "internalServerError",
+            "safeName": "internalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "internal_server_error",
+            "safeName": "internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "INTERNAL_SERVER_ERROR",
+            "safeName": "INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "InternalServerError",
+            "safeName": "InternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "InternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "InternalServerError",
+          "camelCase": {
+            "unsafeName": "internalServerError",
+            "safeName": "internalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "internal_server_error",
+            "safeName": "internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "INTERNAL_SERVER_ERROR",
+            "safeName": "INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "InternalServerError",
+            "safeName": "InternalServerError"
+          }
+        },
+        "wireValue": "InternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "UploadDocumentErrorResponse",
+          "camelCase": {
+            "unsafeName": "uploadDocumentErrorResponse",
+            "safeName": "uploadDocumentErrorResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_document_error_response",
+            "safeName": "upload_document_error_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
+            "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadDocumentErrorResponse",
+            "safeName": "UploadDocumentErrorResponse"
+          }
+        },
+        "typeId": "UploadDocumentErrorResponse",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "",
+      "examples": []
+    },
+    "ConflictError": {
+      "name": {
+        "name": {
+          "originalName": "ConflictError",
+          "camelCase": {
+            "unsafeName": "conflictError",
+            "safeName": "conflictError"
+          },
+          "snakeCase": {
+            "unsafeName": "conflict_error",
+            "safeName": "conflict_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CONFLICT_ERROR",
+            "safeName": "CONFLICT_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ConflictError",
+            "safeName": "ConflictError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ConflictError"
+      },
+      "displayName": "ConflictError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ConflictError",
+          "camelCase": {
+            "unsafeName": "conflictError",
+            "safeName": "conflictError"
+          },
+          "snakeCase": {
+            "unsafeName": "conflict_error",
+            "safeName": "conflict_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CONFLICT_ERROR",
+            "safeName": "CONFLICT_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ConflictError",
+            "safeName": "ConflictError"
+          }
+        },
+        "wireValue": "ConflictError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "RegisterPromptErrorResponse",
+          "camelCase": {
+            "unsafeName": "registerPromptErrorResponse",
+            "safeName": "registerPromptErrorResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "register_prompt_error_response",
+            "safeName": "register_prompt_error_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REGISTER_PROMPT_ERROR_RESPONSE",
+            "safeName": "REGISTER_PROMPT_ERROR_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "RegisterPromptErrorResponse",
+            "safeName": "RegisterPromptErrorResponse"
+          }
+        },
+        "typeId": "RegisterPromptErrorResponse",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 409,
+      "docs": "",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

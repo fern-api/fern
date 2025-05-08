@@ -13114,7 +13114,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13229,7 +13243,21 @@
             "statusCode": 201,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13459,7 +13487,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13585,7 +13627,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13687,7 +13743,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13812,7 +13882,34 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13919,7 +14016,34 @@
             },
             "description": "Onboarding user public_key"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14013,7 +14137,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14161,7 +14299,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14265,7 +14417,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14504,7 +14670,21 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14602,7 +14782,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14764,7 +14958,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14979,7 +15187,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15244,7 +15466,34 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15737,7 +15986,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15905,7 +16168,21 @@
             "statusCode": 201,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16033,7 +16310,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16143,7 +16434,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16225,7 +16530,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16343,7 +16662,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16459,7 +16792,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16595,7 +16942,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16728,7 +17089,21 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "responses.ApiError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18283,7 +18658,21 @@
           "statusCode": 200,
           "description": "OK"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "value": "responses.ApiError"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",

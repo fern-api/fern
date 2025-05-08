@@ -276,6 +276,8 @@ export class OpenAPIConverter extends AbstractConverter<OpenAPIConverterContext3
                         endpointLevelServers.push(endpoint.servers[0]);
                     }
                     if (endpoint.errors) {
+                        // TODO: For SDK-IR, errorIds are not guaranteed to be unique.
+                        // We'll want to override the type to unknown if errorId is already present.
                         for (const [errorId, error] of Object.entries(endpoint.errors)) {
                             errors[errorId] = error;
                         }

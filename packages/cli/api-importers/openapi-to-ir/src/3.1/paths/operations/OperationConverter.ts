@@ -80,10 +80,10 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
-        const endpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
         const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? this.context.spec.servers?.[0];
-
-        // TODO: We'll need to perform conversion for the top-level errors as well.
+        const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
+        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
+        const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
         const endpointId = [];
         if (this.context.namespace != null) {
@@ -110,9 +110,29 @@ export class OperationConverter extends AbstractOperationConverter {
             headers.push(...securityHeaders);
         }
 
+        for (const convertedError of convertedEndpointErrors) {
+            const responseError = convertedError.error;
+            const responseErrorType = convertedError.errorType;
+            const errorId = responseError.error.errorId;
+            topLevelErrors[errorId] = {
+                name: responseError.error,
+                displayName: convertedError.displayName,
+                discriminantValue: {
+                    name: responseError.error.name,
+                    wireValue: errorId
+                },
+                type: responseErrorType,
+                statusCode: convertedError.statusCode,
+                docs: responseError.docs,
+                examples: [],
+                // TODO: Add v2 examples
+                v2Examples: undefined
+            };
+        }
+
         return {
             group,
-            errors: {},
+            errors: topLevelErrors,
             endpoint: {
                 id: endpointId.join("."),
                 displayName: this.operation.summary,
@@ -128,7 +148,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 requestBody,
                 sdkRequest: undefined,
                 response,
-                errors: endpointErrors,
+                errors,
                 auth: this.operation.security != null || this.context.spec.security != null,
                 availability: await this.context.getAvailability({
                     node: this.operation,

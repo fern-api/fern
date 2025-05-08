@@ -340,89 +340,118 @@
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "ListRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "listRequestBadRequestError",
+                    "safeName": "listRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "list_request_bad_request_error",
+                    "safeName": "list_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "ListRequestBadRequestError",
+                    "safeName": "ListRequestBadRequestError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ListRequestBadRequestError"
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "ListRequestUnauthorizedError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "listRequestUnauthorizedError",
+                    "safeName": "listRequestUnauthorizedError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "list_request_unauthorized_error",
+                    "safeName": "list_request_unauthorized_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "ListRequestUnauthorizedError",
+                    "safeName": "ListRequestUnauthorizedError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ListRequestUnauthorizedError"
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "ListRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "listRequestNotFoundError",
+                    "safeName": "listRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "list_request_not_found_error",
+                    "safeName": "list_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "ListRequestNotFoundError",
+                    "safeName": "ListRequestNotFoundError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "ListRequestNotFoundError"
               },
               "docs": "Not Found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "listRequestInternalServerError",
+                    "safeName": "listRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_request_internal_server_error",
+                    "safeName": "list_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListRequestInternalServerError",
+                    "safeName": "ListRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListRequestInternalServerError"
+              },
+              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -584,7 +613,336 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "ListRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "ListRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "listRequestBadRequestError",
+            "safeName": "listRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_bad_request_error",
+            "safeName": "list_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestBadRequestError",
+            "safeName": "ListRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "listRequestBadRequestError",
+            "safeName": "listRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_bad_request_error",
+            "safeName": "list_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestBadRequestError",
+            "safeName": "ListRequestBadRequestError"
+          }
+        },
+        "wireValue": "ListRequestBadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "Bad Request",
+      "examples": []
+    },
+    "ListRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "ListRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "listRequestUnauthorizedError",
+            "safeName": "listRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_unauthorized_error",
+            "safeName": "list_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestUnauthorizedError",
+            "safeName": "ListRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "listRequestUnauthorizedError",
+            "safeName": "listRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_unauthorized_error",
+            "safeName": "list_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestUnauthorizedError",
+            "safeName": "ListRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "ListRequestUnauthorizedError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "ListRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "ListRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "listRequestNotFoundError",
+            "safeName": "listRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_not_found_error",
+            "safeName": "list_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestNotFoundError",
+            "safeName": "ListRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "listRequestNotFoundError",
+            "safeName": "listRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_not_found_error",
+            "safeName": "list_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestNotFoundError",
+            "safeName": "ListRequestNotFoundError"
+          }
+        },
+        "wireValue": "ListRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "ListRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "ListRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "listRequestInternalServerError",
+            "safeName": "listRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_internal_server_error",
+            "safeName": "list_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestInternalServerError",
+            "safeName": "ListRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "listRequestInternalServerError",
+            "safeName": "listRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_request_internal_server_error",
+            "safeName": "list_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListRequestInternalServerError",
+            "safeName": "ListRequestInternalServerError"
+          }
+        },
+        "wireValue": "ListRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Error",
+          "camelCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "snakeCase": {
+            "unsafeName": "error",
+            "safeName": "error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR",
+            "safeName": "ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "Error",
+            "safeName": "Error_"
+          }
+        },
+        "typeId": "Error",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

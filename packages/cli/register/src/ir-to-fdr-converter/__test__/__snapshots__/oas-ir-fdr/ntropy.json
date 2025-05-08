@@ -7501,7 +7501,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7678,7 +7692,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7807,7 +7835,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7998,7 +8040,21 @@
             "statusCode": 200,
             "description": "Enriched transactions."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8232,7 +8288,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8490,7 +8560,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8591,7 +8675,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8715,7 +8813,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -8813,7 +8925,21 @@
             "statusCode": 200,
             "description": "Returned batch of transaction enrichment results."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9078,7 +9204,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9170,7 +9310,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9269,7 +9423,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9359,7 +9527,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9435,7 +9617,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9567,7 +9763,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9708,7 +9918,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9791,7 +10015,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -9906,7 +10144,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10002,7 +10254,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10118,7 +10384,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10248,7 +10528,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10355,7 +10649,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10472,7 +10780,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10565,7 +10887,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10654,7 +10990,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10755,7 +11105,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -10881,7 +11245,21 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11004,7 +11382,21 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11092,7 +11484,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11170,7 +11576,21 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11332,7 +11752,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11439,7 +11873,21 @@
             "statusCode": 200,
             "description": "The newly created report"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11556,7 +12004,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11647,7 +12109,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11731,7 +12207,21 @@
             "statusCode": 200,
             "description": "Category set for the selected type of account holder"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11882,7 +12372,21 @@
             "statusCode": 200,
             "description": "Custom categories successfully set."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12017,7 +12521,21 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12189,7 +12707,21 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12288,7 +12820,21 @@
             "statusCode": 200,
             "description": "Entity"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

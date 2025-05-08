@@ -11667,7 +11667,21 @@
             "statusCode": 200,
             "description": "Users returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11775,7 +11789,34 @@
             "statusCode": 201,
             "description": "User created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "User request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -11894,7 +11935,21 @@
             "statusCode": 200,
             "description": "User returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12011,7 +12066,34 @@
             "statusCode": 200,
             "description": "User created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "User request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12119,7 +12201,47 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 403,
+              "description": "User is the current user.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12195,7 +12317,47 @@
             "statusCode": 200,
             "description": "User locked."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 403,
+              "description": "User is the current user.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12297,7 +12459,47 @@
             "statusCode": 200,
             "description": "User unlocked."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 403,
+              "description": "User is the current user.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12390,7 +12592,21 @@
             "statusCode": 200,
             "description": "User resources returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12475,7 +12691,21 @@
             "statusCode": 200,
             "description": "Users returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12579,7 +12809,21 @@
             "statusCode": 200,
             "description": "User found."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12677,7 +12921,21 @@
             "statusCode": 200,
             "description": "User found and image or fallback returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12778,7 +13036,34 @@
             "statusCode": 200,
             "description": "Text translated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12870,7 +13155,21 @@
             "statusCode": 200,
             "description": "Templates returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -12974,7 +13273,21 @@
             "statusCode": 200,
             "description": "Template returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13074,7 +13387,21 @@
             "statusCode": 200,
             "description": "Contributors returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13203,7 +13530,34 @@
             "statusCode": 201,
             "description": "Contributor assigned to team."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Contributor request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13326,7 +13680,34 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13458,7 +13839,34 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13558,7 +13966,21 @@
             "statusCode": 200,
             "description": "Teams returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13657,7 +14079,47 @@
             "statusCode": 201,
             "description": "Team created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Team request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 409,
+              "description": "Team name is already in use.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13764,7 +14226,21 @@
             "statusCode": 200,
             "description": "Teams returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13879,7 +14355,34 @@
             "statusCode": 200,
             "description": "Team updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Team request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -13998,7 +14501,21 @@
             "statusCode": 200,
             "description": "Usage tracking results returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14124,7 +14641,21 @@
             "statusCode": 200,
             "description": "API call returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14268,7 +14799,21 @@
             "statusCode": 200,
             "description": "API call returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14374,7 +14919,21 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14464,7 +15023,21 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14595,7 +15168,21 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14734,7 +15321,21 @@
             "statusCode": 200,
             "description": "Storage usage returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -14859,7 +15460,21 @@
             "statusCode": 200,
             "description": "Search results returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15000,7 +15615,47 @@
             "statusCode": 201,
             "description": "Schema field created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 409,
+              "description": "Schema field name already in use.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15343,7 +15998,47 @@
             "statusCode": 201,
             "description": "Schema field created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 409,
+              "description": "Schema field name already in use.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15669,7 +16364,34 @@
             "statusCode": 200,
             "description": "Schema UI fields defined."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -15978,7 +16700,34 @@
             "statusCode": 200,
             "description": "Schema fields reordered."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16313,7 +17062,34 @@
             "statusCode": 200,
             "description": "Schema fields reordered."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16649,7 +17425,34 @@
             "statusCode": 200,
             "description": "Schema field updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -16976,7 +17779,34 @@
             "statusCode": 200,
             "description": "Schema field deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17317,7 +18147,34 @@
             "statusCode": 200,
             "description": "Schema field updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17663,7 +18520,34 @@
             "statusCode": 200,
             "description": "Schema field deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17973,7 +18857,34 @@
             "statusCode": 200,
             "description": "Schema field shown."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18300,7 +19211,34 @@
             "statusCode": 200,
             "description": "Schema field hidden."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18610,7 +19548,34 @@
             "statusCode": 200,
             "description": "Schema field hidden."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18937,7 +19902,34 @@
             "statusCode": 200,
             "description": "Schema field hidden."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19247,7 +20239,34 @@
             "statusCode": 200,
             "description": "Schema field shown."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19574,7 +20593,34 @@
             "statusCode": 200,
             "description": "Schema field shown."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19884,7 +20930,34 @@
             "statusCode": 200,
             "description": "Schema field enabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20211,7 +21284,34 @@
             "statusCode": 200,
             "description": "Schema field enabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20521,7 +21621,34 @@
             "statusCode": 200,
             "description": "Schema field disabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20848,7 +21975,34 @@
             "statusCode": 200,
             "description": "Schema field disabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema field request not valid or field locked.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21121,7 +22275,21 @@
             "statusCode": 200,
             "description": "Schemas returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21416,7 +22584,47 @@
             "statusCode": 201,
             "description": "Schema created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 409,
+              "description": "Schema name already in use.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21719,7 +22927,21 @@
             "statusCode": 200,
             "description": "Schema found."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22023,7 +23245,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22310,7 +23559,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22420,7 +23696,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22737,7 +24040,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23046,7 +24376,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23355,7 +24712,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23664,7 +25048,34 @@
             "statusCode": 200,
             "description": "Schema updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Schema request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23958,7 +25369,34 @@
             "statusCode": 200,
             "description": "Schema published."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24247,7 +25685,34 @@
             "statusCode": 200,
             "description": "Schema unpublished."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24518,7 +25983,21 @@
             "statusCode": 200,
             "description": "Rule actions returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24600,7 +26079,21 @@
             "statusCode": 200,
             "description": "Rules returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24749,7 +26242,34 @@
             "statusCode": 201,
             "description": "Rule created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Rule request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24879,7 +26399,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24988,7 +26535,34 @@
             "statusCode": 200,
             "description": "Rule updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Rule request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25123,7 +26697,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25218,7 +26819,34 @@
             "statusCode": 200,
             "description": "Rule enabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25359,7 +26987,34 @@
             "statusCode": 200,
             "description": "Rule disabled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25489,7 +27144,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25588,7 +27270,34 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25672,7 +27381,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25764,7 +27500,34 @@
             "statusCode": 200,
             "description": "Rule simulated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25921,7 +27684,21 @@
             "statusCode": 200,
             "description": "Rule simulated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26084,7 +27861,21 @@
             "statusCode": 200,
             "description": "Rule events returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26191,7 +27982,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26274,7 +28092,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26358,7 +28203,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26421,7 +28293,21 @@
             "statusCode": 200,
             "description": "Rule events returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26496,7 +28382,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26582,7 +28482,21 @@
             "statusCode": 200,
             "description": "App plan information returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26731,7 +28645,34 @@
             "statusCode": 200,
             "description": "Plan changed or redirect url returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Plan not owned by user.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26828,7 +28769,21 @@
             "statusCode": 200,
             "description": "Team plan information returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26977,7 +28932,34 @@
             "statusCode": 200,
             "description": "Plan changed or redirect url returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27065,7 +29047,21 @@
             "statusCode": 200,
             "description": "Infos returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27118,7 +29114,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27182,7 +29192,21 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27264,7 +29288,21 @@
             "statusCode": 200,
             "description": "Latest features returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27357,7 +29395,21 @@
             "statusCode": 200,
             "description": "Supported language codes returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27478,7 +29530,21 @@
             "statusCode": 200,
             "description": "Events returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27597,7 +29663,21 @@
             "statusCode": 200,
             "description": "Events returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27690,7 +29770,21 @@
             "statusCode": 200,
             "description": "Event consumers returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27798,7 +29892,34 @@
             "statusCode": 200,
             "description": "Event consumer started asynchronously."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27898,7 +30019,34 @@
             "statusCode": 200,
             "description": "Event consumer stopped asynchronously."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27998,7 +30146,34 @@
             "statusCode": 200,
             "description": "Event consumer resetted asynchronously."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28078,7 +30253,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 501,
+              "description": "Not configured.",
+              "name": "NotImplementedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28122,7 +30324,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 501,
+              "description": "Not configured.",
+              "name": "NotImplementedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28252,7 +30481,21 @@
             "statusCode": 200,
             "description": "Contents returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28581,7 +30824,34 @@
             "statusCode": 201,
             "description": "Content created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28875,7 +31145,34 @@
             "statusCode": 200,
             "description": "Contents returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29187,7 +31484,21 @@
             "statusCode": 200,
             "description": "Content returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29511,7 +31822,34 @@
             "statusCode": 200,
             "description": "Content created or updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29824,7 +32162,34 @@
             "statusCode": 200,
             "description": "Content updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30138,7 +32503,34 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content cannot be deleted.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30268,7 +32660,34 @@
             "statusCode": 200,
             "description": "Content patched."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30555,7 +32974,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30684,7 +33130,21 @@
             "statusCode": 200,
             "description": "Contents returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30991,7 +33451,21 @@
             "statusCode": 200,
             "description": "Content returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31299,7 +33773,21 @@
             "statusCode": 200,
             "description": "Content version returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31416,7 +33904,34 @@
             "statusCode": 200,
             "description": "Contents created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31583,7 +34098,34 @@
             "statusCode": 200,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Contents request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31765,7 +34307,34 @@
             "statusCode": 200,
             "description": "Content status changed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32067,7 +34636,34 @@
             "statusCode": 200,
             "description": "Content status change cancelled."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Content request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32360,7 +34956,34 @@
             "statusCode": 200,
             "description": "Content draft created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32653,7 +35276,34 @@
             "statusCode": 200,
             "description": "Content draft deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32942,7 +35592,21 @@
             "statusCode": 200,
             "description": "Watching users returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33065,7 +35729,21 @@
             "statusCode": 200,
             "description": "Comments returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33229,7 +35907,34 @@
             "statusCode": 201,
             "description": "Comment created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Comment request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33375,7 +36080,34 @@
             },
             "description": "The comment object that needs to updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Comment request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33487,7 +36219,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33591,7 +36350,21 @@
             "statusCode": 200,
             "description": "All comments returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33728,7 +36501,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33829,7 +36629,21 @@
             "statusCode": 200,
             "description": "Backup found and content returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33913,7 +36727,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34014,7 +36855,21 @@
             "statusCode": 200,
             "description": "Backup found and content returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34090,7 +36945,21 @@
             "statusCode": 200,
             "description": "Backups returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34189,7 +37058,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Backup contingent reached.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34246,7 +37142,21 @@
             "statusCode": 200,
             "description": "Status returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34329,7 +37239,34 @@
             },
             "description": "The backup to restore."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34633,7 +37570,21 @@
             "statusCode": 200,
             "description": "Asset found and content or (resized) image returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34887,7 +37838,21 @@
             "statusCode": 200,
             "description": "Asset found and content or (resized) image returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34989,7 +37954,21 @@
             "statusCode": 200,
             "description": "Asset folders returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35130,7 +38109,34 @@
             "statusCode": 201,
             "description": "Asset folder created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset folder request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35268,7 +38274,34 @@
             "statusCode": 200,
             "description": "Asset folder updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset folder request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35381,7 +38414,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35491,7 +38551,34 @@
             "statusCode": 200,
             "description": "Asset folder moved."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset folder request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35605,7 +38692,21 @@
             "statusCode": 200,
             "description": "Assets tags returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35733,7 +38834,34 @@
             "statusCode": 200,
             "description": "Asset tag renamed and new tags returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35920,7 +39048,21 @@
             "statusCode": 200,
             "description": "Assets returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36137,7 +39279,47 @@
             "statusCode": 201,
             "description": "Asset created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 413,
+              "description": "Asset exceeds the maximum upload size.",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36307,7 +39489,34 @@
             "statusCode": 200,
             "description": "Assets returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36486,7 +39695,21 @@
             "statusCode": 200,
             "description": "Asset found."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36697,7 +39920,47 @@
             "statusCode": 200,
             "description": "Asset created or updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 413,
+              "description": "Asset exceeds the maximum upload size.",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36885,7 +40148,34 @@
             "statusCode": 200,
             "description": "Asset updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37069,7 +40359,34 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37164,7 +40481,34 @@
             "statusCode": 200,
             "description": "Assets created, update or delete."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Assets request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37324,7 +40668,47 @@
             "statusCode": 200,
             "description": "Asset updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 413,
+              "description": "Asset exceeds the maximum upload size.",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37512,7 +40896,34 @@
             "statusCode": 200,
             "description": "Asset moved."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37672,7 +41083,21 @@
             "statusCode": 200,
             "description": "Asset scripts returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37791,7 +41216,34 @@
             "statusCode": 200,
             "description": "Asset scripts updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Asset request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37901,7 +41353,21 @@
             "statusCode": 200,
             "description": "Clients returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38029,7 +41495,34 @@
             "statusCode": 201,
             "description": "Client created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Client request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38184,7 +41677,34 @@
             "statusCode": 200,
             "description": "Client updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Client request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38321,7 +41841,34 @@
             "statusCode": 200,
             "description": "Client deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38434,7 +41981,21 @@
             "statusCode": 200,
             "description": "Contributors returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38563,7 +42124,34 @@
             "statusCode": 201,
             "description": "Contributor assigned to app."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Contributor request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38686,7 +42274,34 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38818,7 +42433,34 @@
             "statusCode": 200,
             "description": "Contributor removed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38929,7 +42571,21 @@
             "statusCode": 200,
             "description": "App image found and content or (resized) image returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39025,7 +42681,34 @@
             "statusCode": 200,
             "description": "App image uploaded."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "App request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39153,7 +42836,34 @@
             "statusCode": 200,
             "description": "App image removed."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39271,7 +42981,21 @@
             "statusCode": 200,
             "description": "Languages returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39398,7 +43122,34 @@
             "statusCode": 201,
             "description": "Language created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Language request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39552,7 +43303,34 @@
             "statusCode": 200,
             "description": "Language updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Language request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39688,7 +43466,34 @@
             "statusCode": 200,
             "description": "Language deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Language is master language.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39801,7 +43606,21 @@
             "statusCode": 200,
             "description": "Roles returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39930,7 +43749,34 @@
             "statusCode": 201,
             "description": "Role created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Role request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40058,7 +43904,21 @@
             "statusCode": 200,
             "description": "App permissions returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40179,7 +44039,34 @@
             "statusCode": 200,
             "description": "Role updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Role request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40325,7 +44212,34 @@
             "statusCode": 200,
             "description": "Role deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Role is in use by contributor or client or a default role.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40425,7 +44339,21 @@
             "statusCode": 200,
             "description": "Apps returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40542,7 +44470,47 @@
             "statusCode": 201,
             "description": "App created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "App request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 409,
+              "description": "App name is already in use.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40671,7 +44639,21 @@
             "statusCode": 200,
             "description": "Apps returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40793,7 +44775,21 @@
             "statusCode": 200,
             "description": "Apps returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40926,7 +44922,34 @@
             "statusCode": 200,
             "description": "App updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "App request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41038,7 +45061,34 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41129,7 +45179,34 @@
             "statusCode": 200,
             "description": "App transferred."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "App request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41252,7 +45329,21 @@
             "statusCode": 200,
             "description": "App settings returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41387,7 +45478,34 @@
             "statusCode": 200,
             "description": "App updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "App request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41538,7 +45656,21 @@
             "statusCode": 200,
             "description": "Workflows returned."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41671,7 +45803,34 @@
             "statusCode": 200,
             "description": "Workflow created."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Workflow request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41831,7 +45990,34 @@
             "statusCode": 200,
             "description": "Workflow updated."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Workflow request not valid.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41979,7 +46165,34 @@
             "statusCode": 200,
             "description": "Workflow deleted."
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation error.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "ErrorDto"
+                }
+              },
+              "statusCode": 500,
+              "description": "Operation failed.",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

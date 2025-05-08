@@ -9,7 +9,6 @@ components:
   schemas:
     Error:
       type: object
-      additionalProperties: false
       required: 
         - error
       properties:
@@ -19,6 +18,14 @@ components:
         status:
           type: string
           const: error
+    AnotherError:
+      type: object
+      required:
+        - customError
+      properties:
+        customError:
+          description: Custom error message
+          type: string
   responses:
     BadRequest:
       description: Bad Request
@@ -26,14 +33,20 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
-    Unauthorized:
-      description: Unauthorized
+    AnotherBadRequest:
+      description: Bad Request 1
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AnotherError"
+    NotFound:
+      description: Not Found
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/Error"
-    NotFound:
-      description: Not Found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -58,7 +71,6 @@ paths:
                 offset:
                   type: integer
                   default: 0
-                  
       responses:
         "200":
           description: A response
@@ -69,7 +81,31 @@ paths:
                 example: "Hello, world!"
         "400":
           $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+      responses:
+        "200":
+          description: A response
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Hello, world!"
+        "400":
+          $ref: "#/components/responses/AnotherBadRequest"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
