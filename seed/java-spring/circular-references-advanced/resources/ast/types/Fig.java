@@ -17,33 +17,33 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
-    builder = FirstUnionFirstElement.Builder.class
+    builder = Fig.Builder.class
 )
-public final class FirstUnionFirstElement {
-  private final SecondUnion child;
+public final class Fig {
+  private final Animal animal;
 
-  private FirstUnionFirstElement(SecondUnion child) {
-    this.child = child;
+  private Fig(Animal animal) {
+    this.animal = animal;
   }
 
-  @JsonProperty("child")
-  public SecondUnion getChild() {
-    return child;
+  @JsonProperty("animal")
+  public Animal getAnimal() {
+    return animal;
   }
 
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
-    return other instanceof FirstUnionFirstElement && equalTo((FirstUnionFirstElement) other);
+    return other instanceof Fig && equalTo((Fig) other);
   }
 
-  private boolean equalTo(FirstUnionFirstElement other) {
-    return child.equals(other.child);
+  private boolean equalTo(Fig other) {
+    return animal.equals(other.animal);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.child);
+    return Objects.hash(this.animal);
   }
 
   @java.lang.Override
@@ -51,45 +51,45 @@ public final class FirstUnionFirstElement {
     return ObjectMappers.stringify(this);
   }
 
-  public static ChildStage builder() {
+  public static AnimalStage builder() {
     return new Builder();
   }
 
-  public interface ChildStage {
-    _FinalStage child(@NotNull SecondUnion child);
+  public interface AnimalStage {
+    _FinalStage animal(@NotNull Animal animal);
 
-    Builder from(FirstUnionFirstElement other);
+    Builder from(Fig other);
   }
 
   public interface _FinalStage {
-    FirstUnionFirstElement build();
+    Fig build();
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements ChildStage, _FinalStage {
-    private SecondUnion child;
+  public static final class Builder implements AnimalStage, _FinalStage {
+    private Animal animal;
 
     private Builder() {
     }
 
     @java.lang.Override
-    public Builder from(FirstUnionFirstElement other) {
-      child(other.getChild());
+    public Builder from(Fig other) {
+      animal(other.getAnimal());
       return this;
     }
 
     @java.lang.Override
-    @JsonSetter("child")
-    public _FinalStage child(@NotNull SecondUnion child) {
-      this.child = Objects.requireNonNull(child, "child must not be null");
+    @JsonSetter("animal")
+    public _FinalStage animal(@NotNull Animal animal) {
+      this.animal = Objects.requireNonNull(animal, "animal must not be null");
       return this;
     }
 
     @java.lang.Override
-    public FirstUnionFirstElement build() {
-      return new FirstUnionFirstElement(child);
+    public Fig build() {
+      return new Fig(animal);
     }
   }
 }
