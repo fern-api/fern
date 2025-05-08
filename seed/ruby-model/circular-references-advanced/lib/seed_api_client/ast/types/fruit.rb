@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "second_union_first_element"
-require_relative "second_union_second_element"
+require_relative "acai"
+require_relative "fig"
 
 module SeedApiClient
   class Ast
-    class SecondUnion
-      # Deserialize a JSON object to an instance of SecondUnion
+    class Fruit
+      # Deserialize a JSON object to an instance of Fruit
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Ast::SecondUnion]
+      # @return [SeedApiClient::Ast::Fruit]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
-          SeedApiClient::Ast::SecondUnionFirstElement.validate_raw(obj: struct)
-          return SeedApiClient::Ast::SecondUnionFirstElement.from_json(json_object: struct) unless struct.nil?
+          SeedApiClient::Ast::Acai.validate_raw(obj: struct)
+          return SeedApiClient::Ast::Acai.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
           # noop
         end
         begin
-          SeedApiClient::Ast::SecondUnionSecondElement.validate_raw(obj: struct)
-          return SeedApiClient::Ast::SecondUnionSecondElement.from_json(json_object: struct) unless struct.nil?
+          SeedApiClient::Ast::Fig.validate_raw(obj: struct)
+          return SeedApiClient::Ast::Fig.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
@@ -40,12 +40,12 @@ module SeedApiClient
       # @return [Void]
       def self.validate_raw(obj:)
         begin
-          return SeedApiClient::Ast::SecondUnionFirstElement.validate_raw(obj: obj)
+          return SeedApiClient::Ast::Acai.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end
         begin
-          return SeedApiClient::Ast::SecondUnionSecondElement.validate_raw(obj: obj)
+          return SeedApiClient::Ast::Fig.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end
