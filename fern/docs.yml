@@ -612,6 +612,7 @@ navigation:
           path: ./pages/ai-search/getting-started/overview.mdx
         - page: AI Search Customer Showcase
           icon: fa-regular fa-star
+          slug: customer-showcase
           path: ./pages/ai-search/getting-started/customer-showcase.mdx
     - section: Features 
       skip-slug: true

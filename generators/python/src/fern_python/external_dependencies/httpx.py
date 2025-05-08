@@ -53,6 +53,7 @@ class HttpX:
         headers: Optional[AST.Expression],
         files: Optional[AST.Expression],
         content: Optional[AST.Expression],
+        content_type: Optional[str],
         response_variable_name: str,
         request_options_variable_name: str,
         is_async: bool,
@@ -68,7 +69,12 @@ class HttpX:
                 writer.write_line(",")
 
             if request_body is not None:
-                writer.write("data=" if files is not None else "json=")
+                writer.write(
+                    "data="
+                    if files is not None
+                    or (content_type is not None and (content_type == "application/x-www-form-urlencoded"))
+                    else "json="
+                )
                 writer.write_node(request_body)
                 writer.write_line(",")
 
