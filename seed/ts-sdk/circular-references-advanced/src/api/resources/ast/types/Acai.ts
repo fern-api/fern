@@ -4,4 +4,6 @@
 
 import * as SeedApi from "../../../index";
 
-export type SecondUnion = SeedApi.SecondUnionFirstElement | SeedApi.SecondUnionSecondElement;
+export interface Acai {
+    animal: SeedApi.Animal;
+}
