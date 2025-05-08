@@ -308,10 +308,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     }
                     this.ir.services[pkg.service]?.endpoints.push(endpoint.endpoint);
 
-                    const newService = this.ir.services[pkg.service]!;
-                    this.irGraph.addEndpoint(newService, endpoint.endpoint);
-                    // TODO: This method should be "markEndpointsForAudience"
-                    this.irGraph.markEndpointForAudience(newService.name, [endpoint.endpoint], endpoint.audiences);
+                    const newService = this.ir.services[pkg.service];
+                    if (newService != null) {
+                        this.irGraph.addEndpoint(newService, endpoint.endpoint);
+                        // TODO: This method should be "markEndpointsForAudience"
+                        this.irGraph.markEndpointForAudience(newService.name, [endpoint.endpoint], endpoint.audiences);
+                    }
 
                     if (endpoint.servers && endpoint.servers[0] != null) {
                         endpointLevelServers.push(endpoint.servers[0]);
