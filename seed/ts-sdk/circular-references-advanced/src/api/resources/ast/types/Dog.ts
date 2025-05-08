@@ -4,6 +4,6 @@
 
 import * as SeedApi from "../../../index";
 
-export interface FirstUnionSecondElement {
-    child: SeedApi.SecondUnion;
+export interface Dog {
+    fruit: SeedApi.Fruit;
 }

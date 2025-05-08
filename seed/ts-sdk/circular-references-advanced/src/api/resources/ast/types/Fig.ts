@@ -4,4 +4,6 @@
 
 import * as SeedApi from "../../../index";
 
-export type FirstUnion = SeedApi.FirstUnionFirstElement | SeedApi.FirstUnionSecondElement;
+export interface Fig {
+    animal: SeedApi.Animal;
+}
