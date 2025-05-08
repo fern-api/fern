@@ -81,3 +81,5 @@ export * from "./ExperimentalConfig";
 export * from "./PlaygroundSettings";
 export * from "./PlaygroundButtonSettings";
 export * from "./AnnouncementConfig";
+export * from "./ProductConfig";
+export * from "./ProductFileConfig";

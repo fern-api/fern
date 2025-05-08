@@ -201,6 +201,16 @@
         }
       ]
     },
+    "product": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/products.ProductDeclarationSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "version": {
       "oneOf": [
         {
@@ -1528,6 +1538,129 @@
         },
         "header": {
           "$ref": "#/definitions/versioning.VersionDeclarationHeaderSchema"
+        }
+      },
+      "required": [
+        "values",
+        "header"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValueDetailed": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        },
+        "versions": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/versioning.VersionDeclarationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductValue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductValueDetailed"
+        }
+      ]
+    },
+    "products.ProductDeclarationHeaderObjectSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "env": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "products.ProductDeclarationHeaderSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderObjectSchema"
+        }
+      ]
+    },
+    "products.ProductDeclarationSchema": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/products.ProductValue"
+          }
+        },
+        "header": {
+          "$ref": "#/definitions/products.ProductDeclarationHeaderSchema"
         }
       },
       "required": [
