@@ -28,13 +28,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     public async convert(): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
-            document: this.context.spec,
-            context: this.context
+            document: this.context.spec
         }) as OpenAPIV3_1.Document;
 
         this.context.spec = (await this.resolveAllExternalRefs({
-            spec: this.context.spec,
-            context: this.context
+            spec: this.context.spec
         })) as OpenAPIV3_1.Document;
 
         const idToAuthScheme = this.convertSecuritySchemes();

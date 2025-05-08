@@ -84,7 +84,7 @@ export abstract class AbstractSpecConverter<
         };
     }
 
-    protected async resolveAllExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
+    protected async resolveAllExternalRefs({ spec }: { spec: unknown }): Promise<unknown> {
         const queue = [spec];
 
         while (queue.length > 0) {
@@ -94,31 +94,27 @@ export abstract class AbstractSpecConverter<
             }
 
             if (Array.isArray(current)) {
-                await this.resolveExternalRefsInArray(current, context, queue);
+                await this.resolveExternalRefsInArray(current, queue);
             } else if (typeof current === "object") {
-                await this.resolveExternalRefsInObject(current as Record<string, unknown>, context, queue);
+                await this.resolveExternalRefsInObject(current as Record<string, unknown>, queue);
             }
         }
         return spec;
     }
 
-    private async resolveExternalRefsInArray(arr: unknown[], context: Context, queue: unknown[]): Promise<void> {
+    private async resolveExternalRefsInArray(arr: unknown[], queue: unknown[]): Promise<void> {
         for (let i = 0; i < arr.length; i++) {
-            arr[i] = await this.resolveReferenceChain(arr[i], context, queue);
+            arr[i] = await this.resolveReferenceChain(arr[i], queue);
         }
     }
 
-    private async resolveExternalRefsInObject(
-        obj: Record<string, unknown>,
-        context: Context,
-        queue: unknown[]
-    ): Promise<void> {
+    private async resolveExternalRefsInObject(obj: Record<string, unknown>, queue: unknown[]): Promise<void> {
         for (const [key, value] of Object.entries(obj)) {
-            obj[key] = await this.resolveReferenceChain(value, context, queue);
+            obj[key] = await this.resolveReferenceChain(value, queue);
         }
     }
 
-    private async resolveReferenceChain(value: unknown, context: Context, queue: unknown[]): Promise<unknown | null> {
+    private async resolveReferenceChain(value: unknown, queue: unknown[]): Promise<unknown | null> {
         let resolvedRefVal = value;
         if (!this.context.isReferenceObject(resolvedRefVal)) {
             queue.push(resolvedRefVal);
@@ -127,7 +123,7 @@ export abstract class AbstractSpecConverter<
 
         while (this.context.isReferenceObject(resolvedRefVal)) {
             const isExternalRef = this.context.isExternalReference(resolvedRefVal.$ref);
-            const nextResolvedRef = await context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
+            const nextResolvedRef = await this.context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
             if (nextResolvedRef.resolved) {
                 resolvedRefVal = nextResolvedRef.value;
                 if (isExternalRef) {
@@ -142,11 +138,9 @@ export abstract class AbstractSpecConverter<
 
     protected removeXFernIgnores({
         document,
-        context,
         breadcrumbs = []
     }: {
         document: unknown;
-        context: Context;
         breadcrumbs?: string[];
     }): unknown {
         if (Array.isArray(document)) {
@@ -155,14 +149,13 @@ export abstract class AbstractSpecConverter<
                     const shouldIgnore = new FernIgnoreExtension({
                         breadcrumbs: [...breadcrumbs, String(index)],
                         operation: item,
-                        context
+                        context: this.context
                     }).convert();
                     return !shouldIgnore;
                 })
                 .map((item, index) =>
                     this.removeXFernIgnores({
                         document: item,
-                        context,
                         breadcrumbs: [...breadcrumbs, String(index)]
                     })
                 );
@@ -173,7 +166,7 @@ export abstract class AbstractSpecConverter<
                         const shouldIgnore = new FernIgnoreExtension({
                             breadcrumbs: [...breadcrumbs, key],
                             operation: value,
-                            context
+                            context: this.context
                         }).convert();
                         return !shouldIgnore;
                     })
@@ -181,7 +174,6 @@ export abstract class AbstractSpecConverter<
                         key,
                         this.removeXFernIgnores({
                             document: value,
-                            context,
                             breadcrumbs: [...breadcrumbs, key]
                         })
                     ])

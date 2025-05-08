@@ -22,8 +22,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
 
     public async convert(): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
-            document: this.context.spec,
-            context: this.context
+            document: this.context.spec
         }) as OpenrpcDocument;
 
         this.convertServers({});

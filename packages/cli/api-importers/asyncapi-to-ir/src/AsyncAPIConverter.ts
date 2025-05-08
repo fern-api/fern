@@ -29,13 +29,11 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
     public async convert(): Promise<IntermediateRepresentation> {
         this.context.spec = this.removeXFernIgnores({
-            document: this.context.spec,
-            context: this.context
+            document: this.context.spec
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
         this.context.spec = (await this.resolveAllExternalRefs({
-            spec: this.context.spec,
-            context: this.context
+            spec: this.context.spec
         })) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
         if (this.isAsyncAPIV3(this.context)) {
