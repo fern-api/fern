@@ -181,11 +181,9 @@ components:
           type: number
           format: float
           example: 25.4
-        # This field is deprecated and should not appear in examples
         age:
           type: integer
           example: 50
-          availability: deprecated
         location:
           type: object
           properties:
@@ -195,13 +193,6 @@ components:
             longitude:
               type: number
               format: float
-      example:
-        species: 'Quercus alba'
-        height: 25.4
-        age: 50
-        location:
-          latitude: 40.7128
-          longitude: -74.0060
 
     Tree:
       allOf:
@@ -216,6 +207,31 @@ components:
             plantedDate:
               type: string
               format: date-time
+
+    PlantHealth:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ['healthy', 'needs_water', 'needs_sun', 'diseased']
+          example: 'healthy'
+        lastChecked:
+          type: string
+          format: date-time
+          example: '2024-03-20T10:00:00Z'
+        waterLevel:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 75
+        # This field is deprecated and should not appear in examples
+        oldHealthMetric:
+          type: string
+          deprecated: true
+          example: 'good'
+        notes:
+          type: string
+          example: 'Plant is thriving in current conditions'
 
   examples:
     oakTree:
