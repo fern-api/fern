@@ -32,6 +32,18 @@ export function convertOAuthTokenEndpoint({
             ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
             : {};
 
+    let expiresIn = undefined;
+    try {
+        expiresIn =
+            tokenEndpoint.responseProperties.expires_in != null
+                ? propertyResolver.resolveResponsePropertyOrThrow({
+                      file,
+                      endpoint: tokenEndpoint.endpoint,
+                      propertyComponents: tokenEndpoint.responseProperties.expires_in
+                  })
+                : undefined;
+    } catch {}
+
     return {
         endpointReference: {
             endpointId: generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
@@ -72,14 +84,7 @@ export function convertOAuthTokenEndpoint({
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.responseProperties.access_token
             }),
-            expiresIn:
-                tokenEndpoint.responseProperties.expires_in != null
-                    ? propertyResolver.resolveResponsePropertyOrThrow({
-                          file,
-                          endpoint: tokenEndpoint.endpoint,
-                          propertyComponents: tokenEndpoint.responseProperties.expires_in
-                      })
-                    : undefined,
+            expiresIn,
             refreshToken:
                 tokenEndpoint.responseProperties.refresh_token != null
                     ? propertyResolver.resolveResponsePropertyOrThrow({

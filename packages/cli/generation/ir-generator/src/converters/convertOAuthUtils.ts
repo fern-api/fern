@@ -12,7 +12,7 @@ const DEFAULT_TOKEN_ENDPOINT: Omit<TokenEndpoint, "endpoint"> = {
     responseProperties: {
         type: "access_token",
         access_token: ["access_token"],
-        expires_in: undefined,
+        expires_in: ["expires_in"],
         refresh_token: undefined
     }
 };
@@ -26,7 +26,7 @@ const DEFAULT_REFRESH_TOKEN_ENDPOINT: Omit<RefreshTokenEndpoint, "endpoint"> = {
         type: "access_token",
         access_token: ["access_token"],
         refresh_token: undefined,
-        expires_in: undefined
+        expires_in: ["expires_in"]
     }
 };
 
