@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.18.4
+  changelogEntry:
+    - summary: |
+        Fix requirements.txt generation to properly handle dependency version constraints, ensuring compatibility markers are correctly formatted.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
 - version: 4.18.3
   changelogEntry:
     - summary: |
