@@ -5,10 +5,10 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public record SecondUnionFirstElement
+public record Fig
 {
-    [JsonPropertyName("child")]
-    public required OneOf<FirstUnionFirstElement, FirstUnionSecondElement> Child { get; set; }
+    [JsonPropertyName("animal")]
+    public required OneOf<Cat, Dog> Animal { get; set; }
 
     /// <summary>
     /// Additional properties received from the response, if any.
