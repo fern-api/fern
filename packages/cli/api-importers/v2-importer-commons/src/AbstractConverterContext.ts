@@ -504,11 +504,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
             breadcrumbs,
             context: this
         });
-        const audiences = audiencesExtension.convert();
-        if (audiences == null) {
+        const converted = audiencesExtension.convert();
+        if (converted == null) {
             return undefined;
         }
-        return audiences.audiences;
+        return converted.audiences;
     }
 
     public getAvailability({

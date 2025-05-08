@@ -16,7 +16,6 @@ export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
-        servers?: OpenAPIV3_1.ServerObject[];
         idToAuthScheme?: Record<string, AuthScheme>;
     }
 
@@ -30,14 +29,12 @@ export declare namespace PathConverter {
 export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1, PathConverter.Output> {
     private readonly pathItem: OpenAPIV3_1.PathItemObject;
     private readonly path: string;
-    private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly idToAuthScheme?: Record<string, AuthScheme>;
 
-    constructor({ context, breadcrumbs, pathItem, path, servers, idToAuthScheme }: PathConverter.Args) {
+    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
-        this.servers = servers;
         this.idToAuthScheme = idToAuthScheme;
     }
 

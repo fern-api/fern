@@ -43,7 +43,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme });
 
-        this.convertServers({ endpointLevelServers });
+        const defaultUrl = this.convertServers({ endpointLevelServers });
+
+        this.updateEndpointsWithDefaultUrl(defaultUrl);
+
+        // TODO: We'll eventually want to use filterIntermediateRepresentationForAudiences here
+        const filteredEndpoints = this.irGraph.getFilteredEndpoints();
+        this.filterIrForAudiences(filteredEndpoints);
 
         let ir = {
             ...this.ir,
@@ -64,6 +70,18 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         };
 
         return ir;
+    }
+
+    private filterIrForAudiences(filteredEndpoints: Set<FernIr.EndpointId>): void {
+        for (const service of Object.values(this.ir.services)) {
+            const updatedEndpoints: FernIr.HttpEndpoint[] = [];
+            for (const endpoint of service.endpoints) {
+                if (filteredEndpoints.has(endpoint.id)) {
+                    updatedEndpoints.push(endpoint);
+                }
+            }
+            service.endpoints = updatedEndpoints;
+        }
     }
 
     private convertSecuritySchemes(): Record<string, AuthScheme> {
@@ -117,13 +135,17 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return idToAuthScheme;
     }
 
-    private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): void {
+    private convertServers({
+        endpointLevelServers
+    }: {
+        endpointLevelServers?: OpenAPIV3_1.ServerObject[];
+    }): string | undefined {
         if (this.context.environmentOverrides) {
             this.ir.environments = convertEnvironments({
                 rawApiFileSchema: this.context.environmentOverrides,
                 casingsGenerator: this.context.casingsGenerator
             });
-            return;
+            return this.context.environmentOverrides["default-url"];
         }
 
         const serversConverter = new ServersConverter({
@@ -135,6 +157,20 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const convertedServers = serversConverter.convert();
         if (convertedServers != null) {
             this.ir.environments = convertedServers.value;
+        }
+        return convertedServers?.defaultUrl;
+    }
+
+    private updateEndpointsWithDefaultUrl(defaultUrl: string | undefined): void {
+        if (defaultUrl == null) {
+            return;
+        }
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.baseUrl == null) {
+                    endpoint.baseUrl = defaultUrl;
+                }
+            }
         }
     }
 
@@ -269,6 +305,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart });
                     }
                     this.ir.services[pkg.service]?.endpoints.push(endpoint.endpoint);
+
+                    const newService = this.ir.services[pkg.service]!;
+                    this.irGraph.addEndpoint(newService, endpoint.endpoint);
+                    // TODO: This method should be "markEndpointsForAudience"
+                    this.irGraph.markEndpointForAudience(newService.name, [endpoint.endpoint], endpoint.audiences);
 
                     if (endpoint.servers && endpoint.servers[0] != null) {
                         endpointLevelServers.push(endpoint.servers[0]);

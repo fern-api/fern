@@ -91,10 +91,7 @@ export class ServersConverter extends AbstractConverter<
                         environments
                     })
                 },
-                defaultUrl: ServersConverter.getServerName({
-                    server: this.servers[0],
-                    context: this.context
-                })
+                defaultUrl: defaultBaseUrl.id
             };
         }
 
@@ -116,7 +113,8 @@ export class ServersConverter extends AbstractConverter<
                 environments: Environments.singleBaseUrl({
                     environments
                 })
-            }
+            },
+            defaultUrl: environments[0]?.id
         };
     }
 

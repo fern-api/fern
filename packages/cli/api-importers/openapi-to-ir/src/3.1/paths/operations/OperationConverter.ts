@@ -17,6 +17,7 @@ export declare namespace OperationConverter {
 
     export interface Output extends AbstractOperationConverter.Output {
         endpoint: HttpEndpoint;
+        audiences: string[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
     }
@@ -80,7 +81,7 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
-        const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? this.context.spec.servers?.[0];
+        const server = this.operation.servers?.[0] ?? this.servers?.[0];
         const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
         const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
         const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
@@ -131,6 +132,11 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         return {
+            audiences:
+                this.context.getAudiences({
+                    operation: this.operation,
+                    breadcrumbs: this.breadcrumbs
+                }) ?? [],
             group,
             errors: topLevelErrors,
             endpoint: {
@@ -170,10 +176,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 source: HttpEndpointSource.openapi()
             },
             inlinedTypes: this.inlinedTypes,
-            servers: this.operation.servers?.filter(
-                (endpointServer) =>
-                    !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === endpointServer.url)
-            )
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
         };
     }
 
@@ -288,6 +291,12 @@ export class OperationConverter extends AbstractOperationConverter {
                     }
                 ];
             })
+        );
+    }
+
+    private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
+        return servers.filter(
+            (server) => !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === server.url)
         );
     }
 }

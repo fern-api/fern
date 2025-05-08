@@ -30467,7 +30467,7 @@
               "safeName": "Retrieve"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/deployments/",
             "parts": [
@@ -31548,7 +31548,7 @@
                     "method": "GET",
                     "path": "/v1/deployments/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo"
                   },
@@ -31659,7 +31659,7 @@
               "safeName": "Create"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/document-indexes",
             "parts": []
@@ -33012,7 +33012,7 @@
                     "method": "POST",
                     "path": "/v1/document-indexes"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {},
                   "queryParameters": {},
                   "headers": {},
@@ -33138,7 +33138,7 @@
               "safeName": "List"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/documents",
             "parts": []
@@ -37384,7 +37384,7 @@
                     "method": "GET",
                     "path": "/v1/documents"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {},
                   "queryParameters": {},
                   "headers": {}
@@ -52576,7 +52576,7 @@
               "safeName": "Retrieve"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -58810,7 +58810,7 @@
                     "method": "GET",
                     "path": "/v1/model-versions/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo"
                   },
@@ -58932,7 +58932,7 @@
               "safeName": "ModelVersionCompilePrompt"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/model-versions/",
             "parts": [
@@ -59575,7 +59575,7 @@
                     "method": "POST",
                     "path": "/v1/model-versions/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo"
                   },
@@ -59682,7 +59682,7 @@
               "safeName": "RegisterPrompt"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/registered-prompts/register",
             "parts": []
@@ -64768,7 +64768,7 @@
                     "method": "POST",
                     "path": "/v1/registered-prompts/register"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {},
                   "queryParameters": {},
                   "headers": {},
@@ -64919,7 +64919,7 @@
               "safeName": "UpsertSandboxScenario"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -68851,7 +68851,7 @@
                     "method": "POST",
                     "path": "/v1/sandboxes/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo"
                   },
@@ -68934,7 +68934,7 @@
               "safeName": "DeleteSandboxScenario"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/sandboxes/",
             "parts": [
@@ -69227,7 +69227,7 @@
                     "method": "DELETE",
                     "path": "/v1/sandboxes/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo",
                     "scenario_id": "foo"
@@ -69321,7 +69321,7 @@
               "safeName": "UpsertTestSuiteTestCase"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [
@@ -70500,7 +70500,7 @@
                     "method": "POST",
                     "path": "/v1/test-suites/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo"
                   },
@@ -70555,7 +70555,7 @@
               "safeName": "DeleteTestSuiteTestCase"
             }
           },
-          "baseUrl": "Default",
+          "baseUrl": "Base",
           "path": {
             "head": "/v1/test-suites/",
             "parts": [
@@ -70848,7 +70848,7 @@
                     "method": "DELETE",
                     "path": "/v1/test-suites/"
                   },
-                  "environment": "Default",
+                  "environment": "Base",
                   "pathParameters": {
                     "id": "foo",
                     "test_case_id": "foo"

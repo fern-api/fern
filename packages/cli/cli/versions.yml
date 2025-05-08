@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      The v3 parser now supports filtering endpoints by audiences.
+    type: fix
+  irVersion: 57
+  version: 0.60.26
+
+- changelogEntry: 
+  - summary: |
       Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
     type: fix
   irVersion: 57
