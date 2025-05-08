@@ -8,7 +8,7 @@ import { IntermediateRepresentation as Serialize } from "@fern-api/ir-sdk/src/sd
 import { FernCliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../../cli-context/CliContext";
-import { IntermediateRepresentationChangeDetector } from "../utils/IntermediateRepresentationChangeDetector";
+import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 
 export interface Result {
     bump: "major" | "minor" | "patch";
@@ -26,7 +26,7 @@ export async function getSdkVersion({
     to: string;
     fromVersion: string;
 }): Promise<Result> {
-    const detector = new IntermediateRepresentationChangeDetector(context);
+    const detector = new IntermediateRepresentationChangeDetector();
     const change = await detector.detectChanges({
         from: await readIr({ context, filepath: from, flagName: "from" }),
         to: await readIr({ context, filepath: to, flagName: "to" })
