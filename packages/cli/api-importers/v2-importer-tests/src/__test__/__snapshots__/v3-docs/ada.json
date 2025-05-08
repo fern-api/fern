@@ -3598,89 +3598,118 @@
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUserByIdRequestUnauthorizedError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUserByIdRequestUnauthorizedError",
+                    "safeName": "getEndUserByIdRequestUnauthorizedError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_user_by_id_request_unauthorized_error",
+                    "safeName": "get_end_user_by_id_request_unauthorized_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUserByIdRequestUnauthorizedError",
+                    "safeName": "GetEndUserByIdRequestUnauthorizedError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUserByIdRequestUnauthorizedError"
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUserByIdRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUserByIdRequestNotFoundError",
+                    "safeName": "getEndUserByIdRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_user_by_id_request_not_found_error",
+                    "safeName": "get_end_user_by_id_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUserByIdRequestNotFoundError",
+                    "safeName": "GetEndUserByIdRequestNotFoundError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUserByIdRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUserByIdRequestTooManyRequestsError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUserByIdRequestTooManyRequestsError",
+                    "safeName": "getEndUserByIdRequestTooManyRequestsError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_user_by_id_request_too_many_requests_error",
+                    "safeName": "get_end_user_by_id_request_too_many_requests_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+                    "safeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUserByIdRequestTooManyRequestsError",
+                    "safeName": "GetEndUserByIdRequestTooManyRequestsError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUserByIdRequestTooManyRequestsError"
               },
               "docs": "Too Many Requests"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetEndUserByIdRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "getEndUserByIdRequestInternalServerError",
+                    "safeName": "getEndUserByIdRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_end_user_by_id_request_internal_server_error",
+                    "safeName": "get_end_user_by_id_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetEndUserByIdRequestInternalServerError",
+                    "safeName": "GetEndUserByIdRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetEndUserByIdRequestInternalServerError"
+              },
+              "docs": "Internal Server Error"
             }
           ],
           "auth": true,
@@ -6487,147 +6516,176 @@
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "UpdateEndUserByIdRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "updateEndUserByIdRequestBadRequestError",
+                    "safeName": "updateEndUserByIdRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "update_end_user_by_id_request_bad_request_error",
+                    "safeName": "update_end_user_by_id_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "UpdateEndUserByIdRequestBadRequestError",
+                    "safeName": "UpdateEndUserByIdRequestBadRequestError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UpdateEndUserByIdRequestBadRequestError"
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "UpdateEndUserByIdRequestUnauthorizedError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "updateEndUserByIdRequestUnauthorizedError",
+                    "safeName": "updateEndUserByIdRequestUnauthorizedError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "update_end_user_by_id_request_unauthorized_error",
+                    "safeName": "update_end_user_by_id_request_unauthorized_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "UpdateEndUserByIdRequestUnauthorizedError",
+                    "safeName": "UpdateEndUserByIdRequestUnauthorizedError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UpdateEndUserByIdRequestUnauthorizedError"
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "UpdateEndUserByIdRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "updateEndUserByIdRequestNotFoundError",
+                    "safeName": "updateEndUserByIdRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "update_end_user_by_id_request_not_found_error",
+                    "safeName": "update_end_user_by_id_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "UpdateEndUserByIdRequestNotFoundError",
+                    "safeName": "UpdateEndUserByIdRequestNotFoundError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UpdateEndUserByIdRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "UpdateEndUserByIdRequestContentTooLargeError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "updateEndUserByIdRequestContentTooLargeError",
+                    "safeName": "updateEndUserByIdRequestContentTooLargeError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "update_end_user_by_id_request_content_too_large_error",
+                    "safeName": "update_end_user_by_id_request_content_too_large_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "UpdateEndUserByIdRequestContentTooLargeError",
+                    "safeName": "UpdateEndUserByIdRequestContentTooLargeError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UpdateEndUserByIdRequestContentTooLargeError"
               },
               "docs": "Content Too Large"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "UpdateEndUserByIdRequestTooManyRequestsError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "updateEndUserByIdRequestTooManyRequestsError",
+                    "safeName": "updateEndUserByIdRequestTooManyRequestsError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "update_end_user_by_id_request_too_many_requests_error",
+                    "safeName": "update_end_user_by_id_request_too_many_requests_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "UpdateEndUserByIdRequestTooManyRequestsError",
+                    "safeName": "UpdateEndUserByIdRequestTooManyRequestsError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UpdateEndUserByIdRequestTooManyRequestsError"
               },
               "docs": "Too Many Requests"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdateEndUserByIdRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "updateEndUserByIdRequestInternalServerError",
+                    "safeName": "updateEndUserByIdRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_end_user_by_id_request_internal_server_error",
+                    "safeName": "update_end_user_by_id_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdateEndUserByIdRequestInternalServerError",
+                    "safeName": "UpdateEndUserByIdRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdateEndUserByIdRequestInternalServerError"
+              },
+              "docs": "Internal Server Error"
             }
           ],
           "auth": true,
@@ -9970,89 +10028,118 @@
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUsersRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUsersRequestBadRequestError",
+                    "safeName": "getEndUsersRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_users_request_bad_request_error",
+                    "safeName": "get_end_users_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUsersRequestBadRequestError",
+                    "safeName": "GetEndUsersRequestBadRequestError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUsersRequestBadRequestError"
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUsersRequestUnauthorizedError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUsersRequestUnauthorizedError",
+                    "safeName": "getEndUsersRequestUnauthorizedError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_users_request_unauthorized_error",
+                    "safeName": "get_end_users_request_unauthorized_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUsersRequestUnauthorizedError",
+                    "safeName": "GetEndUsersRequestUnauthorizedError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUsersRequestUnauthorizedError"
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Errors",
+                  "originalName": "GetEndUsersRequestTooManyRequestsError",
                   "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "getEndUsersRequestTooManyRequestsError",
+                    "safeName": "getEndUsersRequestTooManyRequestsError"
                   },
                   "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
+                    "unsafeName": "get_end_users_request_too_many_requests_error",
+                    "safeName": "get_end_users_request_too_many_requests_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
+                    "unsafeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR",
+                    "safeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
+                    "unsafeName": "GetEndUsersRequestTooManyRequestsError",
+                    "safeName": "GetEndUsersRequestTooManyRequestsError"
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "GetEndUsersRequestTooManyRequestsError"
               },
               "docs": "Too Many Requests"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetEndUsersRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "getEndUsersRequestInternalServerError",
+                    "safeName": "getEndUsersRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_end_users_request_internal_server_error",
+                    "safeName": "get_end_users_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetEndUsersRequestInternalServerError",
+                    "safeName": "GetEndUsersRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetEndUsersRequestInternalServerError"
+              },
+              "docs": "Internal Server Error"
             }
           ],
           "auth": true,
@@ -15559,7 +15646,1156 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "GetEndUserByIdRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestUnauthorizedError",
+            "safeName": "getEndUserByIdRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_unauthorized_error",
+            "safeName": "get_end_user_by_id_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestUnauthorizedError",
+            "safeName": "GetEndUserByIdRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUserByIdRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestUnauthorizedError",
+            "safeName": "getEndUserByIdRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_unauthorized_error",
+            "safeName": "get_end_user_by_id_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestUnauthorizedError",
+            "safeName": "GetEndUserByIdRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "GetEndUserByIdRequestUnauthorizedError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "GetEndUserByIdRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestNotFoundError",
+            "safeName": "getEndUserByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_not_found_error",
+            "safeName": "get_end_user_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestNotFoundError",
+            "safeName": "GetEndUserByIdRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUserByIdRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestNotFoundError",
+            "safeName": "getEndUserByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_not_found_error",
+            "safeName": "get_end_user_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestNotFoundError",
+            "safeName": "GetEndUserByIdRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetEndUserByIdRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "GetEndUserByIdRequestTooManyRequestsError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestTooManyRequestsError",
+            "safeName": "getEndUserByIdRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_too_many_requests_error",
+            "safeName": "get_end_user_by_id_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestTooManyRequestsError",
+            "safeName": "GetEndUserByIdRequestTooManyRequestsError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUserByIdRequestTooManyRequestsError"
+      },
+      "displayName": "TooManyRequestsError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestTooManyRequestsError",
+            "safeName": "getEndUserByIdRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_too_many_requests_error",
+            "safeName": "get_end_user_by_id_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestTooManyRequestsError",
+            "safeName": "GetEndUserByIdRequestTooManyRequestsError"
+          }
+        },
+        "wireValue": "GetEndUserByIdRequestTooManyRequestsError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 429,
+      "docs": "Too Many Requests",
+      "examples": []
+    },
+    "GetEndUserByIdRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestInternalServerError",
+            "safeName": "getEndUserByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_internal_server_error",
+            "safeName": "get_end_user_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestInternalServerError",
+            "safeName": "GetEndUserByIdRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUserByIdRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUserByIdRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getEndUserByIdRequestInternalServerError",
+            "safeName": "getEndUserByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_user_by_id_request_internal_server_error",
+            "safeName": "get_end_user_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUserByIdRequestInternalServerError",
+            "safeName": "GetEndUserByIdRequestInternalServerError"
+          }
+        },
+        "wireValue": "GetEndUserByIdRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestBadRequestError",
+            "safeName": "updateEndUserByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_bad_request_error",
+            "safeName": "update_end_user_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestBadRequestError",
+            "safeName": "UpdateEndUserByIdRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestBadRequestError",
+            "safeName": "updateEndUserByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_bad_request_error",
+            "safeName": "update_end_user_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestBadRequestError",
+            "safeName": "UpdateEndUserByIdRequestBadRequestError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestBadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "Bad Request",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestUnauthorizedError",
+            "safeName": "updateEndUserByIdRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_unauthorized_error",
+            "safeName": "update_end_user_by_id_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestUnauthorizedError",
+            "safeName": "UpdateEndUserByIdRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestUnauthorizedError",
+            "safeName": "updateEndUserByIdRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_unauthorized_error",
+            "safeName": "update_end_user_by_id_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestUnauthorizedError",
+            "safeName": "UpdateEndUserByIdRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestUnauthorizedError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestNotFoundError",
+            "safeName": "updateEndUserByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_not_found_error",
+            "safeName": "update_end_user_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestNotFoundError",
+            "safeName": "UpdateEndUserByIdRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestNotFoundError",
+            "safeName": "updateEndUserByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_not_found_error",
+            "safeName": "update_end_user_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestNotFoundError",
+            "safeName": "UpdateEndUserByIdRequestNotFoundError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestContentTooLargeError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestContentTooLargeError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestContentTooLargeError",
+            "safeName": "updateEndUserByIdRequestContentTooLargeError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_content_too_large_error",
+            "safeName": "update_end_user_by_id_request_content_too_large_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestContentTooLargeError",
+            "safeName": "UpdateEndUserByIdRequestContentTooLargeError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestContentTooLargeError"
+      },
+      "displayName": "ContentTooLargeError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestContentTooLargeError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestContentTooLargeError",
+            "safeName": "updateEndUserByIdRequestContentTooLargeError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_content_too_large_error",
+            "safeName": "update_end_user_by_id_request_content_too_large_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_CONTENT_TOO_LARGE_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestContentTooLargeError",
+            "safeName": "UpdateEndUserByIdRequestContentTooLargeError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestContentTooLargeError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 413,
+      "docs": "Content Too Large",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestTooManyRequestsError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestTooManyRequestsError",
+            "safeName": "updateEndUserByIdRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_too_many_requests_error",
+            "safeName": "update_end_user_by_id_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestTooManyRequestsError",
+            "safeName": "UpdateEndUserByIdRequestTooManyRequestsError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestTooManyRequestsError"
+      },
+      "displayName": "TooManyRequestsError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestTooManyRequestsError",
+            "safeName": "updateEndUserByIdRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_too_many_requests_error",
+            "safeName": "update_end_user_by_id_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestTooManyRequestsError",
+            "safeName": "UpdateEndUserByIdRequestTooManyRequestsError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestTooManyRequestsError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 429,
+      "docs": "Too Many Requests",
+      "examples": []
+    },
+    "UpdateEndUserByIdRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestInternalServerError",
+            "safeName": "updateEndUserByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_internal_server_error",
+            "safeName": "update_end_user_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestInternalServerError",
+            "safeName": "UpdateEndUserByIdRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateEndUserByIdRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateEndUserByIdRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "updateEndUserByIdRequestInternalServerError",
+            "safeName": "updateEndUserByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_end_user_by_id_request_internal_server_error",
+            "safeName": "update_end_user_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "UPDATE_END_USER_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateEndUserByIdRequestInternalServerError",
+            "safeName": "UpdateEndUserByIdRequestInternalServerError"
+          }
+        },
+        "wireValue": "UpdateEndUserByIdRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "GetEndUsersRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUsersRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestBadRequestError",
+            "safeName": "getEndUsersRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_bad_request_error",
+            "safeName": "get_end_users_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestBadRequestError",
+            "safeName": "GetEndUsersRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUsersRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUsersRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestBadRequestError",
+            "safeName": "getEndUsersRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_bad_request_error",
+            "safeName": "get_end_users_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestBadRequestError",
+            "safeName": "GetEndUsersRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetEndUsersRequestBadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "Bad Request",
+      "examples": []
+    },
+    "GetEndUsersRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUsersRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestUnauthorizedError",
+            "safeName": "getEndUsersRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_unauthorized_error",
+            "safeName": "get_end_users_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestUnauthorizedError",
+            "safeName": "GetEndUsersRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUsersRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUsersRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestUnauthorizedError",
+            "safeName": "getEndUsersRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_unauthorized_error",
+            "safeName": "get_end_users_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestUnauthorizedError",
+            "safeName": "GetEndUsersRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "GetEndUsersRequestUnauthorizedError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "GetEndUsersRequestTooManyRequestsError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUsersRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestTooManyRequestsError",
+            "safeName": "getEndUsersRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_too_many_requests_error",
+            "safeName": "get_end_users_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestTooManyRequestsError",
+            "safeName": "GetEndUsersRequestTooManyRequestsError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUsersRequestTooManyRequestsError"
+      },
+      "displayName": "TooManyRequestsError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUsersRequestTooManyRequestsError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestTooManyRequestsError",
+            "safeName": "getEndUsersRequestTooManyRequestsError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_too_many_requests_error",
+            "safeName": "get_end_users_request_too_many_requests_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_TOO_MANY_REQUESTS_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestTooManyRequestsError",
+            "safeName": "GetEndUsersRequestTooManyRequestsError"
+          }
+        },
+        "wireValue": "GetEndUsersRequestTooManyRequestsError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 429,
+      "docs": "Too Many Requests",
+      "examples": []
+    },
+    "GetEndUsersRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "GetEndUsersRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestInternalServerError",
+            "safeName": "getEndUsersRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_internal_server_error",
+            "safeName": "get_end_users_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestInternalServerError",
+            "safeName": "GetEndUsersRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetEndUsersRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetEndUsersRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getEndUsersRequestInternalServerError",
+            "safeName": "getEndUsersRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_end_users_request_internal_server_error",
+            "safeName": "get_end_users_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_END_USERS_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetEndUsersRequestInternalServerError",
+            "safeName": "GetEndUsersRequestInternalServerError"
+          }
+        },
+        "wireValue": "GetEndUsersRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "Errors",
+          "camelCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "snakeCase": {
+            "unsafeName": "errors",
+            "safeName": "errors"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERRORS",
+            "safeName": "ERRORS"
+          },
+          "pascalCase": {
+            "unsafeName": "Errors",
+            "safeName": "Errors"
+          }
+        },
+        "typeId": "Errors",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

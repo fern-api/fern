@@ -340,87 +340,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "BadRequestError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "BadRequestError"
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "UnauthorizedError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "unauthorizedError",
+                    "safeName": "unauthorizedError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "unauthorized_error",
+                    "safeName": "unauthorized_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "UNAUTHORIZED_ERROR",
+                    "safeName": "UNAUTHORIZED_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "UnauthorizedError",
+                    "safeName": "UnauthorizedError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "UnauthorizedError"
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "Error",
+                  "originalName": "NotFoundError",
                   "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                }
+                },
+                "errorId": "NotFoundError"
               },
               "docs": "Not Found"
             },
@@ -614,12 +614,15 @@
     }
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
   "errors": {},
 =======
 =======
 <<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors-simple.json
 >>>>>>> 1a7aff3095 (fix(go): go generator compiles (#7031))
+=======
+>>>>>>> d1416a327f (us)
   "errors": {
     "BadRequestError": {
       "name": {
@@ -951,12 +954,15 @@
     }
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> f3bccdc7ee (respect `enableUniqueErrorsPerEndpoint` key during IR conversion, but render succinct displayName property):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors-simple.json
 =======
 =======
   "errors": {},
 >>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors.json
 >>>>>>> 1a7aff3095 (fix(go): go generator compiles (#7031))
+=======
+>>>>>>> d1416a327f (us)
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

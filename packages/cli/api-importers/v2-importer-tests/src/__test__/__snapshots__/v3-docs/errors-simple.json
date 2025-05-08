@@ -340,7 +340,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                   "originalName": "ListRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "listRequestBadRequestError",
@@ -357,43 +356,19 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestBadRequestError",
                     "safeName": "ListRequestBadRequestError"
-=======
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                 },
                 "errorId": "ListRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                   "originalName": "ListRequestUnauthorizedError",
                   "camelCase": {
                     "unsafeName": "listRequestUnauthorizedError",
@@ -410,43 +385,19 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestUnauthorizedError",
                     "safeName": "ListRequestUnauthorizedError"
-=======
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                 },
                 "errorId": "ListRequestUnauthorizedError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                   "originalName": "ListRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "listRequestNotFoundError",
@@ -463,36 +414,13 @@
                   "pascalCase": {
                     "unsafeName": "ListRequestNotFoundError",
                     "safeName": "ListRequestNotFoundError"
-=======
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error_"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
                   }
                 },
-                "errorId": "Error",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
                 },
                 "errorId": "ListRequestNotFoundError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
               },
               "docs": "Not Found"
             },
@@ -685,7 +613,6 @@
       ]
     }
   },
-<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors-simple.json
   "errors": {
     "ListRequestBadRequestError": {
       "name": {
@@ -1016,9 +943,6 @@
       "examples": []
     }
   },
-=======
-  "errors": {},
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
