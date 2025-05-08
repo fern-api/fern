@@ -91,6 +91,28 @@
         ]
       }
     },
+    "type_ast:Node": {
+      "name": "Node",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "BranchNode",
+            "type": {
+              "type": "id",
+              "value": "type_ast:BranchNode"
+            }
+          },
+          {
+            "typeName": "LeafNode",
+            "type": {
+              "type": "id",
+              "value": "type_ast:LeafNode"
+            }
+          }
+        ]
+      }
+    },
     "type_ast:Cat": {
       "name": "Cat",
       "shape": {
@@ -150,6 +172,55 @@
             "valueType": {
               "type": "id",
               "value": "type_ast:Animal"
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:BranchNode": {
+      "name": "BranchNode",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "children",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_ast:Node"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_ast:LeafNode": {
+      "name": "LeafNode",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "type_ast:NodesWrapper": {
+      "name": "NodesWrapper",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "nodes",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_ast:Node"
+                }
+              }
             }
           }
         ]
@@ -328,10 +399,14 @@
       "types": [
         "type_ast:Animal",
         "type_ast:Fruit",
+        "type_ast:Node",
         "type_ast:Cat",
         "type_ast:Dog",
         "type_ast:Acai",
         "type_ast:Fig",
+        "type_ast:BranchNode",
+        "type_ast:LeafNode",
+        "type_ast:NodesWrapper",
         "type_ast:ContainerValue",
         "type_ast:PrimitiveValue",
         "type_ast:ObjectValue",
