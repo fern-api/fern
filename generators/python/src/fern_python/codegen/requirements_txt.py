@@ -18,7 +18,7 @@ class RequirementsTxt:
             if version.startswith((">=", "<=", "==", ">", "<")):
                 content += f"{dep.name}{version}\n"
                 continue
-                
+
             # Remove any caret (^) from the version string
             if version.startswith("^"):
                 version = version[1:]
