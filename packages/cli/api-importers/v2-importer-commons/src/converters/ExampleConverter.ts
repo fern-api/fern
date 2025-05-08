@@ -521,7 +521,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                     return { key, result: { isValid: true, coerced: false, validExample: undefined, errors: [] } };
                 }
 
-                // If the property is both deprecated and optional, we will not include the example
                 if (this.isDeprecatedProperty(property)) {
                     const isOptionalProperty = !this.isRequiredProperty({ key, resolvedSchema });
                     if (isOptionalProperty) {
@@ -798,14 +797,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         return undefined;
     }
 
-    // Checks if the property is deprecated
     private isDeprecatedProperty(
         property: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): property is OpenAPIV3_1.SchemaObject & { availability: "deprecated" } {
         return property != null && "availability" in property && property.availability === "deprecated";
     }
 
-    // Checks if the property is required
     private isRequiredProperty({
         key,
         resolvedSchema
