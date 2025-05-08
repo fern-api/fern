@@ -6,18 +6,16 @@ const client = new SeedApiClient({
     environment: () => ""
 });
 
-// request
-// typeReference: named: imdb
-// request
-// undefined
+// "POST"
 export const imdbCreateMovie = {
     register(server: McpServer) {
         return server.tool(
             "imdb_create_movie",
             "Add a movie to the database using the movies/* /... path.",
-            schemas.imdbCreateMovieRequest.shape,
+            schemas.ImdbCreateMovieRequest.shape,
             async (params) => {
-                const result = await client.imdb.createMovie(params);
+                const { ...restParams } = params;
+                const result = await client.imdb.createMovie(restParams);
                 return {
                     content: [{ type: "text", text: JSON.stringify(result) }]
                 };
@@ -26,17 +24,15 @@ export const imdbCreateMovie = {
     }
 };
 
-// undefined
-// undefined
-// undefined
-// undefined
+// "GET"
 export const imdbGetMovie = {
     register(server: McpServer) {
         return server.tool(
             "imdb_get_movie",
-            { movieId: schemas.movieId },
+            { movieId: schemas.ImdbMovieId },
             async (params) => {
-                const result = await client.imdb.getMovie(params);
+                const { movieId } = params;
+                const result = await client.imdb.getMovie(movieId);
                 return {
                     content: [{ type: "text", text: JSON.stringify(result) }]
                 };

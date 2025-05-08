@@ -6,7 +6,7 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 
 import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";
 
@@ -29,13 +29,13 @@ export class TypescriptMcpProject extends AbstractProject<
     private toolsFiles: File[] = [];
     public readonly filepaths: TypescriptMcpProjectFilepaths;
 
-    public readonly helpers: TypescriptMcpProjectHelpers;
+    public readonly builder: TypescriptMcpProjectBuilder;
     private packageJson: PackageJson;
 
     public constructor({ context }: { context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema> }) {
         super(context);
         this.filepaths = new TypescriptMcpProjectFilepaths();
-        this.helpers = new TypescriptMcpProjectHelpers({ context });
+        this.builder = new TypescriptMcpProjectBuilder({ context });
         this.packageJson = new PackageJson({ context });
     }
 
@@ -138,52 +138,54 @@ class TypescriptMcpProjectFilepaths {
     }
 }
 
-declare namespace TypescriptMcpProjectHelpers {
+declare namespace TypescriptMcpProjectBuilder {
     interface Args {
         context: AbstractTypescriptMcpGeneratorContext<TypescriptCustomConfigSchema>;
     }
 }
 
-class TypescriptMcpProjectHelpers {
+class TypescriptMcpProjectBuilder {
     public readonly packageName: string;
     public readonly description: string;
-    public readonly generatedSdkPackageName: string;
-    public readonly generatedSdkClientName: string;
+    public readonly sdkPackageName: string;
+    public readonly sdkClientVariableName: string;
 
-    constructor({ context }: TypescriptMcpProjectHelpers.Args) {
-        const organization = context.config.organization;
-        const workspaceName = context.config.workspaceName;
+    constructor({ context }: TypescriptMcpProjectBuilder.Args) {
+        const { organization, workspaceName } = context.config;
         this.packageName = context.publishConfig?.packageName ?? `${organization}-mcp-server`;
         this.description = `Model Context Protocol (MCP) server for ${organization}'s ${workspaceName}.`;
-        this.generatedSdkPackageName = `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
-        this.generatedSdkClientName = `${capitalize(organization)}${capitalize(workspaceName)}Client`;
+        this.sdkPackageName = this.inferSdkPackageName(organization, workspaceName);
+        this.sdkClientVariableName = this.inferSdkClientVariableName(organization, workspaceName);
     }
 
-    public fullyQualifiedMethodPath(service: HttpService, endpoint: HttpEndpoint): string {
-        const namespace = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join(".");
-        const name = endpoint.name.camelCase.safeName;
-        return `${namespace}.${name}`;
+    private inferSdkPackageName(organization: string, workspaceName: string): string {
+        return `${kebabCase(organization)}-${kebabCase(workspaceName)}`;
     }
 
-    public fullyQualifiedToolIdentifier(service: HttpService, endpoint: HttpEndpoint): string {
-        const namespace = service.name.fernFilepath.allParts
-            .map((part, index) => (index > 0 ? part.pascalCase.safeName : part.camelCase.safeName))
-            .join("");
-        const name =
-            service.name.fernFilepath.allParts.length > 0
-                ? endpoint.name.pascalCase.safeName
-                : endpoint.name.camelCase.safeName;
-        return `${namespace}${name}`;
+    private inferSdkClientVariableName(organization: string, workspaceName: string): string {
+        return `${capitalize(organization)}${capitalize(workspaceName)}Client`;
     }
 
-    public fullyQualifiedSchemaIdentifier(service: HttpService, endpoint: HttpEndpoint): string {
-        return this.fullyQualifiedToolIdentifier(service, endpoint);
+    public getSdkMethodPath(name: Name, fernFilepath?: FernFilepath): string {
+        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.camelCase.unsafeName);
+        return parts.join(".");
     }
 
-    public fullyQualifiedToolName(service: HttpService, endpoint: HttpEndpoint): string {
-        const namespace = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("_");
-        const name = endpoint.name.snakeCase.safeName;
-        return `${namespace}_${name}`;
+    public getSchemaVariableName(name: Name, fernFilepath?: FernFilepath): string {
+        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.pascalCase.safeName);
+        return parts.join("");
+    }
+
+    public getToolVariableName(name: Name, fernFilepath?: FernFilepath): string {
+        const parts = [...(fernFilepath?.allParts ?? []), name].map((part, index) =>
+            index === 0 ? part.camelCase.safeName : part.pascalCase.safeName
+        );
+        return parts.join("");
+    }
+
+    public getToolName(name: Name, fernFilepath?: FernFilepath): string {
+        const parts = [...(fernFilepath?.allParts ?? []), name].map((part) => part.snakeCase.safeName);
+        return parts.join("_");
     }
 }
 
@@ -202,8 +204,8 @@ class PackageJson {
 
     private build(): Record<string, unknown> {
         const packageJson: Record<string, unknown> = {
-            name: this.context.project.helpers.packageName,
-            description: this.context.project.helpers.description,
+            name: this.context.project.builder.packageName,
+            description: this.context.project.builder.description,
             version: this.context.version ?? "0.0.0",
             keywords: [this.context.config.organization, "mcp", "server"],
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
@@ -216,7 +218,7 @@ class PackageJson {
             },
             dependencies: {
                 "@modelcontextprotocol/sdk": "^1.8.0",
-                [this.context.project.helpers.generatedSdkPackageName]: "file:./sdk",
+                [this.context.project.builder.sdkPackageName]: "file:./sdk",
                 zod: "^3.24.2"
             },
             devDependencies: {

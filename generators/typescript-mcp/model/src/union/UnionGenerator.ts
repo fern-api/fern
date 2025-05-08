@@ -29,7 +29,7 @@ export class UnionGenerator extends FileGenerator<
                 writer.writeLine("export default z.union([]);");
             }),
             directory: this.getFilepath(),
-            filename: `${this.typeDeclaration.name.name.camelCase.safeName}.ts`,
+            filename: `${this.context.project.builder.getSchemaVariableName(this.typeDeclaration.name.name, this.typeDeclaration.name.fernFilepath)}.ts`,
             customConfig: this.context.customConfig
         });
     }

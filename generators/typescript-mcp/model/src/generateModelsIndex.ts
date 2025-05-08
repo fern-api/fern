@@ -9,7 +9,11 @@ const FILENAME = "index.ts";
 
 export function generateModelsIndex(context: ModelGeneratorContext): void {
     const exportStrings = Object.values(context.ir.types).map((typeDeclaration) => {
-        return `export { default as ${typeDeclaration.name.name.camelCase.safeName} } from "./${typeDeclaration.name.name.camelCase.safeName}";`;
+        const schemaName = context.project.builder.getSchemaVariableName(
+            typeDeclaration.name.name,
+            typeDeclaration.name.fernFilepath
+        );
+        return `export { default as ${schemaName} } from "./${schemaName}";`;
     });
     const file = new TypescriptMcpFile({
         node: ts.codeblock((writer) => {
