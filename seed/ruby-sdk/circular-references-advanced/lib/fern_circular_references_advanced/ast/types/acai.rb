@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative "first_union"
+require_relative "animal"
 require "ostruct"
 require "json"
 
 module SeedApiClient
   class Ast
-    class SecondUnionSecondElement
-      # @return [SeedApiClient::Ast::FirstUnion]
-      attr_reader :child
+    class Acai
+      # @return [SeedApiClient::Ast::Animal]
+      attr_reader :animal
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -17,32 +17,32 @@ module SeedApiClient
 
       OMIT = Object.new
 
-      # @param child [SeedApiClient::Ast::FirstUnion]
+      # @param animal [SeedApiClient::Ast::Animal]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedApiClient::Ast::SecondUnionSecondElement]
-      def initialize(child:, additional_properties: nil)
-        @child = child
+      # @return [SeedApiClient::Ast::Acai]
+      def initialize(animal:, additional_properties: nil)
+        @animal = animal
         @additional_properties = additional_properties
-        @_field_set = { "child": child }
+        @_field_set = { "animal": animal }
       end
 
-      # Deserialize a JSON object to an instance of SecondUnionSecondElement
+      # Deserialize a JSON object to an instance of Acai
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Ast::SecondUnionSecondElement]
+      # @return [SeedApiClient::Ast::Acai]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        if parsed_json["child"].nil?
-          child = nil
+        if parsed_json["animal"].nil?
+          animal = nil
         else
-          child = parsed_json["child"].to_json
-          child = SeedApiClient::Ast::FirstUnion.from_json(json_object: child)
+          animal = parsed_json["animal"].to_json
+          animal = SeedApiClient::Ast::Animal.from_json(json_object: animal)
         end
-        new(child: child, additional_properties: struct)
+        new(animal: animal, additional_properties: struct)
       end
 
-      # Serialize an instance of SecondUnionSecondElement to a JSON object
+      # Serialize an instance of Acai to a JSON object
       #
       # @return [String]
       def to_json(*_args)
@@ -56,7 +56,7 @@ module SeedApiClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedApiClient::Ast::FirstUnion.validate_raw(obj: obj.child)
+        SeedApiClient::Ast::Animal.validate_raw(obj: obj.animal)
       end
     end
   end
