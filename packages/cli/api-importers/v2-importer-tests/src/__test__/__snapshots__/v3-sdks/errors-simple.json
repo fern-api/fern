@@ -613,9 +613,13 @@
       ]
     }
   },
+<<<<<<< HEAD
 <<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors.json
   "errors": {},
 =======
+=======
+<<<<<<< HEAD:packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors-simple.json
+>>>>>>> 1a7aff3095 (fix(go): go generator compiles (#7031))
   "errors": {
     "BadRequestError": {
       "name": {
@@ -946,7 +950,13 @@
       "examples": []
     }
   },
+<<<<<<< HEAD
 >>>>>>> f3bccdc7ee (respect `enableUniqueErrorsPerEndpoint` key during IR conversion, but render succinct displayName property):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-sdks/errors-simple.json
+=======
+=======
+  "errors": {},
+>>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031)):packages/cli/api-importers/v2-importer-tests/src/__test__/__snapshots__/v3-docs/errors.json
+>>>>>>> 1a7aff3095 (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

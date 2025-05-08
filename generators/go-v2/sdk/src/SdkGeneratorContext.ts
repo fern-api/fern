@@ -25,7 +25,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
+<<<<<<< HEAD
             ir
+=======
+            ir,
+>>>>>>> 1a7aff3095 (fix(go): go generator compiles (#7031))
         });
     }
 }
