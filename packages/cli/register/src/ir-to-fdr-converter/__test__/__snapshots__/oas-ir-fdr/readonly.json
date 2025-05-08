@@ -243,8 +243,8 @@
         ]
       }
     },
-    "validateAUserObject_Response_400": {
-      "name": "validateAUserObject_Response_400",
+    "BadRequestError": {
+      "name": "BadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -543,7 +543,21 @@
           "statusCode": 200,
           "description": "User object validated successfully"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "value": "BadRequestError"
+              }
+            },
+            "statusCode": 400,
+            "description": "Invalid user object",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",

@@ -18292,7 +18292,34 @@
             "statusCode": 200,
             "description": "List of issue triggers"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18495,7 +18522,34 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18682,7 +18736,34 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18841,7 +18922,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19053,7 +19148,34 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19206,7 +19328,21 @@
             "statusCode": 200,
             "description": "An object with deleted issue trigger's id"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19318,7 +19454,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19466,7 +19616,21 @@
             "statusCode": 200,
             "description": "A single issue trigger"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19677,7 +19841,34 @@
             "statusCode": 200,
             "description": "List of attempts"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19851,7 +20042,21 @@
             "statusCode": 200,
             "description": "A single attempt"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20116,7 +20321,34 @@
             "statusCode": 200,
             "description": "List of bookmarks"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20324,7 +20556,34 @@
             "statusCode": 200,
             "description": "A single bookmark"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20479,7 +20738,21 @@
             "statusCode": 200,
             "description": "A single bookmark"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20692,7 +20965,47 @@
             "statusCode": 200,
             "description": "A single bookmark"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20841,7 +21154,21 @@
             "statusCode": 200,
             "description": "An object with deleted bookmark's id"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20976,7 +21303,47 @@
             "statusCode": 200,
             "description": "Array of created events"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21262,7 +21629,34 @@
             "statusCode": 200,
             "description": "List of destinations"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21494,7 +21888,34 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21711,7 +22132,34 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21850,7 +22298,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22095,7 +22557,47 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22236,7 +22738,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22368,7 +22884,21 @@
             "statusCode": 200,
             "description": "A single destination"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22765,7 +23295,34 @@
             "statusCode": 200,
             "description": "List of events"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22949,7 +23506,21 @@
             "statusCode": 200,
             "description": "A single event"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23111,7 +23682,21 @@
             "statusCode": 200,
             "description": "A request raw body data"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23223,7 +23808,21 @@
             "statusCode": 200,
             "description": "Retried event with event attempt"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23435,7 +24034,21 @@
             "statusCode": 200,
             "description": "A single event"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23724,7 +24337,34 @@
             "statusCode": 200,
             "description": "List of events bulk retries"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23891,7 +24531,34 @@
             "statusCode": 200,
             "description": "A single events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24027,7 +24694,34 @@
             "statusCode": 200,
             "description": "Events bulk retry plan"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24141,7 +24835,21 @@
             "statusCode": 200,
             "description": "A single events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24281,7 +24989,21 @@
             "statusCode": 200,
             "description": "A single events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24548,7 +25270,34 @@
             "statusCode": 200,
             "description": "List of ignored events bulk retries"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24715,7 +25464,34 @@
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24851,7 +25627,34 @@
             "statusCode": 200,
             "description": "Ignored events bulk retry plan"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24965,7 +25768,21 @@
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25105,7 +25922,21 @@
             "statusCode": 200,
             "description": "A single ignored events bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25260,7 +26091,34 @@
             "statusCode": 200,
             "description": "List of integrations"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25458,7 +26316,34 @@
             "statusCode": 200,
             "description": "A single integration"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25631,7 +26516,21 @@
             "statusCode": 200,
             "description": "A single integration"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25837,7 +26736,47 @@
             "statusCode": 200,
             "description": "A single integration"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25988,7 +26927,21 @@
             "statusCode": 200,
             "description": "An object with deleted integration id"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26117,7 +27070,34 @@
             "statusCode": 200,
             "description": "Attach operation success status"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26247,7 +27227,34 @@
             "statusCode": 200,
             "description": "Detach operation success status"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26509,7 +27516,34 @@
             "statusCode": 200,
             "description": "List of issues"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26946,7 +27980,21 @@
             "statusCode": 200,
             "description": "Issue count"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27056,7 +28104,21 @@
             "statusCode": 200,
             "description": "A single issue"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27348,7 +28410,34 @@
             "statusCode": 200,
             "description": "Updated issue"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27523,7 +28612,21 @@
             "statusCode": 200,
             "description": "Dismissed issue"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27896,7 +28999,34 @@
             "statusCode": 200,
             "description": "List of requests"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28076,7 +29206,21 @@
             "statusCode": 200,
             "description": "A single request"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28234,7 +29378,21 @@
             "statusCode": 200,
             "description": "A request raw body data"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28372,7 +29530,47 @@
             "statusCode": 200,
             "description": "Retry request operation result"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28880,7 +30078,47 @@
             "statusCode": 200,
             "description": "List of events"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29137,7 +30375,47 @@
             "statusCode": 200,
             "description": "List of ignored events"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29414,7 +30692,34 @@
             "statusCode": 200,
             "description": "List of request bulk retries"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29581,7 +30886,34 @@
             "statusCode": 200,
             "description": "A single requests bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29717,7 +31049,34 @@
             "statusCode": 200,
             "description": "Requests bulk retry plan"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29831,7 +31190,21 @@
             "statusCode": 200,
             "description": "A single requests bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29971,7 +31344,21 @@
             "statusCode": 200,
             "description": "A single requests bulk retry"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30206,7 +31593,34 @@
             "statusCode": 200,
             "description": "List of rulesets"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30400,7 +31814,34 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30579,7 +32020,34 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30726,7 +32194,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30936,7 +32418,47 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31081,7 +32603,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31221,7 +32757,21 @@
             "statusCode": 200,
             "description": "A single ruleset"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31466,7 +33016,34 @@
             "statusCode": 200,
             "description": "List of sources"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31636,7 +33213,34 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31791,7 +33395,34 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31940,7 +33571,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32126,7 +33771,47 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32273,7 +33958,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32415,7 +34114,21 @@
             "statusCode": 200,
             "description": "A single source"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32797,7 +34510,34 @@
             "statusCode": 200,
             "description": "List of transformations"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32974,7 +34714,34 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33138,7 +34905,34 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33275,7 +35069,21 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33454,7 +35262,47 @@
             "statusCode": 200,
             "description": "A single transformation"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33654,7 +35502,34 @@
             "statusCode": 200,
             "description": "Transformation run output"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33902,7 +35777,34 @@
             "statusCode": 200,
             "description": "List of transformation executions"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34117,7 +36019,21 @@
             "statusCode": 200,
             "description": "A single transformation execution"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34431,7 +36347,34 @@
             "statusCode": 200,
             "description": "List of connections"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34809,7 +36752,34 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35172,7 +37142,34 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35431,7 +37428,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35752,7 +37763,47 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 422,
+              "description": "Unprocessable Entity",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36009,7 +38060,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36261,7 +38326,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36513,7 +38592,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36765,7 +38858,21 @@
             "statusCode": 200,
             "description": "A single connection"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "APIErrorResponse"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
