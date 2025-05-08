@@ -25,7 +25,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
-            ir,
+            ir
         });
     }
 }
