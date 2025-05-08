@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "first_union_first_element"
-require_relative "first_union_second_element"
+require_relative "cat"
+require_relative "dog"
 
 module SeedApiClient
   class Ast
-    class FirstUnion
-      # Deserialize a JSON object to an instance of FirstUnion
+    class Animal
+      # Deserialize a JSON object to an instance of Animal
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Ast::FirstUnion]
+      # @return [SeedApiClient::Ast::Animal]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
-          SeedApiClient::Ast::FirstUnionFirstElement.validate_raw(obj: struct)
-          return SeedApiClient::Ast::FirstUnionFirstElement.from_json(json_object: struct) unless struct.nil?
+          SeedApiClient::Ast::Cat.validate_raw(obj: struct)
+          return SeedApiClient::Ast::Cat.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
           # noop
         end
         begin
-          SeedApiClient::Ast::FirstUnionSecondElement.validate_raw(obj: struct)
-          return SeedApiClient::Ast::FirstUnionSecondElement.from_json(json_object: struct) unless struct.nil?
+          SeedApiClient::Ast::Dog.validate_raw(obj: struct)
+          return SeedApiClient::Ast::Dog.from_json(json_object: struct) unless struct.nil?
 
           return nil
         rescue StandardError
@@ -40,12 +40,12 @@ module SeedApiClient
       # @return [Void]
       def self.validate_raw(obj:)
         begin
-          return SeedApiClient::Ast::FirstUnionFirstElement.validate_raw(obj: obj)
+          return SeedApiClient::Ast::Cat.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end
         begin
-          return SeedApiClient::Ast::FirstUnionSecondElement.validate_raw(obj: obj)
+          return SeedApiClient::Ast::Dog.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end

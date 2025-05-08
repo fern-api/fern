@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
-require_relative "second_union"
+require_relative "fruit"
 require "ostruct"
 require "json"
 
 module SeedApiClient
   class Ast
-    class FirstUnionSecondElement
-      # @return [SeedApiClient::Ast::SecondUnion]
-      attr_reader :child
+    class Dog
+      # @return [SeedApiClient::Ast::Fruit]
+      attr_reader :fruit
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
       # @return [Object]
@@ -17,32 +17,32 @@ module SeedApiClient
 
       OMIT = Object.new
 
-      # @param child [SeedApiClient::Ast::SecondUnion]
+      # @param fruit [SeedApiClient::Ast::Fruit]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [SeedApiClient::Ast::FirstUnionSecondElement]
-      def initialize(child:, additional_properties: nil)
-        @child = child
+      # @return [SeedApiClient::Ast::Dog]
+      def initialize(fruit:, additional_properties: nil)
+        @fruit = fruit
         @additional_properties = additional_properties
-        @_field_set = { "child": child }
+        @_field_set = { "fruit": fruit }
       end
 
-      # Deserialize a JSON object to an instance of FirstUnionSecondElement
+      # Deserialize a JSON object to an instance of Dog
       #
       # @param json_object [String]
-      # @return [SeedApiClient::Ast::FirstUnionSecondElement]
+      # @return [SeedApiClient::Ast::Dog]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        if parsed_json["child"].nil?
-          child = nil
+        if parsed_json["fruit"].nil?
+          fruit = nil
         else
-          child = parsed_json["child"].to_json
-          child = SeedApiClient::Ast::SecondUnion.from_json(json_object: child)
+          fruit = parsed_json["fruit"].to_json
+          fruit = SeedApiClient::Ast::Fruit.from_json(json_object: fruit)
         end
-        new(child: child, additional_properties: struct)
+        new(fruit: fruit, additional_properties: struct)
       end
 
-      # Serialize an instance of FirstUnionSecondElement to a JSON object
+      # Serialize an instance of Dog to a JSON object
       #
       # @return [String]
       def to_json(*_args)
@@ -56,7 +56,7 @@ module SeedApiClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        SeedApiClient::Ast::SecondUnion.validate_raw(obj: obj.child)
+        SeedApiClient::Ast::Fruit.validate_raw(obj: obj.fruit)
       end
     end
   end
