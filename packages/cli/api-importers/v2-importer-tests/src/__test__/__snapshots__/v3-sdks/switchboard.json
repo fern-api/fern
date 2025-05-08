@@ -15278,89 +15278,60 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "NotFoundError"
+                }
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Unprocessable Entity"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "InternalServerError",
-                  "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "InternalServerError"
-              },
-              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -24573,89 +24544,60 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "NotFoundError"
+                }
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Unprocessable Entity"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "InternalServerError",
-                  "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "InternalServerError"
-              },
-              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -27731,89 +27673,60 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "NotFoundError"
+                }
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Unprocessable Entity"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "InternalServerError",
-                  "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "InternalServerError"
-              },
-              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -38484,89 +38397,60 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "NotFoundError"
+                }
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Unprocessable Entity"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "InternalServerError",
-                  "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "InternalServerError"
-              },
-              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -42763,89 +42647,60 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "NotFoundError"
+                }
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "ErrorEnvelope",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "errorEnvelope",
+                    "safeName": "errorEnvelope"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "error_envelope",
+                    "safeName": "error_envelope"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "ERROR_ENVELOPE",
+                    "safeName": "ERROR_ENVELOPE"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ErrorEnvelope",
+                    "safeName": "ErrorEnvelope"
                   }
                 },
+                "errorId": "ErrorEnvelope",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-                },
-                "errorId": "UnprocessableEntityError"
+                }
               },
               "docs": "Unprocessable Entity"
-            },
-            {
-              "error": {
-                "name": {
-                  "originalName": "InternalServerError",
-                  "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
-                  }
-                },
-                "fernFilepath": {
-                  "allParts": [],
-                  "packagePath": []
-                },
-                "errorId": "InternalServerError"
-              },
-              "docs": "Internal Server Error"
             }
           ],
           "auth": false,
@@ -56924,254 +56779,7 @@
       ]
     }
   },
-  "errors": {
-    "NotFoundError": {
-      "name": {
-        "name": {
-          "originalName": "NotFoundError",
-          "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
-          }
-        },
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "errorId": "NotFoundError"
-      },
-      "displayName": "NotFoundError",
-      "discriminantValue": {
-        "name": {
-          "originalName": "NotFoundError",
-          "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
-          }
-        },
-        "wireValue": "NotFoundError"
-      },
-      "type": {
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "ErrorEnvelope",
-          "camelCase": {
-            "unsafeName": "errorEnvelope",
-            "safeName": "errorEnvelope"
-          },
-          "snakeCase": {
-            "unsafeName": "error_envelope",
-            "safeName": "error_envelope"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR_ENVELOPE",
-            "safeName": "ERROR_ENVELOPE"
-          },
-          "pascalCase": {
-            "unsafeName": "ErrorEnvelope",
-            "safeName": "ErrorEnvelope"
-          }
-        },
-        "typeId": "ErrorEnvelope",
-        "inline": false,
-        "type": "named"
-      },
-      "statusCode": 404,
-      "docs": "Not Found",
-      "examples": []
-    },
-    "UnprocessableEntityError": {
-      "name": {
-        "name": {
-          "originalName": "UnprocessableEntityError",
-          "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
-          },
-          "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
-          }
-        },
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "errorId": "UnprocessableEntityError"
-      },
-      "displayName": "UnprocessableEntityError",
-      "discriminantValue": {
-        "name": {
-          "originalName": "UnprocessableEntityError",
-          "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
-          },
-          "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
-          }
-        },
-        "wireValue": "UnprocessableEntityError"
-      },
-      "type": {
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "ErrorEnvelope",
-          "camelCase": {
-            "unsafeName": "errorEnvelope",
-            "safeName": "errorEnvelope"
-          },
-          "snakeCase": {
-            "unsafeName": "error_envelope",
-            "safeName": "error_envelope"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR_ENVELOPE",
-            "safeName": "ERROR_ENVELOPE"
-          },
-          "pascalCase": {
-            "unsafeName": "ErrorEnvelope",
-            "safeName": "ErrorEnvelope"
-          }
-        },
-        "typeId": "ErrorEnvelope",
-        "inline": false,
-        "type": "named"
-      },
-      "statusCode": 422,
-      "docs": "Unprocessable Entity",
-      "examples": []
-    },
-    "InternalServerError": {
-      "name": {
-        "name": {
-          "originalName": "InternalServerError",
-          "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
-          }
-        },
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "errorId": "InternalServerError"
-      },
-      "displayName": "InternalServerError",
-      "discriminantValue": {
-        "name": {
-          "originalName": "InternalServerError",
-          "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
-          }
-        },
-        "wireValue": "InternalServerError"
-      },
-      "type": {
-        "fernFilepath": {
-          "allParts": [],
-          "packagePath": []
-        },
-        "name": {
-          "originalName": "ErrorEnvelope",
-          "camelCase": {
-            "unsafeName": "errorEnvelope",
-            "safeName": "errorEnvelope"
-          },
-          "snakeCase": {
-            "unsafeName": "error_envelope",
-            "safeName": "error_envelope"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR_ENVELOPE",
-            "safeName": "ERROR_ENVELOPE"
-          },
-          "pascalCase": {
-            "unsafeName": "ErrorEnvelope",
-            "safeName": "ErrorEnvelope"
-          }
-        },
-        "typeId": "ErrorEnvelope",
-        "inline": false,
-        "type": "named"
-      },
-      "statusCode": 500,
-      "docs": "Internal Server Error",
-      "examples": []
-    }
-  },
+  "errors": {},
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
