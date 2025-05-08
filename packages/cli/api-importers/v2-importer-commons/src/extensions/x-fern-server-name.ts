@@ -18,7 +18,7 @@ export class ServerNameExtension extends AbstractExtension<string | undefined> {
     }
 
     public convert(): string | undefined {
-        const extensionValue = this.getExtensionValue(this.server);
+        const extensionValue = this.getExtensionValue(this.server, "x-name");
         if (extensionValue == null || typeof extensionValue !== "string") {
             return undefined;
         }
