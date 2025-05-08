@@ -116,6 +116,97 @@
         ]
       }
     },
+    "PlantHealthStatus": {
+      "name": "PlantHealthStatus",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "healthy"
+          },
+          {
+            "value": "needs_water"
+          },
+          {
+            "value": "needs_sun"
+          },
+          {
+            "value": "diseased"
+          }
+        ]
+      }
+    },
+    "PlantHealth": {
+      "name": "PlantHealth",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "status",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PlantHealthStatus"
+              }
+            }
+          },
+          {
+            "key": "lastChecked",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          {
+            "key": "waterLevel",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            }
+          },
+          {
+            "key": "oldHealthMetric",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "availability": "Deprecated"
+          },
+          {
+            "key": "notes",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "createFern_Response_201": {
       "name": "createFern_Response_201",
       "shape": {
@@ -762,7 +853,8 @@
     "websockets": [],
     "types": [
       "TreeCreate",
-      "Tree"
+      "Tree",
+      "PlantHealth"
     ],
     "subpackages": []
   },
