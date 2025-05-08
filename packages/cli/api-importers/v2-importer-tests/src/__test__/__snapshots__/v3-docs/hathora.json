@@ -15096,7 +15096,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateAppRequestUnprocessableEntityError",
                   "camelCase": {
@@ -15116,14 +15115,10 @@
                     "safeName": "CreateAppRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "AppV1_CreateApp_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateAppRequestUnprocessableEntityError"
               },
               "docs": ""
@@ -15154,28 +15149,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateAppRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "AppV1_CreateApp_Response_422",
-                  "camelCase": {
-                    "unsafeName": "appV1CreateAppResponse422",
-                    "safeName": "appV1CreateAppResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "app_v_1_create_app_response_422",
-                    "safeName": "app_v_1_create_app_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "APP_V_1_CREATE_APP_RESPONSE_422",
-                    "safeName": "APP_V_1_CREATE_APP_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AppV1CreateAppResponse422",
-                    "safeName": "AppV1CreateAppResponse422"
-                  }
-                },
-                "errorId": "AppV1_CreateApp_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -17053,7 +17026,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "UpdateAppRequestNotFoundError",
                   "camelCase": {
@@ -17073,14 +17045,10 @@
                     "safeName": "UpdateAppRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AppV1_UpdateApp_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "UpdateAppRequestNotFoundError"
               },
               "docs": ""
@@ -17111,28 +17079,6 @@
                   "packagePath": []
                 },
                 "errorId": "UpdateAppRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "AppV1_UpdateApp_Response_404",
-                  "camelCase": {
-                    "unsafeName": "appV1UpdateAppResponse404",
-                    "safeName": "appV1UpdateAppResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "app_v_1_update_app_response_404",
-                    "safeName": "app_v_1_update_app_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "APP_V_1_UPDATE_APP_RESPONSE_404",
-                    "safeName": "APP_V_1_UPDATE_APP_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AppV1UpdateAppResponse404",
-                    "safeName": "AppV1UpdateAppResponse404"
-                  }
-                },
-                "errorId": "AppV1_UpdateApp_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -19102,7 +19048,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetAppInfoRequestNotFoundError",
                   "camelCase": {
@@ -19122,37 +19067,11 @@
                     "safeName": "GetAppInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AppV1_GetAppInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetAppInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "AppV1_GetAppInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "appV1GetAppInfoResponse404",
-                    "safeName": "appV1GetAppInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "app_v_1_get_app_info_response_404",
-                    "safeName": "app_v_1_get_app_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "APP_V_1_GET_APP_INFO_RESPONSE_404",
-                    "safeName": "APP_V_1_GET_APP_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AppV1GetAppInfoResponse404",
-                    "safeName": "AppV1GetAppInfoResponse404"
-                  }
-                },
-                "errorId": "AppV1_GetAppInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -20610,7 +20529,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "DeleteAppRequestNotFoundError",
                   "camelCase": {
@@ -20630,14 +20548,10 @@
                     "safeName": "DeleteAppRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AppV1_DeleteApp_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "DeleteAppRequestNotFoundError"
               },
               "docs": ""
@@ -20668,28 +20582,6 @@
                   "packagePath": []
                 },
                 "errorId": "DeleteAppRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "AppV1_DeleteApp_Response_404",
-                  "camelCase": {
-                    "unsafeName": "appV1DeleteAppResponse404",
-                    "safeName": "appV1DeleteAppResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "app_v_1_delete_app_response_404",
-                    "safeName": "app_v_1_delete_app_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "APP_V_1_DELETE_APP_RESPONSE_404",
-                    "safeName": "APP_V_1_DELETE_APP_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AppV1DeleteAppResponse404",
-                    "safeName": "AppV1DeleteAppResponse404"
-                  }
-                },
-                "errorId": "AppV1_DeleteApp_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -21073,7 +20965,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "LoginAnonymousRequestNotFoundError",
                   "camelCase": {
@@ -21093,37 +20984,11 @@
                     "safeName": "LoginAnonymousRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AuthV1_LoginAnonymous_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "LoginAnonymousRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "AuthV1_LoginAnonymous_Response_404",
-                  "camelCase": {
-                    "unsafeName": "authV1LoginAnonymousResponse404",
-                    "safeName": "authV1LoginAnonymousResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "auth_v_1_login_anonymous_response_404",
-                    "safeName": "auth_v_1_login_anonymous_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTH_V_1_LOGIN_ANONYMOUS_RESPONSE_404",
-                    "safeName": "AUTH_V_1_LOGIN_ANONYMOUS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AuthV1LoginAnonymousResponse404",
-                    "safeName": "AuthV1LoginAnonymousResponse404"
-                  }
-                },
-                "errorId": "AuthV1_LoginAnonymous_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -21637,7 +21502,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "LoginNicknameRequestNotFoundError",
                   "camelCase": {
@@ -21657,37 +21521,11 @@
                     "safeName": "LoginNicknameRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AuthV1_LoginNickname_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "LoginNicknameRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "AuthV1_LoginNickname_Response_404",
-                  "camelCase": {
-                    "unsafeName": "authV1LoginNicknameResponse404",
-                    "safeName": "authV1LoginNicknameResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "auth_v_1_login_nickname_response_404",
-                    "safeName": "auth_v_1_login_nickname_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTH_V_1_LOGIN_NICKNAME_RESPONSE_404",
-                    "safeName": "AUTH_V_1_LOGIN_NICKNAME_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AuthV1LoginNicknameResponse404",
-                    "safeName": "AuthV1LoginNicknameResponse404"
-                  }
-                },
-                "errorId": "AuthV1_LoginNickname_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -22248,7 +22086,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "LoginGoogleRequestUnauthorizedError",
                   "camelCase": {
@@ -22268,43 +22105,16 @@
                     "safeName": "LoginGoogleRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "AuthV1_LoginGoogle_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "LoginGoogleRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "AuthV1_LoginGoogle_Response_401",
-                  "camelCase": {
-                    "unsafeName": "authV1LoginGoogleResponse401",
-                    "safeName": "authV1LoginGoogleResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "auth_v_1_login_google_response_401",
-                    "safeName": "auth_v_1_login_google_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_401",
-                    "safeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AuthV1LoginGoogleResponse401",
-                    "safeName": "AuthV1LoginGoogleResponse401"
-                  }
-                },
-                "errorId": "AuthV1_LoginGoogle_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "LoginGoogleRequestNotFoundError",
                   "camelCase": {
@@ -22324,37 +22134,11 @@
                     "safeName": "LoginGoogleRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "AuthV1_LoginGoogle_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "LoginGoogleRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "AuthV1_LoginGoogle_Response_404",
-                  "camelCase": {
-                    "unsafeName": "authV1LoginGoogleResponse404",
-                    "safeName": "authV1LoginGoogleResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "auth_v_1_login_google_response_404",
-                    "safeName": "auth_v_1_login_google_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_404",
-                    "safeName": "AUTH_V_1_LOGIN_GOOGLE_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "AuthV1LoginGoogleResponse404",
-                    "safeName": "AuthV1LoginGoogleResponse404"
-                  }
-                },
-                "errorId": "AuthV1_LoginGoogle_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -22916,7 +22700,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetBuildsRequestNotFoundError",
                   "camelCase": {
@@ -22936,37 +22719,11 @@
                     "safeName": "GetBuildsRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "BuildV1_GetBuilds_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetBuildsRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "BuildV1_GetBuilds_Response_404",
-                  "camelCase": {
-                    "unsafeName": "buildV1GetBuildsResponse404",
-                    "safeName": "buildV1GetBuildsResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_get_builds_response_404",
-                    "safeName": "build_v_1_get_builds_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_GET_BUILDS_RESPONSE_404",
-                    "safeName": "BUILD_V_1_GET_BUILDS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1GetBuildsResponse404",
-                    "safeName": "BuildV1GetBuildsResponse404"
-                  }
-                },
-                "errorId": "BuildV1_GetBuilds_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -26085,7 +25842,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetBuildInfoRequestNotFoundError",
                   "camelCase": {
@@ -26105,37 +25861,11 @@
                     "safeName": "GetBuildInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "BuildV1_GetBuildInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetBuildInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "BuildV1_GetBuildInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "buildV1GetBuildInfoResponse404",
-                    "safeName": "buildV1GetBuildInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_get_build_info_response_404",
-                    "safeName": "build_v_1_get_build_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_GET_BUILD_INFO_RESPONSE_404",
-                    "safeName": "BUILD_V_1_GET_BUILD_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1GetBuildInfoResponse404",
-                    "safeName": "BuildV1GetBuildInfoResponse404"
-                  }
-                },
-                "errorId": "BuildV1_GetBuildInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -27932,7 +27662,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateBuildRequestNotFoundError",
                   "camelCase": {
@@ -27952,43 +27681,16 @@
                     "safeName": "CreateBuildRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "BuildV1_CreateBuild_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateBuildRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "BuildV1_CreateBuild_Response_404",
-                  "camelCase": {
-                    "unsafeName": "buildV1CreateBuildResponse404",
-                    "safeName": "buildV1CreateBuildResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_create_build_response_404",
-                    "safeName": "build_v_1_create_build_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_CREATE_BUILD_RESPONSE_404",
-                    "safeName": "BUILD_V_1_CREATE_BUILD_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1CreateBuildResponse404",
-                    "safeName": "BuildV1CreateBuildResponse404"
-                  }
-                },
-                "errorId": "BuildV1_CreateBuild_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateBuildRequestUnprocessableEntityError",
                   "camelCase": {
@@ -28008,14 +27710,10 @@
                     "safeName": "CreateBuildRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "BuildV1_CreateBuild_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateBuildRequestUnprocessableEntityError"
               },
               "docs": ""
@@ -28046,28 +27744,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateBuildRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "BuildV1_CreateBuild_Response_422",
-                  "camelCase": {
-                    "unsafeName": "buildV1CreateBuildResponse422",
-                    "safeName": "buildV1CreateBuildResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_create_build_response_422",
-                    "safeName": "build_v_1_create_build_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_CREATE_BUILD_RESPONSE_422",
-                    "safeName": "BUILD_V_1_CREATE_BUILD_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1CreateBuildResponse422",
-                    "safeName": "BuildV1CreateBuildResponse422"
-                  }
-                },
-                "errorId": "BuildV1_CreateBuild_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -29800,7 +29476,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "RunBuildRequestNotFoundError",
                   "camelCase": {
@@ -29820,14 +29495,10 @@
                     "safeName": "RunBuildRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "BuildV1_RunBuild_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "RunBuildRequestNotFoundError"
               },
               "docs": ""
@@ -29858,28 +29529,6 @@
                   "packagePath": []
                 },
                 "errorId": "RunBuildRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "BuildV1_RunBuild_Response_404",
-                  "camelCase": {
-                    "unsafeName": "buildV1RunBuildResponse404",
-                    "safeName": "buildV1RunBuildResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_run_build_response_404",
-                    "safeName": "build_v_1_run_build_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_RUN_BUILD_RESPONSE_404",
-                    "safeName": "BUILD_V_1_RUN_BUILD_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1RunBuildResponse404",
-                    "safeName": "BuildV1RunBuildResponse404"
-                  }
-                },
-                "errorId": "BuildV1_RunBuild_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -30198,7 +29847,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "DeleteBuildRequestNotFoundError",
                   "camelCase": {
@@ -30218,43 +29866,16 @@
                     "safeName": "DeleteBuildRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "BuildV1_DeleteBuild_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "DeleteBuildRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "BuildV1_DeleteBuild_Response_404",
-                  "camelCase": {
-                    "unsafeName": "buildV1DeleteBuildResponse404",
-                    "safeName": "buildV1DeleteBuildResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_delete_build_response_404",
-                    "safeName": "build_v_1_delete_build_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_DELETE_BUILD_RESPONSE_404",
-                    "safeName": "BUILD_V_1_DELETE_BUILD_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1DeleteBuildResponse404",
-                    "safeName": "BuildV1DeleteBuildResponse404"
-                  }
-                },
-                "errorId": "BuildV1_DeleteBuild_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "DeleteBuildRequestUnprocessableEntityError",
                   "camelCase": {
@@ -30274,14 +29895,10 @@
                     "safeName": "DeleteBuildRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "BuildV1_DeleteBuild_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "DeleteBuildRequestUnprocessableEntityError"
               },
               "docs": ""
@@ -30312,28 +29929,6 @@
                   "packagePath": []
                 },
                 "errorId": "DeleteBuildRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "BuildV1_DeleteBuild_Response_422",
-                  "camelCase": {
-                    "unsafeName": "buildV1DeleteBuildResponse422",
-                    "safeName": "buildV1DeleteBuildResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "build_v_1_delete_build_response_422",
-                    "safeName": "build_v_1_delete_build_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BUILD_V_1_DELETE_BUILD_RESPONSE_422",
-                    "safeName": "BUILD_V_1_DELETE_BUILD_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BuildV1DeleteBuildResponse422",
-                    "safeName": "BuildV1DeleteBuildResponse422"
-                  }
-                },
-                "errorId": "BuildV1_DeleteBuild_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -30868,7 +30463,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetDeploymentsRequestNotFoundError",
                   "camelCase": {
@@ -30888,37 +30482,11 @@
                     "safeName": "GetDeploymentsRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "DeploymentV1_GetDeployments_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetDeploymentsRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "DeploymentV1_GetDeployments_Response_404",
-                  "camelCase": {
-                    "unsafeName": "deploymentV1GetDeploymentsResponse404",
-                    "safeName": "deploymentV1GetDeploymentsResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "deployment_v_1_get_deployments_response_404",
-                    "safeName": "deployment_v_1_get_deployments_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DEPLOYMENT_V_1_GET_DEPLOYMENTS_RESPONSE_404",
-                    "safeName": "DEPLOYMENT_V_1_GET_DEPLOYMENTS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DeploymentV1GetDeploymentsResponse404",
-                    "safeName": "DeploymentV1GetDeploymentsResponse404"
-                  }
-                },
-                "errorId": "DeploymentV1_GetDeployments_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -34135,7 +33703,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetDeploymentInfoRequestNotFoundError",
                   "camelCase": {
@@ -34155,37 +33722,11 @@
                     "safeName": "GetDeploymentInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "DeploymentV1_GetDeploymentInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetDeploymentInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "DeploymentV1_GetDeploymentInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "deploymentV1GetDeploymentInfoResponse404",
-                    "safeName": "deploymentV1GetDeploymentInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "deployment_v_1_get_deployment_info_response_404",
-                    "safeName": "deployment_v_1_get_deployment_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DEPLOYMENT_V_1_GET_DEPLOYMENT_INFO_RESPONSE_404",
-                    "safeName": "DEPLOYMENT_V_1_GET_DEPLOYMENT_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DeploymentV1GetDeploymentInfoResponse404",
-                    "safeName": "DeploymentV1GetDeploymentInfoResponse404"
-                  }
-                },
-                "errorId": "DeploymentV1_GetDeploymentInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -36140,7 +35681,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateDeploymentRequestBadRequestError",
                   "camelCase": {
@@ -36160,43 +35700,16 @@
                     "safeName": "CreateDeploymentRequestBadRequestError"
                   }
                 },
-=======
-                "typeId": "DeploymentV1_CreateDeployment_Response_400",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateDeploymentRequestBadRequestError"
-=======
-                "name": {
-                  "originalName": "DeploymentV1_CreateDeployment_Response_400",
-                  "camelCase": {
-                    "unsafeName": "deploymentV1CreateDeploymentResponse400",
-                    "safeName": "deploymentV1CreateDeploymentResponse400"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "deployment_v_1_create_deployment_response_400",
-                    "safeName": "deployment_v_1_create_deployment_response_400"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DEPLOYMENT_V_1_CREATE_DEPLOYMENT_RESPONSE_400",
-                    "safeName": "DEPLOYMENT_V_1_CREATE_DEPLOYMENT_RESPONSE_400"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DeploymentV1CreateDeploymentResponse400",
-                    "safeName": "DeploymentV1CreateDeploymentResponse400"
-                  }
-                },
-                "errorId": "DeploymentV1_CreateDeployment_Response_400"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateDeploymentRequestNotFoundError",
                   "camelCase": {
@@ -36216,14 +35729,10 @@
                     "safeName": "CreateDeploymentRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "DeploymentV1_CreateDeployment_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateDeploymentRequestNotFoundError"
               },
               "docs": ""
@@ -36254,28 +35763,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateDeploymentRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "DeploymentV1_CreateDeployment_Response_404",
-                  "camelCase": {
-                    "unsafeName": "deploymentV1CreateDeploymentResponse404",
-                    "safeName": "deploymentV1CreateDeploymentResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "deployment_v_1_create_deployment_response_404",
-                    "safeName": "deployment_v_1_create_deployment_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "DEPLOYMENT_V_1_CREATE_DEPLOYMENT_RESPONSE_404",
-                    "safeName": "DEPLOYMENT_V_1_CREATE_DEPLOYMENT_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "DeploymentV1CreateDeploymentResponse404",
-                    "safeName": "DeploymentV1CreateDeploymentResponse404"
-                  }
-                },
-                "errorId": "DeploymentV1_CreateDeployment_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -39971,7 +39458,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyDeprecatedRequestUnauthorizedError",
                   "camelCase": {
@@ -39991,43 +39477,16 @@
                     "safeName": "CreatePrivateLobbyDeprecatedRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyDeprecatedRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePrivateLobbyDeprecated_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse401",
-                    "safeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_private_lobby_deprecated_response_401",
-                    "safeName": "lobby_v_1_create_private_lobby_deprecated_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_401",
-                    "safeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse401",
-                    "safeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse401"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyDeprecatedRequestNotFoundError",
                   "camelCase": {
@@ -40047,43 +39506,16 @@
                     "safeName": "CreatePrivateLobbyDeprecatedRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyDeprecatedRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePrivateLobbyDeprecated_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse404",
-                    "safeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_private_lobby_deprecated_response_404",
-                    "safeName": "lobby_v_1_create_private_lobby_deprecated_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_404",
-                    "safeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse404",
-                    "safeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse404"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError",
                   "camelCase": {
@@ -40103,43 +39535,16 @@
                     "safeName": "CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePrivateLobbyDeprecated_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse422",
-                    "safeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_private_lobby_deprecated_response_422",
-                    "safeName": "lobby_v_1_create_private_lobby_deprecated_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_422",
-                    "safeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse422",
-                    "safeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse422"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyDeprecatedRequestTooManyRequestsError",
                   "camelCase": {
@@ -40159,14 +39564,10 @@
                     "safeName": "CreatePrivateLobbyDeprecatedRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyDeprecatedRequestTooManyRequestsError"
               },
               "docs": ""
@@ -40197,28 +39598,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreatePrivateLobbyDeprecatedRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePrivateLobbyDeprecated_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse429",
-                    "safeName": "lobbyV1CreatePrivateLobbyDeprecatedResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_private_lobby_deprecated_response_429",
-                    "safeName": "lobby_v_1_create_private_lobby_deprecated_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_429",
-                    "safeName": "LOBBY_V_1_CREATE_PRIVATE_LOBBY_DEPRECATED_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse429",
-                    "safeName": "LobbyV1CreatePrivateLobbyDeprecatedResponse429"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePrivateLobbyDeprecated_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -40794,7 +40173,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyDeprecatedRequestUnauthorizedError",
                   "camelCase": {
@@ -40814,43 +40192,16 @@
                     "safeName": "CreatePublicLobbyDeprecatedRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePublicLobbyDeprecated_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyDeprecatedRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePublicLobbyDeprecated_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePublicLobbyDeprecatedResponse401",
-                    "safeName": "lobbyV1CreatePublicLobbyDeprecatedResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_public_lobby_deprecated_response_401",
-                    "safeName": "lobby_v_1_create_public_lobby_deprecated_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_401",
-                    "safeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePublicLobbyDeprecatedResponse401",
-                    "safeName": "LobbyV1CreatePublicLobbyDeprecatedResponse401"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePublicLobbyDeprecated_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyDeprecatedRequestNotFoundError",
                   "camelCase": {
@@ -40870,43 +40221,16 @@
                     "safeName": "CreatePublicLobbyDeprecatedRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePublicLobbyDeprecated_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyDeprecatedRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePublicLobbyDeprecated_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePublicLobbyDeprecatedResponse404",
-                    "safeName": "lobbyV1CreatePublicLobbyDeprecatedResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_public_lobby_deprecated_response_404",
-                    "safeName": "lobby_v_1_create_public_lobby_deprecated_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_404",
-                    "safeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePublicLobbyDeprecatedResponse404",
-                    "safeName": "LobbyV1CreatePublicLobbyDeprecatedResponse404"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePublicLobbyDeprecated_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyDeprecatedRequestUnprocessableEntityError",
                   "camelCase": {
@@ -40926,43 +40250,16 @@
                     "safeName": "CreatePublicLobbyDeprecatedRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePublicLobbyDeprecated_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyDeprecatedRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePublicLobbyDeprecated_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePublicLobbyDeprecatedResponse422",
-                    "safeName": "lobbyV1CreatePublicLobbyDeprecatedResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_public_lobby_deprecated_response_422",
-                    "safeName": "lobby_v_1_create_public_lobby_deprecated_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_422",
-                    "safeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePublicLobbyDeprecatedResponse422",
-                    "safeName": "LobbyV1CreatePublicLobbyDeprecatedResponse422"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePublicLobbyDeprecated_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyDeprecatedRequestTooManyRequestsError",
                   "camelCase": {
@@ -40982,14 +40279,10 @@
                     "safeName": "CreatePublicLobbyDeprecatedRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_CreatePublicLobbyDeprecated_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyDeprecatedRequestTooManyRequestsError"
               },
               "docs": ""
@@ -41020,28 +40313,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreatePublicLobbyDeprecatedRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_CreatePublicLobbyDeprecated_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1CreatePublicLobbyDeprecatedResponse429",
-                    "safeName": "lobbyV1CreatePublicLobbyDeprecatedResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_create_public_lobby_deprecated_response_429",
-                    "safeName": "lobby_v_1_create_public_lobby_deprecated_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_429",
-                    "safeName": "LOBBY_V_1_CREATE_PUBLIC_LOBBY_DEPRECATED_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1CreatePublicLobbyDeprecatedResponse429",
-                    "safeName": "LobbyV1CreatePublicLobbyDeprecatedResponse429"
-                  }
-                },
-                "errorId": "LobbyV1_CreatePublicLobbyDeprecated_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -41635,7 +40906,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "ListActivePublicLobbiesDeprecatedRequestUnauthorizedError",
                   "camelCase": {
@@ -41655,43 +40925,16 @@
                     "safeName": "ListActivePublicLobbiesDeprecatedRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "ListActivePublicLobbiesDeprecatedRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse401",
-                    "safeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_401",
-                    "safeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_401",
-                    "safeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse401",
-                    "safeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse401"
-                  }
-                },
-                "errorId": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "ListActivePublicLobbiesDeprecatedRequestNotFoundError",
                   "camelCase": {
@@ -41711,37 +40954,11 @@
                     "safeName": "ListActivePublicLobbiesDeprecatedRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "ListActivePublicLobbiesDeprecatedRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse404",
-                    "safeName": "lobbyV1ListActivePublicLobbiesDeprecatedResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_404",
-                    "safeName": "lobby_v_1_list_active_public_lobbies_deprecated_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_404",
-                    "safeName": "LOBBY_V_1_LIST_ACTIVE_PUBLIC_LOBBIES_DEPRECATED_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse404",
-                    "safeName": "LobbyV1ListActivePublicLobbiesDeprecatedResponse404"
-                  }
-                },
-                "errorId": "LobbyV1_ListActivePublicLobbiesDeprecated_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -44209,7 +43426,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyRequestUnauthorizedError",
                   "camelCase": {
@@ -44229,43 +43445,16 @@
                     "safeName": "CreatePrivateLobbyRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePrivateLobby_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePrivateLobby_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePrivateLobbyResponse401",
-                    "safeName": "lobbyV2CreatePrivateLobbyResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_private_lobby_response_401",
-                    "safeName": "lobby_v_2_create_private_lobby_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_401",
-                    "safeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePrivateLobbyResponse401",
-                    "safeName": "LobbyV2CreatePrivateLobbyResponse401"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePrivateLobby_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyRequestNotFoundError",
                   "camelCase": {
@@ -44285,43 +43474,16 @@
                     "safeName": "CreatePrivateLobbyRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePrivateLobby_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePrivateLobby_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePrivateLobbyResponse404",
-                    "safeName": "lobbyV2CreatePrivateLobbyResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_private_lobby_response_404",
-                    "safeName": "lobby_v_2_create_private_lobby_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePrivateLobbyResponse404",
-                    "safeName": "LobbyV2CreatePrivateLobbyResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePrivateLobby_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyRequestUnprocessableEntityError",
                   "camelCase": {
@@ -44341,43 +43503,16 @@
                     "safeName": "CreatePrivateLobbyRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePrivateLobby_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePrivateLobby_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePrivateLobbyResponse422",
-                    "safeName": "lobbyV2CreatePrivateLobbyResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_private_lobby_response_422",
-                    "safeName": "lobby_v_2_create_private_lobby_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_422",
-                    "safeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePrivateLobbyResponse422",
-                    "safeName": "LobbyV2CreatePrivateLobbyResponse422"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePrivateLobby_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePrivateLobbyRequestTooManyRequestsError",
                   "camelCase": {
@@ -44397,14 +43532,10 @@
                     "safeName": "CreatePrivateLobbyRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePrivateLobby_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePrivateLobbyRequestTooManyRequestsError"
               },
               "docs": ""
@@ -44435,28 +43566,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreatePrivateLobbyRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePrivateLobby_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePrivateLobbyResponse429",
-                    "safeName": "lobbyV2CreatePrivateLobbyResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_private_lobby_response_429",
-                    "safeName": "lobby_v_2_create_private_lobby_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_429",
-                    "safeName": "LOBBY_V_2_CREATE_PRIVATE_LOBBY_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePrivateLobbyResponse429",
-                    "safeName": "LobbyV2CreatePrivateLobbyResponse429"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePrivateLobby_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -46111,7 +45220,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyRequestUnauthorizedError",
                   "camelCase": {
@@ -46131,43 +45239,16 @@
                     "safeName": "CreatePublicLobbyRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePublicLobby_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePublicLobby_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePublicLobbyResponse401",
-                    "safeName": "lobbyV2CreatePublicLobbyResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_public_lobby_response_401",
-                    "safeName": "lobby_v_2_create_public_lobby_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_401",
-                    "safeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePublicLobbyResponse401",
-                    "safeName": "LobbyV2CreatePublicLobbyResponse401"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePublicLobby_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyRequestNotFoundError",
                   "camelCase": {
@@ -46187,43 +45268,16 @@
                     "safeName": "CreatePublicLobbyRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePublicLobby_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePublicLobby_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePublicLobbyResponse404",
-                    "safeName": "lobbyV2CreatePublicLobbyResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_public_lobby_response_404",
-                    "safeName": "lobby_v_2_create_public_lobby_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePublicLobbyResponse404",
-                    "safeName": "LobbyV2CreatePublicLobbyResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePublicLobby_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyRequestUnprocessableEntityError",
                   "camelCase": {
@@ -46243,43 +45297,16 @@
                     "safeName": "CreatePublicLobbyRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePublicLobby_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePublicLobby_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePublicLobbyResponse422",
-                    "safeName": "lobbyV2CreatePublicLobbyResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_public_lobby_response_422",
-                    "safeName": "lobby_v_2_create_public_lobby_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_422",
-                    "safeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePublicLobbyResponse422",
-                    "safeName": "LobbyV2CreatePublicLobbyResponse422"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePublicLobby_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreatePublicLobbyRequestTooManyRequestsError",
                   "camelCase": {
@@ -46299,14 +45326,10 @@
                     "safeName": "CreatePublicLobbyRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreatePublicLobby_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreatePublicLobbyRequestTooManyRequestsError"
               },
               "docs": ""
@@ -46337,28 +45360,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreatePublicLobbyRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreatePublicLobby_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreatePublicLobbyResponse429",
-                    "safeName": "lobbyV2CreatePublicLobbyResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_public_lobby_response_429",
-                    "safeName": "lobby_v_2_create_public_lobby_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_429",
-                    "safeName": "LOBBY_V_2_CREATE_PUBLIC_LOBBY_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreatePublicLobbyResponse429",
-                    "safeName": "LobbyV2CreatePublicLobbyResponse429"
-                  }
-                },
-                "errorId": "LobbyV2_CreatePublicLobby_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -48013,7 +47014,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLocalLobbyRequestUnauthorizedError",
                   "camelCase": {
@@ -48033,43 +47033,16 @@
                     "safeName": "CreateLocalLobbyRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLocalLobby_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLocalLobbyRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLocalLobby_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLocalLobbyResponse401",
-                    "safeName": "lobbyV2CreateLocalLobbyResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_local_lobby_response_401",
-                    "safeName": "lobby_v_2_create_local_lobby_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_401",
-                    "safeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLocalLobbyResponse401",
-                    "safeName": "LobbyV2CreateLocalLobbyResponse401"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLocalLobby_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLocalLobbyRequestNotFoundError",
                   "camelCase": {
@@ -48089,43 +47062,16 @@
                     "safeName": "CreateLocalLobbyRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLocalLobby_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLocalLobbyRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLocalLobby_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLocalLobbyResponse404",
-                    "safeName": "lobbyV2CreateLocalLobbyResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_local_lobby_response_404",
-                    "safeName": "lobby_v_2_create_local_lobby_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLocalLobbyResponse404",
-                    "safeName": "LobbyV2CreateLocalLobbyResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLocalLobby_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLocalLobbyRequestUnprocessableEntityError",
                   "camelCase": {
@@ -48145,43 +47091,16 @@
                     "safeName": "CreateLocalLobbyRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLocalLobby_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLocalLobbyRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLocalLobby_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLocalLobbyResponse422",
-                    "safeName": "lobbyV2CreateLocalLobbyResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_local_lobby_response_422",
-                    "safeName": "lobby_v_2_create_local_lobby_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_422",
-                    "safeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLocalLobbyResponse422",
-                    "safeName": "LobbyV2CreateLocalLobbyResponse422"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLocalLobby_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLocalLobbyRequestTooManyRequestsError",
                   "camelCase": {
@@ -48201,14 +47120,10 @@
                     "safeName": "CreateLocalLobbyRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLocalLobby_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLocalLobbyRequestTooManyRequestsError"
               },
               "docs": ""
@@ -48239,28 +47154,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateLocalLobbyRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLocalLobby_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLocalLobbyResponse429",
-                    "safeName": "lobbyV2CreateLocalLobbyResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_local_lobby_response_429",
-                    "safeName": "lobby_v_2_create_local_lobby_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_429",
-                    "safeName": "LOBBY_V_2_CREATE_LOCAL_LOBBY_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLocalLobbyResponse429",
-                    "safeName": "LobbyV2CreateLocalLobbyResponse429"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLocalLobby_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -49974,7 +48867,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLobbyRequestUnauthorizedError",
                   "camelCase": {
@@ -49994,43 +48886,16 @@
                     "safeName": "CreateLobbyRequestUnauthorizedError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLobby_Response_401",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLobbyRequestUnauthorizedError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLobby_Response_401",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLobbyResponse401",
-                    "safeName": "lobbyV2CreateLobbyResponse401"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_lobby_response_401",
-                    "safeName": "lobby_v_2_create_lobby_response_401"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_401",
-                    "safeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_401"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLobbyResponse401",
-                    "safeName": "LobbyV2CreateLobbyResponse401"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLobby_Response_401"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLobbyRequestNotFoundError",
                   "camelCase": {
@@ -50050,43 +48915,16 @@
                     "safeName": "CreateLobbyRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLobby_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLobbyRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLobby_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLobbyResponse404",
-                    "safeName": "lobbyV2CreateLobbyResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_lobby_response_404",
-                    "safeName": "lobby_v_2_create_lobby_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLobbyResponse404",
-                    "safeName": "LobbyV2CreateLobbyResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLobby_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLobbyRequestUnprocessableEntityError",
                   "camelCase": {
@@ -50106,43 +48944,16 @@
                     "safeName": "CreateLobbyRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLobby_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLobbyRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLobby_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLobbyResponse422",
-                    "safeName": "lobbyV2CreateLobbyResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_lobby_response_422",
-                    "safeName": "lobby_v_2_create_lobby_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_422",
-                    "safeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLobbyResponse422",
-                    "safeName": "LobbyV2CreateLobbyResponse422"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLobby_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateLobbyRequestTooManyRequestsError",
                   "camelCase": {
@@ -50162,14 +48973,10 @@
                     "safeName": "CreateLobbyRequestTooManyRequestsError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_CreateLobby_Response_429",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateLobbyRequestTooManyRequestsError"
               },
               "docs": ""
@@ -50200,28 +49007,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateLobbyRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_CreateLobby_Response_429",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2CreateLobbyResponse429",
-                    "safeName": "lobbyV2CreateLobbyResponse429"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_create_lobby_response_429",
-                    "safeName": "lobby_v_2_create_lobby_response_429"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_429",
-                    "safeName": "LOBBY_V_2_CREATE_LOBBY_RESPONSE_429"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2CreateLobbyResponse429",
-                    "safeName": "LobbyV2CreateLobbyResponse429"
-                  }
-                },
-                "errorId": "LobbyV2_CreateLobby_Response_429"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -53938,7 +52723,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetLobbyInfoRequestNotFoundError",
                   "camelCase": {
@@ -53958,37 +52742,11 @@
                     "safeName": "GetLobbyInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_GetLobbyInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetLobbyInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_GetLobbyInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2GetLobbyInfoResponse404",
-                    "safeName": "lobbyV2GetLobbyInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_get_lobby_info_response_404",
-                    "safeName": "lobby_v_2_get_lobby_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_GET_LOBBY_INFO_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_GET_LOBBY_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2GetLobbyInfoResponse404",
-                    "safeName": "LobbyV2GetLobbyInfoResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_GetLobbyInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -55472,7 +54230,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "SetLobbyStateRequestNotFoundError",
                   "camelCase": {
@@ -55492,43 +54249,16 @@
                     "safeName": "SetLobbyStateRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_SetLobbyState_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "SetLobbyStateRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_SetLobbyState_Response_404",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2SetLobbyStateResponse404",
-                    "safeName": "lobbyV2SetLobbyStateResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_set_lobby_state_response_404",
-                    "safeName": "lobby_v_2_set_lobby_state_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_SET_LOBBY_STATE_RESPONSE_404",
-                    "safeName": "LOBBY_V_2_SET_LOBBY_STATE_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2SetLobbyStateResponse404",
-                    "safeName": "LobbyV2SetLobbyStateResponse404"
-                  }
-                },
-                "errorId": "LobbyV2_SetLobbyState_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "SetLobbyStateRequestUnprocessableEntityError",
                   "camelCase": {
@@ -55548,37 +54278,11 @@
                     "safeName": "SetLobbyStateRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "LobbyV2_SetLobbyState_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "SetLobbyStateRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "LobbyV2_SetLobbyState_Response_422",
-                  "camelCase": {
-                    "unsafeName": "lobbyV2SetLobbyStateResponse422",
-                    "safeName": "lobbyV2SetLobbyStateResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "lobby_v_2_set_lobby_state_response_422",
-                    "safeName": "lobby_v_2_set_lobby_state_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOBBY_V_2_SET_LOBBY_STATE_RESPONSE_422",
-                    "safeName": "LOBBY_V_2_SET_LOBBY_STATE_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LobbyV2SetLobbyStateResponse422",
-                    "safeName": "LobbyV2SetLobbyStateResponse422"
-                  }
-                },
-                "errorId": "LobbyV2_SetLobbyState_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -57158,7 +55862,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetLogsForAppRequestNotFoundError",
                   "camelCase": {
@@ -57178,37 +55881,11 @@
                     "safeName": "GetLogsForAppRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LogV1_GetLogsForApp_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetLogsForAppRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LogV1_GetLogsForApp_Response_404",
-                  "camelCase": {
-                    "unsafeName": "logV1GetLogsForAppResponse404",
-                    "safeName": "logV1GetLogsForAppResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "log_v_1_get_logs_for_app_response_404",
-                    "safeName": "log_v_1_get_logs_for_app_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOG_V_1_GET_LOGS_FOR_APP_RESPONSE_404",
-                    "safeName": "LOG_V_1_GET_LOGS_FOR_APP_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LogV1GetLogsForAppResponse404",
-                    "safeName": "LogV1GetLogsForAppResponse404"
-                  }
-                },
-                "errorId": "LogV1_GetLogsForApp_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -57664,7 +56341,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetLogsForProcessRequestNotFoundError",
                   "camelCase": {
@@ -57684,37 +56360,11 @@
                     "safeName": "GetLogsForProcessRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LogV1_GetLogsForProcess_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetLogsForProcessRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LogV1_GetLogsForProcess_Response_404",
-                  "camelCase": {
-                    "unsafeName": "logV1GetLogsForProcessResponse404",
-                    "safeName": "logV1GetLogsForProcessResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "log_v_1_get_logs_for_process_response_404",
-                    "safeName": "log_v_1_get_logs_for_process_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOG_V_1_GET_LOGS_FOR_PROCESS_RESPONSE_404",
-                    "safeName": "LOG_V_1_GET_LOGS_FOR_PROCESS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LogV1GetLogsForProcessResponse404",
-                    "safeName": "LogV1GetLogsForProcessResponse404"
-                  }
-                },
-                "errorId": "LogV1_GetLogsForProcess_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -58299,7 +56949,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetLogsForDeploymentRequestNotFoundError",
                   "camelCase": {
@@ -58319,37 +56968,11 @@
                     "safeName": "GetLogsForDeploymentRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "LogV1_GetLogsForDeployment_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetLogsForDeploymentRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "LogV1_GetLogsForDeployment_Response_404",
-                  "camelCase": {
-                    "unsafeName": "logV1GetLogsForDeploymentResponse404",
-                    "safeName": "logV1GetLogsForDeploymentResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "log_v_1_get_logs_for_deployment_response_404",
-                    "safeName": "log_v_1_get_logs_for_deployment_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LOG_V_1_GET_LOGS_FOR_DEPLOYMENT_RESPONSE_404",
-                    "safeName": "LOG_V_1_GET_LOGS_FOR_DEPLOYMENT_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "LogV1GetLogsForDeploymentResponse404",
-                    "safeName": "LogV1GetLogsForDeploymentResponse404"
-                  }
-                },
-                "errorId": "LogV1_GetLogsForDeployment_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -59159,7 +57782,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetMetricsRequestNotFoundError",
                   "camelCase": {
@@ -59179,43 +57801,16 @@
                     "safeName": "GetMetricsRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "MetricsV1_GetMetrics_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetMetricsRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "MetricsV1_GetMetrics_Response_404",
-                  "camelCase": {
-                    "unsafeName": "metricsV1GetMetricsResponse404",
-                    "safeName": "metricsV1GetMetricsResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "metrics_v_1_get_metrics_response_404",
-                    "safeName": "metrics_v_1_get_metrics_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "METRICS_V_1_GET_METRICS_RESPONSE_404",
-                    "safeName": "METRICS_V_1_GET_METRICS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "MetricsV1GetMetricsResponse404",
-                    "safeName": "MetricsV1GetMetricsResponse404"
-                  }
-                },
-                "errorId": "MetricsV1_GetMetrics_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetMetricsRequestUnprocessableEntityError",
                   "camelCase": {
@@ -59235,37 +57830,11 @@
                     "safeName": "GetMetricsRequestUnprocessableEntityError"
                   }
                 },
-=======
-                "typeId": "MetricsV1_GetMetrics_Response_422",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetMetricsRequestUnprocessableEntityError"
-=======
-                "name": {
-                  "originalName": "MetricsV1_GetMetrics_Response_422",
-                  "camelCase": {
-                    "unsafeName": "metricsV1GetMetricsResponse422",
-                    "safeName": "metricsV1GetMetricsResponse422"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "metrics_v_1_get_metrics_response_422",
-                    "safeName": "metrics_v_1_get_metrics_response_422"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "METRICS_V_1_GET_METRICS_RESPONSE_422",
-                    "safeName": "METRICS_V_1_GET_METRICS_RESPONSE_422"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "MetricsV1GetMetricsResponse422",
-                    "safeName": "MetricsV1GetMetricsResponse422"
-                  }
-                },
-                "errorId": "MetricsV1_GetMetrics_Response_422"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -59746,7 +58315,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetRunningProcessesRequestNotFoundError",
                   "camelCase": {
@@ -59766,37 +58334,11 @@
                     "safeName": "GetRunningProcessesRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "ProcessesV1_GetRunningProcesses_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetRunningProcessesRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "ProcessesV1_GetRunningProcesses_Response_404",
-                  "camelCase": {
-                    "unsafeName": "processesV1GetRunningProcessesResponse404",
-                    "safeName": "processesV1GetRunningProcessesResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "processes_v_1_get_running_processes_response_404",
-                    "safeName": "processes_v_1_get_running_processes_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PROCESSES_V_1_GET_RUNNING_PROCESSES_RESPONSE_404",
-                    "safeName": "PROCESSES_V_1_GET_RUNNING_PROCESSES_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ProcessesV1GetRunningProcessesResponse404",
-                    "safeName": "ProcessesV1GetRunningProcessesResponse404"
-                  }
-                },
-                "errorId": "ProcessesV1_GetRunningProcesses_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -63155,7 +61697,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetStoppedProcessesRequestNotFoundError",
                   "camelCase": {
@@ -63175,37 +61716,11 @@
                     "safeName": "GetStoppedProcessesRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "ProcessesV1_GetStoppedProcesses_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetStoppedProcessesRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "ProcessesV1_GetStoppedProcesses_Response_404",
-                  "camelCase": {
-                    "unsafeName": "processesV1GetStoppedProcessesResponse404",
-                    "safeName": "processesV1GetStoppedProcessesResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "processes_v_1_get_stopped_processes_response_404",
-                    "safeName": "processes_v_1_get_stopped_processes_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PROCESSES_V_1_GET_STOPPED_PROCESSES_RESPONSE_404",
-                    "safeName": "PROCESSES_V_1_GET_STOPPED_PROCESSES_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ProcessesV1GetStoppedProcessesResponse404",
-                    "safeName": "ProcessesV1GetStoppedProcessesResponse404"
-                  }
-                },
-                "errorId": "ProcessesV1_GetStoppedProcesses_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -66242,7 +64757,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetProcessInfoRequestNotFoundError",
                   "camelCase": {
@@ -66262,37 +64776,11 @@
                     "safeName": "GetProcessInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "ProcessesV1_GetProcessInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetProcessInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "ProcessesV1_GetProcessInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "processesV1GetProcessInfoResponse404",
-                    "safeName": "processesV1GetProcessInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "processes_v_1_get_process_info_response_404",
-                    "safeName": "processes_v_1_get_process_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "PROCESSES_V_1_GET_PROCESS_INFO_RESPONSE_404",
-                    "safeName": "PROCESSES_V_1_GET_PROCESS_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ProcessesV1GetProcessInfoResponse404",
-                    "safeName": "ProcessesV1GetProcessInfoResponse404"
-                  }
-                },
-                "errorId": "ProcessesV1_GetProcessInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -68184,7 +66672,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "CreateRoomRequestNotFoundError",
                   "camelCase": {
@@ -68204,14 +66691,10 @@
                     "safeName": "CreateRoomRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_CreateRoom_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "CreateRoomRequestNotFoundError"
               },
               "docs": ""
@@ -68242,28 +66725,6 @@
                   "packagePath": []
                 },
                 "errorId": "CreateRoomRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "RoomV1_CreateRoom_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1CreateRoomResponse404",
-                    "safeName": "roomV1CreateRoomResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_create_room_response_404",
-                    "safeName": "room_v_1_create_room_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_CREATE_ROOM_RESPONSE_404",
-                    "safeName": "ROOM_V_1_CREATE_ROOM_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1CreateRoomResponse404",
-                    "safeName": "RoomV1CreateRoomResponse404"
-                  }
-                },
-                "errorId": "RoomV1_CreateRoom_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -68813,7 +67274,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetRoomInfoRequestNotFoundError",
                   "camelCase": {
@@ -68833,37 +67293,11 @@
                     "safeName": "GetRoomInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_GetRoomInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetRoomInfoRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "RoomV1_GetRoomInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1GetRoomInfoResponse404",
-                    "safeName": "roomV1GetRoomInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_get_room_info_response_404",
-                    "safeName": "room_v_1_get_room_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_GET_ROOM_INFO_RESPONSE_404",
-                    "safeName": "ROOM_V_1_GET_ROOM_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1GetRoomInfoResponse404",
-                    "safeName": "RoomV1GetRoomInfoResponse404"
-                  }
-                },
-                "errorId": "RoomV1_GetRoomInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -71110,7 +69544,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetActiveRoomsForProcessRequestNotFoundError",
                   "camelCase": {
@@ -71130,37 +69563,11 @@
                     "safeName": "GetActiveRoomsForProcessRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_GetActiveRoomsForProcess_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetActiveRoomsForProcessRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "RoomV1_GetActiveRoomsForProcess_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1GetActiveRoomsForProcessResponse404",
-                    "safeName": "roomV1GetActiveRoomsForProcessResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_get_active_rooms_for_process_response_404",
-                    "safeName": "room_v_1_get_active_rooms_for_process_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_GET_ACTIVE_ROOMS_FOR_PROCESS_RESPONSE_404",
-                    "safeName": "ROOM_V_1_GET_ACTIVE_ROOMS_FOR_PROCESS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1GetActiveRoomsForProcessResponse404",
-                    "safeName": "RoomV1GetActiveRoomsForProcessResponse404"
-                  }
-                },
-                "errorId": "RoomV1_GetActiveRoomsForProcess_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -71730,7 +70137,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetInactiveRoomsForProcessRequestNotFoundError",
                   "camelCase": {
@@ -71750,37 +70156,11 @@
                     "safeName": "GetInactiveRoomsForProcessRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_GetInactiveRoomsForProcess_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetInactiveRoomsForProcessRequestNotFoundError"
-=======
-                "name": {
-                  "originalName": "RoomV1_GetInactiveRoomsForProcess_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1GetInactiveRoomsForProcessResponse404",
-                    "safeName": "roomV1GetInactiveRoomsForProcessResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_get_inactive_rooms_for_process_response_404",
-                    "safeName": "room_v_1_get_inactive_rooms_for_process_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_GET_INACTIVE_ROOMS_FOR_PROCESS_RESPONSE_404",
-                    "safeName": "ROOM_V_1_GET_INACTIVE_ROOMS_FOR_PROCESS_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1GetInactiveRoomsForProcessResponse404",
-                    "safeName": "RoomV1GetInactiveRoomsForProcessResponse404"
-                  }
-                },
-                "errorId": "RoomV1_GetInactiveRoomsForProcess_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -72298,7 +70678,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "DestroyRoomRequestNotFoundError",
                   "camelCase": {
@@ -72318,14 +70697,10 @@
                     "safeName": "DestroyRoomRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_DestroyRoom_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "DestroyRoomRequestNotFoundError"
               },
               "docs": ""
@@ -72356,28 +70731,6 @@
                   "packagePath": []
                 },
                 "errorId": "DestroyRoomRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "RoomV1_DestroyRoom_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1DestroyRoomResponse404",
-                    "safeName": "roomV1DestroyRoomResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_destroy_room_response_404",
-                    "safeName": "room_v_1_destroy_room_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_DESTROY_ROOM_RESPONSE_404",
-                    "safeName": "ROOM_V_1_DESTROY_ROOM_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1DestroyRoomResponse404",
-                    "safeName": "RoomV1DestroyRoomResponse404"
-                  }
-                },
-                "errorId": "RoomV1_DestroyRoom_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -72849,7 +71202,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "SuspendRoomRequestNotFoundError",
                   "camelCase": {
@@ -72869,14 +71221,10 @@
                     "safeName": "SuspendRoomRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_SuspendRoom_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "SuspendRoomRequestNotFoundError"
               },
               "docs": ""
@@ -72907,28 +71255,6 @@
                   "packagePath": []
                 },
                 "errorId": "SuspendRoomRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "RoomV1_SuspendRoom_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1SuspendRoomResponse404",
-                    "safeName": "roomV1SuspendRoomResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_suspend_room_response_404",
-                    "safeName": "room_v_1_suspend_room_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_SUSPEND_ROOM_RESPONSE_404",
-                    "safeName": "ROOM_V_1_SUSPEND_ROOM_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1SuspendRoomResponse404",
-                    "safeName": "RoomV1SuspendRoomResponse404"
-                  }
-                },
-                "errorId": "RoomV1_SuspendRoom_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -73447,7 +71773,6 @@
           "errors": [
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetConnectionInfoRequestBadRequestError",
                   "camelCase": {
@@ -73467,43 +71792,16 @@
                     "safeName": "GetConnectionInfoRequestBadRequestError"
                   }
                 },
-=======
-                "typeId": "RoomV1_GetConnectionInfo_Response_400",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetConnectionInfoRequestBadRequestError"
-=======
-                "name": {
-                  "originalName": "RoomV1_GetConnectionInfo_Response_400",
-                  "camelCase": {
-                    "unsafeName": "roomV1GetConnectionInfoResponse400",
-                    "safeName": "roomV1GetConnectionInfoResponse400"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_get_connection_info_response_400",
-                    "safeName": "room_v_1_get_connection_info_response_400"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_GET_CONNECTION_INFO_RESPONSE_400",
-                    "safeName": "ROOM_V_1_GET_CONNECTION_INFO_RESPONSE_400"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1GetConnectionInfoResponse400",
-                    "safeName": "RoomV1GetConnectionInfoResponse400"
-                  }
-                },
-                "errorId": "RoomV1_GetConnectionInfo_Response_400"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
-<<<<<<< HEAD
                 "name": {
                   "originalName": "GetConnectionInfoRequestNotFoundError",
                   "camelCase": {
@@ -73523,14 +71821,10 @@
                     "safeName": "GetConnectionInfoRequestNotFoundError"
                   }
                 },
-=======
-                "typeId": "RoomV1_GetConnectionInfo_Response_404",
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-<<<<<<< HEAD
                 "errorId": "GetConnectionInfoRequestNotFoundError"
               },
               "docs": ""
@@ -73561,28 +71855,6 @@
                   "packagePath": []
                 },
                 "errorId": "GetConnectionInfoRequestInternalServerError"
-=======
-                "name": {
-                  "originalName": "RoomV1_GetConnectionInfo_Response_404",
-                  "camelCase": {
-                    "unsafeName": "roomV1GetConnectionInfoResponse404",
-                    "safeName": "roomV1GetConnectionInfoResponse404"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "room_v_1_get_connection_info_response_404",
-                    "safeName": "room_v_1_get_connection_info_response_404"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ROOM_V_1_GET_CONNECTION_INFO_RESPONSE_404",
-                    "safeName": "ROOM_V_1_GET_CONNECTION_INFO_RESPONSE_404"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RoomV1GetConnectionInfoResponse404",
-                    "safeName": "RoomV1GetConnectionInfoResponse404"
-                  }
-                },
-                "errorId": "RoomV1_GetConnectionInfo_Response_404"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -74194,7 +72466,6 @@
       ]
     }
   },
-<<<<<<< HEAD
   "errors": {
     "CreateAppRequestUnprocessableEntityError": {
       "name": {
@@ -79381,9 +77652,6 @@
       "examples": []
     }
   },
-=======
-  "errors": {},
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

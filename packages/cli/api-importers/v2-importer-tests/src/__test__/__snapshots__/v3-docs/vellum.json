@@ -37550,7 +37550,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Documents_uploadRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "documentsUploadRequestBadRequestError",
@@ -37567,43 +37566,19 @@
                   "pascalCase": {
                     "unsafeName": "DocumentsUploadRequestBadRequestError",
                     "safeName": "DocumentsUploadRequestBadRequestError"
-=======
-                  "originalName": "UploadDocumentErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "uploadDocumentErrorResponse",
-                    "safeName": "uploadDocumentErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "upload_document_error_response",
-                    "safeName": "upload_document_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
-                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UploadDocumentErrorResponse",
-                    "safeName": "UploadDocumentErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "UploadDocumentErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Documents_uploadRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Documents_uploadRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "documentsUploadRequestNotFoundError",
@@ -37620,31 +37595,11 @@
                   "pascalCase": {
                     "unsafeName": "DocumentsUploadRequestNotFoundError",
                     "safeName": "DocumentsUploadRequestNotFoundError"
-=======
-                  "originalName": "UploadDocumentErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "uploadDocumentErrorResponse",
-                    "safeName": "uploadDocumentErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "upload_document_error_response",
-                    "safeName": "upload_document_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE",
-                    "safeName": "UPLOAD_DOCUMENT_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UploadDocumentErrorResponse",
-                    "safeName": "UploadDocumentErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "UploadDocumentErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Documents_uploadRequestNotFoundError"
               },
@@ -37676,9 +37631,6 @@
                   "packagePath": []
                 },
                 "errorId": "Documents_uploadRequestInternalServerError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -40665,7 +40617,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GenerateRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "generateRequestBadRequestError",
@@ -40682,43 +40633,19 @@
                   "pascalCase": {
                     "unsafeName": "GenerateRequestBadRequestError",
                     "safeName": "GenerateRequestBadRequestError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GenerateRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GenerateRequestForbiddenError",
                   "camelCase": {
                     "unsafeName": "generateRequestForbiddenError",
@@ -40735,43 +40662,19 @@
                   "pascalCase": {
                     "unsafeName": "GenerateRequestForbiddenError",
                     "safeName": "GenerateRequestForbiddenError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GenerateRequestForbiddenError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GenerateRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "generateRequestNotFoundError",
@@ -40788,31 +40691,11 @@
                   "pascalCase": {
                     "unsafeName": "GenerateRequestNotFoundError",
                     "safeName": "GenerateRequestNotFoundError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GenerateRequestNotFoundError"
               },
@@ -40844,9 +40727,6 @@
                   "packagePath": []
                 },
                 "errorId": "GenerateRequestInternalServerError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -46454,7 +46334,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Generate_streamRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "generateStreamRequestBadRequestError",
@@ -46471,43 +46350,19 @@
                   "pascalCase": {
                     "unsafeName": "GenerateStreamRequestBadRequestError",
                     "safeName": "GenerateStreamRequestBadRequestError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Generate_streamRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Generate_streamRequestForbiddenError",
                   "camelCase": {
                     "unsafeName": "generateStreamRequestForbiddenError",
@@ -46524,43 +46379,19 @@
                   "pascalCase": {
                     "unsafeName": "GenerateStreamRequestForbiddenError",
                     "safeName": "GenerateStreamRequestForbiddenError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Generate_streamRequestForbiddenError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Generate_streamRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "generateStreamRequestNotFoundError",
@@ -46577,31 +46408,11 @@
                   "pascalCase": {
                     "unsafeName": "GenerateStreamRequestNotFoundError",
                     "safeName": "GenerateStreamRequestNotFoundError"
-=======
-                  "originalName": "GenerateErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "generateErrorResponse",
-                    "safeName": "generateErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generate_error_response",
-                    "safeName": "generate_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATE_ERROR_RESPONSE",
-                    "safeName": "GENERATE_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GenerateErrorResponse",
-                    "safeName": "GenerateErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "GenerateErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Generate_streamRequestNotFoundError"
               },
@@ -46633,9 +46444,6 @@
                   "packagePath": []
                 },
                 "errorId": "Generate_streamRequestInternalServerError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -49479,7 +49287,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "SearchRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "searchRequestBadRequestError",
@@ -49496,43 +49303,19 @@
                   "pascalCase": {
                     "unsafeName": "SearchRequestBadRequestError",
                     "safeName": "SearchRequestBadRequestError"
-=======
-                  "originalName": "SearchErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "searchErrorResponse",
-                    "safeName": "searchErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "search_error_response",
-                    "safeName": "search_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_ERROR_RESPONSE",
-                    "safeName": "SEARCH_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SearchErrorResponse",
-                    "safeName": "SearchErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "SearchErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "SearchRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "SearchRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "searchRequestNotFoundError",
@@ -49549,31 +49332,11 @@
                   "pascalCase": {
                     "unsafeName": "SearchRequestNotFoundError",
                     "safeName": "SearchRequestNotFoundError"
-=======
-                  "originalName": "SearchErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "searchErrorResponse",
-                    "safeName": "searchErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "search_error_response",
-                    "safeName": "search_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SEARCH_ERROR_RESPONSE",
-                    "safeName": "SEARCH_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SearchErrorResponse",
-                    "safeName": "SearchErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "SearchErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "SearchRequestNotFoundError"
               },
@@ -49605,9 +49368,6 @@
                   "packagePath": []
                 },
                 "errorId": "SearchRequestInternalServerError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -51479,7 +51239,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Submit_completion_actualsRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "submitCompletionActualsRequestBadRequestError",
@@ -51496,43 +51255,19 @@
                   "pascalCase": {
                     "unsafeName": "SubmitCompletionActualsRequestBadRequestError",
                     "safeName": "SubmitCompletionActualsRequestBadRequestError"
-=======
-                  "originalName": "SubmitCompletionActualsErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "submitCompletionActualsErrorResponse",
-                    "safeName": "submitCompletionActualsErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "submit_completion_actuals_error_response",
-                    "safeName": "submit_completion_actuals_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
-                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SubmitCompletionActualsErrorResponse",
-                    "safeName": "SubmitCompletionActualsErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "SubmitCompletionActualsErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Submit_completion_actualsRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Submit_completion_actualsRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "submitCompletionActualsRequestNotFoundError",
@@ -51549,31 +51284,11 @@
                   "pascalCase": {
                     "unsafeName": "SubmitCompletionActualsRequestNotFoundError",
                     "safeName": "SubmitCompletionActualsRequestNotFoundError"
-=======
-                  "originalName": "SubmitCompletionActualsErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "submitCompletionActualsErrorResponse",
-                    "safeName": "submitCompletionActualsErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "submit_completion_actuals_error_response",
-                    "safeName": "submit_completion_actuals_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE",
-                    "safeName": "SUBMIT_COMPLETION_ACTUALS_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SubmitCompletionActualsErrorResponse",
-                    "safeName": "SubmitCompletionActualsErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "SubmitCompletionActualsErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Submit_completion_actualsRequestNotFoundError"
               },
@@ -51605,9 +51320,6 @@
                   "packagePath": []
                 },
                 "errorId": "Submit_completion_actualsRequestInternalServerError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -60117,7 +59829,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "Register_promptRequestConflictError",
                   "camelCase": {
                     "unsafeName": "registerPromptRequestConflictError",
@@ -60134,36 +59845,13 @@
                   "pascalCase": {
                     "unsafeName": "RegisterPromptRequestConflictError",
                     "safeName": "RegisterPromptRequestConflictError"
-=======
-                  "originalName": "RegisterPromptErrorResponse",
-                  "camelCase": {
-                    "unsafeName": "registerPromptErrorResponse",
-                    "safeName": "registerPromptErrorResponse"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "register_prompt_error_response",
-                    "safeName": "register_prompt_error_response"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "REGISTER_PROMPT_ERROR_RESPONSE",
-                    "safeName": "REGISTER_PROMPT_ERROR_RESPONSE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "RegisterPromptErrorResponse",
-                    "safeName": "RegisterPromptErrorResponse"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "RegisterPromptErrorResponse",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "Register_promptRequestConflictError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": ""
             }
@@ -71180,7 +70868,6 @@
       ]
     }
   },
-<<<<<<< HEAD
   "errors": {
     "GenerateRequestBadRequestError": {
       "name": {
@@ -72659,9 +72346,6 @@
       "examples": []
     }
   },
-=======
-  "errors": {},
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

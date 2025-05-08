@@ -1,6 +1,2 @@
 api:
-<<<<<<< HEAD
   - path: ../openapi.yml
-=======
-  - path: ../openapi.yml
->>>>>>> b81a1ad208 (chore(cli): Parse errors in the v3 parser.)

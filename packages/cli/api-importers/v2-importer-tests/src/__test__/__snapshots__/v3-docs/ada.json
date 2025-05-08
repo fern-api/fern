@@ -3598,7 +3598,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUserByIdRequestUnauthorizedError",
                   "camelCase": {
                     "unsafeName": "getEndUserByIdRequestUnauthorizedError",
@@ -3615,43 +3614,19 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUserByIdRequestUnauthorizedError",
                     "safeName": "GetEndUserByIdRequestUnauthorizedError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUserByIdRequestUnauthorizedError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUserByIdRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "getEndUserByIdRequestNotFoundError",
@@ -3668,43 +3643,19 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUserByIdRequestNotFoundError",
                     "safeName": "GetEndUserByIdRequestNotFoundError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUserByIdRequestNotFoundError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUserByIdRequestTooManyRequestsError",
                   "camelCase": {
                     "unsafeName": "getEndUserByIdRequestTooManyRequestsError",
@@ -3721,31 +3672,11 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUserByIdRequestTooManyRequestsError",
                     "safeName": "GetEndUserByIdRequestTooManyRequestsError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUserByIdRequestTooManyRequestsError"
               },
@@ -3779,11 +3710,6 @@
                 "errorId": "GetEndUserByIdRequestInternalServerError"
               },
               "docs": "Internal Server Error"
-=======
-                }
-              },
-              "docs": "Too Many Requests"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": true,
@@ -6590,7 +6516,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "UpdateEndUserByIdRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "updateEndUserByIdRequestBadRequestError",
@@ -6607,43 +6532,19 @@
                   "pascalCase": {
                     "unsafeName": "UpdateEndUserByIdRequestBadRequestError",
                     "safeName": "UpdateEndUserByIdRequestBadRequestError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "UpdateEndUserByIdRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "UpdateEndUserByIdRequestUnauthorizedError",
                   "camelCase": {
                     "unsafeName": "updateEndUserByIdRequestUnauthorizedError",
@@ -6660,43 +6561,19 @@
                   "pascalCase": {
                     "unsafeName": "UpdateEndUserByIdRequestUnauthorizedError",
                     "safeName": "UpdateEndUserByIdRequestUnauthorizedError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "UpdateEndUserByIdRequestUnauthorizedError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "UpdateEndUserByIdRequestNotFoundError",
                   "camelCase": {
                     "unsafeName": "updateEndUserByIdRequestNotFoundError",
@@ -6713,43 +6590,19 @@
                   "pascalCase": {
                     "unsafeName": "UpdateEndUserByIdRequestNotFoundError",
                     "safeName": "UpdateEndUserByIdRequestNotFoundError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "UpdateEndUserByIdRequestNotFoundError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "UpdateEndUserByIdRequestContentTooLargeError",
                   "camelCase": {
                     "unsafeName": "updateEndUserByIdRequestContentTooLargeError",
@@ -6766,43 +6619,19 @@
                   "pascalCase": {
                     "unsafeName": "UpdateEndUserByIdRequestContentTooLargeError",
                     "safeName": "UpdateEndUserByIdRequestContentTooLargeError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "UpdateEndUserByIdRequestContentTooLargeError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Content Too Large"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "UpdateEndUserByIdRequestTooManyRequestsError",
                   "camelCase": {
                     "unsafeName": "updateEndUserByIdRequestTooManyRequestsError",
@@ -6819,31 +6648,11 @@
                   "pascalCase": {
                     "unsafeName": "UpdateEndUserByIdRequestTooManyRequestsError",
                     "safeName": "UpdateEndUserByIdRequestTooManyRequestsError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "UpdateEndUserByIdRequestTooManyRequestsError"
               },
@@ -6877,11 +6686,6 @@
                 "errorId": "UpdateEndUserByIdRequestInternalServerError"
               },
               "docs": "Internal Server Error"
-=======
-                }
-              },
-              "docs": "Too Many Requests"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": true,
@@ -10224,7 +10028,6 @@
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUsersRequestBadRequestError",
                   "camelCase": {
                     "unsafeName": "getEndUsersRequestBadRequestError",
@@ -10241,43 +10044,19 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUsersRequestBadRequestError",
                     "safeName": "GetEndUsersRequestBadRequestError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUsersRequestBadRequestError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Bad Request"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUsersRequestUnauthorizedError",
                   "camelCase": {
                     "unsafeName": "getEndUsersRequestUnauthorizedError",
@@ -10294,43 +10073,19 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUsersRequestUnauthorizedError",
                     "safeName": "GetEndUsersRequestUnauthorizedError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUsersRequestUnauthorizedError"
-=======
-                }
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
               },
               "docs": "Unauthorized"
             },
             {
               "error": {
                 "name": {
-<<<<<<< HEAD
                   "originalName": "GetEndUsersRequestTooManyRequestsError",
                   "camelCase": {
                     "unsafeName": "getEndUsersRequestTooManyRequestsError",
@@ -10347,31 +10102,11 @@
                   "pascalCase": {
                     "unsafeName": "GetEndUsersRequestTooManyRequestsError",
                     "safeName": "GetEndUsersRequestTooManyRequestsError"
-=======
-                  "originalName": "Errors",
-                  "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
                   }
                 },
-                "errorId": "Errors",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
-<<<<<<< HEAD
                 },
                 "errorId": "GetEndUsersRequestTooManyRequestsError"
               },
@@ -10405,11 +10140,6 @@
                 "errorId": "GetEndUsersRequestInternalServerError"
               },
               "docs": "Internal Server Error"
-=======
-                }
-              },
-              "docs": "Too Many Requests"
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
             }
           ],
           "auth": true,
@@ -15916,7 +15646,6 @@
       ]
     }
   },
-<<<<<<< HEAD
   "errors": {
     "GetEndUserByIdRequestUnauthorizedError": {
       "name": {
@@ -17067,9 +16796,6 @@
       "examples": []
     }
   },
-=======
-  "errors": {},
->>>>>>> fcf801a9bd (fix(go): go generator compiles (#7031))
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
