@@ -29,7 +29,7 @@ export class ArraySchemaConverter extends AbstractConverter<
         this.schema = schema;
     }
 
-    public async convert(): Promise<ArraySchemaConverter.Output | undefined> {
+    public convert(): ArraySchemaConverter.Output | undefined {
         if (this.schema.items == null) {
             return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, inlinedTypes: {} };
         }
@@ -40,7 +40,7 @@ export class ArraySchemaConverter extends AbstractConverter<
             schemaOrReference: this.schema.items
         });
 
-        const convertedSchema = await schemaOrReferenceConverter.convert();
+        const convertedSchema = schemaOrReferenceConverter.convert();
         if (convertedSchema != null) {
             return {
                 typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),

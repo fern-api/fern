@@ -33,22 +33,22 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             context: this.context
         }) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
-        this.context.spec = (await this.resolveExternalRefs({
+        this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec,
             context: this.context
         })) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
 
         if (this.isAsyncAPIV3(this.context)) {
-            await this.convertChannelMessages();
+            this.convertChannelMessages();
         } else {
-            await this.convertComponentMessages();
+            this.convertComponentMessages();
         }
 
-        await this.convertSchemas();
+        this.convertSchemas();
 
-        await this.convertServers();
+        this.convertServers();
 
-        await this.convertChannels();
+        this.convertChannels();
 
         let ir = {
             ...this.ir,
@@ -74,7 +74,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         return parseFloat(context.spec.asyncapi) >= 3;
     }
 
-    private async convertChannelMessages(): Promise<void> {
+    private convertChannelMessages(): void {
         const spec = this.context.spec as AsyncAPIV3.DocumentV3;
         for (const [channelPath, channel] of Object.entries(spec.channels ?? {})) {
             for (const [messageId, message] of Object.entries(channel.messages ?? {})) {
@@ -83,14 +83,14 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 }
                 const messageBreadcrumbs = ["channels", channelPath, "messages", messageId];
 
-                const resolvedMessage = await this.context.resolveMaybeReference<AsyncAPIV3.ChannelMessage>({
+                const resolvedMessage = this.context.resolveMaybeReference<AsyncAPIV3.ChannelMessage>({
                     schemaOrReference: message,
                     breadcrumbs: messageBreadcrumbs
                 });
                 if (!this.context.isMessageWithPayload(resolvedMessage)) {
                     continue;
                 }
-                const messageSchema = await this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                const messageSchema = this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
                     schemaOrReference: resolvedMessage.payload,
                     breadcrumbs: messageBreadcrumbs
                 });
@@ -98,7 +98,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     continue;
                 }
                 const typeId = `${channelPath}_${messageId}`;
-                await this.convertSchema({
+                this.convertSchema({
                     id: typeId,
                     breadcrumbs: messageBreadcrumbs,
                     schema: messageSchema
@@ -107,14 +107,14 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         }
     }
 
-    private async convertComponentMessages(): Promise<void> {
+    private convertComponentMessages(): void {
         for (const [id, message] of Object.entries(this.context.spec.components?.messages ?? {})) {
             if (message.payload == null) {
                 continue;
             }
             const componentBreadcrumbs = ["components", "messages", id];
             const payloadSchema: OpenAPIV3.SchemaObject | undefined =
-                await this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
                     schemaOrReference: message.payload,
                     breadcrumbs: componentBreadcrumbs
                 });
@@ -122,7 +122,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 continue;
             }
 
-            await this.convertSchema({
+            this.convertSchema({
                 id,
                 breadcrumbs: componentBreadcrumbs,
                 schema: payloadSchema
@@ -130,9 +130,9 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         }
     }
 
-    private async convertSchemas(): Promise<void> {
+    private convertSchemas(): void {
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
-            await this.convertSchema({
+            this.convertSchema({
                 id,
                 breadcrumbs: ["components", "schemas", id],
                 schema
@@ -140,7 +140,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         }
     }
 
-    private async convertSchema({
+    private convertSchema({
         id,
         breadcrumbs,
         schema
@@ -148,14 +148,14 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         id: string;
         breadcrumbs: string[];
         schema: OpenAPIV3.SchemaObject;
-    }): Promise<void> {
+    }): void {
         const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
             context: this.context,
             id,
             breadcrumbs,
             schema
         });
-        const convertedSchema = await schemaConverter.convert();
+        const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
             this.ir.rootPackage.types.push(id);
             this.ir.types = {
@@ -166,7 +166,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         }
     }
 
-    private async convertServers(): Promise<void> {
+    private convertServers(): void {
         if (this.isAsyncAPIV3(this.context)) {
             const servers = this.context.spec.servers as Record<string, AsyncAPIV3.ServerV3>;
             const serversConverter = new ServersConverter3_0({
@@ -192,7 +192,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         }
     }
 
-    private async convertChannels(): Promise<void> {
+    private convertChannels(): void {
         for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
                 breadcrumbs: ["channels", channelPath],
@@ -214,7 +214,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     operations,
                     group
                 });
-                convertedChannel = await channelConverter.convert();
+                convertedChannel = channelConverter.convert();
             } else {
                 const channelConverter = new ChannelConverter2_X({
                     context: this.context,
@@ -223,7 +223,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     channelPath,
                     group
                 });
-                convertedChannel = await channelConverter.convert();
+                convertedChannel = channelConverter.convert();
             }
             if (convertedChannel != null) {
                 const channelName = `channel_${camelCase(channelPath)}`;

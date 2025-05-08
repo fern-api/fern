@@ -84,7 +84,7 @@ export abstract class AbstractSpecConverter<
         };
     }
 
-    protected async resolveExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
+    protected async resolveAllExternalRefs({ spec, context }: { spec: unknown; context: Context }): Promise<unknown> {
         const queue = [spec];
 
         while (queue.length > 0) {
@@ -126,11 +126,11 @@ export abstract class AbstractSpecConverter<
         }
 
         while (this.context.isReferenceObject(resolvedRefVal)) {
-            const externalRef = this.context.isExternalReference(resolvedRefVal.$ref);
-            const nextResolvedRef = await context.resolveReference({ $ref: resolvedRefVal.$ref });
+            const isExternalRef = this.context.isExternalReference(resolvedRefVal.$ref);
+            const nextResolvedRef = await context.resolveMaybeExternalReference({ $ref: resolvedRefVal.$ref });
             if (nextResolvedRef.resolved) {
                 resolvedRefVal = nextResolvedRef.value;
-                if (externalRef) {
+                if (isExternalRef) {
                     return resolvedRefVal;
                 }
             } else {

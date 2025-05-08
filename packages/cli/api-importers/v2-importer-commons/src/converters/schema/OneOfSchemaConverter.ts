@@ -11,7 +11,7 @@ import {
     UndiscriminatedUnionMember
 } from "@fern-api/ir-sdk";
 
-import { AbstractConverter, AbstractConverterContext, convertNumberToSnakeCase } from "../..";
+import { AbstractConverter, AbstractConverterContext } from "../..";
 import { convertProperties } from "../../utils/ConvertProperties";
 import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
@@ -42,29 +42,25 @@ export class OneOfSchemaConverter extends AbstractConverter<
         this.id = id;
     }
 
-    public async convert(): Promise<OneOfSchemaConverter.Output | undefined> {
+    public convert(): OneOfSchemaConverter.Output | undefined {
         if (this.shouldConvertAsNullableSchemaOrReference()) {
-            return await this.convertAsNullableSchemaOrReference();
+            return this.convertAsNullableSchemaOrReference();
         }
 
         if (
             this.schema.discriminator != null &&
-            !(await this.unionVariantsContainLiteral({
+            !this.unionVariantsContainLiteral({
                 discriminantProperty: this.schema.discriminator.propertyName
-            }))
+            })
         ) {
-            return await this.convertAsDiscriminatedUnion();
+            return this.convertAsDiscriminatedUnion();
         }
         return this.convertAsUndiscriminatedUnion();
     }
 
-    private async unionVariantsContainLiteral({
-        discriminantProperty
-    }: {
-        discriminantProperty: string;
-    }): Promise<boolean> {
+    private unionVariantsContainLiteral({ discriminantProperty }: { discriminantProperty: string }): boolean {
         for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
-            const schema = await this.context.resolveReference<OpenAPIV3_1.SchemaObject>({ $ref: reference });
+            const schema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({ $ref: reference });
             if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
                 return false;
             }
@@ -72,7 +68,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         return true;
     }
 
-    private async convertAsDiscriminatedUnion(): Promise<OneOfSchemaConverter.Output | undefined> {
+    private convertAsDiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
         if (this.schema.discriminator == null) {
             return undefined;
         }
@@ -87,7 +83,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
             });
             const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
-            const convertedSchema = await singleUnionTypeSchemaConverter.convert();
+            const convertedSchema = singleUnionTypeSchemaConverter.convert();
             if (convertedSchema?.type != null && typeId != null) {
                 const nameAndWireValue = this.context.casingsGenerator.generateNameAndWireValue({
                     name: discriminant,
@@ -116,7 +112,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
-        const { convertedProperties: baseProperties, inlinedTypesFromProperties } = await convertProperties({
+        const { convertedProperties: baseProperties, inlinedTypesFromProperties } = convertProperties({
             properties: this.schema.properties ?? {},
             required: this.schema.required ?? [],
             breadcrumbs: this.breadcrumbs,
@@ -141,7 +137,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private async convertAsUndiscriminatedUnion(): Promise<OneOfSchemaConverter.Output | undefined> {
+    private convertAsUndiscriminatedUnion(): OneOfSchemaConverter.Output | undefined {
         if (
             (!this.schema.oneOf && !this.schema.anyOf) ||
             (this.schema.anyOf?.length === 0 && this.schema.oneOf?.length === 0)
@@ -157,7 +153,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.anyOf ?? []).entries()
         ]) {
             if (this.context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = await this.context.convertReferenceToTypeReference(subSchema);
+                const maybeTypeReference = this.context.convertReferenceToTypeReference(subSchema);
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,
@@ -174,7 +170,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 schema: subSchema
             });
-            const convertedSchema = await schemaConverter.convert();
+            const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 unionTypes.push({
                     type: this.context.createNamedTypeReference(schemaId),
@@ -237,7 +233,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
         };
     }
 
-    private async convertAsNullableSchemaOrReference(): Promise<OneOfSchemaConverter.Output | undefined> {
+    private convertAsNullableSchemaOrReference(): OneOfSchemaConverter.Output | undefined {
         const simplifiedSchema = this.removeNullFromOneOfOrAnyOf();
         if (simplifiedSchema == null) {
             return undefined;
@@ -248,7 +244,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             breadcrumbs: this.breadcrumbs,
             schemaOrReference: simplifiedSchema
         });
-        const convertedSchema = await schemaOrReferenceConverter.convert();
+        const convertedSchema = schemaOrReferenceConverter.convert();
         if (convertedSchema == null) {
             return undefined;
         }

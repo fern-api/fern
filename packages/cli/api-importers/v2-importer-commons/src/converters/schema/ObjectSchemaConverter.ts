@@ -28,7 +28,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         this.schema = schema;
     }
 
-    public async convert(): Promise<ObjectSchemaConverter.Output | undefined> {
+    public convert(): ObjectSchemaConverter.Output {
         const hasAdditionalProperties =
             typeof this.schema.additionalProperties === "boolean" && this.schema.additionalProperties;
 
@@ -45,7 +45,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         }
 
         const { convertedProperties: properties, inlinedTypesFromProperties: propertiesInlinedTypes } =
-            await convertProperties({
+            convertProperties({
                 properties: this.schema.properties ?? {},
                 required: this.schema.required ?? [],
                 breadcrumbs: this.breadcrumbs,
@@ -57,7 +57,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
         let inlinedTypes: Record<TypeId, TypeDeclaration> = propertiesInlinedTypes;
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
             if (this.context.isReferenceObject(allOfSchema)) {
-                const maybeTypeReference = await this.context.convertReferenceToTypeReference(allOfSchema);
+                const maybeTypeReference = this.context.convertReferenceToTypeReference(allOfSchema);
                 if (maybeTypeReference.ok) {
                     extends_.push(maybeTypeReference.reference);
                 }
@@ -65,7 +65,7 @@ export class ObjectSchemaConverter extends AbstractConverter<
             }
 
             const { convertedProperties: allOfProperties, inlinedTypesFromProperties: inlinedTypesFromAllOf } =
-                await convertProperties({
+                convertProperties({
                     properties: allOfSchema.properties ?? {},
                     required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
                     breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],

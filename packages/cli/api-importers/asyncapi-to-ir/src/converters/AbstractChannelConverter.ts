@@ -34,7 +34,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         this.group = group;
     }
 
-    public abstract convert(): Promise<AbstractChannelConverter.Output | undefined>;
+    public abstract convert(): AbstractChannelConverter.Output | undefined;
 
     protected convertExamples({
         pathHead,

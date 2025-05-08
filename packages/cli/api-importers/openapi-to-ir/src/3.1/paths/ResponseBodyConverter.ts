@@ -37,12 +37,12 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         this.streamingExtension = streamingExtension;
     }
 
-    public async convert(): Promise<ResponseBodyConverter.Output | undefined> {
+    public convert(): ResponseBodyConverter.Output | undefined {
         const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
         for (const contentType of [...jsonContentTypes]) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
-            const convertedSchema = await this.parseMediaTypeObject({
+            const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId
             });
@@ -55,7 +55,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     JsonResponse.response({
                         responseBodyType: convertedSchema.type,
                         docs: this.responseBody.description,
-                        v2Examples: await this.convertMediaTypeObjectExamples({
+                        v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             generateOptionalProperties: true,
                             exampleGenerationStrategy: "response"
@@ -75,7 +75,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         );
         for (const contentType of nonJsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
-            const convertedSchema = await this.parseMediaTypeObject({
+            const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId
             });
@@ -86,7 +86,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 if (this.context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
                     const responseBody = HttpResponseBody.bytes({
                         docs: this.responseBody.description,
-                        v2Examples: await this.convertMediaTypeObjectExamples({
+                        v2Examples: this.convertMediaTypeObjectExamples({
                             mediaTypeObject,
                             generateOptionalProperties: true,
                             exampleGenerationStrategy: "response"
@@ -99,7 +99,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 }
                 const responseBody = HttpResponseBody.fileDownload({
                     docs: this.responseBody.description,
-                    v2Examples: await this.convertMediaTypeObjectExamples({
+                    v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         generateOptionalProperties: true,
                         exampleGenerationStrategy: "response"

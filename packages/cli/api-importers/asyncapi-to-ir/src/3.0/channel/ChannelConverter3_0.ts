@@ -38,7 +38,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         this.operations = operations;
     }
 
-    public async convert(): Promise<AbstractChannelConverter.Output | undefined> {
+    public convert(): AbstractChannelConverter.Output | undefined {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
         const headers: HttpHeader[] = [];
@@ -51,7 +51,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
-            await this.convertChannelParameters({
+            this.convertChannelParameters({
                 pathParameters,
                 queryParameters,
                 headers
@@ -74,7 +74,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
             for (const message of operation.messages) {
-                const resolved = await this.context.convertReferenceToTypeReference(message);
+                const resolved = this.context.convertReferenceToTypeReference(message);
                 if (resolved.ok) {
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,
@@ -85,7 +85,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                         displayName: operationId,
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
-                        availability: await this.context.getAvailability({
+                        availability: this.context.getAvailability({
                             node: operation,
                             breadcrumbs: this.breadcrumbs
                         }),
@@ -115,7 +115,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 queryParameters,
                 pathParameters,
                 messages,
-                availability: await this.context.getAvailability({
+                availability: this.context.getAvailability({
                     node: this.channel,
                     breadcrumbs: this.breadcrumbs
                 }),
@@ -133,7 +133,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         };
     }
 
-    private async convertChannelParameters({
+    private convertChannelParameters({
         pathParameters,
         queryParameters,
         headers
@@ -141,9 +141,9 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
-    }): Promise<void> {
+    }): void {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
-            const parameterObject = await this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
+            const parameterObject = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
                 schemaOrReference: parameter,
                 breadcrumbs: [...this.breadcrumbs, "parameters"]
             });
@@ -164,7 +164,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     in: type
                 }
             });
-            const convertedParameter = await parameterConverter.convert();
+            const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
                 switch (convertedParameter.type) {

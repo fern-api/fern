@@ -13,7 +13,7 @@ export class WebhookConverter extends AbstractOperationConverter {
         super({ context, breadcrumbs, operation, method, path });
     }
 
-    public async convert(): Promise<WebhookConverter.Output | undefined> {
+    public convert(): WebhookConverter.Output | undefined {
         if (this.operation.requestBody == null) {
             this.context.errorCollector.collect({
                 message: "Skipping webhook because no request body present",
@@ -39,11 +39,11 @@ export class WebhookConverter extends AbstractOperationConverter {
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
 
         const payloadBreadcrumbs = [...this.breadcrumbs, "Payload"];
-        const { headers, pathParameters, queryParameters } = await this.convertParameters({
+        const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: payloadBreadcrumbs
         });
 
-        const requestBody = await this.convertRequestBody({
+        const requestBody = this.convertRequestBody({
             breadcrumbs: payloadBreadcrumbs,
             group,
             method
@@ -75,7 +75,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 headers,
                 payload,
                 examples: [],
-                availability: await this.context.getAvailability({
+                availability: this.context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs
                 }),

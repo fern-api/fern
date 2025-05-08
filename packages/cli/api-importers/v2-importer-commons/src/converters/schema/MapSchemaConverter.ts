@@ -24,13 +24,13 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
         this.schema = schema;
     }
 
-    public async convert(): Promise<MapSchemaConverter.Output | undefined> {
+    public convert(): MapSchemaConverter.Output | undefined {
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             schemaOrReference: this.schema
         });
-        const convertedAdditionalProperties = await additionalPropertiesSchemaConverter.convert();
+        const convertedAdditionalProperties = additionalPropertiesSchemaConverter.convert();
         if (convertedAdditionalProperties != null) {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({

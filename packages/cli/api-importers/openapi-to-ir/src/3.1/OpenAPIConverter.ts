@@ -32,18 +32,18 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             context: this.context
         }) as OpenAPIV3_1.Document;
 
-        this.context.spec = (await this.resolveExternalRefs({
+        this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec,
             context: this.context
         })) as OpenAPIV3_1.Document;
 
-        const idToAuthScheme = await this.convertSecuritySchemes();
+        const idToAuthScheme = this.convertSecuritySchemes();
 
-        await this.convertSchemas();
+        this.convertSchemas();
 
-        await this.convertWebhooks();
+        this.convertWebhooks();
 
-        const { endpointLevelServers, errors } = await this.convertPaths({ idToAuthScheme });
+        const { endpointLevelServers, errors } = this.convertPaths({ idToAuthScheme });
 
         this.convertServers({ endpointLevelServers });
 
@@ -68,7 +68,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         return ir;
     }
 
-    private async convertSecuritySchemes(): Promise<Record<string, AuthScheme>> {
+    private convertSecuritySchemes(): Record<string, AuthScheme> {
         if (this.context.authOverrides) {
             this.ir.auth = convertApiAuth({
                 rawApiFileSchema: this.context.authOverrides,
@@ -86,7 +86,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
-            const resolvedSecurityScheme = await this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
+            const resolvedSecurityScheme = this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
                 schemaOrReference: securityScheme,
                 breadcrumbs: ["components", "securitySchemes", id]
             });
@@ -140,7 +140,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private async convertSchemas(): Promise<void> {
+    private convertSchemas(): void {
         const group = this.context.getGroup({
             groupParts: [],
             namespace: this.context.namespace
@@ -157,7 +157,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = await schemaConverter.convert();
+            const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 pkg.types.push(id);
                 this.ir.types = {
@@ -169,7 +169,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private async convertWebhooks(): Promise<void> {
+    private convertWebhooks(): void {
         const groupToWebhooks: Record<string, string[]> = {};
 
         for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
@@ -178,7 +178,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     message: "Skipping empty webhook",
                     path: this.breadcrumbs
                 });
-                return undefined;
+                continue;
             }
 
             if (!("post" in webhookItem)) {
@@ -186,7 +186,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     message: "Skipping webhook because non-POST method",
                     path: this.breadcrumbs
                 });
-                return undefined;
+                continue;
             }
 
             if (webhookItem.post?.operationId == null) {
@@ -194,7 +194,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                     message: "Skipping webhook because no operation id present",
                     path: this.breadcrumbs
                 });
-                return undefined;
+                continue;
             }
 
             const operationId = webhookItem.post.operationId;
@@ -206,7 +206,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 path: operationId
             });
 
-            const convertedWebHook = await webHookConverter.convert();
+            const convertedWebHook = webHookConverter.convert();
 
             if (convertedWebHook != null) {
                 const group = convertedWebHook.group?.join(".") ?? operationId;
@@ -233,10 +233,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         }
     }
 
-    private async convertPaths({ idToAuthScheme }: { idToAuthScheme: Record<string, AuthScheme> }): Promise<{
+    private convertPaths({ idToAuthScheme }: { idToAuthScheme: Record<string, AuthScheme> }): {
         endpointLevelServers?: OpenAPIV3_1.ServerObject[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
-    }> {
+    } {
         const endpointLevelServers: OpenAPIV3_1.ServerObject[] = [];
         const errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
@@ -251,7 +251,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 pathItem,
                 path
             });
-            const convertedPath = await pathConverter.convert();
+            const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
                     const group = this.context.getGroup({

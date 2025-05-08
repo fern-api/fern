@@ -14,7 +14,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         super({ context, breadcrumbs, parameter });
     }
 
-    public async convert(): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
+    public convert(): Converters.AbstractConverters.AbstractParameterConverter.Output | undefined {
         let typeReference: TypeReference | undefined;
         let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
 
@@ -41,7 +41,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             schemaOrReference: maybeParameterSchema,
             wrapAsOptional: parameterIsOptional
         });
-        const converted = await schemaOrReferenceConverter.convert();
+        const converted = schemaOrReferenceConverter.convert();
         if (converted != null) {
             typeReference = converted.type;
             inlinedTypes = converted.inlinedTypes ?? {};

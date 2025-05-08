@@ -26,11 +26,16 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             context: this.context
         }) as OpenrpcDocument;
 
+        this.context.spec = (await this.resolveAllExternalRefs({
+            spec: this.context.spec,
+            context: this.context
+        })) as OpenrpcDocument;
+
         this.convertServers({});
 
-        await this.convertSchemas();
+        this.convertSchemas();
 
-        await this.convertMethods();
+        this.convertMethods();
 
         let ir = {
             ...this.ir,
@@ -65,7 +70,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         }
     }
 
-    private async convertSchemas(): Promise<void> {
+    private convertSchemas(): void {
         const group = this.context.getGroup({
             groupParts: [],
             namespace: this.context.namespace
@@ -82,7 +87,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
-            const convertedSchema = await schemaConverter.convert();
+            const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 pkg.types.push(id);
                 this.ir.types = {
@@ -94,7 +99,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         }
     }
 
-    private async convertMethods(): Promise<void> {
+    private convertMethods(): void {
         // Import the FernParametersExtension to handle custom parameters
         const fernParametersExtension = new FernParametersExtension({
             context: this.context,
@@ -116,7 +121,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                     parameter
                 });
 
-                const convertedParameter = await parameterConverter.convert();
+                const convertedParameter = parameterConverter.convert();
                 if (convertedParameter == null) {
                     continue;
                 }
@@ -147,7 +152,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
         });
 
         for (const method of this.context.spec.methods ?? []) {
-            const resolvedMethod = await this.context.resolveMaybeReference<MethodObject>({
+            const resolvedMethod = this.context.resolveMaybeReference<MethodObject>({
                 schemaOrReference: method,
                 breadcrumbs: ["methods"]
             });
@@ -164,7 +169,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 headers
             });
 
-            const convertedMethod = await methodConverter.convert();
+            const convertedMethod = methodConverter.convert();
 
             if (convertedMethod != null) {
                 if (pkg.service == null) {

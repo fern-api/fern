@@ -38,7 +38,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         this.methodName = methodName;
     }
 
-    public async convert(): Promise<ResponseErrorConverter.Output | undefined> {
+    public convert(): ResponseErrorConverter.Output | undefined {
         if (!this.responseError.content) {
             // TODO: Handle 204 in a first class manner.
             return undefined;
@@ -52,7 +52,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         }
         for (const contentType of [...jsonContentTypes]) {
             const mediaTypeObject = this.responseError.content?.[contentType];
-            const convertedSchema = await this.parseMediaTypeObject({
+            const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
                 schemaId: errorName
             });
