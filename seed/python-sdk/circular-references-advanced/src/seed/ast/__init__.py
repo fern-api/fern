@@ -5,6 +5,7 @@
 from .types import (
     Acai,
     Animal,
+    Berry,
     BranchNode,
     Cat,
     ContainerValue,
@@ -29,6 +30,7 @@ from .types import (
 __all__ = [
     "Acai",
     "Animal",
+    "Berry",
     "BranchNode",
     "Cat",
     "ContainerValue",

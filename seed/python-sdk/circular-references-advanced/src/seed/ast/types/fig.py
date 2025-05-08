@@ -22,6 +22,7 @@ class Fig(UniversalBaseModel):
 
 
 from .acai import Acai  # noqa: E402, F401, I001
+from .berry import Berry  # noqa: E402, F401, I001
 from .cat import Cat  # noqa: E402, F401, I001
 from .dog import Dog  # noqa: E402, F401, I001
 from .animal import Animal  # noqa: E402, F401, I001

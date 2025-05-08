@@ -20,6 +20,7 @@ class Cat(UniversalBaseModel):
 
 
 from .acai import Acai  # noqa: E402, F401, I001
+from .berry import Berry  # noqa: E402, F401, I001
 from .dog import Dog  # noqa: E402, F401, I001
 from .fig import Fig  # noqa: E402, F401, I001
 from .fruit import Fruit  # noqa: E402, F401, I001
