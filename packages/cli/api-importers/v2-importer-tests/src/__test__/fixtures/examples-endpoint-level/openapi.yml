@@ -14,35 +14,35 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TreeCreate'
+              $ref: "#/components/schemas/TreeCreate"
       responses:
-        '201':
+        "201":
           description: Tree created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tree'
+                $ref: "#/components/schemas/Tree"
               examples:
                 oak:
-                  $ref: '#/components/examples/oakTree'
+                  $ref: "#/components/examples/oakTree"
                 maple:
-                  $ref: '#/components/examples/mapleTree'
-    
+                  $ref: "#/components/examples/mapleTree"
+
     get:
       summary: List all trees
       operationId: listTrees
       responses:
-        '200':
+        "200":
           description: List of trees
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Tree'
+                  $ref: "#/components/schemas/Tree"
               examples:
                 treeList:
-                  $ref: '#/components/examples/treeList'
+                  $ref: "#/components/examples/treeList"
 
   /trees/{treeId}:
     get:
@@ -56,15 +56,15 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Tree details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tree'
+                $ref: "#/components/schemas/Tree"
               examples:
                 oak:
-                  $ref: '#/components/examples/oakTree'
+                  $ref: "#/components/examples/oakTree"
 
   /ferns:
     post:
@@ -90,10 +90,10 @@ paths:
                   name: "RedFern"
               fernRequestExample2:
                 value:
-                  color: "green" 
+                  color: "green"
                   name: "GreenFern"
       responses:
-        '201':
+        "201":
           description: Fern created successfully
           content:
             application/json:
@@ -126,7 +126,7 @@ paths:
             type: string
             format: uuid
       responses:
-        '200':
+        "200":
           description: Fern details
           content:
             application/json:
@@ -181,22 +181,31 @@ components:
           type: number
           format: float
           example: 25.4
+        # This field is deprecated and should not appear in examples
         age:
           type: integer
           example: 50
+          availability: deprecated
         location:
           type: object
           properties:
             latitude:
               type: number
               format: float
-            longitude: 
+            longitude:
               type: number
               format: float
-      
+      example:
+        species: "Quercus alba"
+        height: 25.4
+        age: 50
+        location:
+          latitude: 40.7128
+          longitude: -74.0060
+
     Tree:
       allOf:
-        - $ref: '#/components/schemas/TreeCreate'
+        - $ref: "#/components/schemas/TreeCreate"
         - type: object
           required:
             - id
@@ -207,7 +216,6 @@ components:
             plantedDate:
               type: string
               format: date-time
-
 
   examples:
     oakTree:
@@ -221,7 +229,7 @@ components:
           latitude: 40.7128
           longitude: -74.0060
       summary: Example oak tree
-      
+
     mapleTree:
       value:
         id: "987fcdeb-51a2-43d7-9012-345678901234"
