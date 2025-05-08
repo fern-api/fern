@@ -13,13 +13,13 @@ import com.seed.api.core.ObjectMappers;
 import java.io.IOException;
 import java.util.Objects;
 
-@JsonDeserialize(using = FirstUnion.Deserializer.class)
-public final class FirstUnion {
+@JsonDeserialize(using = Animal.Deserializer.class)
+public final class Animal {
     private final Object value;
 
     private final int type;
 
-    private FirstUnion(Object value, int type) {
+    private Animal(Object value, int type) {
         this.value = value;
         this.type = type;
     }
@@ -32,9 +32,9 @@ public final class FirstUnion {
     @SuppressWarnings("unchecked")
     public <T> T visit(Visitor<T> visitor) {
         if (this.type == 0) {
-            return visitor.visit((FirstUnionFirstElement) this.value);
+            return visitor.visit((Cat) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((FirstUnionSecondElement) this.value);
+            return visitor.visit((Dog) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -42,10 +42,10 @@ public final class FirstUnion {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof FirstUnion && equalTo((FirstUnion) other);
+        return other instanceof Animal && equalTo((Animal) other);
     }
 
-    private boolean equalTo(FirstUnion other) {
+    private boolean equalTo(Animal other) {
         return value.equals(other.value);
     }
 
@@ -59,34 +59,34 @@ public final class FirstUnion {
         return this.value.toString();
     }
 
-    public static FirstUnion of(FirstUnionFirstElement value) {
-        return new FirstUnion(value, 0);
+    public static Animal of(Cat value) {
+        return new Animal(value, 0);
     }
 
-    public static FirstUnion of(FirstUnionSecondElement value) {
-        return new FirstUnion(value, 1);
+    public static Animal of(Dog value) {
+        return new Animal(value, 1);
     }
 
     public interface Visitor<T> {
-        T visit(FirstUnionFirstElement value);
+        T visit(Cat value);
 
-        T visit(FirstUnionSecondElement value);
+        T visit(Dog value);
     }
 
-    static final class Deserializer extends StdDeserializer<FirstUnion> {
+    static final class Deserializer extends StdDeserializer<Animal> {
         Deserializer() {
-            super(FirstUnion.class);
+            super(Animal.class);
         }
 
         @java.lang.Override
-        public FirstUnion deserialize(JsonParser p, DeserializationContext context) throws IOException {
+        public Animal deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FirstUnionFirstElement.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Cat.class));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, FirstUnionSecondElement.class));
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Dog.class));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
