@@ -1,13 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import {
-    HttpHeader,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration,
-    WebSocketMessage,
-    WebSocketMessageBody
-} from "@fern-api/ir-sdk";
+import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIV3 } from "..";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
@@ -31,7 +25,7 @@ const SERVER_REFERENCE_PREFIX = "#/servers/";
 
 export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.ChannelV3> {
     private readonly operations: Record<string, AsyncAPIV3.Operation>;
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
     constructor({ context, breadcrumbs, channel, channelPath, operations, group }: ChannelConverter3_0.Args) {
         super({ context, breadcrumbs, channel, channelPath, group });
@@ -101,6 +95,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.channel,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
@@ -129,6 +129,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     })
                 }
             },
+            audiences,
             inlinedTypes: this.inlinedTypes
         };
     }

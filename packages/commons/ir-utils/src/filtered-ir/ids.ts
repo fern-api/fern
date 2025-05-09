@@ -60,6 +60,7 @@ export interface EndpointNode {
     referencedTypes: Set<TypeId>;
     referencedSubpackages: Set<FernFilepath>;
 }
+
 export interface WebhookNode {
     webhookId: WebhookId;
     referencedTypes: Set<TypeId>;

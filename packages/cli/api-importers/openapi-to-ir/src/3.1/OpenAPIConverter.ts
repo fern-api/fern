@@ -103,12 +103,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         defaultUrl: string | undefined;
     } {
         if (this.context.environmentOverrides) {
-            this.addEnvironmentsToIr(
-                convertEnvironments({
-                    rawApiFileSchema: this.context.environmentOverrides,
-                    casingsGenerator: this.context.casingsGenerator
-                })
-            );
+            const convertedEnvironments = convertEnvironments({
+                rawApiFileSchema: this.context.environmentOverrides,
+                casingsGenerator: this.context.casingsGenerator
+            });
+            if (convertedEnvironments != null) {
+                this.addEnvironmentsToIr({
+                    environmentConfig: convertedEnvironments.environmentsConfig,
+                    audiences: convertedEnvironments.audiences
+                });
+            }
             return {
                 defaultUrl: this.context.environmentOverrides["default-url"]
             };
@@ -121,7 +125,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             endpointLevelServers
         });
         const convertedServers = serversConverter.convert();
-        this.addEnvironmentsToIr(convertedServers?.value);
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
         return {
             defaultUrl: convertedServers?.defaultUrl
         };
@@ -143,10 +147,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 this.addTypeToPackage(id, group);
-                this.addConvertedTypeToIr({
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    typeId: id,
-                    typeDeclaration: convertedSchema.typeDeclaration
+                this.addTypesToIr({
+                    ...convertedSchema.inlinedTypes,
+                    [id]: convertedSchema.convertedSchema
                 });
             }
         }
@@ -190,9 +193,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedWebHook = webHookConverter.convert();
 
             if (convertedWebHook != null) {
-                this.addWebhookGroupsToIr({
+                this.addWebhookToIr({
                     webhook: convertedWebHook.webhook,
                     operationId,
+                    audiences: convertedWebHook.audiences,
                     group: convertedWebHook.group
                 });
                 this.addTypesToIr(convertedWebHook.inlinedTypes);
@@ -244,7 +248,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         groupParts: webhook.group,
                         namespace: this.context.namespace
                     });
-                    this.addWebhookGroupsToIr({ webhook: webhook.webhook, operationId: group.join("."), group });
+                    this.addWebhookToIr({
+                        webhook: webhook.webhook,
+                        operationId: group.join("."),
+                        group,
+                        audiences: webhook.audiences
+                    });
                 }
                 this.addTypesToIr(convertedPath.inlinedTypes);
             }

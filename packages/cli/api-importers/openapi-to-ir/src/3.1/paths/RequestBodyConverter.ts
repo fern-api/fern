@@ -54,12 +54,12 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 continue;
             }
 
-            if (convertedSchema.schema?.shape.type === "object") {
+            if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
                 const requestBody = HttpRequestBody.fileUpload({
                     contentType,
                     docs: this.requestBody.description,
                     name: this.context.casingsGenerator.generateName(schemaId),
-                    properties: convertedSchema.schema?.shape.properties.map((property) => {
+                    properties: convertedSchema.schema?.typeDeclaration.shape.properties.map((property) => {
                         return this.convertRequestBodyProperty({ property, contentType });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
@@ -102,15 +102,15 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined;
         }
 
-        if (convertedSchema.schema?.shape.type === "object") {
+        if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
             const requestBody = HttpRequestBody.inlinedRequestBody({
                 contentType,
                 docs: this.requestBody.description,
                 name: this.context.casingsGenerator.generateName(schemaId),
-                extendedProperties: convertedSchema.schema?.shape.extendedProperties,
-                extends: convertedSchema.schema?.shape.extends,
-                properties: convertedSchema.schema?.shape.properties,
-                extraProperties: convertedSchema.schema?.shape.extraProperties,
+                extendedProperties: convertedSchema.schema?.typeDeclaration.shape.extendedProperties,
+                extends: convertedSchema.schema?.typeDeclaration.shape.extends,
+                properties: convertedSchema.schema?.typeDeclaration.shape.properties,
+                extraProperties: convertedSchema.schema?.typeDeclaration.shape.extraProperties,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
                     exampleGenerationStrategy: "request"

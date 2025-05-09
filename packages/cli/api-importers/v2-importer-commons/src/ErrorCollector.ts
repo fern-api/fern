@@ -1,5 +1,3 @@
-import chalk from "chalk";
-
 import { formatLog } from "@fern-api/cli-logger";
 import { LogLevel } from "@fern-api/logger";
 
@@ -43,8 +41,7 @@ export class ErrorCollector {
                 LogLevel.Info,
                 formatLog({
                     title: error.message,
-                    breadcrumbs: error.path,
-                    subtitle: error.path != null ? chalk.dim(error.path.join(" -> ")) : undefined
+                    breadcrumbs: error.path
                 })
             );
         }

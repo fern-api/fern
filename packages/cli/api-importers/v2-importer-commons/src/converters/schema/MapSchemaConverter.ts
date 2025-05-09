@@ -1,8 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ContainerType, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
+import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
@@ -12,7 +13,8 @@ export declare namespace MapSchemaConverter {
 
     export interface Output {
         type: Type;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -38,12 +40,21 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
                     valueType: convertedAdditionalProperties.type
                 })
             );
+            const referencedTypes = new Set<string>();
+            for (const type of convertedAdditionalProperties.schema?.typeDeclaration.referencedTypes ?? []) {
+                referencedTypes.add(type);
+            }
+            for (const typeId of Object.keys(convertedAdditionalProperties.inlinedTypes)) {
+                referencedTypes.add(typeId);
+            }
+
             return {
                 type: Type.alias({
                     aliasOf: additionalPropertiesType,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     resolvedType: additionalPropertiesType as any
                 }),
+                referencedTypes,
                 inlinedTypes: convertedAdditionalProperties.inlinedTypes
             };
         }

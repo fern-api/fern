@@ -1,17 +1,10 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import {
-    HttpHeader,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    V2SchemaExamples
-} from "@fern-api/ir-sdk";
+import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
+import { SchemaConverter } from "../schema/SchemaConverter";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
@@ -19,7 +12,7 @@ export declare namespace AbstractParameterConverter {
     }
 
     export interface BaseParameterOutput {
-        inlinedTypes?: Record<TypeId, TypeDeclaration>;
+        inlinedTypes?: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 
     export interface QueryParameterOutput extends BaseParameterOutput {
@@ -59,7 +52,7 @@ export abstract class AbstractParameterConverter<
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         typeReference: TypeReference | undefined;
-        inlinedTypes: Record<TypeId, TypeDeclaration> | undefined;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> | undefined;
     }): AbstractParameterConverter.Output | undefined {
         const availability = this.context.getAvailability({
             node: this.parameter,

@@ -1,10 +1,11 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration, V2SchemaExamples } from "@fern-api/ir-sdk";
+import { V2SchemaExamples } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
 import { SchemaOrReferenceConverter } from "../schema";
+import { SchemaConverter } from "../schema/SchemaConverter";
 
 export declare namespace AbstractMediaTypeObjectConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -14,7 +15,7 @@ export declare namespace AbstractMediaTypeObjectConverter {
 
     export interface Output {
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
-        inlinedTypes: Record<string, TypeDeclaration>;
+        inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
     }
 }
 

@@ -12,7 +12,6 @@ import {
     JsonResponse,
     JsonResponseBody,
     PathParameter,
-    TypeDeclaration,
     TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
@@ -31,7 +30,7 @@ export declare namespace MethodConverter {
     export interface Output {
         endpoint: HttpEndpoint;
         audiences: string[];
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -57,7 +56,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     }
 
     public convert(): MethodConverter.Output | undefined {
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         // Construct the path with all path parameters
         let pathString = "";
@@ -99,7 +98,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
-                    v2Examples: schema.schema?.v2Examples
+                    v2Examples: schema.schema?.typeDeclaration.v2Examples
                 });
                 inlinedTypes = {
                     ...schema.inlinedTypes,
@@ -123,17 +122,17 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 });
                 const schemaId = [...this.method.name, "Result"].join("_");
-                const schema = resultSchemaConverter.convert();
-                if (schema != null) {
+                const convertedResultSchema = resultSchemaConverter.convert();
+                if (convertedResultSchema != null) {
                     jsonResponseBody = {
                         docs: resolvedResult.description,
-                        v2Examples: schema?.schema?.v2Examples,
-                        responseBodyType: schema.type
+                        v2Examples: convertedResultSchema.schema?.typeDeclaration.v2Examples,
+                        responseBodyType: convertedResultSchema.type
                     };
                     inlinedTypes = {
-                        ...schema.inlinedTypes,
+                        ...convertedResultSchema.inlinedTypes,
                         ...inlinedTypes,
-                        ...(schema.schema != null ? { [schemaId]: schema.schema } : {})
+                        ...(convertedResultSchema.schema != null ? { [schemaId]: convertedResultSchema.schema } : {})
                     };
                 }
             }
