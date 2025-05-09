@@ -71,6 +71,9 @@
     },
     {
       "path": "../../../../../packages/core"
+    },
+    {
+      "path": "../../../configuration-loader"
     }
   ]
 }
