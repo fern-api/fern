@@ -13,7 +13,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -40,7 +41,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
