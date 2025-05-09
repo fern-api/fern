@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/account/{account_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getAccount"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\nclient = SeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nclient.get_account(account_id='account_id', )\n",
+                "async_client": "from seed import AsyncSeedApi\nimport asyncio\nclient = AsyncSeedApi(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.get_account(account_id='account_id', )\nasyncio.run(main())",
+                "type": "python"
+            }
+        }
+    ]
+}
