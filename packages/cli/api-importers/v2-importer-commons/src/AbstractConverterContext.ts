@@ -13,7 +13,6 @@ import {
     DeclaredTypeName,
     FernFilepath,
     ObjectPropertyAccess,
-    Package,
     TypeDeclaration,
     TypeId,
     TypeReference
@@ -139,26 +138,6 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
         return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
-    }
-
-    /**
-     * Creates a Package object with default values
-     * @param args Optional object containing package name
-     * @returns Package object with default values
-     */
-    public createPackage(args: { name?: string } = {}): Package {
-        return {
-            fernFilepath: this.createFernFilepath(args),
-            service: undefined,
-            types: [],
-            errors: [],
-            subpackages: [],
-            docs: undefined,
-            webhooks: undefined,
-            websocket: undefined,
-            hasEndpointsInTree: false,
-            navigationConfig: undefined
-        };
     }
 
     /**
