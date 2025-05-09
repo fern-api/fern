@@ -116,14 +116,14 @@ export function getGeneratorConfig({
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
                 snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         publishV2: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
                 snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
