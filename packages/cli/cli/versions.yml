@@ -1,5 +1,13 @@
 - changelogEntry: 
   - summary: |
+      Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
+      GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
+    type: fix
+  irVersion: 57
+  version: 0.60.28
+
+- changelogEntry: 
+  - summary: |
       Added support for using Podman as a container runner with `fern generate --runner podman`. 
       This allows users to run generators locally using Podman instead of Docker.
     type: fix

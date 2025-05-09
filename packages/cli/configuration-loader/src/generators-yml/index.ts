@@ -9,3 +9,5 @@ export {
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";
+export { isGithubSelfhosted } from "./convertGeneratorsConfiguration";
+

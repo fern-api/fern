@@ -7321,6 +7321,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../../../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../../../core

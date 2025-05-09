@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import {
@@ -21,6 +21,7 @@ import {
     DOCKER_PATH_TO_SNIPPET,
     DOCKER_PATH_TO_SNIPPET_TEMPLATES
 } from "./constants";
+import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
@@ -209,7 +210,8 @@ export function getGeneratorConfig({
 
 function newDummyPublishOutputConfig(
     version: string,
-    multipleOutputMode: PublishOutputMode | PublishOutputModeV2
+    multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
+    generatorInvocation: GeneratorInvocation,
 ): FernGeneratorExec.GeneratorOutputConfig {
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
@@ -228,9 +230,18 @@ function newDummyPublishOutputConfig(
         });
     }
 
+    let repoUrl = "";
+    if (generatorInvocation.raw?.github != null) {
+        if (isGithubSelfhosted(generatorInvocation.raw.github)) {
+            repoUrl = generatorInvocation.raw.github.uri;
+        } else {
+            repoUrl = generatorInvocation.raw?.github.repository;
+        }
+    }
+
     return {
         mode: FernGeneratorExec.OutputMode.github({
-            repoUrl: "",
+            repoUrl,
             version
         }),
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY
