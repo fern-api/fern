@@ -2,6 +2,7 @@ import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
 
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, streamObjectToFile, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, IntermediateRepresentation, SourceConfig } from "@fern-api/ir-sdk";
@@ -20,8 +21,6 @@ import {
 } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
-import { ContainerRunner } from "@fern-api/core-utils";
-
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -51,7 +50,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatePaginatedClients,
     includeOptionalRequestPropertyExamples,
     ir,
-    runner,
+    runner
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -139,7 +138,7 @@ export async function writeFilesToDiskAndRunGenerator({
             generateOauthClients,
             generatePaginatedClients,
             sources: workspace.getSources(),
-            runner,
+            runner
         });
 
         return {
@@ -227,7 +226,7 @@ export async function runGenerator({
     generateOauthClients,
     generatePaginatedClients,
     sources,
-    runner,
+    runner
 }: runGenerator.Args): Promise<runGenerator.Return> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -273,7 +272,7 @@ export async function runGenerator({
         args: [DOCKER_GENERATOR_CONFIG_PATH],
         binds,
         removeAfterCompletion: !keepDocker,
-        runner,
+        runner
     });
 
     return {

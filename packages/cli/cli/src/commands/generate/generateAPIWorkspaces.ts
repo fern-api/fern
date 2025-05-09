@@ -15,7 +15,6 @@ export const GenerationMode = {
 
 export type GenerationMode = Values<typeof GenerationMode>;
 
-
 export async function generateAPIWorkspaces({
     project,
     cliContext,
@@ -27,7 +26,7 @@ export async function generateAPIWorkspaces({
     preview,
     mode,
     force,
-    runner,
+    runner
 }: {
     project: Project;
     cliContext: CliContext;

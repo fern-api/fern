@@ -1,8 +1,8 @@
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { Logger } from "@fern-api/logger";
 import { ContainerRunner } from "@fern-api/core-utils";
+import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 
 export declare namespace runDocker {
@@ -13,7 +13,7 @@ export declare namespace runDocker {
         binds?: string[];
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
-        runner?: ContainerRunner
+        runner?: ContainerRunner;
     }
 
     export interface Result {
@@ -28,9 +28,10 @@ export async function runDocker({
     binds = [],
     writeLogsToFile = true,
     removeAfterCompletion = false,
-    runner,
+    runner
 }: runDocker.Args): Promise<void> {
-    const tryRun = () => tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile, runner });
+    const tryRun = () =>
+        tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile, runner });
     try {
         await tryRun();
     } catch (e) {
@@ -50,7 +51,7 @@ async function tryRunDocker({
     binds,
     removeAfterCompletion,
     writeLogsToFile,
-    runner,
+    runner
 }: {
     logger: Logger;
     imageName: string;
@@ -58,7 +59,7 @@ async function tryRunDocker({
     binds: string[];
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
-    runner?: ContainerRunner 
+    runner?: ContainerRunner;
 }): Promise<void> {
     const dockerArgs = [
         "run",

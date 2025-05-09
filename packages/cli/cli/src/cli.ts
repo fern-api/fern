@@ -12,6 +12,7 @@ import {
     getFernDirectory,
     loadProjectConfig
 } from "@fern-api/configuration-loader";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
@@ -49,7 +50,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { ContainerRunner } from "@fern-api/core-utils";
 
 void runCli();
 
@@ -525,7 +525,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     preview: argv.preview,
                     mode: argv.mode,
                     force: argv.force,
-                    runner: argv.runner as ContainerRunner,
+                    runner: argv.runner as ContainerRunner
                 });
             }
             if (argv.docs != null) {
@@ -566,7 +566,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 preview: argv.preview,
                 mode: argv.mode,
                 force: argv.force,
-                runner: argv.runner as ContainerRunner,
+                runner: argv.runner as ContainerRunner
             });
         }
     );
