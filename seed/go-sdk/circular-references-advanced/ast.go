@@ -124,6 +124,52 @@ func (a *Animal) Accept(visitor AnimalVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", a)
 }
 
+type BranchNode struct {
+	Children []*Node `json:"children,omitempty" url:"children,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *BranchNode) GetChildren() []*Node {
+	if b == nil {
+		return nil
+	}
+	return b.Children
+}
+
+func (b *BranchNode) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *BranchNode) UnmarshalJSON(data []byte) error {
+	type unmarshaler BranchNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = BranchNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *BranchNode) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type Cat struct {
 	Fruit *Fruit `json:"fruit,omitempty" url:"fruit,omitempty"`
 
@@ -648,6 +694,159 @@ func (f *Fruit) Accept(visitor FruitVisitor) error {
 		return visitor.VisitFig(f.Fig)
 	}
 	return fmt.Errorf("type %T does not include a non-empty union type", f)
+}
+
+type LeafNode struct {
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *LeafNode) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *LeafNode) UnmarshalJSON(data []byte) error {
+	type unmarshaler LeafNode
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = LeafNode(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *LeafNode) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+type Node struct {
+	BranchNode *BranchNode
+	LeafNode   *LeafNode
+
+	typ string
+}
+
+func NewNodeFromBranchNode(value *BranchNode) *Node {
+	return &Node{typ: "BranchNode", BranchNode: value}
+}
+
+func NewNodeFromLeafNode(value *LeafNode) *Node {
+	return &Node{typ: "LeafNode", LeafNode: value}
+}
+
+func (n *Node) GetBranchNode() *BranchNode {
+	if n == nil {
+		return nil
+	}
+	return n.BranchNode
+}
+
+func (n *Node) GetLeafNode() *LeafNode {
+	if n == nil {
+		return nil
+	}
+	return n.LeafNode
+}
+
+func (n *Node) UnmarshalJSON(data []byte) error {
+	valueBranchNode := new(BranchNode)
+	if err := json.Unmarshal(data, &valueBranchNode); err == nil {
+		n.typ = "BranchNode"
+		n.BranchNode = valueBranchNode
+		return nil
+	}
+	valueLeafNode := new(LeafNode)
+	if err := json.Unmarshal(data, &valueLeafNode); err == nil {
+		n.typ = "LeafNode"
+		n.LeafNode = valueLeafNode
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, n)
+}
+
+func (n Node) MarshalJSON() ([]byte, error) {
+	if n.typ == "BranchNode" || n.BranchNode != nil {
+		return json.Marshal(n.BranchNode)
+	}
+	if n.typ == "LeafNode" || n.LeafNode != nil {
+		return json.Marshal(n.LeafNode)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NodeVisitor interface {
+	VisitBranchNode(*BranchNode) error
+	VisitLeafNode(*LeafNode) error
+}
+
+func (n *Node) Accept(visitor NodeVisitor) error {
+	if n.typ == "BranchNode" || n.BranchNode != nil {
+		return visitor.VisitBranchNode(n.BranchNode)
+	}
+	if n.typ == "LeafNode" || n.LeafNode != nil {
+		return visitor.VisitLeafNode(n.LeafNode)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", n)
+}
+
+type NodesWrapper struct {
+	Nodes [][]*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (n *NodesWrapper) GetNodes() [][]*Node {
+	if n == nil {
+		return nil
+	}
+	return n.Nodes
+}
+
+func (n *NodesWrapper) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NodesWrapper) UnmarshalJSON(data []byte) error {
+	type unmarshaler NodesWrapper
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NodesWrapper(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+	n.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (n *NodesWrapper) String() string {
+	if len(n.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(n); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", n)
 }
 
 // This type allows us to test a circular reference with a union type (see FieldValue).

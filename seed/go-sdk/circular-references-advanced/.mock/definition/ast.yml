@@ -9,6 +9,11 @@ types:
     union:
       - Acai
       - Fig
+  Node:
+    discriminated: false
+    union:
+      - BranchNode
+      - LeafNode
   Cat:
     properties:
       fruit: Fruit
@@ -21,6 +26,14 @@ types:
   Fig:
     properties:
       animal: Animal
+  BranchNode:
+    properties:
+      children: list<Node>
+  LeafNode:
+    properties: {}
+  NodesWrapper:
+    properties:
+      nodes: list<list<Node>>
   ContainerValue:
     union:
       list: list<FieldValue>
