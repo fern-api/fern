@@ -133,7 +133,9 @@ class EndpointResponseCodeWriter:
                                         self._context.core_utilities.get_construct(
                                             self._get_streaming_response_data_type(stream_response),
                                             AST.Expression(
-                                                Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                                                Json.loads(
+                                                    AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data")
+                                                )
                                             ),
                                         ),
                                     ),
