@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Add support for `propertyAccess` in the IR -> FDR SDK conversion.
+    type: feat
+  irVersion: 57
+  version: 0.60.29
+
+- changelogEntry: 
+  - summary: |
       Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
       GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
     type: fix
