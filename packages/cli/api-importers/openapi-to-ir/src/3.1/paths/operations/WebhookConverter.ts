@@ -5,6 +5,7 @@ import { AbstractOperationConverter } from "./AbstractOperationConverter";
 export declare namespace WebhookConverter {
     export interface Output extends AbstractOperationConverter.Output {
         webhook: Webhook;
+        audiences: string[];
     }
 }
 
@@ -66,6 +67,11 @@ export class WebhookConverter extends AbstractOperationConverter {
         }
 
         return {
+            audiences:
+                this.context.getAudiences({
+                    operation: this.operation,
+                    breadcrumbs: this.breadcrumbs
+                }) ?? [],
             group,
             webhook: {
                 id: `${group?.join(".") ?? ""}.${method}`,

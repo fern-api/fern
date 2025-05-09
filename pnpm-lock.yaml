@@ -4835,9 +4835,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../commons/ir-utils
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../v2-importer-commons

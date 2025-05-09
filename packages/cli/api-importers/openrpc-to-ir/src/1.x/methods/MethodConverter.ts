@@ -30,6 +30,7 @@ export declare namespace MethodConverter {
 
     export interface Output {
         endpoint: HttpEndpoint;
+        audiences: string[];
         inlinedTypes: Record<TypeId, TypeDeclaration>;
     }
 }
@@ -138,6 +139,12 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             }
         }
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.method,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
             basePath: undefined,
@@ -187,6 +194,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         return {
             endpoint,
+            audiences,
             inlinedTypes
         };
     }
