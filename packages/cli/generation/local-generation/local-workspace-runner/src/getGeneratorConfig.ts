@@ -1,4 +1,5 @@
 import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import {
@@ -21,7 +22,6 @@ import {
     DOCKER_PATH_TO_SNIPPET,
     DOCKER_PATH_TO_SNIPPET_TEMPLATES
 } from "./constants";
-import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
@@ -211,7 +211,7 @@ export function getGeneratorConfig({
 function newDummyPublishOutputConfig(
     version: string,
     multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
-    generatorInvocation: GeneratorInvocation,
+    generatorInvocation: GeneratorInvocation
 ): FernGeneratorExec.GeneratorOutputConfig {
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
