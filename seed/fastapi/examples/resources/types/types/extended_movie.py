@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...commons.resources.types.types.tag import Tag
-from .movie_id import MovieId
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from .movie import Movie
 
 
-class ExtendedMovie(UniversalBaseModel):
+class ExtendedMovie(Movie):
     """
     Examples
     --------
@@ -20,20 +19,6 @@ class ExtendedMovie(UniversalBaseModel):
     """
 
     cast: typing.List[str]
-    id: MovieId
-    prequel: typing.Optional[MovieId] = None
-    title: str
-    from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field()
-    """
-    The rating scale is one to five stars
-    """
-
-    type: typing.Literal["movie"] = "movie"
-    tag: Tag
-    book: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Optional[typing.Any]]
-    revenue: int
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

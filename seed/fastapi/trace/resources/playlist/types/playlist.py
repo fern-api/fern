@@ -3,17 +3,15 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...commons.types.problem_id import ProblemId
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ...commons.types.user_id import UserId
+from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
 
 
-class Playlist(UniversalBaseModel):
+class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
     owner_id: UserId = pydantic.Field(alias="owner-id")
-    name: str
-    problems: typing.List[ProblemId]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

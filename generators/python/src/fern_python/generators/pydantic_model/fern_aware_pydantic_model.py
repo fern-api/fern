@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from types import TracebackType
-from typing import Optional, Sequence, Tuple, Type
+from typing import List, Optional, Sequence, Tuple, Type
 
 from ..context.pydantic_generator_context import PydanticGeneratorContext
 from .custom_config import PydanticModelCustomConfig
@@ -41,6 +41,7 @@ class FernAwarePydanticModel:
         class_name: str,
         type_name: Optional[ir_types.DeclaredTypeName],
         should_export: bool = True,
+        extends: Sequence[ir_types.DeclaredTypeName] = [],
         base_models: Sequence[AST.ClassReference] = [],
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
@@ -64,11 +65,18 @@ class FernAwarePydanticModel:
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
+        self._extends = extends
 
         self._model_contains_forward_refs = False
 
         models_to_extend = [item for item in base_models] if base_models is not None else []
+        extends_crs = (
+            [context.get_class_reference_for_type_id(extended.type_id, as_request=False) for extended in extends]
+            if extends is not None
+            else []
+        )
 
+        models_to_extend.extend(extends_crs)
         self._pydantic_model = PydanticModel(
             version=self._custom_config.version,
             name=class_name,
@@ -277,6 +285,17 @@ class FernAwarePydanticModel:
         if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
 
+        # Acknowledge forward refs for extended models as well
+        for extended_type in self._extends:
+            type_id_to_reference = self._type_id_for_forward_ref()
+            if type_id_to_reference is not None and self._context.does_type_reference_other_type(
+                type_id=extended_type.type_id, other_type_id=type_id_to_reference
+            ):
+                # While we don't want to string reference the extended model, we still want to rebuild the model
+                self._model_contains_forward_refs = True
+                break
+            self._add_ghost_references_for_transitive_circular_dependencies(extended_type.type_id)
+
         self._pydantic_model.finish()
 
     def _get_validators_generator(self) -> ValidatorsGenerator:
@@ -296,8 +315,27 @@ class FernAwarePydanticModel:
                 unique_name.append(self._type_name.name.snake_case.unsafe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
+                extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
                 unique_name=unique_name,
             )
+
+    def _get_extended_pydantic_fields(self, extends: Sequence[ir_types.DeclaredTypeName]) -> List[PydanticField]:
+        extended_fields: List[PydanticField] = []
+        for extended in extends:
+            extended_declaration = self._context.get_declaration_for_type_id(extended.type_id)
+            shape_union = extended_declaration.shape.get_as_union()
+            if shape_union.type == "object":
+                for property in shape_union.properties:
+                    field = self._create_pydantic_field(
+                        name=property.name.name.snake_case.safe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
+                        json_field_name=property.name.wire_value,
+                        type_reference=property.value_type,
+                        description=property.docs,
+                    )
+                    extended_fields.append(field)
+                extended_fields.extend(self._get_extended_pydantic_fields(shape_union.extends))
+        return extended_fields
 
     def _create_pydantic_field(
         self,

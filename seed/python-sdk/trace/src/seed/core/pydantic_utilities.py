@@ -181,7 +181,7 @@ def deep_union_pydantic_dicts(source: Dict[str, Any], destination: Dict[str, Any
 
 if IS_PYDANTIC_V2:
 
-    class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore[name-defined, type-arg]
+    class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore[misc, name-defined, type-arg]
         pass
 
     UniversalRootModel: TypeAlias = V2RootModel  # type: ignore[misc]

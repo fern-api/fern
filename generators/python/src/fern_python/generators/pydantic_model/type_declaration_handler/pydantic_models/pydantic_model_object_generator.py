@@ -41,27 +41,33 @@ class PydanticModelObjectGenerator(AbstractObjectGenerator):
         )
 
     def generate(self) -> None:
-        # NOTE: we inline the properties from extended types here to avoid inheritance, which causes potential circular
-        #       reference issues in particular cases with forward refs.
-        properties = list(self._properties)
-        if self._name is not None:
-            for extended_properties in self._extends:
-                properties.extend(
-                    [
-                        ObjectProperty(
-                            name=extended_property.name,
-                            value_type=extended_property.value_type,
-                            docs=extended_property.docs,
-                        )
-                        for extended_property in self._context.get_all_properties_including_extensions(
-                            extended_properties.type_id
-                        )
-                    ]
-                )
+        if self._custom_config.use_inheritance_for_extended_models:
+            extends = self._extends
+            properties = self._properties
+        else:
+            extends = []
+            # NOTE: we inline the properties from extended types here to avoid inheritance, which causes potential circular
+            #       reference issues in particular cases with forward refs.
+            properties = list(self._properties)
+            if self._name is not None:
+                for extended_properties in self._extends:
+                    properties.extend(
+                        [
+                            ObjectProperty(
+                                name=extended_property.name,
+                                value_type=extended_property.value_type,
+                                docs=extended_property.docs,
+                            )
+                            for extended_property in self._context.get_all_properties_including_extensions(
+                                extended_properties.type_id
+                            )
+                        ]
+                    )
 
         with FernAwarePydanticModel(
             class_name=self._class_name,
             type_name=self._name,
+            extends=extends,
             context=self._context,
             custom_config=self._custom_config,
             source_file=self._source_file,

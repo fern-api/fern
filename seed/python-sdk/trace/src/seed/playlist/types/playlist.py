@@ -4,18 +4,16 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...commons.types.problem_id import ProblemId
 from ...commons.types.user_id import UserId
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.serialization import FieldMetadata
+from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
 
 
-class Playlist(UniversalBaseModel):
+class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
     owner_id: typing_extensions.Annotated[UserId, FieldMetadata(alias="owner-id")]
-    name: str
-    problems: typing.List[ProblemId]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
