@@ -193,6 +193,13 @@ export class OperationConverter extends AbstractOperationConverter {
             if (authScheme == null) {
                 continue;
             }
+            const baseHeader: Omit<FernIr.HttpHeader, "name"> = {
+                valueType: AbstractConverter.STRING,
+                availability: undefined,
+                docs: undefined,
+                env: undefined,
+                v2Examples: undefined
+            };
 
             switch (authScheme.type) {
                 case "bearer":
@@ -201,11 +208,7 @@ export class OperationConverter extends AbstractOperationConverter {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
                 case "basic":
@@ -214,21 +217,13 @@ export class OperationConverter extends AbstractOperationConverter {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
                 case "header":
                     headers.push({
                         name: authScheme.name,
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
             }

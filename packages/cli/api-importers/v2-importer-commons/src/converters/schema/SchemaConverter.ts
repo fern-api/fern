@@ -29,12 +29,17 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly id: string;
     private readonly inlined: boolean;
-
+    private readonly audiences: string[];
     constructor({ context, breadcrumbs, schema, id, inlined = false }: SchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.id = id;
         this.inlined = inlined;
+        this.audiences =
+            this.context.getAudiences({
+                operation: this.schema,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
     }
 
     public convert(): SchemaConverter.Output | undefined {

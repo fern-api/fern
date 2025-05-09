@@ -101,6 +101,12 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         const pathHead = this.transformToValidPath(this.channel.address ?? this.channelPath);
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.channel,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
@@ -129,6 +135,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     })
                 }
             },
+            audiences,
             inlinedTypes: this.inlinedTypes
         };
     }

@@ -143,10 +143,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 this.addTypeToPackage(id, group);
-                this.addConvertedTypeToIr({
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    typeId: id,
-                    typeDeclaration: convertedSchema.typeDeclaration
+                this.addTypesToIr({
+                    ...convertedSchema.inlinedTypes,
+                    [id]: convertedSchema.typeDeclaration
                 });
             }
         }
@@ -190,9 +189,10 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedWebHook = webHookConverter.convert();
 
             if (convertedWebHook != null) {
-                this.addWebhookGroupsToIr({
+                this.addWebhookToIr({
                     webhook: convertedWebHook.webhook,
                     operationId,
+                    audiences: convertedWebHook.audiences,
                     group: convertedWebHook.group
                 });
                 this.addTypesToIr(convertedWebHook.inlinedTypes);
@@ -244,7 +244,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         groupParts: webhook.group,
                         namespace: this.context.namespace
                     });
-                    this.addWebhookGroupsToIr({ webhook: webhook.webhook, operationId: group.join("."), group });
+                    this.addWebhookToIr({
+                        webhook: webhook.webhook,
+                        operationId: group.join("."),
+                        group,
+                        audiences: webhook.audiences
+                    });
                 }
                 this.addTypesToIr(convertedPath.inlinedTypes);
             }

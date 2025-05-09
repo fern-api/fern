@@ -148,13 +148,43 @@ export abstract class AbstractSpecConverter<
         }
     }
 
+    protected addWebhookToIr({
+        webhook,
+        operationId,
+        audiences,
+        group
+    }: {
+        webhook: FernIr.Webhook;
+        operationId: string;
+        audiences: string[];
+        group?: string[];
+    }): void {
+        const groupName = group?.join(".") ?? operationId;
+        const pkg = this.getOrCreatePackage({
+            group
+        });
+
+        if (this.ir.webhookGroups[groupName] == null) {
+            this.ir.webhookGroups[groupName] = [];
+        }
+        this.ir.webhookGroups[groupName].push(webhook);
+        pkg.webhooks = groupName;
+        const emptyFile = this.context.createFernFilepath();
+        this.irGraph.addWebhook(emptyFile, webhook);
+        if (audiences != null) {
+            this.irGraph.markWebhookForAudiences(emptyFile, webhook, audiences);
+        }
+    }
+
     protected addWebsocketChannelToIr({
         websocketChannel,
         channelPath,
+        audiences,
         group
     }: {
         websocketChannel: FernIr.WebSocketChannel;
         channelPath: string;
+        audiences: string[];
         group?: string[];
     }): void {
         const channelName = group ? group.join(".") : `channel_${camelCase(channelPath)}`;
@@ -176,27 +206,11 @@ export abstract class AbstractSpecConverter<
         } else {
             this.ir.rootPackage.websocket = "";
         }
-    }
-
-    protected addWebhookGroupsToIr({
-        webhook,
-        operationId,
-        group
-    }: {
-        webhook: FernIr.Webhook;
-        operationId: string;
-        group?: string[];
-    }): void {
-        const groupName = group?.join(".") ?? operationId;
-        const pkg = this.getOrCreatePackage({
-            group
-        });
-
-        if (this.ir.webhookGroups[groupName] == null) {
-            this.ir.webhookGroups[groupName] = [];
+        const emptyFile = this.context.createFernFilepath();
+        this.irGraph.addChannel(emptyFile, channelName, websocketChannel);
+        if (audiences != null) {
+            this.irGraph.markChannelForAudiences(emptyFile, channelName, audiences);
         }
-        this.ir.webhookGroups[groupName].push(webhook);
-        pkg.webhooks = groupName;
     }
 
     protected addAuthToIR(auth: FernIr.ApiAuth): void {
@@ -223,32 +237,21 @@ export abstract class AbstractSpecConverter<
         groupPackage.types.push(typeId);
     }
 
-    protected addConvertedTypeToIr({
-        inlinedTypes,
-        typeId,
-        typeDeclaration
-    }: {
-        inlinedTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
-        typeId: FernIr.TypeId;
-        typeDeclaration: FernIr.TypeDeclaration;
-    }): void {
-        this.addTypesToIr({
-            ...inlinedTypes,
-            [typeId]: typeDeclaration
-        });
-    }
-
     protected addTypesToIr(types: Record<FernIr.TypeId, FernIr.TypeDeclaration>): void {
-        for (const [typeId, type] of Object.entries(types)) {
-            this.addTypeToIrGraph(typeId, type);
-        }
-    }
-
-    protected addTypeToIrGraph(typeId: FernIr.TypeId, type: FernIr.TypeDeclaration): void {
         this.ir.types = {
             ...this.ir.types,
-            [typeId]: type
+            ...types
         };
+        // for (const [typeId, type] of Object.entries(types)) {
+        //     this.irGraph.addType({
+        //         declaredTypeName: type.name,
+        //         descendantTypeIds: type.referencedTypes,
+        //         descendantTypeIdsByAudience: {},
+        //         propertiesByAudience: type.propertiesByAudience,
+        //         descendantFilepaths: new Set<FernIr.FernFilepath>()
+        //     });
+        //     this.irGraph.markTypeForAudiences(type.name, type.audiences);
+        // }
     }
 
     private filterIrForAudiences(filteredEndpoints: Set<FernIr.EndpointId>): void {

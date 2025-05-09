@@ -14,6 +14,7 @@ export declare namespace AbstractChannelConverter {
 
     export interface Output {
         channel: WebSocketChannel;
+        audiences: string[];
         inlinedTypes: Record<string, TypeDeclaration>;
     }
 }

@@ -64,10 +64,9 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 this.addTypeToPackage(id, group);
-                this.addConvertedTypeToIr({
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    typeId: id,
-                    typeDeclaration: convertedSchema.typeDeclaration
+                this.addTypesToIr({
+                    ...convertedSchema.inlinedTypes,
+                    [id]: convertedSchema.typeDeclaration
                 });
             }
         }

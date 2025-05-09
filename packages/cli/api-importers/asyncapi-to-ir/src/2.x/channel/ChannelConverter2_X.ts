@@ -97,6 +97,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const pathHead = channelAddress != null ? channelAddress : this.transformToValidPath(this.channelPath);
         const groupName = camelCase(this.channelPath);
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.channel,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
@@ -125,6 +131,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     })
                 }
             },
+            audiences,
             inlinedTypes: this.inlinedTypes
         };
     }
