@@ -1,3 +1,10 @@
+- version: 0.37.4
+  changelogEntry:
+    - summary: |
+        Fix an issue where enum values containing double quotes were not properly escaped in generated code.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
 - version: 0.37.3
   changelogEntry:
     - summary: |
