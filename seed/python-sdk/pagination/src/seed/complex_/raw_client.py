@@ -79,7 +79,7 @@ class RawComplexClient:
                         query=query,
                         pagination=pagination,
                         request_options=request_options,
-                    )
+                    ).data
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -152,7 +152,7 @@ class AsyncRawComplexClient:
                             query=query,
                             pagination=pagination,
                             request_options=request_options,
-                        )
+                        ).data
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
