@@ -8,7 +8,7 @@ import { getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
@@ -27,7 +27,8 @@ export async function runLocalGenerationForWorkspace({
     workspace,
     generatorGroup,
     keepDocker,
-    context
+    context,
+    runner,
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -35,6 +36,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
+    runner: ContainerRunner | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -125,7 +127,8 @@ export async function runLocalGenerationForWorkspace({
                     writeUnitTests: organization?.body.snippetUnitTestsEnabled ?? false,
                     generateOauthClients: organization?.body.oauthClientEnabled ?? false,
                     generatePaginatedClients: organization?.body.paginationEnabled ?? false,
-                    ir: intermediateRepresentation
+                    ir: intermediateRepresentation,
+                    runner,
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
