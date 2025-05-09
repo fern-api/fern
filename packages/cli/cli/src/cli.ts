@@ -565,7 +565,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 useLocalDocker: argv.local,
                 preview: argv.preview,
                 mode: argv.mode,
-                force: argv.force
+                force: argv.force,
+                runner: argv.runner as ContainerRunner,
             });
         }
     );
