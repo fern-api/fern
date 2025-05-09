@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.2
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming response handling by adding proper type casting to sse.data, ensuring correct data type conversion during stream processing.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
 - version: 4.19.1
   changelogEntry:
     - summary: |
