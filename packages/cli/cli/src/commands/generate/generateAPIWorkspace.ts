@@ -13,6 +13,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { GenerationMode } from "./generateAPIWorkspaces";
+import { ContainerRunner } from "@fern-api/core-utils";
 
 export async function generateWorkspace({
     organization,
@@ -26,7 +27,8 @@ export async function generateWorkspace({
     useLocalDocker,
     keepDocker,
     absolutePathToPreview,
-    mode
+    mode,
+    runner,
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -40,6 +42,7 @@ export async function generateWorkspace({
     keepDocker: boolean;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: GenerationMode | undefined;
+    runner: ContainerRunner | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -78,7 +81,8 @@ export async function generateWorkspace({
             workspace,
             generatorGroup: group,
             keepDocker,
-            context
+            context,
+            runner
         });
     } else {
         if (!token) {

@@ -1,5 +1,13 @@
 - changelogEntry: 
   - summary: |
+      Added support for using Podman as a container runner with `fern generate --runner podman`. 
+      This allows users to run generators locally using Podman instead of Docker.
+    type: fix
+  irVersion: 57
+  version: 0.60.27
+
+- changelogEntry: 
+  - summary: |
       The v3 parser now supports filtering endpoints by audiences.
     type: fix
   irVersion: 57

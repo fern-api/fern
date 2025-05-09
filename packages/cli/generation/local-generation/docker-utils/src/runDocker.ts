@@ -2,6 +2,7 @@ import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 import { Logger } from "@fern-api/logger";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 
 export declare namespace runDocker {
@@ -12,6 +13,7 @@ export declare namespace runDocker {
         binds?: string[];
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
+        runner?: ContainerRunner
     }
 
     export interface Result {
@@ -25,9 +27,10 @@ export async function runDocker({
     args = [],
     binds = [],
     writeLogsToFile = true,
-    removeAfterCompletion = false
+    removeAfterCompletion = false,
+    runner,
 }: runDocker.Args): Promise<void> {
-    const tryRun = () => tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile });
+    const tryRun = () => tryRunDocker({ logger, imageName, args, binds, removeAfterCompletion, writeLogsToFile, runner });
     try {
         await tryRun();
     } catch (e) {
@@ -46,7 +49,8 @@ async function tryRunDocker({
     args,
     binds,
     removeAfterCompletion,
-    writeLogsToFile
+    writeLogsToFile,
+    runner,
 }: {
     logger: Logger;
     imageName: string;
@@ -54,6 +58,7 @@ async function tryRunDocker({
     binds: string[];
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
+    runner?: ContainerRunner 
 }): Promise<void> {
     const dockerArgs = [
         "run",
@@ -67,7 +72,7 @@ async function tryRunDocker({
     // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
     // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, "docker", dockerArgs, {
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
