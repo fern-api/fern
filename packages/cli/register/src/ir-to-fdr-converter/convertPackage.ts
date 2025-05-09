@@ -465,7 +465,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                 description: property.docs ?? undefined,
                                 key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                                 valueType: convertTypeReference(property.valueType),
-                                availability: convertIrAvailability(property.availability)
+                                availability: convertIrAvailability(property.availability),
+                                propertyAccess: undefined
                             })
                         ),
                         extraProperties: inlinedRequestBody.extraProperties ? { type: "unknown" } : undefined
@@ -530,7 +531,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
                                     contentType: bodyProperty.contentType,
                                     description: bodyProperty.docs ?? undefined,
                                     availability: convertIrAvailability(bodyProperty.availability),
-                                    exploded: bodyProperty.style === "exploded"
+                                    exploded: bodyProperty.style === "exploded",
+                                    propertyAccess: undefined
                                 }),
                                 _other: () => undefined
                             });
@@ -670,7 +672,8 @@ function convertResponseErrorsV2(
                             }
                         },
                         description: errorDeclaration.docs,
-                        availability: undefined
+                        availability: undefined,
+                        propertyAccess: undefined
                     }
                 ];
 
@@ -679,7 +682,8 @@ function convertResponseErrorsV2(
                         key: FdrCjsSdk.PropertyKey(ir.errorDiscriminationStrategy.contentProperty.wireValue),
                         valueType: convertTypeReference(errorDeclaration.type),
                         description: errorDeclaration.docs,
-                        availability: undefined
+                        availability: undefined,
+                        propertyAccess: undefined
                     });
                 }
 
@@ -1021,7 +1025,8 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): Fd
                             description: property.docs ?? undefined,
                             key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                             valueType: convertTypeReference(property.valueType),
-                            availability: convertIrAvailability(property.availability)
+                            availability: convertIrAvailability(property.availability),
+                            propertyAccess: undefined
                         })
                     ),
                     // TODO: add support for extraProperties in IR
@@ -1055,7 +1060,8 @@ function convertMessageBody(
                         description: property.docs ?? undefined,
                         key: FdrCjsSdk.PropertyKey(property.name.wireValue),
                         valueType: convertTypeReference(property.valueType),
-                        availability: convertIrAvailability(property.availability)
+                        availability: convertIrAvailability(property.availability),
+                        propertyAccess: undefined
                     })
                 ),
                 // TODO: add support for extraProperties in IR
