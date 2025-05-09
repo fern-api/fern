@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "children": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ast.Node"
+      }
+    }
+  },
+  "required": [
+    "children"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "ast.BranchNode": {
+      "type": "object",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ast.Node"
+          }
+        }
+      },
+      "required": [
+        "children"
+      ],
+      "additionalProperties": false
+    },
+    "ast.LeafNode": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "ast.Node": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ast.BranchNode"
+        },
+        {
+          "$ref": "#/definitions/ast.LeafNode"
+        }
+      ]
+    }
+  }
+}

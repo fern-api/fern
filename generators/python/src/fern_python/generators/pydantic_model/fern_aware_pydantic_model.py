@@ -201,16 +201,16 @@ class FernAwarePydanticModel:
 
     def _must_import_after_current_declaration(self, type_name: ir_types.DeclaredTypeName) -> bool:
         type_id_to_reference = self._type_id_for_forward_ref()
-        should_import_after = False
-        if type_id_to_reference is not None:
-            should_import_after = self._context.does_type_reference_other_type(
-                type_id=type_name.type_id, other_type_id=type_id_to_reference
-            )
+        if type_id_to_reference is None:
+            return False
 
-        if should_import_after:
+        if self._context.does_type_reference_other_type(type_name.type_id, type_id_to_reference) or (
+            self._context.does_circularly_reference_itself(type_name.type_id)
+        ):
             self._model_contains_forward_refs = True
+            return True
 
-        return should_import_after
+        return False
 
     def add_method(
         self,

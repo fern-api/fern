@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for generating proper Pydantic models that contain forward references wrapped in containers (e.g. list, optional, etc.)
+      type: feat
+  createdAt: '2025-05-09'
+  irVersion: 57
+
 - version: 4.18.6
   changelogEntry:
     - summary: |

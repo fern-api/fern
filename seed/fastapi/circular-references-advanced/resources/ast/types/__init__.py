@@ -4,6 +4,7 @@
 
 from .acai import Acai
 from .animal import Animal
+from .branch_node import BranchNode
 from .cat import Cat
 from .container_value import ContainerValue
 from .dog import Dog
@@ -11,6 +12,9 @@ from .field_name import FieldName
 from .field_value import FieldValue
 from .fig import Fig
 from .fruit import Fruit
+from .leaf_node import LeafNode
+from .node import Node
+from .nodes_wrapper import NodesWrapper
 from .object_field_value import ObjectFieldValue
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
@@ -18,6 +22,7 @@ from .primitive_value import PrimitiveValue
 __all__ = [
     "Acai",
     "Animal",
+    "BranchNode",
     "Cat",
     "ContainerValue",
     "Dog",
@@ -25,6 +30,9 @@ __all__ = [
     "FieldValue",
     "Fig",
     "Fruit",
+    "LeafNode",
+    "Node",
+    "NodesWrapper",
     "ObjectFieldValue",
     "ObjectValue",
     "PrimitiveValue",
