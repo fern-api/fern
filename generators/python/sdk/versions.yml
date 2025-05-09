@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.1
+  changelogEntry:
+    - summary: |
+        Fix a mypy error in pydantic_utilities.py by properly handling type annotations for Pydantic v1 and v2 compatibility, ensuring type checking passes correctly across different Pydantic versions.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
 - version: 4.19.0
   changelogEntry:
     - summary: |
