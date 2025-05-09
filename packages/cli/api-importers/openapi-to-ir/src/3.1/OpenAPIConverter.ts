@@ -221,31 +221,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const convertedPath = pathConverter.convert();
             if (convertedPath != null) {
                 for (const endpoint of convertedPath.endpoints) {
-                    // const group = this.context.getGroup({
-                    //     groupParts: endpoint.group,
-                    //     namespace: this.context.namespace
-                    // });
-
-                    // const pkg = this.getOrCreatePackage({ group: endpoint.group });
-
-                    // const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
-                    // const finalpart = allParts[allParts.length - 1];
-
-                    // const groupId = group.join(".");
-                    // pkg.service = pkg.service ?? `service_${groupId}`;
-
-                    // if (this.ir.services[pkg.service] == null) {
-                    //     this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart });
-                    // }
-                    // this.ir.services[pkg.service]?.endpoints.push(endpoint.endpoint);
-
-                    // const service = this.ir.services[pkg.service];
-                    // if (service != null) {
-                    //     this.irGraph.addEndpoint(service, endpoint.endpoint);
-                    //     // TODO: This method should be "markEndpointsForAudience"
-                    //     this.irGraph.markEndpointForAudience(service.name, [endpoint.endpoint], endpoint.audiences);
-                    // }
-
                     this.addEndpointToIr({
                         endpoint: endpoint.endpoint,
                         audiences: endpoint.audiences,
