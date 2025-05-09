@@ -69,6 +69,7 @@ class CursorPagination(Paginator):
                 writer.write(f"{parameter.name}={parameter.name}")
             writer.write(", ")
         writer.write(")")
+        writer.write(".data")
         writer.write_line("")
 
     def get_results_property(self) -> ir_types.ResponseProperty:

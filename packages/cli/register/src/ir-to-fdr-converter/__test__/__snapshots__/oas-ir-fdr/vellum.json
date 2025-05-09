@@ -105,7 +105,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -169,7 +170,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -294,7 +296,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "created",
@@ -304,7 +307,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "A human-readable label for the deployment",
@@ -369,7 +373,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "last_deployed_on",
@@ -417,7 +422,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The human-readable name for the document.",
@@ -489,7 +495,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
@@ -500,7 +507,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "An enum value representing where this document is along its indexing lifecycle for this index.\n\n* `AWAITING_PROCESSING` - Awaiting Processing\n* `QUEUED` - Queued\n* `INDEXING` - Indexing\n* `INDEXED` - Indexed\n* `FAILED` - Failed",
@@ -691,7 +699,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "created",
@@ -701,7 +710,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "A human-readable label for the document index",
@@ -1932,7 +1942,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Timestamp of when this model version was created.",
@@ -1943,7 +1954,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-friendly name for this model version.",
@@ -2086,7 +2098,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2294,7 +2307,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -3480,7 +3494,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -3799,7 +3814,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -4243,7 +4259,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The external ID that was originally provided when uploading the document.",
@@ -4550,7 +4567,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -4596,7 +4614,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -4621,7 +4640,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -4701,7 +4721,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -5124,7 +5145,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -5173,7 +5195,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "data",
@@ -5633,7 +5656,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
@@ -5646,7 +5670,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -5713,7 +5738,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
@@ -5726,7 +5752,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -5779,7 +5806,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",

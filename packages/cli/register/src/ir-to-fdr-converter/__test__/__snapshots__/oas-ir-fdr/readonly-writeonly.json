@@ -59,7 +59,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -95,7 +96,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "createdAt",
@@ -108,7 +110,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -212,7 +215,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -225,7 +229,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -235,7 +240,8 @@
                 "type": "id",
                 "value": "UserStatsAccountStatus"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }

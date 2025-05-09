@@ -1,4 +1,20 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.3
+  changelogEntry:
+    - summary: |
+        Fix pagination support in raw clients by properly indexing into response data, ensuring that raw client endpoints with pagination correctly iterate through paginated results.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.2
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming response handling by adding proper type casting to sse.data, ensuring correct data type conversion during stream processing.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
 - version: 4.19.1
   changelogEntry:
     - summary: |

@@ -81,7 +81,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -118,7 +119,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -184,7 +186,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -222,7 +225,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -235,7 +239,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
