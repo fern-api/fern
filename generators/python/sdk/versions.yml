@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.18.6
+  changelogEntry:
+    - summary: |
+        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
+        ensuring valid Python syntax for both single and double quoted string literals.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
 - version: 4.18.5
   changelogEntry:
     - summary: |
