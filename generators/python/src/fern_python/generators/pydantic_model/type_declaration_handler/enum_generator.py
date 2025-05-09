@@ -38,16 +38,28 @@ class EnumGenerator(AbstractTypeGenerator):
 
     def generate(self) -> None:
         if self._use_str_enums:
-            self._source_file.add_declaration(
-                AST.TypeAliasDeclaration(
-                    type_hint=AST.TypeHint.union(
-                        AST.TypeHint.literal(
-                            AST.Expression(", ".join(map(lambda v: f'"{v.name.wire_value}"', self._enum.values)))
-                        ),
-                        AST.TypeHint.any(),
-                    ),
-                    name=self._class_name,
+            # Create a list of string literals for enum values
+            enum_literals = []
+            for v in self._enum.values:
+                if '"' not in v.name.wire_value:
+                    enum_literals.append(f'"{v.name.wire_value}"')
+                else:
+                    enum_literals.append(f"'{v.name.wire_value}'")
+            
+            # Join the literals with commas
+            literals_expression = AST.Expression(", ".join(enum_literals))
+            
+            # Create the type alias declaration
+            type_alias = AST.TypeAliasDeclaration(
+                type_hint=AST.TypeHint.union(
+                    AST.TypeHint.literal(literals_expression),
+                    AST.TypeHint.any(),
                 ),
+                name=self._class_name,
+            )
+            
+            self._source_file.add_declaration(
+                type_alias,
                 should_export=True,
             )
         else:
