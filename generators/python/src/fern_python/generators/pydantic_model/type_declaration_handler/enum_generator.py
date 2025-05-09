@@ -45,10 +45,10 @@ class EnumGenerator(AbstractTypeGenerator):
                     enum_literals.append(f'"{v.name.wire_value}"')
                 else:
                     enum_literals.append(f"'{v.name.wire_value}'")
-            
+
             # Join the literals with commas
             literals_expression = AST.Expression(", ".join(enum_literals))
-            
+
             # Create the type alias declaration
             type_alias = AST.TypeAliasDeclaration(
                 type_hint=AST.TypeHint.union(
@@ -57,7 +57,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 ),
                 name=self._class_name,
             )
-            
+
             self._source_file.add_declaration(
                 type_alias,
                 should_export=True,
