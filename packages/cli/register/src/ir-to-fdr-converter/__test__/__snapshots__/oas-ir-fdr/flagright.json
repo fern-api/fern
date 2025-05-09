@@ -7269,7 +7269,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
