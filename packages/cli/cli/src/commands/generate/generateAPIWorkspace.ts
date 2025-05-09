@@ -4,6 +4,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     fernConfigJson
 } from "@fern-api/configuration-loader";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -13,7 +14,6 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 import { GenerationMode } from "./generateAPIWorkspaces";
-import { ContainerRunner } from "@fern-api/core-utils";
 
 export async function generateWorkspace({
     organization,
@@ -28,7 +28,7 @@ export async function generateWorkspace({
     keepDocker,
     absolutePathToPreview,
     mode,
-    runner,
+    runner
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;

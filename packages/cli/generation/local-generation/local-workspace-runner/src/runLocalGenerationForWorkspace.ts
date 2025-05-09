@@ -28,7 +28,7 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     keepDocker,
     context,
-    runner,
+    runner
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -128,7 +128,7 @@ export async function runLocalGenerationForWorkspace({
                     generateOauthClients: organization?.body.oauthClientEnabled ?? false,
                     generatePaginatedClients: organization?.body.paginationEnabled ?? false,
                     ir: intermediateRepresentation,
-                    runner,
+                    runner
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
