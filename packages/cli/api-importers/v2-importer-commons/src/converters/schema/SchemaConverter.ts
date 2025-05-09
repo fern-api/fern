@@ -19,9 +19,15 @@ export declare namespace SchemaConverter {
         inlined?: boolean;
     }
 
-    export interface Output {
+    export interface ConvertedSchema {
         typeDeclaration: FernIr.TypeDeclaration;
-        inlinedTypes: Record<FernIr.TypeId, FernIr.TypeDeclaration>;
+        audiences: string[];
+        propertiesByAudience: Record<string, Set<string>>;
+    }
+
+    export interface Output {
+        convertedSchema: ConvertedSchema;
+        inlinedTypes: Record<FernIr.TypeId, ConvertedSchema>;
     }
 }
 
@@ -46,7 +52,12 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const maybeFernTypeDeclaration = this.tryConvertFernTypeDeclaration();
         if (maybeFernTypeDeclaration != null) {
             return {
-                typeDeclaration: maybeFernTypeDeclaration,
+                convertedSchema: {
+                    typeDeclaration: maybeFernTypeDeclaration,
+                    audiences: this.audiences,
+                    // TODO: Can convertedFernTypeDeclaration contain propertiesByAudiences?
+                    propertiesByAudience: {}
+                },
                 inlinedTypes: {}
             };
         }
@@ -71,15 +82,19 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const enumType = enumConverter.convert();
             if (enumType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: enumType.type
-                    }),
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: enumType.type,
+                            referencedTypes: new Set()
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
                     inlinedTypes: {}
                 };
             }
         }
 
-        // Check if there is a single allOf that is not an object
         if (
             this.schema.allOf?.length === 1 &&
             this.schemaOnlyHasAllowedKeys(["allOf"]) &&
@@ -109,7 +124,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
                 const allOfResult = allOfConverter.convert();
 
-                if (allOfResult?.typeDeclaration?.shape.type !== "object") {
+                if (allOfResult?.convertedSchema.typeDeclaration?.shape.type !== "object") {
                     return allOfResult;
                 }
             }
@@ -119,13 +134,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         const primitiveType = primitiveConverter.convert();
         if (primitiveType != null) {
             return {
-                typeDeclaration: this.createTypeDeclaration({
-                    shape: FernIr.Type.alias({
-                        aliasOf: primitiveType,
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        resolvedType: primitiveType as any
-                    })
-                }),
+                convertedSchema: {
+                    typeDeclaration: this.createTypeDeclaration({
+                        shape: FernIr.Type.alias({
+                            aliasOf: primitiveType,
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            resolvedType: primitiveType as any
+                        }),
+                        referencedTypes: new Set()
+                    }),
+                    audiences: this.audiences,
+                    propertiesByAudience: {}
+                },
                 inlinedTypes: {}
             };
         }
@@ -139,13 +159,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const arrayType = arrayConverter.convert();
             if (arrayType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: FernIr.Type.alias({
-                            aliasOf: arrayType.typeReference,
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            resolvedType: arrayType.typeReference as any
-                        })
-                    }),
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: FernIr.Type.alias({
+                                aliasOf: arrayType.typeReference,
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                resolvedType: arrayType.typeReference as any
+                            }),
+                            referencedTypes: arrayType.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
                     inlinedTypes: arrayType.inlinedTypes
                 };
             }
@@ -175,9 +200,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const oneOfType = oneOfConverter.convert();
             if (oneOfType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: oneOfType.type
-                    }),
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: oneOfType.type,
+                            referencedTypes: oneOfType.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
                     inlinedTypes: oneOfType.inlinedTypes
                 };
             }
@@ -197,9 +227,14 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             const additionalPropertiesType = additionalPropertiesConverter.convert();
             if (additionalPropertiesType != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: additionalPropertiesType.type
-                    }),
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: additionalPropertiesType.type,
+                            referencedTypes: additionalPropertiesType.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
                     inlinedTypes: additionalPropertiesType.inlinedTypes
                 };
             }
@@ -211,13 +246,18 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs,
                 schema: this.schema
             });
-            const objectType = objectConverter.convert();
-            if (objectType != null) {
+            const convertedObject = objectConverter.convert();
+            if (convertedObject != null) {
                 return {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: objectType.type
-                    }),
-                    inlinedTypes: objectType.inlinedTypes
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: convertedObject.type,
+                            referencedTypes: convertedObject.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: convertedObject.propertiesByAudience
+                    },
+                    inlinedTypes: convertedObject.inlinedTypes
                 };
             }
         }
@@ -247,7 +287,13 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
         return undefined;
     }
 
-    public createTypeDeclaration({ shape }: { shape: FernIr.Type }): FernIr.TypeDeclaration {
+    public createTypeDeclaration({
+        shape,
+        referencedTypes
+    }: {
+        shape: FernIr.Type;
+        referencedTypes: Set<string>;
+    }): FernIr.TypeDeclaration {
         const v2Examples = this.convertSchemaExamples();
         return {
             name: this.convertDeclaredTypeName(),
@@ -260,7 +306,7 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 breadcrumbs: this.breadcrumbs
             }),
             docs: this.schema.description,
-            referencedTypes: new Set(),
+            referencedTypes,
             source: undefined,
             inline: this.inlined,
             v2Examples

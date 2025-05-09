@@ -66,7 +66,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 const error = {
                     error: {
                         name: this.context.casingsGenerator.generateName(errorId),
-                        fernFilepath: convertedSchema.schema.name?.fernFilepath,
+                        fernFilepath: convertedSchema.schema.typeDeclaration.name.fernFilepath,
                         errorId
                     },
                     docs: this.responseError.description

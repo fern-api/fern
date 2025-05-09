@@ -1,7 +1,7 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { AuthScheme, TypeDeclaration } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AuthScheme } from "@fern-api/ir-sdk";
+import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
 import { HttpMethods } from "../../constants/HttpMethods";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";
@@ -22,7 +22,7 @@ export declare namespace PathConverter {
     export interface Output {
         endpoints: OperationConverter.Output[];
         webhooks: WebhookConverter.Output[];
-        inlinedTypes: Record<string, TypeDeclaration>;
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -41,7 +41,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     public convert(): PathConverter.Output | undefined {
         const endpoints: OperationConverter.Output[] = [];
         const webhooks: WebhookConverter.Output[] = [];
-        const inlinedTypes: Record<string, TypeDeclaration> = {};
+        const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         for (const method of HttpMethods) {
             const operation = this.pathItem[method];

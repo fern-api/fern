@@ -139,7 +139,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             this.addTypeToRootPackage(id);
             this.addTypesToIr({
                 ...convertedSchema.inlinedTypes,
-                [id]: convertedSchema.typeDeclaration
+                [id]: convertedSchema.convertedSchema
             });
         }
     }
@@ -163,7 +163,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             });
             convertedServers = serversConverter.convert();
         }
-        this.addEnvironmentsToIr(convertedServers);
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers });
     }
 
     private convertChannels(): void {

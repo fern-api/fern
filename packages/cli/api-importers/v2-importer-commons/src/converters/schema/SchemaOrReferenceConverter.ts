@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
@@ -15,8 +15,8 @@ export declare namespace SchemaOrReferenceConverter {
 
     export interface Output {
         type: TypeReference;
-        schema?: TypeDeclaration;
-        inlinedTypes: Record<string, TypeDeclaration>;
+        schema?: SchemaConverter.ConvertedSchema;
+        inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
         availability?: Availability;
     }
 }
@@ -89,21 +89,21 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         });
         const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
-            const convertedSchemaShape = convertedSchema.typeDeclaration.shape;
+            const convertedSchemaShape = convertedSchema.convertedSchema.typeDeclaration.shape;
             if (convertedSchemaShape.type === "alias") {
                 return {
                     type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
-                    schema: convertedSchema.typeDeclaration,
+                    schema: convertedSchema.convertedSchema,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     availability
                 };
             }
             return {
                 type: this.wrapTypeReference(this.context.createNamedTypeReference(schemaId)),
-                schema: convertedSchema.typeDeclaration,
+                schema: convertedSchema.convertedSchema,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration
+                    [schemaId]: convertedSchema.convertedSchema
                 },
                 availability
             };

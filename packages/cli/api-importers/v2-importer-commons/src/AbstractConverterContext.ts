@@ -13,7 +13,6 @@ import {
     DeclaredTypeName,
     FernFilepath,
     ObjectPropertyAccess,
-    TypeDeclaration,
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -22,6 +21,7 @@ import { Logger } from "@fern-api/logger";
 
 import { Extensions } from ".";
 import { ErrorCollector } from "./ErrorCollector";
+import { SchemaConverter } from "./converters/schema/SchemaConverter";
 
 export declare namespace Spec {
     export interface Args<T> {
@@ -575,8 +575,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         inlinedTypes
     }: {
         id: string;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
-    }): Record<TypeId, TypeDeclaration> {
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
+    }): Record<TypeId, SchemaConverter.ConvertedSchema> {
         return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
     }
 

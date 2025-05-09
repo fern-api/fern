@@ -17,7 +17,7 @@ export function convertEnvironments({
 }: {
     rawApiFileSchema: RawSchemas.WithEnvironmentsSchema;
     casingsGenerator: CasingsGenerator;
-}): EnvironmentsConfig | undefined {
+}): { environmentsConfig: EnvironmentsConfig; audiences: Record<string, string[]> } | undefined {
     if (environments == null) {
         return undefined;
     }
@@ -27,19 +27,32 @@ export function convertEnvironments({
     }
 
     return {
-        defaultEnvironment: defaultEnvironment ?? undefined,
-        environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
-            singleBaseUrl: () =>
-                Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
-            multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) =>
-                Environments.multipleBaseUrls(
-                    convertMultipleBaseUrlEnvironments({
-                        baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
-                        environments,
-                        casingsGenerator
+        environmentsConfig: {
+            defaultEnvironment: defaultEnvironment ?? undefined,
+            environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
+                singleBaseUrl: () =>
+                    Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
+                multipleBaseUrls: (firstMultipleBaseUrlsEnvironment) =>
+                    Environments.multipleBaseUrls(
+                        convertMultipleBaseUrlEnvironments({
+                            baseUrls: Object.keys(firstMultipleBaseUrlsEnvironment.urls),
+                            environments,
+                            casingsGenerator
+                        })
+                    )
+            })
+        },
+        audiences: {
+            ...Object.fromEntries(
+                Object.entries(environments).map(([environmentName, rawEnvironment]) => [
+                    environmentName,
+                    visitRawEnvironmentDeclaration(rawEnvironment, {
+                        singleBaseUrl: (env) => [...(typeof env === "string" ? [] : (env.audiences ?? []))],
+                        multipleBaseUrls: (env) => [...(env.audiences ?? [])]
                     })
-                )
-        })
+                ])
+            )
+        }
     };
 }
 

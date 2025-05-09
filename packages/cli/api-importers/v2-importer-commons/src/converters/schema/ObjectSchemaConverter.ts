@@ -1,10 +1,11 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { isNonNullish } from "@fern-api/core-utils";
-import { Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { convertProperties } from "../../utils/ConvertProperties";
+import { SchemaConverter } from "./SchemaConverter";
 
 export declare namespace ObjectSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
@@ -13,7 +14,9 @@ export declare namespace ObjectSchemaConverter {
 
     export interface Output {
         type: Type;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        propertiesByAudience: Record<string, Set<string>>;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -40,41 +43,64 @@ export class ObjectSchemaConverter extends AbstractConverter<
                     extendedProperties: [],
                     extraProperties: hasAdditionalProperties
                 }),
-                inlinedTypes: {}
+                propertiesByAudience: {},
+                inlinedTypes: {},
+                referencedTypes: new Set()
             };
         }
 
-        const { convertedProperties: properties, inlinedTypesFromProperties: propertiesInlinedTypes } =
-            convertProperties({
-                properties: this.schema.properties ?? {},
-                required: this.schema.required ?? [],
-                breadcrumbs: this.breadcrumbs,
-                context: this.context,
-                errorCollector: this.context.errorCollector
-            });
+        const {
+            convertedProperties: properties,
+            inlinedTypesFromProperties: propertiesInlinedTypes,
+            referencedTypes: baseReferencedTypes,
+            propertiesByAudience: basePropertiesByAudience
+        } = convertProperties({
+            properties: this.schema.properties ?? {},
+            required: this.schema.required ?? [],
+            breadcrumbs: this.breadcrumbs,
+            context: this.context,
+            errorCollector: this.context.errorCollector
+        });
 
         const extends_: TypeReference[] = [];
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = propertiesInlinedTypes;
+        const referencedTypes: Set<string> = baseReferencedTypes;
+        let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = propertiesInlinedTypes;
+        let propertiesByAudience: Record<string, Set<string>> = basePropertiesByAudience;
         for (const [index, allOfSchema] of (this.schema.allOf ?? []).entries()) {
             if (this.context.isReferenceObject(allOfSchema)) {
                 const maybeTypeReference = this.context.convertReferenceToTypeReference(allOfSchema);
                 if (maybeTypeReference.ok) {
                     extends_.push(maybeTypeReference.reference);
                 }
+                const typeId = this.context.getTypeIdFromSchemaReference(allOfSchema);
+                if (typeId != null) {
+                    referencedTypes.add(typeId);
+                }
                 continue;
             }
 
-            const { convertedProperties: allOfProperties, inlinedTypesFromProperties: inlinedTypesFromAllOf } =
-                convertProperties({
-                    properties: allOfSchema.properties ?? {},
-                    required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
-                    breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],
-                    context: this.context,
-                    errorCollector: this.context.errorCollector
-                });
+            const {
+                convertedProperties: allOfProperties,
+                inlinedTypesFromProperties: inlinedTypesFromAllOf,
+                referencedTypes: allOfReferencedTypes,
+                propertiesByAudience: allOfPropertiesByAudience
+            } = convertProperties({
+                properties: allOfSchema.properties ?? {},
+                required: [...(this.schema.required ?? []), ...(allOfSchema.required ?? [])],
+                breadcrumbs: [...this.breadcrumbs, "allOf", index.toString()],
+                context: this.context,
+                errorCollector: this.context.errorCollector
+            });
 
             properties.push(...allOfProperties);
             inlinedTypes = { ...inlinedTypes, ...inlinedTypesFromAllOf };
+            propertiesByAudience = { ...propertiesByAudience, ...allOfPropertiesByAudience };
+            allOfReferencedTypes.forEach((typeId) => {
+                referencedTypes.add(typeId);
+            });
+        }
+        for (const typeId of Object.keys(inlinedTypes)) {
+            referencedTypes.add(typeId);
         }
 
         return {
@@ -84,6 +110,8 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 extendedProperties: [],
                 extraProperties: hasAdditionalProperties
             }),
+            propertiesByAudience,
+            referencedTypes,
             inlinedTypes
         };
     }

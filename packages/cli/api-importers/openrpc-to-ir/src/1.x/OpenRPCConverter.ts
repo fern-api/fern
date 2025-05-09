@@ -41,7 +41,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             endpointLevelServers
         });
         const convertedServers = serversConverter.convert();
-        this.addEnvironmentsToIr(convertedServers?.value);
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers?.value });
     }
 
     private convertSchemas(): void {
@@ -66,7 +66,7 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 this.addTypeToPackage(id, group);
                 this.addTypesToIr({
                     ...convertedSchema.inlinedTypes,
-                    [id]: convertedSchema.typeDeclaration
+                    [id]: convertedSchema.convertedSchema
                 });
             }
         }
