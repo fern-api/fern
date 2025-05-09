@@ -8,12 +8,13 @@ from .validator_generators import (
 from .validators_generator import ValidatorsGenerator
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
 
 
 class PydanticValidatorsGenerator(ValidatorsGenerator):
     _DECORATOR_FUNCTION_NAME = "field"
 
-    def __init__(self, model: PydanticModel, unique_name: List[str]):
+    def __init__(self, model: PydanticModel, extended_pydantic_fields: List[PydanticField], unique_name: List[str]):
         super().__init__(model=model)
         reference_to_validators_class = self._get_reference_to_validators_class()
 
@@ -23,6 +24,14 @@ class PydanticValidatorsGenerator(ValidatorsGenerator):
                 field=field,
                 model=self._model,
                 reference_to_validators_class=reference_to_validators_class,
+            )
+            self._field_validator_generators.append(field_validator_generator)
+        for field in extended_pydantic_fields:
+            field_validator_generator = FieldValidatorGenerator(
+                field=field,
+                model=self._model,
+                reference_to_validators_class=reference_to_validators_class,
+                extended=True,
             )
             self._field_validator_generators.append(field_validator_generator)
 
