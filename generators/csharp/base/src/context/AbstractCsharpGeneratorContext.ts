@@ -755,16 +755,7 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    #doesIrHaveCustomPagination: boolean | null = null;
-
-    public doesIrHaveCustomPagination(): boolean {
-        if (this.#doesIrHaveCustomPagination === null) {
-            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
-                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
-            );
-        }
-        return this.#doesIrHaveCustomPagination;
-    }
+    public abstract shouldCreateCustomPagination(): boolean;
 
     public getCustomPagerName(): string {
         return this.customConfig["custom-pager-name"] ?? `${stripNonAlphanumeric(this.getPackageId())}Pager`;

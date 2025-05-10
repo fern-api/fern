@@ -117,4 +117,8 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
     }
+
+    public shouldCreateCustomPagination(): boolean {
+        return false;
+    }
 }
