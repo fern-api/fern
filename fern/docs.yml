@@ -413,6 +413,10 @@ navigation:
             icon: fa-regular fa-font
             path: ./pages/docs/writing-content/write-markdown.mdx
             slug: write-markdown
+          - page: Translated Content
+            icon: fa-regular fa-language
+            path: ./pages/docs/writing-content/translated-content.mdx
+            slug: translated-content
           - section: Components
             icon: fa-regular fa-puzzle-piece
             slug: components
