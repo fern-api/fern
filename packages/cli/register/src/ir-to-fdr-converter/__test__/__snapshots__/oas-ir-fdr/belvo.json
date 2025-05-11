@@ -12993,7 +12993,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "account",

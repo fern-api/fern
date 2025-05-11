@@ -183,7 +183,8 @@
             "valueType": {
               "type": "id",
               "value": "AccountAllows"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "If `true`, the customer has opted in to receive account statements electronically.",
@@ -228,7 +229,8 @@
                   "maxLength": 80
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "maskedNumber",
@@ -272,7 +274,8 @@
                 "type": "integer",
                 "maximum": 4
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
@@ -287,7 +290,8 @@
                   "maxLength": 256
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -331,7 +335,8 @@
                 "type": "integer",
                 "maximum": 4
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -366,7 +371,8 @@
                 "type": "id",
                 "value": "accountItem"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
@@ -391,7 +397,8 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
@@ -406,7 +413,8 @@
                   "maxLength": 256
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -482,7 +490,8 @@
                 "type": "string",
                 "maxLength": 80
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "nickname",
@@ -580,7 +589,8 @@
                   "maxLength": 80
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "nickname",
@@ -792,7 +802,8 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
@@ -806,7 +817,8 @@
                   "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
@@ -820,7 +832,8 @@
                   "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The time when the balance values were last updated from the banking core.",
@@ -831,7 +844,8 @@
                 "type": "id",
                 "value": "readOnlyTimestamp"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
@@ -845,7 +859,8 @@
                   "regex": "^(-|\\+)?(0|[1-9][0-9]*)\\.[0-9][0-9]$"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "If `true`, the response is incomplete and the client may retry the operation after the `Retry-After` time in order to fetch balances for any incomplete accounts in the `items`. The retry operation should only pass in accounts that are `incomplete`.",
@@ -874,7 +889,8 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The full name of the joint owner.",
@@ -1027,7 +1043,8 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1531,7 +1548,8 @@
                 "minLength": 6,
                 "maxLength": 128
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The transaction type. If the `type` is `debit` or `credit`, the `subtype` conveys further transaction type details.",
@@ -1558,7 +1576,8 @@
                 "type": "string",
                 "format": "date"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date when the transaction occurred in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived and immutable.<br>**Warning**: The property `createdOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `createdOn` will be removed on version `v3.0.0` of the schema.",
@@ -1573,7 +1592,8 @@
                 }
               }
             },
-            "availability": "Deprecated"
+            "availability": "Deprecated",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date `YYYY-MM-DD` format, UTC. This is derived and immutable and only present if `posted` is `true`.<br>**Warning**: The property `postedOn` was deprecated on version `v2.1.0` of the schema. Use the `occurredOn` property instead. `postedOn` will be removed on version `v3.0.0` of the schema.",
@@ -1588,7 +1608,8 @@
                 }
               }
             },
-            "availability": "Deprecated"
+            "availability": "Deprecated",
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
@@ -1814,7 +1835,8 @@
                 "minLength": 1,
                 "maxLength": 32
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2098,7 +2120,8 @@
                   "format": "date"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The effective the transfer is scheduled to credit the target account, in `YYYY-MM-DD` [RFC 3339](https://tools.ietf.org/html/rfc3339) `date` format. This is derived from the `scheduledOn` date, based on the financial institution's transfer rules.",
@@ -2112,7 +2135,8 @@
                   "format": "date"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2376,7 +2400,8 @@
             "valueType": {
               "type": "id",
               "value": "TransferItemState"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date/time the transfer was processed.",
@@ -2390,7 +2415,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The full name of the banking customer who last updated the transfer.",
@@ -2404,7 +2430,8 @@
                   "maxLength": 48
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2867,7 +2894,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC. This is derived and immutable.",
@@ -2881,7 +2909,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2983,7 +3012,8 @@
                 "type": "id",
                 "value": "readOnlyResourceId"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time `YYYY-MM-DDThh:mm:ss.sssZ` format, UTC.",
@@ -2994,7 +3024,8 @@
                 "type": "id",
                 "value": "readOnlyTimestamp"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
@@ -3108,7 +3139,8 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
@@ -3116,7 +3148,8 @@
             "valueType": {
               "type": "id",
               "value": "readOnlyResourceId"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The `labels` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an `sms` factor and a `voice` factor.",
@@ -3164,7 +3197,8 @@
                   "maxLength": 8000
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }

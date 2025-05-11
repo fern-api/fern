@@ -27,7 +27,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "integration",
@@ -39,7 +40,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "integration_slug",
@@ -51,7 +53,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "category",
@@ -76,7 +79,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "end_user_organization_name",
@@ -88,7 +92,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "end_user_email_address",
@@ -101,7 +106,8 @@
                   "format": "email"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "status",
@@ -113,7 +119,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "webhook_listener_url",
@@ -126,7 +133,8 @@
                   "format": "uri"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
@@ -142,7 +150,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -516,7 +525,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "If checked, this integration will not appear in the linking flow, and will appear elsewhere with a Beta tag.",
@@ -661,7 +671,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -787,7 +798,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -801,7 +813,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -814,7 +827,8 @@
                   "value": "BankInfoFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -830,7 +844,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -861,7 +876,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -1005,7 +1021,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -1019,7 +1036,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -1032,7 +1050,8 @@
                   "value": "BenefitFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -1048,7 +1067,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1181,7 +1201,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -1261,7 +1282,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -1275,7 +1297,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -1288,7 +1311,8 @@
                   "value": "CompanyFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -1304,7 +1328,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1367,7 +1392,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "User-facing *native condition* name. e.g. \"Skip Manager\".",
@@ -2477,7 +2503,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -2584,7 +2611,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -2597,7 +2625,8 @@
                   "value": "DeductionFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -2613,7 +2642,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2655,7 +2685,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -2744,7 +2775,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -2757,7 +2789,8 @@
                   "value": "EarningFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -2773,7 +2806,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2878,7 +2912,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -3364,7 +3399,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -3378,7 +3414,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -3391,7 +3428,8 @@
                   "value": "EmployeeFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -3407,7 +3445,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -3454,7 +3493,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -3600,7 +3640,8 @@
                   "value": "Earning"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "deductions",
@@ -3613,7 +3654,8 @@
                   "value": "Deduction"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "taxes",
@@ -3626,7 +3668,8 @@
                   "value": "Tax"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Indicates whether or not this object has been deleted by third party webhooks.",
@@ -3639,7 +3682,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -3653,7 +3697,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -3666,7 +3711,8 @@
                   "value": "EmployeePayrollRunFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -3682,7 +3728,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -4192,7 +4239,8 @@
                   "value": "EmployeeRequestIntegrationParams"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "linked_account_params",
@@ -4205,7 +4253,8 @@
                   "value": "EmployeeRequestLinkedAccountParams"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -4340,7 +4389,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -4522,7 +4572,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -4536,7 +4587,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -4549,7 +4601,8 @@
                   "value": "EmploymentFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -4565,7 +4618,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -4949,7 +5003,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -5025,7 +5080,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -5039,7 +5095,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -5052,7 +5109,8 @@
                   "value": "GroupFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -5068,7 +5126,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5185,7 +5244,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
@@ -5215,7 +5275,8 @@
                 "type": "id",
                 "value": "IssueEndUser"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "first_incident_time",
@@ -5259,7 +5320,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "error_details",
@@ -5274,7 +5336,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5364,7 +5427,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "User-facing *native condition* name. e.g. \"Skip Manager\".",
@@ -5454,7 +5518,8 @@
                   "value": "LinkedAccountCondition"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5574,7 +5639,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -5743,7 +5809,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -5757,7 +5824,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -5770,7 +5838,8 @@
                   "value": "LocationFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -5786,7 +5855,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -6093,7 +6163,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Whether the operator can be repeated multiple times.",
@@ -6106,7 +6177,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -7984,7 +8056,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8029,7 +8102,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -8043,7 +8117,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8056,7 +8131,8 @@
                   "value": "PayGroupFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8072,7 +8148,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -8161,7 +8238,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8269,7 +8347,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -8283,7 +8362,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8296,7 +8376,8 @@
                   "value": "PayrollRunFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8312,7 +8393,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -8827,7 +8909,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8934,7 +9017,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8947,7 +9031,8 @@
                   "value": "TaxFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8963,7 +9048,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -8994,7 +9080,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -9056,7 +9143,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -9070,7 +9158,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -9083,7 +9172,8 @@
                   "value": "TeamFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -9099,7 +9189,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9163,7 +9254,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -9333,7 +9425,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -9347,7 +9440,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -9360,7 +9454,8 @@
                   "value": "TimeOffFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -9376,7 +9471,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9418,7 +9514,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -9510,7 +9607,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -9524,7 +9622,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -9537,7 +9636,8 @@
                   "value": "TimeOffBalanceFieldMappings"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -9553,7 +9653,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9783,7 +9884,8 @@
                   "value": "TimeOffRequestIntegrationParams"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "linked_account_params",
@@ -9796,7 +9898,8 @@
                   "value": "TimeOffRequestLinkedAccountParams"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
