@@ -1,5 +1,15 @@
 package com.fern.java.client;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -60,20 +70,17 @@ import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdkDownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
+    public static void main(String... args) {
+        Cli cli = new Cli();
+        cli.run(args);
+    }
     private final List<String> subprojects = new ArrayList<>();
+
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
 
     public Cli() {
@@ -105,8 +112,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     }
 
     @Override
-    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
-        JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0]));
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args, IntermediateRepresentation ir) {
+        JavaV2Adapter.run(defaultGeneratorExecClient, new JavaV2Arguments(args[0], ir.));
     }
 
     @Override
@@ -443,10 +450,5 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
         }
         return JavaSdkCustomConfig.builder().build();
-    }
-
-    public static void main(String... args) {
-        Cli cli = new Cli();
-        cli.run(args);
     }
 }

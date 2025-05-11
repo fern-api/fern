@@ -61,6 +61,7 @@ class HttpX:
         response_code_writer: AST.CodeWriter,
         reference_to_client: AST.Expression,
         is_default_body_parameter_used: bool,
+        force_multipart: bool = False,
     ) -> AST.Expression:
         def add_request_params(*, writer: AST.NodeWriter) -> None:
             if query_parameters is not None:
@@ -97,6 +98,11 @@ class HttpX:
 
             if is_default_body_parameter_used:
                 writer.write_line("omit=OMIT,")
+
+            if force_multipart:
+                writer.write("force_multipart=")
+                writer.write("True")
+                writer.write_line(",")
 
         def write_non_streaming_call(
             *,

@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.4
+  changelogEntry:
+    - summary: |
+        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
+        for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
+      type: feat
+  createdAt: '2025-05-11'
+  irVersion: 57
+
 - version: 4.19.3
   changelogEntry:
     - summary: |

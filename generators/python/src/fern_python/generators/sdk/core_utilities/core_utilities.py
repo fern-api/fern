@@ -126,6 +126,16 @@ class CoreUtilities:
             exports={"HttpResponse", "AsyncHttpResponse"} if not self._exclude_types_from_init_exports else set(),
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="force_multipart.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="force_multipart"),
+            ),
+            exports=set(),
+        )
+
         is_v1_on_v2 = self._version == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
             "with_pydantic_v1_on_v2/with_aliases/pydantic_utilities.py"

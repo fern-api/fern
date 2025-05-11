@@ -113,6 +113,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -147,6 +148,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -206,6 +208,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -260,6 +263,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -301,6 +305,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -401,6 +406,7 @@ class RawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -448,11 +454,9 @@ class RawServiceClient:
                     else {}
                 ),
             },
-            headers={
-                "content-type": "multipart/form-data",
-            },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -561,6 +565,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -595,6 +600,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -654,6 +660,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -708,6 +715,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -749,6 +757,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -849,6 +858,7 @@ class AsyncRawServiceClient:
             },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -896,11 +906,9 @@ class AsyncRawServiceClient:
                     else {}
                 ),
             },
-            headers={
-                "content-type": "multipart/form-data",
-            },
             request_options=request_options,
             omit=OMIT,
+            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:

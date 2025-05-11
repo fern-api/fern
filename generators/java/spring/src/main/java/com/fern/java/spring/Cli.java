@@ -1,5 +1,14 @@
 package com.fern.java.spring;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -25,22 +34,21 @@ import com.fern.java.spring.generators.ErrorBodyGenerator;
 import com.fern.java.spring.generators.ExceptionGenerator;
 import com.fern.java.spring.generators.SpringServerInterfaceGenerator;
 import com.palantir.common.streams.KeyedStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
+    public static void main(String... args) {
+        Cli cli = new Cli();
+        cli.run(args);
+    }
+
     private final List<String> subprojects = new ArrayList<>();
 
     @Override
-    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args,
+            IntermediateRepresentation ir) {
         // V2 is not yet supported for the spring generator
     }
 
@@ -110,10 +118,10 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
 
         // errors
         Map<ErrorId, GeneratedSpringException> generatedErrors = KeyedStream.stream(
-                        context.getIr().getErrors())
+                context.getIr().getErrors())
                 .map(errorDeclaration -> {
-                    ExceptionGenerator exceptionGenerator =
-                            new ExceptionGenerator(context, apiException, errorBodyFile, errorDeclaration);
+                    ExceptionGenerator exceptionGenerator = new ExceptionGenerator(context, apiException, errorBodyFile,
+                            errorDeclaration);
                     GeneratedSpringException springException = exceptionGenerator.generateFile();
                     this.addGeneratedFile(springException);
                     this.addGeneratedFile(springException.controllerAdvice());
@@ -171,15 +179,10 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
                     .getErrorDiscriminationStrategy()
                     .getProperty()
                     .get();
-            ErrorBodyGenerator errorBodyGenerator =
-                    new ErrorBodyGenerator(errorDiscriminationByPropertyStrategy, context);
+            ErrorBodyGenerator errorBodyGenerator = new ErrorBodyGenerator(errorDiscriminationByPropertyStrategy,
+                    context);
             return Optional.of(errorBodyGenerator.generateFile());
         }
         return Optional.empty();
-    }
-
-    public static void main(String... args) {
-        Cli cli = new Cli();
-        cli.run(args);
     }
 }
