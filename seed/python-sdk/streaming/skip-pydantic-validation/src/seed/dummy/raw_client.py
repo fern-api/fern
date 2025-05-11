@@ -47,7 +47,7 @@ class RawDummyClient:
             omit=OMIT,
         ) as _response:
 
-            def stream() -> HttpResponse[typing.Iterator[StreamResponse]]:
+            def _stream() -> HttpResponse[typing.Iterator[StreamResponse]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -76,7 +76,7 @@ class RawDummyClient:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield stream()
+            yield _stream()
 
     def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
@@ -150,7 +150,7 @@ class AsyncRawDummyClient:
             omit=OMIT,
         ) as _response:
 
-            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -179,7 +179,7 @@ class AsyncRawDummyClient:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await stream()
+            yield await _stream()
 
     async def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None

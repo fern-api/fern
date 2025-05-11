@@ -15,6 +15,7 @@ HTTPX_MODULE = AST.Module.external(
 
 class HttpX:
     _ASYNC_CLIENT_NAME = "_client"
+    STREAM_FUNC_NAME = "_stream"
 
     ASYNC_CLIENT = AST.ClassReference(
         qualified_name_excluding_import=("AsyncClient",),
@@ -155,7 +156,7 @@ class HttpX:
             with writer.indent():
                 writer.write_node(
                     AST.FunctionDeclaration(
-                        name="stream",
+                        name=HttpX.STREAM_FUNC_NAME,
                         signature=AST.FunctionSignature(
                             return_type=stream_response_type,
                         ),
@@ -165,9 +166,9 @@ class HttpX:
                 )
                 writer.write_newline_if_last_line_not()
                 if is_async:
-                    writer.write("yield await stream()")
+                    writer.write(f"yield await {HttpX.STREAM_FUNC_NAME}()")
                 else:
-                    writer.write("yield stream()")
+                    writer.write(f"yield {HttpX.STREAM_FUNC_NAME}()")
 
         def write(writer: AST.NodeWriter) -> None:
             if stream_response_type is not None:

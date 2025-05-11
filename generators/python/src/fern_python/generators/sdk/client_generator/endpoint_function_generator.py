@@ -73,7 +73,6 @@ class GeneratedEndpointFunction:
 
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
-    STREAM_FUNC_NAME = "stream"
 
     def __init__(
         self,
