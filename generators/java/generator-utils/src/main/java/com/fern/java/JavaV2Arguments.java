@@ -12,17 +12,13 @@ public final class JavaV2Arguments {
     private final File generatorConfig;
 
     // Useful for debugging locally but makes remote jobs fail
-    private boolean enableLogging = false;
+    private final boolean enableLogging = false;
 
     public JavaV2Arguments(String configPath) {
-        this(JAVA_V2_EXECUTABLE_PATH, configPath, false);
+        this(JAVA_V2_EXECUTABLE_PATH, configPath);
     }
 
-    public JavaV2Arguments(String configPath, boolean enableLogging) {
-        this(JAVA_V2_EXECUTABLE_PATH, configPath, enableLogging);
-    }
-
-    public JavaV2Arguments(String executablePath, String configPath, boolean enableLogging) {
+    public JavaV2Arguments(String executablePath, String configPath) {
         this.executable = new File(executablePath);
         Preconditions.checkArgument(
                 this.executable.exists(), "Could not find v2 executable at provided path " + executablePath);
@@ -30,7 +26,6 @@ public final class JavaV2Arguments {
         this.generatorConfig = new File(configPath);
         Preconditions.checkArgument(
                 this.generatorConfig.exists(), "Could not find generator config at provided path " + configPath);
-        this.enableLogging = enableLogging;
     }
 
     /** The path of the Java V2 executable. */

@@ -23,7 +23,7 @@ import java.util.List;
 public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
 
     @Override
-    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args, IntermediateRepresentation ir) {
+    public void runV2Generator(DefaultGeneratorExecClient defaultGeneratorExecClient, String[] args) {
         // V2 is not yet supported for the model generator
     }
 
