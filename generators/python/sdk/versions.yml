@@ -1,4 +1,14 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.5
+  changelogEntry:
+    - summary: |
+        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients, 
+        preventing collisions with endpoint parameters that might also be named "stream", 
+        while maintaining proper functionality for streaming responses.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
 - version: 4.19.4
   changelogEntry:
     - summary: |
