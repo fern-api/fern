@@ -1,15 +1,7 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import {
-    HttpHeader,
-    HttpMethod,
-    HttpRequestBody,
-    HttpResponse,
-    PathParameter,
-    QueryParameter,
-    TypeDeclaration
-} from "@fern-api/ir-sdk";
+import { HttpHeader, HttpMethod, HttpRequestBody, HttpResponse, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
@@ -31,7 +23,7 @@ export declare namespace AbstractOperationConverter {
 
     export interface Output {
         group?: string[];
-        inlinedTypes: Record<string, TypeDeclaration>;
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 interface ConvertedRequestBody {
@@ -51,7 +43,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected readonly operation: OpenAPIV3_1.OperationObject;
     protected readonly method: OpenAPIV3_1.HttpMethods;
     protected readonly path: string;
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
     constructor({ context, breadcrumbs, operation, method, path }: AbstractOperationConverter.Args) {
         super({ context, breadcrumbs });

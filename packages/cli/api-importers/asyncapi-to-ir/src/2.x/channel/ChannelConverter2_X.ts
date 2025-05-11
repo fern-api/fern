@@ -5,7 +5,6 @@ import {
     HttpHeader,
     PathParameter,
     QueryParameter,
-    TypeDeclaration,
     TypeReference,
     WebSocketMessage,
     WebSocketMessageBody
@@ -24,7 +23,7 @@ export declare namespace ChannelConverter2_X {
 }
 
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
     constructor({ context, breadcrumbs, channel, channelPath, group }: ChannelConverter2_X.Args) {
         super({ context, breadcrumbs, channel, channelPath, group });
@@ -97,6 +96,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const pathHead = channelAddress != null ? channelAddress : this.transformToValidPath(this.channelPath);
         const groupName = camelCase(this.channelPath);
 
+        const audiences =
+            this.context.getAudiences({
+                operation: this.channel,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
@@ -125,6 +130,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     })
                 }
             },
+            audiences,
             inlinedTypes: this.inlinedTypes
         };
     }
@@ -138,7 +144,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         operation: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
         origin: "server" | "client";
     }): WebSocketMessage | undefined {
-        let convertedSchema: TypeDeclaration | undefined = undefined;
+        let convertedSchema: Converters.SchemaConverters.SchemaConverter.ConvertedSchema | undefined = undefined;
         const action = origin === "server" ? "subscribe" : "publish";
         const breadcrumbs = [...this.breadcrumbs, action];
 
@@ -195,8 +201,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
 
             const typeReference = TypeReference.named({
                 fernFilepath: context.createFernFilepath(),
-                name: convertedTypeDeclaration.name.name,
-                typeId: convertedTypeDeclaration.name.typeId,
+                name: convertedTypeDeclaration.typeDeclaration.name.name,
+                typeId: convertedTypeDeclaration.typeDeclaration.name.typeId,
                 default: undefined,
                 inline: false
             });

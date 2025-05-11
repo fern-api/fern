@@ -1,5 +1,6 @@
-import { FernIr, TypeDeclaration, WebSocketChannel } from "@fern-api/ir-sdk";
+import { FernIr, WebSocketChannel } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { Converters } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter";
 import { AsyncAPIConverterContext } from "../AsyncAPIConverterContext";
@@ -14,7 +15,8 @@ export declare namespace AbstractChannelConverter {
 
     export interface Output {
         channel: WebSocketChannel;
-        inlinedTypes: Record<string, TypeDeclaration>;
+        audiences: string[];
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -25,7 +27,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
     protected readonly channel: TChannel;
     protected readonly channelPath: string;
     protected readonly group: string[] | undefined;
-    protected inlinedTypes: Record<string, TypeDeclaration> = {};
+    protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
     constructor({ context, breadcrumbs, channel, channelPath, group }: AbstractChannelConverter.Args<TChannel>) {
         super({ context, breadcrumbs });

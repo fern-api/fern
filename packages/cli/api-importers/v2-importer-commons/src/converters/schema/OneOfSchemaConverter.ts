@@ -5,7 +5,6 @@ import {
     SingleUnionType,
     SingleUnionTypeProperties,
     Type,
-    TypeDeclaration,
     TypeId,
     TypeReference,
     UndiscriminatedUnionMember
@@ -20,12 +19,13 @@ export declare namespace OneOfSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         id: string;
         schema: OpenAPIV3_1.SchemaObject;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 
     export interface Output {
         type: Type;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -74,7 +74,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         const unionTypes: SingleUnionType[] = [];
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let referencedTypes: Set<string> = new Set();
+        let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         for (const [discriminant, reference] of Object.entries(this.schema.discriminator.mapping ?? {})) {
             const singleUnionTypeSchemaConverter = new SchemaOrReferenceConverter({
@@ -83,8 +84,17 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 breadcrumbs: [...this.breadcrumbs, "discriminator", "mapping", discriminant]
             });
             const typeId = this.context.getTypeIdFromSchemaReference({ $ref: reference });
+            if (typeId != null) {
+                referencedTypes.add(typeId);
+            }
             const convertedSchema = singleUnionTypeSchemaConverter.convert();
             if (convertedSchema?.type != null && typeId != null) {
+                for (const typeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
+                    referencedTypes.add(typeId);
+                }
+                for (const typeId of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
+                    referencedTypes.add(typeId);
+                }
                 const nameAndWireValue = this.context.casingsGenerator.generateNameAndWireValue({
                     name: discriminant,
                     wireValue: discriminant
@@ -112,13 +122,22 @@ export class OneOfSchemaConverter extends AbstractConverter<
             }
         }
 
-        const { convertedProperties: baseProperties, inlinedTypesFromProperties } = convertProperties({
+        const {
+            convertedProperties: baseProperties,
+            referencedTypes: baseReferencedTypes,
+            inlinedTypesFromProperties
+        } = convertProperties({
             properties: this.schema.properties ?? {},
             required: this.schema.required ?? [],
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             errorCollector: this.context.errorCollector
         });
+
+        referencedTypes = new Set([...referencedTypes, ...baseReferencedTypes]);
+        for (const typeId of Object.keys({ ...inlinedTypes, ...inlinedTypesFromProperties })) {
+            referencedTypes.add(typeId);
+        }
 
         return {
             type: Type.union({
@@ -130,6 +149,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 extends: [],
                 types: unionTypes
             }),
+            referencedTypes,
             inlinedTypes: {
                 ...inlinedTypes,
                 ...inlinedTypesFromProperties
@@ -146,7 +166,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
         }
 
         const unionTypes: UndiscriminatedUnionMember[] = [];
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        const referencedTypes: Set<string> = new Set();
+        let inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
 
         for (const [index, subSchema] of [
             ...(this.schema.oneOf ?? []).entries(),
@@ -159,6 +180,10 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: maybeTypeReference.reference,
                         docs: subSchema.description
                     });
+                }
+                const typeId = this.context.getTypeIdFromSchemaReference(subSchema);
+                if (typeId != null) {
+                    referencedTypes.add(typeId);
                 }
                 continue;
             }
@@ -176,10 +201,13 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     type: this.context.createNamedTypeReference(schemaId),
                     docs: subSchema.description
                 });
+                convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {
+                    referencedTypes.add(referencedType);
+                });
                 inlinedTypes = {
                     ...inlinedTypes,
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration
+                    [schemaId]: convertedSchema.convertedSchema
                 };
             }
         }
@@ -188,6 +216,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             type: Type.undiscriminatedUnion({
                 members: unionTypes
             }),
+            referencedTypes,
             inlinedTypes
         };
     }
@@ -255,6 +284,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 resolvedType: wrappedType as any
             }),
+            referencedTypes: convertedSchema.schema?.typeDeclaration.referencedTypes ?? new Set(),
             inlinedTypes: convertedSchema.inlinedTypes
         };
     }

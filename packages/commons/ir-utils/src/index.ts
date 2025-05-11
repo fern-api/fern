@@ -16,3 +16,4 @@ export { type FilteredIr } from "./filtered-ir/FilteredIr";
 export { IrGraph } from "./filtered-ir/IrGraph";
 export { type AudienceId } from "./filtered-ir/ids";
 export { getPropertiesByAudience } from "./filtered-ir/getPropertiesByAudience";
+export { filterIntermediateRepresentationForAudiences } from "./filtered-ir/filterIntermediateRepresentationForAudiences";

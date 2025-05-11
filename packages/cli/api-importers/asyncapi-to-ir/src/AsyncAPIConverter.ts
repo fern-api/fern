@@ -137,10 +137,9 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
             this.addTypeToRootPackage(id);
-            this.addConvertedTypeToIr({
-                inlinedTypes: convertedSchema.inlinedTypes,
-                typeId: id,
-                typeDeclaration: convertedSchema.typeDeclaration
+            this.addTypesToIr({
+                ...convertedSchema.inlinedTypes,
+                [id]: convertedSchema.convertedSchema
             });
         }
     }
@@ -164,11 +163,10 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             });
             convertedServers = serversConverter.convert();
         }
-        this.addEnvironmentsToIr(convertedServers);
+        this.addEnvironmentsToIr({ environmentConfig: convertedServers });
     }
 
     private convertChannels(): void {
-        const websocketChannels: Record<string, FernIr.WebSocketChannel> = {};
         for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
                 breadcrumbs: ["channels", channelPath],
@@ -202,7 +200,12 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 convertedChannel = channelConverter.convert();
             }
             if (convertedChannel != null) {
-                this.addWebsocketChannelToIr({ websocketChannel: convertedChannel.channel, channelPath, group });
+                this.addWebsocketChannelToIr({
+                    websocketChannel: convertedChannel.channel,
+                    channelPath,
+                    audiences: convertedChannel.audiences,
+                    group
+                });
                 this.addTypesToIr(convertedChannel.inlinedTypes);
             }
         }

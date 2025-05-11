@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v2-importer-commons";
 
 export class ParameterConverter extends Converters.AbstractConverters
@@ -15,7 +15,7 @@ export class ParameterConverter extends Converters.AbstractConverters
 
     public convert(): Converters.AbstractConverters.AbstractParameterConverter.Output | undefined {
         let typeReference: TypeReference | undefined;
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         if (this.parameter.schema != null) {
             const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
