@@ -1,0 +1,116 @@
+{
+  "types": {},
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "id": "get_user",
+        "originalEndpointId": "get_user",
+        "name": "Get User",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "userId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/user/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "userId"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [
+          {
+            "key": "foo",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "headers": [
+          {
+            "key": "X-API-Version",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "Success!"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/user/",
+            "pathParameters": {
+              "userId": "foo"
+            },
+            "queryParameters": {
+              "foo": "foo"
+            },
+            "headers": {
+              "X-API-Version": "foo"
+            },
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

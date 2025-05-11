@@ -6,6 +6,11 @@ import * as SeedNullable from "../../../index";
 
 export interface User {
     name: string;
+    id: SeedNullable.UserId;
     tags: string[] | null;
     metadata?: SeedNullable.Metadata | null;
+    email: SeedNullable.Email;
+    favoriteNumber: SeedNullable.WeirdNumber;
+    numbers?: number[] | null;
+    strings?: Record<string, unknown> | null;
 }

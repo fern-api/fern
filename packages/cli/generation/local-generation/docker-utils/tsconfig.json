@@ -4,6 +4,7 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../../commons/fs-utils" },
+    { "path": "../../../../commons/core-utils" },
     { "path": "../../../../commons/logging-execa" }
   ]
 }

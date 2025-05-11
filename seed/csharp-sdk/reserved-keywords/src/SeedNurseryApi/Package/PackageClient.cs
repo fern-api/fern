@@ -1,6 +1,6 @@
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
@@ -14,12 +14,10 @@ public partial class PackageClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Package.TestAsync(new TestRequest { For = "for" });
-    /// </code>
-    /// </example>
-    public async Task TestAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task TestAsync(
         TestRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -28,8 +26,8 @@ public partial class PackageClient
         var _query = new Dictionary<string, object>();
         _query["for"] = request.For;
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -44,11 +42,13 @@ public partial class PackageClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedNurseryApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedNurseryApiApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

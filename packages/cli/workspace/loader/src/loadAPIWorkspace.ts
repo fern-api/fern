@@ -88,11 +88,27 @@ export async function loadSingleNamespaceAPIWorkspace({
                     asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                     filter: definition.settings?.filter,
                     exampleGeneration: undefined,
-                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding
+                    defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                    useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                    respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                    additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
                 }
             });
             continue;
         }
+
+        if (definition.schema.type === "openrpc") {
+            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
+            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
+            specs.push({
+                type: "openrpc",
+                absoluteFilepath: absoluteFilepathToOpenRpc,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+            continue;
+        }
+
         const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
         if (!(await doesPathExist(absoluteFilepath))) {
             return {
@@ -141,7 +157,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                 asyncApiNaming: definition.settings?.asyncApiMessageNaming ?? "v1",
                 filter: definition.settings?.filter,
                 exampleGeneration: definition.settings?.exampleGeneration,
-                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding
+                defaultFormParameterEncoding: definition.settings?.defaultFormParameterEncoding,
+                useBytesForBinaryResponse: definition.settings?.useBytesForBinaryResponse ?? false,
+                respectForwardCompatibleEnums: definition.settings?.respectForwardCompatibleEnums ?? false,
+                additionalPropertiesDefaultsTo: definition.settings?.additionalPropertiesDefaultsTo ?? false
             },
             source: {
                 type: "openapi",
@@ -237,7 +256,8 @@ export async function loadAPIWorkspace({
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({
-                specs,
+                specs: specs.filter((spec) => spec.type !== "openrpc"),
+                allSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

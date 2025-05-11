@@ -23,13 +23,20 @@ import com.fern.java.ObjectMethodFactory.ToStringSpec;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.lang.model.element.Modifier;
+import okhttp3.Response;
 
 public final class ApiErrorGenerator extends AbstractFileGenerator {
 
@@ -43,6 +50,15 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
     private static final FieldSpec BODY_FIELD_SPEC = FieldSpec.builder(
                     Object.class, "body", Modifier.PRIVATE, Modifier.FINAL)
             .addJavadoc("The body of the response that triggered the exception.")
+            .build();
+
+    private static final TypeName MAP_FROM_STRING_TO_LIST_OF_STRING = ParameterizedTypeName.get(
+            ClassName.get(Map.class),
+            ClassName.get(String.class),
+            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(String.class)));
+
+    private static final FieldSpec HEADERS_FIELD_SPEC = FieldSpec.builder(
+                    MAP_FROM_STRING_TO_LIST_OF_STRING, "headers", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
     private final GeneratedJavaFile generatedBaseErrorFile;
@@ -67,20 +83,12 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
                 .superclass(generatedBaseErrorFile.getClassName())
                 .addField(STATUS_CODE_FIELD_SPEC)
                 .addField(BODY_FIELD_SPEC)
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PUBLIC)
-                        .addParameter(ParameterSpec.builder(String.class, MESSAGE_FIELD_NAME)
-                                .build())
-                        .addParameter(ParameterSpec.builder(STATUS_CODE_FIELD_SPEC.type, STATUS_CODE_FIELD_SPEC.name)
-                                .build())
-                        .addParameter(ParameterSpec.builder(BODY_FIELD_SPEC.type, BODY_FIELD_SPEC.name)
-                                .build())
-                        .addStatement("super($L)", MESSAGE_FIELD_NAME)
-                        .addStatement("this.$L = $L", STATUS_CODE_FIELD_SPEC.name, STATUS_CODE_FIELD_SPEC.name)
-                        .addStatement("this.$L = $L", BODY_FIELD_SPEC.name, BODY_FIELD_SPEC.name)
-                        .build())
+                .addField(HEADERS_FIELD_SPEC)
+                .addMethod(constructorWithoutHeaders())
+                .addMethod(constructorWithHeaders())
                 .addMethod(createGetter(STATUS_CODE_FIELD_SPEC))
                 .addMethod(createGetter(BODY_FIELD_SPEC))
+                .addMethod(createGetter(HEADERS_FIELD_SPEC))
                 .addMethod(ObjectMethodFactory.createToStringMethod(
                         className,
                         List.of(
@@ -93,6 +101,48 @@ public final class ApiErrorGenerator extends AbstractFileGenerator {
         return GeneratedJavaFile.builder()
                 .className(className)
                 .javaFile(apiErrorFile)
+                .build();
+    }
+
+    private MethodSpec constructorWithoutHeaders() {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(
+                        ParameterSpec.builder(String.class, MESSAGE_FIELD_NAME).build())
+                .addParameter(ParameterSpec.builder(STATUS_CODE_FIELD_SPEC.type, STATUS_CODE_FIELD_SPEC.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(BODY_FIELD_SPEC.type, BODY_FIELD_SPEC.name)
+                        .build())
+                .addStatement("super($L)", MESSAGE_FIELD_NAME)
+                .addStatement("this.$L = $L", STATUS_CODE_FIELD_SPEC.name, STATUS_CODE_FIELD_SPEC.name)
+                .addStatement("this.$L = $L", BODY_FIELD_SPEC.name, BODY_FIELD_SPEC.name)
+                .addStatement("this.$L = new $T<>()", HEADERS_FIELD_SPEC.name, HashMap.class)
+                .build();
+    }
+
+    private MethodSpec constructorWithHeaders() {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(
+                        ParameterSpec.builder(String.class, MESSAGE_FIELD_NAME).build())
+                .addParameter(ParameterSpec.builder(STATUS_CODE_FIELD_SPEC.type, STATUS_CODE_FIELD_SPEC.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(BODY_FIELD_SPEC.type, BODY_FIELD_SPEC.name)
+                        .build())
+                .addParameter(
+                        ParameterSpec.builder(Response.class, "rawResponse").build())
+                .addStatement("super($L)", MESSAGE_FIELD_NAME)
+                .addStatement("this.$L = $L", STATUS_CODE_FIELD_SPEC.name, STATUS_CODE_FIELD_SPEC.name)
+                .addStatement("this.$L = $L", BODY_FIELD_SPEC.name, BODY_FIELD_SPEC.name)
+                .addStatement("this.$L = new $T<>()", HEADERS_FIELD_SPEC.name, HashMap.class)
+                .addCode("rawResponse.headers().forEach(header -> {\n")
+                .addCode("    String key = header.component1();\n")
+                .addCode("    String value = header.component2();\n")
+                .addCode(
+                        "    this.$L.computeIfAbsent(key, _str -> new $T<>()).add(value);\n",
+                        HEADERS_FIELD_SPEC.name,
+                        ArrayList.class)
+                .addCode("});\n")
                 .build();
     }
 }

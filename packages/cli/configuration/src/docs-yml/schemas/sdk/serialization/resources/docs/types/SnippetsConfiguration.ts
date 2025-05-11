@@ -16,6 +16,7 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     go: SnippetLanguageConfiguration.optional(),
     java: SnippetLanguageConfiguration.optional(),
     ruby: SnippetLanguageConfiguration.optional(),
+    csharp: SnippetLanguageConfiguration.optional(),
 });
 
 export declare namespace SnippetsConfiguration {
@@ -25,5 +26,6 @@ export declare namespace SnippetsConfiguration {
         go?: SnippetLanguageConfiguration.Raw | null;
         java?: SnippetLanguageConfiguration.Raw | null;
         ruby?: SnippetLanguageConfiguration.Raw | null;
+        csharp?: SnippetLanguageConfiguration.Raw | null;
     }
 }

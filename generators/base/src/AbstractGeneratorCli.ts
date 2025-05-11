@@ -3,20 +3,31 @@ import { readFile } from "fs/promises";
 
 import {
     AbstractGeneratorContext,
+    AbstractGeneratorNotificationService,
     FernGeneratorExec,
     GeneratorExecParsing,
-    GeneratorNotificationService
+    GeneratorNotificationService,
+    NopGeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+
+export declare namespace AbstractGeneratorCli {
+    interface Options {
+        /* Whether to disable notifications */
+        disableNotifications?: boolean;
+    }
+}
 
 export abstract class AbstractGeneratorCli<
     CustomConfig,
     IntermediateRepresentation,
     GeneratorContext extends AbstractGeneratorContext
 > {
-    public async run(): Promise<void> {
+    public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {
         const config = await getGeneratorConfig();
-        const generatorNotificationService = new GeneratorNotificationService(config.environment);
+        const generatorNotificationService = options.disableNotifications
+            ? new NopGeneratorNotificationService()
+            : new GeneratorNotificationService(config.environment);
         try {
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -85,7 +96,7 @@ export abstract class AbstractGeneratorCli<
         ir: IntermediateRepresentation;
         customConfig: CustomConfig;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
-        generatorNotificationService: GeneratorNotificationService;
+        generatorNotificationService: AbstractGeneratorNotificationService;
     }): GeneratorContext;
 
     /**

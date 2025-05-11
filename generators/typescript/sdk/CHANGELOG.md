@@ -5,15 +5,108 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.5] - 2025-05-03
+
+- Fix: Fixed an issue with ts-morph where creating an ifStatement with empty conditions array caused errors in multipart form data handling.
+
+## [0.51.4] - 2025-04-22
+
+- Fix: Fix issue where the _runtime.ts_ file was missing when other files were trying to import it.
+
+## [0.51.3] - 2025-04-21
+
+- Fix: Fix minor type issue for polyfilling Headers in Node 16 and below.
+
+## [0.51.2] - 2025-04-21
+
+- Fix: When uploading files, extract the filename from the `path` property if present on the given object.
+  This will extract the filename for `fs.createReadStream()` for example.
+
+## [0.51.1] - 2025-04-21
+
+- Fix: Fallback to a custom `Headers` class implementation if the native `Headers` class is not available.
+  Versions of Node 16 and below do not support the native `Headers` class, so this fallback is necessary to ensure compatibility. 
+
+## [0.51.0] - 2025-04-14
+
+- Feat: Add `rawResponse` property to JavaScript errors. 
+
+  ```ts
+  try {
+    const fooBar = await client.foo.bar("id", options);
+  } catch (e) {
+    if (error instanceof FooError) {
+      console.log(error.rawResponse);
+    } else {
+      // ...
+    }
+  }
+  ```
+
+## [0.50.1] - 2025-04-08
+
+- Feat: Add `"packageManager": "yarn@1.22.22"` to _package.json_.
+
+## [0.50.0] - 2025-04-07
+
+- Feat: All endpoint functions now return an `HttpResponsePromise<T>` instead of a `Promise<T>`.
+  Using `await`, `.then()`, `.catch()`, and `.finally()` on these promises behave the same as before,
+  but you can call `.withRawResponse()` to get a promise that includes the parsed response and the raw response.
+  The raw response let's you retrieve the response headers, status code, etc.
+
+  ```ts
+  const fooBar = await client.foo.bar("id", options);
+  const { data: alsoFooBar, rawResponse } = await client.foo.bar("id", options).withRawResponse();
+  const {
+      headers,
+      status,
+      url,
+      ...
+  } = rawResponse;
+  ```
+
+
+## [0.49.7] - 2025-03-27
+
+- Fix: Significantly improve performance of SDK generation when the `useLegacyExports` config is `false`.
+  For a large spec like Square, the generation went from 10+ minutes to almost 1 minute.
+
+## [0.49.6] - 2025-03-27
+
+- Feat: Support arbitrary websocket headers during connect handshake.
+
+## [0.49.5] - 2025-03-27
+
+- Feat: Improvements to Websocket code generation quality.
+
+## [0.49.4] - 2025-03-19
+
+- Fix: Increase the timeout used in the generated `webpack.test.ts` file.
+
+## [0.49.3] - 2025-03-19
+
+- Fix: Increase the timeout used in the generated `webpack.test.ts` file.
+
+## [0.49.2] - 2025-03-18
+
+- Fix: Fix issue where IdempotentRequestOptions is not generated in the client namespace.
+
+## [0.49.1] - 2025-03-10
+
+- Fix: This PR includes several fixes to the generated `Socket.ts` file when websocket client code generation is enabled.
+
+## [0.49.0] - 2025-03-06
+
+- Feat: This PR enables the Typescript generator to produce Websocket SDK endpoints. This can be enabled by adding the option `shouldGenerateWebsocketClients: true` to the Typescript generator config.
 
 ## [0.48.7] - 2025-01-28
 
-- Fix: Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair, 
+- Fix: Form data encoding now correctly handles array and object values by encoding each property value as a separate key-value pair,
   rather than trying to encode the entire object as a single value. This ensures proper handling of complex data structures in multipart form requests.
 
 ## [0.48.6] - 2025-01-28
 
-- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and 
+- Fix: Support form-encoded form data parameters by using `qs` to properly encode array and
   object values with the `repeat` array format.
 
 ## [0.48.5] - 2025-01-28

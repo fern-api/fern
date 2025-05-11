@@ -4,57 +4,30 @@
 package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
-import com.seed.singleUrlEnvironmentDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
-import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultApiException;
-import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultException;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class DummyClient {
     protected final ClientOptions clientOptions;
 
+    private final RawDummyClient rawClient;
+
     public DummyClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawDummyClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawDummyClient withRawResponse() {
+        return this.rawClient;
     }
 
     public String getDummy() {
-        return getDummy(null);
+        return this.rawClient.getDummy().body();
     }
 
     public String getDummy(RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("dummy")
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedSingleUrlEnvironmentDefaultApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedSingleUrlEnvironmentDefaultException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getDummy(requestOptions).body();
     }
 }

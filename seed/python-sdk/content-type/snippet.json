@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_service.patch"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedContentTypes\nclient = SeedContentTypes(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.patch(application='application', require_auth=True, )\n",
+                "async_client": "from seed import AsyncSeedContentTypes\nimport asyncio\nclient = AsyncSeedContentTypes(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.service.patch(application='application', require_auth=True, )\nasyncio.run(main())",
+                "type": "python"
+            }
+        }
+    ]
+}

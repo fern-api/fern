@@ -5,7 +5,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointSnippetsGenerator } from "../endpoint/snippets/EndpointSnippetsGenerator";
 
 interface EndpointWithFilepath {
     endpoint: HttpEndpoint;
@@ -201,8 +200,7 @@ try {
     }
 
     private getEndpointSnippetString(endpoint: FernGeneratorExec.Endpoint): string {
-        // TODO: Update this to csharp when available.
-        if (endpoint.snippet.type !== "typescript") {
+        if (endpoint.snippet.type !== "csharp") {
             throw new Error(`Internal error; expected csharp snippet but got: ${endpoint.snippet.type}`);
         }
         return endpoint.snippet.client;

@@ -50,6 +50,10 @@ types:
   WithJsonExample:
     properties:
       jsonExample: unknown
+  
+  WithContentType: 
+    properties: 
+      contentType: optional<string>
 
   # ids
 

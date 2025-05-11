@@ -6,6 +6,4 @@ from ..types.object_with_optional_field import ObjectWithOptionalField
 
 class ObjectWithOptionalFieldError(FernHTTPException):
     def __init__(self, error: ObjectWithOptionalField):
-        super().__init__(
-            status_code=400, name="ObjectWithOptionalFieldError", content=error
-        )
+        super().__init__(status_code=400, name="ObjectWithOptionalFieldError", content=error)

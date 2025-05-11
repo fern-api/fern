@@ -7,4 +7,5 @@ import * as FernDefinition from "../../../index";
 export type SpecSchema =
     | FernDefinition.OpenApiSpecSchema
     | FernDefinition.AsyncApiSpecSchema
-    | FernDefinition.ProtobufSpecSchema;
+    | FernDefinition.ProtobufSpecSchema
+    | FernDefinition.OpenRpcSpecSchema;

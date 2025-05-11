@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedMixedFileDirectory.Core;
 using SeedMixedFileDirectory.User.Events;
@@ -11,7 +9,7 @@ namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 public class GetMetadataTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -38,12 +36,11 @@ public class GetMetadataTest : BaseMockServerTest
             );
 
         var response = await Client.User.Events.Metadata.GetMetadataAsync(
-            new GetEventMetadataRequest { Id = "id" },
-            RequestOptions
+            new GetEventMetadataRequest { Id = "id" }
         );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        Assert.That(
+            response,
+            Is.EqualTo(JsonUtils.Deserialize<Metadata>(mockResponse)).UsingDefaults()
+        );
     }
 }

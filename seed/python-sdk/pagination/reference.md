@@ -14,23 +14,10 @@
 
 ```python
 from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.complex_.search(
-    pagination=StartingAfterPaging(
-        per_page=1,
-        starting_after="starting_after",
-    ),
-    query=SingleFilterSearchRequest(
-        field="field",
-        operator="=",
-        value="value",
-    ),
-)
+from seed.complex_ import StartingAfterPaging
+from seed.complex_ import SingleFilterSearchRequest
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.complex_.search(pagination=StartingAfterPaging(per_page=1, starting_after='starting_after', ), query=SingleFilterSearchRequest(field='field', operator="=", value='value', ), )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -94,17 +81,8 @@ for page in response.iter_pages():
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_cursor_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_cursor_pagination(page=1, per_page=1, order="asc", starting_after='starting_after', )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -186,14 +164,8 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_mixed_type_cursor_pagination(
-    cursor="cursor",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_mixed_type_cursor_pagination(cursor='cursor', )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -249,16 +221,8 @@ for page in response.iter_pages():
 ```python
 from seed import SeedPagination
 from seed.users import WithCursor
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="cursor",
-    ),
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_body_cursor_pagination(pagination=WithCursor(cursor='cursor', ), )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -283,7 +247,6 @@ for page in response.iter_pages():
 
 The object that contains the cursor used for pagination
 in order to fetch the next page of results.
-
     
 </dd>
 </dl>
@@ -317,17 +280,8 @@ in order to fetch the next page of results.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_offset_pagination(
-    page=1,
-    per_page=1,
-    order="asc",
-    starting_after="starting_after",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_offset_pagination(page=1, per_page=1, order="asc", starting_after='starting_after', )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -409,17 +363,8 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_double_offset_pagination(
-    page=1.1,
-    per_page=1.1,
-    order="asc",
-    starting_after="starting_after",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_double_offset_pagination(page=1.1, per_page=1.1, order="asc", starting_after='starting_after', )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -502,16 +447,8 @@ the next page of results.
 ```python
 from seed import SeedPagination
 from seed.users import WithPage
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_body_offset_pagination(
-    pagination=WithPage(
-        page=1,
-    ),
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_body_offset_pagination(pagination=WithPage(page=1, ), )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -536,7 +473,6 @@ for page in response.iter_pages():
 
 The object that contains the offset used for pagination
 in order to fetch the next page of results.
-
     
 </dd>
 </dl>
@@ -570,16 +506,8 @@ in order to fetch the next page of results.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_offset_step_pagination(
-    page=1,
-    limit=1,
-    order="asc",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_offset_step_pagination(page=1, limit=1, order="asc", )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -654,16 +582,8 @@ paginated endpoint.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_offset_pagination_has_next_page(
-    page=1,
-    limit=1,
-    order="asc",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_offset_pagination_has_next_page(page=1, limit=1, order="asc", )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -737,19 +657,10 @@ paginated endpoint.
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_extended_results(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-)
+import uuid
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_extended_results(cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -803,19 +714,10 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_extended_results_and_optional_data(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-)
+import uuid
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_extended_results_and_optional_data(cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -870,14 +772,8 @@ for page in response.iter_pages():
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_usernames(
-    starting_after="starting_after",
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_usernames(starting_after='starting_after', )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -935,14 +831,8 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_global_config(
-    offset=1,
-)
+client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+response = client.users.list_with_global_config(offset=1, )
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page

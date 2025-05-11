@@ -5,6 +5,7 @@ package com.seed.basicAuthEnvironmentVariables.resources.errors.errors;
 
 import com.seed.basicAuthEnvironmentVariables.core.SeedBasicAuthEnvironmentVariablesApiException;
 import com.seed.basicAuthEnvironmentVariables.resources.errors.types.UnauthorizedRequestErrorBody;
+import okhttp3.Response;
 
 public final class UnauthorizedRequest extends SeedBasicAuthEnvironmentVariablesApiException {
     /**
@@ -14,6 +15,11 @@ public final class UnauthorizedRequest extends SeedBasicAuthEnvironmentVariables
 
     public UnauthorizedRequest(UnauthorizedRequestErrorBody body) {
         super("UnauthorizedRequest", 401, body);
+        this.body = body;
+    }
+
+    public UnauthorizedRequest(UnauthorizedRequestErrorBody body, Response rawResponse) {
+        super("UnauthorizedRequest", 401, body, rawResponse);
         this.body = body;
     }
 

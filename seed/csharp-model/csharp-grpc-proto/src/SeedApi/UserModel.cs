@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoUserV1 = User.V1;
@@ -21,9 +22,29 @@ public record UserModel
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new UserModel type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UserModel FromProto(ProtoUserV1.UserModel value)
     {
-        return JsonUtils.Serialize(this);
+        return new UserModel
+        {
+            Username = value.Username,
+            Email = value.Email,
+            Age = value.Age,
+            Weight = value.Weight,
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
+        };
     }
 
     /// <summary>
@@ -55,18 +76,9 @@ public record UserModel
         return result;
     }
 
-    /// <summary>
-    /// Returns a new UserModel type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static UserModel FromProto(ProtoUserV1.UserModel value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new UserModel
-        {
-            Username = value.Username,
-            Email = value.Email,
-            Age = value.Age,
-            Weight = value.Weight,
-            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

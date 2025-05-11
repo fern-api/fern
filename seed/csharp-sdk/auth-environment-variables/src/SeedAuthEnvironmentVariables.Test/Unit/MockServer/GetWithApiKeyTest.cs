@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedAuthEnvironmentVariables.Core;
 
@@ -10,7 +8,7 @@ namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 public class GetWithApiKeyTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             "string"
@@ -25,10 +23,7 @@ public class GetWithApiKeyTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Service.GetWithApiKeyAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Service.GetWithApiKeyAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 }

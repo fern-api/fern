@@ -12,13 +12,13 @@ describe("CodeBlock", () => {
         it("returns an empty string for an empty code block", async () => {
             const codeBlock = python.codeBlock("");
             codeBlock.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("returns a single line of code", async () => {
             const codeBlock = python.codeBlock('print("Hello, World!")');
             codeBlock.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("returns multiple lines of code", async () => {
@@ -29,7 +29,7 @@ def greet(name):
 print(greet("Alice"))\
 `);
             codeBlock.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
 
         it("preserves indentation", async () => {
@@ -40,7 +40,7 @@ if True:
         print("Nested indentation")\
 `);
             codeBlock.write(writer);
-            expect(await writer.toStringFormatted()).toMatchSnapshot();
+            expect(writer.toString()).toMatchSnapshot();
         });
     });
 });

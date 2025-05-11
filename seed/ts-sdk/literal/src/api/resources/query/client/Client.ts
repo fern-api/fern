@@ -54,10 +54,17 @@ export class Query {
      *         query: "What is the weather today"
      *     })
      */
-    public async send(
+    public send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions,
-    ): Promise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
+    }
+
+    private async __send(
+        request: SeedLiteral.SendLiteralsInQueryRequest,
+        requestOptions?: Query.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
         const {
             prompt,
             optionalPrompt,
@@ -129,18 +136,22 @@ export class Query {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.SendResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -149,12 +160,14 @@ export class Query {
                 throw new errors.SeedLiteralError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
             case "unknown":
                 throw new errors.SeedLiteralError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

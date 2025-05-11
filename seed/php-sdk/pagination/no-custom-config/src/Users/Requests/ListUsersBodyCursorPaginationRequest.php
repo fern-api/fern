@@ -12,7 +12,6 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
      * The object that contains the cursor used for pagination
      * in order to fetch the next page of results.
      *
-     *
      * @var ?WithCursor $pagination
      */
     #[JsonProperty('pagination')]

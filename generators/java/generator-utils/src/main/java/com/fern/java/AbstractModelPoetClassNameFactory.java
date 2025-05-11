@@ -20,6 +20,7 @@ import com.fern.ir.model.commons.FernFilepath;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,7 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
                         .map(Name::getCamelCase)
                         .map(SafeAndUnsafeString::getSafeName)
                         .map(String::toLowerCase)
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
                         .collect(Collectors.toList()));
                 break;
             case NESTED:
@@ -65,6 +67,7 @@ public abstract class AbstractModelPoetClassNameFactory extends AbstractPoetClas
                         .map(Name::getSnakeCase)
                         .map(SafeAndUnsafeString::getSafeName)
                         .flatMap(snakeCase -> splitOnNonAlphaNumericChar(snakeCase).stream())
+                        .map(KeyWordUtils::getKeyWordCompatibleName)
                         .collect(Collectors.toList()));
         }
         return String.join(".", tokens);

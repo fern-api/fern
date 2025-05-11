@@ -104,16 +104,7 @@ export class ExampleEndpointFactory {
         if (responseSchemaIdResponse != null && responseSchemaIdResponse.type === "present") {
             const required = this.isSchemaRequired(responseSchemaIdResponse.schema);
 
-            if (endpoint.response?.type === "json" && endpoint.response.statusCode === 204) {
-                responseExamples.push([
-                    undefined,
-                    EndpointResponseExample.withoutStreaming(
-                        FullExample.object({
-                            properties: {}
-                        })
-                    )
-                ]);
-            } else if (responseSchemaIdResponse.examples.length === 0) {
+            if (responseSchemaIdResponse.examples.length === 0) {
                 const example = this.exampleTypeFactory.buildExample({
                     skipReadonly: false,
                     schema: responseSchemaIdResponse.schema,
@@ -607,6 +598,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     nameOverride: undefined,
                     availability: undefined,
                     readonly: undefined,
+                    writeonly: undefined,
                     inline: undefined
                 };
             })
@@ -618,6 +610,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         nameOverride: undefined,
         generatedName: "",
         title: undefined,
+        namespace: undefined,
         groupName: undefined,
         additionalProperties: false,
         availability: undefined,

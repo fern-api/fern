@@ -21,14 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedStreaming
-
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.dummy.generate(
-    stream=False,
-    num_events=5,
-)
+client = SeedStreaming(base_url="https://yourhost.com/path/to/api", )
+client.dummy.generate(stream=False, num_events=5, )
 ```
 
 ## Async Client
@@ -36,22 +30,11 @@ client.dummy.generate(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedStreaming
-
-client = AsyncSeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedStreaming(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.dummy.generate(
-        stream=False,
-        num_events=5,
-    )
-
-
+    await client.dummy.generate(stream=False, num_events=5, )
 asyncio.run(main())
 ```
 
@@ -62,7 +45,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.dummy.generate()
 except ApiError as e:
@@ -71,6 +53,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedStreaming
+client = SeedStreaming(..., )
+response = client.dummy.with_raw_response.generate()
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -99,12 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedStreaming
-
-client = SeedStreaming(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedStreaming(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.dummy.generate(request_options={
@@ -116,18 +106,11 @@ client.dummy.generate(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedStreaming
 
-client = SeedStreaming(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedStreaming
+import httpx
+client = SeedStreaming(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

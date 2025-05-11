@@ -54,6 +54,9 @@ export async function parseDocsConfiguration({
         css: rawCssConfig,
         js: rawJsConfig,
 
+        aiChat,
+        aiSearch,
+
         experimental
     } = rawDocsConfiguration;
 
@@ -175,6 +178,8 @@ export async function parseDocsConfiguration({
         /* scripts */
         css,
         js,
+
+        aiChatConfig: aiSearch ?? aiChat,
 
         experimental
     };
@@ -866,7 +871,8 @@ function convertSnippetsConfiguration({
         typescript: rawConfig.typescript,
         go: rawConfig.go,
         java: rawConfig.java,
-        ruby: rawConfig.ruby
+        ruby: rawConfig.ruby,
+        csharp: rawConfig.csharp
     };
 }
 

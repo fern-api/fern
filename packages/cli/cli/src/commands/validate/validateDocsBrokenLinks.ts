@@ -33,7 +33,14 @@ export async function validateDocsBrokenLinks({
         const violations = await validateDocsWorkspace(docsWorkspace, context, fernWorkspaces, ossWorkspaces, true);
 
         const elapsedMillis = performance.now() - startTime;
-        logViolations({ violations, context, logWarnings: true, logSummary: true, elapsedMillis });
+        logViolations({
+            violations,
+            context,
+            logWarnings: true,
+            logSummary: true,
+            logBreadcrumbs: false,
+            elapsedMillis
+        });
 
         if (violations.length > 0 && errorOnBrokenLinks) {
             context.failAndThrow();

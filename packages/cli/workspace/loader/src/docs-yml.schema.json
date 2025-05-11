@@ -139,6 +139,26 @@
         }
       ]
     },
+    "ai-chat": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ai-search": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AIChatConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -1064,6 +1084,16 @@
           ]
         },
         "ruby": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "csharp": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
@@ -2443,6 +2473,16 @@
               "type": "null"
             }
           ]
+        },
+        "openapi-parser-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2465,6 +2505,40 @@
         "ts",
         "js"
       ]
+    },
+    "docs.AIChatModel": {
+      "type": "string",
+      "enum": [
+        "claude-3.5",
+        "claude-3.7",
+        "command-a"
+      ]
+    },
+    "docs.AIChatConfig": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AIChatModel"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "system-prompt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     },
     "docs.TwitterCardSetting": {
       "type": "string",

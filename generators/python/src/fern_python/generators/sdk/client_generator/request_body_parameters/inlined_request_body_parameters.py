@@ -1,12 +1,5 @@
 from typing import Dict, List, Optional
 
-import fern.ir.resources as ir_types
-
-from fern_python.codegen import AST
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
-    NamedFunctionParameter,
-)
-
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
@@ -14,6 +7,12 @@ from .flattened_request_body_parameter_utils import (
     are_any_properties_optional_in_inlined_request,
     get_json_body_for_inlined_request,
 )
+from fern_python.codegen import AST
+from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
+    NamedFunctionParameter,
+)
+
+import fern.ir.resources as ir_types
 
 
 class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -68,7 +67,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         parameters: List[AST.NamedFunctionParameter] = self.get_parameters()
         parameter_names = [parameter.name for parameter in parameters]
         for property in self._get_all_properties_for_inlined_request_body():
-            if not self._get_property_name(property) in parameter_names:
+            if self._get_property_name(property) not in parameter_names:
                 type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                     property.value_type,
                     in_endpoint=True,

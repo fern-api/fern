@@ -26,6 +26,11 @@ export declare namespace Payment {
         /** Additional headers to include in the request. */
         headers?: Record<string, string>;
     }
+
+    export interface IdempotentRequestOptions extends RequestOptions {
+        idempotencyKey: string;
+        idempotencyExpiration: number;
+    }
 }
 
 export class Payment {
@@ -41,10 +46,17 @@ export class Payment {
      *         currency: "USD"
      *     })
      */
-    public async create(
+    public create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions,
-    ): Promise<string> {
+    ): core.HttpResponsePromise<string> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedIdempotencyHeaders.CreatePaymentRequest,
+        requestOptions?: Payment.IdempotentRequestOptions,
+    ): Promise<core.WithRawResponse<string>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -72,18 +84,22 @@ export class Payment {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.payment.create.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.payment.create.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -92,12 +108,14 @@ export class Payment {
                 throw new errors.SeedIdempotencyHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError("Timeout exceeded when calling POST /payment.");
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -109,7 +127,14 @@ export class Payment {
      * @example
      *     await client.payment.delete("paymentId")
      */
-    public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
+    public delete(paymentId: string, requestOptions?: Payment.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(paymentId, requestOptions));
+    }
+
+    private async __delete(
+        paymentId: string,
+        requestOptions?: Payment.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -134,13 +159,14 @@ export class Payment {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedIdempotencyHeadersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -149,6 +175,7 @@ export class Payment {
                 throw new errors.SeedIdempotencyHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError(
@@ -157,6 +184,7 @@ export class Payment {
             case "unknown":
                 throw new errors.SeedIdempotencyHeadersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

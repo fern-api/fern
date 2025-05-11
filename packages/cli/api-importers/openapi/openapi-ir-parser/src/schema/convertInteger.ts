@@ -17,6 +17,7 @@ export function convertInteger({
     availability,
     wrapAsNullable,
     example,
+    namespace,
     groupName
 }: {
     nameOverride: string | undefined;
@@ -33,6 +34,7 @@ export function convertInteger({
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     example: number | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (format === "int64") {
@@ -47,6 +49,7 @@ export function convertInteger({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "uint32") {
@@ -61,6 +64,7 @@ export function convertInteger({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "uint64") {
@@ -75,6 +79,7 @@ export function convertInteger({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     }
@@ -94,6 +99,7 @@ export function convertInteger({
         wrapAsNullable,
         description,
         availability,
+        namespace,
         groupName
     });
 }

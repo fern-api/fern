@@ -1,3 +1,6 @@
+import { copyFile } from "fs/promises";
+import tmp from "tmp-promise";
+
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
 import {
     AbsoluteFilePath,
@@ -44,16 +47,22 @@ describe("fern init", () => {
     }, 60_000);
 
     it("init openapi", async () => {
-        const openApiPath = join(
+        // Create a temporary directory for the OpenAPI test
+        const tmpDir = await tmp.dir();
+        const sourceOpenAPI = join(
             FIXTURES_DIR,
             RelativeFilePath.of("openapi"),
             RelativeFilePath.of("petstore-openapi.yml")
         );
+        const targetOpenAPI = join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of("petstore-openapi.yml"));
+        await copyFile(sourceOpenAPI, targetOpenAPI);
+
         const pathOfDirectory = await init({
             additionalArgs: [
-                { name: "--openapi", value: openApiPath },
+                { name: "--openapi", value: "petstore-openapi.yml" },
                 { name: "--log-level", value: "debug" }
-            ]
+            ],
+            directory: AbsoluteFilePath.of(tmpDir.path)
         });
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);

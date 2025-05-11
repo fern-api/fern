@@ -1,0 +1,21 @@
+types:
+  User:
+    properties:
+      id: 
+        type: string
+        access: read-only
+      name: string
+      email: string
+      password:
+        type: string
+        access: write-only
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    createUser:
+      method: POST
+      path: ""
+      request: User
+      response: User

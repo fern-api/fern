@@ -1,9 +1,10 @@
 import { OAuthRefreshEndpoint } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { RefreshTokenEndpoint } from "./convertOAuthUtils";
 
@@ -22,9 +23,22 @@ export function convertOAuthRefreshEndpoint({
         endpoint: refreshTokenEndpoint.endpoint,
         file
     });
+
+    let expiresIn = undefined;
+    try {
+        expiresIn =
+            refreshTokenEndpoint.responseProperties.expires_in != null
+                ? propertyResolver.resolveResponsePropertyOrThrow({
+                      file,
+                      endpoint: refreshTokenEndpoint.endpoint,
+                      propertyComponents: refreshTokenEndpoint.responseProperties.expires_in
+                  })
+                : undefined;
+    } catch {}
+
     return {
         endpointReference: {
-            endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+            endpointId: generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
             serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath),
             subpackageId: !isRootFernFilepath({ fernFilePath: resolvedEndpoint.file.fernFilepath })
                 ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
@@ -43,14 +57,7 @@ export function convertOAuthRefreshEndpoint({
                 endpoint: refreshTokenEndpoint.endpoint,
                 propertyComponents: refreshTokenEndpoint.responseProperties.access_token
             }),
-            expiresIn:
-                refreshTokenEndpoint.responseProperties.expires_in != null
-                    ? propertyResolver.resolveResponsePropertyOrThrow({
-                          file,
-                          endpoint: refreshTokenEndpoint.endpoint,
-                          propertyComponents: refreshTokenEndpoint.responseProperties.expires_in
-                      })
-                    : undefined,
+            expiresIn,
             refreshToken:
                 refreshTokenEndpoint.responseProperties.refresh_token != null
                     ? propertyResolver.resolveResponsePropertyOrThrow({

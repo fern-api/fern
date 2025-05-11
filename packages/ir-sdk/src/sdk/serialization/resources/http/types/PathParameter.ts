@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 import { PathParameterLocation } from "./PathParameterLocation";
 import { VariableId } from "../../variables/types/VariableId";
+import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const PathParameter: core.serialization.ObjectSchema<serializers.PathParameter.Raw, FernIr.PathParameter> =
@@ -17,6 +18,7 @@ export const PathParameter: core.serialization.ObjectSchema<serializers.PathPara
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             location: PathParameterLocation,
             variable: VariableId.optional(),
+            v2Examples: V2SchemaExamples.optional(),
         })
         .extend(WithDocs);
 
@@ -26,5 +28,6 @@ export declare namespace PathParameter {
         valueType: serializers.TypeReference.Raw;
         location: PathParameterLocation.Raw;
         variable?: VariableId.Raw | null;
+        v2Examples?: V2SchemaExamples.Raw | null;
     }
 }

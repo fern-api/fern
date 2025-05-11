@@ -114,7 +114,8 @@ export function visitTypeDeclaration({
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,
-                                validation: noop
+                                validation: noop,
+                                access: noop
                             });
                         }
                     }

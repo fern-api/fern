@@ -4,6 +4,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
+import { MANIFEST as RuntimeManifest } from "../runtime/RuntimeImpl";
 import { FormDataUtils } from "./FormDataUtils";
 
 export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
@@ -24,7 +25,8 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
             dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("form-data-encoder", "^4.0.2");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
-        }
+        },
+        dependsOn: [RuntimeManifest]
     };
 
     public readonly newFormData = this.withExportedName(

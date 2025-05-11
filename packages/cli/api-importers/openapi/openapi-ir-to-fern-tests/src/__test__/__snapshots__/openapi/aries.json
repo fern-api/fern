@@ -576,6 +576,7 @@
                 "type": "optional<string>",
               },
               "rfc23_state": {
+                "access": "read-only",
                 "docs": "State per RFC 23",
                 "type": "optional<string>",
               },
@@ -699,6 +700,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1343,6 +1345,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1388,6 +1391,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1769,6 +1773,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -1790,6 +1795,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3694,6 +3700,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3743,6 +3750,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3962,6 +3970,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -3985,6 +3994,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4072,6 +4082,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4370,6 +4381,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4394,6 +4406,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4445,6 +4458,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -4465,6 +4479,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6322,6 +6337,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6355,6 +6371,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6405,6 +6422,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6441,6 +6459,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6566,6 +6585,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6827,6 +6847,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -6878,6 +6899,7 @@
                 "type": "optional<string>",
               },
               "@type": {
+                "access": "read-only",
                 "docs": "Message type",
                 "type": "optional<string>",
               },
@@ -7601,6 +7623,7 @@ types:
       rfc23_state:
         type: optional<string>
         docs: State per RFC 23
+        access: read-only
       routing_state:
         type: optional<ConnRecordRoutingState>
         docs: Routing state of connection
@@ -7639,6 +7662,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       did:
         type: optional<string>
         docs: DID for connection invitation
@@ -8025,6 +8049,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -8050,6 +8075,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -8309,6 +8335,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       protocols:
         docs: List of protocol descriptors
         type: list<ProtocolDescriptor>
@@ -8322,6 +8349,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       disclosures:
         docs: List of protocol or goal_code descriptors
         type: list<map<string, unknown>>
@@ -9457,6 +9485,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       filter:
         type: optional<KeylistQueryFilter>
         docs: Query dictionary object
@@ -9482,6 +9511,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       updates:
         type: optional<list<KeylistUpdateRule>>
         docs: List of update rules
@@ -9625,6 +9655,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       mediator_terms:
         type: optional<list<string>>
       recipient_terms:
@@ -9639,6 +9670,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       endpoint:
         type: optional<string>
         docs: endpoint on which messages destined for the recipient are received.
@@ -9694,6 +9726,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       description:
         type: optional<string>
         docs: Introductory text for the menu
@@ -9892,6 +9925,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -9907,6 +9941,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -9937,6 +9972,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       queries:
         type: optional<list<QueryItem>>
     source:
@@ -9949,6 +9985,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
       query: string
@@ -11038,6 +11075,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11060,6 +11098,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11092,6 +11131,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11113,6 +11153,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11182,6 +11223,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11348,6 +11390,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment
@@ -11374,6 +11417,7 @@ types:
       '@type':
         type: optional<string>
         docs: Message type
+        access: read-only
       comment:
         type: optional<string>
         docs: Human-readable comment

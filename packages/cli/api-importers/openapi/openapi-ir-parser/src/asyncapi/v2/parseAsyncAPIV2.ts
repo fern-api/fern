@@ -9,6 +9,7 @@ import {
     SchemaWithExample,
     Source,
     WebsocketChannel,
+    WebsocketMessageSchema,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
@@ -21,7 +22,7 @@ import { UndiscriminatedOneOfPrefix, convertUndiscriminatedOneOf } from "../../s
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { getSchemas } from "../../utils/getSchemas";
-import { ExampleWebsocketSessionFactory } from "../ExampleWebsocketSessionFactory";
+import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "../fernExtensions";
 import { WebsocketSessionExampleExtension, getFernExamples } from "../getFernExamples";
 import { ParseAsyncAPIOptions } from "../options";
@@ -92,6 +93,7 @@ export function parseAsyncAPIV2({
                                   availability: undefined,
                                   generatedName: "",
                                   title: undefined,
+                                  namespace: undefined,
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),
@@ -115,7 +117,7 @@ export function parseAsyncAPIV2({
                             resolvedHeader,
                             !required.includes(name),
                             context,
-                            breadcrumbs,
+                            [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
@@ -140,7 +142,7 @@ export function parseAsyncAPIV2({
                             resolvedQueryParameter,
                             !required.includes(name),
                             context,
-                            breadcrumbs,
+                            [...breadcrumbs, name],
                             source,
                             context.namespace
                         ),
@@ -211,25 +213,52 @@ export function parseAsyncAPIV2({
                         headers,
                         queryParameters
                     },
-                    publish: publishSchema,
-                    subscribe: subscribeSchema,
                     source,
                     namespace: context.namespace
                 });
             } else {
+                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                if (publishSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "publish",
+                        payload: publishSchema
+                    });
+                }
+                if (subscribeSchema != null) {
+                    exampleBuilderInputs.push({
+                        type: "subscribe",
+                        payload: subscribeSchema
+                    });
+                }
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
                     handshake: {
                         headers,
                         queryParameters
                     },
-                    publish: publishSchema,
-                    subscribe: subscribeSchema
+                    messages: exampleBuilderInputs
                 });
                 if (autogenExample != null) {
                     examples.push(autogenExample);
                 }
             }
 
+            const address = getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_CHANNEL_ADDRESS);
+            const path = address != null ? address : transformToValidPath(channelPath);
+            const messages: WebsocketMessageSchema[] = [];
+            if (publishSchema != null) {
+                messages.push({
+                    origin: "client",
+                    name: "publish",
+                    body: convertSchemaWithExampleToSchema(publishSchema)
+                });
+            }
+            if (subscribeSchema != null) {
+                messages.push({
+                    origin: "server",
+                    name: "subscribe",
+                    body: convertSchemaWithExampleToSchema(subscribeSchema)
+                });
+            }
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -254,18 +283,16 @@ export function parseAsyncAPIV2({
                         };
                     })
                 },
-                groupName: [
+                groupName: context.resolveGroupName([
                     getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ],
-                publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
-                subscribe:
-                    subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
+                ]),
+                messages,
                 servers: (channel.servers?.map((serverId) => servers[serverId]) ?? Object.values(servers)).filter(
                     (server): server is ServerContext => server != null
                 ),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                path: transformToValidPath(channelPath),
-                description: undefined,
+                path,
+                description: channel.description,
                 examples,
                 source
             };
@@ -359,11 +386,7 @@ function convertMessageToSchema({
         if (isReferenceObject(message.payload)) {
             resolvedSchema = context.resolveSchemaReference(message.payload);
         }
-        if (!isReferenceObject(resolvedSchema)) {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        } else {
-            return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
-        }
+        return convertSchema(resolvedSchema, false, context, [channelPath, action], source, context.namespace);
     }
     return undefined;
 }

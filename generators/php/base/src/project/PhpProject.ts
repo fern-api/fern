@@ -27,6 +27,7 @@ const COMPOSER_JSON_FILENAME = "composer.json";
  */
 export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>> {
     private name: string;
+    private packagePathPrefix: string;
     private sourceFiles: PhpFile[] = [];
     private testFiles: PhpFile[] = [];
     private coreFiles: File[] = [];
@@ -43,7 +44,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
     }) {
         super(context);
         this.name = name;
-        this.filepaths = new PhpProjectFilepaths(this.name);
+        this.packagePathPrefix = PhpProject.getPackagePathPrefix(this.context.customConfig.packagePath);
+        this.filepaths = new PhpProjectFilepaths(this.packagePathPrefix, this.name);
     }
 
     public addSourceFiles(file: PhpFile): void {
@@ -69,6 +71,19 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.createComposerJson();
     }
 
+    private static getPackagePathPrefix(packagePath?: string): string {
+        if (!packagePath) {
+            return "";
+        }
+        if (!packagePath.endsWith("/")) {
+            packagePath += "/";
+        }
+        if (!packagePath.startsWith("/")) {
+            packagePath = "/" + packagePath;
+        }
+        return packagePath;
+    }
+
     private async createComposerJson(): Promise<void> {
         const composerJson = new ComposerJson({
             projectName: this.name,
@@ -79,7 +94,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
                 custom: () => CUSTOM_LICENSE_NAME,
                 _other: () => undefined
             }),
-            context: this.context
+            context: this.context,
+            packagePathPrefix: this.packagePathPrefix
         });
         const composerJsonContent = composerJson.toString();
         await writeFile(
@@ -222,18 +238,21 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
 }
 
 class PhpProjectFilepaths {
-    constructor(private readonly name: string) {}
+    constructor(
+        private readonly packagePathPrefix: string,
+        private readonly name: string
+    ) {}
 
     public getProjectDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(this.name);
+        return RelativeFilePath.of(this.packagePathPrefix + this.name);
     }
 
     public getSourceDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(SRC_DIRECTORY_NAME);
+        return RelativeFilePath.of(SRC_DIRECTORY_NAME + this.packagePathPrefix);
     }
 
     public getTestsDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(TESTS_DIRECTORY_NAME);
+        return RelativeFilePath.of(TESTS_DIRECTORY_NAME + this.packagePathPrefix);
     }
 
     public getCoreDirectory(): RelativeFilePath {
@@ -254,6 +273,7 @@ declare namespace ComposerJson {
         context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>;
         projectName: string;
         license?: string;
+        packagePathPrefix: string;
     }
 }
 
@@ -261,11 +281,13 @@ class ComposerJson {
     private context: AbstractPhpGeneratorContext<BasePhpCustomConfigSchema>;
     private projectName: string;
     private license: string | undefined;
+    private packagePathPrefix: string;
 
-    public constructor({ context, projectName, license }: ComposerJson.Args) {
+    public constructor({ context, projectName, license, packagePathPrefix }: ComposerJson.Args) {
         this.context = context;
         this.projectName = projectName;
         this.license = license;
+        this.packagePathPrefix = this.context.customConfig.packagePath ? packagePathPrefix : "/";
     }
 
     private build(): Record<string, unknown> {
@@ -287,12 +309,12 @@ class ComposerJson {
             },
             autoload: {
                 "psr-4": {
-                    [`${this.projectName}\\`]: `${SRC_DIRECTORY_NAME}/`
+                    [`${this.projectName}\\`]: `${SRC_DIRECTORY_NAME}` + this.packagePathPrefix
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    [`${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}/`
+                    [`${this.projectName}\\Tests\\`]: `${TESTS_DIRECTORY_NAME}` + this.packagePathPrefix
                 }
             },
             scripts: {

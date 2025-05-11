@@ -35,9 +35,15 @@ export class Service {
      * @example
      *     await client.folderA.service.getDirectThread()
      */
-    public async getDirectThread(
+    public getDirectThread(
         requestOptions?: Service.RequestOptions,
-    ): Promise<SeedCrossPackageTypeNames.folderA.Response> {
+    ): core.HttpResponsePromise<SeedCrossPackageTypeNames.folderA.Response> {
+        return core.HttpResponsePromise.fromPromise(this.__getDirectThread(requestOptions));
+    }
+
+    private async __getDirectThread(
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.folderA.Response>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -59,18 +65,22 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.folderA.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.folderA.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedCrossPackageTypeNamesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -79,12 +89,14 @@ export class Service {
                 throw new errors.SeedCrossPackageTypeNamesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedCrossPackageTypeNamesError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

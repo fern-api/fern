@@ -14,11 +14,7 @@
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.v_2.test()
 
 ```
@@ -61,21 +57,11 @@ client.v_2.test()
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
 from seed.submission import TestSubmissionStatus
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.update_test_submission_status(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    request=TestSubmissionStatus(),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.update_test_submission_status(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=TestSubmissionStatus(), )
 
 ```
 </dd>
@@ -132,25 +118,12 @@ client.admin.update_test_submission_status(
 <dd>
 
 ```python
-import datetime
-import uuid
-
 from seed import SeedTrace
+import uuid
+import datetime
 from seed.submission import TestSubmissionUpdateInfo_Running
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.send_test_submission_update(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    update_time=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.send_test_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"), )
 
 ```
 </dd>
@@ -215,21 +188,11 @@ client.admin.send_test_submission_update(
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
 from seed.submission import WorkspaceSubmissionStatus
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.update_workspace_submission_status(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    request=WorkspaceSubmissionStatus(),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.update_workspace_submission_status(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=WorkspaceSubmissionStatus(), )
 
 ```
 </dd>
@@ -286,27 +249,12 @@ client.admin.update_workspace_submission_status(
 <dd>
 
 ```python
-import datetime
-import uuid
-
 from seed import SeedTrace
+import uuid
+import datetime
 from seed.submission import WorkspaceSubmissionUpdateInfo_Running
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.send_workspace_submission_update(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    update_time=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    update_info=WorkspaceSubmissionUpdateInfo_Running(
-        value="QUEUEING_SUBMISSION"
-    ),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.send_workspace_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), update_info=WorkspaceSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"), )
 
 ```
 </dd>
@@ -371,116 +319,20 @@ client.admin.send_workspace_submission_update(
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
-from seed.commons import (
-    DebugVariableValue_IntegerValue,
-    VariableValue_IntegerValue,
-)
-from seed.submission import (
-    ActualResult_Value,
-    ExpressionLocation,
-    Scope,
-    StackFrame,
-    StackInformation,
-    TestCaseResult,
-    TestCaseResultWithStdout,
-    TraceResponse,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.store_traced_test_case(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    test_case_id="testCaseId",
-    result=TestCaseResultWithStdout(
-        result=TestCaseResult(
-            expected_result=VariableValue_IntegerValue(value=1),
-            actual_result=ActualResult_Value(
-                value=VariableValue_IntegerValue(value=1)
-            ),
-            passed=True,
-        ),
-        stdout="stdout",
-    ),
-    trace_responses=[
-        TraceResponse(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-        TraceResponse(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-    ],
-)
+import uuid
+from seed.submission import TestCaseResultWithStdout
+from seed.submission import TestCaseResult
+from seed.commons import VariableValue_IntegerValue
+from seed.submission import ActualResult_Value
+from seed.submission import TraceResponse
+from seed.commons import DebugVariableValue_IntegerValue
+from seed.submission import ExpressionLocation
+from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.store_traced_test_case(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), test_case_id='testCaseId', result=TestCaseResultWithStdout(result=TestCaseResult(expected_result=VariableValue_IntegerValue(value=1), actual_result=ActualResult_Value(value=VariableValue_IntegerValue(value=1)), passed=True, ), stdout='stdout', ), trace_responses=[TraceResponse(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', ), TraceResponse(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', )], )
 
 ```
 </dd>
@@ -553,109 +405,17 @@ client.admin.store_traced_test_case(
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
+from seed.submission import TraceResponseV2
+from seed.submission import TracedFile
 from seed.commons import DebugVariableValue_IntegerValue
-from seed.submission import (
-    ExpressionLocation,
-    Scope,
-    StackFrame,
-    StackInformation,
-    TracedFile,
-    TraceResponseV2,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.store_traced_test_case_v_2(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    test_case_id="testCaseId",
-    request=[
-        TraceResponseV2(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            file=TracedFile(
-                filename="filename",
-                directory="directory",
-            ),
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-        TraceResponseV2(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            file=TracedFile(
-                filename="filename",
-                directory="directory",
-            ),
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-    ],
-)
+from seed.submission import ExpressionLocation
+from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.store_traced_test_case_v_2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), test_case_id='testCaseId', request=[TraceResponseV2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, file=TracedFile(filename='filename', directory='directory', ), return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', ), TraceResponseV2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, file=TracedFile(filename='filename', directory='directory', ), return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', )], )
 
 ```
 </dd>
@@ -720,115 +480,19 @@ client.admin.store_traced_test_case_v_2(
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
+from seed.submission import WorkspaceRunDetails
+from seed.submission import ExceptionV2_Generic
+from seed.submission import ExceptionInfo
+from seed.submission import TraceResponse
 from seed.commons import DebugVariableValue_IntegerValue
-from seed.submission import (
-    ExceptionInfo,
-    ExceptionV2_Generic,
-    ExpressionLocation,
-    Scope,
-    StackFrame,
-    StackInformation,
-    TraceResponse,
-    WorkspaceRunDetails,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.store_traced_workspace(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    workspace_run_details=WorkspaceRunDetails(
-        exception_v_2=ExceptionV2_Generic(
-            exception_type="exceptionType",
-            exception_message="exceptionMessage",
-            exception_stacktrace="exceptionStacktrace",
-        ),
-        exception=ExceptionInfo(
-            exception_type="exceptionType",
-            exception_message="exceptionMessage",
-            exception_stacktrace="exceptionStacktrace",
-        ),
-        stdout="stdout",
-    ),
-    trace_responses=[
-        TraceResponse(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-        TraceResponse(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-    ],
-)
+from seed.submission import ExpressionLocation
+from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.store_traced_workspace(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), workspace_run_details=WorkspaceRunDetails(exception_v_2=ExceptionV2_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), exception=ExceptionInfo(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), stdout='stdout', ), trace_responses=[TraceResponse(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', ), TraceResponse(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', )], )
 
 ```
 </dd>
@@ -893,108 +557,17 @@ client.admin.store_traced_workspace(
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedTrace
+import uuid
+from seed.submission import TraceResponseV2
+from seed.submission import TracedFile
 from seed.commons import DebugVariableValue_IntegerValue
-from seed.submission import (
-    ExpressionLocation,
-    Scope,
-    StackFrame,
-    StackInformation,
-    TracedFile,
-    TraceResponseV2,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.admin.store_traced_workspace_v_2(
-    submission_id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    request=[
-        TraceResponseV2(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            file=TracedFile(
-                filename="filename",
-                directory="directory",
-            ),
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-        TraceResponseV2(
-            submission_id=uuid.UUID(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            line_number=1,
-            file=TracedFile(
-                filename="filename",
-                directory="directory",
-            ),
-            return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(
-                start=1,
-                offset=1,
-            ),
-            stack=StackInformation(
-                num_stack_frames=1,
-                top_stack_frame=StackFrame(
-                    method_name="methodName",
-                    line_number=1,
-                    scopes=[
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                        Scope(
-                            variables={
-                                "variables": DebugVariableValue_IntegerValue(
-                                    value=1
-                                )
-                            },
-                        ),
-                    ],
-                ),
-            ),
-            stdout="stdout",
-        ),
-    ],
-)
+from seed.submission import ExpressionLocation
+from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.admin.store_traced_workspace_v_2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), request=[TraceResponseV2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, file=TracedFile(filename='filename', directory='directory', ), return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', ), TraceResponseV2(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), line_number=1, file=TracedFile(filename='filename', directory='directory', ), return_value=DebugVariableValue_IntegerValue(value=1), expression_location=ExpressionLocation(start=1, offset=1, ), stack=StackInformation(num_stack_frames=1, top_stack_frame=StackFrame(method_name='methodName', line_number=1, scopes=[Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, ), Scope(variables={'variables': DebugVariableValue_IntegerValue(value=1)}, )], ), ), stdout='stdout', )], )
 
 ```
 </dd>
@@ -1053,11 +626,7 @@ client.admin.store_traced_workspace_v_2(
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.homepage.get_homepage_problems()
 
 ```
@@ -1100,14 +669,8 @@ client.homepage.get_homepage_problems()
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.homepage.set_homepage_problems(
-    request=["string", "string"],
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.homepage.set_homepage_problems(request=['string', 'string'], )
 
 ```
 </dd>
@@ -1158,14 +721,8 @@ client.homepage.set_homepage_problems(
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.migration.get_attempted_migrations(
-    admin_key_header="admin-key-header",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.migration.get_attempted_migrations(admin_key_header='admin-key-header', )
 
 ```
 </dd>
@@ -1229,25 +786,10 @@ Create a new playlist
 <dd>
 
 ```python
-import datetime
-
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.playlist.create_playlist(
-    service_param=1,
-    datetime=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    optional_datetime=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    name="name",
-    problems=["problems", "problems"],
-)
+import datetime
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.playlist.create_playlist(service_param=1, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), optional_datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), name='name', problems=['problems', 'problems'], )
 
 ```
 </dd>
@@ -1343,19 +885,8 @@ Returns the user's playlists
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.playlist.get_playlists(
-    service_param=1,
-    limit=1,
-    other_field="otherField",
-    multi_line_docs="multiLineDocs",
-    optional_multiple_field="optionalMultipleField",
-    multiple_field="multipleField",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.playlist.get_playlists(service_param=1, limit=1, other_field='otherField', multi_line_docs='multiLineDocs', optional_multiple_field='optionalMultipleField', multiple_field='multipleField', )
 
 ```
 </dd>
@@ -1462,15 +993,8 @@ Returns a playlist
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.playlist.get_playlist(
-    service_param=1,
-    playlist_id="playlistId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.playlist.get_playlist(service_param=1, playlist_id='playlistId', )
 
 ```
 </dd>
@@ -1543,19 +1067,8 @@ Updates a playlist
 ```python
 from seed import SeedTrace
 from seed.playlist import UpdatePlaylistRequest
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.playlist.update_playlist(
-    service_param=1,
-    playlist_id="playlistId",
-    request=UpdatePlaylistRequest(
-        name="name",
-        problems=["problems", "problems"],
-    ),
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.playlist.update_playlist(service_param=1, playlist_id='playlistId', request=UpdatePlaylistRequest(name='name', problems=['problems', 'problems'], ), )
 
 ```
 </dd>
@@ -1635,15 +1148,8 @@ Deletes a playlist
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.playlist.delete_playlist(
-    service_param=1,
-    playlist_id="playlist_id",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.playlist.delete_playlist(service_param=1, playlist_id='playlist_id', )
 
 ```
 </dd>
@@ -1716,85 +1222,17 @@ Creates a problem
 
 ```python
 from seed import SeedTrace
-from seed.commons import (
-    FileInfo,
-    TestCase,
-    TestCaseWithExpectedResult,
-    VariableType,
-    VariableValue_IntegerValue,
-)
-from seed.problem import (
-    ProblemDescription,
-    ProblemDescriptionBoard_Html,
-    ProblemFiles,
-    VariableTypeAndName,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.problem.create_problem(
-    problem_name="problemName",
-    problem_description=ProblemDescription(
-        boards=[
-            ProblemDescriptionBoard_Html(value="boards"),
-            ProblemDescriptionBoard_Html(value="boards"),
-        ],
-    ),
-    files={
-        "JAVA": ProblemFiles(
-            solution_file=FileInfo(
-                filename="filename",
-                contents="contents",
-            ),
-            read_only_files=[
-                FileInfo(
-                    filename="filename",
-                    contents="contents",
-                ),
-                FileInfo(
-                    filename="filename",
-                    contents="contents",
-                ),
-            ],
-        )
-    },
-    input_params=[
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-    ],
-    output_type=VariableType(),
-    testcases=[
-        TestCaseWithExpectedResult(
-            test_case=TestCase(
-                id="id",
-                params=[
-                    VariableValue_IntegerValue(value=1),
-                    VariableValue_IntegerValue(value=1),
-                ],
-            ),
-            expected_result=VariableValue_IntegerValue(value=1),
-        ),
-        TestCaseWithExpectedResult(
-            test_case=TestCase(
-                id="id",
-                params=[
-                    VariableValue_IntegerValue(value=1),
-                    VariableValue_IntegerValue(value=1),
-                ],
-            ),
-            expected_result=VariableValue_IntegerValue(value=1),
-        ),
-    ],
-    method_name="methodName",
-)
+from seed.problem import ProblemDescription
+from seed.problem import ProblemDescriptionBoard_Html
+from seed.problem import ProblemFiles
+from seed.commons import FileInfo
+from seed.problem import VariableTypeAndName
+from seed.commons import VariableType
+from seed.commons import TestCaseWithExpectedResult
+from seed.commons import TestCase
+from seed.commons import VariableValue_IntegerValue
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.problem.create_problem(problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
 
 ```
 </dd>
@@ -1906,86 +1344,17 @@ Updates a problem
 
 ```python
 from seed import SeedTrace
-from seed.commons import (
-    FileInfo,
-    TestCase,
-    TestCaseWithExpectedResult,
-    VariableType,
-    VariableValue_IntegerValue,
-)
-from seed.problem import (
-    ProblemDescription,
-    ProblemDescriptionBoard_Html,
-    ProblemFiles,
-    VariableTypeAndName,
-)
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.problem.update_problem(
-    problem_id="problemId",
-    problem_name="problemName",
-    problem_description=ProblemDescription(
-        boards=[
-            ProblemDescriptionBoard_Html(value="boards"),
-            ProblemDescriptionBoard_Html(value="boards"),
-        ],
-    ),
-    files={
-        "JAVA": ProblemFiles(
-            solution_file=FileInfo(
-                filename="filename",
-                contents="contents",
-            ),
-            read_only_files=[
-                FileInfo(
-                    filename="filename",
-                    contents="contents",
-                ),
-                FileInfo(
-                    filename="filename",
-                    contents="contents",
-                ),
-            ],
-        )
-    },
-    input_params=[
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-    ],
-    output_type=VariableType(),
-    testcases=[
-        TestCaseWithExpectedResult(
-            test_case=TestCase(
-                id="id",
-                params=[
-                    VariableValue_IntegerValue(value=1),
-                    VariableValue_IntegerValue(value=1),
-                ],
-            ),
-            expected_result=VariableValue_IntegerValue(value=1),
-        ),
-        TestCaseWithExpectedResult(
-            test_case=TestCase(
-                id="id",
-                params=[
-                    VariableValue_IntegerValue(value=1),
-                    VariableValue_IntegerValue(value=1),
-                ],
-            ),
-            expected_result=VariableValue_IntegerValue(value=1),
-        ),
-    ],
-    method_name="methodName",
-)
+from seed.problem import ProblemDescription
+from seed.problem import ProblemDescriptionBoard_Html
+from seed.problem import ProblemFiles
+from seed.commons import FileInfo
+from seed.problem import VariableTypeAndName
+from seed.commons import VariableType
+from seed.commons import TestCaseWithExpectedResult
+from seed.commons import TestCase
+from seed.commons import VariableValue_IntegerValue
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.problem.update_problem(problem_id='problemId', problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
 
 ```
 </dd>
@@ -2105,14 +1474,8 @@ Soft deletes a problem
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.problem.delete_problem(
-    problem_id="problemId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.problem.delete_problem(problem_id='problemId', )
 
 ```
 </dd>
@@ -2176,27 +1539,10 @@ Returns default starter files for problem
 
 ```python
 from seed import SeedTrace
-from seed.commons import VariableType
 from seed.problem import VariableTypeAndName
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.problem.get_default_starter_files(
-    input_params=[
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-        VariableTypeAndName(
-            variable_type=VariableType(),
-            name="name",
-        ),
-    ],
-    output_type=VariableType(),
-    method_name="methodName",
-)
+from seed.commons import VariableType
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.problem.get_default_starter_files(input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), method_name='methodName', )
 
 ```
 </dd>
@@ -2236,7 +1582,6 @@ The method name cannot include the following characters:
   - Less Than `<``
   - Equals `=`
   - Period `.`
-
     
 </dd>
 </dl>
@@ -2285,14 +1630,8 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.submission.create_execution_session(
-    language="JAVA",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.submission.create_execution_session(language="JAVA", )
 
 ```
 </dd>
@@ -2356,14 +1695,8 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.submission.get_execution_session(
-    session_id="sessionId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.submission.get_execution_session(session_id='sessionId', )
 
 ```
 </dd>
@@ -2427,14 +1760,8 @@ Stops execution session.
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.submission.stop_execution_session(
-    session_id="sessionId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.submission.stop_execution_session(session_id='sessionId', )
 
 ```
 </dd>
@@ -2484,11 +1811,7 @@ client.submission.stop_execution_session(
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.submission.get_execution_sessions_state()
 
 ```
@@ -2532,15 +1855,8 @@ client.submission.get_execution_sessions_state()
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.sysprop.set_num_warm_instances(
-    language="JAVA",
-    num_warm_instances=1,
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1, )
 
 ```
 </dd>
@@ -2598,11 +1914,7 @@ client.sysprop.set_num_warm_instances(
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.sysprop.get_num_warm_instances()
 
 ```
@@ -2660,11 +1972,7 @@ Returns lightweight versions of all problems
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.v_2.problem.get_lightweight_problems()
 
 ```
@@ -2721,11 +2029,7 @@ Returns latest versions of all problems
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.v_2.problem.get_problems()
 
 ```
@@ -2782,14 +2086,8 @@ Returns latest version of a problem
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.v_2.problem.get_latest_problem(
-    problem_id="problemId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.v_2.problem.get_latest_problem(problem_id='problemId', )
 
 ```
 </dd>
@@ -2853,15 +2151,8 @@ Returns requested version of a problem
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.v_2.problem.get_problem_version(
-    problem_id="problemId",
-    problem_version=1,
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.v_2.problem.get_problem_version(problem_id='problemId', problem_version=1, )
 
 ```
 </dd>
@@ -2934,11 +2225,7 @@ Returns lightweight versions of all problems
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.v_2.v_3.problem.get_lightweight_problems()
 
 ```
@@ -2995,11 +2282,7 @@ Returns latest versions of all problems
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
 client.v_2.v_3.problem.get_problems()
 
 ```
@@ -3056,14 +2339,8 @@ Returns latest version of a problem
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.v_2.v_3.problem.get_latest_problem(
-    problem_id="problemId",
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.v_2.v_3.problem.get_latest_problem(problem_id='problemId', )
 
 ```
 </dd>
@@ -3127,15 +2404,8 @@ Returns requested version of a problem
 
 ```python
 from seed import SeedTrace
-
-client = SeedTrace(
-    x_random_header="YOUR_X_RANDOM_HEADER",
-    token="YOUR_TOKEN",
-)
-client.v_2.v_3.problem.get_problem_version(
-    problem_id="problemId",
-    problem_version=1,
-)
+client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+client.v_2.v_3.problem.get_problem_version(problem_id='problemId', problem_version=1, )
 
 ```
 </dd>

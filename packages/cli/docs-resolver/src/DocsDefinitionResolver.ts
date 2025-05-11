@@ -28,7 +28,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
-import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ApiReferenceNodeConverterLatest } from "./ApiReferenceNodeConverterLatest";
@@ -92,7 +92,7 @@ export class DocsDefinitionResolver {
         private domain: string,
         private docsWorkspace: DocsWorkspace,
         private ossWorkspaces: OSSWorkspace[],
-        private fernWorkspaces: FernWorkspace[],
+        private apiWorkspaces: AbstractAPIWorkspace<unknown>[],
         private taskContext: TaskContext,
         // Optional
         private editThisPage?: docsYml.RawSchemas.EditThisPageConfig,
@@ -122,14 +122,20 @@ export class DocsDefinitionResolver {
         });
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        if (this.docsWorkspace.config.navigation != null) {
+        if (this.docsWorkspace.config.navigation != null && !this.parsedDocsConfig.experimental?.openapiParserV3) {
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
                     apiSection: async ({ workspace }) => {
                         const fernWorkspace = await workspace.toFernWorkspace(
                             { context: this.taskContext },
-                            { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
+                            {
+                                enableUniqueErrorsPerEndpoint: true,
+                                detectGlobalHeaders: false,
+                                objectQueryParameters: true,
+                                respectReadonlySchemas: true,
+                                respectNullableSchemas: true
+                            }
                         );
                         fernWorkspace.changelog?.files.forEach((file) => {
                             const relativePath = relative(this.docsWorkspace.absoluteFilePath, file.absoluteFilepath);
@@ -137,7 +143,7 @@ export class DocsDefinitionResolver {
                         });
                     }
                 },
-                fernWorkspaces: this.fernWorkspaces,
+                apiWorkspaces: this.apiWorkspaces,
                 context: this.taskContext
             });
         }
@@ -364,6 +370,13 @@ export class DocsDefinitionResolver {
     private async convertDocsConfiguration(): Promise<DocsV1Write.DocsConfig> {
         const root = await this.toRootNode();
         const config: DocsV1Write.DocsConfig = {
+            aiChatConfig:
+                this.parsedDocsConfig.aiChatConfig != null
+                    ? {
+                          model: this.parsedDocsConfig.aiChatConfig.model,
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt
+                      }
+                    : undefined,
             hideNavLinks: undefined,
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
@@ -440,18 +453,23 @@ export class DocsDefinitionResolver {
         return config;
     }
 
-    private getFernWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): FernWorkspace {
-        if (this.fernWorkspaces.length === 1 && this.fernWorkspaces[0] != null) {
-            return this.fernWorkspaces[0];
+    private getFernWorkspaceForApiSection(
+        apiSection: docsYml.DocsNavigationItem.ApiSection
+    ): AbstractAPIWorkspace<unknown> {
+        if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
+            return this.apiWorkspaces[0];
         } else if (apiSection.apiName != null) {
-            const fernWorkspace = this.fernWorkspaces.find((workspace) => {
+            const apiWorkspace = this.apiWorkspaces.find((workspace) => {
                 return workspace.workspaceName === apiSection.apiName;
             });
-            if (fernWorkspace != null) {
-                return fernWorkspace;
+            if (apiWorkspace != null) {
+                return apiWorkspace;
             }
         }
-        throw new Error("Failed to load API Definition referenced in docs");
+        const errorMessage = apiSection.apiName
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
+            : "Failed to load API Definition referenced in docs";
+        throw new Error(errorMessage);
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
@@ -463,7 +481,10 @@ export class DocsDefinitionResolver {
                 return ossWorkspace;
             }
         }
-        throw new Error("Failed to load API Definition referenced in docs");
+        const errorMessage = apiSection.apiName
+            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs`
+            : "Failed to load API Definition referenced in docs";
+        throw new Error(errorMessage);
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -592,7 +613,7 @@ export class DocsDefinitionResolver {
             // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
             default: isDefault,
             availability: version.availability != null ? convertAvailability(version.availability) : undefined,
-            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, parentSlug) : undefined,
+            landingPage: version.landingPage ? this.toLandingPageNode(version.landingPage, slug) : undefined,
             hidden: undefined,
             authed: undefined,
             viewers: version.viewers,
@@ -650,20 +671,22 @@ export class DocsDefinitionResolver {
     private async toNavigationChild(
         prefix: string,
         item: docsYml.DocsNavigationItem,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.NavigationChild> {
         return visitDiscriminatedUnion(item)._visit<Promise<FernNavigation.V1.NavigationChild>>({
-            page: async (value) => this.toPageNode(value, parentSlug),
-            apiSection: async (value) => this.toApiSectionNode(value, parentSlug),
-            section: async (value) => this.toSectionNode(prefix, value, parentSlug),
+            page: async (value) => this.toPageNode(value, parentSlug, hideChildren),
+            apiSection: async (value) => this.toApiSectionNode(value, parentSlug, hideChildren),
+            section: async (value) => this.toSectionNode(prefix, value, parentSlug, hideChildren),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
         });
     }
 
     private async toApiSectionNode(
         item: docsYml.DocsNavigationItem.ApiSection,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ApiReferenceNode> {
         if (item.openrpc != null) {
             const absoluteFilepathToOpenrpc = resolve(
@@ -678,20 +701,23 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenRPC document");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 apiName: item.apiName,
                 snippetsConfig: convertDocsSnippetsConfigToFdr(item.snippetsConfiguration)
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 undefined,
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
-                this.#idgen
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
@@ -704,39 +730,64 @@ export class DocsDefinitionResolver {
                 throw new Error("Failed to generate API Definition from OpenAPI workspace");
             }
             await this.registerApiV2({
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api: api as any,
                 snippetsConfig,
                 apiName: item.apiName
             });
             const node = new ApiReferenceNodeConverterLatest(
                 item,
-                api,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                api as any,
                 parentSlug,
                 workspace,
                 this.docsWorkspace,
                 this.taskContext,
                 this.markdownFilesToFullSlugs,
                 this.markdownFilesToNoIndex,
-                this.#idgen
+                this.#idgen,
+                hideChildren
             );
             return node.get();
         }
 
-        const workspace = this.getFernWorkspaceForApiSection(item);
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
-        const ir = generateIntermediateRepresentation({
-            workspace,
-            audiences: item.audiences,
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false,
-            exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
-            readme: undefined,
-            version: undefined,
-            packageName: undefined,
-            context: this.taskContext,
-            sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-        });
+
+        let ir: IntermediateRepresentation;
+        let workspace: FernWorkspace | undefined = undefined;
+        if (this.parsedDocsConfig.experimental?.openapiParserV3) {
+            const workspace = this.getOpenApiWorkspaceForApiSection(item);
+            ir = await workspace.getIntermediateRepresentation({
+                context: this.taskContext,
+                audiences: item.audiences,
+                enableUniqueErrorsPerEndpoint: true
+            });
+        } else {
+            workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    respectReadonlySchemas: true,
+                    respectNullableSchemas: true
+                }
+            );
+            ir = generateIntermediateRepresentation({
+                workspace,
+                audiences: item.audiences,
+                generationLanguage: undefined,
+                keywords: undefined,
+                smartCasing: false,
+                exampleGeneration: { disabled: false, skipAutogenerationIfManualExamplesExist: true },
+                readme: undefined,
+                version: undefined,
+                packageName: undefined,
+                context: this.taskContext,
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+            });
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -749,19 +800,21 @@ export class DocsDefinitionResolver {
             item,
             api,
             parentSlug,
-            workspace,
             this.docsWorkspace,
             this.taskContext,
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
-            this.#idgen
+            this.#idgen,
+            workspace,
+            hideChildren
         );
         return node.get();
     }
 
     private async toChangelogNode(
         item: docsYml.DocsNavigationItem.Changelog,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.ChangelogNode> {
         const changelogResolver = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
@@ -776,7 +829,7 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             viewers: item.viewers,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             slug: item.slug
         });
     }
@@ -793,7 +846,8 @@ export class DocsDefinitionResolver {
 
     private async toPageNode(
         item: docsYml.DocsNavigationItem.Page,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
@@ -807,7 +861,7 @@ export class DocsDefinitionResolver {
             slug: slug.get(),
             title: item.title,
             icon: item.icon,
-            hidden: item.hidden,
+            hidden: hideChildren || item.hidden,
             viewers: item.viewers,
             orphaned: item.orphaned,
             pageId,
@@ -820,7 +874,8 @@ export class DocsDefinitionResolver {
     private async toSectionNode(
         prefix: string,
         item: docsYml.DocsNavigationItem.Section,
-        parentSlug: FernNavigation.V1.SlugGenerator
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        hideChildren?: boolean
     ): Promise<FernNavigation.V1.SectionNode> {
         const relativeFilePath = this.toRelativeFilepath(item.overviewAbsolutePath);
         const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
@@ -834,6 +889,7 @@ export class DocsDefinitionResolver {
         });
         const noindex =
             item.overviewAbsolutePath != null ? this.markdownFilesToNoIndex.get(item.overviewAbsolutePath) : undefined;
+        const hiddenSection = hideChildren || item.hidden;
         return {
             id,
             type: "section",
@@ -842,10 +898,12 @@ export class DocsDefinitionResolver {
             title: item.title,
             icon: item.icon,
             collapsed: item.collapsed,
-            hidden: item.hidden,
+            hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
-            children: await Promise.all(item.contents.map((child) => this.toNavigationChild(id, child, slug))),
+            children: await Promise.all(
+                item.contents.map((child) => this.toNavigationChild(id, child, slug, hiddenSection))
+            ),
             authed: undefined,
             pointsTo: undefined,
             noindex,

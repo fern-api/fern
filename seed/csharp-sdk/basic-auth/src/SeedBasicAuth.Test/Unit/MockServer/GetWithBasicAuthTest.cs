@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using global::System.Threading.Tasks;
 using NUnit.Framework;
 using SeedBasicAuth.Core;
 
@@ -10,7 +8,7 @@ namespace SeedBasicAuth.Test.Unit.MockServer;
 public class GetWithBasicAuthTest : BaseMockServerTest
 {
     [Test]
-    public async Task MockServerTest()
+    public async global::System.Threading.Tasks.Task MockServerTest()
     {
         const string mockResponse = """
             true
@@ -25,10 +23,7 @@ public class GetWithBasicAuthTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.BasicAuth.GetWithBasicAuthAsync(RequestOptions);
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.BasicAuth.GetWithBasicAuthAsync();
+        Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<bool>(mockResponse)));
     }
 }

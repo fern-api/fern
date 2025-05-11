@@ -21,13 +21,8 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedMultiUrlEnvironment
-
-client = SeedMultiUrlEnvironment(
-    token="YOUR_TOKEN",
-)
-client.ec_2.boot_instance(
-    size="size",
-)
+client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )
+client.ec_2.boot_instance(size='size', )
 ```
 
 ## Async Client
@@ -35,21 +30,11 @@ client.ec_2.boot_instance(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedMultiUrlEnvironment
-
-client = AsyncSeedMultiUrlEnvironment(
-    token="YOUR_TOKEN",
-)
-
-
+import asyncio
+client = AsyncSeedMultiUrlEnvironment(token="YOUR_TOKEN", )
 async def main() -> None:
-    await client.ec_2.boot_instance(
-        size="size",
-    )
-
-
+    await client.ec_2.boot_instance(size='size', )
 asyncio.run(main())
 ```
 
@@ -60,7 +45,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.ec_2.boot_instance(...)
 except ApiError as e:
@@ -69,6 +53,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedMultiUrlEnvironment
+client = SeedMultiUrlEnvironment(..., )
+response = client.ec_2.with_raw_response.boot_instance(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -97,12 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedMultiUrlEnvironment
-
-client = SeedMultiUrlEnvironment(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedMultiUrlEnvironment(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.ec_2.boot_instance(..., request_options={
@@ -114,18 +106,11 @@ client.ec_2.boot_instance(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedMultiUrlEnvironment
 
-client = SeedMultiUrlEnvironment(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedMultiUrlEnvironment
+import httpx
+client = SeedMultiUrlEnvironment(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

@@ -5,7 +5,7 @@
 from .circle import CircleParams
 from .object_with_defaults import ObjectWithDefaultsParams
 from .object_with_optional_field import ObjectWithOptionalFieldParams
-from .shape import ShapeParams, Shape_CircleParams, Shape_SquareParams
+from .shape import Shape_CircleParams, Shape_SquareParams, ShapeParams
 from .square import SquareParams
 from .undiscriminated_shape import UndiscriminatedShapeParams
 

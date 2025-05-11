@@ -1,0 +1,120 @@
+{
+  "types": {
+    "Metadata": {
+      "name": "Metadata",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "id",
+            "value": "MetadataValue"
+          }
+        }
+      }
+    },
+    "MetadataValue0": {
+      "name": "MetadataValue0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "double"
+          }
+        }
+      }
+    },
+    "MetadataValue1": {
+      "name": "MetadataValue1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "MetadataValue2": {
+      "name": "MetadataValue2",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "MetadataValue3": {
+      "name": "MetadataValue3",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "unknown"
+          }
+        }
+      }
+    },
+    "MetadataValue": {
+      "name": "MetadataValue",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MetadataValue0",
+            "type": {
+              "type": "id",
+              "value": "MetadataValue0"
+            }
+          },
+          {
+            "typeName": "MetadataValue1",
+            "type": {
+              "type": "id",
+              "value": "MetadataValue1"
+            }
+          },
+          {
+            "typeName": "MetadataValue2",
+            "type": {
+              "type": "id",
+              "value": "MetadataValue2"
+            }
+          },
+          {
+            "typeName": "MetadataValue3",
+            "type": {
+              "type": "id",
+              "value": "MetadataValue3"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "Metadata",
+      "MetadataValue"
+    ],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -10,6 +10,7 @@ export const CursorPaginationSchema: core.serialization.ObjectSchema<
     serializers.CursorPaginationSchema.Raw,
     FernDefinition.CursorPaginationSchema
 > = core.serialization.object({
+    type: core.serialization.stringLiteral("cursor").optional(),
     cursor: core.serialization.string(),
     next_cursor: core.serialization.string(),
     results: core.serialization.string(),
@@ -17,6 +18,7 @@ export const CursorPaginationSchema: core.serialization.ObjectSchema<
 
 export declare namespace CursorPaginationSchema {
     export interface Raw {
+        type?: "cursor" | null;
         cursor: string;
         next_cursor: string;
         results: string;

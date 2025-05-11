@@ -71,7 +71,7 @@ public final class Type {
 
   private final Name nineteen;
 
-  private final long twenty;
+  private final int twenty;
 
   private final long twentyone;
 
@@ -79,12 +79,16 @@ public final class Type {
 
   private final BigInteger twentythree;
 
+  private final Optional<OffsetDateTime> twentyfour;
+
+  private final Optional<String> twentyfive;
+
   private Type(int one, double two, String three, boolean four, long five, OffsetDateTime six,
       String seven, UUID eight, byte[] nine, List<Integer> ten, Set<Double> eleven,
       Map<String, Boolean> twelve, Optional<Long> thirteen, Object fourteen,
       List<List<Integer>> fifteen, List<Map<String, Integer>> sixteen,
-      List<Optional<UUID>> seventeen, Name nineteen, long twenty, long twentyone, float twentytwo,
-      BigInteger twentythree) {
+      List<Optional<UUID>> seventeen, Name nineteen, int twenty, long twentyone, float twentytwo,
+      BigInteger twentythree, Optional<OffsetDateTime> twentyfour, Optional<String> twentyfive) {
     this.one = one;
     this.two = two;
     this.three = three;
@@ -107,6 +111,8 @@ public final class Type {
     this.twentyone = twentyone;
     this.twentytwo = twentytwo;
     this.twentythree = twentythree;
+    this.twentyfour = twentyfour;
+    this.twentyfive = twentyfive;
   }
 
   @JsonProperty("one")
@@ -205,7 +211,7 @@ public final class Type {
   }
 
   @JsonProperty("twenty")
-  public long getTwenty() {
+  public int getTwenty() {
     return twenty;
   }
 
@@ -224,6 +230,16 @@ public final class Type {
     return twentythree;
   }
 
+  @JsonProperty("twentyfour")
+  public Optional<OffsetDateTime> getTwentyfour() {
+    return twentyfour;
+  }
+
+  @JsonProperty("twentyfive")
+  public Optional<String> getTwentyfive() {
+    return twentyfive;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -231,12 +247,12 @@ public final class Type {
   }
 
   private boolean equalTo(Type other) {
-    return one == other.one && two == other.two && three.equals(other.three) && four == other.four && five == other.five && six.equals(other.six) && seven.equals(other.seven) && eight.equals(other.eight) && nine.equals(other.nine) && ten.equals(other.ten) && eleven.equals(other.eleven) && twelve.equals(other.twelve) && thirteen.equals(other.thirteen) && fourteen.equals(other.fourteen) && fifteen.equals(other.fifteen) && sixteen.equals(other.sixteen) && seventeen.equals(other.seventeen) && nineteen.equals(other.nineteen) && twenty == other.twenty && twentyone == other.twentyone && twentytwo == other.twentytwo && twentythree.equals(other.twentythree);
+    return one == other.one && two == other.two && three.equals(other.three) && four == other.four && five == other.five && six.equals(other.six) && seven.equals(other.seven) && eight.equals(other.eight) && nine.equals(other.nine) && ten.equals(other.ten) && eleven.equals(other.eleven) && twelve.equals(other.twelve) && thirteen.equals(other.thirteen) && fourteen.equals(other.fourteen) && fifteen.equals(other.fifteen) && sixteen.equals(other.sixteen) && seventeen.equals(other.seventeen) && nineteen.equals(other.nineteen) && twenty == other.twenty && twentyone == other.twentyone && twentytwo == other.twentytwo && twentythree.equals(other.twentythree) && twentyfour.equals(other.twentyfour) && twentyfive.equals(other.twentyfive);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.one, this.two, this.three, this.four, this.five, this.six, this.seven, this.eight, this.nine, this.ten, this.eleven, this.twelve, this.thirteen, this.fourteen, this.fifteen, this.sixteen, this.seventeen, this.nineteen, this.twenty, this.twentyone, this.twentytwo, this.twentythree);
+    return Objects.hash(this.one, this.two, this.three, this.four, this.five, this.six, this.seven, this.eight, this.nine, this.ten, this.eleven, this.twelve, this.thirteen, this.fourteen, this.fifteen, this.sixteen, this.seventeen, this.nineteen, this.twenty, this.twentyone, this.twentytwo, this.twentythree, this.twentyfour, this.twentyfive);
   }
 
   @java.lang.Override
@@ -295,7 +311,7 @@ public final class Type {
   }
 
   public interface TwentyStage {
-    TwentyoneStage twenty(long twenty);
+    TwentyoneStage twenty(int twenty);
   }
 
   public interface TwentyoneStage {
@@ -352,6 +368,14 @@ public final class Type {
     _FinalStage addSeventeen(Optional<UUID> seventeen);
 
     _FinalStage addAllSeventeen(List<Optional<UUID>> seventeen);
+
+    _FinalStage twentyfour(Optional<OffsetDateTime> twentyfour);
+
+    _FinalStage twentyfour(OffsetDateTime twentyfour);
+
+    _FinalStage twentyfive(Optional<String> twentyfive);
+
+    _FinalStage twentyfive(String twentyfive);
   }
 
   @JsonIgnoreProperties(
@@ -380,13 +404,17 @@ public final class Type {
 
     private Name nineteen;
 
-    private long twenty;
+    private int twenty;
 
     private long twentyone;
 
     private float twentytwo;
 
     private BigInteger twentythree;
+
+    private Optional<String> twentyfive = Optional.empty();
+
+    private Optional<OffsetDateTime> twentyfour = Optional.empty();
 
     private List<Optional<UUID>> seventeen = new ArrayList<>();
 
@@ -429,6 +457,8 @@ public final class Type {
       twentyone(other.getTwentyone());
       twentytwo(other.getTwentytwo());
       twentythree(other.getTwentythree());
+      twentyfour(other.getTwentyfour());
+      twentyfive(other.getTwentyfive());
       return this;
     }
 
@@ -511,7 +541,7 @@ public final class Type {
 
     @java.lang.Override
     @JsonSetter("twenty")
-    public TwentyoneStage twenty(long twenty) {
+    public TwentyoneStage twenty(int twenty) {
       this.twenty = twenty;
       return this;
     }
@@ -534,6 +564,38 @@ public final class Type {
     @JsonSetter("twentythree")
     public _FinalStage twentythree(@NotNull BigInteger twentythree) {
       this.twentythree = Objects.requireNonNull(twentythree, "twentythree must not be null");
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage twentyfive(String twentyfive) {
+      this.twentyfive = Optional.ofNullable(twentyfive);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter(
+        value = "twentyfive",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage twentyfive(Optional<String> twentyfive) {
+      this.twentyfive = twentyfive;
+      return this;
+    }
+
+    @java.lang.Override
+    public _FinalStage twentyfour(OffsetDateTime twentyfour) {
+      this.twentyfour = Optional.ofNullable(twentyfour);
+      return this;
+    }
+
+    @java.lang.Override
+    @JsonSetter(
+        value = "twentyfour",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage twentyfour(Optional<OffsetDateTime> twentyfour) {
+      this.twentyfour = twentyfour;
       return this;
     }
 
@@ -693,7 +755,7 @@ public final class Type {
 
     @java.lang.Override
     public Type build() {
-      return new Type(one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, nineteen, twenty, twentyone, twentytwo, twentythree);
+      return new Type(one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, nineteen, twenty, twentyone, twentytwo, twentythree, twentyfour, twentyfive);
     }
   }
 }

@@ -42,10 +42,17 @@ export class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    public async getWithCustomHeader(
+    public getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
+    }
+
+    private async __getWithCustomHeader(
+        request: SeedExhaustive.ReqWithHeaders,
+        requestOptions?: ReqWithHeaders.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const {
             "X-TEST-SERVICE-HEADER": xTestServiceHeader,
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
@@ -80,13 +87,14 @@ export class ReqWithHeaders {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -95,6 +103,7 @@ export class ReqWithHeaders {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
@@ -103,6 +112,7 @@ export class ReqWithHeaders {
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

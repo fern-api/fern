@@ -13,12 +13,13 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.object.core.ObjectMappers;
+import com.seed.object.core.WrappedAlias;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
-public final class AliasProperty {
+public final class AliasProperty implements WrappedAlias {
     private final Value value;
 
     private AliasProperty(Value value) {

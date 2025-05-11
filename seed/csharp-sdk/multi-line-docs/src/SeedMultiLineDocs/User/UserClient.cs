@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
+using global::System.Threading.Tasks;
 using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
@@ -19,24 +19,22 @@ public partial class UserClient
     /// Retrieve a user.
     /// This endpoint is used to retrieve a user.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.GetUserAsync("userId");
-    /// </code>
-    /// </example>
-    public async Task GetUserAsync(
+    /// </code></example>
+    public async global::System.Threading.Tasks.Task GetUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
-                    Path = $"users/{JsonUtils.SerializeAsString(userId)}",
+                    Path = string.Format("users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Options = options,
                 },
                 cancellationToken
@@ -46,23 +44,23 @@ public partial class UserClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        throw new SeedMultiLineDocsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMultiLineDocsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
     /// <summary>
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.User.CreateUserAsync(new CreateUserRequest { Name = "name", Age = 1 });
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
         RequestOptions? options = null,
@@ -70,8 +68,8 @@ public partial class UserClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -82,9 +80,9 @@ public partial class UserClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<User>(responseBody)!;
@@ -95,10 +93,13 @@ public partial class UserClient
             }
         }
 
-        throw new SeedMultiLineDocsApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedMultiLineDocsApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

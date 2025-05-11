@@ -23,6 +23,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "The file to upload",
               "type": "file"
             },
             "description": "The file to upload",
@@ -33,8 +34,10 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "An optional file to upload",
               "type": "file"
             },
+            "description": "An optional file to upload",
             "exploded": false
           }
         ],
@@ -68,14 +71,77 @@
       }
     },
     {
-      "summary": "Upload a file",
+      "summary": "Upload a list of files",
       "audiences": [],
-      "operationId": "upload-file",
+      "operationId": "upload-list",
       "tags": [],
       "pathParameters": [],
       "queryParameters": [],
       "headers": [],
-      "generatedRequestName": "UploadFileRequest",
+      "generatedRequestName": "UploadListRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "list_file",
+            "schema": {
+              "isOptional": false,
+              "isArray": true,
+              "description": "A list of files to upload",
+              "type": "file"
+            },
+            "description": "A list of files to upload",
+            "exploded": false
+          },
+          {
+            "key": "maybe_list_file",
+            "schema": {
+              "isOptional": true,
+              "isArray": true,
+              "description": "An optional list of files to upload",
+              "type": "file"
+            },
+            "description": "An optional list of files to upload",
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/upload-list",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Upload a file with a content type",
+      "audiences": [],
+      "operationId": "upload-with-content-type",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadWithContentTypeRequest",
       "request": {
         "properties": [
           {
@@ -83,6 +149,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "The file to upload",
               "type": "file"
             },
             "description": "The file to upload",
@@ -94,27 +161,29 @@
             "schema": {
               "isOptional": true,
               "isArray": false,
+              "description": "An optional file to upload",
               "type": "file"
             },
+            "description": "An optional file to upload",
             "exploded": false
           },
           {
             "key": "metadata",
             "schema": {
               "value": {
-                "generatedName": "uploadFileRequestMetadata",
+                "generatedName": "uploadWithContentTypeRequestMetadata",
                 "value": {
-                  "generatedName": "UploadFileRequestMetadata",
+                  "generatedName": "UploadWithContentTypeRequestMetadata",
                   "description": "This is a metadata field",
                   "key": {
-                    "generatedName": "UploadFileRequestMetadataKey",
+                    "generatedName": "UploadWithContentTypeRequestMetadataKey",
                     "schema": {
                       "type": "string"
                     },
                     "groupName": []
                   },
                   "value": {
-                    "generatedName": "UploadFileRequestMetadataValue",
+                    "generatedName": "UploadWithContentTypeRequestMetadataValue",
                     "groupName": [],
                     "type": "unknown"
                   },
@@ -132,15 +201,15 @@
             "key": "data",
             "schema": {
               "value": {
-                "generatedName": "uploadFileRequestData",
+                "generatedName": "uploadWithContentTypeRequestData",
                 "value": {
                   "properties": [
                     {
                       "key": "datum",
                       "schema": {
-                        "generatedName": "uploadFileRequestDataDatum",
+                        "generatedName": "uploadWithContentTypeRequestDataDatum",
                         "value": {
-                          "generatedName": "UploadFileRequestDataDatum",
+                          "generatedName": "UploadWithContentTypeRequestDataDatum",
                           "schema": {
                             "type": "string"
                           },
@@ -152,10 +221,10 @@
                       },
                       "audiences": [],
                       "conflict": {},
-                      "generatedName": "uploadFileRequestDataDatum"
+                      "generatedName": "uploadWithContentTypeRequestDataDatum"
                     }
                   ],
-                  "generatedName": "UploadFileRequestData",
+                  "generatedName": "UploadWithContentTypeRequestData",
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "groupName": [],

@@ -28,12 +28,7 @@ GET request with basic auth scheme
 
 ```python
 from seed import SeedBasicAuth
-
-client = SeedBasicAuth(
-    username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
 client.basic_auth.get_with_basic_auth()
 
 ```
@@ -90,15 +85,9 @@ POST request with basic auth scheme
 
 ```python
 from seed import SeedBasicAuth
-
-client = SeedBasicAuth(
-    username="YOUR_USERNAME",
-    password="YOUR_PASSWORD",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.basic_auth.post_with_basic_auth(
-    request={"key": "value"},
-)
+client = SeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+client.basic_auth.post_with_basic_auth(request={'key': 'value'}
+, )
 
 ```
 </dd>

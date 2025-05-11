@@ -18,8 +18,7 @@ public partial class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.InlinedRequests.PostWithObjectBodyandResponseAsync(
     ///     new PostWithObjectBody
     ///     {
@@ -43,8 +42,7 @@ public partial class InlinedRequestsClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request,
         RequestOptions? options = null,
@@ -52,8 +50,8 @@ public partial class InlinedRequestsClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -64,9 +62,9 @@ public partial class InlinedRequestsClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -77,10 +75,13 @@ public partial class InlinedRequestsClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

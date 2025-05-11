@@ -1,0 +1,178 @@
+openapi: 3.1.0
+info:
+  title: Deprecated params and fields
+  version: 1.0.0
+paths:
+  /collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}:
+    get:
+      parameters:
+        - in: query
+          name: deprecated_lang
+          schema:
+            type: string
+          description: language code
+          deprecated: true
+        - in: query
+          name: active_lang
+          schema:
+            type: string
+          description: language code
+        - in: query
+          name: deprecated_ref_lang
+          schema:
+            $ref: '#/components/schemas/DeprecatedParam'
+        - in: query
+          name: x-fern-availability_query_param
+          schema:
+            type: string
+          description: active beta query param
+          x-fern-availability: 'beta'
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: string
+          description: collection id
+          deprecated: true
+        - in: path
+          required: true
+          name: active_id
+          schema:
+            type: string
+          description: active header
+        - in: path
+          required: true
+          name: deprecated_ref_id
+          schema:
+            $ref: '#/components/schemas/DeprecatedParam'
+        - in: path
+          required: true
+          name: x-fern-availability_path_param
+          schema:
+            type: string
+          description: active beta header
+          x-fern-availability: 'beta'
+        - in: header
+          name: X-Deprecated-Header
+          schema:
+            type: string
+          description: deprecated header
+          deprecated: true
+        - in: header
+          name: X-Active-Header
+          schema:
+            type: string
+          description: active header
+        - in: header
+          name: X-Deprecated-Ref-Header
+          schema:
+            $ref: '#/components/schemas/DeprecatedParam'
+        - in: header
+          name: x-fern-availability_header
+          schema:
+            type: string
+          description: active beta header
+          x-fern-availability: 'beta'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WholeDeprecatedSettings'
+  /success-ref:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Settings'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotDeprecatedSettings'
+  /success-inline-property-deprecation:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deprecated_setting:
+                  type: boolean
+                  deprecated: true
+                new_setting:
+                  type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotDeprecatedSettings'
+  /success-inline-object-deprecation:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fine_setting:
+                  type: boolean
+              deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotDeprecatedSettings'
+      deprecated: true
+  /success-inline-beta-body:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fine_setting:
+                  type: boolean
+              x-fern-availability: 'beta'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotDeprecatedSettings'
+      x-fern-availability: 'beta'
+components:
+  schemas:
+    DeprecatedParam:
+      type: string
+      deprecated: true
+    Settings:
+      type: object
+      properties:
+        deprecated_setting:
+          type: boolean
+          deprecated: true
+        new_setting:
+          type: boolean
+    WholeDeprecatedSettings:
+      type: object
+      properties:
+        fine_setting:
+          type: boolean
+      deprecated: true
+    NotDeprecatedSettings:
+      type: object
+      properties:
+        not_deprecated_setting:
+          type: boolean

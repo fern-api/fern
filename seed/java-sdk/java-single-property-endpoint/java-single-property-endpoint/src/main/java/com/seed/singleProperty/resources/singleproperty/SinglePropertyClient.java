@@ -4,65 +4,35 @@
 package com.seed.singleProperty.resources.singleproperty;
 
 import com.seed.singleProperty.core.ClientOptions;
-import com.seed.singleProperty.core.ObjectMappers;
 import com.seed.singleProperty.core.RequestOptions;
-import com.seed.singleProperty.core.SeedSinglePropertyApiException;
-import com.seed.singleProperty.core.SeedSinglePropertyException;
 import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SinglePropertyClient {
     protected final ClientOptions clientOptions;
 
+    private final RawSinglePropertyClient rawClient;
+
     public SinglePropertyClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawSinglePropertyClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawSinglePropertyClient withRawResponse() {
+        return this.rawClient;
     }
 
     public String doThing(String id) {
-        return doThing(id, GetThingRequest.builder().build());
+        return this.rawClient.doThing(id).body();
     }
 
     public String doThing(String id, GetThingRequest request) {
-        return doThing(id, request, null);
+        return this.rawClient.doThing(id, request).body();
     }
 
     public String doThing(String id, GetThingRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegment(id);
-        if (request.getIncludeRemoteData().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "include-remote-data", request.getIncludeRemoteData().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedSinglePropertyApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedSinglePropertyException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.doThing(id, request, requestOptions).body();
     }
 }

@@ -38,12 +38,13 @@ export class ApiReferenceNodeConverter {
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        private workspace: FernWorkspace,
         private docsWorkspace: DocsWorkspace,
         private taskContext: TaskContext,
         private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string>,
         private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean>,
-        idgen: NodeIdGenerator
+        idgen: NodeIdGenerator,
+        private workspace?: FernWorkspace,
+        private hideChildren?: boolean
     ) {
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
@@ -90,7 +91,7 @@ export class ApiReferenceNodeConverter {
         const changelogNodeConverter = new ChangelogNodeConverter(
             this.markdownFilesToFullSlugs,
             this.markdownFilesToNoIndex,
-            this.workspace.changelog?.files.map((file) => file.absoluteFilepath),
+            this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
             this.#idgen
         ).orUndefined();
@@ -103,12 +104,13 @@ export class ApiReferenceNodeConverter {
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.apiSection.icon,
-            hidden: this.apiSection.hidden,
+            hidden: this.hideChildren || this.apiSection.hidden,
             hideTitle: this.apiSection.flattened,
             showErrors: this.apiSection.showErrors,
             changelog: changelogNodeConverter?.toChangelogNode({
                 parentSlug: this.#slug,
-                viewers: undefined
+                viewers: undefined,
+                hidden: this.hideChildren
             }),
             children: this.#children,
             availability: undefined,
@@ -163,7 +165,8 @@ export class ApiReferenceNodeConverter {
             docsWorkspace: this.docsWorkspace,
             markdownFilesToFullSlugs: this.markdownFilesToFullSlugs,
             markdownFilesToNoIndex: this.markdownFilesToNoIndex,
-            idgen: this.#idgen
+            idgen: this.#idgen,
+            hideChildren: this.hideChildren
         });
     }
 
@@ -215,7 +218,7 @@ export class ApiReferenceNodeConverter {
                         : this.apiSection.title),
                 slug: slug.get(),
                 icon: pkg.icon,
-                hidden: pkg.hidden,
+                hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
@@ -245,7 +248,7 @@ export class ApiReferenceNodeConverter {
                 title: pkg.title ?? pkg.package,
                 slug: slug.get(),
                 icon: pkg.icon,
-                hidden: pkg.hidden,
+                hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
@@ -318,7 +321,7 @@ export class ApiReferenceNodeConverter {
             title: section.title,
             slug: slug.get(),
             icon: section.icon,
-            hidden: section.hidden,
+            hidden: this.hideChildren || section.hidden,
             overviewPageId,
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
@@ -364,7 +367,7 @@ export class ApiReferenceNodeConverter {
                     : this.apiSection.title,
                 slug: slug.get(),
                 icon: undefined,
-                hidden: undefined,
+                hidden: this.hideChildren,
                 overviewPageId: undefined,
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
@@ -430,7 +433,7 @@ export class ApiReferenceNodeConverter {
                 title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: endpointItem.icon,
-                hidden: endpointItem.hidden,
+                hidden: this.hideChildren || endpointItem.hidden,
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
                 authed: undefined,
                 viewers: endpointItem.viewers,
@@ -465,7 +468,7 @@ export class ApiReferenceNodeConverter {
                     : parentSlug.apply(webSocket)
                 ).get(),
                 icon: endpointItem.icon,
-                hidden: endpointItem.hidden,
+                hidden: this.hideChildren || endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
                 playground: this.#convertPlaygroundSettings(endpointItem.playground),
@@ -503,7 +506,7 @@ export class ApiReferenceNodeConverter {
                     : parentSlug.apply(webhook)
                 ).get(),
                 icon: endpointItem.icon,
-                hidden: endpointItem.hidden,
+                hidden: this.hideChildren || endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined,
                 authed: undefined,
@@ -573,7 +576,7 @@ export class ApiReferenceNodeConverter {
                 title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: undefined,
-                hidden: undefined,
+                hidden: this.hideChildren,
                 playground: undefined,
                 authed: undefined,
                 viewers: undefined,
@@ -597,7 +600,7 @@ export class ApiReferenceNodeConverter {
                 title: webSocket.name ?? stringifyEndpointPathParts(webSocket.path.parts),
                 slug: parentSlug.apply(webSocket).get(),
                 icon: undefined,
-                hidden: undefined,
+                hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: FernNavigation.V1.convertAvailability(webSocket.availability),
                 playground: undefined,
@@ -624,7 +627,7 @@ export class ApiReferenceNodeConverter {
                 title: webhook.name ?? titleCase(webhook.id),
                 slug: parentSlug.apply(webhook).get(),
                 icon: undefined,
-                hidden: undefined,
+                hidden: this.hideChildren,
                 apiDefinitionId: this.apiDefinitionId,
                 availability: undefined,
                 authed: undefined,
@@ -657,7 +660,7 @@ export class ApiReferenceNodeConverter {
                         : this.apiSection.title,
                     slug: slug.get(),
                     icon: undefined,
-                    hidden: undefined,
+                    hidden: this.hideChildren,
                     overviewPageId: undefined,
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,

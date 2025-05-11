@@ -1,14 +1,13 @@
 from typing import Optional
 
-import fern.ir.resources as ir_types
-
+from .abstract_paginator import PaginationSnippetConfig, Paginator
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
-from .abstract_paginator import PaginationSnippetConfig, Paginator
+import fern.ir.resources as ir_types
 
 
 class OffsetPagination(Paginator):
@@ -37,7 +36,17 @@ class OffsetPagination(Paginator):
         return "True"
 
     def init_get_next(self, *, writer: AST.NodeWriter) -> None:
-        writer.write("lambda: ")
+        if self._is_async:
+            writer.write(f"async def {Paginator.PAGINATION_GET_NEXT_VARIABLE}():")
+            with writer.indent():
+                writer.write("return await ")
+                self.write_get_next_body(writer=writer)
+        else:
+            writer.write(f"{Paginator.PAGINATION_GET_NEXT_VARIABLE} =")
+            writer.write("lambda: ")
+            self.write_get_next_body(writer=writer)
+
+    def write_get_next_body(self, *, writer: AST.NodeWriter) -> None:
         page_parameter_name = request_property_to_name(self.offset.page.property)
         writer.write(f"self.{self._config.endpoint_name}(")
         for parameter in self._config.parameters:
@@ -59,9 +68,13 @@ class OffsetPagination(Paginator):
             else:
                 writer.write(f"{parameter.name}={parameter.name}")
             writer.write(", ")
-        writer.write_line(")")
+        writer.write(")")
+        writer.write(".data")
+        writer.write_line("")
 
     def get_step(self) -> str:
+        if self.offset.step is not None:
+            return f"len({Paginator.PAGINATION_ITEMS_VARIABLE})"
         return "1"
 
     def get_results_property(self) -> ir_types.ResponseProperty:

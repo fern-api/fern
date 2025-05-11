@@ -127,7 +127,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user:User": {
             "type": "object",
@@ -255,7 +256,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -333,34 +335,6 @@
             "request": {
                 "type": "body",
                 "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
                     {
                         "name": {
                             "name": {
@@ -534,34 +508,6 @@
                     }
                 },
                 "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
                     {
                         "name": {
                             "name": {
@@ -769,34 +715,6 @@
                     }
                 },
                 "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
                     {
                         "name": {
                             "name": {
@@ -1011,34 +929,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
@@ -1150,36 +1040,7 @@
             },
             "request": {
                 "type": "body",
-                "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    }
-                ],
+                "pathParameters": [],
                 "body": {
                     "type": "typeReference",
                     "value": {
@@ -1330,34 +1191,6 @@
                     }
                 },
                 "pathParameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
                     {
                         "name": {
                             "name": {
@@ -1568,34 +1401,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "tenant_id",
-                                "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tenant_id",
-                                    "safeName": "tenant_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TENANT_ID",
-                                    "safeName": "TENANT_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
-                                }
-                            },
-                            "wireValue": "tenant_id"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "user_id",
                                 "camelCase": {
                                     "unsafeName": "userID",
@@ -1668,5 +1473,36 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "tenant_id",
+                    "camelCase": {
+                        "unsafeName": "tenantID",
+                        "safeName": "tenantID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "tenant_id",
+                        "safeName": "tenant_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TENANT_ID",
+                        "safeName": "TENANT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TenantID",
+                        "safeName": "TenantID"
+                    }
+                },
+                "wireValue": "tenant_id"
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
+    "environments": null,
+    "generatorConfig": null
 }

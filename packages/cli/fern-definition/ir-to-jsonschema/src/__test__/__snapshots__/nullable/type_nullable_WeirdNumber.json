@@ -1,0 +1,38 @@
+{
+  "anyOf": [
+    {
+      "type": "integer"
+    },
+    {
+      "oneOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "type": "number"
+    }
+  ],
+  "definitions": {}
+}

@@ -307,18 +307,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -327,18 +324,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -451,18 +445,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -471,18 +462,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -527,105 +515,6 @@ error-discrimination:
 name: api
 ",
     "name": "api.yml",
-    "type": "file",
-  },
-  {
-    "contents": "types:
-  MarketDataV1PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi/sample.yml
-  MarketDataV1Symbol:
-    docs: >
-      Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
-      are in CCY1. To read more click
-      [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-    enum:
-      - btcusd
-      - ethbtc
-      - ethusd
-      - zecusd
-      - zecbtc
-      - zeceth
-      - zecbch
-      - zecltc
-      - bchusd
-      - bchbtc
-      - bcheth
-      - ltcusd
-      - ltcbtc
-      - ltceth
-      - ltcbch
-      - batusd
-      - daiusd
-      - linkusd
-      - oxtusd
-      - batbtc
-      - linkbtc
-      - oxtbtc
-      - bateth
-      - linketh
-      - oxteth
-      - ampusd
-      - compusd
-      - paxgusd
-      - mkrusd
-      - zrxusd
-      - kncusd
-      - manausd
-      - storjusd
-      - snxusd
-      - crvusd
-      - balusd
-      - uniusd
-      - renusd
-      - umausd
-      - yfiusd
-      - btcdai
-      - ethdai
-      - aaveusd
-      - filusd
-      - btceur
-      - btcgbp
-      - etheur
-      - ethgbp
-      - btcsgd
-      - ethsgd
-      - sklusd
-      - grtusd
-      - bntusd
-      - name: OneInchusd
-        value: 1inchusd
-      - enjusd
-      - lrcusd
-      - sandusd
-      - cubeusd
-      - lptusd
-      - bondusd
-      - maticusd
-      - injusd
-      - sushiusd
-    source:
-      openapi: asyncapi/sample.yml
-channel:
-  auth: false
-  examples:
-    - messages: []
-  messages:
-    publish:
-      body: MarketDataV1PublishEvent
-      origin: client
-  path: /v1/marketdata/{symbol}
-  query-parameters:
-    symbol:
-      docs: >
-        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
-        quantities are in CCY1. To read more click
-        [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-      type: MarketDataV1Symbol
-  url: public
-",
-    "name": "marketDataV1.yml",
     "type": "file",
   },
   {
@@ -861,6 +750,103 @@ service:
         "name": "__package__.yml",
         "type": "file",
       },
+      {
+        "contents": "imports:
+  streamRoot: __package__.yml
+types:
+  Symbol:
+    docs: >
+      Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
+      are in CCY1. To read more click
+      [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
+    enum:
+      - btcusd
+      - ethbtc
+      - ethusd
+      - zecusd
+      - zecbtc
+      - zeceth
+      - zecbch
+      - zecltc
+      - bchusd
+      - bchbtc
+      - bcheth
+      - ltcusd
+      - ltcbtc
+      - ltceth
+      - ltcbch
+      - batusd
+      - daiusd
+      - linkusd
+      - oxtusd
+      - batbtc
+      - linkbtc
+      - oxtbtc
+      - bateth
+      - linketh
+      - oxteth
+      - ampusd
+      - compusd
+      - paxgusd
+      - mkrusd
+      - zrxusd
+      - kncusd
+      - manausd
+      - storjusd
+      - snxusd
+      - crvusd
+      - balusd
+      - uniusd
+      - renusd
+      - umausd
+      - yfiusd
+      - btcdai
+      - ethdai
+      - aaveusd
+      - filusd
+      - btceur
+      - btcgbp
+      - etheur
+      - ethgbp
+      - btcsgd
+      - ethsgd
+      - sklusd
+      - grtusd
+      - bntusd
+      - name: OneInchusd
+        value: 1inchusd
+      - enjusd
+      - lrcusd
+      - sandusd
+      - cubeusd
+      - lptusd
+      - bondusd
+      - maticusd
+      - injusd
+      - sushiusd
+    source:
+      openapi: asyncapi/sample.yml
+channel:
+  auth: false
+  examples:
+    - messages: []
+  messages:
+    marketData:
+      body: streamRoot.Market
+      origin: client
+  path: /v1/marketdata/{symbol}
+  query-parameters:
+    symbol:
+      docs: >
+        Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
+        quantities are in CCY1. To read more click
+        [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
+      type: Symbol
+  url: public
+",
+        "name": "marketDataV1.yml",
+        "type": "file",
+      },
     ],
     "name": "stream",
     "type": "directory",
@@ -878,6 +864,7 @@ service:
         docs: Indicates whether the passenger has a dog.
         type: optional<boolean>
       id:
+        access: read-only
         docs: Unique identifier for the booking
         type: optional<string>
         validation:
@@ -905,6 +892,7 @@ service:
           code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
         type: optional<BookingPaymentCurrency>
       id:
+        access: read-only
         docs: >-
           Unique identifier for the payment. This will be a unique identifier
           for the payment, and is used to reference the payment in other
@@ -919,6 +907,7 @@ service:
           protect PII leaking.
         type: optional<BookingPaymentSource>
       status:
+        access: read-only
         docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
         type: optional<BookingPaymentStatus>
     source:
@@ -1014,12 +1003,15 @@ service:
         type: optional<string>
       address_country: string
       address_line1:
+        access: write-only
         type: optional<string>
       address_line2:
+        access: write-only
         type: optional<string>
       address_post_code:
         type: optional<string>
       cvc:
+        access: write-only
         docs: >-
           Card security code, 3 or 4 digits usually found on the back of the
           card.
@@ -1172,6 +1164,7 @@ service:
         docs: The wrapper for a collection is an array of objects.
         type: optional<list<map<string, unknown>>>
       links:
+        access: read-only
         docs: A set of hypermedia links which serve as controls for the client.
         type: optional<map<string, unknown>>
     source:
@@ -1727,6 +1720,7 @@ types:
       openapi: openapi/trains/openapi.yml
 webhooks:
   new-booking:
+    audiences: []
     display-name: New Booking
     docs: >
       Subscribe to new bookings being created, to update integrations for your
@@ -2683,6 +2677,167 @@ service:
 ]
 `;
 
+exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 1`] = `
+[
+  {
+    "contents": "{}
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: alpha_one.yml
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: alpha_one.yml
+  Pets: list<Pet>
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  alphaRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPets:
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+      method: POST
+      path: /pets
+      source:
+        openapi: alpha_one.yml
+    listPets:
+      auth: false
+      display-name: List all pets
+      examples:
+        - response:
+            body: []
+      method: GET
+      path: /list-all
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            docs: How many items to return at one time (max 100)
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: A paged array of pets
+        status-code: 200
+        type: alphaRoot.Pets
+      source:
+        openapi: alpha_two.yml
+    showPetById:
+      auth: false
+      display-name: Info for a specific pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+      method: GET
+      path: /pets/{petId}
+      path-parameters:
+        petId:
+          docs: The id of the pet to retrieve
+          type: string
+      response:
+        docs: Expected response to a valid request
+        status-code: 200
+        type: alphaRoot.Pet
+      source:
+        openapi: alpha_one.yml
+  source:
+    openapi: alpha_two.yml
+",
+        "name": "pets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "alpha",
+    "type": "directory",
+  },
+  {
+    "contents": "default-environment: Default
+default-url: Base
+display-name: Alpha One
+environments:
+  Default:
+    urls:
+      Base: http://petstore.swagger.io/v1
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+        "name": "betaOne.yml",
+        "type": "file",
+      },
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+        "name": "betaTwo.yml",
+        "type": "file",
+      },
+    ],
+    "name": "beta",
+    "type": "directory",
+  },
+]
+`;
+
 exports[`validate single no endpoint > single-no-endpoint 1`] = `
 [
   {
@@ -2768,18 +2923,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -2788,18 +2940,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2
@@ -2902,18 +3051,15 @@ name: api
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannelPublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
   messages:
-    publish:
-      body: TestChannelPublishEvent
+    testChannel_sendMessage:
+      body: string
       origin: client
   path: /test
   url: websocket
@@ -2922,18 +3068,15 @@ channel:
     "type": "file",
   },
   {
-    "contents": "types:
-  TestChannel2PublishEvent:
-    enum: []
-    source:
-      openapi: asyncapi.yml
-channel:
+    "contents": "channel:
   auth: false
   examples:
-    - messages: []
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
   messages:
-    publish:
-      body: TestChannel2PublishEvent
+    testChannel2_sendMessage:
+      body: string
       origin: client
   path: /test2
   url: websocket2

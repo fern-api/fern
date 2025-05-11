@@ -4,13 +4,15 @@
 
 import * as errors from "../../../../errors/index";
 import * as SeedErrorProperty from "../../../index";
+import * as core from "../../../../core";
 
 export class PropertyBasedErrorTest extends errors.SeedErrorPropertyError {
-    constructor(body: SeedErrorProperty.PropertyBasedErrorTestBody) {
+    constructor(body: SeedErrorProperty.PropertyBasedErrorTestBody, rawResponse?: core.RawResponse) {
         super({
             message: "PropertyBasedErrorTest",
             statusCode: 400,
             body: body,
+            rawResponse: rawResponse,
         });
         Object.setPrototypeOf(this, PropertyBasedErrorTest.prototype);
     }

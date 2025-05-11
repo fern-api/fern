@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_service.getText"
             },
             "snippet": {
-                "sync_client": "from seed import SeedPlainText\n\nclient = SeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_text()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPlainText\n\nclient = AsyncSeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_text()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedPlainText\nclient = SeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.get_text()\n",
+                "async_client": "from seed import AsyncSeedPlainText\nimport asyncio\nclient = AsyncSeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.service.get_text()\nasyncio.run(main())",
                 "type": "python"
             }
         }

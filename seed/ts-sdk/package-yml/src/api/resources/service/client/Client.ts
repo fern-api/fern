@@ -36,7 +36,14 @@ export class Service {
      * @example
      *     await client.service.nop("id-219xca8")
      */
-    public async nop(nestedId: string, requestOptions?: Service.RequestOptions): Promise<void> {
+    public nop(nestedId: string, requestOptions?: Service.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__nop(nestedId, requestOptions));
+    }
+
+    private async __nop(
+        nestedId: string,
+        requestOptions?: Service.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -60,13 +67,14 @@ export class Service {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPackageYmlError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -75,12 +83,14 @@ export class Service {
                 throw new errors.SeedPackageYmlError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling GET /{id}/{nestedId}.");
             case "unknown":
                 throw new errors.SeedPackageYmlError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

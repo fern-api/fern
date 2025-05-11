@@ -35,6 +35,10 @@ export function buildChannel({
         convertedChannel["display-name"] = channel.summary;
     }
 
+    if (channel.description != null) {
+        convertedChannel.docs = channel.description;
+    }
+
     const maybeChannelNamespace = getNamespaceFromGroup(channel.groupName);
 
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
@@ -92,29 +96,13 @@ export function buildChannel({
         channel: convertedChannel
     });
 
-    if (channel.subscribe != null) {
+    for (const message of channel.messages) {
         context.builder.addChannelMessage(declarationFile, {
-            messageId: "subscribe",
+            messageId: message.name,
             message: {
-                origin: "server",
+                origin: message.origin,
                 body: buildTypeReference({
-                    schema: channel.subscribe,
-                    context,
-                    fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace,
-                    declarationDepth: 0
-                })
-            }
-        });
-    }
-
-    if (channel.publish != null) {
-        context.builder.addChannelMessage(declarationFile, {
-            messageId: "publish",
-            message: {
-                origin: "client",
-                body: buildTypeReference({
-                    schema: channel.publish,
+                    schema: message.body,
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeChannelNamespace,

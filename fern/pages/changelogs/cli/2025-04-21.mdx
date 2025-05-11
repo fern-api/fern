@@ -1,0 +1,6 @@
+## 0.57.32
+**`(feat):`** Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers, 
+one for each enum value. For example, a server with URL "https://{region}.example.com" where region 
+is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
+
+

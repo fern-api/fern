@@ -21,11 +21,7 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedBearerTokenEnvironmentVariable
-
-client = SeedBearerTokenEnvironmentVariable(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 client.service.get_with_bearer_token()
 ```
 
@@ -34,20 +30,11 @@ client.service.get_with_bearer_token()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedBearerTokenEnvironmentVariable
-
-client = AsyncSeedBearerTokenEnvironmentVariable(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
     await client.service.get_with_bearer_token()
-
-
 asyncio.run(main())
 ```
 
@@ -58,7 +45,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.service.get_with_bearer_token()
 except ApiError as e:
@@ -67,6 +53,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedBearerTokenEnvironmentVariable
+client = SeedBearerTokenEnvironmentVariable(..., )
+response = client.service.with_raw_response.get_with_bearer_token()
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -95,12 +94,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedBearerTokenEnvironmentVariable
-
-client = SeedBearerTokenEnvironmentVariable(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedBearerTokenEnvironmentVariable(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.service.get_with_bearer_token(request_options={
@@ -112,18 +106,11 @@ client.service.get_with_bearer_token(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedBearerTokenEnvironmentVariable
 
-client = SeedBearerTokenEnvironmentVariable(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedBearerTokenEnvironmentVariable
+import httpx
+client = SeedBearerTokenEnvironmentVariable(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

@@ -22,18 +22,16 @@ public class SendTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.QueryParam.SendAsync(
-                    new SendEnumAsQueryParamRequest
-                    {
-                        Operand = Operand.GreaterThan,
-                        MaybeOperand = Operand.GreaterThan,
-                        OperandOrColor = Color.Red,
-                        MaybeOperandOrColor = Color.Red,
-                    },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.QueryParam.SendAsync(
+                new SendEnumAsQueryParamRequest
+                {
+                    Operand = Operand.GreaterThan,
+                    MaybeOperand = Operand.GreaterThan,
+                    OperandOrColor = Color.Red,
+                    MaybeOperandOrColor = Color.Red,
+                }
+            )
         );
     }
 
@@ -51,16 +49,14 @@ public class SendTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.QueryParam.SendAsync(
-                    new SendEnumAsQueryParamRequest
-                    {
-                        Operand = Operand.GreaterThan,
-                        OperandOrColor = Color.Red,
-                    },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.QueryParam.SendAsync(
+                new SendEnumAsQueryParamRequest
+                {
+                    Operand = Operand.GreaterThan,
+                    OperandOrColor = Color.Red,
+                }
+            )
         );
     }
 }

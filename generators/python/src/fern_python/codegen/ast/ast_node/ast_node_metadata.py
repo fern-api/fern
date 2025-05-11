@@ -2,10 +2,9 @@ from __future__ import annotations
 
 import dataclasses
 
-from ordered_set import OrderedSet
-
 from ..references import Reference
 from .generic_type_var import GenericTypeVar
+from ordered_set import OrderedSet
 
 
 @dataclasses.dataclass

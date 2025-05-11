@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 
-from fern_python.codegen import AST
-
 from ..context import FastApiGeneratorContext
+from fern_python.codegen import AST
 
 
 class AbstractAuthGenerator(ABC):
@@ -10,9 +9,7 @@ class AbstractAuthGenerator(ABC):
         self._context = context
 
     @abstractmethod
-    def get_dependency(self) -> AST.Expression:
-        ...
+    def get_dependency(self) -> AST.Expression: ...
 
     @abstractmethod
-    def get_parsed_auth_type(self) -> AST.TypeHint:
-        ...
+    def get_parsed_auth_type(self) -> AST.TypeHint: ...

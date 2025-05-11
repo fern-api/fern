@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "884740a3",
+            "id": {
+                "method": "POST",
+                "path": "/",
+                "identifier_override": "endpoint_package.test"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.nurseryApi.SeedNurseryApiClient;\nimport com.seed.nurseryApi.resources.package_.requests.TestRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNurseryApiClient client = SeedNurseryApiClient\n            .builder()\n            .build();\n\n        client.package_().test(\n            TestRequest\n                .builder()\n                .for_(\"for\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.nurseryApi.SeedNurseryApiClient;\nimport com.seed.nurseryApi.resources.package_.requests.TestRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedNurseryApiClient client = SeedNurseryApiClient\n            .builder()\n            .build();\n\n        client.package_().test(\n            TestRequest\n                .builder()\n                .for_(\"for\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

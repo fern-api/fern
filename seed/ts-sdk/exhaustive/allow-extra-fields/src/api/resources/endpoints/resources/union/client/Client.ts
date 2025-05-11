@@ -42,10 +42,17 @@ export class Union {
      *         likesToWoof: true
      *     })
      */
-    public async getAndReturnUnion(
+    public getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions,
-    ): Promise<SeedExhaustive.types.Animal> {
+    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
+    }
+
+    private async __getAndReturnUnion(
+        request: SeedExhaustive.types.Animal,
+        requestOptions?: Union.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -75,18 +82,22 @@ export class Union {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.types.Animal.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.types.Animal.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -95,12 +106,14 @@ export class Union {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
             case "unknown":
                 throw new errors.SeedExhaustiveError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

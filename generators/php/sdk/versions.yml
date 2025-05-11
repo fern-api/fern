@@ -1,3 +1,27 @@
+- version: 0.15.0
+  changelogEntry:
+    - type: feat
+      summary: Support custom package path
+  irVersion: 55
+
+- version: 0.14.2
+  changelogEntry:
+    - type: fix
+      summary: >-
+        This updates the PHP generator to better support undiscriminated unions that
+        define one or more `optional` types.
+
+        With this, the generator unwraps each of the optional types, and includes a `|null`
+        variant (e.g. `array<string, mixed>|Metadata|null`).
+  irVersion: 55
+
+- version: 0.14.1
+  changelogEntry:
+    - type: internal
+      summary: >-
+        Upgrade to IRv57.
+  irVersion: 55
+
 - version: 0.14.0
   changelogEntry:
     - type: feat

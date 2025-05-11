@@ -38,14 +38,21 @@ export class SeedValidationClient {
      *     await client.create({
      *         decimal: 2.2,
      *         even: 100,
-     *         name: "foo",
+     *         name: "fern",
      *         shape: "SQUARE"
      *     })
      */
-    public async create(
+    public create(
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
-    ): Promise<SeedValidation.Type> {
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
+    }
+
+    private async __create(
+        request: SeedValidation.CreateRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -70,18 +77,22 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -90,12 +101,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling POST /create.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -108,13 +121,20 @@ export class SeedValidationClient {
      *     await client.get({
      *         decimal: 2.2,
      *         even: 100,
-     *         name: "foo"
+     *         name: "fern"
      *     })
      */
-    public async get(
+    public get(
         request: SeedValidation.GetRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
-    ): Promise<SeedValidation.Type> {
+    ): core.HttpResponsePromise<SeedValidation.Type> {
+        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
+    }
+
+    private async __get(
+        request: SeedValidation.GetRequest,
+        requestOptions?: SeedValidationClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const { decimal, even, name } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["decimal"] = decimal.toString();
@@ -142,18 +162,22 @@ export class SeedValidationClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Type.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Type.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedValidationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -162,12 +186,14 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedValidationTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedValidationError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

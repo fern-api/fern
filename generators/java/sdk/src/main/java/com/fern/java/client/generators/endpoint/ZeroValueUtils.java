@@ -52,13 +52,11 @@ public class ZeroValueUtils {
 
         @Override
         public CodeBlock visitUint() {
-            // TODO(ajgateno): Implement uints property in java generator
-            return CodeBlock.of("$L != 0L", variableName);
+            return CodeBlock.of("$L != 0", variableName);
         }
 
         @Override
         public CodeBlock visitUint64() {
-            // TODO(ajgateno): Implement uints property in java generator
             return CodeBlock.of("$L != 0L", variableName);
         }
 
@@ -137,13 +135,11 @@ public class ZeroValueUtils {
 
         @Override
         public CodeBlock visitUint(UintType uintType) {
-            // TODO(ajgateno): Implement uints property in java generator
-            return CodeBlock.of("$L != 0L", variableName);
+            return CodeBlock.of("$L != 0", variableName);
         }
 
         @Override
         public CodeBlock visitUint64(Uint64Type uint64Type) {
-            // TODO(ajgateno): Implement uints property in java generator
             return CodeBlock.of("$L != 0L", variableName);
         }
 

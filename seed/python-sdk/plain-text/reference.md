@@ -14,10 +14,7 @@
 
 ```python
 from seed import SeedPlainText
-
-client = SeedPlainText(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPlainText(base_url="https://yourhost.com/path/to/api", )
 client.service.get_text()
 
 ```

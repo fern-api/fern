@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.generalerrors.errors;
 
 import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.resources.generalerrors.types.BadObjectRequestInfo;
+import okhttp3.Response;
 
 public final class BadRequestBody extends CustomApiException {
     /**
@@ -14,6 +15,11 @@ public final class BadRequestBody extends CustomApiException {
 
     public BadRequestBody(BadObjectRequestInfo body) {
         super("BadRequestBody", 400, body);
+        this.body = body;
+    }
+
+    public BadRequestBody(BadObjectRequestInfo body, Response rawResponse) {
+        super("BadRequestBody", 400, body, rawResponse);
         this.body = body;
     }
 

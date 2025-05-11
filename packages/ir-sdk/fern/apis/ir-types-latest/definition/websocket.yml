@@ -1,5 +1,6 @@
 imports:
   commons: commons.yml
+  examples: examples.yml
   types: types.yml
   http: http.yml
   environment: environment.yml
@@ -22,6 +23,7 @@ types:
         docs: "The messages that can be sent and received on this channel"
         type: list<WebSocketMessage>
       examples: list<ExampleWebSocketSession>
+      v2Examples: optional<examples.V2WebSocketSessionExamples>
 
   WebSocketName: commons.Name
 

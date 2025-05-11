@@ -14,8 +14,7 @@ public partial class HeadersClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Headers.SendAsync(
     ///     new SendLiteralsInHeadersRequest
     ///     {
@@ -24,8 +23,7 @@ public partial class HeadersClient
     ///         Query = "What is the weather today",
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInHeadersRequest request,
         RequestOptions? options = null,
@@ -39,24 +37,23 @@ public partial class HeadersClient
                 { "X-Async", JsonUtils.Serialize(request.Async) },
             }
         );
-        var requestBody = new Dictionary<string, object>() { { "query", request.Query } };
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "headers",
-                    Body = requestBody,
+                    Body = request,
                     Headers = _headers,
                     Options = options,
                 },
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -67,10 +64,13 @@ public partial class HeadersClient
             }
         }
 
-        throw new SeedLiteralApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedLiteralApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

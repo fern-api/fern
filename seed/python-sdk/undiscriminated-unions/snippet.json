@@ -1,6 +1,6 @@
 {
     "types": {
-        "type_union:Metadata": "{\"name\": \"exampleName\", \"value\": \"exampleValue\"}\n"
+        "type_union:Metadata": "{\"name\": 'exampleName', \"value\": 'exampleValue'}"
     },
     "endpoints": [
         {
@@ -11,8 +11,8 @@
                 "identifier_override": "endpoint_union.get"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    request=\"string\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        request=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nclient = SeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.get(request='string', )\n",
+                "async_client": "from seed import AsyncSeedUndiscriminatedUnions\nimport asyncio\nclient = AsyncSeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.union.get(request='string', )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -24,8 +24,34 @@
                 "identifier_override": "endpoint_union.getMetadata"
             },
             "snippet": {
-                "sync_client": "from seed import SeedUndiscriminatedUnions\n\nclient = SeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get_metadata()\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get_metadata()\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nclient = SeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.get_metadata()\n",
+                "async_client": "from seed import AsyncSeedUndiscriminatedUnions\nimport asyncio\nclient = AsyncSeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.union.get_metadata()\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/metadata",
+                "method": "PUT",
+                "identifier_override": "endpoint_union.updateMetadata"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nclient = SeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.update_metadata(request={'string': {'key': 'value'}\n}, )\n",
+                "async_client": "from seed import AsyncSeedUndiscriminatedUnions\nimport asyncio\nclient = AsyncSeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.union.update_metadata(request={'string': {'key': 'value'}\n    }, )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/call",
+                "method": "POST",
+                "identifier_override": "endpoint_union.call"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUndiscriminatedUnions\nclient = SeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nclient.union.call(union={'union': {'key': 'value'}\n}, )\n",
+                "async_client": "from seed import AsyncSeedUndiscriminatedUnions\nimport asyncio\nclient = AsyncSeedUndiscriminatedUnions(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.union.call(union={'union': {'key': 'value'}\n    }, )\nasyncio.run(main())",
                 "type": "python"
             }
         }

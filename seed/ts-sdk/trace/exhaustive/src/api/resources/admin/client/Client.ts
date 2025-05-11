@@ -43,11 +43,21 @@ export class Admin {
      * @example
      *     await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.TestSubmissionStatus.stopped())
      */
-    public async updateTestSubmissionStatus(
+    public updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateTestSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -80,14 +90,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.updateTestSubmissionStatus.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.updateTestSubmissionStatus.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -102,11 +121,21 @@ export class Admin {
      *         updateInfo: SeedTrace.TestSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
      *     })
      */
-    public async sendTestSubmissionUpdate(
+    public sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendTestSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TestSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -139,14 +168,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.sendTestSubmissionUpdate.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.sendTestSubmissionUpdate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -158,11 +196,21 @@ export class Admin {
      * @example
      *     await client.admin.updateWorkspaceSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.WorkspaceSubmissionStatus.stopped())
      */
-    public async updateWorkspaceSubmissionStatus(
+    public updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __updateWorkspaceSubmissionStatus(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionStatus,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -195,14 +243,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.updateWorkspaceSubmissionStatus.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -217,11 +274,21 @@ export class Admin {
      *         updateInfo: SeedTrace.WorkspaceSubmissionUpdateInfo.running("QUEUEING_SUBMISSION")
      *     })
      */
-    public async sendWorkspaceSubmissionUpdate(
+    public sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __sendWorkspaceSubmissionUpdate(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.WorkspaceSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -254,14 +321,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -334,12 +410,23 @@ export class Admin {
      *             }]
      *     })
      */
-    public async storeTracedTestCase(
+    public storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCase(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: string,
+        request: SeedTrace.StoreTracedTestCaseRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -372,14 +459,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.storeTracedTestCase.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.storeTracedTestCase.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -450,12 +546,23 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedTestCaseV2(
+    public storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedTestCaseV2(
+        submissionId: SeedTrace.SubmissionId,
+        testCaseId: SeedTrace.v2.TestCaseId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -490,14 +597,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.storeTracedTestCaseV2.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.storeTracedTestCaseV2.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -574,11 +690,19 @@ export class Admin {
      *             }]
      *     })
      */
-    public async storeTracedWorkspace(
+    public storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
+    }
+
+    private async __storeTracedWorkspace(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.StoreTracedWorkspaceRequest,
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -611,14 +735,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.storeTracedWorkspace.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.storeTracedWorkspace.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 
@@ -688,11 +821,21 @@ export class Admin {
      *             stdout: "stdout"
      *         }])
      */
-    public async storeTracedWorkspaceV2(
+    public storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: Admin.RequestOptions,
-    ): Promise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
+        );
+    }
+
+    private async __storeTracedWorkspaceV2(
+        submissionId: SeedTrace.SubmissionId,
+        request: SeedTrace.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions,
+    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error>>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -727,14 +870,23 @@ export class Admin {
         });
         if (_response.ok) {
             return {
-                ok: true,
-                body: undefined,
+                data: {
+                    ok: true,
+                    body: undefined,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
             };
         }
 
         return {
-            ok: false,
-            error: SeedTrace.admin.storeTracedWorkspaceV2.Error._unknown(_response.error),
+            data: {
+                ok: false,
+                error: SeedTrace.admin.storeTracedWorkspaceV2.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
         };
     }
 

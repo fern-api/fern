@@ -13,6 +13,7 @@ from .dependency import (
     DependencyVersion,
 )
 from .nodes import (
+    AwaitExpression,
     ClassConstructor,
     ClassDeclaration,
     ClassInstantiation,
@@ -21,22 +22,32 @@ from .nodes import (
     CodeWriterFunction,
     ConditionalExpression,
     ConditionalTree,
+    ContinueStatement,
     Declaration,
     DictionaryInstantiation,
     Docstring,
+    ExceptHandler,
     Expression,
     ExpressionSpread,
+    ForStatement,
     FunctionDeclaration,
     FunctionInvocation,
     FunctionParameter,
     FunctionSignature,
     IfConditionLeaf,
     NamedFunctionParameter,
+    PassStatement,
+    RaiseStatement,
     ReferenceNode,
+    ReturnStatement,
+    TryStatement,
     TypeAliasDeclaration,
     TypeHint,
     TypeParameter,
     VariableDeclaration,
+    WithContextManager,
+    WithStatement,
+    YieldStatement,
 )
 from .references import (
     ClassReference,
@@ -48,6 +59,7 @@ from .references import (
 )
 
 __all__ = [
+    "AwaitExpression",
     "TypeParameter",
     "AstNode",
     "Declaration",
@@ -88,4 +100,14 @@ __all__ = [
     "ConditionalExpression",
     "ConditionalTree",
     "IfConditionLeaf",
+    "ReturnStatement",
+    "WithStatement",
+    "WithContextManager",
+    "ForStatement",
+    "YieldStatement",
+    "ContinueStatement",
+    "PassStatement",
+    "TryStatement",
+    "ExceptHandler",
+    "RaiseStatement",
 ]

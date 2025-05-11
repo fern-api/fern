@@ -24,12 +24,10 @@ public class UnknownRequestTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Folder.Service.UnknownRequestAsync(
-                    new Dictionary<object, object?>() { { "key", "value" } },
-                    RequestOptions
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Folder.Service.UnknownRequestAsync(
+                new Dictionary<object, object?>() { { "key", "value" } }
+            )
         );
     }
 }

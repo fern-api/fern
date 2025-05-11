@@ -39,10 +39,17 @@ export class SeedAliasExtendsClient {
      *         child: "child"
      *     })
      */
-    public async extendedInlineRequestBody(
+    public extendedInlineRequestBody(
         request: SeedAliasExtends.InlinedChildRequest,
         requestOptions?: SeedAliasExtendsClient.RequestOptions,
-    ): Promise<void> {
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__extendedInlineRequestBody(request, requestOptions));
+    }
+
+    private async __extendedInlineRequestBody(
+        request: SeedAliasExtends.InlinedChildRequest,
+        requestOptions?: SeedAliasExtendsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -67,13 +74,14 @@ export class SeedAliasExtendsClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedAliasExtendsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -82,6 +90,7 @@ export class SeedAliasExtendsClient {
                 throw new errors.SeedAliasExtendsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedAliasExtendsTimeoutError(
@@ -90,6 +99,7 @@ export class SeedAliasExtendsClient {
             case "unknown":
                 throw new errors.SeedAliasExtendsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

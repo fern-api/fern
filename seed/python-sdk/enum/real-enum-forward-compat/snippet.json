@@ -1,8 +1,9 @@
 {
     "types": {
-        "type_:Operand": "from seed import Operand\n\nOperand.GREATER_THAN\n",
-        "type_:Color": "from seed import Color\n\nColor.RED\n",
-        "type_:ColorOrOperand": "from seed import Color\n\nColor.RED\n"
+        "type_:Operand": "from seed import Operand\nOperand.GREATER_THAN",
+        "type_:Color": "from seed import Color\nColor.RED",
+        "type_:ColorOrOperand": "from seed import Color\nColor.RED",
+        "type_:EnumWithCustom": "from seed import EnumWithCustom\nEnumWithCustom.SAFE"
     },
     "endpoints": [
         {
@@ -13,8 +14,8 @@
                 "identifier_override": "endpoint_inlined-request.send"
             },
             "snippet": {
-                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_request.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedEnum\nfrom seed import Operand\nfrom seed import Color\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\n",
+                "async_client": "from seed import AsyncSeedEnum\nfrom seed import Operand\nfrom seed import Color\nimport asyncio\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -26,8 +27,8 @@
                 "identifier_override": "endpoint_path-param.send"
             },
             "snippet": {
-                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.path_param.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedEnum\nfrom seed import Operand\nfrom seed import Color\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.path_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\n",
+                "async_client": "from seed import AsyncSeedEnum\nfrom seed import Operand\nfrom seed import Color\nimport asyncio\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.path_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -39,8 +40,8 @@
                 "identifier_override": "endpoint_query-param.send"
             },
             "snippet": {
-                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send(\n        operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedEnum\nfrom seed import Operand\nfrom seed import Color\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\n",
+                "async_client": "from seed import AsyncSeedEnum\nfrom seed import Operand\nfrom seed import Color\nimport asyncio\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -52,8 +53,8 @@
                 "identifier_override": "endpoint_query-param.sendList"
             },
             "snippet": {
-                "sync_client": "from seed import Color, Operand, SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=Operand.GREATER_THAN,\n    maybe_operand=Operand.GREATER_THAN,\n    operand_or_color=Color.RED,\n    maybe_operand_or_color=Color.RED,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum, Color, Operand\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send_list(\n        operand=Operand.GREATER_THAN,\n        maybe_operand=Operand.GREATER_THAN,\n        operand_or_color=Color.RED,\n        maybe_operand_or_color=Color.RED,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedEnum\nfrom seed import Operand\nfrom seed import Color\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.query_param.send_list(operand=Operand.GREATER_THAN, maybe_operand=Operand.GREATER_THAN, operand_or_color=Color.RED, maybe_operand_or_color=Color.RED, )\n",
+                "async_client": "from seed import AsyncSeedEnum\nfrom seed import Operand\nfrom seed import Color\nimport asyncio\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.query_param.send_list(operand=Operand.GREATER_THAN, maybe_operand=Operand.GREATER_THAN, operand_or_color=Color.RED, maybe_operand_or_color=Color.RED, )\nasyncio.run(main())",
                 "type": "python"
             }
         }

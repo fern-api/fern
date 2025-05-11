@@ -21,14 +21,9 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedCustomAuth
-
-client = SeedCustomAuth(
-    custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.custom_auth.post_with_custom_auth(
-    request={"key": "value"},
-)
+client = SeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
+client.custom_auth.post_with_custom_auth(request={'key': 'value'}
+, )
 ```
 
 ## Async Client
@@ -36,22 +31,12 @@ client.custom_auth.post_with_custom_auth(
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedCustomAuth
-
-client = AsyncSeedCustomAuth(
-    custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME",
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedCustomAuth(custom_auth_scheme="YOUR_CUSTOM_AUTH_SCHEME", base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    await client.custom_auth.post_with_custom_auth(
-        request={"key": "value"},
-    )
-
-
+    await client.custom_auth.post_with_custom_auth(request={'key': 'value'}
+    , )
 asyncio.run(main())
 ```
 
@@ -62,7 +47,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.custom_auth.post_with_custom_auth(...)
 except ApiError as e:
@@ -71,6 +55,19 @@ except ApiError as e:
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedCustomAuth
+client = SeedCustomAuth(..., )
+response = client.custom_auth.with_raw_response.post_with_custom_auth(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
 
 ### Retries
 
@@ -99,12 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedCustomAuth
-
-client = SeedCustomAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedCustomAuth(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.custom_auth.post_with_custom_auth(..., request_options={
@@ -116,18 +108,11 @@ client.custom_auth.post_with_custom_auth(..., request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedCustomAuth
 
-client = SeedCustomAuth(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedCustomAuth
+import httpx
+client = SeedCustomAuth(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

@@ -2,10 +2,12 @@ package com.fern.java;
 
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.java.utils.KeyWordUtils;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractPoetClassNameFactory {
 
@@ -16,7 +18,9 @@ public abstract class AbstractPoetClassNameFactory {
     protected final ICustomConfig.PackageLayout packageLayout;
 
     public AbstractPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
-        this.packagePrefixTokens = packagePrefixTokens;
+        this.packagePrefixTokens = packagePrefixTokens.stream()
+                .map(KeyWordUtils::getKeyWordCompatibleName)
+                .collect(Collectors.toList());
         this.packageLayout = packageLayout;
     }
 
@@ -65,6 +69,26 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "Stream");
     }
 
+    public final ClassName getQueryStringMapperClassName() {
+        return ClassName.get(getCorePackage(), "QueryStringMapper");
+    }
+
+    public final ClassName getQueryStringMapperTestClassName() {
+        return ClassName.get(getCorePackage(), "QueryStringMapperTest");
+    }
+
+    public final ClassName getNullableClassName() {
+        return ClassName.get(getCorePackage(), "Nullable");
+    }
+
+    public final ClassName getNullableNonemptyFilterClassName() {
+        return ClassName.get(getCorePackage(), "NullableNonemptyFilter");
+    }
+
+    public final ClassName getWrappedAliasClassName() {
+        return ClassName.get(getCorePackage(), "WrappedAlias");
+    }
+
     public final ClassName getPaginationClassName(String simpleName) {
         return ClassName.get(getPaginationPackage(), simpleName);
     }
@@ -80,8 +104,9 @@ public abstract class AbstractPoetClassNameFactory {
     public static List<String> getPackagePrefixWithOrgAndApiName(IntermediateRepresentation ir, String organization) {
         List<String> prefix = new ArrayList<>();
         prefix.add("com");
-        prefix.addAll(splitOnNonAlphaNumericChar(organization));
-        prefix.addAll(splitOnNonAlphaNumericChar(ir.getApiName().getCamelCase().getSafeName()));
+        prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(organization)));
+        prefix.addAll(splitOnNonAlphaNumericChar(KeyWordUtils.getKeyWordCompatibleName(
+                ir.getApiName().getCamelCase().getSafeName())));
         return prefix;
     }
 }

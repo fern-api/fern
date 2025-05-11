@@ -37,13 +37,21 @@ export function write(filename: string, data: string | NodeJS.TypedArray): void 
     writeFileSync(filename, data);
 }
 
-export function writePage(
-    filename: string | URL = "",
-    title: string = "",
-    description: string = "",
-    markdown: string = "",
-    url?: string
-): void {
+export function writePage({
+    filename = "",
+    title = "",
+    description = "",
+    markdown = "",
+    url,
+    slug
+}: {
+    filename?: string | URL;
+    title?: string;
+    description?: string;
+    markdown?: string;
+    url?: string;
+    slug?: string;
+} = {}): void {
     const rootPath = join(process.cwd(), "fern");
     const writePath = createFilename(rootPath, filename, title);
     if (!writePath) {
@@ -54,20 +62,37 @@ export function writePage(
 
     try {
         mkdirSync(dirname(writePath), { recursive: true });
-        write(writePath, formatPageWithFrontmatter(title, description, markdown, url));
+        write(
+            writePath,
+            formatPageWithFrontmatter({
+                title,
+                description,
+                markdown,
+                url,
+                slug
+            })
+        );
     } catch (error) {
         throw new Error(`${cleanedWritePath}: failed to download to disk`);
     }
 }
 
-export function formatPageWithFrontmatter(
-    title: string = "",
-    description: string = "",
-    markdown: string = "",
-    url: string = ""
-): string {
-    const optionalTitle = title ? `\ntitle: "${title}"` : "";
-    const optionalDescription = description ? `\ndescription: "${description}"` : "";
-    const optionalUrl = url ? `\nurl: "${url}"` : "";
-    return `---${optionalTitle}${optionalDescription}${optionalUrl}\n---\n\n${markdown}`;
+export function formatPageWithFrontmatter({
+    title = "",
+    description = "",
+    markdown = "",
+    url = "",
+    slug = ""
+}: {
+    title?: string;
+    description?: string;
+    markdown?: string;
+    url?: string;
+    slug?: string;
+} = {}): string {
+    const optionalTitle = title ? `\ntitle: "${title.replace(/"/g, '\\"')}"` : "";
+    const optionalDescription = description ? `\ndescription: "${description.replace(/"/g, '\\"')}"` : "";
+    const optionalUrl = url ? `\nurl: "${url.replace(/"/g, '\\"')}"` : "";
+    const optionalSlug = slug ? `\nslug: "${slug.replace(/"/g, '\\"')}"` : "";
+    return `---${optionalTitle}${optionalDescription}${optionalUrl}${optionalSlug}\n---\n\n${markdown}`;
 }

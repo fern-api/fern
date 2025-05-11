@@ -227,7 +227,7 @@ will log the issue using `console.warn` and return the data (casted to the expec
 _Note: This only applies when publishing to Github._
 
 You can use `extraDependencies` to specify extra dependencies in the generated package.json. This is useful
-when you utilize [`.fernignore`](https://buildwithfern.com/docs/compiler/fern-generate#fernignore) to
+when you utilize [`.fernignore`](https://buildwithfern.com/learn/sdks/capabilities/custom-code) to
 supplement the generated client with custom code.
 
 ```yaml
@@ -359,6 +359,56 @@ and a 500 response will be returned. No details from the error will be leaked to
 If `doNotHandleUnrecognizedErrors` is enabled and you throw a non-Fern error, the error will be caught
 and passed on with `next(error)`. It's your responsibility to set up error-catching middleware that handles
 the error and returns a response to the client.
+
+#### ✨ `retainOriginalCasing`
+
+**Type:** boolean
+
+**Default:** `false`
+
+When enabled, property names in the generated code will retain their original casing from the API definition instead of being converted to camelCase.
+
+```yaml
+# generators.yml
+config:
+  retainOriginalCasing: true
+```
+
+**Before (default behavior):**
+If your API definition has a property named `display_name`, it would be converted to `displayName` in the generated TypeScript code.
+
+**After (with retainOriginalCasing):**
+The property `display_name` will remain as `display_name` in the generated TypeScript interfaces.
+
+**Example with OpenAPI input:**
+```yaml
+# OpenAPI schema
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+        display_name:
+          type: string
+```
+
+Generated TypeScript with `retainOriginalCasing: true`:
+```typescript
+export interface User {
+  user_id: string;
+  display_name: string;
+}
+```
+
+Generated TypeScript with default settings (`retainOriginalCasing: false`):
+```typescript
+export interface User {
+  userId: string;
+  displayName: string;
+}
+```
 
 ## Versions
 

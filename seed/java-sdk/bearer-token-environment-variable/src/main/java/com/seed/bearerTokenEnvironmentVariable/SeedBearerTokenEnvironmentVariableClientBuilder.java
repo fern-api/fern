@@ -25,16 +25,32 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
         return this;
     }
 
+    /**
+     * Sets version
+     */
+    public SeedBearerTokenEnvironmentVariableClientBuilder version(String version) {
+        this.version = version;
+        return this;
+    }
+
     public SeedBearerTokenEnvironmentVariableClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
     }
 
     /**
-     * Sets the timeout (in seconds) for the client
+     * Sets the timeout (in seconds) for the client. Defaults to 60 seconds.
      */
     public SeedBearerTokenEnvironmentVariableClientBuilder timeout(int timeout) {
         this.clientOptionsBuilder.timeout(timeout);
+        return this;
+    }
+
+    /**
+     * Sets the maximum number of retries for the client. Defaults to 2 retries.
+     */
+    public SeedBearerTokenEnvironmentVariableClientBuilder maxRetries(int maxRetries) {
+        this.clientOptionsBuilder.maxRetries(maxRetries);
         return this;
     }
 

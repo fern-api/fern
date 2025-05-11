@@ -8,12 +8,14 @@ import * as core from "../../../../../../core";
 import { BasicAuth } from "./BasicAuth";
 import { BearerAuth } from "./BearerAuth";
 import { HeaderAuth } from "./HeaderAuth";
+import { OAuth } from "./OAuth";
 
 export const Auth: core.serialization.Schema<serializers.dynamic.Auth.Raw, FernIr.dynamic.Auth> = core.serialization
     .union("type", {
         basic: BasicAuth,
         bearer: BearerAuth,
         header: HeaderAuth,
+        oauth: OAuth,
     })
     .transform<FernIr.dynamic.Auth>({
         transform: (value) => {
@@ -24,6 +26,8 @@ export const Auth: core.serialization.Schema<serializers.dynamic.Auth.Raw, FernI
                     return FernIr.dynamic.Auth.bearer(value);
                 case "header":
                     return FernIr.dynamic.Auth.header(value);
+                case "oauth":
+                    return FernIr.dynamic.Auth.oauth(value);
                 default:
                     return value as FernIr.dynamic.Auth;
             }
@@ -32,7 +36,7 @@ export const Auth: core.serialization.Schema<serializers.dynamic.Auth.Raw, FernI
     });
 
 export declare namespace Auth {
-    export type Raw = Auth.Basic | Auth.Bearer | Auth.Header;
+    export type Raw = Auth.Basic | Auth.Bearer | Auth.Header | Auth.Oauth;
 
     export interface Basic extends BasicAuth.Raw {
         type: "basic";
@@ -44,5 +48,9 @@ export declare namespace Auth {
 
     export interface Header extends HeaderAuth.Raw {
         type: "header";
+    }
+
+    export interface Oauth extends OAuth.Raw {
+        type: "oauth";
     }
 }

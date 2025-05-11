@@ -15,13 +15,11 @@ public partial class ContainerClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
     ///     new List&lt;string&gt;() { "string", "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,
@@ -29,8 +27,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -41,9 +39,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
@@ -54,15 +52,17 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
     ///     new List&lt;ObjectWithRequiredField&gt;()
     ///     {
@@ -70,8 +70,7 @@ public partial class ContainerClient
     ///         new ObjectWithRequiredField { String = "string" },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
         IEnumerable<ObjectWithRequiredField> request,
         RequestOptions? options = null,
@@ -79,8 +78,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -91,9 +90,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody)!;
@@ -104,20 +103,21 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
     ///     new HashSet&lt;string&gt;() { "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
         HashSet<string> request,
         RequestOptions? options = null,
@@ -125,8 +125,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -137,9 +137,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
@@ -150,20 +150,21 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
     ///     new HashSet&lt;ObjectWithRequiredField&gt;() { new ObjectWithRequiredField { String = "string" } }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
         HashSet<ObjectWithRequiredField> request,
         RequestOptions? options = null,
@@ -171,8 +172,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -183,9 +184,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
@@ -196,20 +197,21 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
     ///     new Dictionary&lt;string, string&gt;() { { "string", "string" } }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
         Dictionary<string, string> request,
         RequestOptions? options = null,
@@ -217,8 +219,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -229,9 +231,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
@@ -242,15 +244,17 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
     ///     new Dictionary&lt;string, ObjectWithRequiredField&gt;()
     ///     {
@@ -260,8 +264,7 @@ public partial class ContainerClient
     ///         },
     ///     }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<
         Dictionary<string, ObjectWithRequiredField>
     > GetAndReturnMapOfPrimToObjectAsync(
@@ -271,8 +274,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -283,9 +286,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
@@ -298,20 +301,21 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,
@@ -319,8 +323,8 @@ public partial class ContainerClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -331,9 +335,9 @@ public partial class ContainerClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
@@ -344,10 +348,13 @@ public partial class ContainerClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

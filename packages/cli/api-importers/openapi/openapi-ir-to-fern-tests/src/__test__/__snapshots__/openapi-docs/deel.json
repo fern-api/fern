@@ -23749,7 +23749,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -23788,7 +23791,11 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                     "contract_id": "37nex2x",
                   },
                   "response": {
-                    "body": {},
+                    "body": {
+                      "data": {
+                        "updated": true,
+                      },
+                    },
                   },
                 },
               ],
@@ -23992,7 +23999,10 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               "request": {
                 "body": {
                   "properties": {
-                    "file": "optional<file>",
+                    "file": {
+                      "docs": "Upload the file you want to attach to this entry.",
+                      "type": "optional<file>",
+                    },
                   },
                 },
                 "content-type": "multipart/form-data",
@@ -24912,7 +24922,9 @@ service:
         name: AddContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
@@ -24954,7 +24966,9 @@ service:
         name: EditContractDocumentRequest
         body:
           properties:
-            file: optional<file>
+            file:
+              type: optional<file>
+              docs: Upload the file you want to attach to this entry.
         content-type: multipart/form-data
         docs: This is the file you will upload in a multi-part form.
       response:
@@ -25079,7 +25093,9 @@ service:
         - path-parameters:
             contract_id: 37nex2x
           response:
-            body: {}
+            body:
+              data:
+                updated: true
       audiences:
         - external
     inviteToSignContract:

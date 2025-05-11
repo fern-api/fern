@@ -4,81 +4,32 @@
 package com.seed.literal.resources.query;
 
 import com.seed.literal.core.ClientOptions;
-import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
-import com.seed.literal.core.SeedLiteralApiException;
-import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;
 import com.seed.literal.types.SendResponse;
-import java.io.IOException;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class QueryClient {
     protected final ClientOptions clientOptions;
 
+    private final RawQueryClient rawClient;
+
     public QueryClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawQueryClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawQueryClient withRawResponse() {
+        return this.rawClient;
     }
 
     public SendResponse send(SendLiteralsInQueryRequest request) {
-        return send(request, null);
+        return this.rawClient.send(request).body();
     }
 
     public SendResponse send(SendLiteralsInQueryRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("query");
-        httpUrl.addQueryParameter("prompt", request.getPrompt());
-        if (request.getOptionalPrompt().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optional_prompt", request.getOptionalPrompt().get());
-        }
-        httpUrl.addQueryParameter("alias_prompt", request.getAliasPrompt());
-        if (request.getAliasOptionalPrompt().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "alias_optional_prompt", request.getAliasOptionalPrompt().get());
-        }
-        httpUrl.addQueryParameter("query", request.getQuery());
-        httpUrl.addQueryParameter("stream", request.getStream().toString());
-        if (request.getOptionalStream().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "optional_stream", request.getOptionalStream().get().toString());
-        }
-        httpUrl.addQueryParameter("alias_stream", request.getAliasStream().toString());
-        if (request.getAliasOptionalStream().isPresent()) {
-            httpUrl.addQueryParameter(
-                    "alias_optional_stream",
-                    request.getAliasOptionalStream().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SendResponse.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedLiteralApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedLiteralException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.send(request, requestOptions).body();
     }
 }

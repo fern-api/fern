@@ -5,6 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export type GithubConfigurationSchema =
+    | FernDefinition.GithubSelfhostedSchema
     | FernDefinition.GithubCommitAndReleaseSchema
     | FernDefinition.GithubPullRequestSchema
     | FernDefinition.GithubPushSchema;

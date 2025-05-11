@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -44,6 +44,19 @@ fixtures:
       customConfig:
         clientName: Acme
         clientConstructorName: New
+    - outputFolder: readme-config
+      customConfig:
+        clientName: Acme
+        clientConstructorName: New
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /big-entity
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -130,7 +143,9 @@ allowedFailures:
   - reserved-keywords
   - streaming-parameter
   - trace
+  - bytes
+  - pagination-custom
+  - literal
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
-  - unions

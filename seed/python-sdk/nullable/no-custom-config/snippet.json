@@ -1,0 +1,44 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_nullable.getUsers"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullable\nclient = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nclient.nullable.get_users(usernames='usernames', avatar='avatar', activated=True, tags='tags', extra=True, )\n",
+                "async_client": "from seed import AsyncSeedNullable\nimport asyncio\nclient = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.nullable.get_users(usernames='usernames', avatar='avatar', activated=True, tags='tags', extra=True, )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_nullable.createUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullable\nfrom seed.nullable import Metadata\nimport datetime\nfrom seed.nullable import Status\nclient = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nclient.nullable.create_user(username='username', tags=['tags', 'tags'], metadata=Metadata(created_at=datetime.datetime.fromisoformat(\"2024-01-15 09:30:00+00:00\", ), updated_at=datetime.datetime.fromisoformat(\"2024-01-15 09:30:00+00:00\", ), avatar='avatar', activated=True, status=Status(), values={'values': 'values'}, ), avatar='avatar', )\n",
+                "async_client": "from seed import AsyncSeedNullable\nfrom seed.nullable import Metadata\nimport datetime\nfrom seed.nullable import Status\nimport asyncio\nclient = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata=Metadata(created_at=datetime.datetime.fromisoformat(\"2024-01-15 09:30:00+00:00\", ), updated_at=datetime.datetime.fromisoformat(\"2024-01-15 09:30:00+00:00\", ), avatar='avatar', activated=True, status=Status(), values={'values': 'values'}, ), avatar='avatar', )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "DELETE",
+                "identifier_override": "endpoint_nullable.deleteUser"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedNullable\nclient = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nclient.nullable.delete_user(username='xy', )\n",
+                "async_client": "from seed import AsyncSeedNullable\nimport asyncio\nclient = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.nullable.delete_user(username='xy', )\nasyncio.run(main())",
+                "type": "python"
+            }
+        }
+    ]
+}

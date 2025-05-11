@@ -17,19 +17,17 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Service.GetWithBearerTokenAsync();
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<string> GetWithBearerTokenAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
@@ -39,9 +37,9 @@ public partial class ServiceClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<string>(responseBody)!;
@@ -55,10 +53,13 @@ public partial class ServiceClient
             }
         }
 
-        throw new SeedBearerTokenEnvironmentVariableApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedBearerTokenEnvironmentVariableApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

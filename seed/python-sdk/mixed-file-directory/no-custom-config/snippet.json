@@ -1,0 +1,57 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/organizations/",
+                "method": "POST",
+                "identifier_override": "endpoint_organization.create"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMixedFileDirectory\nclient = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nclient.organization.create(name='name', )\n",
+                "async_client": "from seed import AsyncSeedMixedFileDirectory\nimport asyncio\nclient = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.organization.create(name='name', )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/",
+                "method": "GET",
+                "identifier_override": "endpoint_user.list"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMixedFileDirectory\nclient = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nclient.user.list(limit=1, )\n",
+                "async_client": "from seed import AsyncSeedMixedFileDirectory\nimport asyncio\nclient = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.user.list(limit=1, )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/events/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events.listEvents"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMixedFileDirectory\nclient = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nclient.user.events.list_events(limit=1, )\n",
+                "async_client": "from seed import AsyncSeedMixedFileDirectory\nimport asyncio\nclient = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.user.events.list_events(limit=1, )\nasyncio.run(main())",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/events/metadata/",
+                "method": "GET",
+                "identifier_override": "endpoint_user/events/metadata.getMetadata"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedMixedFileDirectory\nclient = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nclient.user.events.metadata.get_metadata(id='id', )\n",
+                "async_client": "from seed import AsyncSeedMixedFileDirectory\nimport asyncio\nclient = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.user.events.metadata.get_metadata(id='id', )\nasyncio.run(main())",
+                "type": "python"
+            }
+        }
+    ]
+}

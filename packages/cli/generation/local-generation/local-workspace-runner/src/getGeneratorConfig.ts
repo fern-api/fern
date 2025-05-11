@@ -1,4 +1,5 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { isGithubSelfhosted } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 import {
@@ -115,13 +116,15 @@ export function getGeneratorConfig({
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
         publishV2: (value) => {
             return {
-                ...newDummyPublishOutputConfig(outputVersion, value),
+                ...newDummyPublishOutputConfig(outputVersion, value, generatorInvocation),
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
@@ -129,6 +132,7 @@ export function getGeneratorConfig({
             return {
                 mode: FernGeneratorExec.OutputMode.downloadFiles(),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                snippetFilepath: DOCKER_PATH_TO_SNIPPET,
                 publishingMetadata: generatorInvocation.publishMetadata
             };
         },
@@ -206,7 +210,8 @@ export function getGeneratorConfig({
 
 function newDummyPublishOutputConfig(
     version: string,
-    multipleOutputMode: PublishOutputMode | PublishOutputModeV2
+    multipleOutputMode: PublishOutputMode | PublishOutputModeV2,
+    generatorInvocation: GeneratorInvocation
 ): FernGeneratorExec.GeneratorOutputConfig {
     let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
@@ -225,53 +230,18 @@ function newDummyPublishOutputConfig(
         });
     }
 
+    let repoUrl = "";
+    if (generatorInvocation.raw?.github != null) {
+        if (isGithubSelfhosted(generatorInvocation.raw.github)) {
+            repoUrl = generatorInvocation.raw.github.uri;
+        } else {
+            repoUrl = generatorInvocation.raw?.github.repository;
+        }
+    }
+
     return {
-        mode: FernGeneratorExec.OutputMode.publish({
-            registries: {
-                maven: {
-                    group: "",
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? ""
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    scope: "",
-                    token: (outputMode as NpmOutput)?.token ?? ""
-                }
-            },
-            publishTarget: undefined,
-            registriesV2: {
-                maven: {
-                    password: (outputMode as MavenOutput)?.password ?? "",
-                    registryUrl: (outputMode as MavenOutput)?.registryUrl ?? "",
-                    username: (outputMode as MavenOutput)?.username ?? "",
-                    coordinate: (outputMode as MavenOutput)?.coordinate ?? "",
-                    signature: (outputMode as MavenOutput)?.signature
-                },
-                npm: {
-                    registryUrl: (outputMode as NpmOutput)?.registryUrl ?? "",
-                    token: (outputMode as NpmOutput)?.token ?? "",
-                    packageName: (outputMode as NpmOutput)?.packageName ?? ""
-                },
-                pypi: {
-                    packageName: (outputMode as PypiOutput)?.coordinate ?? "",
-                    password: (outputMode as PypiOutput)?.password ?? "",
-                    registryUrl: (outputMode as PypiOutput)?.registryUrl ?? "",
-                    username: (outputMode as PypiOutput)?.username ?? "",
-                    pypiMetadata: (outputMode as PypiOutput)?.pypiMetadata
-                },
-                rubygems: {
-                    registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as RubyGemsOutput)?.apiKey ?? "",
-                    packageName: (outputMode as RubyGemsOutput)?.packageName ?? ""
-                },
-                nuget: {
-                    registryUrl: (outputMode as NugetOutput)?.registryUrl ?? "",
-                    apiKey: (outputMode as NugetOutput)?.apiKey ?? "",
-                    packageName: (outputMode as NugetOutput)?.packageName ?? ""
-                }
-            },
+        mode: FernGeneratorExec.OutputMode.github({
+            repoUrl,
             version
         }),
         path: DOCKER_CODEGEN_OUTPUT_DIRECTORY

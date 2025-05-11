@@ -12,9 +12,7 @@ public class NopTest : BaseMockServerTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/id//nestedId").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("id", "nestedId", RequestOptions)
-        );
+        Assert.DoesNotThrowAsync(async () => await Client.Service.NopAsync("id", "nestedId"));
     }
 
     [Test]
@@ -29,8 +27,8 @@ public class NopTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () => await Client.Service.NopAsync("id-a2ijs82", "id-219xca8", RequestOptions)
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Service.NopAsync("id-a2ijs82", "id-219xca8")
         );
     }
 }

@@ -15,11 +15,9 @@ public partial class EnumClient
         _client = client;
     }
 
-    /// <example>
-    /// <code>
+    /// <example><code>
     /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
-    /// </code>
-    /// </example>
+    /// </code></example>
     public async Task<WeatherReport> GetAndReturnEnumAsync(
         WeatherReport request,
         RequestOptions? options = null,
@@ -27,8 +25,8 @@ public partial class EnumClient
     )
     {
         var response = await _client
-            .MakeRequestAsync(
-                new RawClient.JsonApiRequest
+            .SendRequestAsync(
+                new JsonRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
@@ -39,9 +37,9 @@ public partial class EnumClient
                 cancellationToken
             )
             .ConfigureAwait(false);
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
             try
             {
                 return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
@@ -52,10 +50,13 @@ public partial class EnumClient
             }
         }
 
-        throw new SeedExhaustiveApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
     }
 }

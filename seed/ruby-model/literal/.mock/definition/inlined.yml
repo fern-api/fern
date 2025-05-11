@@ -12,12 +12,23 @@ types:
   ANestedLiteral:
     properties:
       myLiteral: literal<"How super cool">
+  
+  DiscriminatedLiteral:
+    union:
+      customName: string
+      defaultName: literal<"Bob">
+      george: boolean
+      literalGeorge: literal<true>
 
   UndiscriminatedLiteral:
     discriminated: false
     union:
       - string
       - literal<"$ending">
+      - literal<"10 non-alphanumeric string literals you're going to love & why (number 8 will surprise you)">
+      - literal<true>
+      - literal<false>
+      - boolean
 
 service:
   auth: false

@@ -74,6 +74,7 @@ Check out docs built with Fern:
 - [docs.vellum.ai](https://docs.vellum.ai)
 - [docs.superagent.sh](https://docs.superagent.sh/)
 - [docs.hume.ai](https://docs.hume.ai/)
+- [docs.deepgram.com](https://docs.deepgram.com/)
 
 Get started [here](https://github.com/fern-api/docs-starter-openapi).
 
@@ -226,7 +227,7 @@ errors:
 Checkout open source projects that are using Fern Definitions:
 
 - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
-- [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
+- [Rivet](https://github.com/rivet-gg/rivet/tree/main/sdks/api/fern/definition)
 
 ## Inspiration
 

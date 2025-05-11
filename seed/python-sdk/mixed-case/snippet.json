@@ -1,9 +1,9 @@
 {
     "types": {
-        "type_service:Organization": "from seed.service import Organization\n\nOrganization(\n    name=\"orgName\",\n)\n",
-        "type_service:User": "from seed.service import User\n\nUser(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n",
-        "type_service:NestedUser": "from seed.service import NestedUser, User\n\nNestedUser(\n    name=\"username\",\n    nested_user=User(\n        user_name=\"nestedUsername\",\n        metadata_tags=[\"tag1\", \"tag2\"],\n        extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n    ),\n)\n",
-        "type_service:Resource": "from seed.service import Resource_User\n\nResource_User(\n    user_name=\"username\",\n    metadata_tags=[\"tag1\", \"tag2\"],\n    extra_properties={\"foo\": \"bar\", \"baz\": \"qux\"},\n)\n"
+        "type_service:Organization": "from seed.service import Organization\nOrganization(name='orgName', )",
+        "type_service:User": "from seed.service import User\nUser(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )",
+        "type_service:NestedUser": "from seed.service import NestedUser\nfrom seed.service import User\nNestedUser(name='username', nested_user=User(user_name='nestedUsername', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, ), )",
+        "type_service:Resource": "from seed.service import Resource_User\nResource_User(user_name='username', metadata_tags=['tag1', 'tag2'], extra_properties={'foo': 'bar', 'baz': 'qux'}, )"
     },
     "endpoints": [
         {
@@ -14,8 +14,8 @@
                 "identifier_override": "endpoint_service.getResource"
             },
             "snippet": {
-                "sync_client": "from seed import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_resource(\n    resource_id=\"rsc-xyz\",\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedMixedCase\n\nclient = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.get_resource(\n        resource_id=\"rsc-xyz\",\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedMixedCase\nclient = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.get_resource(resource_id='rsc-xyz', )\n",
+                "async_client": "from seed import AsyncSeedMixedCase\nimport asyncio\nclient = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.service.get_resource(resource_id='rsc-xyz', )\nasyncio.run(main())",
                 "type": "python"
             }
         },
@@ -27,8 +27,8 @@
                 "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
-                "sync_client": "import datetime\n\nfrom seed import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.list_resources(\n    page_limit=10,\n    before_date=datetime.date.fromisoformat(\n        \"2023-01-01\",\n    ),\n)\n",
-                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedMixedCase\n\nclient = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.list_resources(\n        page_limit=10,\n        before_date=datetime.date.fromisoformat(\n            \"2023-01-01\",\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedMixedCase\nimport datetime\nclient = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.list_resources(page_limit=10, before_date=datetime.date.fromisoformat(\"2023-01-01\", ), )\n",
+                "async_client": "from seed import AsyncSeedMixedCase\nimport datetime\nimport asyncio\nclient = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.service.list_resources(page_limit=10, before_date=datetime.date.fromisoformat(\"2023-01-01\", ), )\nasyncio.run(main())",
                 "type": "python"
             }
         }

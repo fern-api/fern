@@ -66,7 +66,9 @@ export class UnknownService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedUnknownAsAnyError) {
                     console.warn(
@@ -101,7 +103,9 @@ export class UnknownService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedUnknownAsAnyError) {
                         console.warn(

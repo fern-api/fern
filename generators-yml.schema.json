@@ -1463,6 +1463,26 @@
             }
           ]
         },
+        "respect-forward-compatible-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "default-form-parameter-encoding": {
           "oneOf": [
             {
@@ -1487,6 +1507,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional-properties-defaults-to": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -1678,6 +1708,38 @@
       ],
       "additionalProperties": false
     },
+    "generators.OpenRPCSpecSchema": {
+      "type": "object",
+      "properties": {
+        "openrpc": {
+          "type": "string"
+        },
+        "overrides": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "namespace": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "openrpc"
+      ],
+      "additionalProperties": false
+    },
     "generators.SpecSchema": {
       "anyOf": [
         {
@@ -1688,6 +1750,9 @@
         },
         {
           "$ref": "#/definitions/generators.ProtobufSpecSchema"
+        },
+        {
+          "$ref": "#/definitions/generators.OpenRPCSpecSchema"
         }
       ]
     },
@@ -2343,6 +2408,22 @@
         }
       ]
     },
+    "group.GithubSelfhostedSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ],
+      "additionalProperties": false
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -2539,6 +2620,9 @@
     },
     "group.GithubConfigurationSchema": {
       "anyOf": [
+        {
+          "$ref": "#/definitions/group.GithubSelfhostedSchema"
+        },
         {
           "$ref": "#/definitions/group.GithubCommitAndReleaseSchema"
         },

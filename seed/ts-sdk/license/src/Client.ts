@@ -34,7 +34,11 @@ export class SeedLicenseClient {
      * @example
      *     await client.get()
      */
-    public async get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<void> {
+    public get(requestOptions?: SeedLicenseClient.RequestOptions): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
+    }
+
+    private async __get(requestOptions?: SeedLicenseClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -58,13 +62,14 @@ export class SeedLicenseClient {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return;
+            return { data: undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedLicenseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -73,12 +78,14 @@ export class SeedLicenseClient {
                 throw new errors.SeedLicenseError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedLicenseTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":
                 throw new errors.SeedLicenseError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 using ProtoUserV1 = User.V1;
@@ -9,9 +10,25 @@ public record CreateResponse
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
-    public override string ToString()
+    /// <summary>
+    /// Additional properties received from the response, if any.
+    /// </summary>
+    /// <remarks>
+    /// [EXPERIMENTAL] This API is experimental and may change in future releases.
+    /// </remarks>
+    [JsonExtensionData]
+    public IDictionary<string, JsonElement> AdditionalProperties { get; internal set; } =
+        new Dictionary<string, JsonElement>();
+
+    /// <summary>
+    /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static CreateResponse FromProto(ProtoUserV1.CreateResponse value)
     {
-        return JsonUtils.Serialize(this);
+        return new CreateResponse
+        {
+            User = value.User != null ? UserModel.FromProto(value.User) : null,
+        };
     }
 
     /// <summary>
@@ -27,14 +44,9 @@ public record CreateResponse
         return result;
     }
 
-    /// <summary>
-    /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
-    /// </summary>
-    internal static CreateResponse FromProto(ProtoUserV1.CreateResponse value)
+    /// <inheritdoc />
+    public override string ToString()
     {
-        return new CreateResponse
-        {
-            User = value.User != null ? UserModel.FromProto(value.User) : null,
-        };
+        return JsonUtils.Serialize(this);
     }
 }

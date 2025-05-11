@@ -3,155 +3,68 @@
  */
 package com.seed.pathParameters.resources.organizations;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pathParameters.core.ClientOptions;
-import com.seed.pathParameters.core.ObjectMappers;
 import com.seed.pathParameters.core.RequestOptions;
-import com.seed.pathParameters.core.SeedPathParametersApiException;
-import com.seed.pathParameters.core.SeedPathParametersException;
 import com.seed.pathParameters.resources.organizations.requests.GetOrganizationUserRequest;
 import com.seed.pathParameters.resources.organizations.requests.SearchOrganizationsRequest;
 import com.seed.pathParameters.resources.organizations.types.Organization;
 import com.seed.pathParameters.resources.user.types.User;
-import java.io.IOException;
 import java.util.List;
-import okhttp3.Headers;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class OrganizationsClient {
     protected final ClientOptions clientOptions;
 
+    private final RawOrganizationsClient rawClient;
+
     public OrganizationsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+        this.rawClient = new RawOrganizationsClient(clientOptions);
+    }
+
+    /**
+     * Get responses with HTTP metadata like headers
+     */
+    public RawOrganizationsClient withRawResponse() {
+        return this.rawClient;
     }
 
     public Organization getOrganization(String organizationId) {
-        return getOrganization(organizationId, null);
+        return this.rawClient.getOrganization(organizationId).body();
     }
 
     public Organization getOrganization(String organizationId, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("organizations")
-                .addPathSegment(organizationId)
-                .build();
-        Request okhttpRequest = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), Organization.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedPathParametersException("Network error executing HTTP request", e);
-        }
+        return this.rawClient.getOrganization(organizationId, requestOptions).body();
     }
 
     public User getOrganizationUser(String organizationId, String userId) {
-        return getOrganizationUser(
-                organizationId, userId, GetOrganizationUserRequest.builder().build());
+        return this.rawClient.getOrganizationUser(organizationId, userId).body();
     }
 
     public User getOrganizationUser(String organizationId, String userId, GetOrganizationUserRequest request) {
-        return getOrganizationUser(organizationId, userId, request, null);
+        return this.rawClient
+                .getOrganizationUser(organizationId, userId, request)
+                .body();
     }
 
     public User getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
-        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("organizations")
-                .addPathSegment(organizationId)
-                .addPathSegments("users")
-                .addPathSegment(userId)
-                .build();
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl)
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), User.class);
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedPathParametersException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .getOrganizationUser(organizationId, userId, request, requestOptions)
+                .body();
     }
 
     public List<Organization> searchOrganizations(String organizationId) {
-        return searchOrganizations(
-                organizationId, SearchOrganizationsRequest.builder().build());
+        return this.rawClient.searchOrganizations(organizationId).body();
     }
 
     public List<Organization> searchOrganizations(String organizationId, SearchOrganizationsRequest request) {
-        return searchOrganizations(organizationId, request, null);
+        return this.rawClient.searchOrganizations(organizationId, request).body();
     }
 
     public List<Organization> searchOrganizations(
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
-                .newBuilder()
-                .addPathSegments("organizations")
-                .addPathSegment(organizationId)
-                .addPathSegments("search");
-        if (request.getLimit().isPresent()) {
-            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
-        }
-        Request.Builder _requestBuilder = new Request.Builder()
-                .url(httpUrl.build())
-                .method("GET", null)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json");
-        Request okhttpRequest = _requestBuilder.build();
-        OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(
-                        responseBody.string(), new TypeReference<List<Organization>>() {});
-            }
-            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
-            throw new SeedPathParametersApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
-        } catch (IOException e) {
-            throw new SeedPathParametersException("Network error executing HTTP request", e);
-        }
+        return this.rawClient
+                .searchOrganizations(organizationId, request, requestOptions)
+                .body();
     }
 }

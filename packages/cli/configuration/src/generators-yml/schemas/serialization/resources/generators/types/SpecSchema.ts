@@ -8,10 +8,16 @@ import * as core from "../../../../core";
 import { OpenApiSpecSchema } from "./OpenApiSpecSchema";
 import { AsyncApiSpecSchema } from "./AsyncApiSpecSchema";
 import { ProtobufSpecSchema } from "./ProtobufSpecSchema";
+import { OpenRpcSpecSchema } from "./OpenRpcSpecSchema";
 
 export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, FernDefinition.SpecSchema> =
-    core.serialization.undiscriminatedUnion([OpenApiSpecSchema, AsyncApiSpecSchema, ProtobufSpecSchema]);
+    core.serialization.undiscriminatedUnion([
+        OpenApiSpecSchema,
+        AsyncApiSpecSchema,
+        ProtobufSpecSchema,
+        OpenRpcSpecSchema,
+    ]);
 
 export declare namespace SpecSchema {
-    export type Raw = OpenApiSpecSchema.Raw | AsyncApiSpecSchema.Raw | ProtobufSpecSchema.Raw;
+    export type Raw = OpenApiSpecSchema.Raw | AsyncApiSpecSchema.Raw | ProtobufSpecSchema.Raw | OpenRpcSpecSchema.Raw;
 }

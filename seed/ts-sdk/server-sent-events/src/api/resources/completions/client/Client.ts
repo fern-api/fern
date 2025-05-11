@@ -31,10 +31,17 @@ export declare namespace Completions {
 export class Completions {
     constructor(protected readonly _options: Completions.Options) {}
 
-    public async stream(
+    public stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions,
-    ): Promise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+        return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
+    }
+
+    private async __stream(
+        request: SeedServerSentEvents.StreamCompletionRequest,
+        requestOptions?: Completions.RequestOptions,
+    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -60,28 +67,32 @@ export class Completions {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return new core.Stream({
-                stream: _response.body,
-                parse: async (data) => {
-                    return serializers.StreamedCompletion.parseOrThrow(data, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    });
-                },
-                signal: requestOptions?.abortSignal,
-                eventShape: {
-                    type: "sse",
-                    streamTerminator: "[[DONE]]",
-                },
-            });
+            return {
+                data: new core.Stream({
+                    stream: _response.body,
+                    parse: async (data) => {
+                        return serializers.StreamedCompletion.parseOrThrow(data, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        });
+                    },
+                    signal: requestOptions?.abortSignal,
+                    eventShape: {
+                        type: "sse",
+                        streamTerminator: "[[DONE]]",
+                    },
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedServerSentEventsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -90,12 +101,14 @@ export class Completions {
                 throw new errors.SeedServerSentEventsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedServerSentEventsTimeoutError("Timeout exceeded when calling POST /stream.");
             case "unknown":
                 throw new errors.SeedServerSentEventsError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

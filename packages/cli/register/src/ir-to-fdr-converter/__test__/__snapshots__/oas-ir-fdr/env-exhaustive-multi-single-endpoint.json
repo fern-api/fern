@@ -1,0 +1,91 @@
+{
+  "types": {},
+  "subpackages": {},
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "method": "GET",
+        "defaultEnvironment": "Prod",
+        "environments": [
+          {
+            "id": "Prod",
+            "baseUrl": "http://debug2.api.com"
+          },
+          {
+            "id": "Prod",
+            "baseUrl": "http://debug2.api.com"
+          },
+          {
+            "id": "Dev",
+            "baseUrl": "http://debug2.api.com"
+          },
+          {
+            "id": "Dev",
+            "baseUrl": "http://debug2.api.com"
+          }
+        ],
+        "id": "list",
+        "originalEndpointId": "list",
+        "name": "List",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/petstore"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "statusCode": 200,
+          "description": "A response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/petstore",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": "foo"
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": "foo"
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": []
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

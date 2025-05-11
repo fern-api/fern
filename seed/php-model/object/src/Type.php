@@ -153,6 +153,18 @@ class Type extends JsonSerializableType
     public string $twentythree;
 
     /**
+     * @var ?DateTime $twentyfour
+     */
+    #[JsonProperty('twentyfour'), Date(Date::TYPE_DATETIME)]
+    public ?DateTime $twentyfour;
+
+    /**
+     * @var ?DateTime $twentyfive
+     */
+    #[JsonProperty('twentyfive'), Date(Date::TYPE_DATE)]
+    public ?DateTime $twentyfive;
+
+    /**
      * @param array{
      *   one: int,
      *   two: float,
@@ -177,6 +189,8 @@ class Type extends JsonSerializableType
      *   twentytwo: float,
      *   twentythree: string,
      *   thirteen?: ?int,
+     *   twentyfour?: ?DateTime,
+     *   twentyfive?: ?DateTime,
      * } $values
      */
     public function __construct(
@@ -205,6 +219,8 @@ class Type extends JsonSerializableType
         $this->twentyone = $values['twentyone'];
         $this->twentytwo = $values['twentytwo'];
         $this->twentythree = $values['twentythree'];
+        $this->twentyfour = $values['twentyfour'] ?? null;
+        $this->twentyfive = $values['twentyfive'] ?? null;
     }
 
     /**

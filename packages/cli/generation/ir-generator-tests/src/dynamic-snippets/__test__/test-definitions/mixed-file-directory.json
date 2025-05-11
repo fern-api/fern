@@ -188,7 +188,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_organization:CreateOrganizationRequest": {
             "type": "object",
@@ -285,7 +286,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user:User": {
             "type": "object",
@@ -438,7 +440,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user/events:Event": {
             "type": "object",
@@ -602,7 +605,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_user/events/metadata:Metadata": {
             "type": "object",
@@ -803,7 +807,8 @@
                         "type": "unknown"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -1670,5 +1675,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

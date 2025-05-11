@@ -21,14 +21,9 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedServerSentEvents
-
-client = SeedServerSentEvents(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.completions.stream(
-    query="query",
-)
-for chunk in response:
+client = SeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
+response = client.completions.stream(query='query', )
+for chunk in response.data:
     yield chunk
 ```
 
@@ -37,23 +32,13 @@ for chunk in response:
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-import asyncio
-
 from seed import AsyncSeedServerSentEvents
-
-client = AsyncSeedServerSentEvents(
-    base_url="https://yourhost.com/path/to/api",
-)
-
-
+import asyncio
+client = AsyncSeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
 async def main() -> None:
-    response = await client.completions.stream(
-        query="query",
-    )
-    async for chunk in response:
+    response = await client.completions.stream(query='query', )
+    async for chunk in response.data:
         yield chunk
-
-
 asyncio.run(main())
 ```
 
@@ -64,7 +49,6 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
-
 try:
     client.completions.stream()
 except ApiError as e:
@@ -78,18 +62,26 @@ The SDK supports streaming responses, as well, the response will be a generator 
 
 ```python
 from seed import SeedServerSentEvents
-
-client = SeedServerSentEvents(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.completions.stream(
-    query="query",
-)
-for chunk in response:
+client = SeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
+response = client.completions.stream(query='query', )
+for chunk in response.data:
     yield chunk
 ```
 
 ## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from seed import SeedServerSentEvents
+client = SeedServerSentEvents(..., )
+with client.completions.with_raw_response.stream() as response:
+    print(response.headers)  # access the response headers
+    for chunk in response.data:
+        print(chunk)  # access the underlying object(s)```
 
 ### Retries
 
@@ -118,12 +110,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedServerSentEvents
-
-client = SeedServerSentEvents(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedServerSentEvents(..., timeout=20.0, )
 
 # Override timeout for a specific method
 client.completions.stream(request_options={
@@ -135,18 +122,11 @@ client.completions.stream(request_options={
 
 You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
 and transports.
-```python
-import httpx
-from seed import SeedServerSentEvents
 
-client = SeedServerSentEvents(
-    ...,
-    httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
+```python
+from seed import SeedServerSentEvents
+import httpx
+client = SeedServerSentEvents(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
 
 ## Contributing
 

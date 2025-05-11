@@ -10,12 +10,15 @@ import { migration } from "../migration";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 const SINGLE_WORKSPACE_FIXTURES = [
-    "root-settings",
-    "openapi-single",
-    "asyncapi-single",
     "api-array",
     "api-namespaces",
-    "nested-openapi-single"
+    "asyncapi-single",
+    "nested-openapi-single",
+    "no-specs",
+    "openapi-json",
+    "openapi-single",
+    "root-settings",
+    "swagger"
 ].map(RelativeFilePath.of);
 
 const MULTIPLE_WORKSPACE_FIXTURES: Record<RelativeFilePath, string[]> = {

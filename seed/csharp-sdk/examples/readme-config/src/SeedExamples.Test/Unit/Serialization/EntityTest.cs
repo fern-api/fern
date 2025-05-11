@@ -1,35 +1,39 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 
 namespace SeedExamples.Test;
 
 [TestFixture]
 public class EntityTest
 {
-    [Test]
+    [NUnit.Framework.Test]
+    public void TestDeserialization()
+    {
+        var json = """
+            {
+              "type": "unknown",
+              "name": "unknown"
+            }
+            """;
+        var expectedObject = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
+        var deserializedObject = JsonUtils.Deserialize<Entity>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
-        var inputJson =
-            @"
-        {
-          ""type"": ""unknown"",
-          ""name"": ""unknown""
-        }
-        ";
-
-        var serializerOptions = new JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        };
-
-        var deserializedObject = JsonSerializer.Deserialize<Entity>(inputJson, serializerOptions);
-
-        var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
-
-        JToken.Parse(inputJson).Should().BeEquivalentTo(JToken.Parse(serializedJson));
+        var expectedJson = """
+            {
+              "type": "unknown",
+              "name": "unknown"
+            }
+            """;
+        var actualObj = new Entity { Type = ComplexType.Unknown, Name = "unknown" };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
     }
 }

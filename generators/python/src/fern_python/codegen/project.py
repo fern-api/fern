@@ -7,18 +7,17 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
-from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
-
-from fern_python.codegen import AST
-from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
-from fern_python.codegen.requirements_txt import RequirementsTxt
-
 from .dependency_manager import DependencyManager
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
+from fern_python.codegen import AST
+from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
+from fern_python.codegen.requirements_txt import RequirementsTxt
+
+from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
 
 
 @dataclass(frozen=True)
@@ -47,6 +46,7 @@ class Project:
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
         user_defined_toml: Optional[str] = None,
+        exclude_types_from_init_exports: Optional[bool] = False,
     ) -> None:
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
@@ -69,6 +69,7 @@ class Project:
         self.license_ = license_
         self._extras: typing.Dict[str, List[str]] = {}
         self._user_defined_toml = user_defined_toml
+        self._exclude_types_from_init_exports = exclude_types_from_init_exports
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -92,8 +93,9 @@ class Project:
         """
 
         def on_finish(source_file: SourceFileImpl) -> None:
+            include_exports = not self._exclude_types_from_init_exports
             self._module_manager.register_exports(
-                filepath=filepath, exports=source_file.get_exports() if from_src else set(), from_src=from_src
+                filepath=filepath, exports=source_file.get_exports() if include_exports else set(), from_src=from_src
             )
 
         module = filepath.to_module()
@@ -144,7 +146,7 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=False)
+            writer = WriterImpl(should_format=False, should_sort_imports=True)
             read_file = existing_file.read()
             if string_replacements is not None:
                 for k, v in string_replacements.items():

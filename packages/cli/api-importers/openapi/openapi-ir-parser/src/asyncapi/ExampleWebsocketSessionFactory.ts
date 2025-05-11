@@ -17,6 +17,11 @@ import { WebsocketSessionExampleExtension } from "./getFernExamples";
 import { AsyncAPIV2ParserContext } from "./v2/AsyncAPIV2ParserContext";
 import { AsyncAPIV3ParserContext } from "./v3/AsyncAPIV3ParserContext";
 
+export interface SessionExampleBuilderInput {
+    type: string;
+    payload: SchemaWithExample;
+}
+
 export class ExampleWebsocketSessionFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private schemas: Record<string, SchemaWithExample>;
@@ -32,8 +37,6 @@ export class ExampleWebsocketSessionFactory {
     public buildWebsocketSessionExamplesForExtension({
         context,
         extensionExamples,
-        publish,
-        subscribe,
         handshake,
         source,
         namespace
@@ -41,8 +44,6 @@ export class ExampleWebsocketSessionFactory {
         context: AsyncAPIV2ParserContext | AsyncAPIV3ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
         handshake: WebsocketHandshakeWithExample;
-        publish: SchemaWithExample | undefined;
-        subscribe: SchemaWithExample | undefined;
         source: Source;
         namespace: string | undefined;
     }): WebsocketSessionExample[] {
@@ -147,13 +148,11 @@ export class ExampleWebsocketSessionFactory {
     }
 
     public buildWebsocketSessionExample({
-        publish,
-        subscribe,
-        handshake
+        handshake,
+        messages
     }: {
         handshake: WebsocketHandshakeWithExample;
-        publish: SchemaWithExample | undefined;
-        subscribe: SchemaWithExample | undefined;
+        messages: SessionExampleBuilderInput[];
     }): WebsocketSessionExample | undefined {
         const example: WebsocketSessionExample = {
             name: undefined,
@@ -215,9 +214,9 @@ export class ExampleWebsocketSessionFactory {
             }
         }
 
-        if (publish != null) {
-            const publishMessageExample = this.exampleTypeFactory.buildExample({
-                schema: publish,
+        for (const message of messages) {
+            const messageExample = this.exampleTypeFactory.buildExample({
+                schema: message.payload,
                 exampleId: undefined,
                 example: undefined,
                 options: {
@@ -225,29 +224,10 @@ export class ExampleWebsocketSessionFactory {
                     ignoreOptionals: true
                 }
             });
-            if (publishMessageExample != null) {
+            if (messageExample != null) {
                 example.messages.push({
-                    messageType: "publish",
-                    payload: publishMessageExample,
-                    description: undefined
-                });
-            }
-        }
-
-        if (subscribe != null) {
-            const publishMessageExample = this.exampleTypeFactory.buildExample({
-                schema: subscribe,
-                exampleId: undefined,
-                example: undefined,
-                options: {
-                    isParameter: false,
-                    ignoreOptionals: true
-                }
-            });
-            if (publishMessageExample != null) {
-                example.messages.push({
-                    messageType: "subscribe",
-                    payload: publishMessageExample,
+                    messageType: message.type,
+                    payload: messageExample,
                     description: undefined
                 });
             }

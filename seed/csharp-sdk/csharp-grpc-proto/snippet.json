@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_userservice.create"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Userservice.CreateAsync(new CreateRequest());\n"
             }
         }

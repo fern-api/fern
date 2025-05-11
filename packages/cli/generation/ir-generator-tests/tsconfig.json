@@ -42,5 +42,8 @@
     {
       "path": "../ir-generator"
     },
+    {
+      "path": "../../../commons/casings-generator"
+    }
   ]
 }

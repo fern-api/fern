@@ -9,9 +9,9 @@ import {
     WebhookGroup,
     WebhookPayload
 } from "@fern-api/ir-sdk";
+import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseTypeName } from "../utils/parseTypeName";
@@ -59,7 +59,8 @@ export function convertWebhookGroup({
                           exampleResolver,
                           workspace
                       })
-                    : undefined
+                    : undefined,
+            v2Examples: undefined
         });
     }
     return webhookGroup;
@@ -186,10 +187,4 @@ function convertWebhookExamples({
             workspace
         })
     }));
-}
-
-export function isReferencedWebhookPayloadSchema(
-    payload: RawSchemas.WebhookPayloadSchema
-): payload is RawSchemas.WebhookReferencedPayloadSchema {
-    return (payload as RawSchemas.WebhookReferencedPayloadSchema).type != null;
 }

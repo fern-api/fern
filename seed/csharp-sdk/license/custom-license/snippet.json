@@ -9,7 +9,7 @@
                 "identifier_override": "endpoint_.get"
             },
             "snippet": {
-                "type": "typescript",
+                "type": "csharp",
                 "client": "using SeedLicense;\n\nvar client = new SeedLicenseClient();\nawait client.GetAsync();\n"
             }
         }

@@ -1,0 +1,56 @@
+imports:
+  commons: commons.yml
+  types: types.yml
+  http: http.yml
+types:
+  WebhookGroup: list<Webhook>
+
+  Webhook:
+    extends: commons.Declaration
+    properties:
+      id: commons.WebhookId
+      name: WebhookName
+      displayName: optional<string>
+      method: WebhookHttpMethod
+      headers: list<http.HttpHeader>
+      payload: WebhookPayload
+      examples: optional<list<ExampleWebhookCall>>
+
+  WebhookName: commons.Name
+
+  WebhookPayload:
+    union:
+      inlinedPayload: InlinedWebhookPayload
+      reference: WebhookPayloadReference
+
+  WebhookPayloadReference:
+    extends: commons.WithDocs
+    properties:
+      payloadType: types.TypeReference
+
+  InlinedWebhookPayload:
+    properties:
+      name: commons.Name
+      extends: list<types.DeclaredTypeName>
+      properties: list<InlinedWebhookPayloadProperty>
+
+  InlinedWebhookPayloadProperty:
+    extends: commons.WithDocsAndAvailability
+    properties:
+      name: commons.NameAndWireValue
+      valueType: types.TypeReference
+
+  WebhookHttpMethod:
+    enum:
+      - GET
+      - POST
+
+  ExampleWebhookCall:
+    docs: |
+      An example webhook call. For now, this only includes the payload,
+      but it can be easily extended to support other endpoint properties
+      (e.g. headers).
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      payload: types.ExampleTypeReference

@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: Test spec for `description` settings defined in anyOf.
+  version: 1.0.0
+
+paths:
+  /with-additional-properties-explicit:
+    post:
+      operationId: with-additional-properties-explicit
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestWithAdditionalPropertiesExplicit"
+      responses:
+        '200':
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithAdditionalPropertiesExplicit"
+  /without-additional-properties-explicit:
+    post:
+      operationId: without-additional-properties-explicit
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestWithoutAdditionalPropertiesExplicit"
+      responses:
+        '200':
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseWithoutAdditionalPropertiesExplicit"
+  /implicit:
+    post:
+      operationId: implicit
+      requestBody:
+        required: true
+        description: A simple API request.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+      responses:
+        '200':
+          description: A simple API response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+
+components:
+  schemas:
+    RequestWithAdditionalPropertiesExplicit:
+      properties:
+        id:
+          type: string
+      additionalProperties: true
+
+    RequestWithoutAdditionalPropertiesExplicit:
+      properties:
+        id:
+          type: string
+      additionalProperties: false
+
+    Request:
+      properties:
+        id:
+          type: string
+
+    ResponseWithAdditionalPropertiesExplicit:
+      properties:
+        id:
+          type: string
+      additionalProperties: true
+
+    ResponseWithoutAdditionalPropertiesExplicit:
+      properties:
+        id:
+          type: string
+      additionalProperties: false
+
+    Response:
+      properties:
+        id:
+          type: string

@@ -38,10 +38,17 @@ export class Organizations {
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
-    public async getOrganization(
+    public getOrganization(
         organizationId: string,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organizationId, requestOptions));
+    }
+
+    private async __getOrganization(
+        organizationId: string,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -65,18 +72,22 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Organization.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.Organization.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -85,6 +96,7 @@ export class Organizations {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -93,6 +105,7 @@ export class Organizations {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -107,10 +120,17 @@ export class Organizations {
      *         userId: "user_id"
      *     })
      */
-    public async getOrganizationUser(
+    public getOrganizationUser(
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.User> {
+    ): core.HttpResponsePromise<SeedPathParameters.User> {
+        return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
+    }
+
+    private async __getOrganizationUser(
+        request: SeedPathParameters.GetOrganizationUserRequest,
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organizationId, userId } = request;
         const _response = await core.fetcher({
             url: urlJoin(
@@ -135,18 +155,22 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.User.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.User.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -155,6 +179,7 @@ export class Organizations {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -163,6 +188,7 @@ export class Organizations {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -177,11 +203,21 @@ export class Organizations {
      *         limit: 1
      *     })
      */
-    public async searchOrganizations(
+    public searchOrganizations(
         organizationId: string,
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: Organizations.RequestOptions,
-    ): Promise<SeedPathParameters.Organization[]> {
+    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__searchOrganizations(organizationId, request, requestOptions),
+        );
+    }
+
+    private async __searchOrganizations(
+        organizationId: string,
+        request: SeedPathParameters.SearchOrganizationsRequest = {},
+        requestOptions?: Organizations.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -212,18 +248,22 @@ export class Organizations {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.organizations.searchOrganizations.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.organizations.searchOrganizations.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -232,6 +272,7 @@ export class Organizations {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
@@ -240,6 +281,7 @@ export class Organizations {
             case "unknown":
                 throw new errors.SeedPathParametersError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

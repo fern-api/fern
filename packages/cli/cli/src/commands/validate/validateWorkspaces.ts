@@ -10,33 +10,39 @@ export async function validateWorkspaces({
     project,
     cliContext,
     logWarnings,
-    errorOnBrokenLinks
+    brokenLinks,
+    errorOnBrokenLinks,
+    isLocal
 }: {
     project: Project;
     cliContext: CliContext;
     logWarnings: boolean;
+    brokenLinks: boolean;
     errorOnBrokenLinks: boolean;
+    isLocal?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
             await validateDocsWorkspaceAndLogIssues({
                 workspace: docsWorkspace,
                 context,
                 logWarnings,
-                fernWorkspaces: await Promise.all(
-                    project.apiWorkspaces.map(async (workspace) => {
-                        return workspace.toFernWorkspace({ context });
-                    })
-                ),
+                apiWorkspaces: project.apiWorkspaces,
                 ossWorkspaces: await filterOssWorkspaces(project),
-                errorOnBrokenLinks
+                errorOnBrokenLinks,
+                excludeRules
             });
         });
     }
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
+            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type != "fern") {
+                return;
+            }
+
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
                 await validateAPIWorkspaceAndLogIssues({

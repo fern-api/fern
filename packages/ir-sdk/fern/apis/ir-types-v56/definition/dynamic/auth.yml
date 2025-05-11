@@ -1,0 +1,42 @@
+imports:
+  commons: ../commons.yml
+  types: ./types.yml
+
+types:
+  Auth:
+    union:
+      basic: BasicAuth
+      bearer: BearerAuth
+      header: HeaderAuth
+
+  AuthValues:
+    union:
+      basic: BasicAuthValues
+      bearer: BearerAuthValues
+      header: HeaderAuthValues
+
+  BasicAuth:
+    properties:
+      username: commons.Name
+      password: commons.Name
+  
+  BasicAuthValues:
+    properties:
+      username: string
+      password: string
+
+  BearerAuth:
+    properties:
+      token: commons.Name
+  
+  BearerAuthValues:
+    properties:
+      token: string
+
+  HeaderAuth:
+    properties:
+      header: types.NamedParameter
+  
+  HeaderAuthValues:
+    properties:
+      value: unknown

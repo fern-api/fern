@@ -31,7 +31,7 @@ exports[`generateDynamicIR > go 1`] = `
           },
         },
       },
-      "examples": undefined,
+      "examples": [],
       "location": {
         "method": "GET",
         "path": "/testdata",
@@ -49,10 +49,13 @@ exports[`generateDynamicIR > go 1`] = `
     },
   },
   "environments": undefined,
+  "generatorConfig": undefined,
   "headers": [],
+  "pathParameters": [],
   "types": {
     "type_:GetTestDataResponse": {
       "_visit": [Function],
+      "additionalProperties": false,
       "declaration": {
         "fernFilepath": {
           "allParts": [],

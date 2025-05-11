@@ -1,6 +1,9 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.SafeAndUnsafeString;
 import com.fern.ir.model.types.EnumTypeDeclaration;
 import com.fern.ir.model.types.EnumValue;
 import com.fern.ir.model.types.TypeDeclaration;
@@ -185,7 +188,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                     .unindent();
         });
         CodeBlock acceptCodeBlock = acceptMethodImplementation
-                .add("case UNKNOWN:\n")
+                .add("case $L:\n", resolveName(UNKNOWN_ENUM_CONSTANT))
                 .add("default:\n")
                 .indent()
                 .addStatement("return visitor.visitUnknown(string)")
@@ -214,7 +217,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
         CodeBlock valueOfCodeBlock = valueOfCodeBlockBuilder
                 .add("default:\n")
                 .indent()
-                .addStatement("return new $T(Value.UNKNOWN, $L)", className, VALUE_FIELD_NAME)
+                .addStatement(
+                        "return new $T(Value.$L, $L)", className, resolveName(UNKNOWN_ENUM_CONSTANT), VALUE_FIELD_NAME)
                 .unindent()
                 .endControlFlow()
                 .build();
@@ -235,7 +239,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 .getValues()
                 .forEach(enumValue -> nestedValueEnumBuilder.addEnumConstant(
                         enumValue.getName().getName().getScreamingSnakeCase().getSafeName()));
-        nestedValueEnumBuilder.addEnumConstant(UNKNOWN_ENUM_CONSTANT);
+        nestedValueEnumBuilder.addEnumConstant(resolveName(UNKNOWN_ENUM_CONSTANT));
         return nestedValueEnumBuilder.build();
     }
 
@@ -253,5 +257,18 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
                 })
                 .collect(Collectors.toList());
         return VisitorFactory.buildVisitorInterface(visitMethodArgs);
+    }
+
+    private String resolveName(String newName) {
+        Set<String> existingNames = enumTypeDeclaration.getValues().stream()
+                .map(EnumValue::getName)
+                .map(NameAndWireValue::getName)
+                .map(Name::getScreamingSnakeCase)
+                .map(SafeAndUnsafeString::getSafeName)
+                .collect(Collectors.toSet());
+        while (existingNames.contains(newName)) {
+            newName = "_" + newName;
+        }
+        return newName;
     }
 }

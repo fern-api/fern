@@ -39,7 +39,14 @@ export class Unknown {
      *         "key": "value"
      *     })
      */
-    public async post(request?: unknown, requestOptions?: Unknown.RequestOptions): Promise<unknown[]> {
+    public post(request?: unknown, requestOptions?: Unknown.RequestOptions): core.HttpResponsePromise<unknown[]> {
+        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
+    }
+
+    private async __post(
+        request?: unknown,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<unknown[]>> {
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -62,18 +69,22 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.post.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.post.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -82,12 +93,14 @@ export class Unknown {
                 throw new errors.SeedUnknownAsAnyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }
@@ -103,10 +116,17 @@ export class Unknown {
      *         }
      *     })
      */
-    public async postObject(
+    public postObject(
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: Unknown.RequestOptions,
-    ): Promise<unknown[]> {
+    ): core.HttpResponsePromise<unknown[]> {
+        return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
+    }
+
+    private async __postObject(
+        request: SeedUnknownAsAny.MyObject,
+        requestOptions?: Unknown.RequestOptions,
+    ): Promise<core.WithRawResponse<unknown[]>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -131,18 +151,22 @@ export class Unknown {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return {
+                data: serializers.unknown.postObject.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
+                rawResponse: _response.rawResponse,
             });
         }
 
@@ -151,12 +175,14 @@ export class Unknown {
                 throw new errors.SeedUnknownAsAnyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
                 });
             case "timeout":
                 throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /with-object.");
             case "unknown":
                 throw new errors.SeedUnknownAsAnyError({
                     message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
                 });
         }
     }

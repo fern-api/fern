@@ -6,6 +6,4 @@ from ..types.nested_object_with_required_field import NestedObjectWithRequiredFi
 
 class NestedObjectWithRequiredFieldError(FernHTTPException):
     def __init__(self, error: NestedObjectWithRequiredField):
-        super().__init__(
-            status_code=400, name="NestedObjectWithRequiredFieldError", content=error
-        )
+        super().__init__(status_code=400, name="NestedObjectWithRequiredFieldError", content=error)

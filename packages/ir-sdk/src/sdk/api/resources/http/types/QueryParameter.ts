@@ -8,4 +8,5 @@ export interface QueryParameter extends FernIr.Declaration {
     name: FernIr.NameAndWireValue;
     valueType: FernIr.TypeReference;
     allowMultiple: boolean;
+    v2Examples: FernIr.V2SchemaExamples | undefined;
 }

@@ -58,7 +58,8 @@
                         "value": "type_:UsernamePage"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:UsernamePage": {
             "type": "object",
@@ -151,7 +152,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:SearchRequestQuery": {
             "type": "undiscriminatedUnion",
@@ -359,7 +361,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:MultipleFilterSearchRequestOperator": {
             "type": "enum",
@@ -717,7 +720,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:SingleFilterSearchRequestOperator": {
             "type": "enum",
@@ -1134,7 +1138,8 @@
                         "value": "type_complex:SearchRequestQuery"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:PaginatedConversationResponse": {
             "type": "object",
@@ -1324,7 +1329,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:CursorPages": {
             "type": "object",
@@ -1548,7 +1554,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:StartingAfterPaging": {
             "type": "object",
@@ -1676,7 +1683,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_complex:Conversation": {
             "type": "object",
@@ -1773,7 +1781,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:Order": {
             "type": "enum",
@@ -1986,7 +1995,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:WithCursor": {
             "type": "object",
@@ -2086,7 +2096,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:UserListContainer": {
             "type": "object",
@@ -2186,7 +2197,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:UserPage": {
             "type": "object",
@@ -2314,7 +2326,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:UserOptionalListContainer": {
             "type": "object",
@@ -2417,7 +2430,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:UserOptionalListPage": {
             "type": "object",
@@ -2545,7 +2559,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:UsernameContainer": {
             "type": "object",
@@ -2645,7 +2660,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:ListUsersExtendedResponse": {
             "type": "object",
@@ -2801,7 +2817,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
             "type": "object",
@@ -2957,7 +2974,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:ListUsersPaginationResponse": {
             "type": "object",
@@ -3147,7 +3165,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:ListUsersMixedTypePaginationResponse": {
             "type": "object",
@@ -3275,7 +3294,8 @@
                         }
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:Page": {
             "type": "object",
@@ -3459,7 +3479,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:NextPage": {
             "type": "object",
@@ -3584,7 +3605,8 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_users:User": {
             "type": "object",
@@ -3709,7 +3731,8 @@
                         "value": "INTEGER"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
@@ -6667,5 +6690,7 @@
             "examples": null
         }
     },
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

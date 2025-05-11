@@ -29,7 +29,8 @@ export async function runLocalGenerationForSeed({
     context,
     irVersionOverride,
     outputVersionOverride,
-    shouldGenerateDynamicSnippetTests
+    shouldGenerateDynamicSnippetTests,
+    skipUnstableDynamicSnippetTests
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -40,6 +41,7 @@ export async function runLocalGenerationForSeed({
     irVersionOverride: string;
     outputVersionOverride: string | undefined;
     shouldGenerateDynamicSnippetTests: boolean | undefined;
+    skipUnstableDynamicSnippetTests?: boolean;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -117,7 +119,8 @@ export async function runLocalGenerationForSeed({
                             ir,
                             config: generatorConfig,
                             language: generatorInvocation.language,
-                            outputDir: generatorInvocation.absolutePathToLocalOutput
+                            outputDir: generatorInvocation.absolutePathToLocalOutput,
+                            skipUnstable: skipUnstableDynamicSnippetTests
                         });
                     } else {
                         interactiveTaskContext.logger.info(

@@ -34,20 +34,11 @@ export async function getViolationsForRule({
         throw new Error("Expected docs workspace to be present, but found none");
     }
 
-    const fernWorkspaces = await Promise.all(
-        project.apiWorkspaces.map(async (workspace) => {
-            return workspace.toFernWorkspace(
-                { context },
-                { enableUniqueErrorsPerEndpoint: true, detectGlobalHeaders: false }
-            );
-        })
-    );
-
     const violations = await runRulesOnDocsWorkspace({
         workspace: project.docsWorkspaces,
         context,
         rules: [rule],
-        fernWorkspaces,
+        apiWorkspaces: project.apiWorkspaces,
         ossWorkspaces: await filterOssWorkspaces(project)
     });
 

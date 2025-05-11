@@ -1,0 +1,144 @@
+{
+  "types": {
+    "Update": {
+      "name": "Update",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "stream",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_status": {
+      "subpackageId": "subpackage_status",
+      "name": "status",
+      "endpoints": [],
+      "webhooks": [
+        {
+          "id": "update",
+          "path": [],
+          "method": "POST",
+          "name": "Update",
+          "headers": [],
+          "payload": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Update"
+              }
+            }
+          },
+          "examples": []
+        },
+        {
+          "id": "updateInlined",
+          "path": [],
+          "method": "POST",
+          "name": "Update Inlined",
+          "headers": [],
+          "payload": {
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "stream-inlined",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "message-inlined",
+                  "valueType": {
+                    "type": "optional",
+                    "itemType": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "examples": []
+        }
+      ],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    },
+    "subpackage_status2": {
+      "subpackageId": "subpackage_status2",
+      "name": "status2",
+      "endpoints": [],
+      "webhooks": [
+        {
+          "id": "update",
+          "path": [],
+          "method": "POST",
+          "name": "Update",
+          "headers": [],
+          "payload": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Update"
+              }
+            }
+          },
+          "examples": []
+        }
+      ],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "Update"
+    ],
+    "subpackages": [
+      "subpackage_status",
+      "subpackage_status2"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

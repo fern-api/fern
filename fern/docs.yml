@@ -31,10 +31,15 @@ tabs:
     display-name: SDKs
     icon: fa-brands fa-codepen
     slug: sdks
+  ai-search: 
+    display-name: AI Search
+    icon: fa-regular fa-magnifying-glass
+    slug: ai-search
   cli-api:
     display-name: CLI & API Reference
     icon: fa-regular fa-code
     skip-slug: true
+
 
 css: ./assets/styles.css
 
@@ -77,7 +82,7 @@ navigation:
                 icon: fa-regular fa-file
                 path: ./pages/api-definition/openapi/endpoints/multipart.mdx
                 slug: multipart
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 path: ./pages/api-definition/openapi/endpoints/sse.mdx
                 icon: fa-regular fa-signal-stream
                 slug: sse
@@ -145,7 +150,7 @@ navigation:
                 path: ./pages/api-definition/fern-definition/endpoints/bytes.mdx
                 icon: fa-regular fa-server
                 slug: bytes                
-              - page: Server Sent Events
+              - page: Server-Sent Events
                 icon: fa-regular fa-signal-stream
                 path: ./pages/api-definition/fern-definition/endpoints/sse.mdx
                 slug: sse
@@ -285,6 +290,10 @@ navigation:
             path: ./pages/sdks/capabilities/websockets.mdx
             icon: fa-regular fa-pro
             slug: websockets
+          - page: Model Context Protocol
+            icon: fa-regular fa-pro
+            path: ./pages/sdks/capabilities/mcp.mdx
+            slug: mcp
       - section: Reference
         contents:
           - page: Configuration
@@ -320,11 +329,6 @@ navigation:
               - page: Packagist (PHP)
                 slug: packagist
                 path: ./pages/sdks/integration/packagist.mdx
-      - section: Alternatives
-        hidden: true
-        contents:
-          - page: Speakeasy
-            path: ./pages/sdks/comparison/speakeasy.mdx
   - tab: docs
     layout:
       - section: Getting Started
@@ -357,6 +361,7 @@ navigation:
             path: ./pages/docs/getting-started/publishing-your-docs.mdx
             icon: fa-regular fa-cloud-arrow-up
           - changelog: ./pages/changelogs/docs
+            icon: fa-regular fa-clock-rotate-left
 
 
       - section: Building and Customizing Your Docs
@@ -384,7 +389,7 @@ navigation:
             icon: fa-regular fa-palette
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
-            icon: fa-regular fa-magnifying-glass
+            icon: fa-regular fa-code-pull-request
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
             icon: fa-regular fa-globe
@@ -396,6 +401,10 @@ navigation:
             icon: fa-regular fa-lock
             path: ./pages/docs/building-your-docs/rbac.mdx
             slug: rbac
+          - page: Search
+            icon: fa-regular fa-magnifying-glass
+            path: ./pages/docs/building-your-docs/search.mdx
+            slug: search
 
       - section: Writing Content
         slug: content
@@ -483,6 +492,9 @@ navigation:
           - page: Changelog
             path: ./pages/docs/writing-content/changelog.mdx
             icon: fa-regular fa-clock-rotate-left
+          - page: Visual Editor (Beta)
+            path: ./pages/docs/writing-content/visual-editor.mdx
+            icon: fa-regular fa-paintbrush
 
       - section: API References
         contents:
@@ -504,9 +516,6 @@ navigation:
               - page: Auto-populate API Keys
                 icon: fa-regular fa-key
                 path: ./pages/docs/api-references/autopopulate-api-key.mdx
-              - page: Advanced Configuration
-                icon: fa-regular fa-screwdriver-wrench
-                path: ./pages/docs/api-references/customize-api-explorer.mdx
           - page: Endpoint Errors
             icon: fa-regular fa-triangle-exclamation
             path: ./pages/docs/api-references/endpoint-errors.mdx
@@ -559,6 +568,9 @@ navigation:
             slug: postman
             path: ./pages/docs/integrations/postman.mdx
             icon: fa-solid fa-user-astronaut
+          - page: Feature Flags
+            path: ./pages/docs/integrations/launchdarkly.mdx
+            icon: fa-regular fa-flag
 
       - section: Developer Tools
         contents:
@@ -579,7 +591,7 @@ navigation:
           - page: View Markdown
             icon: fa-brands fa-markdown
             path: ./pages/docs/developer-tools/view-markdown.mdx
-
+        
       - section: Alternatives
         hidden: true
         contents:
@@ -589,6 +601,28 @@ navigation:
           - page: Mintlify
             slug: mintlify
             path: ./pages/docs/comparison/mintlify.mdx
+
+  - tab: ai-search
+    layout:
+    - section: Getting Started
+      skip-slug: true
+      contents:
+        - page: Overview
+          icon: fa-regular fa-book-open
+          path: ./pages/ai-search/getting-started/overview.mdx
+        - page: AI Search Customer Showcase
+          icon: fa-regular fa-star
+          slug: customer-showcase
+          path: ./pages/ai-search/getting-started/customer-showcase.mdx
+    - section: Features 
+      skip-slug: true
+      contents:
+        - page: Custom Prompting
+          icon: fa-regular fa-gear
+          path: ./pages/ai-search/features/custom-prompting.mdx
+        - page: Citations
+          icon: fa-regular fa-quote-right
+          path: ./pages/ai-search/features/citations.mdx
 
   - tab: cli-api
     layout:
@@ -646,18 +680,24 @@ logo:
   href: https://www.buildwithfern.com
   light: ./images/logo-primary.svg
   dark: ./images/logo-white.svg
-  height: 30
+  height: 20
 colors:
   accent-primary:
-    dark: "#2BDB3C"
-    light: "#0D4C14"
+    dark: "#70E155"
+    light: "#008700"
   background:
-    dark: "#081008"
-    light: "#F9FCFA"
+    dark: "#111113"
+    light: "#F9F9FB"
+  border: 
+    dark: "#393A40"
+    light: "#E0E1E6"
   header-background:
-    dark: "#081008"
-    light: "#F9FCFA"
-favicon: ./images/favicon.ico
+    dark: "#19191B"
+    light: "#FFFFFF"
+  card-background:
+    dark: "#222325"
+    light: "#FFFFFF"
+favicon: ./images/favicon_32.png
 
 layout:
   page-width: 1504px
@@ -744,5 +784,12 @@ redirects:
   - source: /learn/sdks/capabilities/merging-multiple-apis
     destination: /learn/sdks/capabilities/merging-apis
     permanent: true
-    
-
+  - source: /learn/ai-search/getting-started/:slug*
+    destination: /learn/ai-search/:slug*
+    permanent: true    
+  - source: /learn/ai-search/features/:slug*
+    destination: /learn/ai-search/:slug*
+    permanent: true   
+  - source: /learn/ai-search/ai-search-customer-showcase
+    destination: /learn/ai-search/customer-showcase
+    permanent: true

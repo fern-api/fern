@@ -713,8 +713,71 @@
                         "type": "primitive",
                         "value": "BIG_INTEGER"
                     }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "twentyfour",
+                            "camelCase": {
+                                "unsafeName": "twentyfour",
+                                "safeName": "twentyfour"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "twentyfour",
+                                "safeName": "twentyfour"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TWENTYFOUR",
+                                "safeName": "TWENTYFOUR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Twentyfour",
+                                "safeName": "Twentyfour"
+                            }
+                        },
+                        "wireValue": "twentyfour"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    }
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "twentyfive",
+                            "camelCase": {
+                                "unsafeName": "twentyfive",
+                                "safeName": "twentyfive"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "twentyfive",
+                                "safeName": "twentyfive"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TWENTYFIVE",
+                                "safeName": "TWENTYFIVE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Twentyfive",
+                                "safeName": "Twentyfive"
+                            }
+                        },
+                        "wireValue": "twentyfive"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        }
+                    }
                 }
-            ]
+            ],
+            "additionalProperties": false
         },
         "type_:Name": {
             "type": "object",
@@ -801,10 +864,13 @@
                         "value": "STRING"
                     }
                 }
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "headers": [],
     "endpoints": {},
-    "environments": null
+    "pathParameters": [],
+    "environments": null,
+    "generatorConfig": null
 }

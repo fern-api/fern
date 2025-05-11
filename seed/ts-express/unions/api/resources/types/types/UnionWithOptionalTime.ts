@@ -4,6 +4,31 @@
 
 import * as SeedUnions from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         type: "date",
+ *         value: "1994-01-01"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "datetime",
+ *         value: "1994-01-01T01:01:01Z"
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "date",
+ *         value: undefined
+ *     }
+ *
+ * @example
+ *     {
+ *         type: "datetime",
+ *         value: undefined
+ *     }
+ */
 export type UnionWithOptionalTime = SeedUnions.UnionWithOptionalTime.Date_ | SeedUnions.UnionWithOptionalTime.Datetime;
 
 export namespace UnionWithOptionalTime {

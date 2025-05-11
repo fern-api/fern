@@ -106,6 +106,7 @@
             "schema": {
               "isOptional": false,
               "isArray": false,
+              "description": "Binary file contents. The file name of the file will be used as the document ID.",
               "type": "file"
             },
             "description": "Binary file contents. The file name of the file will be used as the document ID.",

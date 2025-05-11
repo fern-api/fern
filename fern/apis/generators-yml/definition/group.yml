@@ -63,9 +63,15 @@ types:
   GithubConfigurationSchema:
     discriminated: false
     union:
+      - GithubSelfhostedSchema
       - GithubCommitAndReleaseSchema
       - GithubPullRequestSchema
       - GithubPushSchema
+  
+  GithubSelfhostedSchema: 
+    properties: 
+      uri: string
+      token: string
 
   GeneratorSnippetsSchema:
     properties:

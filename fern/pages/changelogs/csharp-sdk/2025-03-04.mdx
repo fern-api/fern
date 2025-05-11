@@ -1,0 +1,18 @@
+## 1.12.0-rc10
+**`(feat):`** Compare .NET objects instead of JSON strings when comparing objects in mock wire tests.
+With this change, we can remove the dependency on the FluentAssertions.Json package (and implicitly on the Newtonsoft.Json package).
+
+
+**`(chore):`** Update dependencies in generated test project:
+- `Microsoft.NET.Test.Sdk`: 17.12.0 => 17.13.0
+- `NUnit`: 4.2.2 => 4.3.2
+- `NUnit3TestAdapter`: 4.6.0 => 5.0.0
+- `NUnit.Analyzers`: 4.4.0 => 4.6.0
+- `coverlet.collector`: 6.0.2 => 6.0.4
+- `WireMock.Net`: 1.6.8 => 1.7.4
+
+
+**`(fix):`** Compare .NET objects instead of JSON strings when comparing objects in mock wire tests,
+which fixes bugs where JSON deserialization and serialization would cause differences in the JSON strings.
+
+

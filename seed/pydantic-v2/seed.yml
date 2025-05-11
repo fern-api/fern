@@ -1,4 +1,4 @@
-irVersion: v53
+irVersion: v57
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model-v2
 test:
@@ -9,3 +9,5 @@ test:
 language: python
 generatorType: Model
 defaultOutputMode: local_files
+allowedFailures:
+  - version

@@ -30,7 +30,6 @@ export async function convertMarkdown({
     const { data, content } = parseFrontmatter(text);
     const slug = relativeFilepathFromRoot.replace(/\.(md|mdx)$/, "");
     const transformedContent = markReferencedAssets({ content });
-
     return {
         mintlifyFrontmatter: data,
         relativeFilepathFromRoot,

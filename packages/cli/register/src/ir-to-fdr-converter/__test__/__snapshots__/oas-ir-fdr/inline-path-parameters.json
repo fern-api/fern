@@ -1,0 +1,387 @@
+{
+  "types": {
+    "GetOrganizationUser_Response_200": {
+      "name": "GetOrganizationUser_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess": {
+      "description": "Access level",
+      "name": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "private"
+          },
+          {
+            "value": "public"
+          }
+        ]
+      }
+    },
+    "Organizations_Search_Response_200": {
+      "name": "Organizations_Search_Response_200",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "results",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "",
+          "method": "POST",
+          "id": "Search",
+          "originalEndpointId": "Organizations.Search",
+          "name": "Search an organization",
+          "path": {
+            "pathParameters": [
+              {
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "organization_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/organizations/"
+              },
+              {
+                "type": "pathParameter",
+                "value": "organization_id"
+              },
+              {
+                "type": "literal",
+                "value": "/search"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "description": "Access level",
+                    "key": "access",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "OrganizationsOrganizationIdSearchPostRequestBodySchemaAccess"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "Organizations_Search_Response_200"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful response"
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "",
+              "description": "",
+              "path": "/organizations/",
+              "pathParameters": {
+                "id": "foo",
+                "organization_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    "foo"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    "foo"
+                  ]
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "description": "Returns the user with the provided user ID.",
+        "method": "GET",
+        "id": "GetUser",
+        "originalEndpointId": "GetUser",
+        "name": "Get User",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "user_id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/users/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "user_id"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/users/",
+            "pathParameters": {
+              "user_id": "foo"
+            },
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": false,
+        "description": "Returns the user with the provided user ID.",
+        "method": "GET",
+        "id": "GetOrganizationUser",
+        "originalEndpointId": "GetOrganizationUser",
+        "name": "Get Organization User",
+        "path": {
+          "pathParameters": [
+            {
+              "key": "organization_id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "key": "user_id",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/organizations/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "organization_id"
+            },
+            {
+              "type": "literal",
+              "value": "/users/"
+            },
+            {
+              "type": "pathParameter",
+              "value": "user_id"
+            },
+            {
+              "type": "literal",
+              "value": ""
+            }
+          ]
+        },
+        "queryParameters": [
+          {
+            "key": "limit",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "GetOrganizationUser_Response_200"
+            }
+          },
+          "statusCode": 200,
+          "description": "Successful response"
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/organizations/",
+            "pathParameters": {
+              "organization_id": "foo",
+              "user_id": "foo"
+            },
+            "queryParameters": {
+              "limit": 42
+            },
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "results": [
+                  "foo"
+                ]
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "results": [
+                  "foo"
+                ]
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      }
+    ],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_organizations"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}
