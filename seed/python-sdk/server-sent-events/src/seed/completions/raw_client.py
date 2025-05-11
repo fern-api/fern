@@ -47,7 +47,7 @@ class RawCompletionsClient:
             omit=OMIT,
         ) as _response:
 
-            def stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
+            def _stream() -> HttpResponse[typing.Iterator[StreamedCompletion]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -77,7 +77,7 @@ class RawCompletionsClient:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield stream()
+            yield _stream()
 
 
 class AsyncRawCompletionsClient:
@@ -110,7 +110,7 @@ class AsyncRawCompletionsClient:
             omit=OMIT,
         ) as _response:
 
-            async def stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -140,4 +140,4 @@ class AsyncRawCompletionsClient:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await stream()
+            yield await _stream()
