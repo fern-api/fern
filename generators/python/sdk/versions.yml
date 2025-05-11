@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.6
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to automatic pagination in the python client.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
 - version: 4.19.5
   changelogEntry:
     - summary: |

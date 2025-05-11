@@ -92,7 +92,7 @@ class RawUsersClient:
                         order=order,
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    ).data
+                    )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -139,7 +139,7 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_mixed_type_cursor_pagination(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -194,7 +194,7 @@ class RawUsersClient:
                     _get_next = lambda: self.list_with_body_cursor_pagination(
                         pagination=pagination,
                         request_options=request_options,
-                    ).data
+                    )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -264,7 +264,7 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -334,7 +334,7 @@ class RawUsersClient:
                     order=order,
                     starting_after=starting_after,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -385,7 +385,7 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_body_offset_pagination(
                     pagination=pagination,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -450,7 +450,7 @@ class RawUsersClient:
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -515,7 +515,7 @@ class RawUsersClient:
                     limit=limit,
                     order=order,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -563,7 +563,7 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -611,7 +611,7 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_extended_results_and_optional_data(
                     cursor=_parsed_next,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -664,7 +664,7 @@ class RawUsersClient:
                     _get_next = lambda: self.list_usernames(
                         starting_after=_parsed_next,
                         request_options=request_options,
-                    ).data
+                    )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -712,7 +712,7 @@ class RawUsersClient:
                 _get_next = lambda: self.list_with_global_config(
                     offset=offset + 1,
                     request_options=request_options,
-                ).data
+                )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
                 )
@@ -791,7 +791,7 @@ class AsyncRawUsersClient:
                             order=order,
                             starting_after=_parsed_next,
                             request_options=request_options,
-                        ).data
+                        )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -841,7 +841,7 @@ class AsyncRawUsersClient:
                     return await self.list_with_mixed_type_cursor_pagination(
                         cursor=_parsed_next,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -899,7 +899,7 @@ class AsyncRawUsersClient:
                         return await self.list_with_body_cursor_pagination(
                             pagination=pagination,
                             request_options=request_options,
-                        ).data
+                        )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -972,7 +972,7 @@ class AsyncRawUsersClient:
                         order=order,
                         starting_after=starting_after,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1045,7 +1045,7 @@ class AsyncRawUsersClient:
                         order=order,
                         starting_after=starting_after,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1099,7 +1099,7 @@ class AsyncRawUsersClient:
                     return await self.list_with_body_offset_pagination(
                         pagination=pagination,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1167,7 +1167,7 @@ class AsyncRawUsersClient:
                         limit=limit,
                         order=order,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1235,7 +1235,7 @@ class AsyncRawUsersClient:
                         limit=limit,
                         order=order,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1286,7 +1286,7 @@ class AsyncRawUsersClient:
                     return await self.list_with_extended_results(
                         cursor=_parsed_next,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1337,7 +1337,7 @@ class AsyncRawUsersClient:
                     return await self.list_with_extended_results_and_optional_data(
                         cursor=_parsed_next,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1393,7 +1393,7 @@ class AsyncRawUsersClient:
                         return await self.list_usernames(
                             starting_after=_parsed_next,
                             request_options=request_options,
-                        ).data
+                        )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
@@ -1444,7 +1444,7 @@ class AsyncRawUsersClient:
                     return await self.list_with_global_config(
                         offset=offset + 1,
                         request_options=request_options,
-                    ).data
+                    )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
