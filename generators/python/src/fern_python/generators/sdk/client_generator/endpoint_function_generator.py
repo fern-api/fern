@@ -622,6 +622,9 @@ class EndpointFunctionGenerator:
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
                     ),
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
+                    force_multipart=True
+                    if endpoint.request_body is not None and endpoint.request_body.get_as_union().type == "fileUpload"
+                    else False,
                 )
 
             if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
@@ -1280,7 +1283,7 @@ class EndpointFunctionGenerator:
 
         if endpoint.request_body is not None:
             unioned_value = endpoint.request_body.get_as_union()
-            if unioned_value.content_type is not None:
+            if unioned_value.content_type is not None and endpoint.request_body.get_as_union().type != "fileUpload":
                 headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
 
         for header in ir_headers:
