@@ -15891,9 +15891,12 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -16006,9 +16009,7 @@
               "path": "/v1/speak",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Authorization": "Authorization"
-              },
+              "headers": {},
               "messages": [
                 {
                   "type": "sendText",
@@ -16060,9 +16061,12 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -16127,10 +16131,13 @@
               "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
               "key": "diarize_version",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "default": "v2"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "default": "v2"
+                  }
                 }
               }
             },
@@ -16487,12 +16494,8 @@
             {
               "path": "/v1/listen",
               "pathParameters": {},
-              "queryParameters": {
-                "diarize_version": "v2"
-              },
-              "headers": {
-                "Authorization": "Authorization"
-              },
+              "queryParameters": {},
+              "headers": {},
               "messages": [
                 {
                   "type": "sendAudio",
@@ -16541,9 +16544,12 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -16778,9 +16784,7 @@
               "path": "/agent",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {
-                "Authorization": "Authorization"
-              },
+              "headers": {},
               "messages": [
                 {
                   "type": "sendSettingsConfiguration",

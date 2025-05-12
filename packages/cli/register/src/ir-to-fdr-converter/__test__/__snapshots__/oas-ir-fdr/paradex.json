@@ -15274,7 +15274,19 @@
           "id": "orders",
           "name": "SUB orders",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -15283,19 +15295,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -15325,10 +15325,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17319,7 +17319,19 @@
           "id": "bbo",
           "name": "SUB bbo",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17328,19 +17340,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17370,10 +17370,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17433,7 +17433,19 @@
           "id": "fills",
           "name": "SUB fills",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17442,19 +17454,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17484,10 +17484,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17555,7 +17555,19 @@
           "id": "fundingData",
           "name": "SUB funding_data",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17564,19 +17576,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17606,10 +17606,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17667,7 +17667,19 @@
           "id": "fundingPayments",
           "name": "SUB funding_payments",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17676,19 +17688,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17718,10 +17718,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17779,7 +17779,15 @@
           "id": "fundingRateComparison",
           "name": "/funding_rate_comparison",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "refresh_rate",
+                "type": {
+                  "type": "id",
+                  "value": "refresh_rate"
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -17788,15 +17796,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "key": "refresh_rate",
-              "type": {
-                "type": "id",
-                "value": "refresh_rate"
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -17826,10 +17826,10 @@
           "examples": [
             {
               "path": "/funding_rate_comparison",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "refresh_rate": "50ms"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -17992,7 +17992,35 @@
           "id": "orderBook",
           "name": "SUB order_book",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
+                  }
+                }
+              },
+              {
+                "description": "Optional price tick parameter for grouping order book prices, valid values are below.",
+                "key": "price_tick",
+                "type": {
+                  "type": "id",
+                  "value": "price_tick"
+                }
+              },
+              {
+                "description": "Rate of sending updates",
+                "key": "refresh_rate",
+                "type": {
+                  "type": "id",
+                  "value": "refresh_rate"
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -18001,35 +18029,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^[A-Z0-9]+-[A-Z0-9]+$"
-                }
-              }
-            },
-            {
-              "description": "Optional price tick parameter for grouping order book prices, valid values are below.",
-              "key": "price_tick",
-              "type": {
-                "type": "id",
-                "value": "price_tick"
-              }
-            },
-            {
-              "description": "Rate of sending updates",
-              "key": "refresh_rate",
-              "type": {
-                "type": "id",
-                "value": "refresh_rate"
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -18059,12 +18059,12 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol",
                 "price_tick": "0_0000001",
                 "refresh_rate": "50ms"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
@@ -18365,7 +18365,19 @@
           "id": "trades",
           "name": "SUB trades",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
+                "key": "market_symbol",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -18374,19 +18386,7 @@
             ]
           },
           "headers": [],
-          "queryParameters": [
-            {
-              "description": "Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets",
-              "key": "market_symbol",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "regex": "^([A-Z0-9]+-[A-Z0-9]+|ALL)$"
-                }
-              }
-            }
-          ],
+          "queryParameters": [],
           "messages": [
             {
               "type": "subscribe",
@@ -18416,10 +18416,10 @@
           "examples": [
             {
               "path": "",
-              "pathParameters": {},
-              "queryParameters": {
+              "pathParameters": {
                 "market_symbol": "market_symbol"
               },
+              "queryParameters": {},
               "headers": {},
               "messages": [
                 {
