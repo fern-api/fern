@@ -60,7 +60,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private unionVariantsContainLiteral({ discriminantProperty }: { discriminantProperty: string }): boolean {
         for (const [_, reference] of Object.entries(this.schema.discriminator?.mapping ?? {})) {
-            const schema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({ $ref: reference });
+            const schema = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({ reference: { $ref: reference }});
             if (schema.resolved && !Object.keys(schema.value.properties ?? {}).includes(discriminantProperty)) {
                 return false;
             }
@@ -174,7 +174,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             ...(this.schema.anyOf ?? []).entries()
         ]) {
             if (this.context.isReferenceObject(subSchema)) {
-                const maybeTypeReference = this.context.convertReferenceToTypeReference(subSchema);
+                const maybeTypeReference = this.context.convertReferenceToTypeReference({ reference: subSchema});
                 if (maybeTypeReference.ok) {
                     unionTypes.push({
                         type: maybeTypeReference.reference,

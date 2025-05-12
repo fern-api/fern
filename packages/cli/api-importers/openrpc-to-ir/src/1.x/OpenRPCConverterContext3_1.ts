@@ -21,14 +21,15 @@ export class OpenRPCConverterContext3_1 extends AbstractConverterContext<Openrpc
         return parameter != null && "$ref" in parameter;
     }
 
-    public convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): { ok: true; reference: TypeReference } | { ok: false } {
+    public convertReferenceToTypeReference({ reference, breadcrumbs }: {
+        reference: OpenAPIV3_1.ReferenceObject,
+        breadcrumbs?: string[],
+    }): { ok: true; reference: TypeReference } | { ok: false } {
         const typeId = this.getTypeIdFromSchemaReference(reference);
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference });
         if (!resolvedReference.resolved) {
             return { ok: false };
         }

@@ -12,7 +12,8 @@ export async function validateWorkspaces({
     logWarnings,
     brokenLinks,
     errorOnBrokenLinks,
-    isLocal
+    isLocal,
+    directFromOpenapi,
 }: {
     project: Project;
     cliContext: CliContext;
@@ -20,6 +21,7 @@ export async function validateWorkspaces({
     brokenLinks: boolean;
     errorOnBrokenLinks: boolean;
     isLocal?: boolean;
+    directFromOpenapi?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
@@ -44,6 +46,11 @@ export async function validateWorkspaces({
             }
 
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                if (workspace instanceof OSSWorkspace && directFromOpenapi) {
+                    await workspace.getIntermediateRepresentation({ context, audiences: { type: "all" }, enableUniqueErrorsPerEndpoint: false });
+                    return;
+                }
+
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
                 await validateAPIWorkspaceAndLogIssues({
                     workspace: fernWorkspace,

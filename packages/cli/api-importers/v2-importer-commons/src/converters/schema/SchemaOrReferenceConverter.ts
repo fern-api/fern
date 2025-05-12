@@ -57,12 +57,8 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
     }): SchemaOrReferenceConverter.Output | undefined {
-        const response = this.context.convertReferenceToTypeReference(reference);
+        const response = this.context.convertReferenceToTypeReference({ reference, breadcrumbs: this.breadcrumbs });
         if (!response.ok) {
-            this.context.errorCollector.collect({
-                message: `Failed to convert reference to type reference: ${reference.$ref}`,
-                path: this.breadcrumbs
-            });
             return undefined;
         }
         return {

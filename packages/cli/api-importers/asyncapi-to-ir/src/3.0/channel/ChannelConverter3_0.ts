@@ -68,7 +68,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
 
         for (const [operationId, operation] of Object.entries(channelOperations)) {
             for (const message of operation.messages) {
-                const resolved = this.context.convertReferenceToTypeReference(message);
+                const resolved = this.context.convertReferenceToTypeReference({ reference: message });
                 if (resolved.ok) {
                     const messageBody = WebSocketMessageBody.reference({
                         bodyType: resolved.reference,

@@ -50,6 +50,8 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 
 void runCli();
 
@@ -880,6 +882,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Run validation locally without sending data to Fern API.",
                     default: false
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -890,7 +897,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks
+                errorOnBrokenLinks: argv.strictBrokenLinks,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );
