@@ -1,14 +1,5 @@
 {
   "types": {
-    "EndUserProfileMetadata": {
-      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-      "name": "EndUserProfileMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "EndUserProfileSystemProperties": {
       "description": "Read-only profile information set by Ada",
       "name": "EndUserProfileSystemProperties",
@@ -300,8 +291,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserProfileMetadata"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -379,15 +378,6 @@
             "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "EndUserRequestProfileMetadata": {
-      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-      "name": "EndUserRequestProfileMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "EndUserRequestProfile": {
@@ -469,8 +459,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EndUserRequestProfileMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }

@@ -287,6 +287,15 @@
         ]
       }
     },
+    "ActionModel": {
+      "name": "ActionModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "Address": {
       "name": "Address",
       "shape": {
@@ -3104,6 +3113,15 @@
             "value": "outgoing"
           }
         ]
+      }
+    },
+    "FilterModel": {
+      "name": "FilterModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "HTTPValidationError": {
@@ -11245,6 +11263,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11382,6 +11410,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11484,6 +11522,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11575,6 +11623,16 @@
                 }
               }
             }
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
           },
           "errorsV2": [
             {
@@ -12895,6 +12953,7 @@
       "AccountHolderType",
       "AccountType",
       "AccountingCategory",
+      "ActionModel",
       "Address",
       "AsyncEnrichmentInput",
       "BankStatement",
@@ -12924,6 +12983,7 @@
       "Entities",
       "Entity",
       "EntryType",
+      "FilterModel",
       "HTTPValidationError",
       "Intermediary",
       "IntermediaryType",

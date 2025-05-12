@@ -219,6 +219,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const pathConverter = new PathConverter({
                 context: this.context,
                 breadcrumbs: ["paths", path],
+                topLevelServers: this.context.spec.servers,
                 pathItem,
                 path
             });

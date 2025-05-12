@@ -1754,6 +1754,16 @@
         "extends": [],
         "properties": [
           {
+            "description": "any additional data related to the error",
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
             "description": "unique immutable string identifier for specific error",
             "key": "error",
             "valueType": {
