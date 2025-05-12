@@ -42,9 +42,9 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
-            this.convertQueryParameters({
+            this.convertPathParameters({
                 context: this.context,
-                queryParameters
+                pathParameters
             });
         }
 
@@ -229,12 +229,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         return undefined;
     }
 
-    private convertQueryParameters({
+    private convertPathParameters({
         context,
-        queryParameters
+        pathParameters
     }: {
         context: AsyncAPIConverterContext;
-        queryParameters: QueryParameter[];
+        pathParameters: PathParameter[];
     }): void {
         for (const [name, parameter] of Object.entries(this.channel.parameters ?? {})) {
             const parameterObject = context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
@@ -250,7 +250,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 parameter: {
                     ...parameterObject,
                     name,
-                    in: "query",
+                    in: "path",
                     description: parameter.description,
                     required: parameter.required ?? false
                 }
@@ -258,8 +258,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
-                if (convertedParameter.type === "query") {
-                    queryParameters.push(convertedParameter.parameter);
+                if (convertedParameter.type === "path") {
+                    pathParameters.push(convertedParameter.parameter);
                 }
             }
         }
