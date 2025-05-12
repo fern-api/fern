@@ -373,8 +373,14 @@ export class IntermediateRepresentationChangeDetector {
             return false;
         }
         for (let i = 0; i < from.parts.length; i++) {
-            const fromPart = from.parts[i]!;
-            const toPart = to.parts[i]!;
+            const fromPart = from.parts[i];
+            if (fromPart == null) {
+                return false;
+            }
+            const toPart = to.parts[i];
+            if (toPart == null) {
+                return false;
+            }
             if (fromPart.pathParameter !== toPart.pathParameter) {
                 return false;
             }
@@ -1077,9 +1083,13 @@ export class IntermediateRepresentationChangeDetector {
             return false;
         }
         return from.allParts.every((part, index) => {
+            const toPart = to.allParts[index];
+            if (toPart == null) {
+                return false;
+            }
             return this.areNamesCompatible({
                 from: part,
-                to: to.allParts[index]!
+                to: toPart
             });
         });
     }

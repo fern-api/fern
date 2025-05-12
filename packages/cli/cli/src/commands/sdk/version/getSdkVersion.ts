@@ -3,8 +3,7 @@ import semver from "semver";
 
 import { AbsoluteFilePath, cwd, doesPathExist } from "@fern-api/fs-utils";
 import { resolve } from "@fern-api/fs-utils";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk/src/sdk/api";
-import { IntermediateRepresentation as Serialize } from "@fern-api/ir-sdk/src/sdk/serialization";
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
 
@@ -57,7 +56,7 @@ async function readIr({
         throw new FernCliError();
     }
     const ir = await readFile(absoluteFilepath, "utf-8");
-    const parsed = Serialize.parse(JSON.parse(ir));
+    const parsed = serialization.IntermediateRepresentation.parse(JSON.parse(ir));
     if (!parsed.ok) {
         context.failWithoutThrowing(
             `Invalid --${flagName}; expected a filepath containing a valid IR`
