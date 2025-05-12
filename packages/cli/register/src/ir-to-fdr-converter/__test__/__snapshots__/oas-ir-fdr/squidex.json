@@ -160,7 +160,15 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [
+          {
+            "description": "The value for the setting.",
+            "key": "value",
+            "valueType": {
+              "type": "unknown"
+            }
+          }
+        ]
       }
     },
     "ContentsDto": {
@@ -242,6 +250,13 @@
               "value": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "description": "The data of the content item.",
+            "key": "data",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {
@@ -466,9 +481,19 @@
     "ContentFieldData": {
       "name": "ContentFieldData",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "ScheduleJobDto": {
@@ -2758,6 +2783,19 @@
                 }
               }
             }
+          },
+          {
+            "description": "The optional json query.",
+            "key": "q",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -3098,6 +3136,18 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "filter",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
           {
             "key": "fullText",
             "valueType": {
@@ -7470,6 +7520,26 @@
             }
           },
           {
+            "description": "The source event.",
+            "key": "event",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "The enriched event.",
+            "key": "enrichedEvent",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "description": "The data for the action.",
             "key": "actionName",
             "valueType": {
@@ -8434,6 +8504,19 @@
             }
           },
           {
+            "description": "The optional json query.",
+            "key": "q",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "description": "The parent id (for assets).",
             "key": "parentId",
             "valueType": {
@@ -9267,15 +9350,6 @@
         ]
       }
     },
-    "AssetDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "AssetDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "AssetDto": {
       "name": "AssetDto",
       "shape": {
@@ -9400,8 +9474,16 @@
             "description": "The asset metadata.",
             "key": "metadata",
             "valueType": {
-              "type": "id",
-              "value": "AssetDtoMetadata"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -9649,15 +9731,6 @@
         ]
       }
     },
-    "BulkUpdateAssetsJobDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "BulkUpdateAssetsJobDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkUpdateAssetsJobDto": {
       "name": "BulkUpdateAssetsJobDto",
       "shape": {
@@ -9776,8 +9849,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BulkUpdateAssetsJobDtoMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -9827,15 +9908,6 @@
             "value": "Delete"
           }
         ]
-      }
-    },
-    "AnnotateAssetDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "AnnotateAssetDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "AnnotateAssetDto": {
@@ -9919,8 +9991,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "AnnotateAssetDtoMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -10675,8 +10755,16 @@
             "description": "Associated list of UI properties.",
             "key": "properties",
             "valueType": {
-              "type": "id",
-              "value": "RoleDto"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -10727,21 +10815,20 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "UpdateRoleDto"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
         ]
-      }
-    },
-    "AppDtoRoleProperties": {
-      "description": "The properties from the role.",
-      "name": "AppDtoRoleProperties",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "AppDto": {
@@ -10907,8 +10994,16 @@
             "description": "The properties from the role.",
             "key": "roleProperties",
             "valueType": {
-              "type": "id",
-              "value": "AppDtoRoleProperties"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -28382,6 +28477,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Rule event type found."
+          },
           "errorsV2": [
             {
               "type": {

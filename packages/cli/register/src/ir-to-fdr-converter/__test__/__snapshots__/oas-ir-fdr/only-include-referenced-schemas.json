@@ -7543,12 +7543,72 @@
         ]
       }
     },
+    "ConvertVisitorRequestUser0": {
+      "name": "ConvertVisitorRequestUser0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "ConvertVisitorRequestUser1": {
+      "name": "ConvertVisitorRequestUser1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "ConvertVisitorRequestUser": {
       "description": "The unique identifiers retained after converting or merging.",
       "name": "ConvertVisitorRequestUser",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "ConvertVisitorRequestUser0",
+            "type": {
+              "type": "id",
+              "value": "ConvertVisitorRequestUser0"
+            }
+          },
+          {
+            "typeName": "ConvertVisitorRequestUser1",
+            "type": {
+              "type": "id",
+              "value": "ConvertVisitorRequestUser1"
+            }
+          }
+        ]
+      }
+    },
+    "ConvertVisitorRequestVisitor0": {
+      "name": "ConvertVisitorRequestVisitor0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "ConvertVisitorRequestVisitor1": {
+      "name": "ConvertVisitorRequestVisitor1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "ConvertVisitorRequestVisitor2": {
+      "name": "ConvertVisitorRequestVisitor2",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "ConvertVisitorRequestVisitor": {
@@ -7556,7 +7616,29 @@
       "name": "ConvertVisitorRequestVisitor",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "ConvertVisitorRequestVisitor0",
+            "type": {
+              "type": "id",
+              "value": "ConvertVisitorRequestVisitor0"
+            }
+          },
+          {
+            "typeName": "ConvertVisitorRequestVisitor1",
+            "type": {
+              "type": "id",
+              "value": "ConvertVisitorRequestVisitor1"
+            }
+          },
+          {
+            "typeName": "ConvertVisitorRequestVisitor2",
+            "type": {
+              "type": "id",
+              "value": "ConvertVisitorRequestVisitor2"
+            }
+          }
+        ]
       }
     },
     "convert_visitor_request": {
@@ -7791,12 +7873,61 @@
         ]
       }
     },
+    "CreateContactRequest0": {
+      "name": "CreateContactRequest0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "CreateContactRequest1": {
+      "name": "CreateContactRequest1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "CreateContactRequest2": {
+      "name": "CreateContactRequest2",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "create_contact_request": {
       "description": "Payload to create a contact",
       "name": "create_contact_request",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "CreateContactRequest0",
+            "type": {
+              "type": "id",
+              "value": "CreateContactRequest0"
+            }
+          },
+          {
+            "typeName": "CreateContactRequest1",
+            "type": {
+              "type": "id",
+              "value": "CreateContactRequest1"
+            }
+          },
+          {
+            "typeName": "CreateContactRequest2",
+            "type": {
+              "type": "id",
+              "value": "CreateContactRequest2"
+            }
+          }
+        ]
       }
     },
     "CreateConversationRequestFromType": {
@@ -7994,12 +8125,61 @@
         ]
       }
     },
+    "CreateDataEventRequest0": {
+      "name": "CreateDataEventRequest0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "CreateDataEventRequest1": {
+      "name": "CreateDataEventRequest1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "CreateDataEventRequest2": {
+      "name": "CreateDataEventRequest2",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "create_data_event_request": {
       "description": "",
       "name": "create_data_event_request",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "CreateDataEventRequest0",
+            "type": {
+              "type": "id",
+              "value": "CreateDataEventRequest0"
+            }
+          },
+          {
+            "typeName": "CreateDataEventRequest1",
+            "type": {
+              "type": "id",
+              "value": "CreateDataEventRequest1"
+            }
+          },
+          {
+            "typeName": "CreateDataEventRequest2",
+            "type": {
+              "type": "id",
+              "value": "CreateDataEventRequest2"
+            }
+          }
+        ]
       }
     },
     "CreateDataEventSummariesRequestEventSummaries": {
@@ -8128,12 +8308,45 @@
         ]
       }
     },
+    "CreateMessageRequest0": {
+      "name": "CreateMessageRequest0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "CreateMessageRequest1": {
+      "name": "CreateMessageRequest1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "create_message_request": {
       "description": "You can create a message",
       "name": "create_message_request",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "CreateMessageRequest0",
+            "type": {
+              "type": "id",
+              "value": "CreateMessageRequest0"
+            }
+          },
+          {
+            "typeName": "CreateMessageRequest1",
+            "type": {
+              "type": "id",
+              "value": "CreateMessageRequest1"
+            }
+          }
+        ]
       }
     },
     "create_or_update_company_request": {
@@ -16761,12 +16974,45 @@
         ]
       }
     },
+    "UpdateVisitorRequest0": {
+      "name": "UpdateVisitorRequest0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "UpdateVisitorRequest1": {
+      "name": "UpdateVisitorRequest1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "update_visitor_request": {
       "description": "Update an existing visitor.",
       "name": "update_visitor_request",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "UpdateVisitorRequest0",
+            "type": {
+              "type": "id",
+              "value": "UpdateVisitorRequest0"
+            }
+          },
+          {
+            "typeName": "UpdateVisitorRequest1",
+            "type": {
+              "type": "id",
+              "value": "UpdateVisitorRequest1"
+            }
+          }
+        ]
       }
     },
     "VisitorAvatar": {

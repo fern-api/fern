@@ -11,8 +11,8 @@ import { AbstractOperationConverter } from "./AbstractOperationConverter";
 export declare namespace OperationConverter {
     export interface Args extends AbstractOperationConverter.Args {
         idempotent: boolean | undefined;
-        servers?: OpenAPIV3_1.ServerObject[];
         idToAuthScheme?: Record<string, FernIr.AuthScheme>;
+        topLevelServers?: OpenAPIV3_1.ServerObject[];
     }
 
     export interface Output extends AbstractOperationConverter.Output {
@@ -25,9 +25,9 @@ export declare namespace OperationConverter {
 
 export class OperationConverter extends AbstractOperationConverter {
     private readonly idempotent: boolean | undefined;
-    private readonly servers?: OpenAPIV3_1.ServerObject[];
     private readonly streamingExtensionConverter: FernStreamingExtension;
     private readonly idToAuthScheme?: Record<string, FernIr.AuthScheme>;
+    private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
 
     private static readonly AUTHORIZATION_HEADER = "Authorization";
 
@@ -38,13 +38,13 @@ export class OperationConverter extends AbstractOperationConverter {
         method,
         path,
         idempotent,
-        servers,
-        idToAuthScheme
+        idToAuthScheme,
+        topLevelServers
     }: OperationConverter.Args) {
         super({ context, breadcrumbs, operation, method, path });
         this.idempotent = idempotent;
-        this.servers = servers;
         this.idToAuthScheme = idToAuthScheme;
+        this.topLevelServers = topLevelServers;
         this.streamingExtensionConverter = new FernStreamingExtension({
             breadcrumbs: this.breadcrumbs,
             operation: this.operation,
@@ -81,10 +81,9 @@ export class OperationConverter extends AbstractOperationConverter {
             streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
-        const server = this.operation.servers?.[0] ?? this.servers?.[0];
         const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
-        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
         const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
+        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
 
         const endpointId = [];
         if (this.context.namespace != null) {
@@ -94,7 +93,7 @@ export class OperationConverter extends AbstractOperationConverter {
         endpointId.push(method);
 
         const path = constructHttpPath(this.path);
-        const baseUrl = server != null ? ServersConverter.getServerName({ server, context: this.context }) : undefined;
+        const baseUrl = this.getEndpointBaseUrl();
 
         const fernExamples = this.convertExamples({
             pathHead: path.head,
@@ -289,9 +288,23 @@ export class OperationConverter extends AbstractOperationConverter {
         );
     }
 
+    private getEndpointBaseUrl(): string | undefined {
+        const operationServer = this.operation.servers?.[0];
+        if (operationServer == null) {
+            return undefined;
+        }
+        const matchingTopLevelServer = this.topLevelServers?.find((server) => server.url === operationServer.url);
+        const serverToUse = matchingTopLevelServer ?? operationServer;
+
+        return ServersConverter.getServerName({
+            server: serverToUse,
+            context: this.context
+        });
+    }
+
     private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
         return servers.filter(
-            (server) => !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === server.url)
+            (server) => !this.topLevelServers?.some((topLevelServer) => topLevelServer.url === server.url)
         );
     }
 }
