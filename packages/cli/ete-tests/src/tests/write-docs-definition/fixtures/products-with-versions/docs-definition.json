@@ -1,107 +1,4 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`write-docs-definition > petstore 1`] = `
-"{
-  "config": {
-    "title": "fern | Documentation",
-    "root": {
-      "type": "root",
-      "version": "v1",
-      "id": "d0b6b951d313294318002dfa2c33f529a0d58113d36dc35e0a83bb1e0f8638ec",
-      "child": {
-        "type": "unversioned",
-        "id": "c2c16f227d081a4aebef6d1ac541e8dd264d911a6e7de72d7e8c3276a8bcea24",
-        "child": {
-          "type": "sidebarRoot",
-          "id": "552eeeaab28dfd4140385a5c4c28f044254a6f37475dfb26447f2c787110bc0a",
-          "children": [
-            {
-              "id": "fe64a7d21153b7c9d45cca1f07c8a2b403d4d4140692cd59f009878cac447c1a",
-              "type": "apiReference",
-              "title": "API Reference",
-              "apiDefinitionId": "api-2",
-              "paginated": false,
-              "slug": "api-reference",
-              "hideTitle": false,
-              "showErrors": true,
-              "children": [
-                {
-                  "id": "api-2:subpackage_pets",
-                  "type": "apiPackage",
-                  "children": [
-                    {
-                      "id": "api-2:endpoint_pets.listPets",
-                      "type": "endpoint",
-                      "method": "GET",
-                      "endpointId": "endpoint_pets.listPets",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "List all pets",
-                      "slug": "api-reference/pets/list-pets"
-                    },
-                    {
-                      "id": "api-2:endpoint_pets.createPets",
-                      "type": "endpoint",
-                      "method": "POST",
-                      "endpointId": "endpoint_pets.createPets",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "Create a pet",
-                      "slug": "api-reference/pets/create-pets"
-                    },
-                    {
-                      "id": "api-2:endpoint_pets.showPetById",
-                      "type": "endpoint",
-                      "method": "GET",
-                      "endpointId": "endpoint_pets.showPetById",
-                      "apiDefinitionId": "api-2",
-                      "isResponseStream": false,
-                      "title": "Info for a specific pet",
-                      "slug": "api-reference/pets/show-pet-by-id"
-                    }
-                  ],
-                  "title": "Pets",
-                  "slug": "api-reference/pets",
-                  "apiDefinitionId": "api-2"
-                }
-              ],
-              "pointsTo": "api-reference/pets/list-pets"
-            }
-          ]
-        }
-      },
-      "slug": "",
-      "title": "fern | Documentation",
-      "hidden": false
-    },
-    "colorsV3": {
-      "type": "dark",
-      "accentPrimary": {
-        "r": 255,
-        "g": 255,
-        "b": 255,
-        "a": 1
-      },
-      "background": {
-        "r": 0,
-        "g": 0,
-        "b": 0,
-        "a": 1
-      }
-    },
-    "js": {
-      "files": []
-    },
-    "integrations": {},
-    "analyticsConfig": {}
-  },
-  "pages": {},
-  "jsFiles": {}
-}"
-`;
-
-exports[`write-docs-definition > products-with-versions 1`] = `
-"{
+{
   "config": {
     "title": "Products | Documentation",
     "root": {
@@ -648,18 +545,17 @@ exports[`write-docs-definition > products-with-versions 1`] = `
   },
   "pages": {
     "pages/latest.mdx": {
-      "markdown": "---\\ntitle: Welcome to our developer documentation\\nsubtitle: Endpoint Schema Snippet\\nslug: welcome\\n---\\n\\n# Endpoint Schema Snippet\\n\\nLATEST WOO!\\n"
+      "markdown": "---\ntitle: Welcome to our developer documentation\nsubtitle: Endpoint Schema Snippet\nslug: welcome\n---\n\n# Endpoint Schema Snippet\n\nLATEST WOO!\n"
     },
     "pages/concepts.mdx": {
-      "markdown": "---\\ntitle: Key Concepts\\nsubtitle: Resources that will help you get started using the Plant Store API\\nslug: concepts\\ndescription: >-\\n  Learn about the Plant, Store, and User resources that comprise the Plant Store\\n  API.\\n---\\n\\n### Plant\\n\\nA plant can be bought from the store. It has a name, a category, a status, and a list of photo URLs.\\n\\n### Store\\n\\nA store has a collection of plants. It is responsible for managing the inventory of plants. Users place orders for plants from the store.\\n\\n### User\\n\\nA user is a person who buys plants from the store. Also known as plant parents.\\n"
+      "markdown": "---\ntitle: Key Concepts\nsubtitle: Resources that will help you get started using the Plant Store API\nslug: concepts\ndescription: >-\n  Learn about the Plant, Store, and User resources that comprise the Plant Store\n  API.\n---\n\n### Plant\n\nA plant can be bought from the store. It has a name, a category, a status, and a list of photo URLs.\n\n### Store\n\nA store has a collection of plants. It is responsible for managing the inventory of plants. Users place orders for plants from the store.\n\n### User\n\nA user is a person who buys plants from the store. Also known as plant parents.\n"
     },
     "pages/sdks.mdx": {
-      "markdown": "---\\ntitle: SDKs\\nsubtitle: >-\\n  We offer client libraries for your favorite languages, generated by Fern from\\n  your OpenAPI specification file.\\nslug: sdks\\n---\\n\\nWe provide official open-source SDKs (client libraries) for your favorite languages, such as Node.js and Python. These clients make connecting to our API faster and help avoid errors.\\n\\nWe regularly update our SDKs using [Fern](https://buildwithfern.com/?utm_campaign=demo&utm_medium=plantstore&utm_source=markdown_sdks) and adhere to [semantic versioning](https://semver.org/) (semver) principles, so we won't make breaking changes in minor or patch releases.\\n\\n## Official SDKs\\n\\n<CodeBlocks>\\n\\n\`\`\`shell Node\\nbash npm install plantstore-sdk # or yarn add plantstore-sdk\\n\`\`\`\\n\\n\`\`\`shell Python\\nbash pip install plantstore\\n\`\`\`\\n\\n\`\`\`shell Go\\nbash go get -u github.com/fern-demo/plantstore-go\\n\`\`\`\\n\\n\`\`\`xml Java (Maven)\\n<dependency>\\n  <groupId>com.buildwithfern.plantstore</groupId>\\n  <artifactId>plantstore</artifactId>\\n  <version>0.0.1</version>\\n</dependency>\\n\`\`\`\\n\\n\`\`\`gradle Java (Gradle)\\nimplementation 'com.buildwithfern.plantstore:plantstore:0.0.1'\\n\`\`\`\\n\\n\`\`\`shell Ruby\\nbash gem install plantstore\\n\`\`\`\\n\\n\`\`\`shell C#\\nbash nuget install plantstore.net\\n\`\`\`\\n\\n</CodeBlocks>\\n\\n## Request a new SDK\\n\\nIf you'd like to request an SDK for a language that we don't currently support, [let us know](/welcome#get-support). We're always looking to expand our SDK offerings and would love to hear from you.\\n"
+      "markdown": "---\ntitle: SDKs\nsubtitle: >-\n  We offer client libraries for your favorite languages, generated by Fern from\n  your OpenAPI specification file.\nslug: sdks\n---\n\nWe provide official open-source SDKs (client libraries) for your favorite languages, such as Node.js and Python. These clients make connecting to our API faster and help avoid errors.\n\nWe regularly update our SDKs using [Fern](https://buildwithfern.com/?utm_campaign=demo&utm_medium=plantstore&utm_source=markdown_sdks) and adhere to [semantic versioning](https://semver.org/) (semver) principles, so we won't make breaking changes in minor or patch releases.\n\n## Official SDKs\n\n<CodeBlocks>\n\n```shell Node\nbash npm install plantstore-sdk # or yarn add plantstore-sdk\n```\n\n```shell Python\nbash pip install plantstore\n```\n\n```shell Go\nbash go get -u github.com/fern-demo/plantstore-go\n```\n\n```xml Java (Maven)\n<dependency>\n  <groupId>com.buildwithfern.plantstore</groupId>\n  <artifactId>plantstore</artifactId>\n  <version>0.0.1</version>\n</dependency>\n```\n\n```gradle Java (Gradle)\nimplementation 'com.buildwithfern.plantstore:plantstore:0.0.1'\n```\n\n```shell Ruby\nbash gem install plantstore\n```\n\n```shell C#\nbash nuget install plantstore.net\n```\n\n</CodeBlocks>\n\n## Request a new SDK\n\nIf you'd like to request an SDK for a language that we don't currently support, [let us know](/welcome#get-support). We're always looking to expand our SDK offerings and would love to hear from you.\n"
     },
     "pages/welcome.mdx": {
-      "markdown": "---\\ntitle: Welcome to our developer documentation\\nsubtitle: Products with versions\\nslug: welcome\\n---\\n\\n"
+      "markdown": "---\ntitle: Welcome to our developer documentation\nsubtitle: Products with versions\nslug: welcome\n---\n\n"
     }
   },
   "jsFiles": {}
-}"
-`;
+}

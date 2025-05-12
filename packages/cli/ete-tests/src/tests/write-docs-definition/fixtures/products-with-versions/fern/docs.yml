@@ -1,0 +1,30 @@
+instances:
+  - url: https://fern-products-with-versions-snapshot.docs.buildwithfern.com
+title: Products | Documentation
+products:
+  - display-name: Docs
+    icon: fa-regular fa-book
+    subtitle: Interactive documentation
+    path: ./products/product-a/latest.yml
+    slug: product-docs
+    versions:
+      - display-name: V3
+        path: ./products/product-a/latest.yml
+      - display-name: V2
+        path: ./products/product-a/v2.yml
+      - display-name: V1
+        path: ./products/product-a/v1.yml
+
+  - display-name: SDKs
+    icon: fa-solid fa-code
+    subtitle: Generate client libraries
+    path: ./products/product-b/latest.yml
+    slug: product-sdks
+    versions:
+      - display-name: Latest
+        path: ./products/product-b/latest.yml
+      - display-name: V1
+        path: ./products/product-b/v1.yml
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
