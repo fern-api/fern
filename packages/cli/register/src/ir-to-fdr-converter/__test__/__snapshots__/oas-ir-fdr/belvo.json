@@ -20933,31 +20933,6 @@
         ]
       }
     },
-    "CreatePaymentLinkOfpiAmount0": {
-      "name": "CreatePaymentLinkOfpiAmount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "\\d+(?:\\.\\d{1,2})?"
-          }
-        }
-      }
-    },
-    "CreatePaymentLinkOfpiAmount1": {
-      "name": "CreatePaymentLinkOfpiAmount1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
     "CreatePaymentLinkOfpiAmount": {
       "description": "Amount to be paid by your customer. For OFPI, you can send through numbers with up to two decimal points, separated by a `.` period. For example: `1234.12`\n\n**Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `1234.12`.\n",
       "name": "CreatePaymentLinkOfpiAmount",
@@ -20965,17 +20940,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentLinkOfpiAmount0",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentLinkOfpiAmount0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "\\d+(?:\\.\\d{1,2})?"
+              }
             }
           },
           {
-            "typeName": "CreatePaymentLinkOfpiAmount1",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentLinkOfpiAmount1"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           }
         ]
@@ -21130,31 +21108,6 @@
         ]
       }
     },
-    "CreatePaymentLinkPseAmount0": {
-      "name": "CreatePaymentLinkPseAmount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "[1-9]\\d{0,9}"
-          }
-        }
-      }
-    },
-    "CreatePaymentLinkPseAmount1": {
-      "name": "CreatePaymentLinkPseAmount1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "long"
-          }
-        }
-      }
-    },
     "CreatePaymentLinkPseAmount": {
       "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: `350000`.\n\n**Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.\n",
       "name": "CreatePaymentLinkPseAmount",
@@ -21162,17 +21115,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentLinkPseAmount0",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentLinkPseAmount0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "[1-9]\\d{0,9}"
+              }
             }
           },
           {
-            "typeName": "CreatePaymentLinkPseAmount1",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentLinkPseAmount1"
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
             }
           }
         ]
@@ -25246,31 +25202,6 @@
         ]
       }
     },
-    "CreatePaymentIntentPseAmount0": {
-      "name": "CreatePaymentIntentPseAmount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "[1-9]\\d{0,9}"
-          }
-        }
-      }
-    },
-    "CreatePaymentIntentPseAmount1": {
-      "name": "CreatePaymentIntentPseAmount1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "long"
-          }
-        }
-      }
-    },
     "CreatePaymentIntentPseAmount": {
       "description": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: `350000`.\n\n**Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the `amount` as, Belvo returns a string with two decimal points, separated by a period ( `.`). For example, `350000.00`.\n",
       "name": "CreatePaymentIntentPseAmount",
@@ -25278,17 +25209,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CreatePaymentIntentPseAmount0",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentIntentPseAmount0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "[1-9]\\d{0,9}"
+              }
             }
           },
           {
-            "typeName": "CreatePaymentIntentPseAmount1",
             "type": {
-              "type": "id",
-              "value": "CreatePaymentIntentPseAmount1"
+              "type": "primitive",
+              "value": {
+                "type": "long"
+              }
             }
           }
         ]

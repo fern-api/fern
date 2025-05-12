@@ -2742,19 +2742,6 @@
         }
       }
     },
-    "GetHealthResult0": {
-      "description": "Result is 'ok' if healthy.",
-      "name": "GetHealthResult0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "GetHealthResult1": {
       "description": "An error object if unhealthy.",
       "name": "GetHealthResult1",
@@ -2771,11 +2758,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -2796,11 +2784,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -5499,19 +5488,6 @@
         "properties": []
       }
     },
-    "GetTransactionResultTransaction1": {
-      "description": "The transaction details as encoded binary data.",
-      "name": "GetTransactionResultTransaction1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "GetTransactionResultTransaction": {
       "description": "The transaction details, either in JSON format or encoded binary data.",
       "name": "GetTransactionResultTransaction",
@@ -5527,11 +5503,12 @@
             }
           },
           {
-            "typeName": "GetTransactionResultTransaction1",
             "description": "The transaction details as encoded binary data.",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultTransaction1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -5546,30 +5523,6 @@
         "properties": []
       }
     },
-    "GetTransactionResultVersion0": {
-      "name": "GetTransactionResultVersion0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "GetTransactionResultVersion1": {
-      "name": "GetTransactionResultVersion1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "GetTransactionResultVersion": {
       "description": "Transaction version.",
       "name": "GetTransactionResultVersion",
@@ -5577,17 +5530,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultVersion0",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultVersion0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "GetTransactionResultVersion1",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultVersion1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]

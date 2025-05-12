@@ -6092,47 +6092,25 @@
         ]
       }
     },
-    "ValidationErrorLocItems0": {
-      "name": "ValidationErrorLocItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItems1": {
-      "name": "ValidationErrorLocItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItems0",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItems1",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -6453,66 +6431,33 @@
         ]
       }
     },
-    "Expr0": {
-      "name": "Expr0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "Expr1": {
-      "name": "Expr1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "Expr2": {
-      "name": "Expr2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
     "Expr": {
       "name": "Expr",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "Expr0",
             "type": {
-              "type": "id",
-              "value": "Expr0"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "Expr1",
             "type": {
-              "type": "id",
-              "value": "Expr1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "Expr2",
             "type": {
-              "type": "id",
-              "value": "Expr2"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -9317,6 +9262,26 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Bank statements_post_bank_statement_v3_bank_statements_post_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data"
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9351,6 +9316,18 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
