@@ -252,7 +252,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                     name,
                     in: "path",
                     description: parameter.description,
-                    required: parameter.required ?? false
+                    required: parameter.required ?? true
                 }
             });
             const convertedParameter = parameterConverter.convert();
