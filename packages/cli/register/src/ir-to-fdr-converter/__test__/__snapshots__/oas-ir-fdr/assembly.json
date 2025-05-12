@@ -8012,7 +8012,18 @@
           "id": "userId",
           "name": "/{userId}",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "The ID of the user.",
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -8024,9 +8035,12 @@
             {
               "key": "Authentication",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "Authenticate using your AssemblyAI API key."
@@ -8034,22 +8048,15 @@
           ],
           "queryParameters": [
             {
-              "description": "The ID of the user.",
-              "key": "userId",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "description": "The sample rate of the streamed audio.",
               "key": "sample_rate",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
                 }
               }
             },
@@ -8057,9 +8064,12 @@
               "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
               "key": "word_boost",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -8067,9 +8077,12 @@
               "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
               "key": "token",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -8105,16 +8118,11 @@
           "examples": [
             {
               "path": "/{userId}",
-              "pathParameters": {},
-              "queryParameters": {
-                "userId": "userId",
-                "sample_rate": 1,
-                "word_boost": "word_boost",
-                "token": "token"
+              "pathParameters": {
+                "userId": "userId"
               },
-              "headers": {
-                "Authentication": "Authentication"
-              },
+              "queryParameters": {},
+              "headers": {},
               "messages": [
                 {
                   "type": "publish",
