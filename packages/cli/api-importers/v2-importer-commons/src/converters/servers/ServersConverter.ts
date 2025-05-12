@@ -44,9 +44,10 @@ export class ServersConverter extends AbstractConverter<
         }
 
         if (this.endpointLevelServers != null && this.endpointLevelServers.length > 0) {
+            const defaultBaseUrlId = this.getDefaultBaseUrlName();
             const defaultBaseUrl = {
-                id: DEFAULT_BASE_URL_ID,
-                name: this.context.casingsGenerator.generateName(DEFAULT_BASE_URL_ID)
+                id: defaultBaseUrlId,
+                name: this.context.casingsGenerator.generateName(defaultBaseUrlId)
             };
             const endpointUrls = this.endpointLevelServers
                 .map((server) => {
@@ -76,7 +77,7 @@ export class ServersConverter extends AbstractConverter<
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     urls: {
-                        [DEFAULT_BASE_URL_ID]: this.getServerUrl(baseUrl),
+                        [defaultBaseUrlId]: this.getServerUrl(baseUrl),
                         ...Object.fromEntries(endpointLevelServers ?? [])
                     },
                     docs: baseUrl.description
@@ -118,6 +119,16 @@ export class ServersConverter extends AbstractConverter<
         };
     }
 
+    public static getServerExtensionName({
+        server,
+        context
+    }: {
+        server: OpenAPIV3_1.ServerObject;
+        context: AbstractConverterContext<object>;
+    }): string | undefined {
+        return new ServerNameExtension({ breadcrumbs: [], server, context }).convert();
+    }
+
     public static getServerName({
         server,
         context
@@ -125,9 +136,8 @@ export class ServersConverter extends AbstractConverter<
         server: OpenAPIV3_1.ServerObject;
         context: AbstractConverterContext<object>;
     }): string {
-        const serverNameExtension = new ServerNameExtension({ breadcrumbs: [], server, context });
-        const serverName = serverNameExtension.convert();
-        return serverName ?? server.description ?? server.url;
+        const serverExtensionName = ServersConverter.getServerExtensionName({ server, context });
+        return serverExtensionName ?? server.description ?? server.url;
     }
 
     private getServerUrl(server: OpenAPIV3_1.ServerObject): string {
@@ -204,5 +214,17 @@ export class ServersConverter extends AbstractConverter<
                 });
             })
             .filter(isNonNullish);
+    }
+
+    private getDefaultBaseUrlName(): string {
+        if (this.servers == null || this.servers.length === 0 || this.servers[0] == null) {
+            return DEFAULT_BASE_URL_ID;
+        }
+        return (
+            ServersConverter.getServerExtensionName({
+                server: this.servers[0],
+                context: this.context
+            }) ?? DEFAULT_BASE_URL_ID
+        );
     }
 }
