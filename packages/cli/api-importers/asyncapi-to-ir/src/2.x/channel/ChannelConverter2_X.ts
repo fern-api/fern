@@ -42,9 +42,9 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         const displayName = displayNameExtension.convert() ?? this.channelPath;
 
         if (this.channel.parameters) {
-            this.convertQueryParameters({
+            this.convertPathParameters({
                 context: this.context,
-                queryParameters
+                pathParameters
             });
         }
 
@@ -53,7 +53,6 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 context: this.context,
                 headers
             });
-
             this.convertBindingQueryParameters({
                 context: this.context,
                 queryParameters
@@ -230,12 +229,12 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         return undefined;
     }
 
-    private convertQueryParameters({
+    private convertPathParameters({
         context,
-        queryParameters
+        pathParameters
     }: {
         context: AsyncAPIConverterContext;
-        queryParameters: QueryParameter[];
+        pathParameters: PathParameter[];
     }): void {
         for (const [name, parameter] of Object.entries(this.channel.parameters ?? {})) {
             const parameterObject = context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
@@ -251,16 +250,16 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 parameter: {
                     ...parameterObject,
                     name,
-                    in: "query",
+                    in: "path",
                     description: parameter.description,
-                    required: parameter.required ?? false
+                    required: parameter.required ?? true
                 }
             });
             const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
                 this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
-                if (convertedParameter.type === "query") {
-                    queryParameters.push(convertedParameter.parameter);
+                if (convertedParameter.type === "path") {
+                    pathParameters.push(convertedParameter.parameter);
                 }
             }
         }
@@ -325,7 +324,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                         in: "query",
                         required: required.includes(name),
                         schema: resolvedQuery,
-                        description: "description" in resolvedQuery ? resolvedQuery.description : undefined
+                        description: "description" in resolvedQuery ? resolvedQuery.description : undefined,
+                        deprecated: resolvedQuery.deprecated ?? false
                     }
                 });
 

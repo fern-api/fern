@@ -1,3 +1,4 @@
+import { appendFileSync } from "fs";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeId, TypeReference } from "@fern-api/ir-sdk";
@@ -23,7 +24,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             parameter: this.parameter,
             context: this.context
         }).convert();
-        const parameterIsOptional = fernOptional ?? this.parameter.required ?? false;
+        const parameterIsOptional = fernOptional ?? !(this.parameter.required ?? false);
         const maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = this.parameter.schema ?? {
             ...this.parameter,
             type: "string",
@@ -31,6 +32,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             default: this.parameter.default,
             example: this.parameter.example,
             examples: Object.values(this.parameter.examples ?? {}),
+            deprecated: this.parameter.deprecated,
             required: undefined
         };
 
