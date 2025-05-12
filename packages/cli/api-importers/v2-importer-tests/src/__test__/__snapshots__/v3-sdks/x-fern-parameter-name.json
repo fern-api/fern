@@ -404,7 +404,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "pathParameters": {
                     "userId": "foo"
