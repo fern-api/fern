@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .....core.serialization import FieldMetadata
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .parameter import Parameter
@@ -46,4 +46,8 @@ class AssertCorrectnessCheck_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .....commons.types.list_type import ListType  # noqa: E402, F401, I001
+from .....commons.types.map_type import MapType  # noqa: E402, F401, I001
+
 AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
+update_forward_refs(AssertCorrectnessCheck_Custom)

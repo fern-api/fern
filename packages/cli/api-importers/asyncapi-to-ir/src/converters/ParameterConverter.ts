@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { Converters, Extensions } from "@fern-api/v2-importer-commons";
 
 import { AsyncAPIParameter } from "../sharedTypes";
@@ -14,9 +14,9 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         super({ context, breadcrumbs, parameter });
     }
 
-    public async convert(): Promise<Converters.AbstractConverters.AbstractParameterConverter.Output | undefined> {
+    public convert(): Converters.AbstractConverters.AbstractParameterConverter.Output | undefined {
         let typeReference: TypeReference | undefined;
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+        let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         const fernOptional = new Extensions.FernOptionalExtension({
             breadcrumbs: this.breadcrumbs,
@@ -41,7 +41,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             schemaOrReference: maybeParameterSchema,
             wrapAsOptional: parameterIsOptional
         });
-        const converted = await schemaOrReferenceConverter.convert();
+        const converted = schemaOrReferenceConverter.convert();
         if (converted != null) {
             typeReference = converted.type;
             inlinedTypes = converted.inlinedTypes ?? {};

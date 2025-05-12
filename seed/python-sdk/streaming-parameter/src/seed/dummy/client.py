@@ -109,7 +109,7 @@ class DummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    def stream() -> HttpResponse[
+                    def _stream() -> HttpResponse[
                         typing.Iterator[typing.Union[typing.Iterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -142,7 +142,7 @@ class DummyClient:
                             status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
                         )
 
-                    yield stream()
+                    yield _stream()
 
             return stream_generator()
         else:
@@ -266,7 +266,7 @@ class AsyncDummyClient:
                     omit=OMIT,
                 ) as _response:
 
-                    async def stream() -> AsyncHttpResponse[
+                    async def _stream() -> AsyncHttpResponse[
                         typing.AsyncIterator[typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]]
                     ]:
                         try:
@@ -299,7 +299,7 @@ class AsyncDummyClient:
                             status_code=_response.status_code, headers=dict(_response.headers), body=_response_json
                         )
 
-                    yield await stream()
+                    yield await _stream()
 
             return stream_generator()
         else:

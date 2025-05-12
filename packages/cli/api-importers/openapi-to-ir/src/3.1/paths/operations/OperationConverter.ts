@@ -17,6 +17,7 @@ export declare namespace OperationConverter {
 
     export interface Output extends AbstractOperationConverter.Output {
         endpoint: HttpEndpoint;
+        audiences: string[];
         errors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration>;
         servers?: OpenAPIV3_1.ServerObject[];
     }
@@ -51,7 +52,7 @@ export class OperationConverter extends AbstractOperationConverter {
         });
     }
 
-    public async convert(): Promise<OperationConverter.Output | undefined> {
+    public convert(): OperationConverter.Output | undefined {
         const httpMethod = this.convertHttpMethod();
         if (httpMethod == null) {
             return undefined;
@@ -62,28 +63,28 @@ export class OperationConverter extends AbstractOperationConverter {
 
         const streamingExtension = this.streamingExtensionConverter.convert();
 
-        const { headers, pathParameters, queryParameters } = await this.convertParameters({
+        const { headers, pathParameters, queryParameters } = this.convertParameters({
             breadcrumbs: [...this.breadcrumbs, "parameters"]
         });
 
-        const convertedRequestBody = await this.convertRequestBody({
+        const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: [...this.breadcrumbs, "requestBody"],
             group,
             method
         });
         const requestBody = convertedRequestBody != null ? convertedRequestBody.value : undefined;
 
-        const convertedResponseBody = await this.convertResponseBody({
+        const convertedResponseBody = this.convertResponseBody({
             breadcrumbs: [...this.breadcrumbs, "responses"],
             group,
             method,
             streamingExtension
         });
         const response = convertedResponseBody != null ? convertedResponseBody.value : undefined;
-        const endpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
-        const server = this.operation.servers?.[0] ?? this.servers?.[0] ?? this.context.spec.servers?.[0];
-
-        // TODO: We'll need to perform conversion for the top-level errors as well.
+        const server = this.operation.servers?.[0] ?? this.servers?.[0];
+        const convertedEndpointErrors = convertedResponseBody != null ? convertedResponseBody.errors : [];
+        const errors = convertedEndpointErrors.map((convertedError) => convertedError.error);
+        const topLevelErrors: Record<FernIr.ErrorId, FernIr.ErrorDeclaration> = {};
 
         const endpointId = [];
         if (this.context.namespace != null) {
@@ -110,9 +111,34 @@ export class OperationConverter extends AbstractOperationConverter {
             headers.push(...securityHeaders);
         }
 
+        for (const convertedError of convertedEndpointErrors) {
+            const responseError = convertedError.error;
+            const responseErrorType = convertedError.errorType;
+            const errorId = responseError.error.errorId;
+            topLevelErrors[errorId] = {
+                name: responseError.error,
+                displayName: convertedError.displayName,
+                discriminantValue: {
+                    name: responseError.error.name,
+                    wireValue: errorId
+                },
+                type: responseErrorType,
+                statusCode: convertedError.statusCode,
+                docs: responseError.docs,
+                examples: [],
+                // TODO: Add v2 examples
+                v2Examples: undefined
+            };
+        }
+
         return {
+            audiences:
+                this.context.getAudiences({
+                    operation: this.operation,
+                    breadcrumbs: this.breadcrumbs
+                }) ?? [],
             group,
-            errors: {},
+            errors: topLevelErrors,
             endpoint: {
                 id: endpointId.join("."),
                 displayName: this.operation.summary,
@@ -128,9 +154,9 @@ export class OperationConverter extends AbstractOperationConverter {
                 requestBody,
                 sdkRequest: undefined,
                 response,
-                errors: endpointErrors,
+                errors,
                 auth: this.operation.security != null || this.context.spec.security != null,
-                availability: await this.context.getAvailability({
+                availability: this.context.getAvailability({
                     node: this.operation,
                     breadcrumbs: this.breadcrumbs
                 }),
@@ -150,10 +176,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 source: HttpEndpointSource.openapi()
             },
             inlinedTypes: this.inlinedTypes,
-            servers: this.operation.servers?.filter(
-                (endpointServer) =>
-                    !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === endpointServer.url)
-            )
+            servers: this.filterOutTopLevelServers(this.operation.servers ?? [])
         };
     }
 
@@ -170,6 +193,13 @@ export class OperationConverter extends AbstractOperationConverter {
             if (authScheme == null) {
                 continue;
             }
+            const baseHeader: Omit<FernIr.HttpHeader, "name"> = {
+                valueType: AbstractConverter.STRING,
+                availability: undefined,
+                docs: undefined,
+                env: undefined,
+                v2Examples: undefined
+            };
 
             switch (authScheme.type) {
                 case "bearer":
@@ -178,11 +208,7 @@ export class OperationConverter extends AbstractOperationConverter {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
                 case "basic":
@@ -191,21 +217,13 @@ export class OperationConverter extends AbstractOperationConverter {
                             name: this.context.casingsGenerator.generateName(OperationConverter.AUTHORIZATION_HEADER),
                             wireValue: OperationConverter.AUTHORIZATION_HEADER
                         },
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
                 case "header":
                     headers.push({
                         name: authScheme.name,
-                        valueType: AbstractConverter.STRING,
-                        availability: undefined,
-                        docs: undefined,
-                        env: undefined,
-                        v2Examples: undefined
+                        ...baseHeader
                     });
                     break;
             }
@@ -268,6 +286,12 @@ export class OperationConverter extends AbstractOperationConverter {
                     }
                 ];
             })
+        );
+    }
+
+    private filterOutTopLevelServers(servers: OpenAPIV3_1.ServerObject[]): OpenAPIV3_1.ServerObject[] {
+        return servers.filter(
+            (server) => !this.context.spec.servers?.some((topLevelServer) => topLevelServer.url === server.url)
         );
     }
 }

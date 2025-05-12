@@ -1,8 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ContainerType, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
+import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace ArraySchemaConverter {
@@ -12,7 +13,8 @@ export declare namespace ArraySchemaConverter {
 
     export interface Output {
         typeReference: TypeReference;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 }
 
@@ -29,26 +31,35 @@ export class ArraySchemaConverter extends AbstractConverter<
         this.schema = schema;
     }
 
-    public async convert(): Promise<ArraySchemaConverter.Output | undefined> {
-        if (this.schema.items == null) {
-            return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, inlinedTypes: {} };
+    public convert(): ArraySchemaConverter.Output | undefined {
+        if (this.schema.items != null) {
+            const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, "items"],
+                schemaOrReference: this.schema.items
+            });
+
+            const convertedSchema = schemaOrReferenceConverter.convert();
+            if (convertedSchema != null) {
+                const referencedTypes = new Set<string>();
+                for (const type of convertedSchema.schema?.typeDeclaration.referencedTypes ?? []) {
+                    referencedTypes.add(type);
+                }
+                if (convertedSchema.inlinedTypes != null) {
+                    Object.values(convertedSchema.inlinedTypes).forEach((type) => {
+                        type.typeDeclaration.referencedTypes.forEach((type) => {
+                            referencedTypes.add(type);
+                        });
+                    });
+                }
+                return {
+                    typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
+                    referencedTypes,
+                    inlinedTypes: convertedSchema.inlinedTypes
+                };
+            }
         }
 
-        const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
-            context: this.context,
-            breadcrumbs: [...this.breadcrumbs, "items"],
-            schemaOrReference: this.schema.items
-        });
-
-        const convertedSchema = await schemaOrReferenceConverter.convert();
-        if (convertedSchema != null) {
-            return {
-                typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
-                inlinedTypes: convertedSchema.inlinedTypes
-            };
-        }
-
-        // fallback
-        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, inlinedTypes: {} };
+        return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, referencedTypes: new Set(), inlinedTypes: {} };
     }
 }

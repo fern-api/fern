@@ -4835,9 +4835,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../commons/ir-utils
       '@fern-api/v2-importer-commons':
         specifier: workspace:*
         version: link:../v2-importer-commons
@@ -5373,9 +5370,6 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
-      chalk:
-        specifier: ^5.3.0
-        version: 5.4.1
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -7266,6 +7260,9 @@ importers:
 
   packages/cli/generation/local-generation/docker-utils:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -7321,6 +7318,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../../configuration
+      '@fern-api/configuration-loader':
+        specifier: workspace:*
+        version: link:../../../configuration-loader
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../../../core
@@ -8027,8 +8027,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.136.0-eff7d5b45
-        version: 0.136.0-eff7d5b45(encoding@0.1.13)
+        specifier: 0.136.4-de2a61d1a
+        version: 0.136.4-de2a61d1a(encoding@0.1.13)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -10827,6 +10827,9 @@ packages:
 
   '@fern-fern/fdr-cjs-sdk@0.136.0-eff7d5b45':
     resolution: {integrity: sha512-Osi6d3ghKFXfr7GrHdf2C6riSsGL6qFtj8gso+2u+3xATmEy0UvR0RQTCClZH+AYXUM6ALtNSLEPyJAS8DTiSg==}
+
+  '@fern-fern/fdr-cjs-sdk@0.136.4-de2a61d1a':
+    resolution: {integrity: sha512-LBY+pYxKtKTHCWreyiS7rX1Bvu0QQpkmb8kSAboEMqxjQabyird5OT8ix1KTboeWxCuBgf8Otl2RzemQmbdGNA==}
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     resolution: {integrity: sha512-jrZUZ6oIA64LHtrv77xEq0X7qJhT9xRMGWhKcLjIUArMsD7h6KMWUHVdoB/1MP0Mz/uL/E2xmM31SOgJicpIcA==}
@@ -17461,7 +17464,7 @@ snapshots:
   '@babel/helper-module-imports@7.25.9':
     dependencies:
       '@babel/traverse': 7.23.2
-      '@babel/types': 7.26.3
+      '@babel/types': 7.27.1
     transitivePeerDependencies:
       - supports-color
 
@@ -17530,7 +17533,7 @@ snapshots:
   '@babel/helpers@7.26.0':
     dependencies:
       '@babel/template': 7.25.9
-      '@babel/types': 7.26.3
+      '@babel/types': 7.27.1
 
   '@babel/parser@7.26.3':
     dependencies:
@@ -18084,7 +18087,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.0
       '@babel/helper-plugin-utils': 7.25.9
-      '@babel/types': 7.26.3
+      '@babel/types': 7.27.1
       esutils: 2.0.3
 
   '@babel/preset-typescript@7.26.0(@babel/core@7.26.0)':
@@ -18105,8 +18108,8 @@ snapshots:
   '@babel/template@7.25.9':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/parser': 7.26.3
-      '@babel/types': 7.26.3
+      '@babel/parser': 7.27.1
+      '@babel/types': 7.27.1
 
   '@babel/template@7.27.1':
     dependencies:
@@ -18814,6 +18817,18 @@ snapshots:
   '@fern-fern/docs-config@0.0.80': {}
 
   '@fern-fern/fdr-cjs-sdk@0.136.0-eff7d5b45(encoding@0.1.13)':
+    dependencies:
+      form-data: 4.0.1
+      formdata-node: 6.0.3
+      js-base64: 3.7.7
+      node-fetch: 2.7.0(encoding@0.1.13)
+      qs: 6.14.0
+      readable-stream: 4.5.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/fdr-cjs-sdk@0.136.4-de2a61d1a(encoding@0.1.13)':
     dependencies:
       form-data: 4.0.1
       formdata-node: 6.0.3
@@ -20261,7 +20276,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.3
+      '@babel/parser': 7.27.1
       '@vue/shared': 3.5.13
       entities: 4.5.0
       estree-walker: 2.0.2

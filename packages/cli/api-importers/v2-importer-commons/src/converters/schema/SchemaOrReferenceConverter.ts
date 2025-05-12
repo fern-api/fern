@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { Availability, ContainerType, TypeDeclaration, TypeReference } from "@fern-api/ir-sdk";
+import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { SchemaConverter } from "./SchemaConverter";
@@ -15,8 +15,8 @@ export declare namespace SchemaOrReferenceConverter {
 
     export interface Output {
         type: TypeReference;
-        schema?: TypeDeclaration;
-        inlinedTypes: Record<string, TypeDeclaration>;
+        schema?: SchemaConverter.ConvertedSchema;
+        inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
         availability?: Availability;
     }
 }
@@ -45,19 +45,19 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         this.wrapAsNullable = wrapAsNullable;
     }
 
-    public async convert(): Promise<SchemaOrReferenceConverter.Output | undefined> {
+    public convert(): SchemaOrReferenceConverter.Output | undefined {
         if (this.context.isReferenceObject(this.schemaOrReference)) {
             return this.convertReferenceObject({ reference: this.schemaOrReference });
         }
         return this.convertSchemaObject({ schema: this.schemaOrReference });
     }
 
-    private async convertReferenceObject({
+    private convertReferenceObject({
         reference
     }: {
         reference: OpenAPIV3_1.ReferenceObject;
-    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
-        const response = await this.context.convertReferenceToTypeReference(reference);
+    }): SchemaOrReferenceConverter.Output | undefined {
+        const response = this.context.convertReferenceToTypeReference(reference);
         if (!response.ok) {
             this.context.errorCollector.collect({
                 message: `Failed to convert reference to type reference: ${reference.$ref}`,
@@ -71,11 +71,11 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         };
     }
 
-    private async convertSchemaObject({
+    private convertSchemaObject({
         schema
     }: {
         schema: OpenAPIV3_1.SchemaObject;
-    }): Promise<SchemaOrReferenceConverter.Output | undefined> {
+    }): SchemaOrReferenceConverter.Output | undefined {
         const schemaId = this.schemaIdOverride ?? this.context.convertBreadcrumbsToName(this.breadcrumbs);
         const schemaConverter = new SchemaConverter({
             context: this.context,
@@ -83,27 +83,27 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
             schema,
             id: schemaId
         });
-        const availability = await this.context.getAvailability({
+        const availability = this.context.getAvailability({
             node: schema,
             breadcrumbs: this.breadcrumbs
         });
-        const convertedSchema = await schemaConverter.convert();
+        const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
-            const convertedSchemaShape = convertedSchema.typeDeclaration.shape;
+            const convertedSchemaShape = convertedSchema.convertedSchema.typeDeclaration.shape;
             if (convertedSchemaShape.type === "alias") {
                 return {
                     type: this.wrapTypeReference(convertedSchemaShape.aliasOf),
-                    schema: convertedSchema.typeDeclaration,
+                    schema: convertedSchema.convertedSchema,
                     inlinedTypes: convertedSchema.inlinedTypes,
                     availability
                 };
             }
             return {
                 type: this.wrapTypeReference(this.context.createNamedTypeReference(schemaId)),
-                schema: convertedSchema.typeDeclaration,
+                schema: convertedSchema.convertedSchema,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.typeDeclaration
+                    [schemaId]: convertedSchema.convertedSchema
                 },
                 availability
             };

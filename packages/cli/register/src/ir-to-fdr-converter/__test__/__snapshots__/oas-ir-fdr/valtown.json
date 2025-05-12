@@ -2366,8 +2366,9 @@
         ]
       }
     },
-    "vals_evalPost_Response_400": {
-      "name": "vals_evalPost_Response_400",
+    "BadRequestError": {
+      "description": "The function throw an error or had invalid syntax",
+      "name": "BadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2376,7 +2377,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchemaType"
+              "value": "V1EvalCodeGetResponsesSchemaType"
             }
           },
           {
@@ -2500,32 +2501,6 @@
         "values": [
           {
             "value": "error"
-          }
-        ]
-      }
-    },
-    "vals_evalGet_Response_400": {
-      "description": "The function throw an error or had invalid syntax",
-      "name": "vals_evalGet_Response_400",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "type",
-            "valueType": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaType"
-            }
-          },
-          {
-            "key": "error",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
           }
         ]
       }
@@ -3271,6 +3246,24 @@
         "properties": [
           {
             "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "InternalServerError": {
+      "name": "InternalServerError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "error",
             "valueType": {
               "type": "primitive",
               "value": {
@@ -5489,7 +5482,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "BadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Default Response",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -5598,7 +5605,21 @@
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "BadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "The function throw an error or had invalid syntax",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7154,7 +7175,23 @@
             "statusCode": 200,
             "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Default Response",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -7355,7 +7392,21 @@
             "statusCode": 200,
             "description": "Successfully sent email"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "InternalServerError"
+                }
+              },
+              "statusCode": 500,
+              "description": "Default Response",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

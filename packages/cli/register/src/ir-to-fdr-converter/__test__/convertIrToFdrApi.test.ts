@@ -97,16 +97,11 @@ describe("fdr", async () => {
 
 describe("oas-ir-fdr", async () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../api-importers/v2-importer-tests/src/__test__");
-    const V3_IGNORED_FIXTURES = ["vellum"];
     const FIXTURES_DIR = path.join(TEST_DEFINITIONS_DIR, "fixtures");
     const filterFixture = process.env.TEST_FIXTURE;
 
     for (const fixture of await readdir(FIXTURES_DIR, { withFileTypes: true })) {
-        if (
-            !fixture.isDirectory() ||
-            (filterFixture && fixture.name !== filterFixture) ||
-            V3_IGNORED_FIXTURES.includes(fixture.name)
-        ) {
+        if (!fixture.isDirectory() || (filterFixture && fixture.name !== filterFixture)) {
             continue;
         }
 

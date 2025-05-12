@@ -1,9 +1,9 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { AbstractGoGeneratorContext, FileLocation } from "@fern-api/go-ast";
+import { AbstractGoGeneratorContext } from "@fern-api/go-ast";
 import { GoProject } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -25,7 +25,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
-            ir: this.ir
+            ir
         });
     }
 }

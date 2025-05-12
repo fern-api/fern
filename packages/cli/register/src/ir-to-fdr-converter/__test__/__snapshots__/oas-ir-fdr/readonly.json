@@ -31,7 +31,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "settings",
@@ -59,7 +60,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -86,7 +88,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "createdAt",
@@ -96,7 +99,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -147,7 +151,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "apiKey",
@@ -156,7 +161,8 @@
               "value": {
                 "type": "string"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -191,7 +197,8 @@
               "value": {
                 "type": "integer"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -201,7 +208,8 @@
                 "type": "string",
                 "format": "date-time"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -217,7 +225,8 @@
               "value": {
                 "type": "integer"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -243,8 +252,8 @@
         ]
       }
     },
-    "validateAUserObject_Response_400": {
-      "name": "validateAUserObject_Response_400",
+    "BadRequestError": {
+      "name": "BadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -543,7 +552,21 @@
           "statusCode": 200,
           "description": "User object validated successfully"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "value": "BadRequestError"
+              }
+            },
+            "statusCode": 400,
+            "description": "Invalid user object",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",

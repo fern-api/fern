@@ -302,6 +302,10 @@ export class IrGraph {
         }
     }
 
+    public getFilteredEndpoints(): Set<EndpointId> {
+        return this.endpointsNeededForAudience;
+    }
+
     public addWebhook(filepath: FernFilepath, webhook: Webhook, rawWebhook?: RawSchemas.WebhookSchema): void {
         const webhookId = webhook.id;
         if (webhookId == null) {

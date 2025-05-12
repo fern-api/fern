@@ -1,5 +1,63 @@
 - changelogEntry: 
   - summary: |
+      Add support for `propertyAccess` in the IR -> FDR SDK conversion.
+    type: feat
+  irVersion: 57
+  version: 0.60.29
+
+- changelogEntry: 
+  - summary: |
+      Fixed an issue where local generation could produce invalid build files (like pyproject.toml) when 
+      GitHub configuration was missing a repository URL. The CLI now ensures a repository URL is always set when possible.
+    type: fix
+  irVersion: 57
+  version: 0.60.28
+
+- changelogEntry: 
+  - summary: |
+      Added support for using Podman as a container runner with `fern generate --runner podman`. 
+      This allows users to run generators locally using Podman instead of Docker.
+    type: fix
+  irVersion: 57
+  version: 0.60.27
+
+- changelogEntry: 
+  - summary: |
+      The v3 parser now supports filtering endpoints by audiences.
+    type: fix
+  irVersion: 57
+  version: 0.60.26
+
+- changelogEntry: 
+  - summary: |
+      Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
+    type: fix
+  irVersion: 57
+  version: 0.60.25
+
+- changelogEntry: 
+  - summary: |
+      Endpoints that are referenced for oauth can now have special characters (previously the CLI would throw on this).
+    type: fix
+  irVersion: 57
+  version: 0.60.24
+
+- changelogEntry: 
+  - summary: |
+      Auto-detect the `expires_in` property if it exists in the OAuth response.
+    type: chore
+  irVersion: 57
+  version: 0.60.23
+
+- changelogEntry: 
+  - summary: |
+      Parse and render errors in the OpenAPI V3 parser.
+    type: chore
+  irVersion: 57
+  version: 0.60.22
+
+- changelogEntry: 
+  - summary: |
       OpenAPI V3 parser handles converting converting schemas that have a singular non-object `allOf`.
     type: chore
   irVersion: 57

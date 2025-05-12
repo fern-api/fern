@@ -22,7 +22,7 @@ export declare namespace HttpEndpointReferenceParser {
  */
 export class HttpEndpointReferenceParser {
     //eslint-disable-next-line
-    private REFERENCE_REGEX = /^(GET|POST|PUT|DELETE|PATCH)\s(\/[a-zA-Z0-9\/{}_-]*)$/;
+    private REFERENCE_REGEX = /^(GET|POST|PUT|DELETE|PATCH)\s(\/\S*)$/;
 
     public validate(reference: string): HttpEndpointReferenceParser.ValidationResult {
         const validFormat = this.REFERENCE_REGEX.test(reference);

@@ -44199,29 +44199,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "BadRequestError",
+                  "originalName": "EvalPostRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "badRequestError",
-                    "safeName": "badRequestError"
+                    "unsafeName": "evalPostRequestBadRequestError",
+                    "safeName": "evalPostRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "bad_request_error",
-                    "safeName": "bad_request_error"
+                    "unsafeName": "eval_post_request_bad_request_error",
+                    "safeName": "eval_post_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "BAD_REQUEST_ERROR",
-                    "safeName": "BAD_REQUEST_ERROR"
+                    "unsafeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "BadRequestError",
-                    "safeName": "BadRequestError"
+                    "unsafeName": "EvalPostRequestBadRequestError",
+                    "safeName": "EvalPostRequestBadRequestError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "BadRequestError"
+                "errorId": "EvalPostRequestBadRequestError"
               },
               "docs": "Default Response"
             }
@@ -44670,29 +44670,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "BadRequestError",
+                  "originalName": "EvalGetRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "badRequestError",
-                    "safeName": "badRequestError"
+                    "unsafeName": "evalGetRequestBadRequestError",
+                    "safeName": "evalGetRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "bad_request_error",
-                    "safeName": "bad_request_error"
+                    "unsafeName": "eval_get_request_bad_request_error",
+                    "safeName": "eval_get_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "BAD_REQUEST_ERROR",
-                    "safeName": "BAD_REQUEST_ERROR"
+                    "unsafeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "BadRequestError",
-                    "safeName": "BadRequestError"
+                    "unsafeName": "EvalGetRequestBadRequestError",
+                    "safeName": "EvalGetRequestBadRequestError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "BadRequestError"
+                "errorId": "EvalGetRequestBadRequestError"
               },
               "docs": "The function throw an error or had invalid syntax"
             }
@@ -57094,29 +57094,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "ValsCancelRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "valsCancelRequestNotFoundError",
+                    "safeName": "valsCancelRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "vals_cancel_request_not_found_error",
+                    "safeName": "vals_cancel_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ValsCancelRequestNotFoundError",
+                    "safeName": "ValsCancelRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "ValsCancelRequestNotFoundError"
               },
               "docs": "Default Response"
             }
@@ -58158,29 +58158,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "EmailsSendRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "emailsSendRequestInternalServerError",
+                    "safeName": "emailsSendRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "emails_send_request_internal_server_error",
+                    "safeName": "emails_send_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "EmailsSendRequestInternalServerError",
+                    "safeName": "EmailsSendRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "EmailsSendRequestInternalServerError"
               },
               "docs": "Default Response"
             }
@@ -58852,35 +58852,61 @@
     }
   },
   "errors": {
-    "BadRequestError": {
+    "EvalPostRequestBadRequestError": {
       "name": {
         "name": {
-          "originalName": "BadRequestError",
+          "originalName": "EvalPostRequestBadRequestError",
           "camelCase": {
-            "unsafeName": "badRequestError",
-            "safeName": "badRequestError"
+            "unsafeName": "evalPostRequestBadRequestError",
+            "safeName": "evalPostRequestBadRequestError"
           },
           "snakeCase": {
-            "unsafeName": "bad_request_error",
-            "safeName": "bad_request_error"
+            "unsafeName": "eval_post_request_bad_request_error",
+            "safeName": "eval_post_request_bad_request_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "BAD_REQUEST_ERROR",
-            "safeName": "BAD_REQUEST_ERROR"
+            "unsafeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "BadRequestError",
-            "safeName": "BadRequestError"
+            "unsafeName": "EvalPostRequestBadRequestError",
+            "safeName": "EvalPostRequestBadRequestError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "BadRequestError"
+        "errorId": "EvalPostRequestBadRequestError"
       },
       "displayName": "BadRequestError",
       "discriminantValue": {
+        "name": {
+          "originalName": "EvalPostRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "evalPostRequestBadRequestError",
+            "safeName": "evalPostRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "eval_post_request_bad_request_error",
+            "safeName": "eval_post_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EVAL_POST_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "EvalPostRequestBadRequestError",
+            "safeName": "EvalPostRequestBadRequestError"
+          }
+        },
+        "wireValue": "EvalPostRequestBadRequestError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
         "name": {
           "originalName": "BadRequestError",
           "camelCase": {
@@ -58900,7 +58926,63 @@
             "safeName": "BadRequestError"
           }
         },
-        "wireValue": "BadRequestError"
+        "typeId": "BadRequestError",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 400,
+      "docs": "Default Response",
+      "examples": []
+    },
+    "EvalGetRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "EvalGetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "evalGetRequestBadRequestError",
+            "safeName": "evalGetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "eval_get_request_bad_request_error",
+            "safeName": "eval_get_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "EvalGetRequestBadRequestError",
+            "safeName": "EvalGetRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "EvalGetRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "EvalGetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "evalGetRequestBadRequestError",
+            "safeName": "evalGetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "eval_get_request_bad_request_error",
+            "safeName": "eval_get_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EVAL_GET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "EvalGetRequestBadRequestError",
+            "safeName": "EvalGetRequestBadRequestError"
+          }
+        },
+        "wireValue": "EvalGetRequestBadRequestError"
       },
       "type": {
         "fernFilepath": {
@@ -58934,55 +59016,55 @@
       "docs": "The function throw an error or had invalid syntax",
       "examples": []
     },
-    "InternalServerError": {
+    "EmailsSendRequestInternalServerError": {
       "name": {
         "name": {
-          "originalName": "InternalServerError",
+          "originalName": "EmailsSendRequestInternalServerError",
           "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
+            "unsafeName": "emailsSendRequestInternalServerError",
+            "safeName": "emailsSendRequestInternalServerError"
           },
           "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
+            "unsafeName": "emails_send_request_internal_server_error",
+            "safeName": "emails_send_request_internal_server_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
+            "unsafeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
+            "unsafeName": "EmailsSendRequestInternalServerError",
+            "safeName": "EmailsSendRequestInternalServerError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "InternalServerError"
+        "errorId": "EmailsSendRequestInternalServerError"
       },
       "displayName": "InternalServerError",
       "discriminantValue": {
         "name": {
-          "originalName": "InternalServerError",
+          "originalName": "EmailsSendRequestInternalServerError",
           "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
+            "unsafeName": "emailsSendRequestInternalServerError",
+            "safeName": "emailsSendRequestInternalServerError"
           },
           "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
+            "unsafeName": "emails_send_request_internal_server_error",
+            "safeName": "emails_send_request_internal_server_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
+            "unsafeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EMAILS_SEND_REQUEST_INTERNAL_SERVER_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
+            "unsafeName": "EmailsSendRequestInternalServerError",
+            "safeName": "EmailsSendRequestInternalServerError"
           }
         },
-        "wireValue": "InternalServerError"
+        "wireValue": "EmailsSendRequestInternalServerError"
       },
       "type": {
         "fernFilepath": {
@@ -59016,55 +59098,55 @@
       "docs": "Default Response",
       "examples": []
     },
-    "NotFoundError": {
+    "ValsCancelRequestNotFoundError": {
       "name": {
         "name": {
-          "originalName": "NotFoundError",
+          "originalName": "ValsCancelRequestNotFoundError",
           "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
+            "unsafeName": "valsCancelRequestNotFoundError",
+            "safeName": "valsCancelRequestNotFoundError"
           },
           "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
+            "unsafeName": "vals_cancel_request_not_found_error",
+            "safeName": "vals_cancel_request_not_found_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
+            "unsafeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
+            "unsafeName": "ValsCancelRequestNotFoundError",
+            "safeName": "ValsCancelRequestNotFoundError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "NotFoundError"
+        "errorId": "ValsCancelRequestNotFoundError"
       },
       "displayName": "NotFoundError",
       "discriminantValue": {
         "name": {
-          "originalName": "NotFoundError",
+          "originalName": "ValsCancelRequestNotFoundError",
           "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
+            "unsafeName": "valsCancelRequestNotFoundError",
+            "safeName": "valsCancelRequestNotFoundError"
           },
           "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
+            "unsafeName": "vals_cancel_request_not_found_error",
+            "safeName": "vals_cancel_request_not_found_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
+            "unsafeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_CANCEL_REQUEST_NOT_FOUND_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
+            "unsafeName": "ValsCancelRequestNotFoundError",
+            "safeName": "ValsCancelRequestNotFoundError"
           }
         },
-        "wireValue": "NotFoundError"
+        "wireValue": "ValsCancelRequestNotFoundError"
       },
       "type": {
         "primitive": {

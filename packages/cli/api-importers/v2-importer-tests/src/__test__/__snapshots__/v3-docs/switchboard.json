@@ -15278,87 +15278,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "Extensions-get-by-idRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "extensionsGetByIdRequestNotFoundError",
+                    "safeName": "extensionsGetByIdRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "extensions_get_by_id_request_not_found_error",
+                    "safeName": "extensions_get_by_id_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ExtensionsGetByIdRequestNotFoundError",
+                    "safeName": "ExtensionsGetByIdRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "Extensions-get-by-idRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "Extensions-get-by-idRequestUnprocessableEntityError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "extensionsGetByIdRequestUnprocessableEntityError",
+                    "safeName": "extensionsGetByIdRequestUnprocessableEntityError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "extensions_get_by_id_request_unprocessable_entity_error",
+                    "safeName": "extensions_get_by_id_request_unprocessable_entity_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ExtensionsGetByIdRequestUnprocessableEntityError",
+                    "safeName": "ExtensionsGetByIdRequestUnprocessableEntityError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "UnprocessableEntityError"
+                "errorId": "Extensions-get-by-idRequestUnprocessableEntityError"
               },
               "docs": "Unprocessable Entity"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "Extensions-get-by-idRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "extensionsGetByIdRequestInternalServerError",
+                    "safeName": "extensionsGetByIdRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "extensions_get_by_id_request_internal_server_error",
+                    "safeName": "extensions_get_by_id_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "ExtensionsGetByIdRequestInternalServerError",
+                    "safeName": "ExtensionsGetByIdRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "Extensions-get-by-idRequestInternalServerError"
               },
               "docs": "Internal Server Error"
             }
@@ -24573,87 +24573,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "Profiles-get-by-idRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "profilesGetByIdRequestNotFoundError",
+                    "safeName": "profilesGetByIdRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "profiles_get_by_id_request_not_found_error",
+                    "safeName": "profiles_get_by_id_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "ProfilesGetByIdRequestNotFoundError",
+                    "safeName": "ProfilesGetByIdRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "Profiles-get-by-idRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "Profiles-get-by-idRequestUnprocessableEntityError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "profilesGetByIdRequestUnprocessableEntityError",
+                    "safeName": "profilesGetByIdRequestUnprocessableEntityError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "profiles_get_by_id_request_unprocessable_entity_error",
+                    "safeName": "profiles_get_by_id_request_unprocessable_entity_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "ProfilesGetByIdRequestUnprocessableEntityError",
+                    "safeName": "ProfilesGetByIdRequestUnprocessableEntityError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "UnprocessableEntityError"
+                "errorId": "Profiles-get-by-idRequestUnprocessableEntityError"
               },
               "docs": "Unprocessable Entity"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "Profiles-get-by-idRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "profilesGetByIdRequestInternalServerError",
+                    "safeName": "profilesGetByIdRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "profiles_get_by_id_request_internal_server_error",
+                    "safeName": "profiles_get_by_id_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "ProfilesGetByIdRequestInternalServerError",
+                    "safeName": "ProfilesGetByIdRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "Profiles-get-by-idRequestInternalServerError"
               },
               "docs": "Internal Server Error"
             }
@@ -27731,87 +27731,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "Sessions-listRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "sessionsListRequestNotFoundError",
+                    "safeName": "sessionsListRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "sessions_list_request_not_found_error",
+                    "safeName": "sessions_list_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "SessionsListRequestNotFoundError",
+                    "safeName": "SessionsListRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "Sessions-listRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "Sessions-listRequestUnprocessableEntityError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "sessionsListRequestUnprocessableEntityError",
+                    "safeName": "sessionsListRequestUnprocessableEntityError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "sessions_list_request_unprocessable_entity_error",
+                    "safeName": "sessions_list_request_unprocessable_entity_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "SessionsListRequestUnprocessableEntityError",
+                    "safeName": "SessionsListRequestUnprocessableEntityError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "UnprocessableEntityError"
+                "errorId": "Sessions-listRequestUnprocessableEntityError"
               },
               "docs": "Unprocessable Entity"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "Sessions-listRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "sessionsListRequestInternalServerError",
+                    "safeName": "sessionsListRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "sessions_list_request_internal_server_error",
+                    "safeName": "sessions_list_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "SessionsListRequestInternalServerError",
+                    "safeName": "SessionsListRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "Sessions-listRequestInternalServerError"
               },
               "docs": "Internal Server Error"
             }
@@ -38484,87 +38484,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "Sessions-getInfoRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "sessionsGetInfoRequestNotFoundError",
+                    "safeName": "sessionsGetInfoRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "sessions_get_info_request_not_found_error",
+                    "safeName": "sessions_get_info_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "SessionsGetInfoRequestNotFoundError",
+                    "safeName": "SessionsGetInfoRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "Sessions-getInfoRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "Sessions-getInfoRequestUnprocessableEntityError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "sessionsGetInfoRequestUnprocessableEntityError",
+                    "safeName": "sessionsGetInfoRequestUnprocessableEntityError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "sessions_get_info_request_unprocessable_entity_error",
+                    "safeName": "sessions_get_info_request_unprocessable_entity_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "SessionsGetInfoRequestUnprocessableEntityError",
+                    "safeName": "SessionsGetInfoRequestUnprocessableEntityError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "UnprocessableEntityError"
+                "errorId": "Sessions-getInfoRequestUnprocessableEntityError"
               },
               "docs": "Unprocessable Entity"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "Sessions-getInfoRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "sessionsGetInfoRequestInternalServerError",
+                    "safeName": "sessionsGetInfoRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "sessions_get_info_request_internal_server_error",
+                    "safeName": "sessions_get_info_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "SessionsGetInfoRequestInternalServerError",
+                    "safeName": "SessionsGetInfoRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "Sessions-getInfoRequestInternalServerError"
               },
               "docs": "Internal Server Error"
             }
@@ -42763,87 +42763,87 @@
             {
               "error": {
                 "name": {
-                  "originalName": "NotFoundError",
+                  "originalName": "Sessions-eventsRequestNotFoundError",
                   "camelCase": {
-                    "unsafeName": "notFoundError",
-                    "safeName": "notFoundError"
+                    "unsafeName": "sessionsEventsRequestNotFoundError",
+                    "safeName": "sessionsEventsRequestNotFoundError"
                   },
                   "snakeCase": {
-                    "unsafeName": "not_found_error",
-                    "safeName": "not_found_error"
+                    "unsafeName": "sessions_events_request_not_found_error",
+                    "safeName": "sessions_events_request_not_found_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "NOT_FOUND_ERROR",
-                    "safeName": "NOT_FOUND_ERROR"
+                    "unsafeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "NotFoundError",
-                    "safeName": "NotFoundError"
+                    "unsafeName": "SessionsEventsRequestNotFoundError",
+                    "safeName": "SessionsEventsRequestNotFoundError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "NotFoundError"
+                "errorId": "Sessions-eventsRequestNotFoundError"
               },
               "docs": "Not Found"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "UnprocessableEntityError",
+                  "originalName": "Sessions-eventsRequestUnprocessableEntityError",
                   "camelCase": {
-                    "unsafeName": "unprocessableEntityError",
-                    "safeName": "unprocessableEntityError"
+                    "unsafeName": "sessionsEventsRequestUnprocessableEntityError",
+                    "safeName": "sessionsEventsRequestUnprocessableEntityError"
                   },
                   "snakeCase": {
-                    "unsafeName": "unprocessable_entity_error",
-                    "safeName": "unprocessable_entity_error"
+                    "unsafeName": "sessions_events_request_unprocessable_entity_error",
+                    "safeName": "sessions_events_request_unprocessable_entity_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-                    "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+                    "unsafeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "UnprocessableEntityError",
-                    "safeName": "UnprocessableEntityError"
+                    "unsafeName": "SessionsEventsRequestUnprocessableEntityError",
+                    "safeName": "SessionsEventsRequestUnprocessableEntityError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "UnprocessableEntityError"
+                "errorId": "Sessions-eventsRequestUnprocessableEntityError"
               },
               "docs": "Unprocessable Entity"
             },
             {
               "error": {
                 "name": {
-                  "originalName": "InternalServerError",
+                  "originalName": "Sessions-eventsRequestInternalServerError",
                   "camelCase": {
-                    "unsafeName": "internalServerError",
-                    "safeName": "internalServerError"
+                    "unsafeName": "sessionsEventsRequestInternalServerError",
+                    "safeName": "sessionsEventsRequestInternalServerError"
                   },
                   "snakeCase": {
-                    "unsafeName": "internal_server_error",
-                    "safeName": "internal_server_error"
+                    "unsafeName": "sessions_events_request_internal_server_error",
+                    "safeName": "sessions_events_request_internal_server_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "INTERNAL_SERVER_ERROR",
-                    "safeName": "INTERNAL_SERVER_ERROR"
+                    "unsafeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "InternalServerError",
-                    "safeName": "InternalServerError"
+                    "unsafeName": "SessionsEventsRequestInternalServerError",
+                    "safeName": "SessionsEventsRequestInternalServerError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "InternalServerError"
+                "errorId": "Sessions-eventsRequestInternalServerError"
               },
               "docs": "Internal Server Error"
             }
@@ -56925,55 +56925,55 @@
     }
   },
   "errors": {
-    "NotFoundError": {
+    "Extensions-get-by-idRequestNotFoundError": {
       "name": {
         "name": {
-          "originalName": "NotFoundError",
+          "originalName": "Extensions-get-by-idRequestNotFoundError",
           "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
+            "unsafeName": "extensionsGetByIdRequestNotFoundError",
+            "safeName": "extensionsGetByIdRequestNotFoundError"
           },
           "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
+            "unsafeName": "extensions_get_by_id_request_not_found_error",
+            "safeName": "extensions_get_by_id_request_not_found_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
+            "unsafeName": "ExtensionsGetByIdRequestNotFoundError",
+            "safeName": "ExtensionsGetByIdRequestNotFoundError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "NotFoundError"
+        "errorId": "Extensions-get-by-idRequestNotFoundError"
       },
       "displayName": "NotFoundError",
       "discriminantValue": {
         "name": {
-          "originalName": "NotFoundError",
+          "originalName": "Extensions-get-by-idRequestNotFoundError",
           "camelCase": {
-            "unsafeName": "notFoundError",
-            "safeName": "notFoundError"
+            "unsafeName": "extensionsGetByIdRequestNotFoundError",
+            "safeName": "extensionsGetByIdRequestNotFoundError"
           },
           "snakeCase": {
-            "unsafeName": "not_found_error",
-            "safeName": "not_found_error"
+            "unsafeName": "extensions_get_by_id_request_not_found_error",
+            "safeName": "extensions_get_by_id_request_not_found_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "NOT_FOUND_ERROR",
-            "safeName": "NOT_FOUND_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "NotFoundError",
-            "safeName": "NotFoundError"
+            "unsafeName": "ExtensionsGetByIdRequestNotFoundError",
+            "safeName": "ExtensionsGetByIdRequestNotFoundError"
           }
         },
-        "wireValue": "NotFoundError"
+        "wireValue": "Extensions-get-by-idRequestNotFoundError"
       },
       "type": {
         "fernFilepath": {
@@ -57007,55 +57007,55 @@
       "docs": "Not Found",
       "examples": []
     },
-    "UnprocessableEntityError": {
+    "Extensions-get-by-idRequestUnprocessableEntityError": {
       "name": {
         "name": {
-          "originalName": "UnprocessableEntityError",
+          "originalName": "Extensions-get-by-idRequestUnprocessableEntityError",
           "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
+            "unsafeName": "extensionsGetByIdRequestUnprocessableEntityError",
+            "safeName": "extensionsGetByIdRequestUnprocessableEntityError"
           },
           "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
+            "unsafeName": "extensions_get_by_id_request_unprocessable_entity_error",
+            "safeName": "extensions_get_by_id_request_unprocessable_entity_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
+            "unsafeName": "ExtensionsGetByIdRequestUnprocessableEntityError",
+            "safeName": "ExtensionsGetByIdRequestUnprocessableEntityError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "UnprocessableEntityError"
+        "errorId": "Extensions-get-by-idRequestUnprocessableEntityError"
       },
       "displayName": "UnprocessableEntityError",
       "discriminantValue": {
         "name": {
-          "originalName": "UnprocessableEntityError",
+          "originalName": "Extensions-get-by-idRequestUnprocessableEntityError",
           "camelCase": {
-            "unsafeName": "unprocessableEntityError",
-            "safeName": "unprocessableEntityError"
+            "unsafeName": "extensionsGetByIdRequestUnprocessableEntityError",
+            "safeName": "extensionsGetByIdRequestUnprocessableEntityError"
           },
           "snakeCase": {
-            "unsafeName": "unprocessable_entity_error",
-            "safeName": "unprocessable_entity_error"
+            "unsafeName": "extensions_get_by_id_request_unprocessable_entity_error",
+            "safeName": "extensions_get_by_id_request_unprocessable_entity_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "UNPROCESSABLE_ENTITY_ERROR",
-            "safeName": "UNPROCESSABLE_ENTITY_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "UnprocessableEntityError",
-            "safeName": "UnprocessableEntityError"
+            "unsafeName": "ExtensionsGetByIdRequestUnprocessableEntityError",
+            "safeName": "ExtensionsGetByIdRequestUnprocessableEntityError"
           }
         },
-        "wireValue": "UnprocessableEntityError"
+        "wireValue": "Extensions-get-by-idRequestUnprocessableEntityError"
       },
       "type": {
         "fernFilepath": {
@@ -57089,55 +57089,1039 @@
       "docs": "Unprocessable Entity",
       "examples": []
     },
-    "InternalServerError": {
+    "Extensions-get-by-idRequestInternalServerError": {
       "name": {
         "name": {
-          "originalName": "InternalServerError",
+          "originalName": "Extensions-get-by-idRequestInternalServerError",
           "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
+            "unsafeName": "extensionsGetByIdRequestInternalServerError",
+            "safeName": "extensionsGetByIdRequestInternalServerError"
           },
           "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
+            "unsafeName": "extensions_get_by_id_request_internal_server_error",
+            "safeName": "extensions_get_by_id_request_internal_server_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
+            "unsafeName": "ExtensionsGetByIdRequestInternalServerError",
+            "safeName": "ExtensionsGetByIdRequestInternalServerError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "InternalServerError"
+        "errorId": "Extensions-get-by-idRequestInternalServerError"
       },
       "displayName": "InternalServerError",
       "discriminantValue": {
         "name": {
-          "originalName": "InternalServerError",
+          "originalName": "Extensions-get-by-idRequestInternalServerError",
           "camelCase": {
-            "unsafeName": "internalServerError",
-            "safeName": "internalServerError"
+            "unsafeName": "extensionsGetByIdRequestInternalServerError",
+            "safeName": "extensionsGetByIdRequestInternalServerError"
           },
           "snakeCase": {
-            "unsafeName": "internal_server_error",
-            "safeName": "internal_server_error"
+            "unsafeName": "extensions_get_by_id_request_internal_server_error",
+            "safeName": "extensions_get_by_id_request_internal_server_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "INTERNAL_SERVER_ERROR",
-            "safeName": "INTERNAL_SERVER_ERROR"
+            "unsafeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EXTENSIONS_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "InternalServerError",
-            "safeName": "InternalServerError"
+            "unsafeName": "ExtensionsGetByIdRequestInternalServerError",
+            "safeName": "ExtensionsGetByIdRequestInternalServerError"
           }
         },
-        "wireValue": "InternalServerError"
+        "wireValue": "Extensions-get-by-idRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "Profiles-get-by-idRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestNotFoundError",
+            "safeName": "profilesGetByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_not_found_error",
+            "safeName": "profiles_get_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestNotFoundError",
+            "safeName": "ProfilesGetByIdRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Profiles-get-by-idRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestNotFoundError",
+            "safeName": "profilesGetByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_not_found_error",
+            "safeName": "profiles_get_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestNotFoundError",
+            "safeName": "ProfilesGetByIdRequestNotFoundError"
+          }
+        },
+        "wireValue": "Profiles-get-by-idRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "Profiles-get-by-idRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestUnprocessableEntityError",
+            "safeName": "profilesGetByIdRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_unprocessable_entity_error",
+            "safeName": "profiles_get_by_id_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestUnprocessableEntityError",
+            "safeName": "ProfilesGetByIdRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Profiles-get-by-idRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestUnprocessableEntityError",
+            "safeName": "profilesGetByIdRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_unprocessable_entity_error",
+            "safeName": "profiles_get_by_id_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestUnprocessableEntityError",
+            "safeName": "ProfilesGetByIdRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "Profiles-get-by-idRequestUnprocessableEntityError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 422,
+      "docs": "Unprocessable Entity",
+      "examples": []
+    },
+    "Profiles-get-by-idRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestInternalServerError",
+            "safeName": "profilesGetByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_internal_server_error",
+            "safeName": "profiles_get_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestInternalServerError",
+            "safeName": "ProfilesGetByIdRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Profiles-get-by-idRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Profiles-get-by-idRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "profilesGetByIdRequestInternalServerError",
+            "safeName": "profilesGetByIdRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "profiles_get_by_id_request_internal_server_error",
+            "safeName": "profiles_get_by_id_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "PROFILES_GET_BY_ID_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ProfilesGetByIdRequestInternalServerError",
+            "safeName": "ProfilesGetByIdRequestInternalServerError"
+          }
+        },
+        "wireValue": "Profiles-get-by-idRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "Sessions-listRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-listRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestNotFoundError",
+            "safeName": "sessionsListRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_not_found_error",
+            "safeName": "sessions_list_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestNotFoundError",
+            "safeName": "SessionsListRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-listRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-listRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestNotFoundError",
+            "safeName": "sessionsListRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_not_found_error",
+            "safeName": "sessions_list_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestNotFoundError",
+            "safeName": "SessionsListRequestNotFoundError"
+          }
+        },
+        "wireValue": "Sessions-listRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "Sessions-listRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-listRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestUnprocessableEntityError",
+            "safeName": "sessionsListRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_unprocessable_entity_error",
+            "safeName": "sessions_list_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestUnprocessableEntityError",
+            "safeName": "SessionsListRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-listRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-listRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestUnprocessableEntityError",
+            "safeName": "sessionsListRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_unprocessable_entity_error",
+            "safeName": "sessions_list_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestUnprocessableEntityError",
+            "safeName": "SessionsListRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "Sessions-listRequestUnprocessableEntityError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 422,
+      "docs": "Unprocessable Entity",
+      "examples": []
+    },
+    "Sessions-listRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-listRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestInternalServerError",
+            "safeName": "sessionsListRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_internal_server_error",
+            "safeName": "sessions_list_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestInternalServerError",
+            "safeName": "SessionsListRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-listRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-listRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsListRequestInternalServerError",
+            "safeName": "sessionsListRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_list_request_internal_server_error",
+            "safeName": "sessions_list_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_LIST_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsListRequestInternalServerError",
+            "safeName": "SessionsListRequestInternalServerError"
+          }
+        },
+        "wireValue": "Sessions-listRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "Sessions-getInfoRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestNotFoundError",
+            "safeName": "sessionsGetInfoRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_not_found_error",
+            "safeName": "sessions_get_info_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestNotFoundError",
+            "safeName": "SessionsGetInfoRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-getInfoRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestNotFoundError",
+            "safeName": "sessionsGetInfoRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_not_found_error",
+            "safeName": "sessions_get_info_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestNotFoundError",
+            "safeName": "SessionsGetInfoRequestNotFoundError"
+          }
+        },
+        "wireValue": "Sessions-getInfoRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "Sessions-getInfoRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestUnprocessableEntityError",
+            "safeName": "sessionsGetInfoRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_unprocessable_entity_error",
+            "safeName": "sessions_get_info_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestUnprocessableEntityError",
+            "safeName": "SessionsGetInfoRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-getInfoRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestUnprocessableEntityError",
+            "safeName": "sessionsGetInfoRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_unprocessable_entity_error",
+            "safeName": "sessions_get_info_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestUnprocessableEntityError",
+            "safeName": "SessionsGetInfoRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "Sessions-getInfoRequestUnprocessableEntityError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 422,
+      "docs": "Unprocessable Entity",
+      "examples": []
+    },
+    "Sessions-getInfoRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestInternalServerError",
+            "safeName": "sessionsGetInfoRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_internal_server_error",
+            "safeName": "sessions_get_info_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestInternalServerError",
+            "safeName": "SessionsGetInfoRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-getInfoRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-getInfoRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsGetInfoRequestInternalServerError",
+            "safeName": "sessionsGetInfoRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_get_info_request_internal_server_error",
+            "safeName": "sessions_get_info_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_GET_INFO_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsGetInfoRequestInternalServerError",
+            "safeName": "SessionsGetInfoRequestInternalServerError"
+          }
+        },
+        "wireValue": "Sessions-getInfoRequestInternalServerError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 500,
+      "docs": "Internal Server Error",
+      "examples": []
+    },
+    "Sessions-eventsRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-eventsRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestNotFoundError",
+            "safeName": "sessionsEventsRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_not_found_error",
+            "safeName": "sessions_events_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestNotFoundError",
+            "safeName": "SessionsEventsRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-eventsRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-eventsRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestNotFoundError",
+            "safeName": "sessionsEventsRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_not_found_error",
+            "safeName": "sessions_events_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestNotFoundError",
+            "safeName": "SessionsEventsRequestNotFoundError"
+          }
+        },
+        "wireValue": "Sessions-eventsRequestNotFoundError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 404,
+      "docs": "Not Found",
+      "examples": []
+    },
+    "Sessions-eventsRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-eventsRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestUnprocessableEntityError",
+            "safeName": "sessionsEventsRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_unprocessable_entity_error",
+            "safeName": "sessions_events_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestUnprocessableEntityError",
+            "safeName": "SessionsEventsRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-eventsRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-eventsRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestUnprocessableEntityError",
+            "safeName": "sessionsEventsRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_unprocessable_entity_error",
+            "safeName": "sessions_events_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestUnprocessableEntityError",
+            "safeName": "SessionsEventsRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "Sessions-eventsRequestUnprocessableEntityError"
+      },
+      "type": {
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "name": {
+          "originalName": "ErrorEnvelope",
+          "camelCase": {
+            "unsafeName": "errorEnvelope",
+            "safeName": "errorEnvelope"
+          },
+          "snakeCase": {
+            "unsafeName": "error_envelope",
+            "safeName": "error_envelope"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ERROR_ENVELOPE",
+            "safeName": "ERROR_ENVELOPE"
+          },
+          "pascalCase": {
+            "unsafeName": "ErrorEnvelope",
+            "safeName": "ErrorEnvelope"
+          }
+        },
+        "typeId": "ErrorEnvelope",
+        "inline": false,
+        "type": "named"
+      },
+      "statusCode": 422,
+      "docs": "Unprocessable Entity",
+      "examples": []
+    },
+    "Sessions-eventsRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "Sessions-eventsRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestInternalServerError",
+            "safeName": "sessionsEventsRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_internal_server_error",
+            "safeName": "sessions_events_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestInternalServerError",
+            "safeName": "SessionsEventsRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "Sessions-eventsRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "Sessions-eventsRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "sessionsEventsRequestInternalServerError",
+            "safeName": "sessionsEventsRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "sessions_events_request_internal_server_error",
+            "safeName": "sessions_events_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "SESSIONS_EVENTS_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "SessionsEventsRequestInternalServerError",
+            "safeName": "SessionsEventsRequestInternalServerError"
+          }
+        },
+        "wireValue": "Sessions-eventsRequestInternalServerError"
       },
       "type": {
         "fernFilepath": {

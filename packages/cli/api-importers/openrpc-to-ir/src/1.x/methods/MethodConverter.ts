@@ -12,19 +12,15 @@ import {
     JsonResponse,
     JsonResponseBody,
     PathParameter,
-    PrimitiveTypeV2,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
-import { OpenRPCConverter } from "../OpenRPCConverter";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1";
 
 export declare namespace MethodConverter {
-    export interface Args extends OpenRPCConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenRPCConverterContext3_1> {
         method: MethodObject;
         pathParameters?: PathParameter[];
         queryParameters?: FernIr.QueryParameter[];
@@ -33,19 +29,12 @@ export declare namespace MethodConverter {
 
     export interface Output {
         endpoint: HttpEndpoint;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        audiences: string[];
+        inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 
 export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_1, MethodConverter.Output> {
-    public static STRING = TypeReference.primitive({
-        v1: "STRING",
-        v2: PrimitiveTypeV2.string({
-            default: undefined,
-            validation: undefined
-        })
-    });
-
     private readonly method: MethodObject;
     private readonly pathParameters: PathParameter[];
     private readonly queryParameters: FernIr.QueryParameter[];
@@ -66,8 +55,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         this.headers = headers;
     }
 
-    public async convert(): Promise<MethodConverter.Output | undefined> {
-        let inlinedTypes: Record<TypeId, TypeDeclaration> = {};
+    public convert(): MethodConverter.Output | undefined {
+        let inlinedTypes: Record<TypeId, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         // Construct the path with all path parameters
         let pathString = "";
@@ -80,7 +69,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         for (const [index, param] of this.method.params.entries()) {
             let resolvedParam: ContentDescriptorObject;
             if (this.context.isReferenceObject(param)) {
-                const resolvedParamResponse = await this.context.resolveReference<ContentDescriptorObject>(param);
+                const resolvedParamResponse = this.context.resolveReference<ContentDescriptorObject>(param);
                 if (resolvedParamResponse.resolved) {
                     resolvedParam = resolvedParamResponse.value;
                 } else {
@@ -96,11 +85,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 context: this.context,
                 schemaOrReference: resolvedParam.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
             });
-            const schema = await parameterSchemaConverter.convert();
+            const schema = parameterSchemaConverter.convert();
             if (schema != null) {
                 requestProperties.push({
                     docs: resolvedParam.description,
-                    availability: await this.context.getAvailability({
+                    availability: this.context.getAvailability({
                         node: param,
                         breadcrumbs: [...this.breadcrumbs, "parameters"]
                     }),
@@ -109,7 +98,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         wireValue: resolvedParam.name
                     }),
                     valueType: schema.type,
-                    v2Examples: schema.schema?.v2Examples
+                    v2Examples: schema.schema?.typeDeclaration.v2Examples
                 });
                 inlinedTypes = {
                     ...schema.inlinedTypes,
@@ -121,7 +110,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         let jsonResponseBody: JsonResponseBody | undefined = undefined;
         if (this.method.result != null) {
-            const resolvedResult = await this.context.resolveMaybeReference<ContentDescriptorObject>({
+            const resolvedResult = this.context.resolveMaybeReference<ContentDescriptorObject>({
                 schemaOrReference: this.method.result,
                 breadcrumbs: [...this.breadcrumbs, "result"]
             });
@@ -133,21 +122,27 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     schemaOrReference: resolvedResult.schema as OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject
                 });
                 const schemaId = [...this.method.name, "Result"].join("_");
-                const schema = await resultSchemaConverter.convert();
-                if (schema != null) {
+                const convertedResultSchema = resultSchemaConverter.convert();
+                if (convertedResultSchema != null) {
                     jsonResponseBody = {
                         docs: resolvedResult.description,
-                        v2Examples: schema?.schema?.v2Examples,
-                        responseBodyType: schema.type
+                        v2Examples: convertedResultSchema.schema?.typeDeclaration.v2Examples,
+                        responseBodyType: convertedResultSchema.type
                     };
                     inlinedTypes = {
-                        ...schema.inlinedTypes,
+                        ...convertedResultSchema.inlinedTypes,
                         ...inlinedTypes,
-                        ...(schema.schema != null ? { [schemaId]: schema.schema } : {})
+                        ...(convertedResultSchema.schema != null ? { [schemaId]: convertedResultSchema.schema } : {})
                     };
                 }
             }
         }
+
+        const audiences =
+            this.context.getAudiences({
+                operation: this.method,
+                breadcrumbs: this.breadcrumbs
+            }) ?? [];
 
         const endpoint: HttpEndpoint = {
             baseUrl: undefined,
@@ -189,7 +184,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             autogeneratedExamples: [],
             v2Examples: {
                 autogeneratedExamples: {},
-                userSpecifiedExamples: await this.convertExamples()
+                userSpecifiedExamples: this.convertExamples()
             },
             transport: undefined,
             availability: undefined,
@@ -198,11 +193,12 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
         return {
             endpoint,
+            audiences,
             inlinedTypes
         };
     }
 
-    private async convertExamples(): Promise<Record<string, FernIr.V2HttpEndpointExample>> {
+    private convertExamples(): Record<string, FernIr.V2HttpEndpointExample> {
         const examples: Record<string, FernIr.V2HttpEndpointExample> = {};
 
         // If there are examples in the method, convert them
@@ -211,7 +207,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             for (const example of this.method.examples ?? []) {
                 let resolvedExample: ExamplePairingObject;
                 if (this.context.isReferenceObject(example)) {
-                    const resolvedExampleResponse = await this.context.resolveReference<ExamplePairingObject>(example);
+                    const resolvedExampleResponse = this.context.resolveReference<ExamplePairingObject>(example);
                     if (resolvedExampleResponse.resolved) {
                         resolvedExample = resolvedExampleResponse.value;
                     } else {
@@ -225,7 +221,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 let resolvedResult: ExampleObject | undefined;
                 if (resolvedExample.result) {
                     if (this.context.isReferenceObject(resolvedExample.result)) {
-                        const resolvedResultResponse = await this.context.resolveReference<ExampleObject>(
+                        const resolvedResultResponse = this.context.resolveReference<ExampleObject>(
                             resolvedExample.result
                         );
                         if (resolvedResultResponse.resolved) {
@@ -244,7 +240,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     resolvedParams = [];
                     for (const param of resolvedExample.params) {
                         if (this.context.isReferenceObject(param)) {
-                            const resolvedParamResponse = await this.context.resolveReference<ExampleObject>(param);
+                            const resolvedParamResponse = this.context.resolveReference<ExampleObject>(param);
                             if (resolvedParamResponse.resolved) {
                                 resolvedParams.push(resolvedParamResponse.value);
                             } else {

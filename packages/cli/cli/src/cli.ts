@@ -12,6 +12,7 @@ import {
     getFernDirectory,
     loadProjectConfig
 } from "@fern-api/configuration-loader";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
@@ -500,6 +501,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Throw an error (rather than logging a warning) if there are broken links in the docs.",
                     default: false
+                })
+                .option("runner", {
+                    choices: ["docker", "podman"],
+                    description: "Choose the container runtime to use for local generation.",
+                    default: undefined
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -519,10 +525,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     groupName: argv.group,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local,
+                    useLocalDocker: argv.local || argv.runner != null,
                     preview: argv.preview,
                     mode: argv.mode,
-                    force: argv.force
+                    force: argv.force,
+                    runner: argv.runner as ContainerRunner
                 });
             }
             if (argv.docs != null) {
@@ -562,7 +569,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 useLocalDocker: argv.local,
                 preview: argv.preview,
                 mode: argv.mode,
-                force: argv.force
+                force: argv.force,
+                runner: argv.runner as ContainerRunner
             });
         }
     );

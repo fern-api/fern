@@ -12993,7 +12993,8 @@
                 "type": "string",
                 "format": "uuid"
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "account",
@@ -29645,7 +29646,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29793,7 +29811,72 @@
             "statusCode": 201,
             "description": "Created"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiLinksPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29938,7 +30021,72 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiLinksPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30090,7 +30238,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30246,7 +30427,88 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiLinksIdPutResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30360,7 +30622,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30486,7 +30781,88 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiLinksIdPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request error",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31100,7 +31476,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31415,7 +31808,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiAccountsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31597,7 +32071,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiAccountsPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31785,7 +32340,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31922,7 +32510,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32755,7 +33376,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32995,7 +33633,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTransactionsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33225,7 +33944,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTransactionsPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33457,7 +34257,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33638,7 +34471,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34084,7 +34950,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34281,7 +35164,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiBalancesPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34481,7 +35445,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiBalancesPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34683,7 +35728,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34834,7 +35912,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35108,7 +36219,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35327,7 +36455,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35696,7 +36857,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35857,7 +37035,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiOwnersPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36019,7 +37278,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiOwnersPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36187,7 +37527,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36304,7 +37677,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36788,7 +38194,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37029,7 +38452,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiInvoicesPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37275,7 +38763,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiInvoicesPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37613,7 +39182,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37808,7 +39410,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38162,7 +39797,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -38697,7 +40349,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTaxReturnsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39241,7 +40958,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39730,7 +41480,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -39980,7 +41763,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40250,7 +42050,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTaxStatusPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40522,7 +42387,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40749,7 +42647,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -40999,7 +42930,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41141,7 +43089,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTaxComplianceStatusPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41285,7 +43298,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41384,7 +43430,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41569,7 +43648,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41777,7 +43873,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiIncomesPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -41983,7 +44160,88 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiIncomesPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -42202,7 +44460,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -42371,7 +44662,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -42583,7 +44907,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -42932,7 +45273,88 @@
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiRecurringExpensesPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -43280,7 +45702,88 @@
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiRecurringExpensesPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -43636,7 +46139,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -43942,7 +46478,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -44160,7 +46729,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -44384,7 +46970,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "InvestmentsPortfoliosPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -44603,7 +47254,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "InvestmentsPortfoliosPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -44831,7 +47547,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -45012,7 +47761,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -45341,7 +48123,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -45525,7 +48324,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ReceivablesTransactionsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -45715,7 +48579,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -45856,7 +48753,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -46041,7 +48971,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -46318,7 +49265,88 @@
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiRiskInsightsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -46594,7 +49622,88 @@
             "statusCode": 200,
             "description": "Ok (when save_data=false)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiRiskInsightsPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -46879,7 +49988,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -47114,7 +50256,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -47338,7 +50513,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -47525,7 +50717,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTaxRetentionsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -47721,7 +50978,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -47862,7 +51152,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -48190,7 +51513,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -48467,7 +51807,72 @@
             "statusCode": 200,
             "description": "Ok (when `save_data=false`)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiTaxDeclarationsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -48733,7 +52138,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -48964,7 +52402,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -49096,7 +52567,24 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -49341,7 +52829,88 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiEmploymentRecordsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "TokenRequiredResponse"
+                  }
+                }
+              },
+              "statusCode": 428,
+              "description": "MFA Token Required",
+              "name": "PreconditionError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -49589,7 +53158,40 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -49788,7 +53390,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -49880,7 +53515,72 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiEnrichIncomesPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "AccessToResourceDenied"
+                  }
+                }
+              },
+              "statusCode": 403,
+              "description": "Access to Belvo API denied",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50138,7 +53838,72 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "ApiCategorizationPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "AccessToResourceDenied"
+                  }
+                }
+              },
+              "statusCode": 403,
+              "description": "Access to Belvo API denied",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50349,7 +54114,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50448,7 +54230,40 @@
             "statusCode": 201,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsSecretKeysPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout Error",
+              "name": "RequestTimeoutError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50544,7 +54359,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50662,7 +54494,72 @@
             "statusCode": 201,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsWebhooksPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout Error",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50785,7 +54682,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -50884,7 +54814,40 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication to Belvo API failed",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -51078,7 +55041,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -51250,7 +55230,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -51531,7 +55544,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -51680,7 +55710,56 @@
             "statusCode": 201,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsCustomersPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -51815,7 +55894,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -52119,7 +56231,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -52258,7 +56387,72 @@
             "statusCode": 201,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsBankAccountsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout Error",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -52427,7 +56621,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -52694,7 +56921,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -52823,7 +57067,72 @@
             "statusCode": 201,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsPaymentLinksPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout Error",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -53231,7 +57540,40 @@
             "statusCode": 200,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -53849,7 +58191,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -54292,7 +58651,72 @@
             "statusCode": 201,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsPaymentIntentsPostResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "RequestTimeoutError"
+                  }
+                }
+              },
+              "statusCode": 408,
+              "description": "Request Timeout Error",
+              "name": "RequestTimeoutError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnexpectedError"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "Unexpected Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -54785,7 +59209,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -55260,7 +59717,40 @@
             "statusCode": 200,
             "description": "OK (Created)"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "PaymentsPaymentIntentsIdPatchResponsesSchemaItems"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "400 Bad Request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -56021,7 +60511,24 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -56151,7 +60658,40 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "UnauthorizedError"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "Authentication Error",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemType": {
+                    "type": "id",
+                    "value": "NotFoundError"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found Error",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",

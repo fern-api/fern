@@ -1,5 +1,5 @@
 import { FernToken, createOrganizationIfDoesNotExist } from "@fern-api/auth";
-import { Values } from "@fern-api/core-utils";
+import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -25,7 +25,8 @@ export async function generateAPIWorkspaces({
     useLocalDocker,
     preview,
     mode,
-    force
+    force,
+    runner
 }: {
     project: Project;
     cliContext: CliContext;
@@ -37,6 +38,7 @@ export async function generateAPIWorkspaces({
     preview: boolean;
     mode: GenerationMode | undefined;
     force: boolean;
+    runner: ContainerRunner | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -117,7 +119,8 @@ export async function generateAPIWorkspaces({
                     useLocalDocker,
                     keepDocker,
                     absolutePathToPreview,
-                    mode
+                    mode,
+                    runner
                 });
             });
         })

@@ -1,8 +1,9 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { ContainerType, PrimitiveTypeV2, Type, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
+import { SchemaConverter } from "./SchemaConverter";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter";
 
 export declare namespace MapSchemaConverter {
@@ -12,17 +13,10 @@ export declare namespace MapSchemaConverter {
 
     export interface Output {
         type: Type;
-        inlinedTypes: Record<TypeId, TypeDeclaration>;
+        referencedTypes: Set<string>;
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 }
-
-const STRING = TypeReference.primitive({
-    v1: "STRING",
-    v2: PrimitiveTypeV2.string({
-        default: undefined,
-        validation: undefined
-    })
-});
 
 export class MapSchemaConverter extends AbstractConverter<AbstractConverterContext<object>, MapSchemaConverter.Output> {
     private readonly schema: OpenAPIV3_1.SchemaObject;
@@ -32,26 +26,35 @@ export class MapSchemaConverter extends AbstractConverter<AbstractConverterConte
         this.schema = schema;
     }
 
-    public async convert(): Promise<MapSchemaConverter.Output | undefined> {
+    public convert(): MapSchemaConverter.Output | undefined {
         const additionalPropertiesSchemaConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             schemaOrReference: this.schema
         });
-        const convertedAdditionalProperties = await additionalPropertiesSchemaConverter.convert();
+        const convertedAdditionalProperties = additionalPropertiesSchemaConverter.convert();
         if (convertedAdditionalProperties != null) {
             const additionalPropertiesType = TypeReference.container(
                 ContainerType.map({
-                    keyType: STRING,
+                    keyType: AbstractConverter.STRING,
                     valueType: convertedAdditionalProperties.type
                 })
             );
+            const referencedTypes = new Set<string>();
+            for (const type of convertedAdditionalProperties.schema?.typeDeclaration.referencedTypes ?? []) {
+                referencedTypes.add(type);
+            }
+            for (const typeId of Object.keys(convertedAdditionalProperties.inlinedTypes)) {
+                referencedTypes.add(typeId);
+            }
+
             return {
                 type: Type.alias({
                     aliasOf: additionalPropertiesType,
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     resolvedType: additionalPropertiesType as any
                 }),
+                referencedTypes,
                 inlinedTypes: convertedAdditionalProperties.inlinedTypes
             };
         }

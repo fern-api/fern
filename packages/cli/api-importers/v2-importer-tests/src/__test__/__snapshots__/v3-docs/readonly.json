@@ -4530,29 +4530,29 @@
             {
               "error": {
                 "name": {
-                  "originalName": "BadRequestError",
+                  "originalName": "ValidateAUserObjectRequestBadRequestError",
                   "camelCase": {
-                    "unsafeName": "badRequestError",
-                    "safeName": "badRequestError"
+                    "unsafeName": "validateAUserObjectRequestBadRequestError",
+                    "safeName": "validateAUserObjectRequestBadRequestError"
                   },
                   "snakeCase": {
-                    "unsafeName": "bad_request_error",
-                    "safeName": "bad_request_error"
+                    "unsafeName": "validate_a_user_object_request_bad_request_error",
+                    "safeName": "validate_a_user_object_request_bad_request_error"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "BAD_REQUEST_ERROR",
-                    "safeName": "BAD_REQUEST_ERROR"
+                    "unsafeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR"
                   },
                   "pascalCase": {
-                    "unsafeName": "BadRequestError",
-                    "safeName": "BadRequestError"
+                    "unsafeName": "ValidateAUserObjectRequestBadRequestError",
+                    "safeName": "ValidateAUserObjectRequestBadRequestError"
                   }
                 },
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
                 },
-                "errorId": "BadRequestError"
+                "errorId": "ValidateAUserObjectRequestBadRequestError"
               },
               "docs": "Invalid user object"
             }
@@ -5834,55 +5834,55 @@
     }
   },
   "errors": {
-    "BadRequestError": {
+    "ValidateAUserObjectRequestBadRequestError": {
       "name": {
         "name": {
-          "originalName": "BadRequestError",
+          "originalName": "ValidateAUserObjectRequestBadRequestError",
           "camelCase": {
-            "unsafeName": "badRequestError",
-            "safeName": "badRequestError"
+            "unsafeName": "validateAUserObjectRequestBadRequestError",
+            "safeName": "validateAUserObjectRequestBadRequestError"
           },
           "snakeCase": {
-            "unsafeName": "bad_request_error",
-            "safeName": "bad_request_error"
+            "unsafeName": "validate_a_user_object_request_bad_request_error",
+            "safeName": "validate_a_user_object_request_bad_request_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "BAD_REQUEST_ERROR",
-            "safeName": "BAD_REQUEST_ERROR"
+            "unsafeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "BadRequestError",
-            "safeName": "BadRequestError"
+            "unsafeName": "ValidateAUserObjectRequestBadRequestError",
+            "safeName": "ValidateAUserObjectRequestBadRequestError"
           }
         },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
         },
-        "errorId": "BadRequestError"
+        "errorId": "ValidateAUserObjectRequestBadRequestError"
       },
       "displayName": "BadRequestError",
       "discriminantValue": {
         "name": {
-          "originalName": "BadRequestError",
+          "originalName": "ValidateAUserObjectRequestBadRequestError",
           "camelCase": {
-            "unsafeName": "badRequestError",
-            "safeName": "badRequestError"
+            "unsafeName": "validateAUserObjectRequestBadRequestError",
+            "safeName": "validateAUserObjectRequestBadRequestError"
           },
           "snakeCase": {
-            "unsafeName": "bad_request_error",
-            "safeName": "bad_request_error"
+            "unsafeName": "validate_a_user_object_request_bad_request_error",
+            "safeName": "validate_a_user_object_request_bad_request_error"
           },
           "screamingSnakeCase": {
-            "unsafeName": "BAD_REQUEST_ERROR",
-            "safeName": "BAD_REQUEST_ERROR"
+            "unsafeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "VALIDATE_A_USER_OBJECT_REQUEST_BAD_REQUEST_ERROR"
           },
           "pascalCase": {
-            "unsafeName": "BadRequestError",
-            "safeName": "BadRequestError"
+            "unsafeName": "ValidateAUserObjectRequestBadRequestError",
+            "safeName": "ValidateAUserObjectRequestBadRequestError"
           }
         },
-        "wireValue": "BadRequestError"
+        "wireValue": "ValidateAUserObjectRequestBadRequestError"
       },
       "type": {
         "fernFilepath": {
