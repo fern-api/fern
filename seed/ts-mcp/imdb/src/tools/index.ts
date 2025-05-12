@@ -1,5 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { SeedApiClient } from "seed-api/dist";
+import { SeedApiClient } from "seed-api";
 import * as schemas from "../schemas";
 
 const client = new SeedApiClient({
@@ -8,7 +8,7 @@ const client = new SeedApiClient({
 
 // "POST"
 export const imdbCreateMovie = {
-    register(server: McpServer) {
+    register: function(server: McpServer) {
         return server.tool(
             "imdb_create_movie",
             "Add a movie to the database using the movies/* /... path.",
@@ -26,7 +26,7 @@ export const imdbCreateMovie = {
 
 // "GET"
 export const imdbGetMovie = {
-    register(server: McpServer) {
+    register: function(server: McpServer) {
         return server.tool(
             "imdb_get_movie",
             { movieId: schemas.ImdbMovieId },

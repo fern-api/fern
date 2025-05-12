@@ -12,6 +12,7 @@
     "dist"
   ],
   "scripts": {
+    "preinstall": "cd sdk && npm run build && npm run prepack",
     "dev": "concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch dist dist/index.js'",
     "build": "tsup src/index.ts --dts --clean",
     "build:watch": "tsup src/index.ts --dts --watch",

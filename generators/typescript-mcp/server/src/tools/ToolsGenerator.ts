@@ -4,7 +4,7 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ServerGeneratorContext } from "../ServerGeneratorContext";
 
 const SUBDIRECTORY_NAME = "";
 const FILENAME = "index.ts";
@@ -12,7 +12,7 @@ const FILENAME = "index.ts";
 export class ToolsGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
-    SdkGeneratorContext
+    ServerGeneratorContext
 > {
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
@@ -28,24 +28,24 @@ export class ToolsGenerator extends FileGenerator<
                     });
                 });
             }),
-            directory: this.getSubdirectory(),
+            directory: this.getSubDirectory(),
             filename: FILENAME,
             customConfig: this.context.customConfig
         });
     }
 
-    private getSubdirectory(): RelativeFilePath {
+    private getSubDirectory(): RelativeFilePath {
         return join(RelativeFilePath.of(SUBDIRECTORY_NAME));
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.getSubdirectory(), RelativeFilePath.of(FILENAME));
+        return join(this.getSubDirectory(), RelativeFilePath.of(FILENAME));
     }
 
     private writeImportsBlock(writer: ts.Writer) {
         writer.writeLine('import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";');
         writer.writeLine(
-            `import { ${this.context.project.builder.sdkClientVariableName} } from "${this.context.project.builder.sdkPackageName}/dist";`
+            `import { ${this.context.project.builder.sdkClientVariableName} } from "${this.context.project.builder.sdkPackageName}";`
         );
         writer.writeLine('import * as schemas from "../schemas";');
     }

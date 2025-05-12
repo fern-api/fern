@@ -125,21 +125,29 @@ export class PersistedTypescriptProject {
         this.hasBuilt = true;
     }
 
-    public async copyProjectAsZipTo({
-        destinationZip,
+    public async copyProjectTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(this.directory, { logger, destinationZip });
+        await this.zipDirectoryContents(this.directory, { logger, destinationPath, zipFilename, unzipOutput });
     }
 
-    public async npmPackAsZipTo({
-        destinationZip,
+    public async npmPackTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.build(logger);
@@ -166,34 +174,42 @@ export class PersistedTypescriptProject {
         });
 
         // zip decompressed pack into destination
-        await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationZip });
+        await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationPath, zipFilename, unzipOutput });
     }
 
-    public async copySrcAsZipTo({
-        destinationZip,
+    public async copySrcTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.format(logger);
-        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationZip });
+        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationPath, zipFilename, unzipOutput });
     }
 
-    public async copyDistAsZipTo({
-        destinationZip,
+    public async copyDistTo({
+        destinationPath,
+        zipFilename,
+        unzipOutput,
         logger
     }: {
-        destinationZip: AbsoluteFilePath;
+        destinationPath: AbsoluteFilePath;
+        zipFilename: string;
+        unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
         await this.build(logger);
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationZip });
+        await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationPath, zipFilename, unzipOutput });
     }
 
     private async zipDirectoryContents(
         directoryToZip: AbsoluteFilePath,
-        { destinationZip, logger }: { destinationZip: AbsoluteFilePath; logger: Logger }
+        { destinationPath, zipFilename, logger, unzipOutput }: { destinationPath: AbsoluteFilePath; zipFilename: string; logger: Logger; unzipOutput?: boolean }
     ) {
         const zip = createLoggingExecutable("zip", {
             cwd: directoryToZip,
@@ -201,10 +217,20 @@ export class PersistedTypescriptProject {
             // zip is noisy
             doNotPipeOutput: true
         });
+        const destinationZip = join(destinationPath, RelativeFilePath.of(zipFilename));
 
         const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
         await zip(["-r", tmpZipLocation, ...(await readdir(directoryToZip))]);
         await cp(tmpZipLocation, destinationZip);
+
+        if (unzipOutput) {
+            // Unzip the file in the destination directory
+            await decompress(destinationZip, destinationPath, {
+                strip: 0
+            });
+            // Clean up (remove) the zip file
+            await rm(destinationZip);
+        }
     }
 
     public async publish({

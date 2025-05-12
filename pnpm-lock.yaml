@@ -2596,6 +2596,9 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^57.0.0
         version: 57.0.0
+      '@fern-typescript/sdk-generator-cli':
+        specifier: workspace:*
+        version: link:../../typescript/sdk/cli
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^5.2.1
         version: 5.2.1(@vue/compiler-sfc@3.5.13)(prettier@3.4.2)

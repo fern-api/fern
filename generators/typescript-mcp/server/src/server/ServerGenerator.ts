@@ -2,7 +2,7 @@ import { RelativeFilePath, join } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ServerGeneratorContext } from "../ServerGeneratorContext";
 
 const SUBDIRECTORY_NAME = "";
 const FILENAME = "server.ts";
@@ -10,7 +10,7 @@ const FILENAME = "server.ts";
 export class ServerGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
-    SdkGeneratorContext
+    ServerGeneratorContext
 > {
     public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
@@ -25,18 +25,18 @@ export class ServerGenerator extends FileGenerator<
                 writer.newLine();
                 this.writeRegisterToolsBlock(writer);
             }),
-            directory: this.getSubdirectory(),
+            directory: this.getSubDirectory(),
             filename: FILENAME,
             customConfig: this.context.customConfig
         });
     }
 
-    private getSubdirectory(): RelativeFilePath {
+    private getSubDirectory(): RelativeFilePath {
         return join(RelativeFilePath.of(SUBDIRECTORY_NAME));
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(this.getSubdirectory(), RelativeFilePath.of(FILENAME));
+        return join(this.getSubDirectory(), RelativeFilePath.of(FILENAME));
     }
 
     private writeImportsBlock(writer: ts.Writer) {

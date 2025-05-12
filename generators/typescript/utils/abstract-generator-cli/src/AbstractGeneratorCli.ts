@@ -4,6 +4,7 @@ import { GeneratorContext } from "@fern-typescript/contexts";
 import {
     FernGeneratorExec,
     GeneratorNotificationService,
+    NopGeneratorNotificationService,
     parseGeneratorConfig,
     parseIR
 } from "@fern-api/base-generator";
@@ -26,18 +27,33 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
     [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error
 };
 
+// TODO: consider moving these config options into the custom config
+// SEE: /fern/generators/base/src/AbstractGeneratorCli.ts
+export declare namespace AbstractGeneratorCli {
+    interface Options {
+        /* Whether to disable notifications service */
+        disableNotifications?: boolean;
+        /* The subdirectory to generate to (used by the MCP server generator) */
+        outputSubDirectory?: string;
+        /* Whether to immediately unzip the output (used by the MCP server generator) */
+        unzipOutput?: boolean;
+    }
+}
+
 export abstract class AbstractGeneratorCli<CustomConfig> {
-    public async runCli(): Promise<void> {
+    public async runCli(options?: AbstractGeneratorCli.Options): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
         if (pathToConfig == null) {
             throw new Error("No argument for config filepath.");
         }
-        await this.run(pathToConfig);
+        await this.run(pathToConfig, options);
     }
 
-    public async run(pathToConfig: string): Promise<void> {
+    public async run(pathToConfig: string, options?: AbstractGeneratorCli.Options): Promise<void> {
         const config = await parseGeneratorConfig(pathToConfig);
-        const generatorNotificationService = new GeneratorNotificationService(config.environment);
+        const generatorNotificationService = options?.disableNotifications
+            ? new NopGeneratorNotificationService()
+            : new GeneratorNotificationService(config.environment);
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
@@ -88,9 +104,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            const destinationZip = join(
+            const destinationPath = join(
                 AbsoluteFilePath.of(config.output.path),
-                RelativeFilePath.of(OUTPUT_ZIP_FILENAME)
+                RelativeFilePath.of(options?.outputSubDirectory ?? ""),
             );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
@@ -98,13 +114,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         logger,
                         npmPackage,
                         dryRun: config.dryRun,
-                        generatorNotificationService,
+                        generatorNotificationService: generatorNotificationService as GeneratorNotificationService,
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await typescriptProject.npmPackAsZipTo({
+                    await typescriptProject.npmPackTo({
                         logger,
-                        destinationZip
+                        destinationPath,
+                        zipFilename: OUTPUT_ZIP_FILENAME,
+                        unzipOutput: options?.unzipOutput
                     });
                 },
                 github: async (githubOutputMode) => {
@@ -119,21 +137,26 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             publishToJsr: this.publishToJsr(customConfig)
                         });
                     });
-
-                    await typescriptProject.copyProjectAsZipTo({
+                    await typescriptProject.copyProjectTo({
                         logger,
-                        destinationZip
+                        destinationPath,
+                        zipFilename: OUTPUT_ZIP_FILENAME,
+                        unzipOutput: options?.unzipOutput
                     });
                 },
                 downloadFiles: async () => {
                     if (this.outputSourceFiles(customConfig)) {
-                        await typescriptProject.copySrcAsZipTo({
-                            destinationZip,
+                        await typescriptProject.copySrcTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
                             logger
                         });
                     } else {
-                        await typescriptProject.copyDistAsZipTo({
-                            destinationZip,
+                        await typescriptProject.copyDistTo({
+                            destinationPath,
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: options?.unzipOutput,
                             logger
                         });
                     }
@@ -153,6 +176,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // eslint-disable-next-line no-console
             console.log("Sent success event to coordinator");
         } catch (e) {
+            // This call tears down generator service
+            // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
+            // SEE: go-v2
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({

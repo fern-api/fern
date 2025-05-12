@@ -1,13 +1,15 @@
-import { mkdir, readFile, symlink, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import { capitalize, kebabCase } from "lodash-es";
 import path from "path";
 
 import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TypescriptCustomConfigSchema } from "@fern-api/typescript-ast";
 
 import { FernFilepath, Name } from "@fern-fern/ir-sdk/api";
 
+import { Logger } from "../../../../../packages/cli/logger/src/Logger";
 import { AbstractTypescriptMcpGeneratorContext } from "../context/AbstractTypescriptMcpGeneratorContext";
 
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
@@ -58,9 +60,19 @@ export class TypescriptMcpProject extends AbstractProject<
         await this.createSrcDirectory();
         await this.createSchemasDirectory();
         await this.createToolsDirectory();
+        await this.installDependencies(this.context.logger);
         this.context.logger.debug(
             `Successfully wrote typescript project files to ${this.absolutePathToOutputDirectory}`
         );
+    }
+
+    private async installDependencies(logger: Logger): Promise<void> {
+        const npm = createLoggingExecutable("npm", {
+            cwd: this.absolutePathToOutputDirectory,
+            logger
+        });
+
+        await npm(["install"]);
     }
 
     private async createRawFiles(): Promise<void> {
@@ -211,6 +223,7 @@ class PackageJson {
             bin: `${DIST_DIRECTORY_NAME}/index.js`,
             files: [DIST_DIRECTORY_NAME],
             scripts: {
+                preinstall: "cd sdk && npm run build && npm run prepack",
                 dev: `concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch ${DIST_DIRECTORY_NAME} ${DIST_DIRECTORY_NAME}/index.js'`,
                 build: `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --clean`,
                 "build:watch": `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,
