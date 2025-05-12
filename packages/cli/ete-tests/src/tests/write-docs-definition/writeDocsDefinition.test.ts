@@ -9,6 +9,7 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("write-docs-definition", () => {
     itFixture("petstore");
+    itFixture("products");
 });
 
 function itFixture(fixtureName: string) {
