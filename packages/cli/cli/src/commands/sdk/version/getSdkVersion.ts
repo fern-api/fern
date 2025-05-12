@@ -27,7 +27,7 @@ export async function getSdkVersion({
     fromVersion: string;
 }): Promise<Result> {
     const detector = new IntermediateRepresentationChangeDetector();
-    const change = await detector.detectChanges({
+    const change = await detector.check({
         from: await readIr({ context, filepath: from, flagName: "from" }),
         to: await readIr({ context, filepath: to, flagName: "to" })
     });

@@ -32,7 +32,7 @@ it("breaking", async () => {
             audiences: { type: "all" }
         });
         const detector = new IntermediateRepresentationChangeDetector();
-        const result = await detector.detectChanges({
+        const result = await detector.check({
             from: fromIR,
             to: toIR
         });
@@ -61,7 +61,7 @@ it("non-breaking", async () => {
             audiences: { type: "all" }
         });
         const detector = new IntermediateRepresentationChangeDetector();
-        const result = await detector.detectChanges({
+        const result = await detector.check({
             from: fromIR,
             to: toIR
         });

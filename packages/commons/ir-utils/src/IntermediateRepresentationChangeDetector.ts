@@ -5,30 +5,53 @@ import {
     DeclaredTypeName,
     ErrorDeclaration,
     FernFilepath,
+    FileUploadRequest,
+    FileUploadRequestProperty,
+    HttpEndpoint,
+    HttpHeader,
+    HttpMethod,
+    HttpPath,
+    HttpRequestBody,
+    HttpRequestBodyReference,
+    HttpResponse,
     HttpService,
+    InlinedRequestBody,
     IntermediateRepresentation,
+    JsonResponse,
     Name,
     NameAndWireValue,
     ObjectProperty,
+    PathParameter,
+    QueryParameter,
     SingleUnionTypeProperties,
+    StreamingResponse,
     Type,
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
 
-export declare namespace IntermediateRepresentationChangeDetector {
+export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
         bump: "major" | "minor";
         isBreaking: boolean;
+        errors: Error[];
     };
-}
 
-export interface Error {
-    message: string;
+    export type InlinedRequestBody = {
+        [name: string]: TypeReference;
+    };
+
+    export type FileUploadRequest = {
+        [name: string]: "file" | "fileArray" | TypeReference;
+    };
+
+    export interface Error {
+        message: string;
+    }
 }
 
 export class ErrorCollector {
-    private errors: Error[];
+    private errors: IntermediateRepresentationChangeDetector.Error[];
 
     constructor() {
         this.errors = [];
@@ -38,7 +61,7 @@ export class ErrorCollector {
         this.errors.push({ message: error });
     }
 
-    public getErrors(): Error[] {
+    public getErrors(): IntermediateRepresentationChangeDetector.Error[] {
         return this.errors;
     }
 
@@ -49,6 +72,9 @@ export class ErrorCollector {
 
 /**
  * Detects breaking changes between intermediate representations of APIs.
+ *
+ * The breaking change detector is strict; some wire-compatible changes
+ * will still result in breaking changes in the generated SDK.
  */
 export class IntermediateRepresentationChangeDetector {
     private errors: ErrorCollector;
@@ -57,96 +83,512 @@ export class IntermediateRepresentationChangeDetector {
         this.errors = new ErrorCollector();
     }
 
-    public async detectChanges({
+    public async check({
         from,
         to
     }: {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): Promise<IntermediateRepresentationChangeDetector.Result> {
-        const isBreaking = this.isBreaking({ from, to });
+        const result = this.checkBreaking({ from, to });
         return {
-            bump: isBreaking ? "major" : "minor",
-            isBreaking
+            bump: result.isBreaking ? "major" : "minor",
+            isBreaking: result.isBreaking,
+            errors: result.errors
         };
     }
 
-    private isBreaking({ from, to }: { from: IntermediateRepresentation; to: IntermediateRepresentation }): boolean {
-        const typesBreakingChanges = this.detectTypeBreakingChanges({
+    private checkBreaking({
+        from,
+        to
+    }: {
+        from: IntermediateRepresentation;
+        to: IntermediateRepresentation;
+    }): IntermediateRepresentationChangeDetector.Result {
+        this.checkTypeBreakingChanges({
             from: from.types,
             to: to.types
         });
-        const errorsBreakingChanges = this.detectErrorsBreakingChanges({
+        this.checkErrorsBreakingChanges({
             from: from.errors,
             to: to.errors
         });
-        // const servicesBreakingChanges = this.detectServicesBreakingChanges({
-        //     from: from.services,
-        //     to: to.services
-        // });
-        return typesBreakingChanges || errorsBreakingChanges; // || servicesBreakingChanges;
+        this.checkServicesBreakingChanges({
+            from: from.services,
+            to: to.services
+        });
+        const isBreaking = this.errors.hasErrors();
+        return {
+            bump: isBreaking ? "major" : "minor",
+            isBreaking,
+            errors: this.errors.getErrors()
+        };
     }
 
-    private detectTypeBreakingChanges({
+    private checkTypeBreakingChanges({
         from,
         to
     }: {
         from: Record<string, TypeDeclaration>;
         to: Record<string, TypeDeclaration>;
-    }): boolean {
-        return Object.entries(from).some(([typeId, fromType]) => {
+    }): void {
+        for (const [typeId, fromType] of Object.entries(from)) {
             const toType = to[typeId];
             if (!toType) {
-                return true;
+                this.errors.add(`Type "${typeId}" was removed.`);
+                continue;
             }
-            return !this.areTypeDeclarationsCompatible({
-                from: fromType,
-                to: toType
-            });
-        });
+            if (
+                !this.areTypeDeclarationsCompatible({
+                    from: fromType,
+                    to: toType
+                })
+            ) {
+                this.errors.add(`Type "${typeId}" has an incompatible change.`);
+            }
+        }
     }
 
-    private detectErrorsBreakingChanges({
+    private checkErrorsBreakingChanges({
         from,
         to
     }: {
         from: Record<string, ErrorDeclaration>;
         to: Record<string, ErrorDeclaration>;
-    }): boolean {
-        return Object.entries(from).some(([_, fromError]) => {
+    }): void {
+        for (const [_, fromError] of Object.entries(from)) {
             const toError = Object.values(to).find((error) => error.statusCode === fromError.statusCode);
             if (!toError) {
-                this.errors.add(`Error for status code "${fromError.statusCode}" was removed.`);
-                return true;
+                this.errors.add(
+                    `Error "${fromError.name.errorId}" with status code "${fromError.statusCode}" was removed.`
+                );
+                continue;
             }
-            return !this.areErrorsCompatible({
+            this.checkErrorBreakingChanges({
                 from: fromError,
                 to: toError
             });
-        });
+        }
     }
 
-    private areErrorsCompatible({ from, to }: { from: ErrorDeclaration; to: ErrorDeclaration }): boolean {
+    private checkErrorBreakingChanges({ from, to }: { from: ErrorDeclaration; to: ErrorDeclaration }): void {
         if (from.type != null) {
             if (to.type == null) {
-                this.errors.add(`Error with status code "${from.statusCode}" had its type removed.`);
-                return false;
+                this.errors.add(
+                    `Error "${from.name.errorId}" with status code "${from.statusCode}" had its type removed.`
+                );
+                return;
             }
-            return this.areTypeReferencesCompatible({
-                from: from.type,
-                to: to.type
-            });
+            if (
+                !this.areTypeReferencesCompatible({
+                    from: from.type,
+                    to: to.type
+                })
+            ) {
+                this.errors.add(`Error "${from.name.errorId}" type reference changed.`);
+            }
         }
-        return (
-            this.areDeclaredErrorNamesCompatible({
+        if (
+            !this.areDeclaredErrorNamesCompatible({
                 from: from.name,
                 to: to.name
-            }) &&
-            this.areNameAndWireValuesCompatible({
+            })
+        ) {
+            this.errors.add(`Error "${from.name.errorId}" name changed.`);
+        }
+        if (
+            !this.areNameAndWireValuesCompatible({
                 from: from.discriminantValue,
                 to: to.discriminantValue
             })
+        ) {
+            this.errors.add(`Error "${from.name.errorId}" discriminant value changed.`);
+        }
+    }
+
+    private checkServicesBreakingChanges({
+        from,
+        to
+    }: {
+        from: Record<string, HttpService>;
+        to: Record<string, HttpService>;
+    }): void {
+        for (const [serviceId, fromService] of Object.entries(from)) {
+            const toService = to[serviceId];
+            if (!toService) {
+                this.errors.add(`Service "${serviceId}" was removed.`);
+                continue;
+            }
+            this.checkServiceBreakingChanges({
+                id: serviceId,
+                from: fromService,
+                to: toService
+            });
+        }
+    }
+
+    private checkServiceBreakingChanges({ id, from, to }: { id: string; from: HttpService; to: HttpService }): void {
+        this.checkHeadersBreakingChanges({ id, from: from.headers, to: to.headers });
+        this.checkEndpointsBreakingChanges({ id, from, to });
+    }
+
+    private checkEndpointsBreakingChanges({ id, from, to }: { id: string; from: HttpService; to: HttpService }): void {
+        const fromEndpoints = Object.fromEntries(from.endpoints.map((endpoint) => [endpoint.id, endpoint]));
+        const toEndpoints = Object.fromEntries(to.endpoints.map((endpoint) => [endpoint.id, endpoint]));
+        for (const [endpointId, fromEndpoint] of Object.entries(fromEndpoints)) {
+            const toEndpoint = toEndpoints[endpointId];
+            if (!toEndpoint) {
+                this.errors.add(`Endpoint "${endpointId}" was removed.`);
+                continue;
+            }
+            this.checkEndpointBreakingChanges({ id: endpointId, from: fromEndpoint, to: toEndpoint });
+        }
+    }
+
+    private checkEndpointBreakingChanges({ id, from, to }: { id: string; from: HttpEndpoint; to: HttpEndpoint }): void {
+        this.checkHttpMethodsBreakingChanges({ id, from: from.method, to: to.method });
+        this.checkHttpPathsBreakingChanges({ id, from: from.fullPath, to: to.fullPath });
+        this.checkPathParametersBreakingChanges({ id, from: from.pathParameters, to: to.pathParameters });
+        this.checkQueryParametersBreakingChanges({ id, from: from.queryParameters, to: to.queryParameters });
+        this.checkHeadersBreakingChanges({ id, from: from.headers, to: to.headers });
+
+        if (from.requestBody != null) {
+            if (to.requestBody != null) {
+                this.checkHttpRequestBodiesCompatible({ id, from: from.requestBody, to: to.requestBody });
+            } else {
+                this.errors.add(`Request body was removed from endpoint "${from.id}".`);
+            }
+        }
+
+        if (from.response != null) {
+            if (to.response != null) {
+                this.checkHttpResponseBreakingChanges({ id, from: from.response, to: to.response });
+            } else {
+                this.errors.add(`Response was removed from endpoint "${from.id}".`);
+            }
+        }
+
+        if ((from.pagination != null && to.pagination == null) || (from.pagination == null && to.pagination != null)) {
+            this.errors.add(
+                `Pagination was ${from.pagination != null ? "added" : "removed"} from endpoint "${from.id}".`
+            );
+        }
+    }
+
+    private checkPathParametersBreakingChanges({
+        id,
+        from,
+        to
+    }: {
+        id: string;
+        from: PathParameter[];
+        to: PathParameter[];
+    }): void {
+        const fromPathParams = Object.fromEntries(from.map((param) => [param.name.originalName, param]));
+        const toPathParams = Object.fromEntries(to.map((param) => [param.name.originalName, param]));
+        for (const [paramName, fromParam] of Object.entries(fromPathParams)) {
+            const toParam = toPathParams[paramName];
+            if (!toParam) {
+                this.errors.add(`Path parameter "${paramName}" was removed from endpoint "${id}".`);
+                continue;
+            }
+            if (!this.areTypeReferencesCompatible({ from: fromParam.valueType, to: toParam.valueType })) {
+                this.errors.add(`Path parameter "${paramName}" type changed in endpoint "${id}".`);
+            }
+        }
+    }
+
+    private checkQueryParametersBreakingChanges({
+        id,
+        from,
+        to
+    }: {
+        id: string;
+        from: QueryParameter[];
+        to: QueryParameter[];
+    }): void {
+        const fromQueryParams = Object.fromEntries(from.map((param) => [param.name.wireValue, param]));
+        const toQueryParams = Object.fromEntries(to.map((param) => [param.name.wireValue, param]));
+
+        this.checkForNewRequiredTypeReferences({
+            from: Object.fromEntries(Object.entries(fromQueryParams).map(([name, param]) => [name, param.valueType])),
+            to: Object.fromEntries(Object.entries(toQueryParams).map(([name, param]) => [name, param.valueType]))
+        });
+
+        for (const [paramName, fromParam] of Object.entries(fromQueryParams)) {
+            const toParam = toQueryParams[paramName];
+            if (!toParam) {
+                this.errors.add(`Query parameter "${paramName}" was removed from endpoint "${id}".`);
+                continue;
+            }
+            if (!this.areTypeReferencesCompatible({ from: fromParam.valueType, to: toParam.valueType })) {
+                this.errors.add(`Query parameter "${paramName}" type changed in endpoint "${id}".`);
+            }
+            if (fromParam.allowMultiple !== toParam.allowMultiple) {
+                this.errors.add(`Query parameter "${paramName}" allow-multiple values changed in endpoint "${id}".`);
+            }
+        }
+    }
+
+    private checkHeadersBreakingChanges({ id, from, to }: { id: string; from: HttpHeader[]; to: HttpHeader[] }): void {
+        const fromHeaders = Object.fromEntries(from.map((header) => [header.name.wireValue, header]));
+        const toHeaders = Object.fromEntries(to.map((header) => [header.name.wireValue, header]));
+
+        this.checkForNewRequiredTypeReferences({
+            from: Object.fromEntries(Object.entries(fromHeaders).map(([name, header]) => [name, header.valueType])),
+            to: Object.fromEntries(Object.entries(toHeaders).map(([name, header]) => [name, header.valueType]))
+        });
+
+        for (const [headerName, fromHeader] of Object.entries(fromHeaders)) {
+            const toHeader = toHeaders[headerName];
+            if (!toHeader) {
+                this.errors.add(`Header "${headerName}" was removed from ${id}.`);
+                continue;
+            }
+            if (!this.areTypeReferencesCompatible({ from: fromHeader.valueType, to: toHeader.valueType })) {
+                this.errors.add(`Header "${headerName}" type changed in ${id}.`);
+            }
+        }
+    }
+
+    private checkHttpMethodsBreakingChanges({ id, from, to }: { id: string; from: HttpMethod; to: HttpMethod }): void {
+        if (from === to) {
+            return;
+        }
+        this.errors.add(`HTTP method changed in ${id}.`);
+    }
+
+    private checkHttpPathsBreakingChanges({ id, from, to }: { id: string; from: HttpPath; to: HttpPath }): void {
+        if (this.areHttpPathsCompatible({ from, to })) {
+            return;
+        }
+        this.errors.add(`HTTP path changed in ${id}.`);
+    }
+
+    private areHttpPathsCompatible({ from, to }: { from: HttpPath; to: HttpPath }): boolean {
+        if (from.head !== to.head) {
+            return false;
+        }
+        if (from.parts.length !== to.parts.length) {
+            return false;
+        }
+        for (let i = 0; i < from.parts.length; i++) {
+            const fromPart = from.parts[i]!;
+            const toPart = to.parts[i]!;
+            if (fromPart.pathParameter !== toPart.pathParameter) {
+                return false;
+            }
+            if (fromPart.tail !== toPart.tail) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private checkHttpRequestBodiesCompatible({
+        id,
+        from,
+        to
+    }: {
+        id: string;
+        from: HttpRequestBody;
+        to: HttpRequestBody;
+    }): void {
+        switch (from.type) {
+            case "inlinedRequestBody":
+                if (to.type === "inlinedRequestBody") {
+                    if (this.areInlinedRequestBodiesCompatible({ from, to })) {
+                        return;
+                    }
+                }
+                break;
+            case "reference":
+                if (to.type === "reference") {
+                    if (this.areReferenceRequestBodiesCompatible({ from, to })) {
+                        return;
+                    }
+                }
+                break;
+            case "fileUpload":
+                if (to.type === "fileUpload") {
+                    if (this.areFileUploadRequestBodiesCompatible({ from, to })) {
+                        return;
+                    }
+                }
+                break;
+            case "bytes":
+                if (to.type === "bytes") {
+                    return;
+                }
+                break;
+            default:
+                assertNever(from);
+        }
+        this.errors.add(`Request body type changed from "${from.type}" to "${to.type}" in endpoint "${id}".`);
+    }
+
+    private areInlinedRequestBodiesCompatible({
+        from,
+        to
+    }: {
+        from: InlinedRequestBody;
+        to: InlinedRequestBody;
+    }): boolean {
+        const fromRequestBody = this.getInlinedRequestBody(from);
+        const toRequestBody = this.getInlinedRequestBody(to);
+
+        this.checkForNewInlinedRequestBodyProperties({ from: fromRequestBody, to: toRequestBody });
+
+        return Object.entries(fromRequestBody).every(([name, fromType]) => {
+            const toType = toRequestBody[name];
+            if (!toType) {
+                this.errors.add(`Request body property "${name}" was removed.`);
+                return false;
+            }
+            return this.areTypeReferencesCompatible({ from: fromType, to: toType });
+        });
+    }
+
+    private areReferenceRequestBodiesCompatible({
+        from,
+        to
+    }: {
+        from: HttpRequestBodyReference;
+        to: HttpRequestBodyReference;
+    }): boolean {
+        return this.areTypeReferencesCompatible({ from: from.requestBodyType, to: to.requestBodyType });
+    }
+
+    private areFileUploadRequestBodiesCompatible({
+        from,
+        to
+    }: {
+        from: FileUploadRequest;
+        to: FileUploadRequest;
+    }): boolean {
+        const fromRequest = this.getFileUploadRequest(from.properties);
+        const toRequest = this.getFileUploadRequest(to.properties);
+
+        this.checkForNewFileUploadRequestProperties({ from: fromRequest, to: toRequest });
+
+        for (const [propName, fromProp] of Object.entries(fromRequest)) {
+            const toProp = toRequest[propName];
+            if (!toProp) {
+                this.errors.add(`File upload property "${propName}" was removed.`);
+                return false;
+            }
+            if (fromProp === "file") {
+                if (toProp !== "file") {
+                    this.errors.add(`File upload property "${propName}" type changed.`);
+                    return false;
+                }
+            }
+            if (fromProp === "fileArray") {
+                if (toProp !== "fileArray") {
+                    this.errors.add(`File upload property "${propName}" type changed.`);
+                    return false;
+                }
+            }
+            if (fromProp !== "file" && fromProp !== "fileArray" && toProp !== "file" && toProp !== "fileArray") {
+                if (!this.areTypeReferencesCompatible({ from: fromProp, to: toProp })) {
+                    this.errors.add(`File upload property "${propName}" type changed.`);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private checkHttpResponseBreakingChanges({
+        id,
+        from,
+        to
+    }: {
+        id: string;
+        from: HttpResponse;
+        to: HttpResponse;
+    }): void {
+        if (from.statusCode !== to.statusCode) {
+            this.errors.add(`Response status code changed from "${from.statusCode}" to "${to.statusCode}".`);
+        }
+        if (from.body == null && to.body == null) {
+            return;
+        }
+        if (from.body == null || to.body == null) {
+            this.errors.add(`Response body was ${from.body == null ? "added" : "removed"}.`);
+            return;
+        }
+        switch (from.body.type) {
+            case "json":
+                if (to.body.type === "json") {
+                    this.areJsonResponsesCompatible({ from: from.body.value, to: to.body.value });
+                    return;
+                }
+                break;
+            case "fileDownload":
+                if (to.body.type === "fileDownload") {
+                    return;
+                }
+                break;
+            case "text":
+                if (to.body.type === "text") {
+                    return;
+                }
+                break;
+            case "bytes":
+                if (to.body.type === "bytes") {
+                    return;
+                }
+                break;
+            case "streaming":
+                if (to.body.type === "streaming") {
+                    this.areStreamingResponsesCompatible({ from: from.body.value, to: to.body.value });
+                    return;
+                }
+                break;
+            case "streamParameter":
+                if (to.body.type === "streamParameter") {
+                    this.areStreamingResponsesCompatible({
+                        from: from.body.streamResponse,
+                        to: to.body.streamResponse
+                    });
+                    return;
+                }
+                break;
+            default:
+                assertNever(from.body);
+        }
+        this.errors.add(
+            `HTTP response type "${from.body.type}" defined for endpoint "${id}" is not compatible with type "${to.body.type}".`
         );
+    }
+
+    private areJsonResponsesCompatible({ from, to }: { from: JsonResponse; to: JsonResponse }): boolean {
+        return this.areTypeReferencesCompatible({ from: from.responseBodyType, to: to.responseBodyType });
+    }
+
+    private areStreamingResponsesCompatible({ from, to }: { from: StreamingResponse; to: StreamingResponse }): boolean {
+        switch (from.type) {
+            case "json":
+                if (to.type === "json") {
+                    return this.areTypeReferencesCompatible({ from: from.payload, to: to.payload });
+                }
+                break;
+            case "sse":
+                if (to.type === "sse") {
+                    return this.areTypeReferencesCompatible({ from: from.payload, to: to.payload });
+                }
+                break;
+            case "text":
+                if (to.type === "text") {
+                    return true;
+                }
+                break;
+            default:
+                assertNever(from);
+        }
+        this.errors.add(`Streaming response type "${from.type}" is not compatible with type "${to.type}".`);
+        return false;
     }
 
     private areTypeDeclarationsCompatible({ from, to }: { from: TypeDeclaration; to: TypeDeclaration }): boolean {
@@ -246,6 +688,14 @@ export class IntermediateRepresentationChangeDetector {
             ...to.properties.map((property) => [property.name.wireValue, property] as const),
             ...(to.extendedProperties?.map((property) => [property.name.wireValue, property] as const) ?? [])
         ]);
+
+        this.checkForNewRequiredTypeReferences({
+            from: Object.fromEntries(
+                Object.entries(fromProperties).map(([name, property]) => [name, property.valueType])
+            ),
+            to: Object.fromEntries(Object.entries(toProperties).map(([name, property]) => [name, property.valueType]))
+        });
+
         return Object.values(fromProperties).every((property) => {
             const toProperty = toProperties[property.name.wireValue];
             if (!toProperty) {
@@ -311,6 +761,13 @@ export class IntermediateRepresentationChangeDetector {
                 return false;
             }
         }
+
+        this.checkForNewRequiredTypeReferences({
+            from: Object.fromEntries(
+                Object.entries(fromProperties).map(([name, property]) => [name, property.valueType])
+            ),
+            to: Object.fromEntries(Object.entries(toProperties).map(([name, property]) => [name, property.valueType]))
+        });
 
         const fromTypes = Object.fromEntries(from.types.map((value) => [value.discriminantValue.wireValue, value]));
         const toTypes = Object.fromEntries(to.types.map((value) => [value.discriminantValue.wireValue, value]));
@@ -383,7 +840,7 @@ export class IntermediateRepresentationChangeDetector {
         // There isn't an easy way to uniquely identify each undiscriminated union member;
         // the best we can do is compare each member in the same order they're specified.
         //
-        // This isn't perfect, so we'll need to restructure the IR to make this reliable.
+        // This isn't perfect, so we'll need to restructure the IR to make this more reliable.
         return from.members.every((member, index) => {
             const toMember = to.members[index];
             if (!toMember) {
@@ -397,6 +854,68 @@ export class IntermediateRepresentationChangeDetector {
         });
     }
 
+    private checkForNewRequiredTypeReferences({
+        from,
+        to
+    }: {
+        from: Record<string, TypeReference>;
+        to: Record<string, TypeReference>;
+    }): void {
+        for (const [propertyName, toProperty] of Object.entries(to)) {
+            const fromProperty = from[propertyName];
+            if (fromProperty) {
+                continue;
+            }
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
+                this.errors.add(`Required property "${propertyName}" was added.`);
+            }
+        }
+    }
+
+    private checkForNewFileUploadRequestProperties({
+        from,
+        to
+    }: {
+        from: IntermediateRepresentationChangeDetector.FileUploadRequest;
+        to: IntermediateRepresentationChangeDetector.FileUploadRequest;
+    }): void {
+        for (const [propertyName, toProperty] of Object.entries(to)) {
+            const fromProperty = from[propertyName];
+            if (fromProperty) {
+                continue;
+            }
+            if (toProperty === "file" || toProperty === "fileArray") {
+                continue;
+            }
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
+                this.errors.add(`Required property "${propertyName}" was added.`);
+            }
+        }
+    }
+
+    private checkForNewInlinedRequestBodyProperties({
+        from,
+        to
+    }: {
+        from: IntermediateRepresentationChangeDetector.InlinedRequestBody;
+        to: IntermediateRepresentationChangeDetector.InlinedRequestBody;
+    }): void {
+        for (const [propertyName, toProperty] of Object.entries(to)) {
+            const fromProperty = from[propertyName];
+            if (fromProperty) {
+                continue;
+            }
+            if (toProperty.type !== "container" || toProperty.container.type !== "optional") {
+                this.errors.add(`Required property "${propertyName}" was added.`);
+            }
+        }
+    }
+
+    /**
+     * The TypeReference checker is strict; even though it's wire compatible to change from a _required_ property
+     * to an _optional_ property, it will still be detected as a breaking change due to language-specific code
+     * generation (e.g. Java, Go, etc).
+     */
     private areTypeReferencesCompatible({ from, to }: { from: TypeReference; to: TypeReference }): boolean {
         switch (from.type) {
             case "primitive":
@@ -567,6 +1086,35 @@ export class IntermediateRepresentationChangeDetector {
 
     private areNamesCompatible({ from, to }: { from: Name; to: Name }): boolean {
         return from.originalName === to.originalName;
+    }
+
+    private getInlinedRequestBody(
+        inlinedRequestBody: InlinedRequestBody
+    ): IntermediateRepresentationChangeDetector.InlinedRequestBody {
+        const requestBody: IntermediateRepresentationChangeDetector.InlinedRequestBody = {};
+        for (const property of [...(inlinedRequestBody.extendedProperties ?? []), ...inlinedRequestBody.properties]) {
+            requestBody[property.name.wireValue] = property.valueType;
+        }
+        return requestBody;
+    }
+
+    private getFileUploadRequest(
+        fileUploadRequestProperties: FileUploadRequestProperty[]
+    ): IntermediateRepresentationChangeDetector.FileUploadRequest {
+        const properties: IntermediateRepresentationChangeDetector.FileUploadRequest = {};
+        for (const property of fileUploadRequestProperties) {
+            switch (property.type) {
+                case "file":
+                    properties[property.value.key.wireValue] = "file";
+                    break;
+                case "bodyProperty":
+                    properties[property.name.wireValue] = property.valueType;
+                    break;
+                default:
+                    assertNever(property);
+            }
+        }
+        return properties;
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
