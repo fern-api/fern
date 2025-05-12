@@ -53,7 +53,6 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 context: this.context,
                 headers
             });
-
             this.convertBindingQueryParameters({
                 context: this.context,
                 queryParameters
@@ -324,7 +323,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                         in: "query",
                         required: required.includes(name),
                         schema: resolvedQuery,
-                        description: "description" in resolvedQuery ? resolvedQuery.description : undefined
+                        description: "description" in resolvedQuery ? resolvedQuery.description : undefined,
+                        deprecated: resolvedQuery.deprecated ?? false
                     }
                 });
 
