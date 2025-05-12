@@ -16,6 +16,7 @@ export declare namespace PathConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
+        topLevelServers?: OpenAPIV3_1.ServerObject[];
         idToAuthScheme?: Record<string, AuthScheme>;
     }
 
@@ -30,12 +31,14 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
     private readonly pathItem: OpenAPIV3_1.PathItemObject;
     private readonly path: string;
     private readonly idToAuthScheme?: Record<string, AuthScheme>;
+    private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme }: PathConverter.Args) {
+    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
         this.idToAuthScheme = idToAuthScheme;
+        this.topLevelServers = topLevelServers;
     }
 
     public convert(): PathConverter.Output | undefined {
@@ -159,7 +162,8 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
             idempotent: isIdempotent,
-            idToAuthScheme: this.idToAuthScheme
+            idToAuthScheme: this.idToAuthScheme,
+            topLevelServers: this.topLevelServers
         });
         return operationConverter.convert();
     }

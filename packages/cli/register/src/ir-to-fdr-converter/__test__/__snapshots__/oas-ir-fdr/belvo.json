@@ -11307,6 +11307,13 @@
             }
           },
           {
+            "description": "The description of the most recent income from the steam. ",
+            "key": "last_income_description",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "description": "The date when the most recent income from the stream was received, in `YYYY-MM-DD` format.\n",
             "key": "last_income_date",
             "valueType": {
@@ -18235,6 +18242,13 @@
                 "type": "string",
                 "format": "uuid"
               }
+            }
+          },
+          {
+            "description": "The name you provided to identify the webhook.",
+            "key": "name",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {

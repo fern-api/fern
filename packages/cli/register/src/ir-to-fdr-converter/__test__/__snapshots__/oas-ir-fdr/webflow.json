@@ -9,6 +9,30 @@
         "properties": []
       }
     },
+    "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0": {
+      "name": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems": {
+      "name": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0",
+            "type": {
+              "type": "id",
+              "value": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0"
+            }
+          }
+        ]
+      }
+    },
     "WebhooksFormSubmissionPayloadSchemaPayload": {
       "description": "The payload of data sent from Webflow",
       "name": "WebhooksFormSubmissionPayloadSchemaPayload",
@@ -62,7 +86,8 @@
               "itemType": {
                 "type": "list",
                 "itemType": {
-                  "type": "unknown"
+                  "type": "id",
+                  "value": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems"
                 }
               }
             }
@@ -5730,6 +5755,15 @@
                 "value": "TokenIntrospectGetResponsesSchemaAuthorization"
               }
             }
+          },
+          {
+            "key": "application",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            }
           }
         ]
       }
@@ -6880,11 +6914,48 @@
         ]
       }
     },
+    "BadRequestError0": {
+      "description": "Requested an invalid Domain. Please send a valid custom domain URI",
+      "name": "BadRequestError0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "BadRequestError1": {
+      "description": "You must pass at least one domain id to the publish endpoint",
+      "name": "BadRequestError1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "BadRequestError": {
       "name": "BadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "BadRequestError0",
+            "description": "Requested an invalid Domain. Please send a valid custom domain URI",
+            "type": {
+              "type": "id",
+              "value": "BadRequestError0"
+            }
+          },
+          {
+            "typeName": "BadRequestError1",
+            "description": "You must pass at least one domain id to the publish endpoint",
+            "type": {
+              "type": "id",
+              "value": "BadRequestError1"
+            }
+          }
+        ]
       }
     },
     "SitesSiteIdActivityLogsGetResponsesSchemaItemsItemsResourceOperation": {
