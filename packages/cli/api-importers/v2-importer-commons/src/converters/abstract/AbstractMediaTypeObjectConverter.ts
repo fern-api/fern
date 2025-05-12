@@ -52,10 +52,19 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
             return undefined;
         }
 
+        const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: mediaTypeObject.schema,
+            breadcrumbs: this.breadcrumbs
+        });
+
+        if (resolvedSchema == null) {
+            return undefined;
+        }
+
         const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: [...this.breadcrumbs, "schema"],
-            schemaOrReference: mediaTypeObject.schema,
+            schemaOrReference: resolvedSchema,
             schemaIdOverride: schemaId
         });
 
