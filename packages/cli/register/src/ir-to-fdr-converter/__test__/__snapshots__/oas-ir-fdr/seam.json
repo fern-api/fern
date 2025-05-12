@@ -5221,47 +5221,25 @@
         ]
       }
     },
-    "ConnectWebviewCustomMetadata0": {
-      "name": "ConnectWebviewCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectWebviewCustomMetadata1": {
-      "name": "ConnectWebviewCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectWebviewCustomMetadata": {
       "name": "ConnectWebviewCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -5550,47 +5528,25 @@
         ]
       }
     },
-    "ConnectedAccountCustomMetadata0": {
-      "name": "ConnectedAccountCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectedAccountCustomMetadata1": {
-      "name": "ConnectedAccountCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectedAccountCustomMetadata": {
       "name": "ConnectedAccountCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -6004,47 +5960,25 @@
         ]
       }
     },
-    "DeviceCustomMetadata0": {
-      "name": "DeviceCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DeviceCustomMetadata1": {
-      "name": "DeviceCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DeviceCustomMetadata": {
       "name": "DeviceCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DeviceCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "DeviceCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DeviceCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "DeviceCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -9507,47 +9441,25 @@
         ]
       }
     },
-    "PhoneCustomMetadata0": {
-      "name": "PhoneCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "PhoneCustomMetadata1": {
-      "name": "PhoneCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "PhoneCustomMetadata": {
       "name": "PhoneCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "PhoneCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "PhoneCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "PhoneCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "PhoneCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -10627,68 +10539,35 @@
         ]
       }
     },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata": {
       "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -10762,47 +10641,25 @@
         ]
       }
     },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -10939,47 +10796,25 @@
         ]
       }
     },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -11013,68 +10848,35 @@
         ]
       }
     },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata": {
       "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -11592,47 +11394,25 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DevicesListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DevicesListPostRequestBodySchemaCustomMetadataHas": {
       "name": "DevicesListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -11799,68 +11579,35 @@
         ]
       }
     },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata0": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata1": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata2": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "DevicesUpdatePostRequestBodySchemaCustomMetadata": {
       "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -11924,48 +11671,26 @@
         ]
       }
     },
-    "EventsListPostRequestBodySchemaBetweenItems0": {
-      "name": "EventsListPostRequestBodySchemaBetweenItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EventsListPostRequestBodySchemaBetweenItems1": {
-      "name": "EventsListPostRequestBodySchemaBetweenItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      }
-    },
     "EventsListPostRequestBodySchemaBetweenItems": {
       "name": "EventsListPostRequestBodySchemaBetweenItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItems0",
             "type": {
-              "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItems1",
             "type": {
-              "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItems1"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           }
         ]
@@ -12839,47 +12564,25 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "LocksListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "LocksListPostRequestBodySchemaCustomMetadataHas": {
       "name": "LocksListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -13674,47 +13377,25 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ThermostatsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -16237,47 +15918,25 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas": {
       "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]

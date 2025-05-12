@@ -5535,30 +5535,6 @@
         ]
       }
     },
-    "TimesheetIdItemsItems0": {
-      "name": "TimesheetIdItemsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "TimesheetIdItemsItems1": {
-      "name": "TimesheetIdItemsItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "TimesheetIdItemsItems": {
       "description": "ID of an existing timesheet record",
       "name": "TimesheetIdItemsItems",
@@ -5566,17 +5542,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TimesheetIdItemsItems0",
             "type": {
-              "type": "id",
-              "value": "TimesheetIdItemsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "TimesheetIdItemsItems1",
             "type": {
-              "type": "id",
-              "value": "TimesheetIdItemsItems1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -16531,30 +16509,6 @@
         }
       }
     },
-    "UniqueObjectIdentifier0": {
-      "name": "UniqueObjectIdentifier0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "UniqueObjectIdentifier1": {
-      "name": "UniqueObjectIdentifier1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "UniqueObjectIdentifier": {
       "description": "Unique identifier of this resource.",
       "name": "UniqueObjectIdentifier",
@@ -16562,17 +16516,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "UniqueObjectIdentifier0",
             "type": {
-              "type": "id",
-              "value": "UniqueObjectIdentifier0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "UniqueObjectIdentifier1",
             "type": {
-              "type": "id",
-              "value": "UniqueObjectIdentifier1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -21664,6 +21620,29 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Contracts_addContractDocument_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": true,
+                      "contentType": "multipart/form-data",
+                      "description": "Upload the file you want to attach to this entry."
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data",
+              "description": "A form to attach a file to contract document."
+            },
+            "description": "A form to attach a file to contract document."
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21778,6 +21757,16 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21855,6 +21844,29 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Contracts_editContractDocument_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": true,
+                      "contentType": "multipart/form-data",
+                      "description": "Upload the file you want to attach to this entry."
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data",
+              "description": "A form to attach a file to contract document."
+            },
+            "description": "A form to attach a file to contract document."
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21969,6 +21981,16 @@
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",

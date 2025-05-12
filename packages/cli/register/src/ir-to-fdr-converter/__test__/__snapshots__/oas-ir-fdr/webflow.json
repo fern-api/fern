@@ -7259,18 +7259,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -7285,10 +7273,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -7386,18 +7375,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -7412,10 +7389,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16932,18 +16910,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -16958,10 +16924,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16986,18 +16953,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17012,10 +16967,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17337,18 +17293,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17363,10 +17307,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17391,18 +17336,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17417,10 +17350,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17445,18 +17379,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17471,10 +17393,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17499,18 +17422,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17525,10 +17436,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17898,18 +17810,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17924,10 +17824,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17952,18 +17853,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17978,10 +17867,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18303,18 +18193,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -18329,10 +18207,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18357,18 +18236,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -18383,10 +18250,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18800,18 +18668,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -18826,10 +18682,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18854,18 +18711,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -18880,10 +18725,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -19929,18 +19775,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -19955,10 +19789,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -21734,18 +21569,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -21760,10 +21583,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -22725,18 +22549,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -22751,10 +22563,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -24145,18 +23958,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -24171,10 +23972,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -25145,18 +24947,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -25171,10 +24961,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -26123,18 +25914,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -26149,10 +25928,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -28672,18 +28452,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -28698,10 +28466,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -31111,18 +30880,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -31137,10 +30894,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -33550,18 +33308,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -33576,10 +33322,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -35989,18 +35736,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -36015,10 +35750,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -38428,18 +38164,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -38454,10 +38178,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -40885,18 +40610,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -40911,10 +40624,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41003,18 +40717,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems1": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -41029,10 +40731,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41136,18 +40839,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems1": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -41162,10 +40853,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41243,18 +40935,6 @@
         ]
       }
     },
-    "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -41269,10 +40949,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {

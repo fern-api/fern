@@ -6062,47 +6062,25 @@
         ]
       }
     },
-    "GenericObjectRefId0": {
-      "name": "GenericObjectRefId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "GenericObjectRefId1": {
-      "name": "GenericObjectRefId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "GenericObjectRefId": {
       "name": "GenericObjectRefId",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GenericObjectRefId0",
             "type": {
-              "type": "id",
-              "value": "GenericObjectRefId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "GenericObjectRefId1",
             "type": {
-              "type": "id",
-              "value": "GenericObjectRefId1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]

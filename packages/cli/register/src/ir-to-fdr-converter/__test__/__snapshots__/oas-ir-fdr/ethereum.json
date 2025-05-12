@@ -2183,18 +2183,6 @@
         ]
       }
     },
-    "EthSyncingResult1": {
-      "name": "EthSyncingResult1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "EthSyncingResult": {
       "name": "EthSyncingResult",
       "shape": {
@@ -2209,10 +2197,11 @@
             }
           },
           {
-            "typeName": "EthSyncingResult1",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -2232,10 +2221,11 @@
             }
           },
           {
-            "typeName": "EthSyncingResult1",
             "type": {
-              "type": "id",
-              "value": "EthSyncingResult1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
