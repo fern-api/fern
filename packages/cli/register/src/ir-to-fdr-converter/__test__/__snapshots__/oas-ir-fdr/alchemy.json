@@ -1,5 +1,25 @@
 {
   "types": {
+    "ProofNode": {
+      "description": "An individual node used to prove a path down a merkle-patricia-tree",
+      "name": "ProofNode",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "StorageProofKey": {
+      "description": "The key used to get the storage slot in its account tree.",
+      "name": "StorageProofKey",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "StorageProofItems": {
       "description": "Object proving a relationship of a storage value to an account's storageHash.",
       "name": "StorageProofItems",
@@ -66,6 +86,46 @@
             "type": "id",
             "value": "ProofNode"
           }
+        }
+      }
+    },
+    "PowHash": {
+      "description": "Current block header PoW hash.",
+      "name": "PowHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "SeedHash": {
+      "description": "The seed hash used for the DAG.",
+      "name": "SeedHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "MixHash": {
+      "description": "The mix digest.",
+      "name": "MixHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "Difficulty": {
+      "description": "The boundary condition ('target'), 2^256 / difficulty.",
+      "name": "Difficulty",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
         }
       }
     },
@@ -444,6 +504,26 @@
         }
       }
     },
+    "Topic": {
+      "description": "32 Bytes DATA of indexed log arguments. (In solidity: The first topic is the hash of the signature of the event (e.g. Deposit(address,bytes32,uint256))",
+      "name": "Topic",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "TransactionIndex": {
+      "description": "The index of the transaction. null when its pending",
+      "name": "TransactionIndex",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "BlockNumberOrNull": {
       "description": "The block number or null when its the pending block",
       "name": "BlockNumberOrNull",
@@ -467,6 +547,16 @@
         ]
       }
     },
+    "BlockHashOrNull": {
+      "description": "The block hash or null when its the pending block",
+      "name": "BlockHashOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "NonceOrNull": {
       "description": "Randomly selected number to satisfy the proof-of-work or null when its the pending block",
       "name": "NonceOrNull",
@@ -488,6 +578,16 @@
             }
           }
         ]
+      }
+    },
+    "From": {
+      "description": "The sender of the transaction",
+      "name": "From",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "To": {
@@ -990,6 +1090,16 @@
             "type": "string",
             "regex": "^0x[a-fA-F\\d]{64}$"
           }
+        }
+      }
+    },
+    "Nonce": {
+      "description": "A number only to be used once",
+      "name": "Nonce",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
         }
       }
     },
@@ -1880,6 +1990,35 @@
         ]
       }
     },
+    "EthGetWorkResultItems": {
+      "name": "EthGetWorkResultItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "PowHash",
+            "type": {
+              "type": "id",
+              "value": "PowHash"
+            }
+          },
+          {
+            "typeName": "SeedHash",
+            "type": {
+              "type": "id",
+              "value": "SeedHash"
+            }
+          },
+          {
+            "typeName": "Difficulty",
+            "type": {
+              "type": "id",
+              "value": "Difficulty"
+            }
+          }
+        ]
+      }
+    },
     "e_t_h___g_e_t_W_o_r_k_Result": {
       "name": "EthGetWorkResult",
       "shape": {
@@ -1887,7 +2026,8 @@
         "value": {
           "type": "list",
           "itemType": {
-            "type": "unknown"
+            "type": "id",
+            "value": "EthGetWorkResultItems"
           }
         }
       }
@@ -4814,7 +4954,8 @@
             "value": {
               "type": "list",
               "itemType": {
-                "type": "unknown"
+                "type": "id",
+                "value": "EthGetWorkResultItems"
               }
             }
           }
@@ -5648,8 +5789,14 @@
     "webhooks": [],
     "websockets": [],
     "types": [
+      "ProofNode",
+      "StorageProofKey",
       "StorageProof",
       "ProofNodes",
+      "PowHash",
+      "SeedHash",
+      "MixHash",
+      "Difficulty",
       "FilterId",
       "BlockHash",
       "BlockNumber",
@@ -5661,8 +5808,12 @@
       "BloomFilter",
       "Log",
       "Topics",
+      "Topic",
+      "TransactionIndex",
       "BlockNumberOrNull",
+      "BlockHashOrNull",
       "NonceOrNull",
+      "From",
       "To",
       "Block",
       "Transaction",
@@ -5670,6 +5821,7 @@
       "TransactionHash",
       "KeccakOrPending",
       "Keccak",
+      "Nonce",
       "Integer",
       "Address",
       "Addresses",

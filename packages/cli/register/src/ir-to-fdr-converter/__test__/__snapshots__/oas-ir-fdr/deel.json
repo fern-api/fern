@@ -5690,6 +5690,15 @@
         ]
       }
     },
+    "ContractExternalIdPatchedResponseContainer": {
+      "name": "ContractExternalIdPatchedResponseContainer",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "ContractExternalIdPatchedContainer": {
       "name": "ContractExternalIdPatchedContainer",
       "shape": {
@@ -38274,6 +38283,7 @@
       "InvoiceAdjustmentReviewToCreateContainer",
       "InvoiceAdjustmentReviewToCreate",
       "GenericResultCreated",
+      "ContractExternalIdPatchedResponseContainer",
       "ContractExternalIdPatchedContainer",
       "GenericResultUpdated",
       "GenericResultDeleted",

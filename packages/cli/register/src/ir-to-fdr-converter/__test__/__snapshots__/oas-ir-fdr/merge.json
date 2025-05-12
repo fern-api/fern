@@ -427,15 +427,6 @@
         ]
       }
     },
-    "AccountIntegrationApiEndpointsToDocumentationUrls": {
-      "description": "Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}",
-      "name": "AccountIntegrationApiEndpointsToDocumentationUrls",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "AccountIntegration": {
       "name": "AccountIntegration",
       "shape": {
@@ -547,8 +538,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "AccountIntegrationApiEndpointsToDocumentationUrls"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -642,14 +641,6 @@
         "extends": [
           "AccountTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "BankInfoFieldMappings": {
-      "name": "BankInfoFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -823,8 +814,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BankInfoFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -848,14 +847,6 @@
             "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "BenefitFieldMappings": {
-      "name": "BenefitFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Benefit": {
@@ -1046,8 +1037,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BenefitFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -1175,14 +1174,6 @@
         ]
       }
     },
-    "CompanyFieldMappings": {
-      "name": "CompanyFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Company": {
       "description": "# The Company Object\n### Description\nThe `Company` object is used to represent a company within the HRIS / Payroll system.\n\n### Usage Example\nFetch from the `LIST Companies` endpoint and filter by `ID` to show all companies.",
       "name": "Company",
@@ -1307,8 +1298,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "CompanyFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -2272,15 +2271,6 @@
         ]
       }
     },
-    "DataPassthroughRequestHeaders": {
-      "description": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
-      "name": "DataPassthroughRequestHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "DataPassthroughRequestRequestFormat": {
       "name": "DataPassthroughRequestRequestFormat",
       "shape": {
@@ -2372,8 +2362,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "DataPassthroughRequestHeaders"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -2475,14 +2473,6 @@
             }
           }
         ]
-      }
-    },
-    "DeductionFieldMappings": {
-      "name": "DeductionFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Deduction": {
@@ -2621,8 +2611,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "DeductionFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -2656,14 +2654,6 @@
         "extends": [
           "EarningTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "EarningFieldMappings": {
-      "name": "EarningFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -2785,8 +2775,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EarningFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -2874,23 +2872,6 @@
         "extends": [
           "EmploymentStatusEnum"
         ],
-        "properties": []
-      }
-    },
-    "EmployeeCustomFields": {
-      "description": "Custom fields configured for a given model.",
-      "name": "EmployeeCustomFields",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "EmployeeFieldMappings": {
-      "name": "EmployeeFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -3383,8 +3364,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeCustomFields"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -3424,8 +3413,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -3465,14 +3462,6 @@
             }
           }
         ]
-      }
-    },
-    "EmployeePayrollRunFieldMappings": {
-      "name": "EmployeePayrollRunFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "EmployeePayrollRun": {
@@ -3707,8 +3696,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeePayrollRunFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -3775,22 +3772,6 @@
         "extends": [
           "EmploymentStatusEnum"
         ],
-        "properties": []
-      }
-    },
-    "EmployeeRequestIntegrationParams": {
-      "name": "EmployeeRequestIntegrationParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "EmployeeRequestLinkedAccountParams": {
-      "name": "EmployeeRequestLinkedAccountParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -4235,8 +4216,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeRequestIntegrationParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -4249,8 +4238,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeRequestLinkedAccountParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -4360,14 +4357,6 @@
         "extends": [
           "EmploymentTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "EmploymentFieldMappings": {
-      "name": "EmploymentFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -4597,8 +4586,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmploymentFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -4977,14 +4974,6 @@
         "properties": []
       }
     },
-    "GroupFieldMappings": {
-      "name": "GroupFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Group": {
       "description": "# The Group Object\n### Description\nThe `Group` object is used to represent any subset of employees, such as `PayGroup` or `Team`. Employees can be in multiple Groups.\n\n### Usage Example\nFetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.",
       "name": "Group",
@@ -5105,8 +5094,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "GroupFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -5219,14 +5216,6 @@
         ]
       }
     },
-    "IssueEndUser": {
-      "name": "IssueEndUser",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Issue": {
       "name": "Issue",
       "shape": {
@@ -5272,8 +5261,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "IssueEndUser"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             },
             "propertyAccess": "READ_ONLY"
@@ -5454,6 +5451,17 @@
             }
           },
           {
+            "description": "The value for a condition.",
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            },
+            "propertyAccess": "READ_ONLY"
+          },
+          {
             "description": "The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. \"location_type\".",
             "key": "field_name",
             "valueType": {
@@ -5495,6 +5503,13 @@
                 "type": "string",
                 "minLength": 1
               }
+            }
+          },
+          {
+            "description": "The value for a specific condition.",
+            "key": "value",
+            "valueType": {
+              "type": "unknown"
             }
           }
         ]
@@ -5610,14 +5625,6 @@
         "extends": [
           "LocationTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "LocationFieldMappings": {
-      "name": "LocationFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -5834,8 +5841,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "LocationFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -5900,22 +5915,6 @@
         ]
       }
     },
-    "MetaResponseRequestSchema": {
-      "name": "MetaResponseRequestSchema",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "MetaResponseRemoteFieldClasses": {
-      "name": "MetaResponseRemoteFieldClasses",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "MetaResponse": {
       "name": "MetaResponse",
       "shape": {
@@ -5925,8 +5924,16 @@
           {
             "key": "request_schema",
             "valueType": {
-              "type": "id",
-              "value": "MetaResponseRequestSchema"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -5934,8 +5941,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "MetaResponseRemoteFieldClasses"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -8030,14 +8045,6 @@
         ]
       }
     },
-    "PayGroupFieldMappings": {
-      "name": "PayGroupFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "PayGroup": {
       "description": "# The PayGroup Object\n### Description\nThe `PayGroup` object is used to represent a subset of employees that are put together for payroll processing purposes.\n\n### Usage Example\nFetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.",
       "name": "PayGroup",
@@ -8127,8 +8134,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PayGroupFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -8209,14 +8224,6 @@
         "extends": [
           "RunTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "PayrollRunFieldMappings": {
-      "name": "PayrollRunFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -8372,8 +8379,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PayrollRunFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -8444,14 +8459,6 @@
         ]
       }
     },
-    "RemoteDataData": {
-      "name": "RemoteDataData",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RemoteData": {
       "name": "RemoteData",
       "shape": {
@@ -8472,8 +8479,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteDataData"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -8528,14 +8543,6 @@
         ]
       }
     },
-    "RemoteResponseResponseHeaders": {
-      "name": "RemoteResponseResponseHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RemoteResponseResponseType": {
       "description": "* `JSON` - JSON\n* `BASE64_GZIP` - BASE64_GZIP",
       "name": "RemoteResponseResponseType",
@@ -8549,14 +8556,6 @@
             "value": "BASE64_GZIP"
           }
         ]
-      }
-    },
-    "RemoteResponseHeaders": {
-      "name": "RemoteResponseHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "RemoteResponse": {
@@ -8594,12 +8593,26 @@
             }
           },
           {
+            "key": "response",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "key": "response_headers",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteResponseResponseHeaders"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -8618,8 +8631,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteResponseHeaders"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -8883,14 +8904,6 @@
         ]
       }
     },
-    "TaxFieldMappings": {
-      "name": "TaxFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Tax": {
       "description": "# The Tax Object\n### Description\nThe `Tax` object is used to represent an array of the tax deductions for a given employee's payroll run.\n\n### Usage Example\nFetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
       "name": "Tax",
@@ -9027,8 +9040,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TaxFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -9052,14 +9073,6 @@
             "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "TeamFieldMappings": {
-      "name": "TeamFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Team": {
@@ -9168,8 +9181,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TeamFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -9225,14 +9246,6 @@
         "extends": [
           "RequestTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "TimeOffFieldMappings": {
-      "name": "TimeOffFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -9450,8 +9463,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -9485,14 +9506,6 @@
         "extends": [
           "PolicyTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "TimeOffBalanceFieldMappings": {
-      "name": "TimeOffBalanceFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -9632,8 +9645,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffBalanceFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -9705,22 +9726,6 @@
         "extends": [
           "RequestTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "TimeOffRequestIntegrationParams": {
-      "name": "TimeOffRequestIntegrationParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "TimeOffRequestLinkedAccountParams": {
-      "name": "TimeOffRequestLinkedAccountParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -9880,8 +9885,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffRequestIntegrationParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },
@@ -9894,8 +9907,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffRequestLinkedAccountParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             },

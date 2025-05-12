@@ -79,6 +79,12 @@
             }
           },
           {
+            "key": "data",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "key": "errors",
             "valueType": {
               "type": "optional",
@@ -89,6 +95,12 @@
                   "value": "Issue"
                 }
               }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {
@@ -359,15 +371,6 @@
         ]
       }
     },
-    "IssueDetails": {
-      "description": "Any associated details",
-      "name": "IssueDetails",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Issue": {
       "name": "Issue",
       "shape": {
@@ -398,8 +401,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "IssueDetails"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }

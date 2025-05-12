@@ -981,6 +981,15 @@
         ]
       }
     },
+    "MetricsResponse": {
+      "name": "MetricsResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "MetricName": {
       "name": "MetricName",
       "shape": {
@@ -1290,6 +1299,25 @@
             }
           }
         ]
+      }
+    },
+    "Omit_Room.allocations_": {
+      "description": "Construct a type with the properties of T except for those in type K.",
+      "name": "Omit_Room.allocations_",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "RoomWithoutAllocations": {
+      "name": "RoomWithoutAllocations",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "ProcessWithRooms": {
@@ -8135,12 +8163,15 @@
       "ProcessId",
       "MetricValue",
       "Record_Partial_MetricName_.MetricValue-Array_",
+      "MetricsResponse",
       "MetricName",
       "Process",
       "RoomStatus",
       "RoomAllocationId",
       "RoomAllocation",
       "Pick_Room.Exclude_keyofRoom.allocations__",
+      "Omit_Room.allocations_",
+      "RoomWithoutAllocations",
       "ProcessWithRooms",
       "Room",
       "StartingConnectionInfo",

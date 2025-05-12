@@ -166,24 +166,24 @@
     "environments": {
       "baseUrls": [
         {
-          "id": "Base",
+          "id": "Prod",
           "name": {
-            "originalName": "Base",
+            "originalName": "Prod",
             "camelCase": {
-              "unsafeName": "base",
-              "safeName": "base"
+              "unsafeName": "prod",
+              "safeName": "prod"
             },
             "snakeCase": {
-              "unsafeName": "base",
-              "safeName": "base"
+              "unsafeName": "prod",
+              "safeName": "prod"
             },
             "screamingSnakeCase": {
-              "unsafeName": "BASE",
-              "safeName": "BASE"
+              "unsafeName": "PROD",
+              "safeName": "PROD"
             },
             "pascalCase": {
-              "unsafeName": "Base",
-              "safeName": "Base"
+              "unsafeName": "Prod",
+              "safeName": "Prod"
             }
           }
         },
@@ -233,7 +233,7 @@
             }
           },
           "urls": {
-            "Base": "http://prod.api.com",
+            "Prod": "http://prod.api.com",
             "Debug": "http://debug.api.com"
           }
         }
