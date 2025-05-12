@@ -152,6 +152,38 @@
             }
           },
           {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Collection of warnings associated with the access code, structured in a dictionary format. A unique \"warning_code\" keys each warning. Each warning entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the warning. \"created_at\" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          },
+          {
             "description": "Indicates whether Seam manages the access code.",
             "key": "is_managed",
             "valueType": {
@@ -372,6 +404,38 @@
               "value": {
                 "type": "string",
                 "format": "date-time"
+              }
+            }
+          },
+          {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "description": "Collection of warnings associated with the access code, structured in a dictionary format. A unique \"warning_code\" keys each warning. Each warning entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the warning. \"created_at\" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
               }
             }
           },
@@ -2751,6 +2815,21 @@
               "type": "id",
               "value": "ActionAttemptOneOf25ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -3004,6 +3083,21 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf28ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
             }
           }
         ]
@@ -3259,6 +3353,21 @@
               "type": "id",
               "value": "ActionAttemptOneOf31ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -3512,6 +3621,21 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf34ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
             }
           }
         ]
@@ -3767,6 +3891,21 @@
               "type": "id",
               "value": "ActionAttemptOneOf37ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -4021,6 +4160,21 @@
               "type": "id",
               "value": "ActionAttemptOneOf40ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
           }
         ]
       }
@@ -4274,6 +4428,21 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf43ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
             }
           }
         ]
@@ -4942,6 +5111,22 @@
             }
           },
           {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          },
+          {
             "key": "automatic_heating_enabled",
             "valueType": {
               "type": "optional",
@@ -5507,6 +5692,36 @@
               "type": "primitive",
               "value": {
                 "type": "string"
+              }
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "optional",
+                  "itemType": {
+                    "type": "unknown"
+                  }
+                }
               }
             }
           },

@@ -557,15 +557,6 @@
         ]
       }
     },
-    "DocumentIndexCreateRequestIndexingConfig": {
-      "description": "Configuration representing how documents should be indexed",
-      "name": "DocumentIndexCreateRequestIndexingConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "DocumentIndexCreateRequest": {
       "name": "DocumentIndexCreateRequest",
       "shape": {
@@ -622,8 +613,16 @@
             "description": "Configuration representing how documents should be indexed",
             "key": "indexing_config",
             "valueType": {
-              "type": "id",
-              "value": "DocumentIndexCreateRequestIndexingConfig"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -674,15 +673,6 @@
             "value": "PRODUCTION"
           }
         ]
-      }
-    },
-    "DocumentIndexReadIndexingConfig": {
-      "description": "Configuration representing how documents should be indexed",
-      "name": "DocumentIndexReadIndexingConfig",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "DocumentIndexRead": {
@@ -761,8 +751,16 @@
             "description": "Configuration representing how documents should be indexed",
             "key": "indexing_config",
             "valueType": {
-              "type": "id",
-              "value": "DocumentIndexReadIndexingConfig"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -951,6 +949,781 @@
                 "type": "primitive",
                 "value": {
                   "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ExecutePromptEvent": {
+      "name": "ExecutePromptEvent",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InitiatedExecutePromptEvent",
+            "type": {
+              "type": "id",
+              "value": "InitiatedExecutePromptEvent"
+            }
+          },
+          {
+            "typeName": "StreamingExecutePromptEvent",
+            "type": {
+              "type": "id",
+              "value": "StreamingExecutePromptEvent"
+            }
+          },
+          {
+            "typeName": "FulfilledExecutePromptEvent",
+            "type": {
+              "type": "id",
+              "value": "FulfilledExecutePromptEvent"
+            }
+          },
+          {
+            "typeName": "RejectedExecutePromptEvent",
+            "type": {
+              "type": "id",
+              "value": "RejectedExecutePromptEvent"
+            }
+          }
+        ]
+      }
+    },
+    "InitiatedEnum": {
+      "name": "InitiatedEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "INITIATED"
+          }
+        ]
+      }
+    },
+    "InitiatedPromptExecutionMeta": {
+      "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
+      "name": "InitiatedPromptExecutionMeta",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "model_name",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "latency",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "deployment_release_tag",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "prompt_version_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "InitiatedExecutePromptEvent": {
+      "description": "The initial data returned indicating that the response from the model has returned and begun streaming.",
+      "name": "InitiatedExecutePromptEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "state",
+            "valueType": {
+              "type": "id",
+              "value": "InitiatedEnum"
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "InitiatedPromptExecutionMeta"
+              }
+            }
+          },
+          {
+            "key": "execution_id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "StreamingEnum": {
+      "name": "StreamingEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "STREAMING"
+          }
+        ]
+      }
+    },
+    "PromptOutput": {
+      "name": "PromptOutput",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "StringVellumValue",
+            "type": {
+              "type": "id",
+              "value": "StringVellumValue"
+            }
+          },
+          {
+            "typeName": "JsonVellumValue",
+            "type": {
+              "type": "id",
+              "value": "JsonVellumValue"
+            }
+          },
+          {
+            "typeName": "ErrorVellumValue",
+            "type": {
+              "type": "id",
+              "value": "ErrorVellumValue"
+            }
+          },
+          {
+            "typeName": "FunctionCallVellumValue",
+            "type": {
+              "type": "id",
+              "value": "FunctionCallVellumValue"
+            }
+          }
+        ]
+      }
+    },
+    "StringVellumValue": {
+      "description": "A value representing a string.",
+      "name": "StringVellumValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "StringEnum"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "StringEnum": {
+      "name": "StringEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "STRING"
+          }
+        ]
+      }
+    },
+    "JsonEnum": {
+      "name": "JsonEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "JSON"
+          }
+        ]
+      }
+    },
+    "JsonVellumValue": {
+      "description": "A value representing a JSON object.",
+      "name": "JsonVellumValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "JsonEnum"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ErrorEnum": {
+      "name": "ErrorEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "ERROR"
+          }
+        ]
+      }
+    },
+    "FunctionCallVellumValueValue": {
+      "name": "FunctionCallVellumValueValue",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "FunctionCall"
+        ],
+        "properties": []
+      }
+    },
+    "FunctionCallVellumValue": {
+      "description": "A value representing a Function Call.",
+      "name": "FunctionCallVellumValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "FunctionCallEnum"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "FunctionCallVellumValueValue"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "FunctionCallEnum": {
+      "name": "FunctionCallEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "FUNCTION_CALL"
+          }
+        ]
+      }
+    },
+    "FunctionCall": {
+      "description": "The final resolved function call value.",
+      "name": "FunctionCall",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "arguments",
+            "valueType": {
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ErrorVellumValueValue": {
+      "name": "ErrorVellumValueValue",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "VellumError"
+        ],
+        "properties": []
+      }
+    },
+    "ErrorVellumValue": {
+      "description": "A value representing an Error.",
+      "name": "ErrorVellumValue",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "ErrorEnum"
+            }
+          },
+          {
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ErrorVellumValueValue"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "StreamingExecutePromptEvent": {
+      "description": "The data returned for each delta during the prompt execution stream.",
+      "name": "StreamingExecutePromptEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "state",
+            "valueType": {
+              "type": "id",
+              "value": "StreamingEnum"
+            }
+          },
+          {
+            "key": "output",
+            "valueType": {
+              "type": "id",
+              "value": "PromptOutput"
+            }
+          },
+          {
+            "key": "output_index",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "execution_id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "StreamingPromptExecutionMeta"
+              }
+            }
+          },
+          {
+            "description": "The subset of the raw response from the model that the request opted into with `expand_raw`.",
+            "key": "raw",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "StreamingPromptExecutionMeta": {
+      "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
+      "name": "StreamingPromptExecutionMeta",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "latency",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "FulfilledEnum": {
+      "name": "FulfilledEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "FULFILLED"
+          }
+        ]
+      }
+    },
+    "FulfilledExecutePromptEvent": {
+      "description": "The final data event returned indicating that the stream has ended and all final resolved values from the model can be found.",
+      "name": "FulfilledExecutePromptEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "state",
+            "valueType": {
+              "type": "id",
+              "value": "FulfilledEnum"
+            }
+          },
+          {
+            "key": "outputs",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "PromptOutput"
+              }
+            }
+          },
+          {
+            "key": "execution_id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "FulfilledPromptExecutionMeta"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "FulfilledPromptExecutionMetaFinishReason": {
+      "name": "FulfilledPromptExecutionMetaFinishReason",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "FinishReasonEnum"
+        ],
+        "properties": []
+      }
+    },
+    "FulfilledPromptExecutionMetaUsage": {
+      "name": "FulfilledPromptExecutionMetaUsage",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "MLModelUsage"
+        ],
+        "properties": []
+      }
+    },
+    "FulfilledPromptExecutionMetaCost": {
+      "name": "FulfilledPromptExecutionMetaCost",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "Price"
+        ],
+        "properties": []
+      }
+    },
+    "FulfilledPromptExecutionMeta": {
+      "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
+      "name": "FulfilledPromptExecutionMeta",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "latency",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "finish_reason",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "FulfilledPromptExecutionMetaFinishReason"
+                }
+              }
+            }
+          },
+          {
+            "key": "usage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "FulfilledPromptExecutionMetaUsage"
+                }
+              }
+            }
+          },
+          {
+            "key": "cost",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "FulfilledPromptExecutionMetaCost"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "RejectedEnum": {
+      "name": "RejectedEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "REJECTED"
+          }
+        ]
+      }
+    },
+    "RejectedExecutePromptEvent": {
+      "description": "The final data returned indicating an error occurred during the stream.",
+      "name": "RejectedExecutePromptEvent",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "state",
+            "valueType": {
+              "type": "id",
+              "value": "RejectedEnum"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "id",
+              "value": "VellumError"
+            }
+          },
+          {
+            "key": "execution_id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "meta",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "RejectedPromptExecutionMeta"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "RejectedPromptExecutionMetaFinishReason": {
+      "name": "RejectedPromptExecutionMetaFinishReason",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "FinishReasonEnum"
+        ],
+        "properties": []
+      }
+    },
+    "RejectedPromptExecutionMeta": {
+      "description": "The subset of the metadata tracked by Vellum during prompt execution that the request opted into with `expand_meta`.",
+      "name": "RejectedPromptExecutionMeta",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "latency",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "finish_reason",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "RejectedPromptExecutionMetaFinishReason"
                 }
               }
             }
@@ -1196,15 +1969,6 @@
         ]
       }
     },
-    "GenerateRequestInputValues": {
-      "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
-      "name": "GenerateRequestInputValues",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "GenerateRequest": {
       "name": "GenerateRequest",
       "shape": {
@@ -1215,8 +1979,16 @@
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
             "key": "input_values",
             "valueType": {
-              "type": "id",
-              "value": "GenerateRequestInputValues"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -1543,6 +2315,120 @@
         ]
       }
     },
+    "MLModelUsage": {
+      "name": "MLModelUsage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "output_token_count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "input_token_count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "input_char_count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "output_char_count",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "compute_nanos",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "cache_creation_input_tokens",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "cache_read_input_tokens",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "ModelTypeEnum": {
       "description": "* `GENERATE` - Generate\n* `CLASSIFY` - Classify",
       "name": "ModelTypeEnum",
@@ -1602,15 +2488,6 @@
         ]
       }
     },
-    "ModelVersionCompilePromptRequestRequestInputValues": {
-      "description": "Key/value pairs for each variable found within the model version's prompt template.",
-      "name": "ModelVersionCompilePromptRequestRequestInputValues",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "ModelVersionCompilePromptRequestRequest": {
       "name": "ModelVersionCompilePromptRequestRequest",
       "shape": {
@@ -1621,8 +2498,16 @@
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
             "key": "input_values",
             "valueType": {
-              "type": "id",
-              "value": "ModelVersionCompilePromptRequestRequestInputValues"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -2261,6 +3146,31 @@
         ]
       }
     },
+    "Price": {
+      "name": "Price",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "key": "unit",
+            "valueType": {
+              "type": "id",
+              "value": "UnitEnum"
+            }
+          }
+        ]
+      }
+    },
     "ProcessingFailureReasonEnum": {
       "description": "* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
       "name": "ProcessingFailureReasonEnum",
@@ -2476,14 +3386,6 @@
         "properties": []
       }
     },
-    "PromptTemplateBlockPropertiesFunctionParameters": {
-      "name": "PromptTemplateBlockPropertiesFunctionParameters",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "PromptTemplateBlockProperties": {
       "name": "PromptTemplateBlockProperties",
       "shape": {
@@ -2581,8 +3483,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PromptTemplateBlockPropertiesFunctionParameters"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -2623,14 +3533,6 @@
         "extends": [
           "ContentType"
         ],
-        "properties": []
-      }
-    },
-    "PromptTemplateBlockPropertiesRequestFunctionParameters": {
-      "name": "PromptTemplateBlockPropertiesRequestFunctionParameters",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -2733,8 +3635,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PromptTemplateBlockPropertiesRequestFunctionParameters"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -3111,15 +4021,6 @@
         "properties": []
       }
     },
-    "RegisterPromptRequestRequestMeta": {
-      "description": "Optionally include additional metadata to store along with the prompt.",
-      "name": "RegisterPromptRequestRequestMeta",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RegisterPromptRequestRequest": {
       "name": "RegisterPromptRequestRequest",
       "shape": {
@@ -3189,8 +4090,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RegisterPromptRequestRequestMeta"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -3827,14 +4736,6 @@
         ]
       }
     },
-    "SearchNodeResultDataResultsItems": {
-      "name": "SearchNodeResultDataResultsItems",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "SearchNodeResultData": {
       "name": "SearchNodeResultData",
       "shape": {
@@ -3855,8 +4756,16 @@
             "valueType": {
               "type": "list",
               "itemType": {
-                "type": "id",
-                "value": "SearchNodeResultDataResultsItems"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -4583,14 +5492,6 @@
         ]
       }
     },
-    "TerminalNodeJsonResultValue": {
-      "name": "TerminalNodeJsonResultValue",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "TerminalNodeJsonResult": {
       "name": "TerminalNodeJsonResult",
       "shape": {
@@ -4620,8 +5521,16 @@
           {
             "key": "value",
             "valueType": {
-              "type": "id",
-              "value": "TerminalNodeJsonResultValue"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -4736,15 +5645,6 @@
         ]
       }
     },
-    "TestSuiteTestCaseInputValues": {
-      "description": "Key/value pairs for each input variable that the Test Suite expects.",
-      "name": "TestSuiteTestCaseInputValues",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "TestSuiteTestCaseEvaluationParams": {
       "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
       "name": "TestSuiteTestCaseEvaluationParams",
@@ -4795,8 +5695,16 @@
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": "input_values",
             "valueType": {
-              "type": "id",
-              "value": "TestSuiteTestCaseInputValues"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -4808,15 +5716,6 @@
             }
           }
         ]
-      }
-    },
-    "TestSuiteTestCaseRequestInputValues": {
-      "description": "Key/value pairs for each input variable that the Test Suite expects.",
-      "name": "TestSuiteTestCaseRequestInputValues",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "TestSuiteTestCaseRequestEvaluationParams": {
@@ -4870,8 +5769,16 @@
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "key": "input_values",
             "valueType": {
-              "type": "id",
-              "value": "TestSuiteTestCaseRequestInputValues"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -4881,6 +5788,18 @@
               "type": "id",
               "value": "TestSuiteTestCaseRequestEvaluationParams"
             }
+          }
+        ]
+      }
+    },
+    "UnitEnum": {
+      "description": "* `USD` - USD",
+      "name": "UnitEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "USD"
           }
         ]
       }
@@ -5064,6 +5983,58 @@
                 "value": "SandboxMetricInputParamsRequest"
               }
             }
+          }
+        ]
+      }
+    },
+    "VellumError": {
+      "name": "VellumError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "code",
+            "valueType": {
+              "type": "id",
+              "value": "VellumErrorCodeEnum"
+            }
+          }
+        ]
+      }
+    },
+    "VellumErrorCodeEnum": {
+      "description": "* `INVALID_REQUEST` - INVALID_REQUEST\n* `INVALID_INPUTS` - INVALID_INPUTS\n* `PROVIDER_ERROR` - PROVIDER_ERROR\n* `REQUEST_TIMEOUT` - REQUEST_TIMEOUT\n* `INTERNAL_SERVER_ERROR` - INTERNAL_SERVER_ERROR\n* `USER_DEFINED_ERROR` - USER_DEFINED_ERROR",
+      "name": "VellumErrorCodeEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "INVALID_REQUEST"
+          },
+          {
+            "value": "INVALID_INPUTS"
+          },
+          {
+            "value": "PROVIDER_ERROR"
+          },
+          {
+            "value": "REQUEST_TIMEOUT"
+          },
+          {
+            "value": "INTERNAL_SERVER_ERROR"
+          },
+          {
+            "value": "USER_DEFINED_ERROR"
           }
         ]
       }
@@ -5447,14 +6418,6 @@
         ]
       }
     },
-    "WorkflowRequestJsonInputRequestValue": {
-      "name": "WorkflowRequestJsonInputRequestValue",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "WorkflowRequestJSONInputRequest": {
       "name": "WorkflowRequestJSONInputRequest",
       "shape": {
@@ -5475,8 +6438,16 @@
           {
             "key": "value",
             "valueType": {
-              "type": "id",
-              "value": "WorkflowRequestJsonInputRequestValue"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -5692,14 +6663,6 @@
         ]
       }
     },
-    "WorkflowResultEventOutputDataJsonValue": {
-      "name": "WorkflowResultEventOutputDataJsonValue",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "WorkflowResultEventOutputDataJSON": {
       "name": "WorkflowResultEventOutputDataJSON",
       "shape": {
@@ -5760,8 +6723,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "WorkflowResultEventOutputDataJsonValue"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -7522,6 +8493,88 @@
     "endpoints": [
       {
         "auth": true,
+        "description": "Executes a deployed Prompt and streams back the results.",
+        "method": "POST",
+        "defaultEnvironment": "Default",
+        "environments": [
+          {
+            "id": "Default",
+            "baseUrl": "https://predict.vellum.ai"
+          }
+        ],
+        "id": "execute-prompt-stream",
+        "originalEndpointId": "execute-prompt-stream",
+        "name": "Execute Prompt Stream",
+        "path": {
+          "pathParameters": [],
+          "parts": [
+            {
+              "type": "literal",
+              "value": ""
+            },
+            {
+              "type": "literal",
+              "value": "/v1/execute-prompt-stream"
+            }
+          ]
+        },
+        "queryParameters": [],
+        "headers": [],
+        "response": {
+          "type": {
+            "type": "reference",
+            "value": {
+              "type": "id",
+              "value": "ExecutePromptEvent"
+            }
+          },
+          "statusCode": 200,
+          "description": ""
+        },
+        "errorsV2": [],
+        "examples": [
+          {
+            "name": "",
+            "description": "",
+            "path": "/v1/execute-prompt-stream",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "state": "INITIATED",
+                "meta": {
+                  "model_name": "foo",
+                  "latency": 42,
+                  "deployment_release_tag": "foo",
+                  "prompt_version_id": "foo"
+                },
+                "execution_id": "foo"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "state": "INITIATED",
+                "meta": {
+                  "model_name": "foo",
+                  "latency": 42,
+                  "deployment_release_tag": "foo",
+                  "prompt_version_id": "foo"
+                },
+                "execution_id": "foo"
+              }
+            }
+          }
+        ],
+        "protocol": {
+          "type": "rest"
+        }
+      },
+      {
+        "auth": true,
         "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nExecutes a deployed Workflow and streams back its results.",
         "method": "POST",
         "defaultEnvironment": "Default",
@@ -8363,6 +9416,29 @@
       "EnvironmentEnum",
       "EvaluationParams",
       "EvaluationParamsRequest",
+      "ExecutePromptEvent",
+      "InitiatedEnum",
+      "InitiatedPromptExecutionMeta",
+      "InitiatedExecutePromptEvent",
+      "StreamingEnum",
+      "PromptOutput",
+      "StringVellumValue",
+      "StringEnum",
+      "JsonEnum",
+      "JsonVellumValue",
+      "ErrorEnum",
+      "FunctionCallVellumValue",
+      "FunctionCallEnum",
+      "FunctionCall",
+      "ErrorVellumValue",
+      "StreamingExecutePromptEvent",
+      "StreamingPromptExecutionMeta",
+      "FulfilledEnum",
+      "FulfilledExecutePromptEvent",
+      "FulfilledPromptExecutionMeta",
+      "RejectedEnum",
+      "RejectedExecutePromptEvent",
+      "RejectedPromptExecutionMeta",
       "ExecuteWorkflowStreamRequest",
       "FinishReasonEnum",
       "GenerateBodyRequest",
@@ -8379,6 +9455,7 @@
       "GenerateStreamResultData",
       "IndexingStateEnum",
       "LogprobsEnum",
+      "MLModelUsage",
       "ModelTypeEnum",
       "ModelVersionBuildConfig",
       "ModelVersionCompilePromptRequestRequest",
@@ -8392,6 +9469,7 @@
       "NormalizedLogProbs",
       "NormalizedTokenLogProbs",
       "PaginatedSlimDocumentList",
+      "Price",
       "ProcessingFailureReasonEnum",
       "ProcessingStateEnum",
       "PromptNodeResult",
@@ -8446,10 +9524,13 @@
       "TerminalNodeStringResult",
       "TestSuiteTestCase",
       "TestSuiteTestCaseRequest",
+      "UnitEnum",
       "UploadDocumentBodyRequest",
       "UploadDocumentErrorResponse",
       "UploadDocumentResponse",
       "UpsertSandboxScenarioRequestRequest",
+      "VellumError",
+      "VellumErrorCodeEnum",
       "WorkflowEventError",
       "WorkflowExecutionEventErrorCode",
       "WorkflowExecutionNodeResultEvent",
