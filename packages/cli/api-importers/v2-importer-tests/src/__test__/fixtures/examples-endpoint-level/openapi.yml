@@ -15,6 +15,17 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TreeCreate'
+            examples:
+              maple:
+                value:
+                  species: "Acer saccharum"
+                  height: 18.3
+                  age: 35
+              oak:
+                value:
+                  species: "Quercus alba"
+                  height: 25.4
+                  age: 50
       responses:
         '201':
           description: Tree created successfully
