@@ -274,43 +274,21 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     private convertUntypedSchema(): SchemaConverter.Output | undefined {
-        if (this.isNullableSchema()) {
-            return {
-                convertedSchema: {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: FernIr.Type.alias({
-                            aliasOf: FernIr.TypeReference.container(
-                                FernIr.ContainerType.nullable(FernIr.TypeReference.unknown())
-                            ),
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            resolvedType: FernIr.TypeReference.container(
-                                FernIr.ContainerType.nullable(FernIr.TypeReference.unknown())
-                            ) as any
-                        }),
-                        referencedTypes: new Set()
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: FernIr.Type.alias({
+                        aliasOf: FernIr.TypeReference.unknown(),
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        resolvedType: FernIr.TypeReference.unknown() as any
                     }),
-                    audiences: this.audiences,
-                    propertiesByAudience: {}
-                },
-                inlinedTypes: {}
-            };
-        } else {
-            return {
-                convertedSchema: {
-                    typeDeclaration: this.createTypeDeclaration({
-                        shape: FernIr.Type.alias({
-                            aliasOf: FernIr.TypeReference.unknown(),
-                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                            resolvedType: FernIr.TypeReference.unknown() as any
-                        }),
-                        referencedTypes: new Set()
-                    }),
-                    audiences: this.audiences,
-                    propertiesByAudience: {}
-                },
-                inlinedTypes: {}
-            };
-        }
+                    referencedTypes: new Set()
+                }),
+                audiences: this.audiences,
+                propertiesByAudience: {}
+            },
+            inlinedTypes: {}
+        };
     }
 
     private tryConvertFernTypeDeclaration(): FernIr.TypeDeclaration | undefined {
@@ -401,13 +379,6 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             !("items" in this.schema) &&
             !("properties" in this.schema)
         ) {
-            return true;
-        }
-        return false;
-    }
-
-    private isNullableSchema(): boolean {
-        if ("nullable" in this.schema && this.schema.nullable) {
             return true;
         }
         return false;
