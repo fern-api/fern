@@ -46,9 +46,13 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         for (const contentType of multipartContentTypes) {
             const mediaTypeObject = this.requestBody.content[contentType];
             const schemaId = [...this.group, this.method, "Request"].join("_");
+            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
+                continue;
+            }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
-                schemaId
+                schemaId,
+                resolveSchema: true
             });
             if (convertedSchema == null) {
                 continue;

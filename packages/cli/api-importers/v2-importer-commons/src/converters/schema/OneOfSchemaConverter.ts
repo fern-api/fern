@@ -197,18 +197,26 @@ export class OneOfSchemaConverter extends AbstractConverter<
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                unionTypes.push({
-                    type: this.context.createNamedTypeReference(schemaId),
-                    docs: subSchema.description
-                });
+                const typeShape = convertedSchema.convertedSchema.typeDeclaration.shape;
+                if (typeShape.type === "alias" && typeShape.aliasOf.type === "primitive") {
+                    unionTypes.push({
+                        type: typeShape.aliasOf,
+                        docs: subSchema.description
+                    });
+                } else {
+                    unionTypes.push({
+                        type: this.context.createNamedTypeReference(schemaId),
+                        docs: subSchema.description
+                    });
+                    inlinedTypes = {
+                        ...inlinedTypes,
+                        ...convertedSchema.inlinedTypes,
+                        [schemaId]: convertedSchema.convertedSchema
+                    };
+                }
                 convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {
                     referencedTypes.add(referencedType);
                 });
-                inlinedTypes = {
-                    ...inlinedTypes,
-                    ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.convertedSchema
-                };
             }
         }
 
