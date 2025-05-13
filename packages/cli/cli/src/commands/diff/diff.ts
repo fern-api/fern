@@ -7,14 +7,14 @@ import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
 
-import { CliContext } from "../../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext";
 
 export interface Result {
     bump: "major" | "minor" | "patch";
-    nextVersion: string;
+    nextVersion?: string;
 }
 
-export async function getSdkVersion({
+export async function diff({
     context,
     from,
     to,
@@ -23,13 +23,18 @@ export async function getSdkVersion({
     context: CliContext;
     from: string;
     to: string;
-    fromVersion: string;
+    fromVersion: string | undefined;
 }): Promise<Result> {
     const detector = new IntermediateRepresentationChangeDetector();
     const change = await detector.check({
         from: await readIr({ context, filepath: from, flagName: "from" }),
         to: await readIr({ context, filepath: to, flagName: "to" })
     });
+    if (fromVersion == null) {
+        return {
+            bump: change.bump
+        };
+    }
     const nextVersion = semver.inc(fromVersion, change.bump);
     if (!nextVersion) {
         context.failWithoutThrowing(`Invalid current version: ${fromVersion}`);
