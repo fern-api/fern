@@ -5,6 +5,7 @@ export * from "./Cat";
 export * from "./Dog";
 export * from "./Acai";
 export * from "./Fig";
+export * from "./Berry";
 export * from "./BranchNode";
 export * from "./LeafNode";
 export * from "./NodesWrapper";

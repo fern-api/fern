@@ -4310,7 +4310,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadExample",
               "description": "",
               "path": "/v2/upload",
               "pathParameters": {},
@@ -4545,7 +4545,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -4750,7 +4750,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transcriptCreateExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -5276,7 +5276,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/v2/transcript/foo",
               "pathParameters": {
@@ -5795,7 +5795,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/v2/transcript/foo",
               "pathParameters": {
@@ -6333,7 +6333,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSubtitlesExample",
               "description": "",
               "path": "/v2/transcript/foo/srt",
               "pathParameters": {
@@ -6501,7 +6501,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSentencesExample",
               "description": "",
               "path": "/v2/transcript/foo/sentences",
               "pathParameters": {
@@ -6718,7 +6718,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getParagraphsExample",
               "description": "",
               "path": "/v2/transcript/foo/paragraphs",
               "pathParameters": {
@@ -6949,7 +6949,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "wordSearchExample",
               "description": "",
               "path": "/v2/transcript/foo/word-search",
               "pathParameters": {
@@ -7162,7 +7162,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRedactedAudioExample",
               "description": "",
               "path": "/v2/transcript/foo/redacted-audio",
               "pathParameters": {
@@ -7349,7 +7349,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "realtimeCreateTemporaryTokenExample",
               "description": "",
               "path": "/v2/realtime/token",
               "pathParameters": {},
@@ -7541,7 +7541,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurSummaryExample",
               "description": "",
               "path": "/lemur/v3/generate/summary",
               "pathParameters": {},
@@ -7729,7 +7729,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurQuestionAnswerExample",
               "description": "",
               "path": "/lemur/v3/generate/question-answer",
               "pathParameters": {},
@@ -7937,7 +7937,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurActionItemsExample",
               "description": "",
               "path": "/lemur/v3/generate/action-items",
               "pathParameters": {},
@@ -8125,7 +8125,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurTaskExample",
               "description": "",
               "path": "/lemur/v3/generate/task",
               "pathParameters": {},
@@ -8319,7 +8319,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "purgeRequestDataExample",
               "description": "",
               "path": "/lemur/v3/foo",
               "pathParameters": {

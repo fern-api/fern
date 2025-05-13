@@ -3238,7 +3238,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
               "path": "/v1/search/vals",
               "pathParameters": {},
@@ -3391,7 +3391,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "usernameExample",
               "description": "",
               "path": "/v1/alias/foo",
               "pathParameters": {
@@ -3512,7 +3512,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valExample",
               "description": "",
               "path": "/v1/alias/foo/foo",
               "pathParameters": {
@@ -3633,7 +3633,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "me_get_example",
               "description": "",
               "path": "/v1/me",
               "pathParameters": {},
@@ -3745,7 +3745,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "likesExample",
               "description": "",
               "path": "/v1/me/likes",
               "pathParameters": {},
@@ -3930,7 +3930,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "commentsExample",
               "description": "",
               "path": "/v1/me/comments",
               "pathParameters": {},
@@ -4106,7 +4106,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "referencesExample",
               "description": "",
               "path": "/v1/me/references",
               "pathParameters": {},
@@ -4246,7 +4246,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobs_list_example",
               "description": "",
               "path": "/v1/blob",
               "pathParameters": {},
@@ -4339,7 +4339,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/v1/blob/foo",
               "pathParameters": {
@@ -4425,7 +4425,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobsStoreExample",
               "description": "",
               "path": "/v1/blob/foo",
               "pathParameters": {
@@ -4498,7 +4498,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/v1/blob/foo",
               "pathParameters": {
@@ -4585,7 +4585,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/v1/users/foo",
               "pathParameters": {
@@ -4714,7 +4714,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
               "path": "/v1/users/foo/vals",
               "pathParameters": {
@@ -4869,7 +4869,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
@@ -4882,6 +4882,70 @@
                 "type": "json",
                 "value": {
                   "statement": "SELECT 1;"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/sqlite/execute",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -5006,7 +5070,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sqlite_batch_example",
               "description": "",
               "path": "/v1/sqlite/batch",
               "pathParameters": {},
@@ -5178,7 +5242,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5191,6 +5255,38 @@
                 "type": "json",
                 "value": {
                   "code": "export default 1"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default function main(value: number) { return value; }",
+                "args": [
+                  1
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default function main(value: number) { return value; }",
+                  "args": [
+                    1
+                  ]
                 }
               },
               "responseStatusCode": 200,
@@ -5301,7 +5397,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "evalGetExample",
               "description": "",
               "path": "/v1/eval/foo",
               "pathParameters": {
@@ -5391,7 +5487,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "runGetExample",
               "description": "",
               "path": "/v1/run/foo",
               "pathParameters": {
@@ -5484,7 +5580,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_runPost_example",
               "description": "",
               "path": "/v1/run/foo",
               "pathParameters": {
@@ -5631,7 +5727,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_create_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -5782,7 +5878,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_put_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -5869,7 +5965,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/v1/vals/foo",
               "pathParameters": {
@@ -6052,7 +6148,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/vals/foo",
               "pathParameters": {
@@ -6069,6 +6165,26 @@
                 "value": {
                   "name": "myVal",
                   "readme": "# Updated readme"
+                }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/vals/foo",
+              "pathParameters": {
+                "val_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
                 }
               },
               "responseStatusCode": 200
@@ -6143,7 +6259,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
               "path": "/v1/vals/foo",
               "pathParameters": {
@@ -6247,7 +6363,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/v1/vals/foo/versions",
               "pathParameters": {
@@ -6438,7 +6554,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_createVersion_example",
               "description": "",
               "path": "/v1/vals/foo/versions",
               "pathParameters": {
@@ -6630,7 +6746,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getVersionExample",
               "description": "",
               "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
@@ -6785,7 +6901,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVersionExample",
               "description": "",
               "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
@@ -6899,7 +7015,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelExample",
               "description": "",
               "path": "/v1/vals/foo/evaluations/foo/cancel",
               "pathParameters": {
@@ -7114,7 +7230,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "emails_send_example",
               "description": "",
               "path": "/v1/email",
               "pathParameters": {},

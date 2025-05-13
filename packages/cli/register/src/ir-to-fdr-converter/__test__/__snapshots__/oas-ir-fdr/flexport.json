@@ -18907,7 +18907,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "BookingAmendment_booking_amendment_create_example",
               "description": "",
               "path": "/booking_amendments",
               "pathParameters": {},
@@ -19043,6 +19043,18 @@
                   },
                   "new_metadata": {}
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/booking_amendments",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19422,7 +19434,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -19567,7 +19579,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "BookingLineItem_booking_line_item_create_example",
               "description": "",
               "path": "/booking_line_items",
               "pathParameters": {},
@@ -19585,6 +19597,18 @@
                   "booking_id": 9876,
                   "units": 200
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/booking_line_items",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19719,7 +19743,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/booking_line_items/42",
               "pathParameters": {
@@ -20110,7 +20134,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -20612,7 +20636,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Booking_create_example",
               "description": "",
               "path": "/bookings",
               "pathParameters": {},
@@ -20778,6 +20802,18 @@
                   "special_instructions": "Handle carefully",
                   "metadata": {}
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/bookings",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -21332,7 +21368,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/bookings/42",
               "pathParameters": {
@@ -21869,7 +21905,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Carbon Calculation_create_example",
               "description": "",
               "path": "/carbon_calculation",
               "pathParameters": {},
@@ -21901,6 +21937,18 @@
                   },
                   "destination_port": "JFK"
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/carbon_calculation",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -22078,7 +22126,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -22357,7 +22405,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -22657,7 +22705,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices",
               "pathParameters": {},
@@ -22933,7 +22981,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/commercial_invoices/foo",
               "pathParameters": {
@@ -23244,7 +23292,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/customs_entries",
               "pathParameters": {},
@@ -23387,7 +23435,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/customs_entries/foo",
               "pathParameters": {
@@ -23634,7 +23682,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -23783,7 +23831,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/documents",
               "pathParameters": {},
@@ -23919,7 +23967,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/documents/foo",
               "pathParameters": {
@@ -24058,7 +24106,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsDownloadExample",
               "description": "",
               "path": "/documents/foo/download",
               "pathParameters": {
@@ -24204,7 +24252,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsIndexExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -25910,7 +25958,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "eventsShowExample",
               "description": "",
               "path": "/events/42",
               "pathParameters": {
@@ -27803,7 +27851,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
@@ -28374,7 +28422,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/invoices/foo",
               "pathParameters": {
@@ -28984,7 +29032,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -29188,7 +29236,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies",
               "pathParameters": {},
@@ -29366,7 +29414,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies/foo",
               "pathParameters": {
@@ -29577,7 +29625,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/companies/K67EZV1K8cQ5afQErZwk1Q",
               "pathParameters": {
@@ -29748,7 +29796,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/me/companies",
               "pathParameters": {},
@@ -29993,7 +30041,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -30157,7 +30205,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities",
               "pathParameters": {},
@@ -30325,7 +30373,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities/foo",
               "pathParameters": {
@@ -30496,7 +30544,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/company_entities/foo",
               "pathParameters": {
@@ -30722,7 +30770,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -30870,7 +30918,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts",
               "pathParameters": {},
@@ -31024,7 +31072,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts/foo",
               "pathParameters": {
@@ -31179,7 +31227,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/contacts/FHLKEFHHoW8nwh9UVOMpw",
               "pathParameters": {
@@ -31415,7 +31463,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -31589,7 +31637,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations",
               "pathParameters": {},
@@ -31769,7 +31817,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations/foo",
               "pathParameters": {
@@ -31950,7 +31998,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/network/locations/foo",
               "pathParameters": {
@@ -32183,7 +32231,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_container_legs",
               "pathParameters": {},
@@ -32341,7 +32389,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_container_legs/42",
               "pathParameters": {
@@ -32550,7 +32598,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_containers",
               "pathParameters": {},
@@ -32785,7 +32833,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ocean/shipment_containers/foo",
               "pathParameters": {
@@ -33054,7 +33102,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/ports",
               "pathParameters": {},
@@ -33326,7 +33374,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -33505,7 +33553,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products",
               "pathParameters": {},
@@ -33691,7 +33739,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products/foo",
               "pathParameters": {
@@ -33877,7 +33925,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/products/foo",
               "pathParameters": {
@@ -34141,7 +34189,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_order_line_items",
               "pathParameters": {},
@@ -34460,7 +34508,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_order_line_items/42",
               "pathParameters": {
@@ -34956,7 +35004,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -35406,7 +35454,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "PurchaseOrder_purchase_order_create_example",
               "description": "",
               "path": "/purchase_orders",
               "pathParameters": {},
@@ -35649,6 +35697,18 @@
                   ]
                 }
               },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/purchase_orders",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -35758,7 +35818,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/purchase_orders/42",
               "pathParameters": {
@@ -35873,7 +35933,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "PurchaseOrder_purchase_order_update_example",
               "description": "",
               "path": "/purchase_orders/42",
               "pathParameters": {
@@ -36078,6 +36138,20 @@
                   ]
                 }
               },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/purchase_orders/42",
+              "pathParameters": {
+                "id": 42
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -36236,7 +36310,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipment_legs",
               "pathParameters": {},
@@ -36619,7 +36693,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipment_legs/42",
               "pathParameters": {
@@ -37364,7 +37438,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipments",
               "pathParameters": {},
@@ -37991,7 +38065,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipments/foo",
               "pathParameters": {
@@ -38614,7 +38688,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "response",
               "description": "",
               "path": "/shipments/12345",
               "pathParameters": {
@@ -39245,7 +39319,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Shipment_shipments_shareable_example",
               "description": "",
               "path": "/shipments_shareable",
               "pathParameters": {},
@@ -39265,6 +39339,18 @@
                     456
                   ]
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "response",
+              "description": "",
+              "path": "/shipments_shareable",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {

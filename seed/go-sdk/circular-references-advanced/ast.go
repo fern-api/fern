@@ -124,6 +124,52 @@ func (a *Animal) Accept(visitor AnimalVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", a)
 }
 
+type Berry struct {
+	Animal *Animal `json:"animal,omitempty" url:"animal,omitempty"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (b *Berry) GetAnimal() *Animal {
+	if b == nil {
+		return nil
+	}
+	return b.Animal
+}
+
+func (b *Berry) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Berry) UnmarshalJSON(data []byte) error {
+	type unmarshaler Berry
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Berry(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+	b.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (b *Berry) String() string {
+	if len(b.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(b); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", b)
+}
+
 type BranchNode struct {
 	Children []*Node `json:"children,omitempty" url:"children,omitempty"`
 

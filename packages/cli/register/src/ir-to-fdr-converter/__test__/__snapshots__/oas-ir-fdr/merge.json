@@ -10728,7 +10728,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/account-details",
               "pathParameters": {},
@@ -10848,7 +10848,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/account-token/foo",
               "pathParameters": {
@@ -10967,7 +10967,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/available-actions",
               "pathParameters": {},
@@ -11317,7 +11317,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/bank-info",
               "pathParameters": {},
@@ -11518,7 +11518,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/bank-info/foo",
               "pathParameters": {
@@ -11797,7 +11797,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/benefits",
               "pathParameters": {},
@@ -11976,7 +11976,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/benefits/foo",
               "pathParameters": {
@@ -12231,7 +12231,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
@@ -12393,7 +12393,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/companies/foo",
               "pathParameters": {
@@ -12509,7 +12509,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "createExample",
               "description": "",
               "path": "/delete-account",
               "pathParameters": {},
@@ -12807,7 +12807,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employee-payroll-runs",
               "pathParameters": {},
@@ -13099,7 +13099,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/employee-payroll-runs/foo",
               "pathParameters": {
@@ -13724,7 +13724,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -13955,7 +13955,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "employeesCreateExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
@@ -14278,7 +14278,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/employees/foo",
               "pathParameters": {
@@ -14474,7 +14474,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "employeesIgnoreCreateExample",
               "description": "",
               "path": "/employees/ignore/foo",
               "pathParameters": {
@@ -14558,7 +14558,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/employees/meta/post",
               "pathParameters": {},
@@ -14846,7 +14846,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employments",
               "pathParameters": {},
@@ -15055,7 +15055,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/employments/foo",
               "pathParameters": {
@@ -15198,7 +15198,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "generateKeyCreateExample",
               "description": "",
               "path": "/generate-key",
               "pathParameters": {},
@@ -15459,7 +15459,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/groups",
               "pathParameters": {},
@@ -15641,7 +15641,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/groups/foo",
               "pathParameters": {
@@ -15925,7 +15925,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
@@ -16048,7 +16048,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/issues/foo",
               "pathParameters": {
@@ -16163,7 +16163,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "linkTokenCreateExample",
               "description": "",
               "path": "/link-token",
               "pathParameters": {},
@@ -16436,7 +16436,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/linked-accounts",
               "pathParameters": {},
@@ -16753,7 +16753,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/locations",
               "pathParameters": {},
@@ -16947,7 +16947,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/locations/foo",
               "pathParameters": {
@@ -17098,7 +17098,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "passthroughCreateExample",
               "description": "",
               "path": "/passthrough",
               "pathParameters": {},
@@ -17338,7 +17338,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/pay-groups",
               "pathParameters": {},
@@ -17492,7 +17492,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/pay-groups/foo",
               "pathParameters": {
@@ -17822,7 +17822,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/payroll-runs",
               "pathParameters": {},
@@ -18008,7 +18008,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/payroll-runs/foo",
               "pathParameters": {
@@ -18140,7 +18140,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "regenerateKeyCreateExample",
               "description": "",
               "path": "/regenerate-key",
               "pathParameters": {},
@@ -18247,7 +18247,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "StartDateConditionExample",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -18370,7 +18370,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "StartDateConditionRequestExample",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -18406,6 +18406,20 @@
                     }
                   ]
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "StartDateConditionExample",
+              "description": "",
+              "path": "/selective-sync/configurations",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-Account-Token": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18545,7 +18559,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "PaginatedConditionSchemaListExample",
               "description": "",
               "path": "/selective-sync/meta",
               "pathParameters": {},
@@ -18711,7 +18725,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/sync-status",
               "pathParameters": {},
@@ -18835,7 +18849,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "syncStatusResyncCreateExample",
               "description": "",
               "path": "/sync-status/resync",
               "pathParameters": {},
@@ -19092,7 +19106,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -19261,7 +19275,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/teams/foo",
               "pathParameters": {
@@ -19587,7 +19601,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -19769,7 +19783,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "timeOffCreateExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
@@ -20033,7 +20047,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/time-off/foo",
               "pathParameters": {
@@ -20162,7 +20176,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/time-off/meta/post",
               "pathParameters": {},
@@ -20450,7 +20464,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/time-off-balances",
               "pathParameters": {},
@@ -20647,7 +20661,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/time-off-balances/foo",
               "pathParameters": {
@@ -20779,7 +20793,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -20885,7 +20899,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhookReceiversCreateExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},

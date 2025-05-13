@@ -7239,7 +7239,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_blockNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7347,7 +7347,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_call example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7443,7 +7443,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_chainId example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7551,7 +7551,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_estimateGas example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7647,7 +7647,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_gasPrice example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7758,7 +7758,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBalance example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -7881,7 +7881,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8075,7 +8075,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockByNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8265,7 +8265,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockTransactionCountByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8376,7 +8376,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getBlockTransactionCountByNumber example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8495,7 +8495,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getCode example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8602,7 +8602,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getLogs example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8796,7 +8796,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getProof example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -8970,7 +8970,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getStorageAt example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9096,7 +9096,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByBlockHashAndIndex example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9249,7 +9249,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByBlockNumberAndIndex example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9394,7 +9394,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionByHash example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9545,7 +9545,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionCount example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9658,7 +9658,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_getTransactionReceipt example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9800,7 +9800,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_sendRawTransaction example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9885,7 +9885,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "eth_syncing example (syncing)",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -9917,6 +9917,17 @@
                 }
               }
             },
+            "codeSamples": []
+          },
+          {
+            "name": "eth_syncing example (not syncing)",
+            "description": "",
+            "path": "/{apiKey}",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": [],
+            "responseStatusCode": 200,
             "codeSamples": []
           }
         ],
@@ -9972,7 +9983,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "net_version example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10051,7 +10062,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "web3_clientVersion example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -10154,7 +10165,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "web3_sha3 example",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},

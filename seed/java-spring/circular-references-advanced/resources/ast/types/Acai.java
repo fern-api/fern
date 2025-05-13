@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 @JsonDeserialize(
     builder = Acai.Builder.class
 )
-public final class Acai {
+public final class Acai implements IBerry {
   private final Animal animal;
 
   private Acai(Animal animal) {
@@ -27,6 +27,7 @@ public final class Acai {
   }
 
   @JsonProperty("animal")
+  @java.lang.Override
   public Animal getAnimal() {
     return animal;
   }

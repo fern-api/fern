@@ -7474,7 +7474,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listOrganizationsExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
@@ -7585,7 +7585,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsCreateOrganizationExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
@@ -7713,7 +7713,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrganizationExample",
               "description": "",
               "path": "/v2/orgs/foo",
               "pathParameters": {
@@ -7817,7 +7817,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrganizationExample",
               "description": "",
               "path": "/v2/orgs/foo",
               "pathParameters": {
@@ -7921,7 +7921,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsUpdateOrganizationExample",
               "description": "",
               "path": "/v2/orgs/foo",
               "pathParameters": {
@@ -8022,7 +8022,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getActiveOrganizationExample",
               "description": "",
               "path": "/v2/orgs/active/org",
               "pathParameters": {},
@@ -8161,7 +8161,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectsExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
@@ -8278,7 +8278,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "projectsCreateProjectExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
@@ -8408,7 +8408,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectExample",
               "description": "",
               "path": "/v2/projects/foo",
               "pathParameters": {
@@ -8518,7 +8518,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectExample",
               "description": "",
               "path": "/v2/projects/foo",
               "pathParameters": {
@@ -8622,7 +8622,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "projectsUpdateProjectExample",
               "description": "",
               "path": "/v2/projects/foo",
               "pathParameters": {
@@ -8775,7 +8775,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "statsEnvironmentsExample",
               "description": "",
               "path": "/v2/projects/foo/envs/foo/stats",
               "pathParameters": {
@@ -9088,7 +9088,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listEnvironmentsExample",
               "description": "",
               "path": "/v2/projects/foo/envs",
               "pathParameters": {
@@ -9236,7 +9236,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsCreateEnvironmentExample",
               "description": "",
               "path": "/v2/projects/foo/envs",
               "pathParameters": {
@@ -9396,7 +9396,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEnvironmentExample",
               "description": "",
               "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
@@ -9535,7 +9535,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteEnvironmentExample",
               "description": "",
               "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
@@ -9658,7 +9658,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsUpdateEnvironmentExample",
               "description": "",
               "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
@@ -9826,7 +9826,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsCopyEnvironmentExample",
               "description": "",
               "path": "/v2/projects/foo/envs/foo/copy",
               "pathParameters": {
@@ -10068,7 +10068,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourcesExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
@@ -10239,7 +10239,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesCreateResourceExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
@@ -10484,7 +10484,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
@@ -10702,7 +10702,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesReplaceResourceExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
@@ -10907,7 +10907,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
@@ -11049,7 +11049,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesUpdateResourceExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
@@ -11304,7 +11304,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceActionsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
@@ -11484,7 +11484,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionsCreateResourceActionExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
@@ -11676,7 +11676,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceActionExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
@@ -11845,7 +11845,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceActionExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
@@ -12006,7 +12006,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionsUpdateResourceActionExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
@@ -12222,7 +12222,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceActionGroupsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
@@ -12406,7 +12406,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionGroupsCreateResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
@@ -12612,7 +12612,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
@@ -12787,7 +12787,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
@@ -12948,7 +12948,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionGroupsUpdateResourceActionGroupExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
@@ -13166,7 +13166,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceRolesExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
@@ -13356,7 +13356,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesCreateResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
@@ -13570,7 +13570,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
@@ -13749,7 +13749,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
@@ -13910,7 +13910,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesUpdateResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
@@ -14128,7 +14128,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesAssignPermissionsToResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
@@ -14344,7 +14344,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesRemovePermissionsFromResourceRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
@@ -14546,7 +14546,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleAncestorsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo/ancestors",
               "pathParameters": {
@@ -14745,7 +14745,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleDescendantsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/roles/foo/descendants",
               "pathParameters": {
@@ -14972,7 +14972,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceAttributesExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
@@ -15152,7 +15152,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceAttributesCreateResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
@@ -15346,7 +15346,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
@@ -15549,7 +15549,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
@@ -15710,7 +15710,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceAttributesUpdateResourceAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
@@ -15923,7 +15923,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listUserAttributesExample",
               "description": "",
               "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
@@ -16098,7 +16098,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "userAttributesCreateUserAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
@@ -16287,7 +16287,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
@@ -16484,7 +16484,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
@@ -16640,7 +16640,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "userAttributesUpdateUserAttributeExample",
               "description": "",
               "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
@@ -16863,7 +16863,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listRolesExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
@@ -17040,7 +17040,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesCreateRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
@@ -17233,7 +17233,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
@@ -17391,7 +17391,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
@@ -17533,7 +17533,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesUpdateRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
@@ -17730,7 +17730,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesAssignPermissionsToRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
@@ -17925,7 +17925,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesRemovePermissionsFromRoleExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
@@ -18106,7 +18106,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleAncestorsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo/ancestors",
               "pathParameters": {
@@ -18284,7 +18284,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleDescendantsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/roles/foo/descendants",
               "pathParameters": {
@@ -18525,7 +18525,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listConditionSetsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
@@ -18728,7 +18728,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetsCreateConditionSetExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
@@ -18971,7 +18971,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
@@ -19157,7 +19157,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteConditionSetExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
@@ -19299,7 +19299,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetsUpdateConditionSetExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
@@ -19572,7 +19572,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetAncestorsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets/foo/ancestors",
               "pathParameters": {
@@ -19808,7 +19808,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetDescendantsExample",
               "description": "",
               "path": "/v2/schema/foo/foo/condition_sets/foo/descendants",
               "pathParameters": {
@@ -20059,7 +20059,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listUsersExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
@@ -20252,7 +20252,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersCreateUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
@@ -20505,7 +20505,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
@@ -20740,7 +20740,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersReplaceUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
@@ -20983,7 +20983,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
@@ -21125,7 +21125,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersUpdateUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
@@ -21366,7 +21366,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersAssignRoleToUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
@@ -21540,7 +21540,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersUnassignRoleFromUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
@@ -21747,7 +21747,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTenantUsersExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants/foo/users",
               "pathParameters": {
@@ -21987,7 +21987,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTenantsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
@@ -22154,7 +22154,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "tenantsCreateTenantExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
@@ -22345,7 +22345,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTenantExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
@@ -22503,7 +22503,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTenantExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
@@ -22645,7 +22645,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "tenantsUpdateTenantExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
@@ -22826,7 +22826,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTenantUserExample",
               "description": "",
               "path": "/v2/facts/foo/foo/tenants/foo/users/foo",
               "pathParameters": {
@@ -23022,7 +23022,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listRoleAssignmentsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
@@ -23181,7 +23181,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsAssignRoleExample",
               "description": "",
               "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
@@ -23338,7 +23338,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsUnassignRoleExample",
               "description": "",
               "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
@@ -23476,7 +23476,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsBulkAssignRoleExample",
               "description": "",
               "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
@@ -23630,7 +23630,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsBulkUnassignRoleExample",
               "description": "",
               "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
@@ -23853,7 +23853,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
@@ -24013,7 +24013,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetRulesAssignSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
@@ -24172,7 +24172,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetRulesUnassignSetPermissionsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
@@ -24340,7 +24340,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceInstancesExample",
               "description": "",
               "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
@@ -24501,7 +24501,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceInstancesCreateResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
@@ -24690,7 +24690,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
@@ -24848,7 +24848,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
@@ -24990,7 +24990,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceInstancesUpdateResourceInstanceExample",
               "description": "",
               "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
@@ -25178,7 +25178,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkCreateUsersExample",
               "description": "",
               "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
@@ -25325,7 +25325,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkReplaceUsersExample",
               "description": "",
               "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
@@ -25472,7 +25472,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkDeleteUsersExample",
               "description": "",
               "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
@@ -25615,7 +25615,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkCreateTenantsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {
@@ -25764,7 +25764,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkDeleteTenantsExample",
               "description": "",
               "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {

@@ -94,7 +94,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "patchSettingsExample",
             "description": "",
             "path": "/settings",
             "pathParameters": {},

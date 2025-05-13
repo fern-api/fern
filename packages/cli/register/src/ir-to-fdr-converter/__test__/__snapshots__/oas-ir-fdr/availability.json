@@ -301,7 +301,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamExample",
             "description": "",
             "path": "/collection/foo/foo/foo/foo",
             "pathParameters": {
@@ -379,7 +379,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessRefExample",
             "description": "",
             "path": "/success-ref",
             "pathParameters": {},
@@ -481,7 +481,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlinePropertyDeprecationExample",
             "description": "",
             "path": "/success-inline-property-deprecation",
             "pathParameters": {},
@@ -571,7 +571,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineObjectDeprecationExample",
             "description": "",
             "path": "/success-inline-object-deprecation",
             "pathParameters": {},
@@ -660,7 +660,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postSuccessInlineBetaBodyExample",
             "description": "",
             "path": "/success-inline-beta-body",
             "pathParameters": {},
