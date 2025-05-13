@@ -833,13 +833,13 @@ function convertV2HttpEndpointExample({
         responseBodyV3:
             responseBodyValue != null
                 ? example.response?.body?._visit<FdrCjsSdk.api.v1.register.ExampleEndpointResponse | undefined>({
-                      json: () => {
-                          return { type: "json", value: responseBodyValue };
+                      json: (value: unknown) => {
+                          return { type: "json", value };
                       },
-                      stream: () => {
+                      stream: (value: unknown[]) => {
                           return {
                               type: "stream",
-                              value: Array.isArray(responseBodyValue) ? responseBodyValue : [responseBodyValue]
+                              value: value.map((v) => ({ type: "json", value: v }))
                           };
                       },
                       error: () => {

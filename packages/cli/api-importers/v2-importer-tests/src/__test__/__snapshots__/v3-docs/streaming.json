@@ -906,9 +906,11 @@
                 "response": {
                   "statusCode": 200,
                   "body": {
-                    "value": {
-                      "id": "foo"
-                    },
+                    "value": [
+                      {
+                        "id": "foo"
+                      }
+                    ],
                     "type": "stream"
                   }
                 }
@@ -1293,9 +1295,11 @@
                 "response": {
                   "statusCode": 200,
                   "body": {
-                    "value": {
-                      "id": "foo"
-                    },
+                    "value": [
+                      {
+                        "id": "foo"
+                      }
+                    ],
                     "type": "stream"
                   }
                 }
@@ -1680,9 +1684,11 @@
                 "response": {
                   "statusCode": 200,
                   "body": {
-                    "value": {
-                      "id": "foo"
-                    },
+                    "value": [
+                      {
+                        "id": "foo"
+                      }
+                    ],
                     "type": "stream"
                   }
                 }

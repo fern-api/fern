@@ -18,7 +18,7 @@ export const V2HttpEndpointResponseBody: core.serialization.Schema<
             value: core.serialization.unknown(),
         }),
         stream: core.serialization.object({
-            value: core.serialization.unknown(),
+            value: core.serialization.list(core.serialization.unknown()),
         }),
     })
     .transform<FernIr.V2HttpEndpointResponseBody>({
@@ -55,6 +55,6 @@ export declare namespace V2HttpEndpointResponseBody {
 
     export interface Stream {
         type: "stream";
-        value?: unknown;
+        value: unknown[];
     }
 }

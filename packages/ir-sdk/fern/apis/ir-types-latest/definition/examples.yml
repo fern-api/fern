@@ -48,7 +48,7 @@ types:
     union:
       error: unknown
       json: unknown
-      stream: unknown
+      stream: list<unknown>
   
   V2HttpEndpointCodeSample:
     extends: commons.WithDocs

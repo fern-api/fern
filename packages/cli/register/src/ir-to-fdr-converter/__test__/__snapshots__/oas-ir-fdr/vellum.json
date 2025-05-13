@@ -9024,19 +9024,6 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "state": "INITIATED",
-                "meta": {
-                  "model_name": "foo",
-                  "latency": 42,
-                  "deployment_release_tag": "foo",
-                  "prompt_version_id": "foo"
-                },
-                "execution_id": "foo"
-              }
-            },
-            "responseBodyV3": {
-              "type": "stream",
               "value": [
                 {
                   "state": "INITIATED",
@@ -9047,6 +9034,24 @@
                     "prompt_version_id": "foo"
                   },
                   "execution_id": "foo"
+                }
+              ]
+            },
+            "responseBodyV3": {
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "state": "INITIATED",
+                    "meta": {
+                      "model_name": "foo",
+                      "latency": 42,
+                      "deployment_release_tag": "foo",
+                      "prompt_version_id": "foo"
+                    },
+                    "execution_id": "foo"
+                  }
                 }
               ]
             }
@@ -9143,31 +9148,6 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "run_id": "foo",
-                "external_id": "foo",
-                "type": "foo",
-                "data": {
-                  "id": "foo",
-                  "state": "INITIATED",
-                  "ts": "foo",
-                  "output": {
-                    "name": "foo",
-                    "state": "INITIATED",
-                    "node_id": "foo",
-                    "type": "foo",
-                    "delta": "foo",
-                    "value": "foo"
-                  },
-                  "error": {
-                    "message": "foo",
-                    "code": "WORKFLOW_INITIALIZATION"
-                  }
-                }
-              }
-            },
-            "responseBodyV3": {
-              "type": "stream",
               "value": [
                 {
                   "run_id": "foo",
@@ -9188,6 +9168,36 @@
                     "error": {
                       "message": "foo",
                       "code": "WORKFLOW_INITIALIZATION"
+                    }
+                  }
+                }
+              ]
+            },
+            "responseBodyV3": {
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "run_id": "foo",
+                    "external_id": "foo",
+                    "type": "foo",
+                    "data": {
+                      "id": "foo",
+                      "state": "INITIATED",
+                      "ts": "foo",
+                      "output": {
+                        "name": "foo",
+                        "state": "INITIATED",
+                        "node_id": "foo",
+                        "type": "foo",
+                        "delta": "foo",
+                        "value": "foo"
+                      },
+                      "error": {
+                        "message": "foo",
+                        "code": "WORKFLOW_INITIALIZATION"
+                      }
                     }
                   }
                 }
@@ -9546,39 +9556,6 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "delta": {
-                  "request_index": 42,
-                  "data": {
-                    "completion_index": 42,
-                    "completion": {
-                      "id": "foo",
-                      "external_id": "foo",
-                      "text": "foo",
-                      "finish_reason": "LENGTH",
-                      "logprobs": {
-                        "tokens": [
-                          {
-                            "token": "foo",
-                            "logprob": 42,
-                            "top_logprobs": {},
-                            "text_offset": 42
-                          }
-                        ],
-                        "likelihood": 42
-                      },
-                      "model_version_id": "foo",
-                      "type": "STRING"
-                    }
-                  },
-                  "error": {
-                    "message": "foo"
-                  }
-                }
-              }
-            },
-            "responseBodyV3": {
-              "type": "stream",
               "value": [
                 {
                   "delta": {
@@ -9607,6 +9584,44 @@
                     },
                     "error": {
                       "message": "foo"
+                    }
+                  }
+                }
+              ]
+            },
+            "responseBodyV3": {
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "delta": {
+                      "request_index": 42,
+                      "data": {
+                        "completion_index": 42,
+                        "completion": {
+                          "id": "foo",
+                          "external_id": "foo",
+                          "text": "foo",
+                          "finish_reason": "LENGTH",
+                          "logprobs": {
+                            "tokens": [
+                              {
+                                "token": "foo",
+                                "logprob": 42,
+                                "top_logprobs": {},
+                                "text_offset": 42
+                              }
+                            ],
+                            "likelihood": 42
+                          },
+                          "model_version_id": "foo",
+                          "type": "STRING"
+                        }
+                      },
+                      "error": {
+                        "message": "foo"
+                      }
                     }
                   }
                 }

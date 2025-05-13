@@ -78,13 +78,13 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
                 for (const [name, example] of Object.entries(userExamples)) {
                     userResponseExamples[name] = {
                         ...baseResponseExample,
-                        body: V2HttpEndpointResponseBody.stream(example)
+                        body: V2HttpEndpointResponseBody.stream([example])
                     };
                 }
                 for (const [name, example] of Object.entries(autoExamples)) {
                     autoResponseExamples[name] = {
                         ...baseResponseExample,
-                        body: V2HttpEndpointResponseBody.stream(example)
+                        body: V2HttpEndpointResponseBody.stream([example])
                     };
                 }
             }

@@ -217,15 +217,20 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "id": "foo"
-              }
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "stream",
               "value": [
                 {
-                  "id": "foo"
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
                 }
               ]
             }
@@ -312,15 +317,20 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "id": "foo"
-              }
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "stream",
               "value": [
                 {
-                  "id": "foo"
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
                 }
               ]
             }
@@ -407,15 +417,20 @@
             "responseStatusCode": 200,
             "responseBody": {
               "type": "stream",
-              "value": {
-                "id": "foo"
-              }
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "stream",
               "value": [
                 {
-                  "id": "foo"
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
                 }
               ]
             }

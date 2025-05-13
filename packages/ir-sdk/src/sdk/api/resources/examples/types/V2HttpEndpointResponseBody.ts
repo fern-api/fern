@@ -22,7 +22,7 @@ export namespace V2HttpEndpointResponseBody {
 
     export interface Stream extends _Utils {
         type: "stream";
-        value: unknown;
+        value: unknown[];
     }
 
     export interface _Utils {
@@ -32,7 +32,7 @@ export namespace V2HttpEndpointResponseBody {
     export interface _Visitor<_Result> {
         error: (value: unknown) => _Result;
         json: (value: unknown) => _Result;
-        stream: (value: unknown) => _Result;
+        stream: (value: unknown[]) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -64,7 +64,7 @@ export const V2HttpEndpointResponseBody = {
         };
     },
 
-    stream: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Stream => {
+    stream: (value: unknown[]): FernIr.V2HttpEndpointResponseBody.Stream => {
         return {
             value,
             type: "stream",
