@@ -51,6 +51,7 @@ export function createDocsConfigFileAstVisitorForRules({
         ...createAstNodeVisitor("markdownPage"),
         ...createAstNodeVisitor("versionFile"),
         ...createAstNodeVisitor("apiSection"),
-        ...createAstNodeVisitor("permissions")
+        ...createAstNodeVisitor("permissions"),
+        ...createAstNodeVisitor("productFile")
     };
 }

@@ -199,7 +199,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "treeList",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -314,7 +314,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "oak",
             "description": "",
             "path": "/trees",
             "pathParameters": {},
@@ -358,6 +358,54 @@
                 },
                 "id": "123e4567-e89b-12d3-a456-426614174000",
                 "plantedDate": "2020-01-01T00:00:00Z"
+              }
+            }
+          },
+          {
+            "name": "maple",
+            "description": "",
+            "path": "/trees",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "species": "Quercus alba",
+              "height": 25.4
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "Quercus alba",
+                "height": 25.4
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "species": "Acer saccharum",
+                "height": 18.3,
+                "age": 35,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                },
+                "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "plantedDate": "2018-03-15T00:00:00Z"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "Acer saccharum",
+                "height": 18.3,
+                "age": 35,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                },
+                "id": "987fcdeb-51a2-43d7-9012-345678901234",
+                "plantedDate": "2018-03-15T00:00:00Z"
               }
             }
           }
@@ -420,9 +468,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "oak",
             "description": "",
-            "path": "/trees/",
+            "path": "/trees/foo",
             "pathParameters": {
               "treeId": "foo"
             },
@@ -534,7 +582,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "fernRequestExample",
             "description": "",
             "path": "/ferns",
             "pathParameters": {},
@@ -551,6 +599,38 @@
                 "name": "RedFern"
               }
             },
+            "responseStatusCode": 201
+          },
+          {
+            "name": "fernRequestExample2",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "color": "green",
+              "name": "GreenFern"
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "color": "green",
+                "name": "GreenFern"
+              }
+            },
+            "responseStatusCode": 201
+          },
+          {
+            "name": "fernResponseExample",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
             "responseStatusCode": 201,
             "responseBody": {
               "type": "json",
@@ -564,6 +644,32 @@
               "value": {
                 "message": "RedFern created",
                 "code": 42
+              }
+            }
+          },
+          {
+            "name": "fernResponseExample2",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "message": "GreenFern created",
+                "code": 84
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "GreenFern created",
+                "code": 84
               }
             }
           }
@@ -626,9 +732,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getFernExample",
             "description": "",
-            "path": "/ferns/",
+            "path": "/ferns/foo",
             "pathParameters": {
               "fernId": "foo"
             },
@@ -721,7 +827,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createGrassExample",
             "description": "",
             "path": "/grasses",
             "pathParameters": {},

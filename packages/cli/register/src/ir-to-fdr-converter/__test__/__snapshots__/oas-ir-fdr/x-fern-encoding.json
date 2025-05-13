@@ -19,42 +19,6 @@
         }
       }
     },
-    "MetadataValue0": {
-      "name": "MetadataValue0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
-    "MetadataValue1": {
-      "name": "MetadataValue1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "MetadataValue2": {
-      "name": "MetadataValue2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "MetadataValue3": {
       "name": "MetadataValue3",
       "shape": {
@@ -73,24 +37,27 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "MetadataValue0",
             "type": {
-              "type": "id",
-              "value": "MetadataValue0"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
-            "typeName": "MetadataValue1",
             "type": {
-              "type": "id",
-              "value": "MetadataValue1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "MetadataValue2",
             "type": {
-              "type": "id",
-              "value": "MetadataValue2"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {

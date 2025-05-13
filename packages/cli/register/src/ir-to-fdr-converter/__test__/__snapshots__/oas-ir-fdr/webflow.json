@@ -9,6 +9,30 @@
         "properties": []
       }
     },
+    "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0": {
+      "name": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems": {
+      "name": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0",
+            "type": {
+              "type": "id",
+              "value": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems0"
+            }
+          }
+        ]
+      }
+    },
     "WebhooksFormSubmissionPayloadSchemaPayload": {
       "description": "The payload of data sent from Webflow",
       "name": "WebhooksFormSubmissionPayloadSchemaPayload",
@@ -62,7 +86,8 @@
               "itemType": {
                 "type": "list",
                 "itemType": {
-                  "type": "unknown"
+                  "type": "id",
+                  "value": "WebhooksFormSubmissionPayloadSchemaPayloadSchemaItems"
                 }
               }
             }
@@ -5730,6 +5755,15 @@
                 "value": "TokenIntrospectGetResponsesSchemaAuthorization"
               }
             }
+          },
+          {
+            "key": "application",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            }
           }
         ]
       }
@@ -6880,11 +6914,48 @@
         ]
       }
     },
+    "BadRequestError0": {
+      "description": "Requested an invalid Domain. Please send a valid custom domain URI",
+      "name": "BadRequestError0",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "BadRequestError1": {
+      "description": "You must pass at least one domain id to the publish endpoint",
+      "name": "BadRequestError1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "BadRequestError": {
       "name": "BadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "typeName": "BadRequestError0",
+            "description": "Requested an invalid Domain. Please send a valid custom domain URI",
+            "type": {
+              "type": "id",
+              "value": "BadRequestError0"
+            }
+          },
+          {
+            "typeName": "BadRequestError1",
+            "description": "You must pass at least one domain id to the publish endpoint",
+            "type": {
+              "type": "id",
+              "value": "BadRequestError1"
+            }
+          }
+        ]
       }
     },
     "SitesSiteIdActivityLogsGetResponsesSchemaItemsItemsResourceOperation": {
@@ -7188,18 +7259,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -7214,10 +7273,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -7315,18 +7375,6 @@
         ]
       }
     },
-    "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -7341,10 +7389,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdActivityLogsGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16861,18 +16910,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -16887,10 +16924,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16915,18 +16953,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -16941,10 +16967,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17266,18 +17293,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17292,10 +17307,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17320,18 +17336,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17346,10 +17350,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17374,18 +17379,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17400,10 +17393,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17428,18 +17422,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17454,10 +17436,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdDeleteResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17827,18 +17810,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -17853,10 +17824,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -17881,18 +17853,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -17907,10 +17867,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersUserIdPatchResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18232,18 +18193,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -18258,10 +18207,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18286,18 +18236,6 @@
         ]
       }
     },
-    "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -18312,10 +18250,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdUsersInvitePostResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18729,18 +18668,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems1": {
       "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems1",
       "shape": {
@@ -18755,10 +18682,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf0DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -18783,18 +18711,6 @@
         ]
       }
     },
-    "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0": {
-      "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems1": {
       "name": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems1",
       "shape": {
@@ -18809,10 +18725,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdAccessgroupsGetResponsesSchemaOneOf1DetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -19858,18 +19775,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -19884,10 +19789,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -21663,18 +21569,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -21689,10 +21583,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -22654,18 +22549,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -22680,10 +22563,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -24074,18 +23958,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -24100,10 +23972,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -25074,18 +24947,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -25100,10 +24961,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -26052,18 +25914,6 @@
         ]
       }
     },
-    "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -26078,10 +25928,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdProductsProductIdSkusSkuIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -28601,18 +28452,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -28627,10 +28466,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -31040,18 +30880,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -31066,10 +30894,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -33479,18 +33308,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -33505,10 +33322,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -35918,18 +35736,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -35944,10 +35750,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdFulfillPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -38357,18 +38164,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -38383,10 +38178,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdUnfulfillPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -40814,18 +40610,6 @@
         ]
       }
     },
-    "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems1",
       "shape": {
@@ -40840,10 +40624,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdOrdersOrderIdRefundPostResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -40932,18 +40717,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems1": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -40958,10 +40731,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41065,18 +40839,6 @@
         ]
       }
     },
-    "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0": {
-      "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems1": {
       "name": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems1",
       "shape": {
@@ -41091,10 +40853,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "CollectionsCollectionIdItemsItemIdInventoryPatchResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41172,18 +40935,6 @@
         ]
       }
     },
-    "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0": {
-      "name": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems1": {
       "name": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems1",
       "shape": {
@@ -41198,10 +40949,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0",
             "type": {
-              "type": "id",
-              "value": "SitesSiteIdEcommerceSettingsGetResponsesSchemaDetailsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -41336,9 +41088,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/forms",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41581,9 +41333,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/forms/",
+              "path": "/forms/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41770,9 +41522,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listSubmissionsExample",
               "description": "",
-              "path": "/forms/",
+              "path": "/forms/580e63e98c9a982ac9b8b741/submissions",
               "pathParameters": {
                 "form_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41933,9 +41685,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSubmissionExample",
               "description": "",
-              "path": "/form_submissions/",
+              "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_submission_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42076,9 +41828,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "formsUpdateSubmissionExample",
               "description": "",
-              "path": "/form_submissions/",
+              "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_submission_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42233,7 +41985,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/sites",
               "pathParameters": {},
@@ -42589,9 +42341,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42733,9 +42485,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCustomDomainExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_domains",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42910,9 +42662,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sitesPublishExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/publish",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -43149,9 +42901,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -44057,9 +43809,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -44690,9 +44442,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "ordersUpdateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -45290,9 +45042,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "ordersUpdateFulfillExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/fulfill",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -45863,9 +45615,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "updateUnfulfillExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/unfulfill",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -46455,9 +46207,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "ordersRefundExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/refund",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -47945,9 +47697,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -48146,9 +47898,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "inventoryUpdateExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -48380,9 +48132,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "users_list_example",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -48670,9 +48422,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -48822,9 +48574,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -48985,9 +48737,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersUpdateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -49208,9 +48960,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "usersInviteExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/invite",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -49846,9 +49598,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/pages",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -50072,9 +49824,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getMetadataExample",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50459,9 +50211,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "pagesUpdatePageSettingsExample",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50672,9 +50424,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContentExample",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50881,9 +50633,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "pagesUpdateStaticContentExample",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -51139,7 +50891,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "authorizedByExample",
               "description": "",
               "path": "/token/authorized_by",
               "pathParameters": {},
@@ -51213,7 +50965,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "introspectExample",
               "description": "",
               "path": "/token/introspect",
               "pathParameters": {},
@@ -51403,9 +51155,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/activity_logs",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51564,9 +51316,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51764,9 +51516,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collections_create_example",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51911,9 +51663,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -52034,9 +51786,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCollectionExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -52134,9 +51886,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "field_id": "580e63fc8c9a982ac9b8b745"
@@ -52297,9 +52049,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsFieldsCreateExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -52499,9 +52251,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsFieldsUpdateExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "field_id": "580e63fc8c9a982ac9b8b745"
@@ -52738,9 +52490,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listItemsExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53025,9 +52777,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsItemsCreateItemExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53269,9 +53021,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listItemsLiveExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53556,9 +53308,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsItemsCreateItemLiveExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53823,9 +53575,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsItemsCreateItemForMultipleLocalesExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/bulk",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53965,9 +53717,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getItemExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54112,9 +53864,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteItemExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54340,9 +54092,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsItemsUpdateItemExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54519,9 +54271,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getItemLiveExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54666,9 +54418,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteItemLiveExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54894,9 +54646,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collectionsItemsUpdateItemLiveExample",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -55066,9 +54818,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "collections_items_publish-item_example",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/publish",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -55205,9 +54957,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "pages_scripts_get-custom-code_example",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55397,9 +55149,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "pages_scripts_upsert-custom-code_example",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55561,9 +55313,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCustomCodeExample",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55663,9 +55415,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sites_scripts_get-custom-code_example",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -55855,9 +55607,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sites_scripts_upsert-custom-code_example",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56013,9 +55765,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCustomCodeExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56132,9 +55884,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listCustomCodeBlocksExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code/blocks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56337,9 +56089,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56560,9 +56312,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "scriptsRegisterHostedExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/hosted",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56763,9 +56515,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "scriptsRegisterInlineExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/inline",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56900,9 +56652,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57094,9 +56846,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsCreateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57251,9 +57003,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57386,9 +57138,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57501,9 +57253,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsUpdateExample",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57656,9 +57408,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listFoldersExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57829,9 +57581,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsCreateFolderExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57960,9 +57712,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getFolderExample",
               "description": "",
-              "path": "/asset_folders/",
+              "path": "/asset_folders/6390c49774a71f0e3c1a08ee",
               "pathParameters": {
                 "asset_folder_id": "6390c49774a71f0e3c1a08ee"
               },
@@ -58092,9 +57844,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58388,9 +58140,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksCreateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58515,9 +58267,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "webhook_id": "580e64008c9a982ac9b8b754"
               },
@@ -58620,9 +58372,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "webhook_id": "580e64008c9a982ac9b8b754"
               },
@@ -58773,9 +58525,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/accessgroups",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58982,9 +58734,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -59326,9 +59078,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "productsCreateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -59628,9 +59380,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -59972,9 +59724,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "productsUpdateExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -60280,9 +60032,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "productsCreateSkuExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -60566,9 +60318,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "productsUpdateSkuExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745",
@@ -60781,9 +60533,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSettingsExample",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/ecommerce/settings",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },

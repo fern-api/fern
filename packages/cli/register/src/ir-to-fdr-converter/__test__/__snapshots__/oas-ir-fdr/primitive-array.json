@@ -1,73 +1,27 @@
 {
   "types": {
-    "GetSearchWithUnionRequest0": {
-      "name": "GetSearchWithUnionRequest0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "GetSearchWithUnionRequest1": {
-      "name": "GetSearchWithUnionRequest1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "getSearchWithUnion_Request": {
       "name": "getSearchWithUnion_Request",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetSearchWithUnionRequest0",
             "type": {
-              "type": "id",
-              "value": "GetSearchWithUnionRequest0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "GetSearchWithUnionRequest1",
             "type": {
-              "type": "id",
-              "value": "GetSearchWithUnionRequest1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchema0": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchema0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchema1": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
       }
     },
     "SearchWithUnionAndNullGetRequestBodySchema": {
@@ -76,17 +30,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchema0",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchema0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchema1",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchema1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -151,7 +107,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchExample",
             "description": "",
             "path": "/search",
             "pathParameters": {},
@@ -227,7 +183,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionExample",
             "description": "",
             "path": "/search-with-union",
             "pathParameters": {},
@@ -306,7 +262,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionAndNullExample",
             "description": "",
             "path": "/search-with-union-and-null",
             "pathParameters": {},

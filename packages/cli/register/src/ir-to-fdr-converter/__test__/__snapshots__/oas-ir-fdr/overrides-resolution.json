@@ -368,7 +368,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -472,7 +472,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "updateAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},

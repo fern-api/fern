@@ -3582,7 +3582,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listAccountsExample",
               "description": "",
               "path": "/accounts",
               "pathParameters": {},
@@ -3794,9 +3794,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -3999,7 +3999,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listAccountBalancesExample",
               "description": "",
               "path": "/accountBalances",
               "pathParameters": {},
@@ -4216,7 +4216,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listEligibleAchAccountsExample",
               "description": "",
               "path": "/achEligibleAccounts",
               "pathParameters": {},
@@ -4456,9 +4456,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listAccountJointOwnersExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/jointOwners",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -4668,9 +4668,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listEligibleOverdraftAccountsExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/foo/eligibleOverdraftAccounts",
               "pathParameters": {
                 "accountId": "foo"
               },
@@ -4792,9 +4792,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getOverdraftProtectionExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/overdraftProtection",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -4949,9 +4949,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "overdraftProtectionPatchOverdraftAccountsExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/overdraftProtection",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -5121,9 +5121,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "jointOwnersCreateJointOwnerInvitationExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/jointOwnerInvitations",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -5324,7 +5324,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lookUpInstitutionByLocatorExample",
               "description": "",
               "path": "/institutionByLocator",
               "pathParameters": {},
@@ -5561,9 +5561,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransferScheduleExample",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/transferSchedule",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -5808,9 +5808,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCutoffTimesExample",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/cutoffTimes",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -6048,9 +6048,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransferDateRestrictionsExample",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/transferDateRestrictions",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -6532,9 +6532,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransactionsExample",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/foo/transactions",
               "pathParameters": {
                 "accountId": "foo"
               },
@@ -6756,7 +6756,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransactionCategoriesExample",
               "description": "",
               "path": "/transactionCategories",
               "pathParameters": {},
@@ -6997,7 +6997,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransfersExample",
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
@@ -7253,7 +7253,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transfersCreateTransferExample",
               "description": "",
               "path": "/transfers",
               "pathParameters": {},
@@ -7446,9 +7446,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransferExample",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -7606,9 +7606,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTransferExample",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -7773,9 +7773,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transfersPatchTransferExample",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/foo",
               "pathParameters": {
                 "transferId": "foo"
               },

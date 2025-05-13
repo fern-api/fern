@@ -5535,30 +5535,6 @@
         ]
       }
     },
-    "TimesheetIdItemsItems0": {
-      "name": "TimesheetIdItemsItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "TimesheetIdItemsItems1": {
-      "name": "TimesheetIdItemsItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "TimesheetIdItemsItems": {
       "description": "ID of an existing timesheet record",
       "name": "TimesheetIdItemsItems",
@@ -5566,17 +5542,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TimesheetIdItemsItems0",
             "type": {
-              "type": "id",
-              "value": "TimesheetIdItemsItems0"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "TimesheetIdItemsItems1",
             "type": {
-              "type": "id",
-              "value": "TimesheetIdItemsItems1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -5688,6 +5666,15 @@
             }
           }
         ]
+      }
+    },
+    "ContractExternalIdPatchedResponseContainer": {
+      "name": "ContractExternalIdPatchedResponseContainer",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "ContractExternalIdPatchedContainer": {
@@ -16522,30 +16509,6 @@
         }
       }
     },
-    "UniqueObjectIdentifier0": {
-      "name": "UniqueObjectIdentifier0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "UniqueObjectIdentifier1": {
-      "name": "UniqueObjectIdentifier1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "UniqueObjectIdentifier": {
       "description": "Unique identifier of this resource.",
       "name": "UniqueObjectIdentifier",
@@ -16553,17 +16516,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "UniqueObjectIdentifier0",
             "type": {
-              "type": "id",
-              "value": "UniqueObjectIdentifier0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "UniqueObjectIdentifier1",
             "type": {
-              "type": "id",
-              "value": "UniqueObjectIdentifier1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -16735,7 +16700,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "hrisCreateDirectEmployeeExample",
               "description": "",
               "path": "/hris/direct-employees",
               "pathParameters": {},
@@ -17016,9 +16981,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEorCountryValidationsExample",
               "description": "",
-              "path": "/eor/validations/",
+              "path": "/eor/validations/US",
               "pathParameters": {
                 "country_code": "US"
               },
@@ -17306,7 +17271,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "eorCreateEorContractExample",
               "description": "",
               "path": "/eor",
               "pathParameters": {},
@@ -17601,7 +17566,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsCreateContractTimeBasedExample",
               "description": "",
               "path": "/contracts/time-based",
               "pathParameters": {},
@@ -18032,7 +17997,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsCreateContractTaskBasedExample",
               "description": "",
               "path": "/contracts/task-based",
               "pathParameters": {},
@@ -18459,7 +18424,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsCreateContractMilestoneBasedExample",
               "description": "",
               "path": "/contracts/milestone-based",
               "pathParameters": {},
@@ -18886,7 +18851,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsCreateContractFixedRateExample",
               "description": "",
               "path": "/contracts/fixed-rate",
               "pathParameters": {},
@@ -19318,7 +19283,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsCreateContractExample",
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
@@ -19757,9 +19722,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContractPreviewExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/preview",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -19945,9 +19910,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsAmendContractDetailsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/amendments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20158,9 +20123,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsTerminateContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/terminations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20334,9 +20299,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractorsAddPremiumExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/premium",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20578,9 +20543,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "removePremiumFromContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/premium",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20892,7 +20857,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContractListExample",
               "description": "",
               "path": "/contracts",
               "pathParameters": {},
@@ -21165,9 +21130,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContractByIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21559,9 +21524,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsAttachExternalIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21655,6 +21620,29 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Contracts_addContractDocument_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": true,
+                      "contentType": "multipart/form-data",
+                      "description": "Upload the file you want to attach to this entry."
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data",
+              "description": "A form to attach a file to contract document."
+            },
+            "description": "A form to attach a file to contract document."
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21761,14 +21749,24 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsAddContractDocumentExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/documents",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -21846,6 +21844,29 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Contracts_editContractDocument_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": true,
+                      "contentType": "multipart/form-data",
+                      "description": "Upload the file you want to attach to this entry."
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data",
+              "description": "A form to attach a file to contract document."
+            },
+            "description": "A form to attach a file to contract document."
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -21952,14 +21973,24 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsEditContractDocumentExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/documents",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "<file1>"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -22117,9 +22148,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAlternateEmailsByContractIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/alternate_emails",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22323,9 +22354,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsSignContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/signatures",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22499,9 +22530,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "archiveContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/archive",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22703,9 +22734,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsInviteToSignContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22907,9 +22938,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "uninviteToSignContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23106,9 +23137,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "calculateFinalPaymentExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/final-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23272,7 +23303,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contractsPostContractEstimateExample",
               "description": "",
               "path": "/contracts/estimate",
               "pathParameters": {},
@@ -23476,7 +23507,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContractTemplatesExample",
               "description": "",
               "path": "/contract-templates",
               "pathParameters": {},
@@ -23679,9 +23710,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTasksByContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23903,9 +23934,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "tasksCreateContractPgoTakExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -24124,9 +24155,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "tasksCreateTaskManyReviewExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/many/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -24385,9 +24416,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "tasksCreateTaskReviewByIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/foo/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "task_id": "foo"
@@ -24640,9 +24671,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteContractPgoTakExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "task_id": "foo"
@@ -24926,9 +24957,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTimesheetsByContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/timesheets",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -25294,7 +25325,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTimesheetsExample",
               "description": "",
               "path": "/timesheets",
               "pathParameters": {},
@@ -25576,7 +25607,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timesheetsCreateTimesheetExample",
               "description": "",
               "path": "/timesheets",
               "pathParameters": {},
@@ -25796,9 +25827,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTimesheetByIdExample",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26099,9 +26130,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTimesheetByIdExample",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26303,9 +26334,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timesheetsUpdateTimesheetByIdExample",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26522,9 +26553,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timesheetsCreateTimesheetReviewExample",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42/reviews",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26720,7 +26751,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timesheetsCreateTimesheetReviewsExample",
               "description": "",
               "path": "/timesheets/many/reviews",
               "pathParameters": {},
@@ -26936,9 +26967,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getMilestonesByContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -27172,9 +27203,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "milestonesCreateMilestoneExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -27396,9 +27427,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getMilestonesByContractAndIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -27632,9 +27663,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteMilestoneByIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -27855,9 +27886,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "milestonesCreateMilestoneReviewExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -28073,9 +28104,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "milestonesCreateMilestoneReviewsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/many/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28291,9 +28322,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getOffCyclePaymentsByContractExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28539,9 +28570,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "offCyclePaymentsCreateOffCyclePaymentExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28761,9 +28792,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getOffCyclePaymentByContractAndIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "offcycle_payment_id": "foo"
@@ -28962,9 +28993,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEorTimeOffsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -29373,9 +29404,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timeOffCreateEorTimeOffsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -29813,9 +29844,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timeOffEditEorTimeOffsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "timeoff_id": "12345"
@@ -30239,9 +30270,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteEorTimeOffsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "timeoff_id": "12345"
@@ -30390,9 +30421,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEorEntitlementsExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/entitlements",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -30561,7 +30592,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEorClientTimeOffsExample",
               "description": "",
               "path": "/time-offs/",
               "pathParameters": {},
@@ -31549,9 +31580,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "timeOffReviewTimeoffExample",
               "description": "",
-              "path": "/time-offs/",
+              "path": "/time-offs/12345/review",
               "pathParameters": {
                 "timeoff_id": "12345"
               },
@@ -31873,9 +31904,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getInvoiceAdjustmentsByContractIdExample",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invoice-adjustments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -32268,7 +32299,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getInvoiceAdjustmentsExample",
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
@@ -32551,7 +32582,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "invoicesCreateInvoiceAdjustmentExample",
               "description": "",
               "path": "/invoice-adjustments",
               "pathParameters": {},
@@ -32785,9 +32816,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteInvoiceAdjustmentByIdExample",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -32989,9 +33020,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "invoicesUpdateInvoiceAdjustmentByIdExample",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -33206,9 +33237,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "invoicesCreateInvoiceAdjustmentReviewExample",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42/reviews",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -33404,7 +33435,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "invoicesCreateInvoiceAdjustmentReviewsExample",
               "description": "",
               "path": "/invoice-adjustments/many/reviews",
               "pathParameters": {},
@@ -33601,7 +33632,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getLegalEntityListExample",
               "description": "",
               "path": "/legal-entities",
               "pathParameters": {},
@@ -33779,7 +33810,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrganizationsExample",
               "description": "",
               "path": "/organizations",
               "pathParameters": {},
@@ -33953,7 +33984,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamsExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
@@ -34150,7 +34181,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAgreementsExample",
               "description": "",
               "path": "/agreements",
               "pathParameters": {},
@@ -34368,7 +34399,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCountriesExample",
               "description": "",
               "path": "/lookups/countries",
               "pathParameters": {},
@@ -34560,7 +34591,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCurrenciesExample",
               "description": "",
               "path": "/lookups/currencies",
               "pathParameters": {},
@@ -34762,7 +34793,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getJobTitleListExample",
               "description": "",
               "path": "/lookups/job-titles",
               "pathParameters": {},
@@ -34957,7 +34988,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSeniorityListExample",
               "description": "",
               "path": "/lookups/seniorities",
               "pathParameters": {},
@@ -35133,7 +35164,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTimeoffTypeListExample",
               "description": "",
               "path": "/lookups/time-off-types",
               "pathParameters": {},
@@ -35313,7 +35344,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "attachmentsCreateFileRefExample",
               "description": "",
               "path": "/attachments",
               "pathParameters": {},
@@ -35529,7 +35560,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getInvoiceListExample",
               "description": "",
               "path": "/invoices",
               "pathParameters": {},
@@ -35772,9 +35803,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getInvoiceDownloadLinkExample",
               "description": "",
-              "path": "/invoices/",
+              "path": "/invoices/42/download",
               "pathParameters": {
                 "invoice_id": 42
               },
@@ -35965,9 +35996,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBillingInvoiceDownloadLinkExample",
               "description": "",
-              "path": "/billing/",
+              "path": "/billing/42/download",
               "pathParameters": {
                 "invoice_id": 42
               },
@@ -36169,7 +36200,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPaymentListExample",
               "description": "",
               "path": "/payments",
               "pathParameters": {},
@@ -36400,9 +36431,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPaymentsBreakDownByIdExample",
               "description": "",
-              "path": "/payments/",
+              "path": "/payments/foo/breakdown",
               "pathParameters": {
                 "payment_id": "foo"
               },
@@ -36667,7 +36698,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPeopleListExample",
               "description": "",
               "path": "/people",
               "pathParameters": {},
@@ -37026,7 +37057,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPeopleExample",
               "description": "",
               "path": "/people/me",
               "pathParameters": {},
@@ -37230,7 +37261,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAllWebhooksExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -37439,7 +37470,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksCreateWebhookExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -37674,9 +37705,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhookControllerGetByIdExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37875,9 +37906,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhookControllerDeleteByIdExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38060,9 +38091,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksWebhookControllerEditByIdExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38274,6 +38305,7 @@
       "InvoiceAdjustmentReviewToCreateContainer",
       "InvoiceAdjustmentReviewToCreate",
       "GenericResultCreated",
+      "ContractExternalIdPatchedResponseContainer",
       "ContractExternalIdPatchedContainer",
       "GenericResultUpdated",
       "GenericResultDeleted",

@@ -262,11 +262,33 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             }
         }
 
+        if (this.isUntypedSchema()) {
+            return this.convertUntypedSchema();
+        }
+
         this.context.errorCollector.collect({
             message: `Failed to convert schema object: ${JSON.stringify(this.schema, null, 2)}`,
             path: this.breadcrumbs
         });
         return undefined;
+    }
+
+    private convertUntypedSchema(): SchemaConverter.Output | undefined {
+        return {
+            convertedSchema: {
+                typeDeclaration: this.createTypeDeclaration({
+                    shape: FernIr.Type.alias({
+                        aliasOf: FernIr.TypeReference.unknown(),
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        resolvedType: FernIr.TypeReference.unknown() as any
+                    }),
+                    referencedTypes: new Set()
+                }),
+                audiences: this.audiences,
+                propertiesByAudience: {}
+            },
+            inlinedTypes: {}
+        };
     }
 
     private tryConvertFernTypeDeclaration(): FernIr.TypeDeclaration | undefined {
@@ -346,6 +368,20 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
         const schemaKeys = Object.keys(this.schema);
         return schemaKeys.every((key) => allAllowedKeys.includes(key));
+    }
+
+    private isUntypedSchema(): boolean {
+        if (
+            !("type" in this.schema) &&
+            !("oneOf" in this.schema) &&
+            !("anyOf" in this.schema) &&
+            !("allOf" in this.schema) &&
+            !("items" in this.schema) &&
+            !("properties" in this.schema)
+        ) {
+            return true;
+        }
+        return false;
     }
 
     private createTypeDeclarationFromFernType({ fernType }: { fernType: string }): FernIr.TypeDeclaration | undefined {

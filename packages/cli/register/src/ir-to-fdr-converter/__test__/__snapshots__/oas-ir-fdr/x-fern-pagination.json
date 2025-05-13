@@ -164,7 +164,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list",
             "pathParameters": {},
@@ -270,7 +270,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list-with-step",
             "pathParameters": {},

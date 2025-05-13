@@ -432,47 +432,25 @@
         ]
       }
     },
-    "ValidationErrorLocItems0": {
-      "name": "ValidationErrorLocItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItems1": {
-      "name": "ValidationErrorLocItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItems0",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItems1",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -543,10 +521,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAllAgentsApiV1AgentsGetExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -594,6 +582,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -611,7 +609,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentCreateAgentApiV1AgentsPostExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -675,6 +673,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -692,9 +700,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAgentApiV1AgentsAgentIdGetExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -747,6 +755,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -764,9 +782,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAgentApiV1AgentsAgentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -830,6 +848,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -847,9 +875,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -920,6 +948,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -937,9 +975,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo/predict",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -1005,6 +1043,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1022,7 +1070,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignInApiV1AuthSignInPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-in",
               "pathParameters": {},
@@ -1080,6 +1128,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1097,7 +1155,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignUpApiV1AuthSignUpPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-up",
               "pathParameters": {},
@@ -1152,10 +1210,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "readUserMeApiV1UsersMeGetExample",
               "description": "",
               "path": "/api/v1/users/me",
               "pathParameters": {},
@@ -1207,6 +1275,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1224,9 +1302,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "readUserApiV1UsersUserIdGetExample",
               "description": "",
-              "path": "/api/v1/users/",
+              "path": "/api/v1/users/foo",
               "pathParameters": {
                 "userId": "foo"
               },
@@ -1271,10 +1349,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listApiTokensApiV1ApiTokensGetExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1322,6 +1410,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1339,7 +1437,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "apiTokenCreateApiTokenApiV1ApiTokensPostExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1401,6 +1499,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1418,9 +1526,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getApiTokenApiV1ApiTokensTokenIdGetExample",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1473,6 +1581,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1490,9 +1608,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteApiTokenApiV1ApiTokensTokenIdDeleteExample",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1537,10 +1655,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listDocumentsApiV1DocumentsGetExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1588,6 +1716,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1605,7 +1743,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsCreateDocumentApiV1DocumentsPostExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1671,6 +1809,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1688,9 +1836,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getDocumentApiV1DocumentsDocumentIdGetExample",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -1743,6 +1891,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1760,9 +1918,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteDocumentApiV1DocumentsDocumentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -1807,10 +1965,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPromptsApiV1PromptsGetExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -1858,6 +2026,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1875,7 +2053,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsCreateAPromptApiV1PromptsPostExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -1945,6 +2123,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -1962,9 +2150,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPromptApiV1PromptsPromptIdGetExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2017,6 +2205,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2034,9 +2232,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePromptApiV1PromptsPromptIdDeleteExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2100,6 +2298,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2117,9 +2325,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2169,10 +2377,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listToolsApiV1ToolsGetExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2220,6 +2438,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2237,7 +2465,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "toolsCreateAToolApiV1ToolsPostExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2301,6 +2529,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2318,9 +2556,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getToolApiV1ToolsToolIdGetExample",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },
@@ -2373,6 +2611,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -2390,9 +2638,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteToolApiV1ToolsToolIdDeleteExample",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },
@@ -2437,10 +2685,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAgentTracesApiV1TracesGetExample",
               "description": "",
               "path": "/api/v1/traces",
               "pathParameters": {},

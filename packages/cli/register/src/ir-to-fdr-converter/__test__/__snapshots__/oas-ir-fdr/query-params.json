@@ -203,7 +203,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "searchExample",
             "description": "",
             "path": "/search",
             "pathParameters": {},

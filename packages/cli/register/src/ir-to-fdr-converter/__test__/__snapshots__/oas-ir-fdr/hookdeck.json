@@ -80,18 +80,6 @@
         ]
       }
     },
-    "SeekPaginationOrderBy0": {
-      "name": "SeekPaginationOrderBy0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "SeekPaginationOrderBy1": {
       "name": "SeekPaginationOrderBy1",
       "shape": {
@@ -113,10 +101,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SeekPaginationOrderBy0",
             "type": {
-              "type": "id",
-              "value": "SeekPaginationOrderBy0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -262,18 +251,6 @@
         ]
       }
     },
-    "IssueTriggerDeliveryConfigsConnections0": {
-      "name": "IssueTriggerDeliveryConfigsConnections0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "IssueTriggerDeliveryConfigsConnections1": {
       "name": "IssueTriggerDeliveryConfigsConnections1",
       "shape": {
@@ -296,10 +273,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssueTriggerDeliveryConfigsConnections0",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerDeliveryConfigsConnections0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -361,18 +339,6 @@
         ]
       }
     },
-    "IssueTriggerTransformationConfigsTransformations0": {
-      "name": "IssueTriggerTransformationConfigsTransformations0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "IssueTriggerTransformationConfigsTransformations1": {
       "name": "IssueTriggerTransformationConfigsTransformations1",
       "shape": {
@@ -395,10 +361,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssueTriggerTransformationConfigsTransformations0",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerTransformationConfigsTransformations0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -451,18 +418,6 @@
         }
       }
     },
-    "IssueTriggerBackpressureConfigsDestinations0": {
-      "name": "IssueTriggerBackpressureConfigsDestinations0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "IssueTriggerBackpressureConfigsDestinations1": {
       "name": "IssueTriggerBackpressureConfigsDestinations1",
       "shape": {
@@ -485,10 +440,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssueTriggerBackpressureConfigsDestinations0",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerBackpressureConfigsDestinations0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1365,18 +1321,6 @@
         ]
       }
     },
-    "ShortEventDataParsedQuery0": {
-      "name": "ShortEventDataParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "ShortEventDataParsedQuery1": {
       "name": "ShortEventDataParsedQuery1",
       "shape": {
@@ -1391,10 +1335,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ShortEventDataParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1405,18 +1350,6 @@
             }
           }
         ]
-      }
-    },
-    "ShortEventDataHeaders0": {
-      "name": "ShortEventDataHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "ShortEventDataHeaders1": {
@@ -1433,10 +1366,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ShortEventDataHeaders0",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1447,18 +1381,6 @@
             }
           }
         ]
-      }
-    },
-    "ShortEventDataBody0": {
-      "name": "ShortEventDataBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "ShortEventDataBody1": {
@@ -1487,10 +1409,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ShortEventDataBody0",
             "type": {
-              "type": "id",
-              "value": "ShortEventDataBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1788,18 +1711,6 @@
         ]
       }
     },
-    "EventDataParsedQuery0": {
-      "name": "EventDataParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "EventDataParsedQuery1": {
       "name": "EventDataParsedQuery1",
       "shape": {
@@ -1814,10 +1725,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventDataParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "EventDataParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1828,18 +1740,6 @@
             }
           }
         ]
-      }
-    },
-    "EventDataHeaders0": {
-      "name": "EventDataHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "EventDataHeaders1": {
@@ -1856,10 +1756,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventDataHeaders0",
             "type": {
-              "type": "id",
-              "value": "EventDataHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -1870,18 +1771,6 @@
             }
           }
         ]
-      }
-    },
-    "EventDataBody0": {
-      "name": "EventDataBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "EventDataBody1": {
@@ -1910,10 +1799,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventDataBody0",
             "type": {
-              "type": "id",
-              "value": "EventDataBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -2599,18 +2489,6 @@
         "properties": []
       }
     },
-    "BatchOperationQuery1": {
-      "name": "BatchOperationQuery1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "BatchOperationQuery": {
       "description": "Query object to filter records",
       "name": "BatchOperationQuery",
@@ -2625,10 +2503,11 @@
             }
           },
           {
-            "typeName": "BatchOperationQuery1",
             "type": {
-              "type": "id",
-              "value": "BatchOperationQuery1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -4853,18 +4732,6 @@
         ]
       }
     },
-    "RequestDataParsedQuery0": {
-      "name": "RequestDataParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "RequestDataParsedQuery1": {
       "name": "RequestDataParsedQuery1",
       "shape": {
@@ -4879,10 +4746,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RequestDataParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "RequestDataParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -4893,18 +4761,6 @@
             }
           }
         ]
-      }
-    },
-    "RequestDataHeaders0": {
-      "name": "RequestDataHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "RequestDataHeaders1": {
@@ -4921,10 +4777,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RequestDataHeaders0",
             "type": {
-              "type": "id",
-              "value": "RequestDataHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -4935,18 +4792,6 @@
             }
           }
         ]
-      }
-    },
-    "RequestDataBody0": {
-      "name": "RequestDataBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "RequestDataBody1": {
@@ -4975,10 +4820,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RequestDataBody0",
             "type": {
-              "type": "id",
-              "value": "RequestDataBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -5742,42 +5588,6 @@
         ]
       }
     },
-    "ConnectionFilterProperty0": {
-      "name": "ConnectionFilterProperty0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectionFilterProperty1": {
-      "name": "ConnectionFilterProperty1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
-    "ConnectionFilterProperty2": {
-      "name": "ConnectionFilterProperty2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectionFilterProperty3": {
       "name": "ConnectionFilterProperty3",
       "shape": {
@@ -5793,24 +5603,27 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectionFilterProperty0",
             "type": {
-              "type": "id",
-              "value": "ConnectionFilterProperty0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectionFilterProperty1",
             "type": {
-              "type": "id",
-              "value": "ConnectionFilterProperty1"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
-            "typeName": "ConnectionFilterProperty2",
             "type": {
-              "type": "id",
-              "value": "ConnectionFilterProperty2"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
@@ -6732,18 +6545,6 @@
         ]
       }
     },
-    "TransformationExecutorOutputRequestHeaders0": {
-      "name": "TransformationExecutorOutputRequestHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "TransformationExecutorOutputRequestHeaders1": {
       "name": "TransformationExecutorOutputRequestHeaders1",
       "shape": {
@@ -6758,10 +6559,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TransformationExecutorOutputRequestHeaders0",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -6782,18 +6584,6 @@
         "properties": []
       }
     },
-    "TransformationExecutorOutputRequestQuery1": {
-      "name": "TransformationExecutorOutputRequestQuery1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "TransformationExecutorOutputRequestQuery": {
       "name": "TransformationExecutorOutputRequestQuery",
       "shape": {
@@ -6807,25 +6597,14 @@
             }
           },
           {
-            "typeName": "TransformationExecutorOutputRequestQuery1",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestQuery1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
-      }
-    },
-    "TransformationExecutorOutputRequestParsedQuery0": {
-      "name": "TransformationExecutorOutputRequestParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "TransformationExecutorOutputRequestParsedQuery1": {
@@ -6842,10 +6621,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TransformationExecutorOutputRequestParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -6856,18 +6636,6 @@
             }
           }
         ]
-      }
-    },
-    "TransformationExecutorOutputRequestBody0": {
-      "name": "TransformationExecutorOutputRequestBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "TransformationExecutorOutputRequestBody1": {
@@ -6884,10 +6652,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "TransformationExecutorOutputRequestBody0",
             "type": {
-              "type": "id",
-              "value": "TransformationExecutorOutputRequestBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -7301,20 +7070,6 @@
         ]
       }
     },
-    "IssueTriggersGetParametersSchema0": {
-      "name": "IssueTriggersGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "IssueTriggersGetParametersSchema1": {
       "name": "IssueTriggersGetParametersSchema1",
       "shape": {
@@ -7347,6 +7102,20 @@
               "type": "id",
               "value": "IssueTriggersGetParametersSchema1"
             }
+          }
+        ]
+      }
+    },
+    "IssueTriggersGetParametersSchema0": {
+      "name": "IssueTriggersGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
         ]
       }
@@ -7455,20 +7224,6 @@
         ]
       }
     },
-    "AttemptsGetParametersSchema0": {
-      "name": "AttemptsGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "AttemptsGetParametersSchema1": {
       "name": "AttemptsGetParametersSchema1",
       "shape": {
@@ -7505,8 +7260,8 @@
         ]
       }
     },
-    "AttemptsGetParametersSchemaOneOf1Items": {
-      "name": "AttemptsGetParametersSchemaOneOf1Items",
+    "AttemptsGetParametersSchema0": {
+      "name": "AttemptsGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -7519,8 +7274,8 @@
         ]
       }
     },
-    "BookmarksGetParametersSchema0": {
-      "name": "BookmarksGetParametersSchema0",
+    "AttemptsGetParametersSchemaOneOf1Items": {
+      "name": "AttemptsGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -7569,6 +7324,20 @@
         ]
       }
     },
+    "BookmarksGetParametersSchema0": {
+      "name": "BookmarksGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
     "BookmarksGetParametersSchemaOneOf1Items": {
       "name": "BookmarksGetParametersSchemaOneOf1Items",
       "shape": {
@@ -7594,20 +7363,6 @@
           },
           {
             "value": "cli"
-          }
-        ]
-      }
-    },
-    "DestinationsGetParametersSchema0": {
-      "name": "DestinationsGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
           }
         ]
       }
@@ -7662,6 +7417,20 @@
             }
           }
         }
+      }
+    },
+    "DestinationsGetParametersSchema0": {
+      "name": "DestinationsGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
       }
     },
     "DestinationsGetParametersSchemaOneOf1Items": {
@@ -7732,20 +7501,6 @@
         ]
       }
     },
-    "EventsGetParametersSchema0": {
-      "name": "EventsGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "EventsGetParametersSchema1": {
       "name": "EventsGetParametersSchema1",
       "shape": {
@@ -7797,8 +7552,8 @@
         }
       }
     },
-    "EventsGetParametersSchemaOneOf1Items": {
-      "name": "EventsGetParametersSchemaOneOf1Items",
+    "EventsGetParametersSchema0": {
+      "name": "EventsGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -7811,8 +7566,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchema0": {
-      "name": "BulkEventsRetryGetParametersSchema0",
+    "EventsGetParametersSchemaOneOf1Items": {
+      "name": "EventsGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -7861,20 +7616,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaId0": {
-      "description": "Event ID",
-      "name": "BulkEventsRetryGetParametersSchemaId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaId1": {
       "name": "BulkEventsRetryGetParametersSchemaId1",
       "shape": {
@@ -7898,11 +7639,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaId0",
             "description": "Event ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -7951,19 +7694,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaIssueId0": {
-      "name": "BulkEventsRetryGetParametersSchemaIssueId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaIssueId1": {
       "name": "BulkEventsRetryGetParametersSchemaIssueId1",
       "shape": {
@@ -7986,10 +7716,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaIssueId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaIssueId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8000,20 +7732,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaWebhookId0": {
-      "description": "Webhook ID",
-      "name": "BulkEventsRetryGetParametersSchemaWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaWebhookId1": {
@@ -8039,11 +7757,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaWebhookId0",
             "description": "Webhook ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8054,20 +7774,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaDestinationId0": {
-      "description": "Destination ID",
-      "name": "BulkEventsRetryGetParametersSchemaDestinationId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaDestinationId1": {
@@ -8093,11 +7799,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaDestinationId0",
             "description": "Destination ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaDestinationId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8108,20 +7816,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaSourceId0": {
-      "description": "Source ID",
-      "name": "BulkEventsRetryGetParametersSchemaSourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaSourceId1": {
@@ -8147,11 +7841,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaSourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaSourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8162,19 +7858,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaAttempts0": {
-      "name": "BulkEventsRetryGetParametersSchemaAttempts0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaAttempts1": {
@@ -8270,10 +7953,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaAttempts0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaAttempts0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -8284,20 +7969,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaResponseStatus0": {
-      "name": "BulkEventsRetryGetParametersSchemaResponseStatus0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 200,
-            "maximum": 600
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaResponseStatus1": {
@@ -8415,10 +8086,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaResponseStatus0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaResponseStatus0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 200,
+                "maximum": 600
+              }
             }
           },
           {
@@ -8436,19 +8110,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaSuccessfulAt0": {
-      "name": "BulkEventsRetryGetParametersSchemaSuccessfulAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaSuccessfulAt1": {
@@ -8531,10 +8192,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaSuccessfulAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaSuccessfulAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -8545,19 +8208,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaCreatedAt0": {
-      "name": "BulkEventsRetryGetParametersSchemaCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaCreatedAt1": {
@@ -8640,10 +8290,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -8654,19 +8306,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaErrorCode0": {
-      "name": "BulkEventsRetryGetParametersSchemaErrorCode0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaErrorCode1": {
@@ -8691,10 +8330,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaErrorCode0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaErrorCode0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8705,18 +8346,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaCliId0": {
-      "name": "BulkEventsRetryGetParametersSchemaCliId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaCliId1": {
@@ -8762,10 +8391,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCliId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCliId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -8783,18 +8413,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaCliUserId0": {
-      "name": "BulkEventsRetryGetParametersSchemaCliUserId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaCliUserId1": {
@@ -8818,10 +8436,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCliUserId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCliUserId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -8832,19 +8451,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaLastAttemptAt0": {
-      "name": "BulkEventsRetryGetParametersSchemaLastAttemptAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaLastAttemptAt1": {
@@ -8927,10 +8533,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaLastAttemptAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaLastAttemptAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -8941,19 +8549,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaEventDataId0": {
-      "name": "BulkEventsRetryGetParametersSchemaEventDataId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaEventDataId1": {
@@ -8978,10 +8573,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaEventDataId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaEventDataId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -8992,18 +8589,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaHeaders0": {
-      "name": "BulkEventsRetryGetParametersSchemaHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaHeaders1": {
@@ -9021,10 +8606,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -9035,18 +8621,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaBody0": {
-      "name": "BulkEventsRetryGetParametersSchemaBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaBody1": {
@@ -9064,10 +8638,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaBody0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -9078,18 +8653,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaParsedQuery0": {
-      "name": "BulkEventsRetryGetParametersSchemaParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaParsedQuery1": {
@@ -9107,10 +8670,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -9121,19 +8685,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaBulkRetryId0": {
-      "name": "BulkEventsRetryGetParametersSchemaBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaBulkRetryId1": {
@@ -9158,10 +8709,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9320,8 +8873,8 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaOneOf1Items": {
-      "name": "BulkEventsRetryGetParametersSchemaOneOf1Items",
+    "BulkEventsRetryGetParametersSchema0": {
+      "name": "BulkEventsRetryGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -9334,18 +8887,18 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryId0": {
-      "description": "Event ID",
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryId0",
+    "BulkEventsRetryGetParametersSchemaOneOf1Items": {
+      "name": "BulkEventsRetryGetParametersSchemaOneOf1Items",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
-        }
+        ]
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryId1": {
@@ -9371,11 +8924,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryId0",
             "description": "Event ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9424,19 +8979,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryIssueId0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryIssueId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryIssueId1": {
       "name": "BulkEventsRetryPostRequestBodySchemaQueryIssueId1",
       "shape": {
@@ -9459,10 +9001,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryIssueId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryIssueId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9473,20 +9017,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryWebhookId0": {
-      "description": "Webhook ID",
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryWebhookId1": {
@@ -9512,11 +9042,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId0",
             "description": "Webhook ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9527,20 +9059,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryDestinationId0": {
-      "description": "Destination ID",
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryDestinationId1": {
@@ -9566,11 +9084,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId0",
             "description": "Destination ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9581,20 +9101,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQuerySourceId0": {
-      "description": "Source ID",
-      "name": "BulkEventsRetryPostRequestBodySchemaQuerySourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQuerySourceId1": {
@@ -9620,11 +9126,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQuerySourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQuerySourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -9635,19 +9143,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryAttempts0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryAttempts0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryAttempts1": {
@@ -9743,10 +9238,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryAttempts0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryAttempts0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -9757,20 +9254,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 200,
-            "maximum": 600
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus1": {
@@ -9888,10 +9371,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 200,
+                "maximum": 600
+              }
             }
           },
           {
@@ -9909,19 +9395,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQuerySuccessfulAt0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQuerySuccessfulAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQuerySuccessfulAt1": {
@@ -10004,10 +9477,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQuerySuccessfulAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQuerySuccessfulAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -10018,19 +9493,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryCreatedAt0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryCreatedAt1": {
@@ -10113,10 +9575,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -10127,19 +9591,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryErrorCode0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryErrorCode1": {
@@ -10164,10 +9615,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -10178,18 +9631,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryCliId0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryCliId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryCliId1": {
@@ -10235,10 +9676,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryCliId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryCliId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -10256,18 +9698,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryCliUserId0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryCliUserId1": {
@@ -10291,10 +9721,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -10305,19 +9736,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryLastAttemptAt0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryLastAttemptAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryLastAttemptAt1": {
@@ -10400,10 +9818,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryLastAttemptAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryLastAttemptAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -10414,19 +9834,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryEventDataId0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryEventDataId1": {
@@ -10451,10 +9858,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -10465,18 +9874,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryHeaders0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryHeaders1": {
@@ -10494,10 +9891,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -10508,18 +9906,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryBody0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryBody1": {
@@ -10537,10 +9923,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryBody0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -10551,18 +9938,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryParsedQuery0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryParsedQuery1": {
@@ -10580,10 +9955,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -10594,19 +9970,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId0": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId1": {
@@ -10631,10 +9994,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -10889,20 +10254,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaId0": {
-      "description": "Event ID",
-      "name": "BulkEventsRetryPlanGetParametersSchemaId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaId1": {
       "name": "BulkEventsRetryPlanGetParametersSchemaId1",
       "shape": {
@@ -10926,11 +10277,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaId0",
             "description": "Event ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -10979,19 +10332,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaIssueId0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaIssueId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaIssueId1": {
       "name": "BulkEventsRetryPlanGetParametersSchemaIssueId1",
       "shape": {
@@ -11014,10 +10354,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaIssueId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaIssueId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -11028,20 +10370,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaWebhookId0": {
-      "description": "Webhook ID",
-      "name": "BulkEventsRetryPlanGetParametersSchemaWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaWebhookId1": {
@@ -11067,11 +10395,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaWebhookId0",
             "description": "Webhook ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -11082,20 +10412,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaDestinationId0": {
-      "description": "Destination ID",
-      "name": "BulkEventsRetryPlanGetParametersSchemaDestinationId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaDestinationId1": {
@@ -11121,11 +10437,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaDestinationId0",
             "description": "Destination ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaDestinationId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -11136,20 +10454,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaSourceId0": {
-      "description": "Source ID",
-      "name": "BulkEventsRetryPlanGetParametersSchemaSourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaSourceId1": {
@@ -11175,11 +10479,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaSourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaSourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -11190,19 +10496,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaAttempts0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaAttempts0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaAttempts1": {
@@ -11298,10 +10591,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaAttempts0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaAttempts0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -11312,20 +10607,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaResponseStatus0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaResponseStatus0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 200,
-            "maximum": 600
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaResponseStatus1": {
@@ -11443,10 +10724,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaResponseStatus0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaResponseStatus0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 200,
+                "maximum": 600
+              }
             }
           },
           {
@@ -11464,19 +10748,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt1": {
@@ -11559,10 +10830,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaSuccessfulAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -11573,19 +10846,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaCreatedAt0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaCreatedAt1": {
@@ -11668,10 +10928,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -11682,19 +10944,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaErrorCode0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaErrorCode0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaErrorCode1": {
@@ -11719,10 +10968,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaErrorCode0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaErrorCode0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -11733,18 +10984,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaCliId0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaCliId1": {
@@ -11790,10 +11029,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCliId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCliId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -11811,18 +11051,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaCliUserId0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliUserId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaCliUserId1": {
@@ -11846,10 +11074,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCliUserId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCliUserId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -11860,19 +11089,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt1": {
@@ -11955,10 +11171,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaLastAttemptAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -11969,19 +11187,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaEventDataId0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaEventDataId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaEventDataId1": {
@@ -12006,10 +11211,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaEventDataId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaEventDataId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12020,18 +11227,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaHeaders0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaHeaders1": {
@@ -12049,10 +11244,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -12063,18 +11259,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaBody0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaBody1": {
@@ -12092,10 +11276,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaBody0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -12106,18 +11291,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaParsedQuery0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaParsedQuery1": {
@@ -12135,10 +11308,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -12149,19 +11323,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaBulkRetryId0": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaBulkRetryId1": {
@@ -12186,10 +11347,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12444,20 +11607,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchema0": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "BulkIgnoredEventsRetryGetParametersSchema1": {
       "name": "BulkIgnoredEventsRetryGetParametersSchema1",
       "shape": {
@@ -12494,19 +11643,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchemaCause0": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaCause0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkIgnoredEventsRetryGetParametersSchemaCause1": {
       "name": "BulkIgnoredEventsRetryGetParametersSchemaCause1",
       "shape": {
@@ -12530,10 +11666,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryGetParametersSchemaCause0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryGetParametersSchemaCause0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12544,19 +11682,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryGetParametersSchemaWebhookId0": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1": {
@@ -12582,10 +11707,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12594,6 +11721,20 @@
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1"
             }
+          }
+        ]
+      }
+    },
+    "BulkIgnoredEventsRetryGetParametersSchema0": {
+      "name": "BulkIgnoredEventsRetryGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
         ]
       }
@@ -12610,19 +11751,6 @@
             "value": "desc"
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause0": {
-      "name": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause1": {
@@ -12648,10 +11776,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12662,19 +11792,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId0": {
-      "name": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId1": {
@@ -12700,10 +11817,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12762,19 +11881,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaCause0": {
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1": {
       "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1",
       "shape": {
@@ -12798,10 +11904,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -12812,19 +11920,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId0": {
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId1": {
@@ -12850,10 +11945,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId0",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -13000,20 +12097,6 @@
         ]
       }
     },
-    "IssuesGetParametersSchema0": {
-      "name": "IssuesGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "IssuesGetParametersSchema1": {
       "name": "IssuesGetParametersSchema1",
       "shape": {
@@ -13050,8 +12133,8 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaOneOf1Items": {
-      "name": "IssuesGetParametersSchemaOneOf1Items",
+    "IssuesGetParametersSchema0": {
+      "name": "IssuesGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13064,16 +12147,18 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaWebhookId0": {
-      "name": "IssuesGetParametersSchemaWebhookId0",
+    "IssuesGetParametersSchemaOneOf1Items": {
+      "name": "IssuesGetParametersSchemaOneOf1Items",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
-        }
+        ]
       }
     },
     "IssuesGetParametersSchemaWebhookId1": {
@@ -13097,10 +12182,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssuesGetParametersSchemaWebhookId0",
             "type": {
-              "type": "id",
-              "value": "IssuesGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -13111,18 +12197,6 @@
             }
           }
         ]
-      }
-    },
-    "IssuesGetParametersSchemaResponseStatus0": {
-      "name": "IssuesGetParametersSchemaResponseStatus0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
       }
     },
     "IssuesGetParametersSchemaResponseStatus1": {
@@ -13146,10 +12220,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssuesGetParametersSchemaResponseStatus0",
             "type": {
-              "type": "id",
-              "value": "IssuesGetParametersSchemaResponseStatus0"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -13197,20 +12272,6 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchema0": {
-      "name": "IssuesCountGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "IssuesCountGetParametersSchema1": {
       "name": "IssuesCountGetParametersSchema1",
       "shape": {
@@ -13247,8 +12308,8 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaOneOf1Items": {
-      "name": "IssuesCountGetParametersSchemaOneOf1Items",
+    "IssuesCountGetParametersSchema0": {
+      "name": "IssuesCountGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13261,16 +12322,18 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaWebhookId0": {
-      "name": "IssuesCountGetParametersSchemaWebhookId0",
+    "IssuesCountGetParametersSchemaOneOf1Items": {
+      "name": "IssuesCountGetParametersSchemaOneOf1Items",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
-        }
+        ]
       }
     },
     "IssuesCountGetParametersSchemaWebhookId1": {
@@ -13294,10 +12357,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssuesCountGetParametersSchemaWebhookId0",
             "type": {
-              "type": "id",
-              "value": "IssuesCountGetParametersSchemaWebhookId0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -13308,18 +12372,6 @@
             }
           }
         ]
-      }
-    },
-    "IssuesCountGetParametersSchemaResponseStatus0": {
-      "name": "IssuesCountGetParametersSchemaResponseStatus0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
       }
     },
     "IssuesCountGetParametersSchemaResponseStatus1": {
@@ -13343,10 +12395,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "IssuesCountGetParametersSchemaResponseStatus0",
             "type": {
-              "type": "id",
-              "value": "IssuesCountGetParametersSchemaResponseStatus0"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -13415,20 +12468,6 @@
         ]
       }
     },
-    "RequestsGetParametersSchema0": {
-      "name": "RequestsGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "RequestsGetParametersSchema1": {
       "name": "RequestsGetParametersSchema1",
       "shape": {
@@ -13481,8 +12520,8 @@
         }
       }
     },
-    "RequestsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsGetParametersSchemaOneOf1Items",
+    "RequestsGetParametersSchema0": {
+      "name": "RequestsGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13495,8 +12534,8 @@
         ]
       }
     },
-    "RequestsIdEventsGetParametersSchema0": {
-      "name": "RequestsIdEventsGetParametersSchema0",
+    "RequestsGetParametersSchemaOneOf1Items": {
+      "name": "RequestsGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -13560,8 +12599,8 @@
         }
       }
     },
-    "RequestsIdEventsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsIdEventsGetParametersSchemaOneOf1Items",
+    "RequestsIdEventsGetParametersSchema0": {
+      "name": "RequestsIdEventsGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13574,8 +12613,8 @@
         ]
       }
     },
-    "RequestsIdIgnoredEventsGetParametersSchema0": {
-      "name": "RequestsIdIgnoredEventsGetParametersSchema0",
+    "RequestsIdEventsGetParametersSchemaOneOf1Items": {
+      "name": "RequestsIdEventsGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -13624,8 +12663,8 @@
         ]
       }
     },
-    "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items": {
-      "name": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items",
+    "RequestsIdIgnoredEventsGetParametersSchema0": {
+      "name": "RequestsIdIgnoredEventsGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -13638,8 +12677,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchema0": {
-      "name": "BulkRequestsRetryGetParametersSchema0",
+    "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items": {
+      "name": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -13688,20 +12727,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaId0": {
-      "description": "Request ID",
-      "name": "BulkRequestsRetryGetParametersSchemaId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaId1": {
       "name": "BulkRequestsRetryGetParametersSchemaId1",
       "shape": {
@@ -13725,11 +12750,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaId0",
             "description": "Request ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -13870,19 +12897,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIgnoredCount0": {
-      "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaIgnoredCount1": {
       "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount1",
       "shape": {
@@ -13991,10 +13005,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaIgnoredCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaIgnoredCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -14012,19 +13028,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaEventsCount0": {
-      "name": "BulkRequestsRetryGetParametersSchemaEventsCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaEventsCount1": {
@@ -14135,10 +13138,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaEventsCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaEventsCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -14156,20 +13161,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaSourceId0": {
-      "description": "Source ID",
-      "name": "BulkRequestsRetryGetParametersSchemaSourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaSourceId1": {
@@ -14195,11 +13186,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaSourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaSourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -14210,18 +13203,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaHeaders0": {
-      "name": "BulkRequestsRetryGetParametersSchemaHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaHeaders1": {
@@ -14239,10 +13220,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -14253,18 +13235,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaBody0": {
-      "name": "BulkRequestsRetryGetParametersSchemaBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaBody1": {
@@ -14282,10 +13252,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaBody0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -14296,18 +13267,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaParsedQuery0": {
-      "name": "BulkRequestsRetryGetParametersSchemaParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaParsedQuery1": {
@@ -14325,10 +13284,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -14339,19 +13299,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaCreatedAt0": {
-      "name": "BulkRequestsRetryGetParametersSchemaCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaCreatedAt1": {
@@ -14433,10 +13380,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -14447,19 +13396,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaIngestedAt0": {
-      "name": "BulkRequestsRetryGetParametersSchemaIngestedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaIngestedAt1": {
@@ -14541,10 +13477,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaIngestedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaIngestedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -14555,19 +13493,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaBulkRetryId0": {
-      "name": "BulkRequestsRetryGetParametersSchemaBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaBulkRetryId1": {
@@ -14592,10 +13517,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -14747,8 +13674,8 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaOneOf1Items": {
-      "name": "BulkRequestsRetryGetParametersSchemaOneOf1Items",
+    "BulkRequestsRetryGetParametersSchema0": {
+      "name": "BulkRequestsRetryGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -14761,18 +13688,18 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryId0": {
-      "description": "Request ID",
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryId0",
+    "BulkRequestsRetryGetParametersSchemaOneOf1Items": {
+      "name": "BulkRequestsRetryGetParametersSchemaOneOf1Items",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
-        }
+        ]
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryId1": {
@@ -14798,11 +13725,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryId0",
             "description": "Request ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -14943,19 +13872,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount1": {
       "name": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount1",
       "shape": {
@@ -15064,10 +13980,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -15085,19 +14003,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount1": {
@@ -15208,10 +14113,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -15229,20 +14136,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQuerySourceId0": {
-      "description": "Source ID",
-      "name": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQuerySourceId1": {
@@ -15268,11 +14161,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -15283,18 +14178,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryHeaders0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryHeaders1": {
@@ -15312,10 +14195,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -15326,18 +14210,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryBody0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryBody1": {
@@ -15355,10 +14227,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryBody0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -15369,18 +14242,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryParsedQuery0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryParsedQuery1": {
@@ -15398,10 +14259,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -15412,19 +14274,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryCreatedAt0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryCreatedAt1": {
@@ -15506,10 +14355,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -15520,19 +14371,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryIngestedAt0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryIngestedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryIngestedAt1": {
@@ -15614,10 +14452,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryIngestedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryIngestedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -15628,19 +14468,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId0": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId1": {
@@ -15665,10 +14492,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -15846,20 +14675,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaId0": {
-      "description": "Request ID",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaId1": {
       "name": "BulkRequestsRetryPlanGetParametersSchemaId1",
       "shape": {
@@ -15883,11 +14698,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaId0",
             "description": "Request ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -16028,19 +14845,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1": {
       "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount1",
       "shape": {
@@ -16149,10 +14953,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -16170,19 +14976,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaEventsCount0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaEventsCount0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaEventsCount1": {
@@ -16293,10 +15086,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaEventsCount0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaEventsCount0"
+              "type": "primitive",
+              "value": {
+                "type": "integer",
+                "minimum": 0
+              }
             }
           },
           {
@@ -16314,20 +15109,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaSourceId0": {
-      "description": "Source ID",
-      "name": "BulkRequestsRetryPlanGetParametersSchemaSourceId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaSourceId1": {
@@ -16353,11 +15134,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaSourceId0",
             "description": "Source ID",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaSourceId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -16368,18 +15151,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaHeaders0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaHeaders0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaHeaders1": {
@@ -16397,10 +15168,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaHeaders0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaHeaders0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16411,18 +15183,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaBody0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBody0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaBody1": {
@@ -16440,10 +15200,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaBody0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaBody0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16454,18 +15215,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaParsedQuery0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaParsedQuery1": {
@@ -16483,10 +15232,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaParsedQuery0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -16497,19 +15247,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaCreatedAt0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaCreatedAt1": {
@@ -16591,10 +15328,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaCreatedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -16605,19 +15344,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaIngestedAt0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaIngestedAt1": {
@@ -16699,10 +15425,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaIngestedAt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           },
           {
@@ -16713,19 +15441,6 @@
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId0": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 255
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId1": {
@@ -16750,10 +15465,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId0",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 255
+              }
             }
           },
           {
@@ -16931,20 +15648,6 @@
         ]
       }
     },
-    "RulesetsGetParametersSchema0": {
-      "name": "RulesetsGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "RulesetsGetParametersSchema1": {
       "name": "RulesetsGetParametersSchema1",
       "shape": {
@@ -16981,20 +15684,6 @@
         ]
       }
     },
-    "RulesetsGetParametersSchema00": {
-      "name": "RulesetsGetParametersSchema00",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
-          }
-        }
-      }
-    },
     "RulesetsGetParametersSchema01": {
       "name": "RulesetsGetParametersSchema01",
       "shape": {
@@ -17012,18 +15701,18 @@
         }
       }
     },
-    "RulesetsGetParametersSchemaOneOf1Gt0": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gt0",
+    "RulesetsGetParametersSchema0": {
+      "name": "RulesetsGetParametersSchema0",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
-        }
+        ]
       }
     },
     "RulesetsGetParametersSchemaOneOf1Gt1": {
@@ -17049,10 +15738,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Gt0",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Gt0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[A-z0-9-_]+$",
+                "maxLength": 155
+              }
             }
           },
           {
@@ -17063,20 +15755,6 @@
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Gte0": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gte0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Gte1": {
@@ -17102,10 +15780,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Gte0",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Gte0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[A-z0-9-_]+$",
+                "maxLength": 155
+              }
             }
           },
           {
@@ -17116,20 +15797,6 @@
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Le0": {
-      "name": "RulesetsGetParametersSchemaOneOf1Le0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Le1": {
@@ -17155,10 +15822,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Le0",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Le0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[A-z0-9-_]+$",
+                "maxLength": 155
+              }
             }
           },
           {
@@ -17169,20 +15839,6 @@
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Lte0": {
-      "name": "RulesetsGetParametersSchemaOneOf1Lte0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Lte1": {
@@ -17208,10 +15864,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Lte0",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Lte0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[A-z0-9-_]+$",
+                "maxLength": 155
+              }
             }
           },
           {
@@ -17222,20 +15881,6 @@
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Contains0": {
-      "name": "RulesetsGetParametersSchemaOneOf1Contains0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "regex": "^[A-z0-9-_]+$",
-            "maxLength": 155
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Contains1": {
@@ -17261,10 +15906,13 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Contains0",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Contains0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[A-z0-9-_]+$",
+                "maxLength": 155
+              }
             }
           },
           {
@@ -17279,20 +15927,6 @@
     },
     "RulesetsGetParametersSchemaOneOf1Items": {
       "name": "RulesetsGetParametersSchemaOneOf1Items",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
-    "SourcesGetParametersSchema0": {
-      "name": "SourcesGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -17341,8 +15975,8 @@
         ]
       }
     },
-    "SourcesGetParametersSchemaOneOf1Items": {
-      "name": "SourcesGetParametersSchemaOneOf1Items",
+    "SourcesGetParametersSchema0": {
+      "name": "SourcesGetParametersSchema0",
       "shape": {
         "type": "enum",
         "values": [
@@ -17355,8 +15989,8 @@
         ]
       }
     },
-    "TransformationsGetParametersSchema0": {
-      "name": "TransformationsGetParametersSchema0",
+    "SourcesGetParametersSchemaOneOf1Items": {
+      "name": "SourcesGetParametersSchemaOneOf1Items",
       "shape": {
         "type": "enum",
         "values": [
@@ -17401,6 +16035,20 @@
               "type": "id",
               "value": "TransformationsGetParametersSchema1"
             }
+          }
+        ]
+      }
+    },
+    "TransformationsGetParametersSchema0": {
+      "name": "TransformationsGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
         ]
       }
@@ -17472,18 +16120,6 @@
         "properties": []
       }
     },
-    "TransformationsRunPutRequestBodySchemaRequestBody1": {
-      "name": "TransformationsRunPutRequestBodySchemaRequestBody1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "TransformationsRunPutRequestBodySchemaRequestBody": {
       "description": "Body of the request",
       "name": "TransformationsRunPutRequestBodySchemaRequestBody",
@@ -17498,10 +16134,11 @@
             }
           },
           {
-            "typeName": "TransformationsRunPutRequestBodySchemaRequestBody1",
             "type": {
-              "type": "id",
-              "value": "TransformationsRunPutRequestBodySchemaRequestBody1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -17652,20 +16289,6 @@
         ]
       }
     },
-    "WebhooksGetParametersSchema0": {
-      "name": "WebhooksGetParametersSchema0",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "asc"
-          },
-          {
-            "value": "desc"
-          }
-        ]
-      }
-    },
     "WebhooksGetParametersSchema1": {
       "name": "WebhooksGetParametersSchema1",
       "shape": {
@@ -17698,6 +16321,20 @@
               "type": "id",
               "value": "WebhooksGetParametersSchema1"
             }
+          }
+        ]
+      }
+    },
+    "WebhooksGetParametersSchema0": {
+      "name": "WebhooksGetParametersSchema0",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
           }
         ]
       }
@@ -18322,7 +16959,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIssueTriggersExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -18552,7 +17189,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "issueTriggersCreateIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -18766,7 +17403,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "issueTriggersUpsertIssueTriggerExample",
               "description": "",
               "path": "/issue-triggers",
               "pathParameters": {},
@@ -18939,9 +17576,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19178,9 +17815,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "issueTriggersUpdateIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19345,9 +17982,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19471,9 +18108,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "disableIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo/disable",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19633,9 +18270,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "enableIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo/enable",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19871,7 +18508,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAttemptsExample",
               "description": "",
               "path": "/attempts",
               "pathParameters": {},
@@ -20059,9 +18696,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAttemptExample",
               "description": "",
-              "path": "/attempts/",
+              "path": "/attempts/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -20351,7 +18988,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBookmarksExample",
               "description": "",
               "path": "/bookmarks",
               "pathParameters": {},
@@ -20586,7 +19223,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bookmarksCreateBookmarkExample",
               "description": "",
               "path": "/bookmarks",
               "pathParameters": {},
@@ -20755,9 +19392,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBookmarkExample",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21008,9 +19645,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bookmarksUpdateBookmarkExample",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21171,9 +19808,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBookmarkExample",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21346,9 +19983,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bookmarksTriggerBookmarkExample",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo/trigger",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21659,7 +20296,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getDestinationsExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -21918,7 +20555,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "destinationsCreateDestinationExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -22162,7 +20799,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "destinationsUpsertDestinationExample",
               "description": "",
               "path": "/destinations",
               "pathParameters": {},
@@ -22315,9 +20952,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getDestinationExample",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22600,9 +21237,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "destinationsUpdateDestinationExample",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22755,9 +21392,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "archiveDestinationExample",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22901,9 +21538,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unarchiveDestinationExample",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23325,7 +21962,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventsExample",
               "description": "",
               "path": "/events",
               "pathParameters": {},
@@ -23523,9 +22160,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventExample",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23699,9 +22336,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestRawBodyExample",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/raw_body",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23825,9 +22462,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "retryEventExample",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/retry",
               "pathParameters": {
                 "id": "foo"
               },
@@ -24051,9 +22688,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "muteEventExample",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/mute",
               "pathParameters": {
                 "id": "foo"
               },
@@ -24367,7 +23004,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventBulkRetriesExample",
               "description": "",
               "path": "/bulk/events/retry",
               "pathParameters": {},
@@ -24561,7 +23198,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkRetryEventsCreateEventBulkRetryExample",
               "description": "",
               "path": "/bulk/events/retry",
               "pathParameters": {},
@@ -24724,7 +23361,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "generateEventBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/events/retry/plan",
               "pathParameters": {},
@@ -24852,9 +23489,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/events/retry/",
+              "path": "/bulk/events/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25006,9 +23643,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/events/retry/",
+              "path": "/bulk/events/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25300,7 +23937,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIgnoredEventBulkRetriesExample",
               "description": "",
               "path": "/bulk/ignored-events/retry",
               "pathParameters": {},
@@ -25494,7 +24131,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkRetryIgnoredEventsCreateIgnoredEventBulkRetryExample",
               "description": "",
               "path": "/bulk/ignored-events/retry",
               "pathParameters": {},
@@ -25657,7 +24294,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "generateIgnoredEventBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/ignored-events/retry/plan",
               "pathParameters": {},
@@ -25785,9 +24422,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIgnoredEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/ignored-events/retry/",
+              "path": "/bulk/ignored-events/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25939,9 +24576,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelIgnoredEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/ignored-events/retry/",
+              "path": "/bulk/ignored-events/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -26121,7 +24758,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIntegrationsExample",
               "description": "",
               "path": "/integrations",
               "pathParameters": {},
@@ -26346,7 +24983,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "integrationsCreateIntegrationExample",
               "description": "",
               "path": "/integrations",
               "pathParameters": {},
@@ -26533,9 +25170,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIntegrationExample",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -26779,9 +25416,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "integrationsUpdateIntegrationExample",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -26944,9 +25581,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteIntegrationExample",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -27100,9 +25737,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "attachIntegrationToSourceExample",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo/attach/foo",
               "pathParameters": {
                 "id": "foo",
                 "source_id": "foo"
@@ -27257,9 +25894,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "detachIntegrationToSourceExample",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo/detach/foo",
               "pathParameters": {
                 "id": "foo",
                 "source_id": "foo"
@@ -27546,7 +26183,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIssuesExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
@@ -27997,7 +26634,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIssueCountExample",
               "description": "",
               "path": "/issues/count",
               "pathParameters": {},
@@ -28121,9 +26758,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getIssueExample",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -28440,9 +27077,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "issuesUpdateIssueExample",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -28629,9 +27266,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "dismissIssueExample",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29029,7 +27666,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestsExample",
               "description": "",
               "path": "/requests",
               "pathParameters": {},
@@ -29223,9 +27860,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestExample",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29395,9 +28032,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestRawBodyExample",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/raw_body",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29573,9 +28210,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "requestsRetryRequestExample",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/retry",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30121,9 +28758,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestEventsExample",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/events",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30418,9 +29055,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestIgnoredEventsExample",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/ignored_events",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30722,7 +29359,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestBulkRetriesExample",
               "description": "",
               "path": "/bulk/requests/retry",
               "pathParameters": {},
@@ -30916,7 +29553,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkRetryRequestsCreateRequestBulkRetryExample",
               "description": "",
               "path": "/bulk/requests/retry",
               "pathParameters": {},
@@ -31079,7 +29716,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "generateRequestBulkRetryPlanExample",
               "description": "",
               "path": "/bulk/requests/retry/plan",
               "pathParameters": {},
@@ -31207,9 +29844,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRequestBulkRetryExample",
               "description": "",
-              "path": "/bulk/requests/retry/",
+              "path": "/bulk/requests/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31361,9 +29998,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelRequestBulkRetryExample",
               "description": "",
-              "path": "/bulk/requests/retry/",
+              "path": "/bulk/requests/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31623,7 +30260,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRulesetsExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -31844,7 +30481,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesetsCreateRulesetExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -32050,7 +30687,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesetsUpsertRulesetExample",
               "description": "",
               "path": "/rulesets",
               "pathParameters": {},
@@ -32211,9 +30848,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRulesetExample",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32461,9 +31098,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesetsUpdateRulesetExample",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32620,9 +31257,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "archiveRulesetExample",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32774,9 +31411,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unarchiveRulesetExample",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33046,7 +31683,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSourcesExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -33243,7 +31880,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sourcesCreateSourceExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -33425,7 +32062,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sourcesUpsertSourceExample",
               "description": "",
               "path": "/sources",
               "pathParameters": {},
@@ -33588,9 +32225,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSourceExample",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33814,9 +32451,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "sourcesUpdateSourceExample",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33975,9 +32612,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "archiveSourceExample",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34131,9 +32768,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unarchiveSourceExample",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34317,7 +32954,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "notificationsToggleWebhookNotificationsExample",
               "description": "",
               "path": "/notifications/webhooks",
               "pathParameters": {},
@@ -34540,7 +33177,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransformationsExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -34744,7 +33381,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transformationsCreateTransformationExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -34935,7 +33572,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transformationsUpsertTransformationExample",
               "description": "",
               "path": "/transformations",
               "pathParameters": {},
@@ -35086,9 +33723,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransformationExample",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -35305,9 +33942,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transformationsUpdateTransformationExample",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -35532,7 +34169,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transformationsTestTransformationExample",
               "description": "",
               "path": "/transformations/run",
               "pathParameters": {},
@@ -35807,9 +34444,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransformationExecutionsExample",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo/executions",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36036,9 +34673,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransformationExecutionExample",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo/executions/foo",
               "pathParameters": {
                 "id": "foo",
                 "execution_id": "foo"
@@ -36377,7 +35014,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionsExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -36782,7 +35419,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "connectionsCreateConnectionExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -37172,7 +35809,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "connectionsUpsertConnectionExample",
               "description": "",
               "path": "/webhooks",
               "pathParameters": {},
@@ -37445,9 +36082,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37806,9 +36443,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "connectionsUpdateConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38077,9 +36714,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "archiveConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38343,9 +36980,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unarchiveConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38609,9 +37246,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "pauseConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/pause",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38875,9 +37512,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unpauseConnectionExample",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/unpause",
               "pathParameters": {
                 "id": "foo"
               },

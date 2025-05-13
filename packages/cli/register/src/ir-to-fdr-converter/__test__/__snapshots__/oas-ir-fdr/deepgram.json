@@ -3158,14 +3158,30 @@
             }
           },
           {
-            "typeName": "V1ListenPostParametersSchema1",
             "description": "Use a previous version of a model",
             "type": {
-              "type": "id",
-              "value": "V1ListenPostParametersSchema1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
+      }
+    },
+    "V1ListenPostParametersSchema1": {
+      "name": "V1ListenPostParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "V1ListenPostParametersSchema0": {
@@ -3178,19 +3194,6 @@
             "value": "latest"
           }
         ]
-      }
-    },
-    "V1ListenPostParametersSchema1": {
-      "description": "Use a previous version of a model",
-      "name": "V1ListenPostParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
       }
     },
     "V1ListenPostParametersSchemaOneOf1Items": {
@@ -3283,18 +3286,6 @@
         ]
       }
     },
-    "V1ReadPostParametersSchema0": {
-      "name": "V1ReadPostParametersSchema0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "V1ReadPostParametersSchema1": {
       "name": "V1ReadPostParametersSchema1",
       "shape": {
@@ -3330,36 +3321,6 @@
           },
           {
             "value": "48000"
-          }
-        ]
-      }
-    },
-    "V1SpeakPostParametersSchema1": {
-      "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema1",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
-          }
-        ]
-      }
-    },
-    "V1SpeakPostParametersSchema2": {
-      "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
-      "name": "V1SpeakPostParametersSchema2",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
           }
         ]
       }
@@ -3408,6 +3369,36 @@
               "type": "id",
               "value": "V1SpeakPostParametersSchema4"
             }
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSchema1": {
+      "description": "Encoding - mulaw. Supported sample rates - 8000, 16000 Hz.",
+      "name": "V1SpeakPostParametersSchema1",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          }
+        ]
+      }
+    },
+    "V1SpeakPostParametersSchema2": {
+      "description": "Encoding - alaw. Supported sample rates - 8000, 16000 Hz.",
+      "name": "V1SpeakPostParametersSchema2",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
           }
         ]
       }
@@ -8910,9 +8901,149 @@
         ]
       }
     },
-    "encoding": {
+    "speak_encoding": {
+      "description": "Encoding allows you to specify the expected encoding of your audio output",
+      "name": "speak_encoding",
+      "shape": {
+        "type": "enum",
+        "default": "mp3",
+        "values": [
+          {
+            "value": "linear16"
+          },
+          {
+            "value": "mulaw"
+          },
+          {
+            "value": "alaw"
+          },
+          {
+            "value": "opus"
+          },
+          {
+            "value": "mp3"
+          },
+          {
+            "value": "flac"
+          },
+          {
+            "value": "aac"
+          }
+        ]
+      }
+    },
+    "speak_model": {
+      "description": "AI model used to process submitted text",
+      "name": "speak_model",
+      "shape": {
+        "type": "enum",
+        "default": "aura-asteria-en",
+        "values": [
+          {
+            "value": "aura-asteria-en"
+          },
+          {
+            "value": "aura-luna-en"
+          },
+          {
+            "value": "aura-stella-en"
+          },
+          {
+            "value": "aura-athena-en"
+          },
+          {
+            "value": "aura-hera-en"
+          },
+          {
+            "value": "aura-orion-en"
+          },
+          {
+            "value": "aura-arcas-en"
+          },
+          {
+            "value": "aura-perseus-en"
+          },
+          {
+            "value": "aura-angus-en"
+          },
+          {
+            "value": "aura-orpheus-en"
+          },
+          {
+            "value": "aura-helios-en"
+          },
+          {
+            "value": "aura-zeus-en"
+          }
+        ]
+      }
+    },
+    "speak_sample_rate": {
+      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+      "name": "speak_sample_rate",
+      "shape": {
+        "type": "enum",
+        "default": "24000",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          },
+          {
+            "value": "24000"
+          },
+          {
+            "value": "44100"
+          },
+          {
+            "value": "48000"
+          }
+        ]
+      }
+    },
+    "listen_callback_method": {
+      "description": "HTTP method by which the callback request will be made",
+      "name": "listen_callback_method",
+      "shape": {
+        "type": "enum",
+        "default": "POST",
+        "values": [
+          {
+            "value": "POST"
+          },
+          {
+            "value": "GET"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "DELETE"
+          }
+        ]
+      }
+    },
+    "listen_dictation": {
+      "description": "Identify and extract key entities from content in submitted audio",
+      "name": "listen_dictation",
+      "shape": {
+        "type": "enum",
+        "default": "false",
+        "values": [
+          {
+            "value": "true"
+          },
+          {
+            "value": "false"
+          }
+        ]
+      }
+    },
+    "listen_encoding": {
       "description": "Specify the expected encoding of your submitted audio",
-      "name": "encoding",
+      "name": "listen_encoding",
       "shape": {
         "type": "enum",
         "values": [
@@ -8943,171 +9074,9 @@
         ]
       }
     },
-    "model": {
-      "description": "AI model to use for the transcription",
-      "name": "model",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "nova-3"
-          },
-          {
-            "value": "nova-3-general"
-          },
-          {
-            "value": "nova-3-medical"
-          },
-          {
-            "value": "nova-2"
-          },
-          {
-            "value": "nova-2-general"
-          },
-          {
-            "value": "nova-2-meeting"
-          },
-          {
-            "value": "nova-2-finance"
-          },
-          {
-            "value": "nova-2-conversationalai"
-          },
-          {
-            "value": "nova-2-voicemail"
-          },
-          {
-            "value": "nova-2-video"
-          },
-          {
-            "value": "nova-2-medical"
-          },
-          {
-            "value": "nova-2-drivethru"
-          },
-          {
-            "value": "nova-2-automotive"
-          },
-          {
-            "value": "nova"
-          },
-          {
-            "value": "nova-general"
-          },
-          {
-            "value": "nova-phonecall"
-          },
-          {
-            "value": "nova-medical"
-          },
-          {
-            "value": "enhanced"
-          },
-          {
-            "value": "enhanced-general"
-          },
-          {
-            "value": "enhanced-meeting"
-          },
-          {
-            "value": "enhanced-phonecall"
-          },
-          {
-            "value": "enhanced-finance"
-          },
-          {
-            "value": "base"
-          },
-          {
-            "value": "meeting"
-          },
-          {
-            "value": "phonecall"
-          },
-          {
-            "value": "finance"
-          },
-          {
-            "value": "conversationalai"
-          },
-          {
-            "value": "voicemail"
-          },
-          {
-            "value": "video"
-          },
-          {
-            "value": "custom"
-          }
-        ]
-      }
-    },
-    "sample_rate": {
-      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-      "name": "sample_rate",
-      "shape": {
-        "type": "enum",
-        "default": "24000",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
-          },
-          {
-            "value": "24000"
-          },
-          {
-            "value": "44100"
-          },
-          {
-            "value": "48000"
-          }
-        ]
-      }
-    },
-    "callback_method": {
-      "description": "HTTP method by which the callback request will be made",
-      "name": "callback_method",
-      "shape": {
-        "type": "enum",
-        "default": "POST",
-        "values": [
-          {
-            "value": "POST"
-          },
-          {
-            "value": "GET"
-          },
-          {
-            "value": "PUT"
-          },
-          {
-            "value": "DELETE"
-          }
-        ]
-      }
-    },
-    "dictation": {
-      "description": "Identify and extract key entities from content in submitted audio",
-      "name": "dictation",
-      "shape": {
-        "type": "enum",
-        "default": "false",
-        "values": [
-          {
-            "value": "true"
-          },
-          {
-            "value": "false"
-          }
-        ]
-      }
-    },
-    "filler_words": {
+    "listen_filler_words": {
       "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
-      "name": "filler_words",
+      "name": "listen_filler_words",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9121,9 +9090,9 @@
         ]
       }
     },
-    "interim_results": {
+    "listen_interim_results": {
       "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-      "name": "interim_results",
+      "name": "listen_interim_results",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9137,9 +9106,9 @@
         ]
       }
     },
-    "language": {
+    "listen_language": {
       "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-      "name": "language",
+      "name": "listen_language",
       "shape": {
         "type": "enum",
         "default": "en",
@@ -9315,9 +9284,108 @@
         ]
       }
     },
-    "multichannel": {
+    "listen_model": {
+      "description": "AI model to use for the transcription",
+      "name": "listen_model",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "nova-3"
+          },
+          {
+            "value": "nova-3-general"
+          },
+          {
+            "value": "nova-3-medical"
+          },
+          {
+            "value": "nova-2"
+          },
+          {
+            "value": "nova-2-general"
+          },
+          {
+            "value": "nova-2-meeting"
+          },
+          {
+            "value": "nova-2-finance"
+          },
+          {
+            "value": "nova-2-conversationalai"
+          },
+          {
+            "value": "nova-2-voicemail"
+          },
+          {
+            "value": "nova-2-video"
+          },
+          {
+            "value": "nova-2-medical"
+          },
+          {
+            "value": "nova-2-drivethru"
+          },
+          {
+            "value": "nova-2-automotive"
+          },
+          {
+            "value": "nova"
+          },
+          {
+            "value": "nova-general"
+          },
+          {
+            "value": "nova-phonecall"
+          },
+          {
+            "value": "nova-medical"
+          },
+          {
+            "value": "enhanced"
+          },
+          {
+            "value": "enhanced-general"
+          },
+          {
+            "value": "enhanced-meeting"
+          },
+          {
+            "value": "enhanced-phonecall"
+          },
+          {
+            "value": "enhanced-finance"
+          },
+          {
+            "value": "base"
+          },
+          {
+            "value": "meeting"
+          },
+          {
+            "value": "phonecall"
+          },
+          {
+            "value": "finance"
+          },
+          {
+            "value": "conversationalai"
+          },
+          {
+            "value": "voicemail"
+          },
+          {
+            "value": "video"
+          },
+          {
+            "value": "custom"
+          }
+        ]
+      }
+    },
+    "listen_multichannel": {
       "description": "Transcribe each audio channel independently",
-      "name": "multichannel",
+      "name": "listen_multichannel",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9331,9 +9399,9 @@
         ]
       }
     },
-    "numerals": {
+    "listen_numerals": {
       "description": "Convert numbers from written format to numerical format",
-      "name": "numerals",
+      "name": "listen_numerals",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9347,9 +9415,9 @@
         ]
       }
     },
-    "profanity_filter": {
+    "listen_profanity_filter": {
       "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-      "name": "profanity_filter",
+      "name": "listen_profanity_filter",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9363,9 +9431,9 @@
         ]
       }
     },
-    "punctuate": {
+    "listen_punctuate": {
       "description": "Add punctuation and capitalization to the transcript",
-      "name": "punctuate",
+      "name": "listen_punctuate",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9379,9 +9447,9 @@
         ]
       }
     },
-    "redact": {
+    "listen_redact": {
       "description": "Redaction removes sensitive information from your transcripts",
-      "name": "redact",
+      "name": "listen_redact",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9407,9 +9475,9 @@
         ]
       }
     },
-    "smart_format": {
+    "listen_smart_format": {
       "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-      "name": "smart_format",
+      "name": "listen_smart_format",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9423,9 +9491,9 @@
         ]
       }
     },
-    "vad_events": {
+    "listen_vad_events": {
       "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-      "name": "vad_events",
+      "name": "listen_vad_events",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9972,7 +10040,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "speechToTextListenExample",
               "description": "",
               "path": "/v1/listen",
               "pathParameters": {},
@@ -10620,7 +10688,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "textIntelligenceTextReadExample",
               "description": "",
               "path": "/v1/read",
               "pathParameters": {},
@@ -11029,7 +11097,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "textToSpeechSpeakExample",
               "description": "",
               "path": "/v1/speak",
               "pathParameters": {},
@@ -11123,7 +11191,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectsExample",
               "description": "",
               "path": "/v1/projects",
               "pathParameters": {},
@@ -11317,9 +11385,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/foo",
               "pathParameters": {
                 "project_id": "foo"
               },
@@ -11453,9 +11521,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11597,9 +11665,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11735,9 +11803,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalances_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11896,9 +11964,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalance_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "balance_id": "123456-7890-1234-5678-901234"
@@ -12017,9 +12085,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectModelsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/models",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12197,9 +12265,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectModelExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/undefined/models/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -12335,9 +12403,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectKeysExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12500,9 +12568,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectKeyExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12657,9 +12725,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectKeyExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -12822,9 +12890,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_deleteProjectKey_example",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -12939,9 +13007,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMembersExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13081,9 +13149,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectMemberExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13216,9 +13284,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMemberScopesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13370,9 +13438,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectMemberScopesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13469,9 +13537,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectInvitesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13610,9 +13678,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectInviteExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13755,9 +13823,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectInviteExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe@example.com",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "email": "john.doe@example.com"
@@ -13872,9 +13940,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectLeaveExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/leave",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14059,9 +14127,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectRequestsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14199,9 +14267,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectRequestExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "request_id": "123456-7890-1234-5678-901234"
@@ -14376,9 +14444,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14534,9 +14602,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectUsageFieldsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/fields",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14736,9 +14804,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageBreakdownExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/breakdown",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14927,9 +14995,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectPurchasesExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/purchases",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15043,7 +15111,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listModelsExample",
               "description": "",
               "path": "/v1/models",
               "pathParameters": {},
@@ -15216,9 +15284,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getModelExample",
               "description": "",
-              "path": "/v1/models/",
+              "path": "/v1/models/af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
               "pathParameters": {
                 "model_id": "af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291"
               },
@@ -15352,9 +15420,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15510,9 +15578,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15643,9 +15711,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSelfHostedCredentialsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
@@ -15802,9 +15870,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteSelfHostedDistCredsExample",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
@@ -15907,7 +15975,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "speak_encoding"
                 }
               }
             },
@@ -15918,7 +15986,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "speak_model"
                 }
               }
             },
@@ -15929,7 +15997,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "sample_rate"
+                  "value": "speak_sample_rate"
                 }
               }
             }
@@ -16003,23 +16071,39 @@
           ],
           "examples": [
             {
-              "path": "/v1/speak",
-              "pathParameters": {},
-              "queryParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
+              "queryParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "headers": {
-                "Authorization": "Authorization"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
-                  "type": "sendText",
+                  "type": "textToSpeechRequest",
                   "body": {
                     "type": "Speak",
-                    "text": "text"
+                    "text": "Hello, world!"
                   }
                 },
                 {
-                  "type": "receiveAudio",
-                  "body": "string"
+                  "type": "textToSpeechRequest",
+                  "body": {
+                    "type": "Speak",
+                    "text": "Welcome to Deepgram!"
+                  }
+                },
+                {
+                  "type": "textToSpeechResponse",
+                  "body": "Y3VyaW91cyBtaW5kcyB0aGluayBhbGlrZSA6KQ=="
                 }
               ]
             }
@@ -16089,7 +16173,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "callback_method"
+                  "value": "listen_callback_method"
                 }
               }
             },
@@ -16141,7 +16225,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "dictation"
+                  "value": "listen_dictation"
                 }
               }
             },
@@ -16152,7 +16236,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "listen_encoding"
                 }
               }
             },
@@ -16190,7 +16274,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "filler_words"
+                  "value": "listen_filler_words"
                 }
               }
             },
@@ -16201,7 +16285,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "interim_results"
+                  "value": "listen_interim_results"
                 }
               }
             },
@@ -16244,7 +16328,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "language"
+                  "value": "listen_language"
                 }
               }
             },
@@ -16255,7 +16339,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "listen_model"
                 }
               }
             },
@@ -16266,7 +16350,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "multichannel"
+                  "value": "listen_multichannel"
                 }
               }
             },
@@ -16277,7 +16361,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "numerals"
+                  "value": "listen_numerals"
                 }
               }
             },
@@ -16288,7 +16372,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "profanity_filter"
+                  "value": "listen_profanity_filter"
                 }
               }
             },
@@ -16299,7 +16383,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "punctuate"
+                  "value": "listen_punctuate"
                 }
               }
             },
@@ -16310,7 +16394,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "redact"
+                  "value": "listen_redact"
                 }
               }
             },
@@ -16360,7 +16444,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "smart_format"
+                  "value": "listen_smart_format"
                 }
               }
             },
@@ -16397,7 +16481,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "vad_events"
+                  "value": "listen_vad_events"
                 }
               }
             },
@@ -16485,22 +16569,93 @@
           ],
           "examples": [
             {
-              "path": "/v1/listen",
-              "pathParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "queryParameters": {
-                "diarize_version": "v2"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "headers": {
-                "Authorization": "Authorization"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
-                  "type": "sendAudio",
-                  "body": "string"
+                  "type": "transcriptionRequest",
+                  "body": "Y3VyaW91cyBtaW5k"
                 },
                 {
-                  "type": "receiveTranscription",
-                  "body": {}
+                  "type": "transcriptionRequest",
+                  "body": "cyB0aGluayBhbGlrZSA6KQ=="
+                },
+                {
+                  "type": "transcriptionResponse",
+                  "body": {
+                    "type": "Results",
+                    "channel": {
+                      "alternatives": [
+                        {
+                          "confidence": 0.98,
+                          "transcript": "Hello, world! Welcome to Deepgram!",
+                          "words": [
+                            {
+                              "confidence": 0.99,
+                              "end": 0.5,
+                              "punctuated_word": "Hello,",
+                              "start": 0.1,
+                              "word": "hello"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 0.8,
+                              "punctuated_word": "world!",
+                              "start": 0.6,
+                              "word": "world"
+                            },
+                            {
+                              "confidence": 0.97,
+                              "end": 1.2,
+                              "punctuated_word": "Welcome",
+                              "start": 0.9,
+                              "word": "welcome"
+                            },
+                            {
+                              "confidence": 0.99,
+                              "end": 1.4,
+                              "punctuated_word": "to",
+                              "start": 1.3,
+                              "word": "to"
+                            },
+                            {
+                              "confidence": 0.98,
+                              "end": 1.9,
+                              "punctuated_word": "Deepgram!",
+                              "start": 1.5,
+                              "word": "deepgram"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "duration": 2,
+                    "is_final": true,
+                    "metadata": {
+                      "model_info": {
+                        "name": "nova-2",
+                        "version": "1.0.0",
+                        "arch": "transformer"
+                      },
+                      "model_uuid": "123e4567-e89b-12d3-a456-426614174000",
+                      "request_id": "987fcdeb-51a2-43b7-91e4-c95bafcda21a"
+                    },
+                    "start": 0,
+                    "speech_final": true
+                  }
                 }
               ]
             }

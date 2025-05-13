@@ -52,11 +52,7 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import okhttp3.Headers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.*;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
@@ -117,7 +113,15 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 && generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters;
         Optional<CodeBlock> inlinedRequestBodyBuilder = Optional.empty();
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
-            if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
+            if (generatedWrappedRequest.requestBodyGetter().get()
+                    instanceof GeneratedWrappedRequest.UrlFormEncodedGetters) {
+                GeneratedWrappedRequest.UrlFormEncodedGetters urlFormEncodedGetters =
+                        ((GeneratedWrappedRequest.UrlFormEncodedGetters)
+                                generatedWrappedRequest.requestBodyGetter().get());
+                initializeUrlFormEncodedBody(urlFormEncodedGetters, requestBodyCodeBlock);
+                inlinedRequestBodyBuilder =
+                        Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
+            } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
                 String jsonRequestBodyArgument = requestParameterName + "."
                         + ((ReferencedRequestBodyGetter) generatedWrappedRequest
                                         .requestBodyGetter()
@@ -252,6 +256,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock.Builder requestBodyCodeBlock,
             boolean sendContentType,
             String contentType) {
+
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
             isOptional = HttpRequestBodyIsWrappedInOptional.isOptional(
@@ -440,6 +445,45 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             }
         }
+        requestBodyCodeBlock
+                .endControlFlow()
+                .beginControlFlow("catch($T e)", Exception.class)
+                .addStatement("throw new $T(e)", RuntimeException.class)
+                .endControlFlow();
+    }
+
+    private void initializeUrlFormEncodedBody(
+            GeneratedWrappedRequest.UrlFormEncodedGetters urlFormEncodedGetters,
+            CodeBlock.Builder requestBodyCodeBlock) {
+        requestBodyCodeBlock.addStatement(
+                "$T.Builder $L = new $T.Builder()",
+                FormBody.class,
+                variables.getOkhttpRequestBodyName(),
+                FormBody.class);
+        requestBodyCodeBlock.beginControlFlow("try");
+
+        for (EnrichedObjectProperty property : urlFormEncodedGetters.properties()) {
+            String propertyGetter = requestParameterName + "." + property.getterProperty().name + "()";
+            boolean isOptional = typeNameIsOptional(property.poetTypeName());
+
+            if (isOptional) {
+                requestBodyCodeBlock
+                        .beginControlFlow("if ($L.isPresent())", propertyGetter)
+                        .addStatement(
+                                "$L.add($S, String.valueOf($L.get()))",
+                                variables.getOkhttpRequestBodyName(),
+                                property.wireKey().get(),
+                                propertyGetter)
+                        .endControlFlow();
+            } else {
+                requestBodyCodeBlock.addStatement(
+                        "$L.add($S, String.valueOf($L))",
+                        variables.getOkhttpRequestBodyName(),
+                        property.wireKey().get(),
+                        propertyGetter);
+            }
+        }
+
         requestBodyCodeBlock
                 .endControlFlow()
                 .beginControlFlow("catch($T e)", Exception.class)

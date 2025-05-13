@@ -3340,18 +3340,6 @@
         ]
       }
     },
-    "LemurBaseParametersContext0": {
-      "name": "LemurBaseParametersContext0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "LemurBaseParametersContext1": {
       "name": "LemurBaseParametersContext1",
       "shape": {
@@ -3370,10 +3358,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurBaseParametersContext0",
             "type": {
-              "type": "id",
-              "value": "LemurBaseParametersContext0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -3501,18 +3490,6 @@
         ]
       }
     },
-    "LemurQuestionContext0": {
-      "name": "LemurQuestionContext0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "LemurQuestionContext1": {
       "name": "LemurQuestionContext1",
       "shape": {
@@ -3531,10 +3508,11 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LemurQuestionContext0",
             "type": {
-              "type": "id",
-              "value": "LemurQuestionContext0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -4308,7 +4286,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "uploadExample",
               "description": "",
               "path": "/v2/upload",
               "pathParameters": {},
@@ -4519,7 +4497,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -4700,7 +4678,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transcriptCreateExample",
               "description": "",
               "path": "/v2/transcript",
               "pathParameters": {},
@@ -5202,9 +5180,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -5697,9 +5675,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6211,9 +6189,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSubtitlesExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/srt",
               "pathParameters": {
                 "transcript_id": "foo",
                 "subtitle_format": "srt"
@@ -6355,9 +6333,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSentencesExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/sentences",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6548,9 +6526,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getParagraphsExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/paragraphs",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6755,9 +6733,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "wordSearchExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/word-search",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6944,9 +6922,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRedactedAudioExample",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/redacted-audio",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -7107,7 +7085,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "realtimeCreateTemporaryTokenExample",
               "description": "",
               "path": "/v2/realtime/token",
               "pathParameters": {},
@@ -7275,7 +7253,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurSummaryExample",
               "description": "",
               "path": "/lemur/v3/generate/summary",
               "pathParameters": {},
@@ -7439,7 +7417,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurQuestionAnswerExample",
               "description": "",
               "path": "/lemur/v3/generate/question-answer",
               "pathParameters": {},
@@ -7623,7 +7601,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurActionItemsExample",
               "description": "",
               "path": "/lemur/v3/generate/action-items",
               "pathParameters": {},
@@ -7787,7 +7765,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lemurTaskExample",
               "description": "",
               "path": "/lemur/v3/generate/task",
               "pathParameters": {},
@@ -7957,9 +7935,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "purgeRequestDataExample",
               "description": "",
-              "path": "/lemur/v3/",
+              "path": "/lemur/v3/foo",
               "pathParameters": {
                 "request_id": "foo"
               },
@@ -8012,7 +7990,18 @@
           "id": "userId",
           "name": "/{userId}",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "description": "The ID of the user.",
+                "key": "userId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -8024,9 +8013,12 @@
             {
               "key": "Authentication",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               },
               "description": "Authenticate using your AssemblyAI API key."
@@ -8034,22 +8026,15 @@
           ],
           "queryParameters": [
             {
-              "description": "The ID of the user.",
-              "key": "userId",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            {
               "description": "The sample rate of the streamed audio.",
               "key": "sample_rate",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
                 }
               }
             },
@@ -8057,9 +8042,12 @@
               "description": "Add up to 2500 characters of custom vocabulary.\nThe parameter should map to a JSON encoded list of strings.\n",
               "key": "word_boost",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             },
@@ -8067,9 +8055,12 @@
               "description": "Authenticate using a [generated temporary token](https://www.assemblyai.com/docs/Guides/real-time_streaming_transcription#creating-temporary-authentication-tokens)",
               "key": "token",
               "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -8104,30 +8095,32 @@
           ],
           "examples": [
             {
-              "path": "/{userId}",
-              "pathParameters": {},
+              "name": "",
+              "description": "",
+              "path": "",
+              "pathParameters": {
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
+              },
               "queryParameters": {
-                "userId": "userId",
-                "sample_rate": 1,
-                "word_boost": "word_boost",
-                "token": "token"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "headers": {
-                "Authentication": "Authentication"
+                "userSpecifiedExamples": {},
+                "autogeneratedExamples": {}
               },
               "messages": [
                 {
                   "type": "publish",
                   "body": {
-                    "audio_data": "audio_data"
+                    "audio_data": "base64-encoded-audio-data"
                   }
                 },
                 {
-                  "type": "subscribe",
+                  "type": "publish",
                   "body": {
-                    "message_type": "SessionBegins",
-                    "session_id": "session_id",
-                    "expires_at": "2024-01-15T09:30:00Z"
+                    "terminate_session": true
                   }
                 }
               ]

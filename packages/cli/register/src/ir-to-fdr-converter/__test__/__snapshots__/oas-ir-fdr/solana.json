@@ -2742,19 +2742,6 @@
         }
       }
     },
-    "GetHealthResult0": {
-      "description": "Result is 'ok' if healthy.",
-      "name": "GetHealthResult0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "GetHealthResult1": {
       "description": "An error object if unhealthy.",
       "name": "GetHealthResult1",
@@ -2771,11 +2758,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -2796,11 +2784,12 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetHealthResult0",
             "description": "Result is 'ok' if healthy.",
             "type": {
-              "type": "id",
-              "value": "GetHealthResult0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
@@ -5499,19 +5488,6 @@
         "properties": []
       }
     },
-    "GetTransactionResultTransaction1": {
-      "description": "The transaction details as encoded binary data.",
-      "name": "GetTransactionResultTransaction1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "GetTransactionResultTransaction": {
       "description": "The transaction details, either in JSON format or encoded binary data.",
       "name": "GetTransactionResultTransaction",
@@ -5527,11 +5503,12 @@
             }
           },
           {
-            "typeName": "GetTransactionResultTransaction1",
             "description": "The transaction details as encoded binary data.",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultTransaction1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           }
         ]
@@ -5546,30 +5523,6 @@
         "properties": []
       }
     },
-    "GetTransactionResultVersion0": {
-      "name": "GetTransactionResultVersion0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "GetTransactionResultVersion1": {
-      "name": "GetTransactionResultVersion1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "GetTransactionResultVersion": {
       "description": "Transaction version.",
       "name": "GetTransactionResultVersion",
@@ -5577,17 +5530,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "GetTransactionResultVersion0",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultVersion0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "GetTransactionResultVersion1",
             "type": {
-              "type": "id",
-              "value": "GetTransactionResultVersion1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -7073,7 +7028,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAccountInfoExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7172,7 +7127,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBalanceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7269,7 +7224,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlockExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7358,7 +7313,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlockCommitmentExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7447,7 +7402,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlockHeightExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7534,7 +7489,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlockProductionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7646,7 +7601,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlocksExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7762,7 +7717,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlocksWithLimitExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7855,7 +7810,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getBlockTimeExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -7925,7 +7880,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getClusterNodesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8013,7 +7968,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getEpochInfoExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8080,7 +8035,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getEpochScheduleExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8174,7 +8129,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getFeeForMessageExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8243,7 +8198,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getFirstAvailableBlockExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8309,7 +8264,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getGenesisHashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8373,7 +8328,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getHealthExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8437,7 +8392,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getHighestSnapshotSlotExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8501,7 +8456,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getIdentityExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8585,7 +8540,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getInflationGovernorExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8652,7 +8607,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getInflationRateExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8739,7 +8694,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getInflationRewardExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8833,7 +8788,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getLargestAccountsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8924,7 +8879,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getLatestBlockhashExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -8993,7 +8948,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getMaxRetransmitSlotExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9059,7 +9014,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getMaxShredInsertSlotExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9153,7 +9108,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getMinimumBalanceForRentExemptionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9256,7 +9211,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getMultipleAccountsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9360,7 +9315,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getProgramAccountsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9456,7 +9411,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getRecentPerformanceSamplesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9555,7 +9510,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getRecentPrioritizationFeesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9659,7 +9614,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSignaturesForAddressExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9766,7 +9721,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSignatureStatusesExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9859,7 +9814,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSlotExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -9948,7 +9903,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSlotLeaderExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10052,7 +10007,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSlotLeadersExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10143,7 +10098,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSupplyExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10240,7 +10195,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTokenAccountBalanceExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10348,7 +10303,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTokenAccountsByOwnerExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10449,7 +10404,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTokenSupplyExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10546,7 +10501,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTransactionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10613,7 +10568,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getVersionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10697,7 +10652,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getVoteAccountsExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10796,7 +10751,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "isBlockhashValidExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10865,7 +10820,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "minimumLedgerSlotExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -10971,7 +10926,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "requestAirdropExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -11070,7 +11025,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "sendTransactionExample",
             "description": "",
             "path": "",
             "pathParameters": {},
@@ -11167,7 +11122,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "simulateTransactionExample",
             "description": "",
             "path": "",
             "pathParameters": {},

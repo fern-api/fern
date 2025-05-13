@@ -97,7 +97,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postV1UsersExample",
             "description": "",
             "path": "/v1/users",
             "pathParameters": {},
