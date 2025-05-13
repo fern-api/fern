@@ -5,6 +5,8 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     ObjectProperty,
+    PrimitiveTypeV1,
+    PrimitiveTypeV2,
     TypeReference
 } from "@fern-api/ir-sdk";
 import { Converters } from "@fern-api/v2-importer-commons";
@@ -92,6 +94,68 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             }
         }
 
+        const octetStreamContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("octet-stream")
+        );
+        for (const contentType of octetStreamContentTypes) {
+            const mediaTypeObject = this.requestBody.content[contentType];
+            const schemaId = [...this.group, this.method, "Request"].join("_");
+            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
+                continue;
+            }
+            const convertedSchema = this.parseMediaTypeObject({
+                mediaTypeObject,
+                schemaId,
+                resolveSchema: true
+            });
+            if (convertedSchema == null) {
+                continue;
+            }
+
+            if (convertedSchema.schema?.typeDeclaration.shape.type === "alias") {
+                const requestBody = HttpRequestBody.fileUpload({
+                    contentType,
+                    docs: this.requestBody.description,
+                    name: this.context.casingsGenerator.generateName(schemaId),
+                    properties: [
+                        FileUploadRequestProperty.bodyProperty({
+                            name: {
+                                name: this.context.casingsGenerator.generateName("filename"),
+                                wireValue: "filename"
+                            },
+                            valueType: TypeReference.primitive({
+                                v1: PrimitiveTypeV1.String,
+                                v2: PrimitiveTypeV2.string({
+                                    default: undefined,
+                                    validation: undefined
+                                })
+                            }),
+                            contentType,
+                            style: undefined,
+                            docs: this.requestBody.description,
+                            v2Examples: this.convertMediaTypeObjectExamples({
+                                mediaTypeObject,
+                                exampleGenerationStrategy: "request"
+                            }),
+                            availability: undefined
+                        })
+                    ],
+                    v2Examples: this.convertMediaTypeObjectExamples({
+                        mediaTypeObject,
+                        exampleGenerationStrategy: "request"
+                    })
+                });
+
+                return {
+                    requestBody,
+                    inlinedTypes: this.context.removeSchemaFromInlinedTypes({
+                        id: schemaId,
+                        inlinedTypes: convertedSchema.inlinedTypes
+                    }),
+                    examples: convertedSchema.examples
+                };
+            }
+        }
         return undefined;
     }
 
