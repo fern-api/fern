@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.51.6] - 2025-05-13
+
+- Fix: Add support for the custom introduction setting in the generated README.md.
+
 ## [0.51.5] - 2025-05-03
 
 - Fix: Fixed an issue with ts-morph where creating an ifStatement with empty conditions array caused errors in multipart form data handling.
