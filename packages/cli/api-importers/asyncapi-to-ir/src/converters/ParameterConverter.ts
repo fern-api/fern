@@ -7,12 +7,17 @@ import { Converters, Extensions } from "@fern-api/v2-importer-commons";
 import { AsyncAPIParameter } from "../sharedTypes";
 
 export class ParameterConverter extends Converters.AbstractConverters.AbstractParameterConverter<AsyncAPIParameter> {
+    private readonly parameterNamePrefix?: string;
     constructor({
         context,
         breadcrumbs,
-        parameter
-    }: Converters.AbstractConverters.AbstractParameterConverter.Args<AsyncAPIParameter>) {
+        parameter,
+        parameterNamePrefix
+    }: Converters.AbstractConverters.AbstractParameterConverter.Args<AsyncAPIParameter> & {
+        parameterNamePrefix?: string;
+    }) {
         super({ context, breadcrumbs, parameter });
+        this.parameterNamePrefix = parameterNamePrefix;
     }
 
     public convert(): Converters.AbstractConverters.AbstractParameterConverter.Output | undefined {
@@ -24,7 +29,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             parameter: this.parameter,
             context: this.context
         }).convert();
-        const parameterIsOptional = fernOptional ?? !(this.parameter.required ?? false);
+        const parameterIsOptional = fernOptional ?? this.parameter.required === false;
         const maybeParameterSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject = this.parameter.schema ?? {
             ...this.parameter,
             type: "string",
@@ -39,7 +44,9 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
         const schemaOrReferenceConverter = new Converters.SchemaConverters.SchemaOrReferenceConverter({
             context: this.context,
             breadcrumbs: [...this.breadcrumbs, "schema"],
-            schemaIdOverride: this.parameter.name,
+            schemaIdOverride: this.parameterNamePrefix
+                ? `${this.parameterNamePrefix}_${this.parameter.name}`
+                : this.parameter.name,
             schemaOrReference: maybeParameterSchema,
             wrapAsOptional: parameterIsOptional
         });
