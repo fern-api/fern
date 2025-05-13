@@ -6896,7 +6896,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/v1/deployments/foo",
               "pathParameters": {
@@ -7009,7 +7009,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Example1",
               "description": "",
               "path": "/v1/document-indexes",
               "pathParameters": {},
@@ -7055,6 +7055,150 @@
                         "instruction_domain": "",
                         "instruction_document_text_type": "plain_text",
                         "instruction_query_text_type": "plain_text"
+                      }
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 201,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "id": "foo",
+                  "created": "foo",
+                  "label": "foo",
+                  "name": "foo",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "foo",
+                  "created": "foo",
+                  "label": "foo",
+                  "name": "foo",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              }
+            },
+            {
+              "name": "Example2",
+              "description": "",
+              "path": "/v1/document-indexes",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "My Document Index",
+                "name": "my-document-index",
+                "indexing_config": {
+                  "chunking": {
+                    "chunker_name": "sentence-chunker",
+                    "chunker_config": {
+                      "character_limit": 1000,
+                      "min_overlap_ratio": 0.5
+                    }
+                  },
+                  "vectorizer": {
+                    "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                    "config": {}
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_name": "sentence-chunker",
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5
+                      }
+                    },
+                    "vectorizer": {
+                      "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                      "config": {}
+                    }
+                  }
+                }
+              },
+              "responseStatusCode": 201,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "id": "foo",
+                  "created": "foo",
+                  "label": "foo",
+                  "name": "foo",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "foo",
+                  "created": "foo",
+                  "label": "foo",
+                  "name": "foo",
+                  "status": "ACTIVE",
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {}
+                }
+              }
+            },
+            {
+              "name": "Example3",
+              "description": "",
+              "path": "/v1/document-indexes",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "My Document Index",
+                "name": "my-document-index",
+                "indexing_config": {
+                  "chunking": {
+                    "chunker_name": "sentence-chunker",
+                    "chunker_config": {
+                      "character_limit": 1000,
+                      "min_overlap_ratio": 0.5
+                    }
+                  },
+                  "vectorizer": {
+                    "model_name": "text-embedding-ada-002",
+                    "config": {
+                      "add_openai_api_key": true
+                    }
+                  }
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_name": "sentence-chunker",
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5
+                      }
+                    },
+                    "vectorizer": {
+                      "model_name": "text-embedding-ada-002",
+                      "config": {
+                        "add_openai_api_key": true
                       }
                     }
                   }
@@ -7198,7 +7342,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/v1/documents",
               "pathParameters": {},
@@ -7365,7 +7509,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsUploadExample",
               "description": "",
               "path": "/v1/upload-document",
               "pathParameters": {},
@@ -7474,7 +7618,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/v1/model-versions/foo",
               "pathParameters": {
@@ -7729,7 +7873,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "modelVersionsModelVersionCompilePromptExample",
               "description": "",
               "path": "/v1/model-versions/foo/compile-prompt",
               "pathParameters": {
@@ -7851,7 +7995,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "registeredPromptsRegisterPromptExample",
               "description": "",
               "path": "/v1/registered-prompts/register",
               "pathParameters": {},
@@ -8069,7 +8213,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Example1",
               "description": "",
               "path": "/v1/sandboxes/foo/scenarios",
               "pathParameters": {
@@ -8109,6 +8253,114 @@
                       "key": "var_2",
                       "type": "TEXT",
                       "value": "Why hello, there!"
+                    }
+                  ],
+                  "metric_input_params": {
+                    "params": {}
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "label": "Untitled Scenario",
+                  "inputs": [
+                    {
+                      "key": "foo",
+                      "type": "TEXT",
+                      "value": "foo",
+                      "chat_history": [
+                        {
+                          "text": "foo",
+                          "role": "SYSTEM"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "foo",
+                  "metric_input_params": {
+                    "params": {
+                      "target": "foo"
+                    }
+                  }
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Untitled Scenario",
+                  "inputs": [
+                    {
+                      "key": "foo",
+                      "type": "TEXT",
+                      "value": "foo",
+                      "chat_history": [
+                        {
+                          "text": "foo",
+                          "role": "SYSTEM"
+                        }
+                      ]
+                    }
+                  ],
+                  "id": "foo",
+                  "metric_input_params": {
+                    "params": {
+                      "target": "foo"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "Example2",
+              "description": "",
+              "path": "/v1/sandboxes/foo/scenarios",
+              "pathParameters": {
+                "id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "label": "Scenario 2",
+                "inputs": [
+                  {
+                    "key": "$chat_history",
+                    "type": "CHAT_HISTORY",
+                    "chat_history": [
+                      {
+                        "text": "What's your favorite color?",
+                        "role": "USER"
+                      },
+                      {
+                        "text": "AI's don't have a favorite color.... Yet.",
+                        "role": "ASSISTANT"
+                      }
+                    ]
+                  }
+                ],
+                "metric_input_params": {
+                  "params": {}
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "label": "Scenario 2",
+                  "inputs": [
+                    {
+                      "key": "$chat_history",
+                      "type": "CHAT_HISTORY",
+                      "chat_history": [
+                        {
+                          "text": "What's your favorite color?",
+                          "role": "USER"
+                        },
+                        {
+                          "text": "AI's don't have a favorite color.... Yet.",
+                          "role": "ASSISTANT"
+                        }
+                      ]
                     }
                   ],
                   "metric_input_params": {
@@ -8243,7 +8495,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteSandboxScenarioExample",
               "description": "",
               "path": "/v1/sandboxes/foo/scenarios/foo",
               "pathParameters": {
@@ -8345,7 +8597,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "testSuitesUpsertTestSuiteTestCaseExample",
               "description": "",
               "path": "/v1/test-suites/foo/test-cases",
               "pathParameters": {
@@ -8463,7 +8715,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTestSuiteTestCaseExample",
               "description": "",
               "path": "/v1/test-suites/foo/test-cases/foo",
               "pathParameters": {
@@ -8531,7 +8783,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "executePromptStreamExample",
             "description": "",
             "path": "/v1/execute-prompt-stream",
             "pathParameters": {},
@@ -8626,7 +8878,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "executeWorkflowStreamExample",
             "description": "",
             "path": "/v1/execute-workflow-stream",
             "pathParameters": {},
@@ -8817,7 +9069,7 @@
         ],
         "examples": [
           {
-            "name": "",
+            "name": "generateExample",
             "description": "",
             "path": "/v1/generate",
             "pathParameters": {},
@@ -9026,7 +9278,7 @@
         ],
         "examples": [
           {
-            "name": "",
+            "name": "generateStreamExample",
             "description": "",
             "path": "/v1/generate-stream",
             "pathParameters": {},
@@ -9218,7 +9470,7 @@
         ],
         "examples": [
           {
-            "name": "",
+            "name": "searchExample",
             "description": "",
             "path": "/v1/search",
             "pathParameters": {},
@@ -9363,7 +9615,7 @@
         ],
         "examples": [
           {
-            "name": "",
+            "name": "submitCompletionActualsExample",
             "description": "",
             "path": "/v1/submit-completion-actuals",
             "pathParameters": {},

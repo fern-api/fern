@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Various bugfixes and improvements to the v3 parser.
+    type: fix
+  irVersion: 57
+  version: 0.60.31
+
+- changelogEntry: 
+  - summary: |
       Add support for products and versioned products in the docs config file.
     type: feat
   irVersion: 57

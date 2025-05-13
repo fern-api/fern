@@ -107,7 +107,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchExample",
             "description": "",
             "path": "/search",
             "pathParameters": {},
@@ -183,7 +183,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionExample",
             "description": "",
             "path": "/search-with-union",
             "pathParameters": {},
@@ -262,7 +262,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionAndNullExample",
             "description": "",
             "path": "/search-with-union-and-null",
             "pathParameters": {},

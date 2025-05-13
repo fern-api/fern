@@ -534,7 +534,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAllAgentsApiV1AgentsGetExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -609,7 +609,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentCreateAgentApiV1AgentsPostExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -700,7 +700,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAgentApiV1AgentsAgentIdGetExample",
               "description": "",
               "path": "/api/v1/agents/foo",
               "pathParameters": {
@@ -782,7 +782,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAgentApiV1AgentsAgentIdDeleteExample",
               "description": "",
               "path": "/api/v1/agents/foo",
               "pathParameters": {
@@ -875,7 +875,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
               "description": "",
               "path": "/api/v1/agents/foo",
               "pathParameters": {
@@ -975,7 +975,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
               "description": "",
               "path": "/api/v1/agents/foo/predict",
               "pathParameters": {
@@ -1070,7 +1070,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignInApiV1AuthSignInPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-in",
               "pathParameters": {},
@@ -1155,7 +1155,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignUpApiV1AuthSignUpPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-up",
               "pathParameters": {},
@@ -1223,7 +1223,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "readUserMeApiV1UsersMeGetExample",
               "description": "",
               "path": "/api/v1/users/me",
               "pathParameters": {},
@@ -1302,7 +1302,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "readUserApiV1UsersUserIdGetExample",
               "description": "",
               "path": "/api/v1/users/foo",
               "pathParameters": {
@@ -1362,7 +1362,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listApiTokensApiV1ApiTokensGetExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1437,7 +1437,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "apiTokenCreateApiTokenApiV1ApiTokensPostExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1526,7 +1526,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getApiTokenApiV1ApiTokensTokenIdGetExample",
               "description": "",
               "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
@@ -1608,7 +1608,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteApiTokenApiV1ApiTokensTokenIdDeleteExample",
               "description": "",
               "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
@@ -1668,7 +1668,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listDocumentsApiV1DocumentsGetExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1743,7 +1743,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsCreateDocumentApiV1DocumentsPostExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1836,7 +1836,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getDocumentApiV1DocumentsDocumentIdGetExample",
               "description": "",
               "path": "/api/v1/documents/foo",
               "pathParameters": {
@@ -1918,7 +1918,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteDocumentApiV1DocumentsDocumentIdDeleteExample",
               "description": "",
               "path": "/api/v1/documents/foo",
               "pathParameters": {
@@ -1978,7 +1978,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPromptsApiV1PromptsGetExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -2053,7 +2053,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsCreateAPromptApiV1PromptsPostExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -2150,7 +2150,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPromptApiV1PromptsPromptIdGetExample",
               "description": "",
               "path": "/api/v1/prompts/foo",
               "pathParameters": {
@@ -2232,7 +2232,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePromptApiV1PromptsPromptIdDeleteExample",
               "description": "",
               "path": "/api/v1/prompts/foo",
               "pathParameters": {
@@ -2325,7 +2325,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
               "description": "",
               "path": "/api/v1/prompts/foo",
               "pathParameters": {
@@ -2390,7 +2390,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listToolsApiV1ToolsGetExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2465,7 +2465,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "toolsCreateAToolApiV1ToolsPostExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2556,7 +2556,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getToolApiV1ToolsToolIdGetExample",
               "description": "",
               "path": "/api/v1/tools/foo",
               "pathParameters": {
@@ -2638,7 +2638,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteToolApiV1ToolsToolIdDeleteExample",
               "description": "",
               "path": "/api/v1/tools/foo",
               "pathParameters": {
@@ -2698,7 +2698,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAgentTracesApiV1TracesGetExample",
               "description": "",
               "path": "/api/v1/traces",
               "pathParameters": {},
