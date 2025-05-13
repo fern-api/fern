@@ -1,6 +1,6 @@
 - changelogEntry:
   - summary: |
-      Implement the first iteration of the `fern sdk version` command, which can be used
+      Implement the first iteration of the `fern diff` command, which can be used
       to verify backwards compatibility between API changes.
     type: feat
   irVersion: 57
