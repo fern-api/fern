@@ -1,3 +1,10 @@
+- changelogEntry: 
+  - summary: |
+      Fix a bug where unknown identifiers in the API Reference layout would not be resolved correctly.
+    type: fix
+  irVersion: 57
+  version: 0.61.1
+
 - changelogEntry:
   - summary: |
       Implement the first iteration of the `fern diff` command, which can be used
