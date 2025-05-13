@@ -331,7 +331,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "diff",
-        "Diff two versions of the API",
+        "Diff two versions of an API",
         (yargs) =>
             yargs
                 .option("from", {
