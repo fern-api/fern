@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+  version: 2.36.1
+- changelogEntry:
+    - summary: |
         Support sending requests with content type application/x-www-form-urlencoded.
       type: feat
   createdAt: '2025-05-11'
