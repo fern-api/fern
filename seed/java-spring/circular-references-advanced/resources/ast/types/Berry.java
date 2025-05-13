@@ -17,12 +17,12 @@ import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
-    builder = Acai.Builder.class
+    builder = Berry.Builder.class
 )
-public final class Acai implements IBerry {
+public final class Berry implements IBerry {
   private final Animal animal;
 
-  private Acai(Animal animal) {
+  private Berry(Animal animal) {
     this.animal = animal;
   }
 
@@ -35,10 +35,10 @@ public final class Acai implements IBerry {
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
-    return other instanceof Acai && equalTo((Acai) other);
+    return other instanceof Berry && equalTo((Berry) other);
   }
 
-  private boolean equalTo(Acai other) {
+  private boolean equalTo(Berry other) {
     return animal.equals(other.animal);
   }
 
@@ -59,11 +59,11 @@ public final class Acai implements IBerry {
   public interface AnimalStage {
     _FinalStage animal(@NotNull Animal animal);
 
-    Builder from(Acai other);
+    Builder from(Berry other);
   }
 
   public interface _FinalStage {
-    Acai build();
+    Berry build();
   }
 
   @JsonIgnoreProperties(
@@ -76,7 +76,7 @@ public final class Acai implements IBerry {
     }
 
     @java.lang.Override
-    public Builder from(Acai other) {
+    public Builder from(Berry other) {
       animal(other.getAnimal());
       return this;
     }
@@ -89,8 +89,8 @@ public final class Acai implements IBerry {
     }
 
     @java.lang.Override
-    public Acai build() {
-      return new Acai(animal);
+    public Berry build() {
+      return new Berry(animal);
     }
   }
 }
