@@ -8901,9 +8901,149 @@
         ]
       }
     },
-    "encoding": {
+    "speak_encoding": {
+      "description": "Encoding allows you to specify the expected encoding of your audio output",
+      "name": "speak_encoding",
+      "shape": {
+        "type": "enum",
+        "default": "mp3",
+        "values": [
+          {
+            "value": "linear16"
+          },
+          {
+            "value": "mulaw"
+          },
+          {
+            "value": "alaw"
+          },
+          {
+            "value": "opus"
+          },
+          {
+            "value": "mp3"
+          },
+          {
+            "value": "flac"
+          },
+          {
+            "value": "aac"
+          }
+        ]
+      }
+    },
+    "speak_model": {
+      "description": "AI model used to process submitted text",
+      "name": "speak_model",
+      "shape": {
+        "type": "enum",
+        "default": "aura-asteria-en",
+        "values": [
+          {
+            "value": "aura-asteria-en"
+          },
+          {
+            "value": "aura-luna-en"
+          },
+          {
+            "value": "aura-stella-en"
+          },
+          {
+            "value": "aura-athena-en"
+          },
+          {
+            "value": "aura-hera-en"
+          },
+          {
+            "value": "aura-orion-en"
+          },
+          {
+            "value": "aura-arcas-en"
+          },
+          {
+            "value": "aura-perseus-en"
+          },
+          {
+            "value": "aura-angus-en"
+          },
+          {
+            "value": "aura-orpheus-en"
+          },
+          {
+            "value": "aura-helios-en"
+          },
+          {
+            "value": "aura-zeus-en"
+          }
+        ]
+      }
+    },
+    "speak_sample_rate": {
+      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
+      "name": "speak_sample_rate",
+      "shape": {
+        "type": "enum",
+        "default": "24000",
+        "values": [
+          {
+            "value": "8000"
+          },
+          {
+            "value": "16000"
+          },
+          {
+            "value": "24000"
+          },
+          {
+            "value": "44100"
+          },
+          {
+            "value": "48000"
+          }
+        ]
+      }
+    },
+    "listen_callback_method": {
+      "description": "HTTP method by which the callback request will be made",
+      "name": "listen_callback_method",
+      "shape": {
+        "type": "enum",
+        "default": "POST",
+        "values": [
+          {
+            "value": "POST"
+          },
+          {
+            "value": "GET"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "DELETE"
+          }
+        ]
+      }
+    },
+    "listen_dictation": {
+      "description": "Identify and extract key entities from content in submitted audio",
+      "name": "listen_dictation",
+      "shape": {
+        "type": "enum",
+        "default": "false",
+        "values": [
+          {
+            "value": "true"
+          },
+          {
+            "value": "false"
+          }
+        ]
+      }
+    },
+    "listen_encoding": {
       "description": "Specify the expected encoding of your submitted audio",
-      "name": "encoding",
+      "name": "listen_encoding",
       "shape": {
         "type": "enum",
         "values": [
@@ -8934,171 +9074,9 @@
         ]
       }
     },
-    "model": {
-      "description": "AI model to use for the transcription",
-      "name": "model",
-      "shape": {
-        "type": "enum",
-        "values": [
-          {
-            "value": "nova-3"
-          },
-          {
-            "value": "nova-3-general"
-          },
-          {
-            "value": "nova-3-medical"
-          },
-          {
-            "value": "nova-2"
-          },
-          {
-            "value": "nova-2-general"
-          },
-          {
-            "value": "nova-2-meeting"
-          },
-          {
-            "value": "nova-2-finance"
-          },
-          {
-            "value": "nova-2-conversationalai"
-          },
-          {
-            "value": "nova-2-voicemail"
-          },
-          {
-            "value": "nova-2-video"
-          },
-          {
-            "value": "nova-2-medical"
-          },
-          {
-            "value": "nova-2-drivethru"
-          },
-          {
-            "value": "nova-2-automotive"
-          },
-          {
-            "value": "nova"
-          },
-          {
-            "value": "nova-general"
-          },
-          {
-            "value": "nova-phonecall"
-          },
-          {
-            "value": "nova-medical"
-          },
-          {
-            "value": "enhanced"
-          },
-          {
-            "value": "enhanced-general"
-          },
-          {
-            "value": "enhanced-meeting"
-          },
-          {
-            "value": "enhanced-phonecall"
-          },
-          {
-            "value": "enhanced-finance"
-          },
-          {
-            "value": "base"
-          },
-          {
-            "value": "meeting"
-          },
-          {
-            "value": "phonecall"
-          },
-          {
-            "value": "finance"
-          },
-          {
-            "value": "conversationalai"
-          },
-          {
-            "value": "voicemail"
-          },
-          {
-            "value": "video"
-          },
-          {
-            "value": "custom"
-          }
-        ]
-      }
-    },
-    "sample_rate": {
-      "description": "Sample Rate specifies the sample rate for the output audio. Based on encoding 8000 or 24000 are possible defaults. For some encodings sample rate is not configurable.",
-      "name": "sample_rate",
-      "shape": {
-        "type": "enum",
-        "default": "24000",
-        "values": [
-          {
-            "value": "8000"
-          },
-          {
-            "value": "16000"
-          },
-          {
-            "value": "24000"
-          },
-          {
-            "value": "44100"
-          },
-          {
-            "value": "48000"
-          }
-        ]
-      }
-    },
-    "callback_method": {
-      "description": "HTTP method by which the callback request will be made",
-      "name": "callback_method",
-      "shape": {
-        "type": "enum",
-        "default": "POST",
-        "values": [
-          {
-            "value": "POST"
-          },
-          {
-            "value": "GET"
-          },
-          {
-            "value": "PUT"
-          },
-          {
-            "value": "DELETE"
-          }
-        ]
-      }
-    },
-    "dictation": {
-      "description": "Identify and extract key entities from content in submitted audio",
-      "name": "dictation",
-      "shape": {
-        "type": "enum",
-        "default": "false",
-        "values": [
-          {
-            "value": "true"
-          },
-          {
-            "value": "false"
-          }
-        ]
-      }
-    },
-    "filler_words": {
+    "listen_filler_words": {
       "description": "Filler Words can help transcribe interruptions in your audio, like \"uh\" and \"um\"",
-      "name": "filler_words",
+      "name": "listen_filler_words",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9112,9 +9090,9 @@
         ]
       }
     },
-    "interim_results": {
+    "listen_interim_results": {
       "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time",
-      "name": "interim_results",
+      "name": "listen_interim_results",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9128,9 +9106,9 @@
         ]
       }
     },
-    "language": {
+    "listen_language": {
       "description": "The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available",
-      "name": "language",
+      "name": "listen_language",
       "shape": {
         "type": "enum",
         "default": "en",
@@ -9306,9 +9284,108 @@
         ]
       }
     },
-    "multichannel": {
+    "listen_model": {
+      "description": "AI model to use for the transcription",
+      "name": "listen_model",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "nova-3"
+          },
+          {
+            "value": "nova-3-general"
+          },
+          {
+            "value": "nova-3-medical"
+          },
+          {
+            "value": "nova-2"
+          },
+          {
+            "value": "nova-2-general"
+          },
+          {
+            "value": "nova-2-meeting"
+          },
+          {
+            "value": "nova-2-finance"
+          },
+          {
+            "value": "nova-2-conversationalai"
+          },
+          {
+            "value": "nova-2-voicemail"
+          },
+          {
+            "value": "nova-2-video"
+          },
+          {
+            "value": "nova-2-medical"
+          },
+          {
+            "value": "nova-2-drivethru"
+          },
+          {
+            "value": "nova-2-automotive"
+          },
+          {
+            "value": "nova"
+          },
+          {
+            "value": "nova-general"
+          },
+          {
+            "value": "nova-phonecall"
+          },
+          {
+            "value": "nova-medical"
+          },
+          {
+            "value": "enhanced"
+          },
+          {
+            "value": "enhanced-general"
+          },
+          {
+            "value": "enhanced-meeting"
+          },
+          {
+            "value": "enhanced-phonecall"
+          },
+          {
+            "value": "enhanced-finance"
+          },
+          {
+            "value": "base"
+          },
+          {
+            "value": "meeting"
+          },
+          {
+            "value": "phonecall"
+          },
+          {
+            "value": "finance"
+          },
+          {
+            "value": "conversationalai"
+          },
+          {
+            "value": "voicemail"
+          },
+          {
+            "value": "video"
+          },
+          {
+            "value": "custom"
+          }
+        ]
+      }
+    },
+    "listen_multichannel": {
       "description": "Transcribe each audio channel independently",
-      "name": "multichannel",
+      "name": "listen_multichannel",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9322,9 +9399,9 @@
         ]
       }
     },
-    "numerals": {
+    "listen_numerals": {
       "description": "Convert numbers from written format to numerical format",
-      "name": "numerals",
+      "name": "listen_numerals",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9338,9 +9415,9 @@
         ]
       }
     },
-    "profanity_filter": {
+    "listen_profanity_filter": {
       "description": "Profanity Filter looks for recognized profanity and converts it to the nearest recognized non-profane word or removes it from the transcript completely",
-      "name": "profanity_filter",
+      "name": "listen_profanity_filter",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9354,9 +9431,9 @@
         ]
       }
     },
-    "punctuate": {
+    "listen_punctuate": {
       "description": "Add punctuation and capitalization to the transcript",
-      "name": "punctuate",
+      "name": "listen_punctuate",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9370,9 +9447,9 @@
         ]
       }
     },
-    "redact": {
+    "listen_redact": {
       "description": "Redaction removes sensitive information from your transcripts",
-      "name": "redact",
+      "name": "listen_redact",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9398,9 +9475,9 @@
         ]
       }
     },
-    "smart_format": {
+    "listen_smart_format": {
       "description": "Apply formatting to transcript output. When set to true, additional formatting will be applied to transcripts to improve readability",
-      "name": "smart_format",
+      "name": "listen_smart_format",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -9414,9 +9491,9 @@
         ]
       }
     },
-    "vad_events": {
+    "listen_vad_events": {
       "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting",
-      "name": "vad_events",
+      "name": "listen_vad_events",
       "shape": {
         "type": "enum",
         "default": "false",
@@ -15882,12 +15959,9 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -15901,7 +15975,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "speak_encoding"
                 }
               }
             },
@@ -15912,7 +15986,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "speak_model"
                 }
               }
             },
@@ -15923,7 +15997,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "sample_rate"
+                  "value": "speak_sample_rate"
                 }
               }
             }
@@ -16070,12 +16144,9 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -16102,7 +16173,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "callback_method"
+                  "value": "listen_callback_method"
                 }
               }
             },
@@ -16140,13 +16211,10 @@
               "description": "Version of the diarization feature to use. Only used when the diarization feature is enabled (`diarize=true` is passed to the API)",
               "key": "diarize_version",
               "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "default": "v2"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "default": "v2"
                 }
               }
             },
@@ -16157,7 +16225,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "dictation"
+                  "value": "listen_dictation"
                 }
               }
             },
@@ -16168,7 +16236,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "encoding"
+                  "value": "listen_encoding"
                 }
               }
             },
@@ -16206,7 +16274,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "filler_words"
+                  "value": "listen_filler_words"
                 }
               }
             },
@@ -16217,7 +16285,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "interim_results"
+                  "value": "listen_interim_results"
                 }
               }
             },
@@ -16260,7 +16328,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "language"
+                  "value": "listen_language"
                 }
               }
             },
@@ -16271,7 +16339,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "model"
+                  "value": "listen_model"
                 }
               }
             },
@@ -16282,7 +16350,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "multichannel"
+                  "value": "listen_multichannel"
                 }
               }
             },
@@ -16293,7 +16361,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "numerals"
+                  "value": "listen_numerals"
                 }
               }
             },
@@ -16304,7 +16372,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "profanity_filter"
+                  "value": "listen_profanity_filter"
                 }
               }
             },
@@ -16315,7 +16383,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "punctuate"
+                  "value": "listen_punctuate"
                 }
               }
             },
@@ -16326,7 +16394,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "redact"
+                  "value": "listen_redact"
                 }
               }
             },
@@ -16376,7 +16444,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "smart_format"
+                  "value": "listen_smart_format"
                 }
               }
             },
@@ -16413,7 +16481,7 @@
                 "type": "optional",
                 "itemType": {
                   "type": "id",
-                  "value": "vad_events"
+                  "value": "listen_vad_events"
                 }
               }
             },
@@ -16628,12 +16696,9 @@
             {
               "key": "Authorization",
               "type": {
-                "type": "optional",
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               },
               "description": "API key for authentication. Format should be token <DEEPGRAM_API_KEY>"
@@ -16868,7 +16933,9 @@
               "path": "/agent",
               "pathParameters": {},
               "queryParameters": {},
-              "headers": {},
+              "headers": {
+                "Authorization": "Authorization"
+              },
               "messages": [
                 {
                   "type": "sendSettingsConfiguration",
