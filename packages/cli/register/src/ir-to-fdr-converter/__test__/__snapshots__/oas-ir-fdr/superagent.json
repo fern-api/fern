@@ -702,7 +702,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -784,7 +784,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -877,7 +877,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -977,7 +977,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo/predict",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -1304,7 +1304,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/users/",
+              "path": "/api/v1/users/foo",
               "pathParameters": {
                 "userId": "foo"
               },
@@ -1528,7 +1528,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1610,7 +1610,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1838,7 +1838,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -1920,7 +1920,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -2152,7 +2152,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2234,7 +2234,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2327,7 +2327,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -2558,7 +2558,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },
@@ -2640,7 +2640,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },

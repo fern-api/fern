@@ -19232,7 +19232,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -21576,7 +21576,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -21852,7 +21852,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -22596,7 +22596,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/pet/"
+                    "path": "/pet/42/uploadImage"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -25879,7 +25879,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/store/order/"
+                    "path": "/store/order/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -26097,7 +26097,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/store/order/"
+                    "path": "/store/order/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -33162,7 +33162,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -34366,7 +34366,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PUT",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -34576,7 +34576,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -51356,7 +51356,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -53700,7 +53700,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -53976,7 +53976,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/pet/"
+                    "path": "/pet/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -54720,7 +54720,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/pet/"
+                    "path": "/pet/42/uploadImage"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -58003,7 +58003,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/store/order/"
+                    "path": "/store/order/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -58221,7 +58221,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/store/order/"
+                    "path": "/store/order/42"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -65286,7 +65286,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -66490,7 +66490,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PUT",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {
@@ -66700,7 +66700,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/user/"
+                    "path": "/user/foo"
                   },
                   "environment": "/api/v3",
                   "pathParameters": {

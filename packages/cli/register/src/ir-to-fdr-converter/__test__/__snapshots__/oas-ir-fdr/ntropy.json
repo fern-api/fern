@@ -7483,7 +7483,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -7674,7 +7674,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8270,7 +8270,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo/assign",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8795,7 +8795,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8907,7 +8907,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/foo/results",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9437,7 +9437,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9541,7 +9541,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9631,7 +9631,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo/overview",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9777,7 +9777,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo/results",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9932,7 +9932,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10029,7 +10029,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10398,7 +10398,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo/recurring_groups",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10794,7 +10794,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10901,7 +10901,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -11004,7 +11004,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -11528,7 +11528,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -11630,7 +11630,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -12058,7 +12058,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12163,7 +12163,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12261,7 +12261,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12426,7 +12426,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12575,7 +12575,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer/reset",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12874,7 +12874,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/entities/",
+              "path": "/v3/entities/foo",
               "pathParameters": {
                 "id": "foo"
               },

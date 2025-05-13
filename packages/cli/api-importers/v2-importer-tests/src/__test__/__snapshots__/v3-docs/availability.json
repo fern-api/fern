@@ -1608,7 +1608,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/collection/"
+                    "path": "/collection/foo/foo/foo/foo"
                   },
                   "pathParameters": {
                     "id": "foo",

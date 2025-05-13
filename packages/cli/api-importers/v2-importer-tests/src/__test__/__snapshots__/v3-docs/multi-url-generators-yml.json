@@ -1554,7 +1554,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/users/"
+                    "path": "/users/foo"
                   },
                   "environment": "https://a.com",
                   "pathParameters": {

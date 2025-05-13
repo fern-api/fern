@@ -752,6 +752,7 @@ function convertV2HttpEndpointExample({
     if (example == null) {
         return undefined;
     }
+    const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     const { codeSamples } = example ?? { codeSamples: [] };
     return {
         name: "",
@@ -821,9 +822,8 @@ function convertV2HttpEndpointExample({
             _other: () => undefined
         }),
         responseStatusCode: example.response?.statusCode ?? irEndpoint.response?.statusCode ?? 200,
-        responseBody: example.response?.body != null ? { type: "json", value: example.response.body.value } : undefined,
-        responseBodyV3:
-            example.response?.body != null ? { type: "json", value: example.response.body.value } : undefined,
+        responseBody: responseBodyValue != null ? { type: "json", value: responseBodyValue } : undefined,
+        responseBodyV3: responseBodyValue != null ? { type: "json", value: responseBodyValue } : undefined,
         codeSamples: codeSamples
             ?.map((codeSample) => ({
                 name: "",

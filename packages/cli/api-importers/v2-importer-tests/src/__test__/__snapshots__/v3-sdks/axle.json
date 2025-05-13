@@ -9701,7 +9701,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/accounts/"
+                    "path": "/accounts/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -18357,7 +18357,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/policies/"
+                    "path": "/policies/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -20230,7 +20230,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/carriers/"
+                    "path": "/carriers/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {

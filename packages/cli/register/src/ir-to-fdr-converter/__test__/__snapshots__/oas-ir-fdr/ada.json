@@ -917,7 +917,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/end-users/v1/",
+              "path": "/end-users/v1/foo",
               "pathParameters": {
                 "end_user_id": "foo"
               },
@@ -1152,7 +1152,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/end-users/v1/",
+              "path": "/end-users/v1/foo",
               "pathParameters": {
                 "end_user_id": "foo"
               },

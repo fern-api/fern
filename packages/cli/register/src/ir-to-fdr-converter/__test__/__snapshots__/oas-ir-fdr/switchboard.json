@@ -2286,7 +2286,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/extensions/",
+              "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -2843,7 +2843,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/profiles/",
+              "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba",
               "pathParameters": {
                 "id": "4a61a55c-391b-4f73-957e-ffbd29ac7cba"
               },
@@ -3476,7 +3476,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3634,7 +3634,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3740,7 +3740,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events",
               "pathParameters": {
                 "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
               },
@@ -3885,7 +3885,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "7334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4051,7 +4051,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4225,7 +4225,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"
@@ -4417,7 +4417,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sessions/",
+              "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content",
               "pathParameters": {
                 "sessionId": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
                 "windowId": "0334da2a-91b0-42c5-6156-76a5eba87430"

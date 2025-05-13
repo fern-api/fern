@@ -10850,7 +10850,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/account-token/",
+              "path": "/account-token/foo",
               "pathParameters": {
                 "public_token": "foo"
               },
@@ -11520,7 +11520,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bank-info/",
+              "path": "/bank-info/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -11978,7 +11978,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/benefits/",
+              "path": "/benefits/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12395,7 +12395,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -13101,7 +13101,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/employee-payroll-runs/",
+              "path": "/employee-payroll-runs/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -14280,7 +14280,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/employees/",
+              "path": "/employees/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -14476,7 +14476,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/employees/ignore/",
+              "path": "/employees/ignore/foo",
               "pathParameters": {
                 "model_id": "foo"
               },
@@ -15057,7 +15057,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/employments/",
+              "path": "/employments/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -15643,7 +15643,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/groups/",
+              "path": "/groups/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -16050,7 +16050,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -16949,7 +16949,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/locations/",
+              "path": "/locations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -17494,7 +17494,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pay-groups/",
+              "path": "/pay-groups/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -18010,7 +18010,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payroll-runs/",
+              "path": "/payroll-runs/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19263,7 +19263,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/teams/",
+              "path": "/teams/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -20035,7 +20035,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/time-off/",
+              "path": "/time-off/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -20649,7 +20649,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/time-off-balances/",
+              "path": "/time-off-balances/foo",
               "pathParameters": {
                 "id": "foo"
               },

@@ -18135,7 +18135,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/extensions/"
+                    "path": "/extensions/4a61a55c-391b-4f73-957e-ffbd29ac7cba"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -27757,7 +27757,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/profiles/"
+                    "path": "/profiles/4a61a55c-391b-4f73-957e-ffbd29ac7cba"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -43134,7 +43134,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -43391,7 +43391,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -43688,7 +43688,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/events"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -46689,7 +46689,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430/get-window-info"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -50446,7 +50446,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -54208,7 +54208,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {
@@ -57911,7 +57911,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/sessions/"
+                    "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content"
                   },
                   "environment": "https://api.airtop.ai/v1",
                   "pathParameters": {

@@ -3796,7 +3796,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -4458,7 +4458,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/jointOwners",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -4670,7 +4670,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/foo/eligibleOverdraftAccounts",
               "pathParameters": {
                 "accountId": "foo"
               },
@@ -4794,7 +4794,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/overdraftProtection",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -4951,7 +4951,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/overdraftProtection",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -5123,7 +5123,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/undefined/jointOwnerInvitations",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -5563,7 +5563,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/transferSchedule",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -5810,7 +5810,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/cutoffTimes",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -6050,7 +6050,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/institutions/",
+              "path": "/institutions/TIBURON/transferDateRestrictions",
               "pathParameters": {
                 "institutionId": "TIBURON"
               },
@@ -6534,7 +6534,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/foo/transactions",
               "pathParameters": {
                 "accountId": "foo"
               },
@@ -7448,7 +7448,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -7608,7 +7608,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -7775,7 +7775,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transfers/",
+              "path": "/transfers/foo",
               "pathParameters": {
                 "transferId": "foo"
               },

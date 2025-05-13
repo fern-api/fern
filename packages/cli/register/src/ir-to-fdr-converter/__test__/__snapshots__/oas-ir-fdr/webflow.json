@@ -41090,7 +41090,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/forms",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41335,7 +41335,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/forms/",
+              "path": "/forms/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41524,7 +41524,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/forms/",
+              "path": "/forms/580e63e98c9a982ac9b8b741/submissions",
               "pathParameters": {
                 "form_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41687,7 +41687,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/form_submissions/",
+              "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_submission_id": "580e63e98c9a982ac9b8b741"
               },
@@ -41830,7 +41830,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/form_submissions/",
+              "path": "/form_submissions/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "form_submission_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42343,7 +42343,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42487,7 +42487,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_domains",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42664,7 +42664,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/publish",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -42903,7 +42903,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -43811,7 +43811,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -44444,7 +44444,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -45044,7 +45044,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/fulfill",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -45617,7 +45617,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/unfulfill",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -46209,7 +46209,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/orders/5e8518516e147040726cc415/refund",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "order_id": "5e8518516e147040726cc415"
@@ -47699,7 +47699,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -47900,7 +47900,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/inventory",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -48134,7 +48134,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -48424,7 +48424,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -48576,7 +48576,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -48739,7 +48739,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/580e63e98c9a982ac9b8b741",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "user_id": "580e63e98c9a982ac9b8b741"
@@ -48962,7 +48962,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/users/invite",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -49600,7 +49600,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/pages",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -49826,7 +49826,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50213,7 +50213,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50426,7 +50426,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -50635,7 +50635,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/dom",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -51157,7 +51157,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/activity_logs",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51318,7 +51318,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51518,7 +51518,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/collections",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -51665,7 +51665,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -51788,7 +51788,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -51888,7 +51888,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "field_id": "580e63fc8c9a982ac9b8b745"
@@ -52051,7 +52051,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -52253,7 +52253,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/fields/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "field_id": "580e63fc8c9a982ac9b8b745"
@@ -52492,7 +52492,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -52779,7 +52779,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53023,7 +53023,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53310,7 +53310,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53577,7 +53577,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/bulk",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -53719,7 +53719,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -53866,7 +53866,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54094,7 +54094,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54273,7 +54273,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54420,7 +54420,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54648,7 +54648,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/580e64008c9a982ac9b8b754/live",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745",
                 "item_id": "580e64008c9a982ac9b8b754"
@@ -54820,7 +54820,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/collections/",
+              "path": "/collections/580e63fc8c9a982ac9b8b745/items/publish",
               "pathParameters": {
                 "collection_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -54959,7 +54959,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55151,7 +55151,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55315,7 +55315,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/pages/",
+              "path": "/pages/63c720f9347c2139b248e552/custom_code",
               "pathParameters": {
                 "page_id": "63c720f9347c2139b248e552"
               },
@@ -55417,7 +55417,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -55609,7 +55609,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -55767,7 +55767,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -55886,7 +55886,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/custom_code/blocks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56091,7 +56091,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56314,7 +56314,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/hosted",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56517,7 +56517,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/registered_scripts/inline",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56654,7 +56654,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -56848,7 +56848,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/assets",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57005,7 +57005,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57140,7 +57140,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57255,7 +57255,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/assets/",
+              "path": "/assets/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "asset_id": "580e63fc8c9a982ac9b8b745"
               },
@@ -57410,7 +57410,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57583,7 +57583,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/asset_folders",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -57714,7 +57714,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/asset_folders/",
+              "path": "/asset_folders/6390c49774a71f0e3c1a08ee",
               "pathParameters": {
                 "asset_folder_id": "6390c49774a71f0e3c1a08ee"
               },
@@ -57846,7 +57846,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58142,7 +58142,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/webhooks",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58269,7 +58269,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "webhook_id": "580e64008c9a982ac9b8b754"
               },
@@ -58374,7 +58374,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/580e64008c9a982ac9b8b754",
               "pathParameters": {
                 "webhook_id": "580e64008c9a982ac9b8b754"
               },
@@ -58527,7 +58527,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/accessgroups",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -58736,7 +58736,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -59080,7 +59080,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
@@ -59382,7 +59382,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -59726,7 +59726,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -60034,7 +60034,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745"
@@ -60320,7 +60320,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/products/580e63fc8c9a982ac9b8b745/skus/5e8518516e147040726cc415",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741",
                 "product_id": "580e63fc8c9a982ac9b8b745",
@@ -60535,7 +60535,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sites/",
+              "path": "/sites/580e63e98c9a982ac9b8b741/ecommerce/settings",
               "pathParameters": {
                 "site_id": "580e63e98c9a982ac9b8b741"
               },
