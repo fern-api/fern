@@ -95,5 +95,5 @@ class AsyncCompletionsClient:
         asyncio.run(main())
         """
         async with self._raw_client.stream(query=query, request_options=request_options) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk
