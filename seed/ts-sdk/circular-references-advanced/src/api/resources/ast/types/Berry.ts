@@ -4,4 +4,6 @@
 
 import * as SeedApi from "../../../index";
 
-export interface Acai extends SeedApi.Berry {}
+export interface Berry {
+    animal: SeedApi.Animal;
+}
