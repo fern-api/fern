@@ -235,7 +235,7 @@ describe("fern generator upgrade", () => {
                         cwd: directory
                     }
                 )
-            ).stdout
+            ).stderr
         ).toMatchSnapshot();
     }, 60_000);
 });
