@@ -48,7 +48,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             this.convertChannelParameters({
                 pathParameters,
                 queryParameters,
-                headers
+                headers,
+                channelPath: this.channelPath
             });
         }
 
@@ -138,11 +139,13 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
     private convertChannelParameters({
         pathParameters,
         queryParameters,
-        headers
+        headers,
+        channelPath
     }: {
         pathParameters: PathParameter[];
         queryParameters: QueryParameter[];
         headers: HttpHeader[];
+        channelPath: string;
     }): void {
         for (const parameter of Object.values(this.channel.parameters ?? {})) {
             const parameterObject = this.context.resolveMaybeReference<OpenAPIV3_1.ParameterObject>({
@@ -164,7 +167,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     ...parameterObject,
                     name: parameterKey,
                     in: type
-                }
+                },
+                parameterNamePrefix: this.channelPath
             });
             const convertedParameter = parameterConverter.convert();
             if (convertedParameter != null) {
