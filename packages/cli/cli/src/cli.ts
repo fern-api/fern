@@ -362,7 +362,7 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext.logger.info(JSON.stringify(result));
             }
             const code = result.bump === "major" ? 1 : 0;
-            cliContext.exit({ code });
+            await cliContext.exit({ code });
         }
     );
 }
