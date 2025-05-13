@@ -82,6 +82,37 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             }
         }
 
+        const octetStreamContentTypes = Object.keys(this.requestBody.content).filter((type) =>
+            type.includes("octet-stream")
+        );
+        for (const contentType of octetStreamContentTypes) {
+            const mediaTypeObject = this.requestBody.content[contentType];
+            const schemaId = [...this.group, this.method, "Request"].join("_");
+            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
+                continue;
+            }
+            const convertedSchema = this.parseMediaTypeObject({
+                mediaTypeObject,
+                schemaId
+            });
+            if (convertedSchema == null) {
+                continue;
+            }
+            const requestBody = HttpRequestBody.bytes({
+                contentType,
+                isOptional: this.requestBody.required === false,
+                docs: this.requestBody.description,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    exampleGenerationStrategy: "request"
+                })
+            });
+            return {
+                requestBody,
+                inlinedTypes: convertedSchema.inlinedTypes ?? {}
+            };
+        }
+
         const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
             type.includes("urlencoded")
         );

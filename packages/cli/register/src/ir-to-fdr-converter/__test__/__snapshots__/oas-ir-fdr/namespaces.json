@@ -1505,6 +1505,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -3777,6 +3784,13 @@
             }
           ],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
