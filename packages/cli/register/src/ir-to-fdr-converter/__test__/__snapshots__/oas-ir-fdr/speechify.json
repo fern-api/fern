@@ -1376,7 +1376,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "audioExperimentalStreamCreateExample",
               "description": "",
               "path": "/experimental/audio/stream",
               "pathParameters": {},
@@ -1445,7 +1445,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "audioGetSpeechExample",
               "description": "",
               "path": "/v1/audio/speech",
               "pathParameters": {},
@@ -1522,7 +1522,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "audioGetStreamExample",
               "description": "",
               "path": "/v1/audio/stream",
               "pathParameters": {},
@@ -1603,7 +1603,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "authCreateAccessTokenExample",
               "description": "",
               "path": "/v1/auth/token",
               "pathParameters": {},
@@ -1667,7 +1667,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listApiKeysExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1712,7 +1712,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "createApiKeyExample",
               "description": "",
               "path": "/v1/token",
               "pathParameters": {},
@@ -1776,7 +1776,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteApiKeyExample",
               "description": "",
               "path": "/v1/token/foo",
               "pathParameters": {
@@ -1857,7 +1857,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "apikeyUpdateApiKeyExample",
               "description": "",
               "path": "/v1/token/foo",
               "pathParameters": {
@@ -1919,7 +1919,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getVoicesExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2011,7 +2011,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "voicesCreateVoiceExample",
               "description": "",
               "path": "/v1/voices",
               "pathParameters": {},
@@ -2097,7 +2097,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVoiceExample",
               "description": "",
               "path": "/v1/voices/foo",
               "pathParameters": {

@@ -7445,7 +7445,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/transactions",
             "pathParameters": {},
@@ -7675,7 +7675,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/transactions/foo",
             "pathParameters": {
@@ -7894,7 +7894,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
             "path": "/events/transaction",
             "pathParameters": {},
@@ -7930,6 +7930,18 @@
                   "vpnUsed": true
                 }
               }
+            },
+            "responseStatusCode": 201
+          },
+          {
+            "name": "example-1",
+            "description": "",
+            "path": "/events/transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
             },
             "responseStatusCode": 201,
             "responseBody": {
@@ -8148,7 +8160,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/consumer/users",
             "pathParameters": {},
@@ -8402,7 +8414,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/consumer/users/foo",
             "pathParameters": {
@@ -8607,7 +8619,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/business/users",
             "pathParameters": {},
@@ -8743,7 +8755,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
             "path": "/business/users/foo",
             "pathParameters": {
@@ -9188,7 +9200,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postUserEventExample",
             "description": "",
             "path": "/events/consumer/user",
             "pathParameters": {},
@@ -10428,7 +10440,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postBusinessUserEventExample",
             "description": "",
             "path": "/events/business/user",
             "pathParameters": {},

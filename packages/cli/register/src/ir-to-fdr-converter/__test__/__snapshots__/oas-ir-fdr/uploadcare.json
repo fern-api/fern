@@ -2618,7 +2618,59 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "one-file",
+              "description": "",
+              "path": "/base/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "two-files",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
@@ -2848,7 +2900,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadStart_example",
               "description": "",
               "path": "/multipart/start/",
               "pathParameters": {},
@@ -2963,7 +3015,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multipartFileUploadPartExample",
               "description": "",
               "path": "/<presigned-url-x>",
               "pathParameters": {},
@@ -3054,7 +3106,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadComplete_example",
               "description": "",
               "path": "/multipart/complete/",
               "pathParameters": {},
@@ -3382,7 +3434,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_fromURLUpload_example",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3426,6 +3478,19 @@
                   }
                 }
               },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "type-token",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {}
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -3439,6 +3504,31 @@
                 "value": {
                   "type": "token",
                   "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+                }
+              }
+            },
+            {
+              "name": "type-file-info",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "type": "token"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "token"
                 }
               }
             }
@@ -3502,7 +3592,99 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "status-waiting",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-progress",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-success",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-error",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-unknown",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3591,7 +3773,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "fileUploadInfoExample",
               "description": "",
               "path": "/info/",
               "pathParameters": {},
@@ -3847,7 +4029,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Groups_createFilesGroup_example",
               "description": "",
               "path": "/group/",
               "pathParameters": {},
@@ -3978,7 +4160,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "filesGroupInfoExample",
               "description": "",
               "path": "/group/info/",
               "pathParameters": {},

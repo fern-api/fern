@@ -49,7 +49,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAlphaExample",
               "description": "",
               "path": "/alpha",
               "pathParameters": {},
@@ -124,7 +124,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getBetaExample",
               "description": "",
               "path": "/beta",
               "pathParameters": {},
@@ -199,7 +199,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getGammaExample",
               "description": "",
               "path": "/gamma",
               "pathParameters": {},
@@ -274,7 +274,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDeltaExample",
               "description": "",
               "path": "/delta",
               "pathParameters": {},
@@ -349,7 +349,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMuExample",
               "description": "",
               "path": "/mu",
               "pathParameters": {},
@@ -424,7 +424,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getOmegaExample",
               "description": "",
               "path": "/omega",
               "pathParameters": {},
@@ -499,7 +499,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getZetaExample",
               "description": "",
               "path": "/zeta",
               "pathParameters": {},
@@ -574,7 +574,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getEtaExample",
               "description": "",
               "path": "/eta",
               "pathParameters": {},

@@ -155,7 +155,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userGetExample",
               "description": "",
               "path": "/user/foo",
               "pathParameters": {
