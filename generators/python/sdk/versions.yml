@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.3
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Pydantic V2 models extend `UniversalRootModel` and not `pydantic.BaseModel` in order to silence mypy warnings.
+  createdAt: '2025-05-15'
+  irVersion: 57
+
 - version: 4.20.2
   changelogEntry:
     - summary: |

@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ......core.pydantic_utilities import update_forward_refs
+from ......core.pydantic_utilities import UniversalRootModel, update_forward_refs
 from .cat import Cat as resources_types_resources_union_types_cat_Cat
 from .dog import Dog as resources_types_resources_union_types_dog_Dog
 
@@ -21,7 +21,7 @@ class _Factory:
         return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
 
 
-class Animal(pydantic.RootModel):
+class Animal(UniversalRootModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     root: typing_extensions.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]

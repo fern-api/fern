@@ -1,4 +1,14 @@
 # For unreleased changes, use unreleased.yml
+- version: 1.7.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for generating proper Pydantic models that contain forward references wrapped in containers (e.g. list, optional, etc.)
+    - type: fix
+      summary: |
+        Pydantic V2 models extend `UniversalRootModel` and not `pydantic.BaseModel` in order to silence mypy warnings.
+
 - version: 1.6.4
   irVersion: 57
   changelogEntry:
