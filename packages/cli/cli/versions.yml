@@ -3,7 +3,7 @@
       Fix a bug where streaming response examples would not be rendered correctly in the API Reference.
     type: fix
   irVersion: 57
-  version: 0.61.2
+  version: 0.61.3
 
 - changelogEntry: 
   - summary: |
