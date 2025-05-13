@@ -1,6 +1,6 @@
 - changelogEntry: 
   - summary: |
-      Improve the naming for nexted primitive types in union schemas.
+      Improve the naming for nested primitive types in union schemas.
     type: fix
   irVersion: 57
   version: 0.61.2
