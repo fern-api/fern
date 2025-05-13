@@ -405,7 +405,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },

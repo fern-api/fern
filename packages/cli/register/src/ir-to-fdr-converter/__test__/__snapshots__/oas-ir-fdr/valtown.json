@@ -3393,7 +3393,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/foo",
               "pathParameters": {
                 "username": "foo"
               },
@@ -3514,7 +3514,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/foo/foo",
               "pathParameters": {
                 "username": "foo",
                 "val_name": "foo"
@@ -4341,7 +4341,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
@@ -4427,7 +4427,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
@@ -4500,7 +4500,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
@@ -4587,7 +4587,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/foo",
               "pathParameters": {
                 "user_id": "foo"
               },
@@ -4716,7 +4716,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/foo/vals",
               "pathParameters": {
                 "user_id": "foo"
               },
@@ -5303,7 +5303,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/eval/",
+              "path": "/v1/eval/foo",
               "pathParameters": {
                 "code": "foo"
               },
@@ -5393,7 +5393,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/foo",
               "pathParameters": {
                 "valname": "foo"
               },
@@ -5486,7 +5486,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/foo",
               "pathParameters": {
                 "valname": "foo"
               },
@@ -5871,7 +5871,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6054,7 +6054,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6132,7 +6132,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6236,7 +6236,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6427,7 +6427,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6619,7 +6619,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
                 "val_id": "foo",
                 "version": 42
@@ -6761,7 +6761,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
                 "val_id": "foo",
                 "version": 42
@@ -6875,7 +6875,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/evaluations/foo/cancel",
               "pathParameters": {
                 "val_id": "foo",
                 "evaluation_id": "foo"

@@ -19957,7 +19957,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/alias/"
+                    "path": "/v1/alias/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -21838,7 +21838,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/alias/"
+                    "path": "/v1/alias/foo/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -33395,7 +33395,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/blob/"
+                    "path": "/v1/blob/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -33647,7 +33647,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/blob/"
+                    "path": "/v1/blob/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -33862,7 +33862,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/blob/"
+                    "path": "/v1/blob/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -34744,7 +34744,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/users/"
+                    "path": "/v1/users/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -38278,7 +38278,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/users/"
+                    "path": "/v1/users/foo/vals"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -42366,7 +42366,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/eval/"
+                    "path": "/v1/eval/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -42636,7 +42636,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/run/"
+                    "path": "/v1/run/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -42984,7 +42984,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/run/"
+                    "path": "/v1/run/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -47256,7 +47256,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -47981,7 +47981,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PUT",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -48197,7 +48197,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -49557,7 +49557,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo/versions"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -51897,7 +51897,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo/versions"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -53971,7 +53971,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo/versions/42"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -54336,7 +54336,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo/versions/42"
                   },
                   "environment": "Production",
                   "pathParameters": {
@@ -54847,7 +54847,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/vals/"
+                    "path": "/v1/vals/foo/evaluations/foo/cancel"
                   },
                   "environment": "Production",
                   "pathParameters": {

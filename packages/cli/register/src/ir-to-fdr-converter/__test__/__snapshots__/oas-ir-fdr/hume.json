@@ -4873,7 +4873,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v0/batch/jobs/",
+              "path": "/v0/batch/jobs/foo/artifacts",
               "pathParameters": {
                 "id": "foo"
               },
@@ -4950,7 +4950,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v0/batch/jobs/",
+              "path": "/v0/batch/jobs/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -5646,7 +5646,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/v0/batch/jobs/",
+            "path": "/v0/batch/jobs/foo/predictions",
             "pathParameters": {
               "id": "foo"
             },

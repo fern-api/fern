@@ -12049,7 +12049,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12193,7 +12193,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12341,7 +12341,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12457,7 +12457,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo/lock",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12599,7 +12599,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo/unlock",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12923,7 +12923,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -13035,7 +13035,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/picture",
               "pathParameters": {
                 "id": "foo"
               },
@@ -13163,7 +13163,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/translations",
               "pathParameters": {
                 "app": "foo"
               },
@@ -13387,7 +13387,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/templates/",
+              "path": "/api/templates/foo",
               "pathParameters": {
                 "name": "foo"
               },
@@ -13501,7 +13501,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13657,7 +13657,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13807,7 +13807,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors/me",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13966,7 +13966,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors/foo",
               "pathParameters": {
                 "team": "foo",
                 "id": "foo"
@@ -14340,7 +14340,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo",
               "pathParameters": {
                 "team": "foo"
               },
@@ -14482,7 +14482,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo",
               "pathParameters": {
                 "team": "foo"
               },
@@ -14615,7 +14615,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/log",
               "pathParameters": {
                 "app": "foo"
               },
@@ -14755,7 +14755,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/calls/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "fromDate": "foo",
@@ -14913,7 +14913,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/calls/foo/foo",
               "pathParameters": {
                 "team": "foo",
                 "fromDate": "foo",
@@ -15033,7 +15033,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/storage/today",
               "pathParameters": {
                 "app": "foo"
               },
@@ -15137,7 +15137,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/storage/today",
               "pathParameters": {
                 "team": "foo"
               },
@@ -15282,7 +15282,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/storage/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "fromDate": "foo",
@@ -15435,7 +15435,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/storage/foo/foo",
               "pathParameters": {
                 "team": "foo",
                 "fromDate": "foo",
@@ -15574,7 +15574,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/search",
               "pathParameters": {
                 "app": "foo"
               },
@@ -15755,7 +15755,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -16138,7 +16138,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -16491,7 +16491,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/ui",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -16827,7 +16827,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/ordering",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -17189,7 +17189,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/ordering",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -17552,7 +17552,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -17906,7 +17906,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18274,7 +18274,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18647,7 +18647,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18984,7 +18984,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/lock",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -19338,7 +19338,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/lock",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -19675,7 +19675,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/hide",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20029,7 +20029,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/hide",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20366,7 +20366,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/show",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20720,7 +20720,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/show",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -21057,7 +21057,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/enable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -21411,7 +21411,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/enable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -21748,7 +21748,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/disable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -22102,7 +22102,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/disable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -22389,7 +22389,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas",
               "pathParameters": {
                 "app": "foo"
               },
@@ -22724,7 +22724,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas",
               "pathParameters": {
                 "app": "foo"
               },
@@ -23041,7 +23041,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23372,7 +23372,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23686,7 +23686,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23823,7 +23823,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/sync",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24167,7 +24167,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/category",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24503,7 +24503,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/preview-urls",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24839,7 +24839,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/scripts",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25175,7 +25175,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/rules",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25496,7 +25496,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/publish",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25812,7 +25812,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/unpublish",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -26193,7 +26193,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26369,7 +26369,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26526,7 +26526,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/run",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26662,7 +26662,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -26824,7 +26824,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -26946,7 +26946,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/enable",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27114,7 +27114,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/disable",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27271,7 +27271,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/trigger",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27397,7 +27397,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/run",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27508,7 +27508,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/events",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27627,7 +27627,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/simulate",
               "pathParameters": {
                 "app": "foo"
               },
@@ -27798,7 +27798,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/simulate",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27975,7 +27975,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28109,7 +28109,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28219,7 +28219,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -28330,7 +28330,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -28506,7 +28506,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/rules/eventtypes/",
+              "path": "/api/rules/eventtypes/foo",
               "pathParameters": {
                 "type": "foo"
               },
@@ -28606,7 +28606,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/plans",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28782,7 +28782,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/plan",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28893,7 +28893,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/plans",
               "pathParameters": {
                 "team": "foo"
               },
@@ -29069,7 +29069,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/plan",
               "pathParameters": {
                 "team": "foo"
               },
@@ -29316,7 +29316,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/ping/",
+              "path": "/api/ping/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -29654,7 +29654,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/history",
               "pathParameters": {
                 "app": "foo"
               },
@@ -29787,7 +29787,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/history",
               "pathParameters": {
                 "team": "foo"
               },
@@ -30029,7 +30029,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/start",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30156,7 +30156,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/stop",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30283,7 +30283,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/reset",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30605,7 +30605,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -30961,7 +30961,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -31282,7 +31282,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/query",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -31608,7 +31608,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -31959,7 +31959,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32299,7 +32299,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32640,7 +32640,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32797,7 +32797,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33111,7 +33111,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/validity",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33254,7 +33254,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/references",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33575,7 +33575,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/referencing",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33897,7 +33897,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -34041,7 +34041,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/import",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -34235,7 +34235,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/bulk",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -34444,7 +34444,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/status",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -34773,7 +34773,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/status",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -35093,7 +35093,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/draft",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -35413,7 +35413,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/draft",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -35716,7 +35716,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/watching/foo",
               "pathParameters": {
                 "app": "foo",
                 "resource": "foo"
@@ -35853,7 +35853,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo"
@@ -36044,7 +36044,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo"
@@ -36217,7 +36217,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo",
@@ -36356,7 +36356,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo",
@@ -36474,7 +36474,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/notifications",
               "pathParameters": {
                 "userId": "foo"
               },
@@ -36638,7 +36638,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/notifications/foo",
               "pathParameters": {
                 "userId": "foo",
                 "commentId": "foo"
@@ -36753,7 +36753,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -36864,7 +36864,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -36979,7 +36979,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/backups/",
+              "path": "/api/apps/backups/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37069,7 +37069,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups",
               "pathParameters": {
                 "app": "foo"
               },
@@ -37195,7 +37195,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups",
               "pathParameters": {
                 "app": "foo"
               },
@@ -37694,7 +37694,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/assets/",
+              "path": "/api/assets/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "idOrSlug": "foo",
@@ -37962,7 +37962,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/assets/",
+              "path": "/api/assets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38078,7 +38078,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38246,7 +38246,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38411,7 +38411,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38551,7 +38551,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38688,7 +38688,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo/parent",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38816,7 +38816,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/tags",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38971,7 +38971,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/tags/foo",
               "pathParameters": {
                 "app": "foo",
                 "name": "foo"
@@ -39172,7 +39172,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39429,7 +39429,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39626,7 +39626,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/query",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39819,7 +39819,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40070,7 +40070,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40285,7 +40285,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40496,7 +40496,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40618,7 +40618,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/bulk",
               "pathParameters": {
                 "app": "foo"
               },
@@ -40818,7 +40818,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo/content",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41033,7 +41033,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo/parent",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41207,7 +41207,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/scripts",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41353,7 +41353,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/scripts",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41477,7 +41477,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41632,7 +41632,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41814,7 +41814,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41978,7 +41978,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -42105,7 +42105,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42261,7 +42261,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42411,7 +42411,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors/me",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42570,7 +42570,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -42695,7 +42695,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42818,7 +42818,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42973,7 +42973,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43105,7 +43105,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43259,7 +43259,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43440,7 +43440,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages/foo",
               "pathParameters": {
                 "app": "foo",
                 "language": "foo"
@@ -43603,7 +43603,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages/foo",
               "pathParameters": {
                 "app": "foo",
                 "language": "foo"
@@ -43730,7 +43730,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43886,7 +43886,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles",
               "pathParameters": {
                 "app": "foo"
               },
@@ -44028,7 +44028,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/permissions",
               "pathParameters": {
                 "app": "foo"
               },
@@ -44176,7 +44176,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/foo",
               "pathParameters": {
                 "app": "foo",
                 "roleName": "foo"
@@ -44349,7 +44349,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/foo",
               "pathParameters": {
                 "app": "foo",
                 "roleName": "foo"
@@ -44763,7 +44763,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/apps",
               "pathParameters": {
                 "team": "foo"
               },
@@ -44899,7 +44899,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45059,7 +45059,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45198,7 +45198,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45316,7 +45316,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/team",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45453,7 +45453,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/settings",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45615,7 +45615,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/settings",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45780,7 +45780,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45940,7 +45940,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows",
               "pathParameters": {
                 "app": "foo"
               },
@@ -46127,7 +46127,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -46302,7 +46302,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"

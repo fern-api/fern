@@ -18355,7 +18355,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/admins/",
+              "path": "/admins/42/away",
               "pathParameters": {
                 "id": 42
               },
@@ -18836,7 +18836,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/admins/",
+              "path": "/admins/123",
               "pathParameters": {
                 "id": 123
               },
@@ -19354,7 +19354,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/articles/",
+              "path": "/articles/123",
               "pathParameters": {
                 "id": 123
               },
@@ -19544,7 +19544,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/articles/",
+              "path": "/articles/123",
               "pathParameters": {
                 "id": 123
               },
@@ -19732,7 +19732,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/articles/",
+              "path": "/articles/123",
               "pathParameters": {
                 "id": 123
               },
@@ -20423,7 +20423,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/help_center/collections/",
+              "path": "/help_center/collections/123",
               "pathParameters": {
                 "id": 123
               },
@@ -20591,7 +20591,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/help_center/collections/",
+              "path": "/help_center/collections/123",
               "pathParameters": {
                 "id": 123
               },
@@ -20755,7 +20755,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/help_center/collections/",
+              "path": "/help_center/collections/123",
               "pathParameters": {
                 "id": 123
               },
@@ -20894,7 +20894,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/help_center/help_centers/",
+              "path": "/help_center/help_centers/123",
               "pathParameters": {
                 "id": 123
               },
@@ -21602,7 +21602,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
@@ -21777,7 +21777,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
@@ -21952,7 +21952,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
               "pathParameters": {
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
@@ -22091,7 +22091,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/contacts",
               "pathParameters": {
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
@@ -22242,7 +22242,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/segments",
               "pathParameters": {
                 "id": "5f4d3c1c-7b1b-4d7d-a97e-6095715c6632"
               },
@@ -22792,7 +22792,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/foo/companies",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22994,7 +22994,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/58a430d35458202d41b1e65b/companies/58a430d35458202d41b1e65b",
               "pathParameters": {
                 "contact_id": "58a430d35458202d41b1e65b",
                 "id": "58a430d35458202d41b1e65b"
@@ -23180,7 +23180,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/companies",
               "pathParameters": {
                 "id": "63a07ddf05a32042dffac965"
               },
@@ -23331,7 +23331,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/segments",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965"
               },
@@ -23486,7 +23486,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965"
               },
@@ -23709,7 +23709,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965"
               },
@@ -23845,7 +23845,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965",
               "pathParameters": {
                 "id": "63a07ddf05a32042dffac965"
               },
@@ -24108,7 +24108,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965",
               "pathParameters": {
                 "id": "63a07ddf05a32042dffac965"
               },
@@ -24369,7 +24369,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25261,7 +25261,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/archive",
               "pathParameters": {
                 "id": "63a07ddf05a32042dffac965"
               },
@@ -25375,7 +25375,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/unarchive",
               "pathParameters": {
                 "id": "63a07ddf05a32042dffac965"
               },
@@ -25513,7 +25513,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/42/notes",
               "pathParameters": {
                 "id": 42
               },
@@ -25809,7 +25809,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/123/notes",
               "pathParameters": {
                 "id": 123
               },
@@ -25987,7 +25987,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/notes/",
+              "path": "/notes/1",
               "pathParameters": {
                 "id": 1
               },
@@ -26194,7 +26194,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965"
               },
@@ -26394,7 +26394,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/subscriptions/37846",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965",
                 "id": "37846"
@@ -26745,7 +26745,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/tags",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965"
               },
@@ -26911,7 +26911,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contacts/",
+              "path": "/contacts/63a07ddf05a32042dffac965/tags/7522907",
               "pathParameters": {
                 "contact_id": "63a07ddf05a32042dffac965",
                 "id": "7522907"
@@ -27083,7 +27083,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/64619700005694/tags",
               "pathParameters": {
                 "conversation_id": "64619700005694"
               },
@@ -27273,7 +27273,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/64619700005694/tags/7522907",
               "pathParameters": {
                 "conversation_id": "64619700005694",
                 "id": "7522907"
@@ -27690,7 +27690,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tags/",
+              "path": "/tags/123",
               "pathParameters": {
                 "id": "123"
               },
@@ -27831,7 +27831,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tags/",
+              "path": "/tags/123",
               "pathParameters": {
                 "id": "123"
               },
@@ -27986,7 +27986,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tickets/",
+              "path": "/tickets/64619700005694/tags",
               "pathParameters": {
                 "ticket_id": "64619700005694"
               },
@@ -28176,7 +28176,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tickets/",
+              "path": "/tickets/64619700005694/tags/7522907",
               "pathParameters": {
                 "ticket_id": "64619700005694",
                 "id": "7522907"
@@ -28686,7 +28686,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123",
               "pathParameters": {
                 "id": 123
               },
@@ -28975,7 +28975,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123",
               "pathParameters": {
                 "id": 123
               },
@@ -29610,7 +29610,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123 or \"last\"/reply",
               "pathParameters": {
                 "id": "123 or \"last\""
               },
@@ -29948,7 +29948,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123/parts",
               "pathParameters": {
                 "id": "123"
               },
@@ -30263,7 +30263,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123/run_assignment_rules",
               "pathParameters": {
                 "id": "123"
               },
@@ -30582,7 +30582,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123/customers",
               "pathParameters": {
                 "id": "123"
               },
@@ -30785,7 +30785,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123/customers/123",
               "pathParameters": {
                 "conversation_id": "123",
                 "contact_id": "123"
@@ -31228,7 +31228,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/conversations/",
+              "path": "/conversations/123/convert",
               "pathParameters": {
                 "id": 123
               },
@@ -32372,7 +32372,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/data_attributes/",
+              "path": "/data_attributes/1",
               "pathParameters": {
                 "id": 1
               },
@@ -33009,7 +33009,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/export/content/data/",
+              "path": "/export/content/data/foo",
               "pathParameters": {
                 "job_identifier": "foo"
               },
@@ -33121,7 +33121,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/export/cancel/",
+              "path": "/export/cancel/foo",
               "pathParameters": {
                 "job_identifier": "foo"
               },
@@ -33222,7 +33222,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/download/content/data/",
+              "path": "/download/content/data/foo",
               "pathParameters": {
                 "job_identifier": "foo"
               },
@@ -33945,7 +33945,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/news/news_items/",
+              "path": "/news/news_items/123",
               "pathParameters": {
                 "id": 123
               },
@@ -34138,7 +34138,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/news/news_items/",
+              "path": "/news/news_items/123",
               "pathParameters": {
                 "id": 123
               },
@@ -34326,7 +34326,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/news/news_items/",
+              "path": "/news/news_items/123",
               "pathParameters": {
                 "id": 123
               },
@@ -34452,7 +34452,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/news/newsfeeds/",
+              "path": "/news/newsfeeds/123/items",
               "pathParameters": {
                 "id": "123"
               },
@@ -34737,7 +34737,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/news/newsfeeds/",
+              "path": "/news/newsfeeds/123",
               "pathParameters": {
                 "id": "123"
               },
@@ -35043,7 +35043,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/segments/",
+              "path": "/segments/123",
               "pathParameters": {
                 "id": "123"
               },
@@ -35442,7 +35442,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/teams/",
+              "path": "/teams/123",
               "pathParameters": {
                 "id": "123"
               },
@@ -35593,7 +35593,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ticket_types/",
+              "path": "/ticket_types/foo/attributes",
               "pathParameters": {
                 "ticket_type_id": "foo"
               },
@@ -35797,7 +35797,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ticket_types/",
+              "path": "/ticket_types/foo/attributes/foo",
               "pathParameters": {
                 "ticket_type_id": "foo",
                 "id": "foo"
@@ -36223,7 +36223,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ticket_types/",
+              "path": "/ticket_types/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36382,7 +36382,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ticket_types/",
+              "path": "/ticket_types/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36585,7 +36585,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tickets/",
+              "path": "/tickets/123/reply",
               "pathParameters": {
                 "id": "123"
               },
@@ -37029,7 +37029,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tickets/",
+              "path": "/tickets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37304,7 +37304,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/tickets/",
+              "path": "/tickets/foo",
               "pathParameters": {
                 "id": "foo"
               },

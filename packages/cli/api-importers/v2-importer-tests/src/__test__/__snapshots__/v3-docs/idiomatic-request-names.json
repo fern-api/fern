@@ -4238,7 +4238,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/organizations/"
+                    "path": "/organizations/foo/users"
                   },
                   "pathParameters": {
                     "organizationId": "foo"
@@ -8700,7 +8700,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/users/"
+                    "path": "/users/foo"
                   },
                   "pathParameters": {
                     "userId": "foo"

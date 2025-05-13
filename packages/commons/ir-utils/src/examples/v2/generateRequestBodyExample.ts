@@ -24,7 +24,7 @@ export function generateRequestBodyExample({
     const result: V2HttpEndpointRequest = {
         endpoint: {
             method: endpoint.method,
-            path: endpoint.path.head
+            path: getUrlForExample(endpoint)
         },
         baseUrl: undefined,
         environment: endpoint.baseUrl,
@@ -63,4 +63,23 @@ export function generateRequestBodyExample({
         }
     }
     return result;
+}
+
+function getUrlForExample(endpoint: HttpEndpoint): string {
+    const pathParameters: Record<string, string> = {};
+    [...endpoint.pathParameters, ...endpoint.allPathParameters].forEach((pathParameter) => {
+        const { userExample, autoExample } = getFirstExamples(pathParameter.v2Examples);
+        const value = userExample ?? autoExample;
+        let stringValue: string;
+        if (value == null) {
+            stringValue = pathParameter.name.originalName;
+        } else {
+            stringValue = typeof value === "string" ? value : JSON.stringify(value);
+        }
+        pathParameters[pathParameter.name.originalName] = stringValue;
+    });
+    const url =
+        endpoint.fullPath.head +
+        endpoint.fullPath.parts.map((pathPart) => pathParameters[pathPart.pathParameter] + pathPart.tail).join("");
+    return url.startsWith("/") || url === "" ? url : `/${url}`;
 }

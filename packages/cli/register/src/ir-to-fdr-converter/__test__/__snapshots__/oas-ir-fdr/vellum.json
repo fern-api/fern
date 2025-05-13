@@ -6898,7 +6898,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/deployments/",
+              "path": "/v1/deployments/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -7476,7 +7476,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/model-versions/",
+              "path": "/v1/model-versions/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -7731,7 +7731,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/model-versions/",
+              "path": "/v1/model-versions/foo/compile-prompt",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8071,7 +8071,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/sandboxes/",
+              "path": "/v1/sandboxes/foo/scenarios",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8245,7 +8245,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/sandboxes/",
+              "path": "/v1/sandboxes/foo/scenarios/foo",
               "pathParameters": {
                 "id": "foo",
                 "scenario_id": "foo"
@@ -8347,7 +8347,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/test-suites/",
+              "path": "/v1/test-suites/foo/test-cases",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8465,7 +8465,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/test-suites/",
+              "path": "/v1/test-suites/foo/test-cases/foo",
               "pathParameters": {
                 "id": "foo",
                 "test_case_id": "foo"

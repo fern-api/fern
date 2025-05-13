@@ -1778,7 +1778,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -1859,7 +1859,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/token/",
+              "path": "/v1/token/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -2099,7 +2099,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/voices/",
+              "path": "/v1/voices/foo",
               "pathParameters": {
                 "id": "foo"
               },

@@ -2048,7 +2048,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/apps/v1/update/",
+              "path": "/apps/v1/update/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2192,7 +2192,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/apps/v1/info/",
+              "path": "/apps/v1/info/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2329,7 +2329,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/apps/v1/delete/",
+              "path": "/apps/v1/delete/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2432,7 +2432,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/anonymous",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2558,7 +2558,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/nickname",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2708,7 +2708,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/google",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2835,7 +2835,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2987,7 +2987,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/info/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -3151,7 +3151,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -3323,7 +3323,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/run/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -3463,7 +3463,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/delete/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -3570,7 +3570,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -3726,7 +3726,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/info/42",
               "pathParameters": {
                 "appId": "foo",
                 "deploymentId": 42
@@ -3922,7 +3922,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/create/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -4281,7 +4281,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/create/private",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -4479,7 +4479,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/create/public",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -4635,7 +4635,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -4880,7 +4880,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/private",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -5122,7 +5122,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/public",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -5364,7 +5364,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/local",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -5612,7 +5612,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -5746,7 +5746,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/list/public",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -5886,7 +5886,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6057,7 +6057,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/setState/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6221,7 +6221,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/all",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -6342,7 +6342,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/process/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -6464,7 +6464,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/deployment/42",
               "pathParameters": {
                 "appId": "foo",
                 "deploymentId": 42
@@ -6649,7 +6649,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/metrics/v1/",
+              "path": "/metrics/v1/foo/process/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -6825,7 +6825,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/list/running",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -6986,7 +6986,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/list/stopped",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -7140,7 +7140,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -7320,7 +7320,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -7445,7 +7445,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -7601,7 +7601,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/list/foo/active",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -7725,7 +7725,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/list/foo/inactive",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -7850,7 +7850,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/destroy/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -7963,7 +7963,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/suspend/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -8102,7 +8102,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/connectioninfo/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"

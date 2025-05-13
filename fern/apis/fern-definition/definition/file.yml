@@ -5,6 +5,7 @@ imports:
   service: service.yml
   pagination: pagination.yml
   versioning: versioning.yml
+  products: products.yml
   environments: environments.yml
   auth: auth.yml
   variables: variables.yml
@@ -77,8 +78,8 @@ types:
       idempotency-headers: optional<map<string, service.HttpHeaderSchema>>
       variables: optional<map<string, variables.VariableDeclarationSchema>>
       pagination: optional<pagination.PaginationSchema>
+      product: optional<products.ProductDeclarationSchema>
       version: optional<versioning.VersionDeclarationSchema> 
-      
   
   ErrorDiscriminationSchema: 
     discriminated: false

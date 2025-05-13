@@ -4484,7 +4484,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/trees/"
+                    "path": "/trees/foo"
                   },
                   "pathParameters": {
                     "treeId": "foo"
@@ -5355,7 +5355,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/ferns/"
+                    "path": "/ferns/foo"
                   },
                   "pathParameters": {
                     "fernId": "foo"

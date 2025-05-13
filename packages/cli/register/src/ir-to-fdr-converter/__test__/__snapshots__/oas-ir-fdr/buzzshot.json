@@ -1895,7 +1895,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/accounts/",
+              "path": "/api/v2/accounts/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -2237,7 +2237,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/games/",
+              "path": "/api/v2/games/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -2649,7 +2649,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/groups/",
+              "path": "/api/v2/groups/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -2976,7 +2976,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/players/",
+              "path": "/api/v2/players/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -3181,7 +3181,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/rooms/",
+              "path": "/api/v2/rooms/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -3380,7 +3380,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/v2/photos/",
+              "path": "/api/v2/photos/foo/",
               "pathParameters": {
                 "photo_id": "foo"
               },
