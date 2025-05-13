@@ -1,3 +1,10 @@
+- version: 0.37.5
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
 - version: 0.37.4
   changelogEntry:
     - summary: |
