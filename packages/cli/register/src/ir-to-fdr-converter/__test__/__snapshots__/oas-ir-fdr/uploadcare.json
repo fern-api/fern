@@ -2390,6 +2390,15 @@
         ]
       }
     },
+    "Upload_multipartFileUploadPart_Request": {
+      "description": "Part of the uploaded file.\n\nDon't include `https://upload.uploadcare.com/` in this request:\n\n```\ncurl -X PUT \"<presigned-url-x>\" -H \"Content-Type: application/octet-stream\" --data <data-part>\n```\n",
+      "name": "Upload_multipartFileUploadPart_Request",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "FromUrlPostRequestBodySchemaCheckUrlDuplicates": {
       "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
       "name": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
@@ -3012,6 +3021,13 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "errorsV2": [],
           "examples": [
             {
