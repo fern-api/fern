@@ -1,10 +1,10 @@
 import { readFile, rm } from "fs/promises";
+import { tmpName } from "tmp-promise";
 
 import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath, join } from "@fern-api/fs-utils";
 
 import { runFernCli } from "../../utils/runFernCli";
-import { tmpName } from "tmp-promise";
 
 export interface DiffResult {
     exitCode: number;
