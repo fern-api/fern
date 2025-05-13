@@ -8145,7 +8145,20 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",
@@ -8604,7 +8617,20 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",
@@ -9185,7 +9211,20 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",
@@ -10425,7 +10464,20 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "",

@@ -12035,6 +12035,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -12173,6 +12185,18 @@
               "statusCode": 400,
               "description": "User request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -12327,6 +12351,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -12437,6 +12473,18 @@
               "statusCode": 403,
               "description": "User is the current user.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -12579,6 +12627,18 @@
               "statusCode": 403,
               "description": "User is the current user.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -12909,6 +12969,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -13017,6 +13089,18 @@
             "description": "User found and image or fallback returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "User not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -13373,6 +13457,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Template not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -13483,6 +13579,18 @@
             "description": "Contributors returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -13643,6 +13751,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -13787,6 +13907,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Contributor or team not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -13946,6 +14078,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Contributor or team not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -14326,6 +14470,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -14468,6 +14624,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -14597,6 +14765,18 @@
             "description": "Usage tracking results returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -14737,6 +14917,18 @@
             "description": "API call returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -14899,6 +15091,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -15019,6 +15223,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -15119,6 +15335,18 @@
             "description": "Storage usage returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -15264,6 +15492,18 @@
             "description": "Storage usage returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -15421,6 +15661,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -15556,6 +15808,18 @@
             "description": "Search results returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -15722,6 +15986,18 @@
               "statusCode": 400,
               "description": "Schema request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -16111,6 +16387,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -16477,6 +16765,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -16807,6 +17107,18 @@
               "statusCode": 400,
               "description": "Schema request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -17169,6 +17481,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -17538,6 +17862,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -17886,6 +18222,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -18254,6 +18602,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -18633,6 +18993,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -18964,6 +19336,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -19324,6 +19708,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Field, schema, or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -19655,6 +20051,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -20015,6 +20423,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Field, schema, or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -20346,6 +20766,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -20706,6 +21138,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -21037,6 +21481,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -21397,6 +21853,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -21728,6 +22196,18 @@
               "statusCode": 400,
               "description": "Schema field request not valid or field locked.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -22088,6 +22568,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema, field or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -22371,6 +22863,18 @@
             "description": "Schemas returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -23027,6 +23531,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -23358,6 +23874,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -23672,6 +24200,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -23803,6 +24343,18 @@
               "statusCode": 400,
               "description": "Schema request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -24153,6 +24705,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -24483,6 +25047,18 @@
               "statusCode": 400,
               "description": "Schema request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -24825,6 +25401,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -25161,6 +25749,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -25482,6 +26082,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -25792,6 +26404,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -26179,6 +26803,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -26349,6 +26985,18 @@
               "statusCode": 400,
               "description": "Rule request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -26648,6 +27296,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -26810,6 +27470,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -26926,6 +27598,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -27100,6 +27784,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -27251,6 +27947,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -27613,6 +28321,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -27780,6 +28500,18 @@
             "description": "Rule simulated."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -27957,6 +28689,18 @@
             "description": "Rule events returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -28205,6 +28949,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App or rule event not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -28310,6 +29066,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App or rule event not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -28492,6 +29260,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Rule event not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -28588,6 +29368,18 @@
             "description": "App plan information returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -28768,6 +29560,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -28875,6 +29679,18 @@
             "description": "Team plan information returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -29049,6 +29865,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -29640,6 +30468,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -29769,6 +30609,18 @@
             "description": "Events returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Team not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -30015,6 +30867,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Event consumer not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -30142,6 +31006,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Event consumer not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -30263,6 +31139,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Event consumer not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -30587,6 +31475,18 @@
             "description": "Contents returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -30947,6 +31847,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -31262,6 +32174,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -31590,6 +32514,18 @@
             "description": "Content returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -31945,6 +32881,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content references, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -32279,6 +33227,18 @@
               "statusCode": 400,
               "description": "Content request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content references, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -32626,6 +33586,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -32777,6 +33749,18 @@
               "statusCode": 400,
               "description": "Content request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -33097,6 +34081,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -33236,6 +34232,18 @@
             "description": "Contents returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -33557,6 +34565,18 @@
             "description": "Content returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -33883,6 +34903,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -34021,6 +35053,18 @@
               "statusCode": 400,
               "description": "Content request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content references, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -34215,6 +35259,18 @@
               "statusCode": 400,
               "description": "Contents request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Contents references, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -34424,6 +35480,18 @@
               "statusCode": 400,
               "description": "Content request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -34759,6 +35827,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -35073,6 +36153,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -35399,6 +36491,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Content, schema or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -35702,6 +36806,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -35835,6 +36951,18 @@
             "description": "Comments returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -36030,6 +37158,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -36203,6 +37343,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Comment or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -36336,6 +37488,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Comment or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -36624,6 +37788,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Comment not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -36739,6 +37915,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Backup or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -36844,6 +38032,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Backup or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -36965,6 +38165,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Backup or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -37051,6 +38263,18 @@
             "description": "Backups returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -37175,6 +38399,18 @@
               "statusCode": 400,
               "description": "Backup contingent reached.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -37680,6 +38916,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -37948,6 +39196,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -38060,6 +39320,18 @@
             "description": "Asset folders returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -38232,6 +39504,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -38397,6 +39681,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset folder or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -38531,6 +39827,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset folder or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -38674,6 +39982,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset folder or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -38798,6 +40118,18 @@
             "description": "Assets tags returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -38951,6 +40283,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -39154,6 +40498,18 @@
             "description": "Assets returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -39402,6 +40758,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -39612,6 +40980,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -39801,6 +41181,18 @@
             "description": "Asset found."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -40043,6 +41435,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -40271,6 +41675,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -40482,6 +41898,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -40598,6 +42026,18 @@
               "statusCode": 400,
               "description": "Assets request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -40785,6 +42225,18 @@
               "statusCode": 400,
               "description": "Asset request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -41019,6 +42471,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Asset or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -41193,6 +42657,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -41339,6 +42815,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -41459,6 +42947,18 @@
             "description": "Clients returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -41612,6 +43112,18 @@
               "statusCode": 400,
               "description": "Client request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -41800,6 +43312,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Client or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -41964,6 +43488,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Client or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -42087,6 +43623,18 @@
             "description": "Contributors returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -42247,6 +43795,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -42391,6 +43951,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Contributor or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -42556,6 +44128,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Contributor or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -42681,6 +44265,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -42798,6 +44394,18 @@
               "statusCode": 400,
               "description": "App request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -42959,6 +44567,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -43087,6 +44707,18 @@
             "description": "Languages returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -43239,6 +44871,18 @@
               "statusCode": 400,
               "description": "Language request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -43426,6 +45070,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Language or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -43589,6 +45245,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Language or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -43712,6 +45380,18 @@
             "description": "Roles returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -43872,6 +45552,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -44010,6 +45702,18 @@
             "description": "App permissions returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -44156,6 +45860,18 @@
               "statusCode": 400,
               "description": "Role request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Role or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -44329,6 +46045,18 @@
               "statusCode": 400,
               "description": "Role is in use by contributor or client or a default role.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Role or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -44885,6 +46613,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -45045,6 +46785,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -45184,6 +46936,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -45296,6 +47060,18 @@
               "statusCode": 400,
               "description": "App request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -45435,6 +47211,18 @@
             "description": "App settings returned."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -45595,6 +47383,18 @@
               "statusCode": 400,
               "description": "App request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -45766,6 +47566,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "App not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -45920,6 +47732,18 @@
               "statusCode": 400,
               "description": "Workflow request not valid.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Workflow or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -46113,6 +47937,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Workflow or app not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ErrorDto"
                 }
@@ -46282,6 +48118,18 @@
               "statusCode": 400,
               "description": "Validation error.",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Workflow or app not found.",
+              "name": "NotFoundError",
               "examples": []
             },
             {

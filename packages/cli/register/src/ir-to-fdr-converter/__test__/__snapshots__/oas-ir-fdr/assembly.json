@@ -4282,6 +4282,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -4493,6 +4517,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -4673,6 +4721,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -5176,6 +5248,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -5670,6 +5766,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -6185,6 +6305,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -6328,6 +6472,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -6521,6 +6689,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -6729,6 +6921,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -6918,6 +7134,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -7080,6 +7320,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -7249,6 +7513,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -7412,6 +7700,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -7597,6 +7909,30 @@
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
               "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
+              "examples": []
             }
           ],
           "examples": [
@@ -7760,6 +8096,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],
@@ -7930,6 +8290,30 @@
               "statusCode": 500,
               "description": "An error occurred while processing the request",
               "name": "InternalServerError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 503,
+              "description": "Service Unavailable",
+              "name": "ServiceUnavailableError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 504,
+              "description": "Gateway Timeout",
+              "name": "GatewayTimeoutError",
               "examples": []
             }
           ],

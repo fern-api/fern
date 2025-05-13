@@ -16984,7 +16984,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17325,7 +17350,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17503,7 +17553,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17615,7 +17690,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17787,7 +17887,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -17958,7 +18083,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18102,7 +18252,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18452,7 +18627,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18577,7 +18777,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18692,7 +18917,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -18886,7 +19136,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19014,7 +19289,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19126,7 +19426,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19318,7 +19643,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19505,7 +19855,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19683,7 +20058,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -19815,7 +20215,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20015,7 +20440,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20159,7 +20609,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20257,7 +20732,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20443,7 +20943,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20614,7 +21139,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20703,7 +21253,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -20845,7 +21420,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21008,7 +21608,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21150,7 +21775,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21263,7 +21913,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21604,7 +22279,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21778,7 +22478,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -21949,7 +22674,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22088,7 +22838,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22337,7 +23112,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22488,7 +23288,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -22905,7 +23730,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23172,7 +24022,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23297,7 +24172,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23419,7 +24319,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23518,7 +24443,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23637,7 +24587,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23738,7 +24713,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -23979,7 +24979,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24106,7 +25131,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24313,7 +25363,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24486,7 +25561,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24769,7 +25869,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -24956,7 +26081,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25101,7 +26251,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25220,7 +26395,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25342,7 +26542,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25495,7 +26720,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25609,7 +26859,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25698,7 +26973,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25826,7 +27126,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -25929,7 +27254,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26047,7 +27397,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26305,7 +27680,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26465,7 +27865,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26623,7 +28048,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26733,7 +28183,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -26896,7 +28371,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27021,7 +28521,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27134,7 +28659,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27231,7 +28781,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27323,7 +28898,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27443,7 +29043,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27619,7 +29244,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27709,7 +29359,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27790,7 +29465,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -27875,7 +29575,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28009,7 +29734,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28198,7 +29948,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28309,7 +30084,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28449,7 +30249,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28583,7 +30408,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28758,7 +30608,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28895,7 +30770,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -28995,7 +30895,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29133,7 +31058,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29255,7 +31205,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29413,7 +31388,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29523,7 +31523,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29701,7 +31726,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -29835,7 +31885,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30119,7 +32194,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30305,7 +32405,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30403,7 +32528,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30589,7 +32739,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30777,7 +32952,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -30945,7 +33145,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31156,7 +33381,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31350,7 +33600,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31514,7 +33789,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31630,7 +33930,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31797,7 +34122,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -31995,7 +34345,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32154,7 +34529,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32310,7 +34710,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32490,7 +34915,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32683,7 +35133,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32827,7 +35302,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -32925,7 +35425,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33112,7 +35637,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33256,7 +35806,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33424,7 +35999,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33524,7 +36124,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33622,7 +36247,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33720,7 +36370,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -33895,7 +36570,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34003,7 +36703,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34101,7 +36826,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34199,7 +36949,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34322,7 +37097,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34705,7 +37505,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -34930,7 +37755,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35119,7 +37969,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35276,7 +38151,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35390,7 +38290,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35518,7 +38443,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35721,7 +38671,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35845,7 +38820,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -35985,7 +38985,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36320,7 +39345,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36458,7 +39508,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36572,7 +39647,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36714,7 +39814,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -36992,7 +40117,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37136,7 +40286,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37234,7 +40409,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37394,7 +40594,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
@@ -37510,7 +40735,32 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "",
