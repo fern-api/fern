@@ -101,14 +101,14 @@ export class CliContext {
         logErrorMessage({ message, error, logger: this.logger });
     }
 
-    public async exit(): Promise<never> {
+    public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage || !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
         const posthogManager = await getPosthogManager();
         await posthogManager.flush();
-        this.exitProgram();
+        this.exitProgram({ code });
     }
 
     private async nudgeUpgradeIfAvailable() {
@@ -139,8 +139,8 @@ export class CliContext {
         }
     }
 
-    private exitProgram(): never {
-        process.exit(this.didSucceed ? 0 : 1);
+    private exitProgram({ code }: { code?: number } = {}): never {
+        process.exit(code ?? (this.didSucceed ? 0 : 1));
     }
 
     private longestWorkspaceName: string | undefined;
