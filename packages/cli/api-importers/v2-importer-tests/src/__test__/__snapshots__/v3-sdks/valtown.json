@@ -48080,7 +48080,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "NotFoundError",
+                  "camelCase": {
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": "The val was not found"
+            }
+          ],
           "auth": true,
           "docs": "Delete a val",
           "userSpecifiedExamples": [],
@@ -54143,7 +54173,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "NotFoundError",
+                  "camelCase": {
+                    "unsafeName": "notFoundError",
+                    "safeName": "notFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "not_found_error",
+                    "safeName": "not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "NOT_FOUND_ERROR",
+                    "safeName": "NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "NotFoundError",
+                    "safeName": "NotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "NotFoundError"
+              },
+              "docs": "The val was not found"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific version of a val",
           "userSpecifiedExamples": [],

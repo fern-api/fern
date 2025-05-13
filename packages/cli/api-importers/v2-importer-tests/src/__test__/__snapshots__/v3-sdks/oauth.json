@@ -830,7 +830,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "BadRequestError",
+                  "camelCase": {
+                    "unsafeName": "badRequestError",
+                    "safeName": "badRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "bad_request_error",
+                    "safeName": "bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BAD_REQUEST_ERROR",
+                    "safeName": "BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BadRequestError",
+                    "safeName": "BadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "BadRequestError"
+              },
+              "docs": "Bad request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "unauthorizedError",
+                    "safeName": "unauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "unauthorized_error",
+                    "safeName": "unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UNAUTHORIZED_ERROR",
+                    "safeName": "UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UnauthorizedError",
+                    "safeName": "UnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            }
+          ],
           "auth": false,
           "docs": "Exchange credentials or refresh token for an access token",
           "userSpecifiedExamples": [],
@@ -1554,7 +1613,122 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "BadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "BadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "BadRequestError",
+          "camelCase": {
+            "unsafeName": "badRequestError",
+            "safeName": "badRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "bad_request_error",
+            "safeName": "bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BAD_REQUEST_ERROR",
+            "safeName": "BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "BadRequestError",
+            "safeName": "BadRequestError"
+          }
+        },
+        "wireValue": "BadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Bad request",
+      "examples": []
+    },
+    "UnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UnauthorizedError",
+          "camelCase": {
+            "unsafeName": "unauthorizedError",
+            "safeName": "unauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "unauthorized_error",
+            "safeName": "unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNAUTHORIZED_ERROR",
+            "safeName": "UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UnauthorizedError",
+            "safeName": "UnauthorizedError"
+          }
+        },
+        "wireValue": "UnauthorizedError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

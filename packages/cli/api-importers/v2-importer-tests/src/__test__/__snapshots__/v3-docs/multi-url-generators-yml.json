@@ -517,7 +517,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListUsersRequestUnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "listUsersRequestUnauthorizedError",
+                    "safeName": "listUsersRequestUnauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_users_request_unauthorized_error",
+                    "safeName": "list_users_request_unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListUsersRequestUnauthorizedError",
+                    "safeName": "ListUsersRequestUnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListUsersRequestUnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ListUsersRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "listUsersRequestNotFoundError",
+                    "safeName": "listUsersRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "list_users_request_not_found_error",
+                    "safeName": "list_users_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ListUsersRequestNotFoundError",
+                    "safeName": "ListUsersRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ListUsersRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "List information about all users",
           "userSpecifiedExamples": [],
@@ -1072,7 +1131,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserInformationRequestUnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "getUserInformationRequestUnauthorizedError",
+                    "safeName": "getUserInformationRequestUnauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_information_request_unauthorized_error",
+                    "safeName": "get_user_information_request_unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserInformationRequestUnauthorizedError",
+                    "safeName": "GetUserInformationRequestUnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserInformationRequestUnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserInformationRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getUserInformationRequestNotFoundError",
+                    "safeName": "getUserInformationRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_information_request_not_found_error",
+                    "safeName": "get_user_information_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserInformationRequestNotFoundError",
+                    "safeName": "GetUserInformationRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserInformationRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "Retrieve detailed information about a specific user",
           "userSpecifiedExamples": [],
@@ -1662,7 +1780,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetAuthenticationTokenRequestUnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "getAuthenticationTokenRequestUnauthorizedError",
+                    "safeName": "getAuthenticationTokenRequestUnauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_authentication_token_request_unauthorized_error",
+                    "safeName": "get_authentication_token_request_unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetAuthenticationTokenRequestUnauthorizedError",
+                    "safeName": "GetAuthenticationTokenRequestUnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetAuthenticationTokenRequestUnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            }
+          ],
           "auth": false,
           "docs": "Retrieve an authentication token for the API",
           "userSpecifiedExamples": [],
@@ -2009,7 +2157,293 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "ListUsersRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "ListUsersRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "listUsersRequestUnauthorizedError",
+            "safeName": "listUsersRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_users_request_unauthorized_error",
+            "safeName": "list_users_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListUsersRequestUnauthorizedError",
+            "safeName": "ListUsersRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListUsersRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListUsersRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "listUsersRequestUnauthorizedError",
+            "safeName": "listUsersRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_users_request_unauthorized_error",
+            "safeName": "list_users_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "LIST_USERS_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListUsersRequestUnauthorizedError",
+            "safeName": "ListUsersRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "ListUsersRequestUnauthorizedError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "ListUsersRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "ListUsersRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "listUsersRequestNotFoundError",
+            "safeName": "listUsersRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_users_request_not_found_error",
+            "safeName": "list_users_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListUsersRequestNotFoundError",
+            "safeName": "ListUsersRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ListUsersRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ListUsersRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "listUsersRequestNotFoundError",
+            "safeName": "listUsersRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "list_users_request_not_found_error",
+            "safeName": "list_users_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "LIST_USERS_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ListUsersRequestNotFoundError",
+            "safeName": "ListUsersRequestNotFoundError"
+          }
+        },
+        "wireValue": "ListUsersRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "User not found",
+      "examples": []
+    },
+    "GetUserInformationRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "GetUserInformationRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getUserInformationRequestUnauthorizedError",
+            "safeName": "getUserInformationRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_information_request_unauthorized_error",
+            "safeName": "get_user_information_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserInformationRequestUnauthorizedError",
+            "safeName": "GetUserInformationRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetUserInformationRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetUserInformationRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getUserInformationRequestUnauthorizedError",
+            "safeName": "getUserInformationRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_information_request_unauthorized_error",
+            "safeName": "get_user_information_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_USER_INFORMATION_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserInformationRequestUnauthorizedError",
+            "safeName": "GetUserInformationRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "GetUserInformationRequestUnauthorizedError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    },
+    "GetUserInformationRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetUserInformationRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getUserInformationRequestNotFoundError",
+            "safeName": "getUserInformationRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_information_request_not_found_error",
+            "safeName": "get_user_information_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserInformationRequestNotFoundError",
+            "safeName": "GetUserInformationRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetUserInformationRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetUserInformationRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getUserInformationRequestNotFoundError",
+            "safeName": "getUserInformationRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_information_request_not_found_error",
+            "safeName": "get_user_information_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_USER_INFORMATION_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserInformationRequestNotFoundError",
+            "safeName": "GetUserInformationRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetUserInformationRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "User not found",
+      "examples": []
+    },
+    "GetAuthenticationTokenRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "GetAuthenticationTokenRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getAuthenticationTokenRequestUnauthorizedError",
+            "safeName": "getAuthenticationTokenRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_authentication_token_request_unauthorized_error",
+            "safeName": "get_authentication_token_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetAuthenticationTokenRequestUnauthorizedError",
+            "safeName": "GetAuthenticationTokenRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetAuthenticationTokenRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetAuthenticationTokenRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "getAuthenticationTokenRequestUnauthorizedError",
+            "safeName": "getAuthenticationTokenRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_authentication_token_request_unauthorized_error",
+            "safeName": "get_authentication_token_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "GET_AUTHENTICATION_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetAuthenticationTokenRequestUnauthorizedError",
+            "safeName": "GetAuthenticationTokenRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "GetAuthenticationTokenRequestUnauthorizedError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
