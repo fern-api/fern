@@ -232,6 +232,14 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         endpointGroup: endpoint.group
                     });
 
+                    if (endpoint.streamEndpoint != null) {
+                        this.addEndpointToIr({
+                            endpoint: endpoint.streamEndpoint,
+                            audiences: endpoint.audiences,
+                            endpointGroup: endpoint.group
+                        });
+                    }
+
                     if (endpoint.servers && endpoint.servers[0] != null) {
                         endpointLevelServers.push(endpoint.servers[0]);
                     }

@@ -71,7 +71,7 @@ export class FernStreamingExtension extends AbstractExtension<FernStreamingExten
 
         if (result.data["stream-condition"] == null) {
             this.context.errorCollector.collect({
-                message: "Missing required stream-condition property",
+                message: "Missing stream-condition property without specified format.",
                 path: this.breadcrumbs
             });
             return undefined;

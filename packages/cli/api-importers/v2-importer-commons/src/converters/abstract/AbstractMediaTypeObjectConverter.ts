@@ -14,14 +14,14 @@ export declare namespace AbstractMediaTypeObjectConverter {
         method: string;
     }
 
+    export interface MediaTypeObject extends SchemaOrReferenceConverter.Output {
+        examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+    }
+
     export interface Output {
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
         inlinedTypes: Record<string, SchemaConverter.ConvertedSchema>;
     }
-}
-
-export interface MediaTypeObject extends SchemaOrReferenceConverter.Output {
-    examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 
 export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter<
@@ -47,7 +47,7 @@ export abstract class AbstractMediaTypeObjectConverter extends AbstractConverter
         mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
         resolveSchema?: boolean;
         schemaId: string;
-    }): MediaTypeObject | undefined {
+    }): AbstractMediaTypeObjectConverter.MediaTypeObject | undefined {
         if (mediaTypeObject == null) {
             return undefined;
         }
