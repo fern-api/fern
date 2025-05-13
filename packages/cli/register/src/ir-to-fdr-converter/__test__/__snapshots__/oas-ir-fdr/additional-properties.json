@@ -132,7 +132,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/object-with-array-of-objects",
             "pathParameters": {},
@@ -220,7 +220,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getImplicitObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/implicit-object-with-array-of-objects",
             "pathParameters": {},

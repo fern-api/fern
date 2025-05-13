@@ -4871,7 +4871,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getJobArtifactsExample",
               "description": "",
               "path": "/v0/batch/jobs/foo/artifacts",
               "pathParameters": {
@@ -4948,7 +4948,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getJobExample",
               "description": "",
               "path": "/v0/batch/jobs/foo",
               "pathParameters": {
@@ -5360,7 +5360,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listJobsExample",
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
@@ -5549,7 +5549,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "startJobExample",
             "description": "",
             "path": "/v0/batch/jobs",
             "pathParameters": {},
@@ -5644,7 +5644,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getJobPredictionsExample",
             "description": "",
             "path": "/v0/batch/jobs/foo/predictions",
             "pathParameters": {

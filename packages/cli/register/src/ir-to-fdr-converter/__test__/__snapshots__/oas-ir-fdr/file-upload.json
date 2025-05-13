@@ -89,7 +89,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "uploadFileExample",
             "description": "",
             "path": "/upload",
             "pathParameters": {},
@@ -171,7 +171,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "uploadListExample",
             "description": "",
             "path": "/upload-list",
             "pathParameters": {},
@@ -286,7 +286,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "uploadWithContentTypeExample",
             "description": "",
             "path": "/upload-with-content-type",
             "pathParameters": {},

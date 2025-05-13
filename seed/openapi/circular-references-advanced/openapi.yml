@@ -60,13 +60,19 @@ components:
     Acai:
       title: Acai
       type: object
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/Berry'
+    Fig:
+      title: Fig
+      type: object
       properties:
         animal:
           $ref: '#/components/schemas/Animal'
       required:
         - animal
-    Fig:
-      title: Fig
+    Berry:
+      title: Berry
       type: object
       properties:
         animal:

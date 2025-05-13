@@ -298,7 +298,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -403,7 +403,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
             "path": "/users/foo",
             "pathParameters": {
