@@ -58,9 +58,7 @@ async function readIr({
     const ir = await readFile(absoluteFilepath, "utf-8");
     const parsed = serialization.IntermediateRepresentation.parse(JSON.parse(ir));
     if (!parsed.ok) {
-        context.failWithoutThrowing(
-            `Invalid --${flagName}; expected a filepath containing a valid IR`
-        );
+        context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`);
         throw new FernCliError();
     }
     return parsed.value;
