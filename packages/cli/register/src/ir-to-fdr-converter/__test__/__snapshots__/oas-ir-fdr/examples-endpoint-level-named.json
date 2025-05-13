@@ -314,54 +314,6 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "oak",
-            "description": "",
-            "path": "/trees",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBody": {
-              "species": "Quercus alba",
-              "height": 25.4
-            },
-            "requestBodyV3": {
-              "type": "json",
-              "value": {
-                "species": "Quercus alba",
-                "height": 25.4
-              }
-            },
-            "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "species": "Quercus alba",
-                "height": 25.4,
-                "age": 50,
-                "location": {
-                  "latitude": 40.7128,
-                  "longitude": -74.006
-                },
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "plantedDate": "2020-01-01T00:00:00Z"
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "species": "Quercus alba",
-                "height": 25.4,
-                "age": 50,
-                "location": {
-                  "latitude": 40.7128,
-                  "longitude": -74.006
-                },
-                "id": "123e4567-e89b-12d3-a456-426614174000",
-                "plantedDate": "2020-01-01T00:00:00Z"
-              }
-            }
-          },
-          {
             "name": "maple",
             "description": "",
             "path": "/trees",
@@ -369,21 +321,31 @@
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "species": "Quercus alba",
-              "height": 25.4
+              "species": "(maple request) Acer saccharum",
+              "height": 18.3,
+              "age": 35,
+              "location": {
+                "latitude": 42.3601,
+                "longitude": -71.0589
+              }
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "species": "Quercus alba",
-                "height": 25.4
+                "species": "(maple request) Acer saccharum",
+                "height": 18.3,
+                "age": 35,
+                "location": {
+                  "latitude": 42.3601,
+                  "longitude": -71.0589
+                }
               }
             },
             "responseStatusCode": 201,
             "responseBody": {
               "type": "json",
               "value": {
-                "species": "Acer saccharum",
+                "species": "(maple response) Acer saccharum",
                 "height": 18.3,
                 "age": 35,
                 "location": {
@@ -397,7 +359,7 @@
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "species": "Acer saccharum",
+                "species": "(maple response) Acer saccharum",
                 "height": 18.3,
                 "age": 35,
                 "location": {
@@ -406,6 +368,64 @@
                 },
                 "id": "987fcdeb-51a2-43d7-9012-345678901234",
                 "plantedDate": "2018-03-15T00:00:00Z"
+              }
+            }
+          },
+          {
+            "name": "oak",
+            "description": "",
+            "path": "/trees",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBody": {
+              "species": "(oak request) Quercus alba",
+              "height": 25.4,
+              "age": 50,
+              "location": {
+                "latitude": 40.7128,
+                "longitude": -74.006
+              }
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "(oak request) Quercus alba",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006
+                }
+              }
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "species": "(oak response) Quercus alba",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006
+                },
+                "id": "123e4567-e89b-12d3-a456-426614174000",
+                "plantedDate": "2020-01-01T00:00:00Z"
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "species": "(oak response) Quercus alba",
+                "height": 25.4,
+                "age": 50,
+                "location": {
+                  "latitude": 40.7128,
+                  "longitude": -74.006
+                },
+                "id": "123e4567-e89b-12d3-a456-426614174000",
+                "plantedDate": "2020-01-01T00:00:00Z"
               }
             }
           }
@@ -480,7 +500,7 @@
             "responseBody": {
               "type": "json",
               "value": {
-                "species": "Quercus alba",
+                "species": "(oak response) Quercus alba",
                 "height": 25.4,
                 "age": 50,
                 "location": {
@@ -494,7 +514,7 @@
             "responseBodyV3": {
               "type": "json",
               "value": {
-                "species": "Quercus alba",
+                "species": "(oak response) Quercus alba",
                 "height": 25.4,
                 "age": 50,
                 "location": {
@@ -622,32 +642,6 @@
             "responseStatusCode": 201
           },
           {
-            "name": "fernResponseExample",
-            "description": "",
-            "path": "/ferns",
-            "pathParameters": {},
-            "queryParameters": {},
-            "headers": {},
-            "requestBodyV3": {
-              "type": "json"
-            },
-            "responseStatusCode": 201,
-            "responseBody": {
-              "type": "json",
-              "value": {
-                "message": "RedFern created",
-                "code": 42
-              }
-            },
-            "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "message": "RedFern created",
-                "code": 42
-              }
-            }
-          },
-          {
             "name": "fernResponseExample2",
             "description": "",
             "path": "/ferns",
@@ -670,6 +664,32 @@
               "value": {
                 "message": "GreenFern created",
                 "code": 84
+              }
+            }
+          },
+          {
+            "name": "fernResponseExample",
+            "description": "",
+            "path": "/ferns",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
+            },
+            "responseStatusCode": 201,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "message": "RedFern created",
+                "code": 42
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "RedFern created",
+                "code": 42
               }
             }
           }

@@ -3,7 +3,7 @@ import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2ValueExamples } f
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { getFirstExamples } from "./getFirstExamples";
 
-export function generateParameterExamples({
+export function getParameterExamples({
     service,
     endpoint,
     typeDeclarations,
