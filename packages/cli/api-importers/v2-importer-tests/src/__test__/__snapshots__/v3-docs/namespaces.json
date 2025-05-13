@@ -2470,7 +2470,1490 @@
       "wireValue": "errorInstanceId"
     }
   },
-  "errors": {},
+  "errors": {
+    "AddPetRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "AddPetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "addPetRequestBadRequestError",
+            "safeName": "addPetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "add_pet_request_bad_request_error",
+            "safeName": "add_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "AddPetRequestBadRequestError",
+            "safeName": "AddPetRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "AddPetRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "AddPetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "addPetRequestBadRequestError",
+            "safeName": "addPetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "add_pet_request_bad_request_error",
+            "safeName": "add_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "AddPetRequestBadRequestError",
+            "safeName": "AddPetRequestBadRequestError"
+          }
+        },
+        "wireValue": "AddPetRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid input",
+      "examples": []
+    },
+    "AddPetRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "AddPetRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "addPetRequestUnprocessableEntityError",
+            "safeName": "addPetRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "add_pet_request_unprocessable_entity_error",
+            "safeName": "add_pet_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "AddPetRequestUnprocessableEntityError",
+            "safeName": "AddPetRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "AddPetRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "AddPetRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "addPetRequestUnprocessableEntityError",
+            "safeName": "addPetRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "add_pet_request_unprocessable_entity_error",
+            "safeName": "add_pet_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "AddPetRequestUnprocessableEntityError",
+            "safeName": "AddPetRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "AddPetRequestUnprocessableEntityError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 422,
+      "docs": "Validation exception",
+      "examples": []
+    },
+    "UpdatePetRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "UpdatePetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestBadRequestError",
+            "safeName": "updatePetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_bad_request_error",
+            "safeName": "update_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestBadRequestError",
+            "safeName": "UpdatePetRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdatePetRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdatePetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestBadRequestError",
+            "safeName": "updatePetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_bad_request_error",
+            "safeName": "update_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestBadRequestError",
+            "safeName": "UpdatePetRequestBadRequestError"
+          }
+        },
+        "wireValue": "UpdatePetRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid ID supplied",
+      "examples": []
+    },
+    "UpdatePetRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "UpdatePetRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestNotFoundError",
+            "safeName": "updatePetRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_not_found_error",
+            "safeName": "update_pet_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestNotFoundError",
+            "safeName": "UpdatePetRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdatePetRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdatePetRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestNotFoundError",
+            "safeName": "updatePetRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_not_found_error",
+            "safeName": "update_pet_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestNotFoundError",
+            "safeName": "UpdatePetRequestNotFoundError"
+          }
+        },
+        "wireValue": "UpdatePetRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Pet not found",
+      "examples": []
+    },
+    "UpdatePetRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "UpdatePetRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestUnprocessableEntityError",
+            "safeName": "updatePetRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_unprocessable_entity_error",
+            "safeName": "update_pet_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestUnprocessableEntityError",
+            "safeName": "UpdatePetRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdatePetRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdatePetRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "updatePetRequestUnprocessableEntityError",
+            "safeName": "updatePetRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_request_unprocessable_entity_error",
+            "safeName": "update_pet_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetRequestUnprocessableEntityError",
+            "safeName": "UpdatePetRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "UpdatePetRequestUnprocessableEntityError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 422,
+      "docs": "Validation exception",
+      "examples": []
+    },
+    "FindPetsByStatusRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "FindPetsByStatusRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "findPetsByStatusRequestBadRequestError",
+            "safeName": "findPetsByStatusRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "find_pets_by_status_request_bad_request_error",
+            "safeName": "find_pets_by_status_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "FindPetsByStatusRequestBadRequestError",
+            "safeName": "FindPetsByStatusRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "FindPetsByStatusRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "FindPetsByStatusRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "findPetsByStatusRequestBadRequestError",
+            "safeName": "findPetsByStatusRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "find_pets_by_status_request_bad_request_error",
+            "safeName": "find_pets_by_status_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "FindPetsByStatusRequestBadRequestError",
+            "safeName": "FindPetsByStatusRequestBadRequestError"
+          }
+        },
+        "wireValue": "FindPetsByStatusRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid status value",
+      "examples": []
+    },
+    "FindPetsByTagsRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "FindPetsByTagsRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "findPetsByTagsRequestBadRequestError",
+            "safeName": "findPetsByTagsRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "find_pets_by_tags_request_bad_request_error",
+            "safeName": "find_pets_by_tags_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "FindPetsByTagsRequestBadRequestError",
+            "safeName": "FindPetsByTagsRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "FindPetsByTagsRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "FindPetsByTagsRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "findPetsByTagsRequestBadRequestError",
+            "safeName": "findPetsByTagsRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "find_pets_by_tags_request_bad_request_error",
+            "safeName": "find_pets_by_tags_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "FindPetsByTagsRequestBadRequestError",
+            "safeName": "FindPetsByTagsRequestBadRequestError"
+          }
+        },
+        "wireValue": "FindPetsByTagsRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid tag value",
+      "examples": []
+    },
+    "GetPetByIdRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetPetByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getPetByIdRequestBadRequestError",
+            "safeName": "getPetByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_pet_by_id_request_bad_request_error",
+            "safeName": "get_pet_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetPetByIdRequestBadRequestError",
+            "safeName": "GetPetByIdRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetPetByIdRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetPetByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getPetByIdRequestBadRequestError",
+            "safeName": "getPetByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_pet_by_id_request_bad_request_error",
+            "safeName": "get_pet_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetPetByIdRequestBadRequestError",
+            "safeName": "GetPetByIdRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetPetByIdRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid ID supplied",
+      "examples": []
+    },
+    "GetPetByIdRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetPetByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getPetByIdRequestNotFoundError",
+            "safeName": "getPetByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_pet_by_id_request_not_found_error",
+            "safeName": "get_pet_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetPetByIdRequestNotFoundError",
+            "safeName": "GetPetByIdRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetPetByIdRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetPetByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getPetByIdRequestNotFoundError",
+            "safeName": "getPetByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_pet_by_id_request_not_found_error",
+            "safeName": "get_pet_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetPetByIdRequestNotFoundError",
+            "safeName": "GetPetByIdRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetPetByIdRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Pet not found",
+      "examples": []
+    },
+    "UpdatePetWithFormRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "UpdatePetWithFormRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updatePetWithFormRequestBadRequestError",
+            "safeName": "updatePetWithFormRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_with_form_request_bad_request_error",
+            "safeName": "update_pet_with_form_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetWithFormRequestBadRequestError",
+            "safeName": "UpdatePetWithFormRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdatePetWithFormRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdatePetWithFormRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updatePetWithFormRequestBadRequestError",
+            "safeName": "updatePetWithFormRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_pet_with_form_request_bad_request_error",
+            "safeName": "update_pet_with_form_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdatePetWithFormRequestBadRequestError",
+            "safeName": "UpdatePetWithFormRequestBadRequestError"
+          }
+        },
+        "wireValue": "UpdatePetWithFormRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid input",
+      "examples": []
+    },
+    "DeletePetRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "DeletePetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deletePetRequestBadRequestError",
+            "safeName": "deletePetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_pet_request_bad_request_error",
+            "safeName": "delete_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeletePetRequestBadRequestError",
+            "safeName": "DeletePetRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeletePetRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeletePetRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deletePetRequestBadRequestError",
+            "safeName": "deletePetRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_pet_request_bad_request_error",
+            "safeName": "delete_pet_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeletePetRequestBadRequestError",
+            "safeName": "DeletePetRequestBadRequestError"
+          }
+        },
+        "wireValue": "DeletePetRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid pet value",
+      "examples": []
+    },
+    "UploadFileRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "UploadFileRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "uploadFileRequestBadRequestError",
+            "safeName": "uploadFileRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_file_request_bad_request_error",
+            "safeName": "upload_file_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadFileRequestBadRequestError",
+            "safeName": "UploadFileRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UploadFileRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UploadFileRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "uploadFileRequestBadRequestError",
+            "safeName": "uploadFileRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_file_request_bad_request_error",
+            "safeName": "upload_file_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadFileRequestBadRequestError",
+            "safeName": "UploadFileRequestBadRequestError"
+          }
+        },
+        "wireValue": "UploadFileRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "No file uploaded",
+      "examples": []
+    },
+    "UploadFileRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "UploadFileRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "uploadFileRequestNotFoundError",
+            "safeName": "uploadFileRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_file_request_not_found_error",
+            "safeName": "upload_file_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadFileRequestNotFoundError",
+            "safeName": "UploadFileRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UploadFileRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UploadFileRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "uploadFileRequestNotFoundError",
+            "safeName": "uploadFileRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "upload_file_request_not_found_error",
+            "safeName": "upload_file_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UploadFileRequestNotFoundError",
+            "safeName": "UploadFileRequestNotFoundError"
+          }
+        },
+        "wireValue": "UploadFileRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Pet not found",
+      "examples": []
+    },
+    "PlaceOrderRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "PlaceOrderRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "placeOrderRequestBadRequestError",
+            "safeName": "placeOrderRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "place_order_request_bad_request_error",
+            "safeName": "place_order_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "PlaceOrderRequestBadRequestError",
+            "safeName": "PlaceOrderRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "PlaceOrderRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "PlaceOrderRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "placeOrderRequestBadRequestError",
+            "safeName": "placeOrderRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "place_order_request_bad_request_error",
+            "safeName": "place_order_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "PlaceOrderRequestBadRequestError",
+            "safeName": "PlaceOrderRequestBadRequestError"
+          }
+        },
+        "wireValue": "PlaceOrderRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid input",
+      "examples": []
+    },
+    "PlaceOrderRequestUnprocessableEntityError": {
+      "name": {
+        "name": {
+          "originalName": "PlaceOrderRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "placeOrderRequestUnprocessableEntityError",
+            "safeName": "placeOrderRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "place_order_request_unprocessable_entity_error",
+            "safeName": "place_order_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "PlaceOrderRequestUnprocessableEntityError",
+            "safeName": "PlaceOrderRequestUnprocessableEntityError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "PlaceOrderRequestUnprocessableEntityError"
+      },
+      "displayName": "UnprocessableEntityError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "PlaceOrderRequestUnprocessableEntityError",
+          "camelCase": {
+            "unsafeName": "placeOrderRequestUnprocessableEntityError",
+            "safeName": "placeOrderRequestUnprocessableEntityError"
+          },
+          "snakeCase": {
+            "unsafeName": "place_order_request_unprocessable_entity_error",
+            "safeName": "place_order_request_unprocessable_entity_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+            "safeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "PlaceOrderRequestUnprocessableEntityError",
+            "safeName": "PlaceOrderRequestUnprocessableEntityError"
+          }
+        },
+        "wireValue": "PlaceOrderRequestUnprocessableEntityError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 422,
+      "docs": "Validation exception",
+      "examples": []
+    },
+    "GetOrderByIdRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetOrderByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getOrderByIdRequestBadRequestError",
+            "safeName": "getOrderByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_order_by_id_request_bad_request_error",
+            "safeName": "get_order_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetOrderByIdRequestBadRequestError",
+            "safeName": "GetOrderByIdRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetOrderByIdRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetOrderByIdRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getOrderByIdRequestBadRequestError",
+            "safeName": "getOrderByIdRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_order_by_id_request_bad_request_error",
+            "safeName": "get_order_by_id_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetOrderByIdRequestBadRequestError",
+            "safeName": "GetOrderByIdRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetOrderByIdRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid ID supplied",
+      "examples": []
+    },
+    "GetOrderByIdRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetOrderByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getOrderByIdRequestNotFoundError",
+            "safeName": "getOrderByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_order_by_id_request_not_found_error",
+            "safeName": "get_order_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetOrderByIdRequestNotFoundError",
+            "safeName": "GetOrderByIdRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetOrderByIdRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetOrderByIdRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getOrderByIdRequestNotFoundError",
+            "safeName": "getOrderByIdRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_order_by_id_request_not_found_error",
+            "safeName": "get_order_by_id_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetOrderByIdRequestNotFoundError",
+            "safeName": "GetOrderByIdRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetOrderByIdRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Order not found",
+      "examples": []
+    },
+    "DeleteOrderRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteOrderRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteOrderRequestBadRequestError",
+            "safeName": "deleteOrderRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_order_request_bad_request_error",
+            "safeName": "delete_order_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteOrderRequestBadRequestError",
+            "safeName": "DeleteOrderRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteOrderRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteOrderRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteOrderRequestBadRequestError",
+            "safeName": "deleteOrderRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_order_request_bad_request_error",
+            "safeName": "delete_order_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteOrderRequestBadRequestError",
+            "safeName": "DeleteOrderRequestBadRequestError"
+          }
+        },
+        "wireValue": "DeleteOrderRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid ID supplied",
+      "examples": []
+    },
+    "DeleteOrderRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteOrderRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteOrderRequestNotFoundError",
+            "safeName": "deleteOrderRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_order_request_not_found_error",
+            "safeName": "delete_order_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteOrderRequestNotFoundError",
+            "safeName": "DeleteOrderRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteOrderRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteOrderRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteOrderRequestNotFoundError",
+            "safeName": "deleteOrderRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_order_request_not_found_error",
+            "safeName": "delete_order_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteOrderRequestNotFoundError",
+            "safeName": "DeleteOrderRequestNotFoundError"
+          }
+        },
+        "wireValue": "DeleteOrderRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Order not found",
+      "examples": []
+    },
+    "LoginUserRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "LoginUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "loginUserRequestBadRequestError",
+            "safeName": "loginUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "login_user_request_bad_request_error",
+            "safeName": "login_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "LoginUserRequestBadRequestError",
+            "safeName": "LoginUserRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "LoginUserRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "LoginUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "loginUserRequestBadRequestError",
+            "safeName": "loginUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "login_user_request_bad_request_error",
+            "safeName": "login_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "LoginUserRequestBadRequestError",
+            "safeName": "LoginUserRequestBadRequestError"
+          }
+        },
+        "wireValue": "LoginUserRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid username/password supplied",
+      "examples": []
+    },
+    "GetUserByNameRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetUserByNameRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getUserByNameRequestBadRequestError",
+            "safeName": "getUserByNameRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_by_name_request_bad_request_error",
+            "safeName": "get_user_by_name_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserByNameRequestBadRequestError",
+            "safeName": "GetUserByNameRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetUserByNameRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetUserByNameRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getUserByNameRequestBadRequestError",
+            "safeName": "getUserByNameRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_by_name_request_bad_request_error",
+            "safeName": "get_user_by_name_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserByNameRequestBadRequestError",
+            "safeName": "GetUserByNameRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetUserByNameRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid username supplied",
+      "examples": []
+    },
+    "GetUserByNameRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetUserByNameRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getUserByNameRequestNotFoundError",
+            "safeName": "getUserByNameRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_by_name_request_not_found_error",
+            "safeName": "get_user_by_name_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserByNameRequestNotFoundError",
+            "safeName": "GetUserByNameRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetUserByNameRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetUserByNameRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getUserByNameRequestNotFoundError",
+            "safeName": "getUserByNameRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_user_by_name_request_not_found_error",
+            "safeName": "get_user_by_name_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetUserByNameRequestNotFoundError",
+            "safeName": "GetUserByNameRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetUserByNameRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "User not found",
+      "examples": []
+    },
+    "UpdateUserRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updateUserRequestBadRequestError",
+            "safeName": "updateUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_user_request_bad_request_error",
+            "safeName": "update_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateUserRequestBadRequestError",
+            "safeName": "UpdateUserRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateUserRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "updateUserRequestBadRequestError",
+            "safeName": "updateUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_user_request_bad_request_error",
+            "safeName": "update_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateUserRequestBadRequestError",
+            "safeName": "UpdateUserRequestBadRequestError"
+          }
+        },
+        "wireValue": "UpdateUserRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "bad request",
+      "examples": []
+    },
+    "UpdateUserRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "UpdateUserRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updateUserRequestNotFoundError",
+            "safeName": "updateUserRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_user_request_not_found_error",
+            "safeName": "update_user_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateUserRequestNotFoundError",
+            "safeName": "UpdateUserRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "UpdateUserRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "UpdateUserRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "updateUserRequestNotFoundError",
+            "safeName": "updateUserRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "update_user_request_not_found_error",
+            "safeName": "update_user_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "UpdateUserRequestNotFoundError",
+            "safeName": "UpdateUserRequestNotFoundError"
+          }
+        },
+        "wireValue": "UpdateUserRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "user not found",
+      "examples": []
+    },
+    "DeleteUserRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteUserRequestBadRequestError",
+            "safeName": "deleteUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_user_request_bad_request_error",
+            "safeName": "delete_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteUserRequestBadRequestError",
+            "safeName": "DeleteUserRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteUserRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteUserRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteUserRequestBadRequestError",
+            "safeName": "deleteUserRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_user_request_bad_request_error",
+            "safeName": "delete_user_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteUserRequestBadRequestError",
+            "safeName": "DeleteUserRequestBadRequestError"
+          }
+        },
+        "wireValue": "DeleteUserRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid username supplied",
+      "examples": []
+    },
+    "DeleteUserRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteUserRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteUserRequestNotFoundError",
+            "safeName": "deleteUserRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_user_request_not_found_error",
+            "safeName": "delete_user_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteUserRequestNotFoundError",
+            "safeName": "DeleteUserRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteUserRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteUserRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteUserRequestNotFoundError",
+            "safeName": "deleteUserRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_user_request_not_found_error",
+            "safeName": "delete_user_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteUserRequestNotFoundError",
+            "safeName": "DeleteUserRequestNotFoundError"
+          }
+        },
+        "wireValue": "DeleteUserRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "User not found",
+      "examples": []
+    }
+  },
   "services": {
     "service_petsV1.pet": {
       "name": {
@@ -2700,7 +4183,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "AddPetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "addPetRequestBadRequestError",
+                    "safeName": "addPetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "add_pet_request_bad_request_error",
+                    "safeName": "add_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AddPetRequestBadRequestError",
+                    "safeName": "AddPetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "AddPetRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "AddPetRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "addPetRequestUnprocessableEntityError",
+                    "safeName": "addPetRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "add_pet_request_unprocessable_entity_error",
+                    "safeName": "add_pet_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AddPetRequestUnprocessableEntityError",
+                    "safeName": "AddPetRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "AddPetRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": true,
           "docs": "Add a new pet to the store.",
           "userSpecifiedExamples": [],
@@ -5690,7 +7232,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestBadRequestError",
+                    "safeName": "updatePetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_bad_request_error",
+                    "safeName": "update_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestBadRequestError",
+                    "safeName": "UpdatePetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestNotFoundError",
+                    "safeName": "updatePetRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_not_found_error",
+                    "safeName": "update_pet_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestNotFoundError",
+                    "safeName": "UpdatePetRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestUnprocessableEntityError",
+                    "safeName": "updatePetRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_unprocessable_entity_error",
+                    "safeName": "update_pet_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestUnprocessableEntityError",
+                    "safeName": "UpdatePetRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": true,
           "docs": "Update an existing pet by Id.",
           "userSpecifiedExamples": [],
@@ -8711,7 +10341,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "FindPetsByStatusRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "findPetsByStatusRequestBadRequestError",
+                    "safeName": "findPetsByStatusRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "find_pets_by_status_request_bad_request_error",
+                    "safeName": "find_pets_by_status_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FindPetsByStatusRequestBadRequestError",
+                    "safeName": "FindPetsByStatusRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "FindPetsByStatusRequestBadRequestError"
+              },
+              "docs": "Invalid status value"
+            }
+          ],
           "auth": true,
           "docs": "Multiple status values can be provided with comma separated strings.",
           "userSpecifiedExamples": [],
@@ -12947,7 +14607,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "FindPetsByTagsRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "findPetsByTagsRequestBadRequestError",
+                    "safeName": "findPetsByTagsRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "find_pets_by_tags_request_bad_request_error",
+                    "safeName": "find_pets_by_tags_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FindPetsByTagsRequestBadRequestError",
+                    "safeName": "FindPetsByTagsRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "FindPetsByTagsRequestBadRequestError"
+              },
+              "docs": "Invalid tag value"
+            }
+          ],
           "auth": true,
           "docs": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "userSpecifiedExamples": [],
@@ -17162,7 +18852,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetPetByIdRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getPetByIdRequestBadRequestError",
+                    "safeName": "getPetByIdRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_pet_by_id_request_bad_request_error",
+                    "safeName": "get_pet_by_id_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetPetByIdRequestBadRequestError",
+                    "safeName": "GetPetByIdRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetPetByIdRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetPetByIdRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getPetByIdRequestNotFoundError",
+                    "safeName": "getPetByIdRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_pet_by_id_request_not_found_error",
+                    "safeName": "get_pet_by_id_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetPetByIdRequestNotFoundError",
+                    "safeName": "GetPetByIdRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetPetByIdRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            }
+          ],
           "auth": true,
           "docs": "Returns a single pet.",
           "userSpecifiedExamples": [],
@@ -19506,7 +21255,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetWithFormRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updatePetWithFormRequestBadRequestError",
+                    "safeName": "updatePetWithFormRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_with_form_request_bad_request_error",
+                    "safeName": "update_pet_with_form_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetWithFormRequestBadRequestError",
+                    "safeName": "UpdatePetWithFormRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetWithFormRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            }
+          ],
           "auth": true,
           "docs": "Updates a pet resource based on the form data.",
           "userSpecifiedExamples": [],
@@ -21740,7 +23519,37 @@
               }
             }
           ],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeletePetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deletePetRequestBadRequestError",
+                    "safeName": "deletePetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_pet_request_bad_request_error",
+                    "safeName": "delete_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeletePetRequestBadRequestError",
+                    "safeName": "DeletePetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeletePetRequestBadRequestError"
+              },
+              "docs": "Invalid pet value"
+            }
+          ],
           "auth": true,
           "docs": "Delete a pet.",
           "userSpecifiedExamples": [],
@@ -22042,7 +23851,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadFileRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "uploadFileRequestBadRequestError",
+                    "safeName": "uploadFileRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_file_request_bad_request_error",
+                    "safeName": "upload_file_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadFileRequestBadRequestError",
+                    "safeName": "UploadFileRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UploadFileRequestBadRequestError"
+              },
+              "docs": "No file uploaded"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadFileRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "uploadFileRequestNotFoundError",
+                    "safeName": "uploadFileRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_file_request_not_found_error",
+                    "safeName": "upload_file_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadFileRequestNotFoundError",
+                    "safeName": "UploadFileRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UploadFileRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            }
+          ],
           "auth": true,
           "docs": "Upload image of the pet.",
           "userSpecifiedExamples": [],
@@ -23024,7 +24892,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "PlaceOrderRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "placeOrderRequestBadRequestError",
+                    "safeName": "placeOrderRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "place_order_request_bad_request_error",
+                    "safeName": "place_order_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PlaceOrderRequestBadRequestError",
+                    "safeName": "PlaceOrderRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "PlaceOrderRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "PlaceOrderRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "placeOrderRequestUnprocessableEntityError",
+                    "safeName": "placeOrderRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "place_order_request_unprocessable_entity_error",
+                    "safeName": "place_order_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PlaceOrderRequestUnprocessableEntityError",
+                    "safeName": "PlaceOrderRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "PlaceOrderRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": false,
           "docs": "Place a new order in the store.",
           "userSpecifiedExamples": [],
@@ -24863,7 +26790,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetOrderByIdRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getOrderByIdRequestBadRequestError",
+                    "safeName": "getOrderByIdRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_order_by_id_request_bad_request_error",
+                    "safeName": "get_order_by_id_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetOrderByIdRequestBadRequestError",
+                    "safeName": "GetOrderByIdRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetOrderByIdRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetOrderByIdRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getOrderByIdRequestNotFoundError",
+                    "safeName": "getOrderByIdRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_order_by_id_request_not_found_error",
+                    "safeName": "get_order_by_id_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetOrderByIdRequestNotFoundError",
+                    "safeName": "GetOrderByIdRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetOrderByIdRequestNotFoundError"
+              },
+              "docs": "Order not found"
+            }
+          ],
           "auth": false,
           "docs": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
           "userSpecifiedExamples": [],
@@ -25985,7 +27971,66 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteOrderRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deleteOrderRequestBadRequestError",
+                    "safeName": "deleteOrderRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_order_request_bad_request_error",
+                    "safeName": "delete_order_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteOrderRequestBadRequestError",
+                    "safeName": "DeleteOrderRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteOrderRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteOrderRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "deleteOrderRequestNotFoundError",
+                    "safeName": "deleteOrderRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_order_request_not_found_error",
+                    "safeName": "delete_order_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteOrderRequestNotFoundError",
+                    "safeName": "DeleteOrderRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteOrderRequestNotFoundError"
+              },
+              "docs": "Order not found"
+            }
+          ],
           "auth": false,
           "docs": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
           "userSpecifiedExamples": [],
@@ -31716,7 +33761,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "LoginUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "loginUserRequestBadRequestError",
+                    "safeName": "loginUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "login_user_request_bad_request_error",
+                    "safeName": "login_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "LoginUserRequestBadRequestError",
+                    "safeName": "LoginUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "LoginUserRequestBadRequestError"
+              },
+              "docs": "Invalid username/password supplied"
+            }
+          ],
           "auth": false,
           "docs": "Log into the system.",
           "userSpecifiedExamples": [],
@@ -31998,7 +34073,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserByNameRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getUserByNameRequestBadRequestError",
+                    "safeName": "getUserByNameRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_by_name_request_bad_request_error",
+                    "safeName": "get_user_by_name_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserByNameRequestBadRequestError",
+                    "safeName": "GetUserByNameRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserByNameRequestBadRequestError"
+              },
+              "docs": "Invalid username supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserByNameRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getUserByNameRequestNotFoundError",
+                    "safeName": "getUserByNameRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_by_name_request_not_found_error",
+                    "safeName": "get_user_by_name_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserByNameRequestNotFoundError",
+                    "safeName": "GetUserByNameRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserByNameRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "Get user detail based on username.",
           "userSpecifiedExamples": [],
@@ -33310,7 +35444,66 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdateUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updateUserRequestBadRequestError",
+                    "safeName": "updateUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_user_request_bad_request_error",
+                    "safeName": "update_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdateUserRequestBadRequestError",
+                    "safeName": "UpdateUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdateUserRequestBadRequestError"
+              },
+              "docs": "bad request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdateUserRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "updateUserRequestNotFoundError",
+                    "safeName": "updateUserRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_user_request_not_found_error",
+                    "safeName": "update_user_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdateUserRequestNotFoundError",
+                    "safeName": "UpdateUserRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdateUserRequestNotFoundError"
+              },
+              "docs": "user not found"
+            }
+          ],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
           "userSpecifiedExamples": [],
@@ -34461,7 +36654,66 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deleteUserRequestBadRequestError",
+                    "safeName": "deleteUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_user_request_bad_request_error",
+                    "safeName": "delete_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteUserRequestBadRequestError",
+                    "safeName": "DeleteUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteUserRequestBadRequestError"
+              },
+              "docs": "Invalid username supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteUserRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "deleteUserRequestNotFoundError",
+                    "safeName": "deleteUserRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_user_request_not_found_error",
+                    "safeName": "delete_user_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteUserRequestNotFoundError",
+                    "safeName": "DeleteUserRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteUserRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
           "userSpecifiedExamples": [],
@@ -34824,7 +37076,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "AddPetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "addPetRequestBadRequestError",
+                    "safeName": "addPetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "add_pet_request_bad_request_error",
+                    "safeName": "add_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "ADD_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AddPetRequestBadRequestError",
+                    "safeName": "AddPetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "AddPetRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "AddPetRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "addPetRequestUnprocessableEntityError",
+                    "safeName": "addPetRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "add_pet_request_unprocessable_entity_error",
+                    "safeName": "add_pet_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "ADD_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "AddPetRequestUnprocessableEntityError",
+                    "safeName": "AddPetRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "AddPetRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": true,
           "docs": "Add a new pet to the store.",
           "userSpecifiedExamples": [],
@@ -37814,7 +40125,95 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestBadRequestError",
+                    "safeName": "updatePetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_bad_request_error",
+                    "safeName": "update_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestBadRequestError",
+                    "safeName": "UpdatePetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestNotFoundError",
+                    "safeName": "updatePetRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_not_found_error",
+                    "safeName": "update_pet_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestNotFoundError",
+                    "safeName": "UpdatePetRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "updatePetRequestUnprocessableEntityError",
+                    "safeName": "updatePetRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_request_unprocessable_entity_error",
+                    "safeName": "update_pet_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "UPDATE_PET_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetRequestUnprocessableEntityError",
+                    "safeName": "UpdatePetRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": true,
           "docs": "Update an existing pet by Id.",
           "userSpecifiedExamples": [],
@@ -40835,7 +43234,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "FindPetsByStatusRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "findPetsByStatusRequestBadRequestError",
+                    "safeName": "findPetsByStatusRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "find_pets_by_status_request_bad_request_error",
+                    "safeName": "find_pets_by_status_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "FIND_PETS_BY_STATUS_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FindPetsByStatusRequestBadRequestError",
+                    "safeName": "FindPetsByStatusRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "FindPetsByStatusRequestBadRequestError"
+              },
+              "docs": "Invalid status value"
+            }
+          ],
           "auth": true,
           "docs": "Multiple status values can be provided with comma separated strings.",
           "userSpecifiedExamples": [],
@@ -45071,7 +47500,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "FindPetsByTagsRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "findPetsByTagsRequestBadRequestError",
+                    "safeName": "findPetsByTagsRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "find_pets_by_tags_request_bad_request_error",
+                    "safeName": "find_pets_by_tags_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "FIND_PETS_BY_TAGS_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "FindPetsByTagsRequestBadRequestError",
+                    "safeName": "FindPetsByTagsRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "FindPetsByTagsRequestBadRequestError"
+              },
+              "docs": "Invalid tag value"
+            }
+          ],
           "auth": true,
           "docs": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "userSpecifiedExamples": [],
@@ -49286,7 +51745,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetPetByIdRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getPetByIdRequestBadRequestError",
+                    "safeName": "getPetByIdRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_pet_by_id_request_bad_request_error",
+                    "safeName": "get_pet_by_id_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_PET_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetPetByIdRequestBadRequestError",
+                    "safeName": "GetPetByIdRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetPetByIdRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetPetByIdRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getPetByIdRequestNotFoundError",
+                    "safeName": "getPetByIdRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_pet_by_id_request_not_found_error",
+                    "safeName": "get_pet_by_id_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_PET_BY_ID_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetPetByIdRequestNotFoundError",
+                    "safeName": "GetPetByIdRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetPetByIdRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            }
+          ],
           "auth": true,
           "docs": "Returns a single pet.",
           "userSpecifiedExamples": [],
@@ -51630,7 +54148,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdatePetWithFormRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updatePetWithFormRequestBadRequestError",
+                    "safeName": "updatePetWithFormRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_pet_with_form_request_bad_request_error",
+                    "safeName": "update_pet_with_form_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_PET_WITH_FORM_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdatePetWithFormRequestBadRequestError",
+                    "safeName": "UpdatePetWithFormRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdatePetWithFormRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            }
+          ],
           "auth": true,
           "docs": "Updates a pet resource based on the form data.",
           "userSpecifiedExamples": [],
@@ -53864,7 +56412,37 @@
               }
             }
           ],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeletePetRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deletePetRequestBadRequestError",
+                    "safeName": "deletePetRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_pet_request_bad_request_error",
+                    "safeName": "delete_pet_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_PET_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeletePetRequestBadRequestError",
+                    "safeName": "DeletePetRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeletePetRequestBadRequestError"
+              },
+              "docs": "Invalid pet value"
+            }
+          ],
           "auth": true,
           "docs": "Delete a pet.",
           "userSpecifiedExamples": [],
@@ -54166,7 +56744,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadFileRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "uploadFileRequestBadRequestError",
+                    "safeName": "uploadFileRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_file_request_bad_request_error",
+                    "safeName": "upload_file_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPLOAD_FILE_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadFileRequestBadRequestError",
+                    "safeName": "UploadFileRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UploadFileRequestBadRequestError"
+              },
+              "docs": "No file uploaded"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UploadFileRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "uploadFileRequestNotFoundError",
+                    "safeName": "uploadFileRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "upload_file_request_not_found_error",
+                    "safeName": "upload_file_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPLOAD_FILE_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UploadFileRequestNotFoundError",
+                    "safeName": "UploadFileRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UploadFileRequestNotFoundError"
+              },
+              "docs": "Pet not found"
+            }
+          ],
           "auth": true,
           "docs": "Upload image of the pet.",
           "userSpecifiedExamples": [],
@@ -55148,7 +57785,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "PlaceOrderRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "placeOrderRequestBadRequestError",
+                    "safeName": "placeOrderRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "place_order_request_bad_request_error",
+                    "safeName": "place_order_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "PLACE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PlaceOrderRequestBadRequestError",
+                    "safeName": "PlaceOrderRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "PlaceOrderRequestBadRequestError"
+              },
+              "docs": "Invalid input"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "PlaceOrderRequestUnprocessableEntityError",
+                  "camelCase": {
+                    "unsafeName": "placeOrderRequestUnprocessableEntityError",
+                    "safeName": "placeOrderRequestUnprocessableEntityError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "place_order_request_unprocessable_entity_error",
+                    "safeName": "place_order_request_unprocessable_entity_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR",
+                    "safeName": "PLACE_ORDER_REQUEST_UNPROCESSABLE_ENTITY_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PlaceOrderRequestUnprocessableEntityError",
+                    "safeName": "PlaceOrderRequestUnprocessableEntityError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "PlaceOrderRequestUnprocessableEntityError"
+              },
+              "docs": "Validation exception"
+            }
+          ],
           "auth": false,
           "docs": "Place a new order in the store.",
           "userSpecifiedExamples": [],
@@ -56987,7 +59683,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetOrderByIdRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getOrderByIdRequestBadRequestError",
+                    "safeName": "getOrderByIdRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_order_by_id_request_bad_request_error",
+                    "safeName": "get_order_by_id_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_ORDER_BY_ID_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetOrderByIdRequestBadRequestError",
+                    "safeName": "GetOrderByIdRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetOrderByIdRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetOrderByIdRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getOrderByIdRequestNotFoundError",
+                    "safeName": "getOrderByIdRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_order_by_id_request_not_found_error",
+                    "safeName": "get_order_by_id_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_ORDER_BY_ID_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetOrderByIdRequestNotFoundError",
+                    "safeName": "GetOrderByIdRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetOrderByIdRequestNotFoundError"
+              },
+              "docs": "Order not found"
+            }
+          ],
           "auth": false,
           "docs": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
           "userSpecifiedExamples": [],
@@ -58109,7 +60864,66 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteOrderRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deleteOrderRequestBadRequestError",
+                    "safeName": "deleteOrderRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_order_request_bad_request_error",
+                    "safeName": "delete_order_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_ORDER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteOrderRequestBadRequestError",
+                    "safeName": "DeleteOrderRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteOrderRequestBadRequestError"
+              },
+              "docs": "Invalid ID supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteOrderRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "deleteOrderRequestNotFoundError",
+                    "safeName": "deleteOrderRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_order_request_not_found_error",
+                    "safeName": "delete_order_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "DELETE_ORDER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteOrderRequestNotFoundError",
+                    "safeName": "DeleteOrderRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteOrderRequestNotFoundError"
+              },
+              "docs": "Order not found"
+            }
+          ],
           "auth": false,
           "docs": "For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.",
           "userSpecifiedExamples": [],
@@ -63840,7 +66654,37 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "LoginUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "loginUserRequestBadRequestError",
+                    "safeName": "loginUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "login_user_request_bad_request_error",
+                    "safeName": "login_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "LOGIN_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "LoginUserRequestBadRequestError",
+                    "safeName": "LoginUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "LoginUserRequestBadRequestError"
+              },
+              "docs": "Invalid username/password supplied"
+            }
+          ],
           "auth": false,
           "docs": "Log into the system.",
           "userSpecifiedExamples": [],
@@ -64122,7 +66966,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserByNameRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getUserByNameRequestBadRequestError",
+                    "safeName": "getUserByNameRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_by_name_request_bad_request_error",
+                    "safeName": "get_user_by_name_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_USER_BY_NAME_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserByNameRequestBadRequestError",
+                    "safeName": "GetUserByNameRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserByNameRequestBadRequestError"
+              },
+              "docs": "Invalid username supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetUserByNameRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getUserByNameRequestNotFoundError",
+                    "safeName": "getUserByNameRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_user_by_name_request_not_found_error",
+                    "safeName": "get_user_by_name_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_USER_BY_NAME_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetUserByNameRequestNotFoundError",
+                    "safeName": "GetUserByNameRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetUserByNameRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "Get user detail based on username.",
           "userSpecifiedExamples": [],
@@ -65434,7 +68337,66 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdateUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "updateUserRequestBadRequestError",
+                    "safeName": "updateUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_user_request_bad_request_error",
+                    "safeName": "update_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "UPDATE_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdateUserRequestBadRequestError",
+                    "safeName": "UpdateUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdateUserRequestBadRequestError"
+              },
+              "docs": "bad request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "UpdateUserRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "updateUserRequestNotFoundError",
+                    "safeName": "updateUserRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "update_user_request_not_found_error",
+                    "safeName": "update_user_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "UPDATE_USER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "UpdateUserRequestNotFoundError",
+                    "safeName": "UpdateUserRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "UpdateUserRequestNotFoundError"
+              },
+              "docs": "user not found"
+            }
+          ],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
           "userSpecifiedExamples": [],
@@ -66585,7 +69547,66 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteUserRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deleteUserRequestBadRequestError",
+                    "safeName": "deleteUserRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_user_request_bad_request_error",
+                    "safeName": "delete_user_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_USER_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteUserRequestBadRequestError",
+                    "safeName": "DeleteUserRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteUserRequestBadRequestError"
+              },
+              "docs": "Invalid username supplied"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteUserRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "deleteUserRequestNotFoundError",
+                    "safeName": "deleteUserRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_user_request_not_found_error",
+                    "safeName": "delete_user_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "DELETE_USER_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteUserRequestNotFoundError",
+                    "safeName": "DeleteUserRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteUserRequestNotFoundError"
+              },
+              "docs": "User not found"
+            }
+          ],
           "auth": false,
           "docs": "This can only be done by the logged in user.",
           "userSpecifiedExamples": [],

@@ -830,7 +830,66 @@
               "type": "json"
             }
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "RequestAnAccessTokenRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "requestAnAccessTokenRequestBadRequestError",
+                    "safeName": "requestAnAccessTokenRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "request_an_access_token_request_bad_request_error",
+                    "safeName": "request_an_access_token_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RequestAnAccessTokenRequestBadRequestError",
+                    "safeName": "RequestAnAccessTokenRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "RequestAnAccessTokenRequestBadRequestError"
+              },
+              "docs": "Bad request"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "RequestAnAccessTokenRequestUnauthorizedError",
+                  "camelCase": {
+                    "unsafeName": "requestAnAccessTokenRequestUnauthorizedError",
+                    "safeName": "requestAnAccessTokenRequestUnauthorizedError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "request_an_access_token_request_unauthorized_error",
+                    "safeName": "request_an_access_token_request_unauthorized_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+                    "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "RequestAnAccessTokenRequestUnauthorizedError",
+                    "safeName": "RequestAnAccessTokenRequestUnauthorizedError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "RequestAnAccessTokenRequestUnauthorizedError"
+              },
+              "docs": "Unauthorized"
+            }
+          ],
           "auth": false,
           "docs": "Exchange credentials or refresh token for an access token",
           "userSpecifiedExamples": [],
@@ -1554,7 +1613,122 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "RequestAnAccessTokenRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "RequestAnAccessTokenRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "requestAnAccessTokenRequestBadRequestError",
+            "safeName": "requestAnAccessTokenRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "request_an_access_token_request_bad_request_error",
+            "safeName": "request_an_access_token_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "RequestAnAccessTokenRequestBadRequestError",
+            "safeName": "RequestAnAccessTokenRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "RequestAnAccessTokenRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "RequestAnAccessTokenRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "requestAnAccessTokenRequestBadRequestError",
+            "safeName": "requestAnAccessTokenRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "request_an_access_token_request_bad_request_error",
+            "safeName": "request_an_access_token_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "RequestAnAccessTokenRequestBadRequestError",
+            "safeName": "RequestAnAccessTokenRequestBadRequestError"
+          }
+        },
+        "wireValue": "RequestAnAccessTokenRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Bad request",
+      "examples": []
+    },
+    "RequestAnAccessTokenRequestUnauthorizedError": {
+      "name": {
+        "name": {
+          "originalName": "RequestAnAccessTokenRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "requestAnAccessTokenRequestUnauthorizedError",
+            "safeName": "requestAnAccessTokenRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "request_an_access_token_request_unauthorized_error",
+            "safeName": "request_an_access_token_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "RequestAnAccessTokenRequestUnauthorizedError",
+            "safeName": "RequestAnAccessTokenRequestUnauthorizedError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "RequestAnAccessTokenRequestUnauthorizedError"
+      },
+      "displayName": "UnauthorizedError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "RequestAnAccessTokenRequestUnauthorizedError",
+          "camelCase": {
+            "unsafeName": "requestAnAccessTokenRequestUnauthorizedError",
+            "safeName": "requestAnAccessTokenRequestUnauthorizedError"
+          },
+          "snakeCase": {
+            "unsafeName": "request_an_access_token_request_unauthorized_error",
+            "safeName": "request_an_access_token_request_unauthorized_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
+            "safeName": "REQUEST_AN_ACCESS_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "RequestAnAccessTokenRequestUnauthorizedError",
+            "safeName": "RequestAnAccessTokenRequestUnauthorizedError"
+          }
+        },
+        "wireValue": "RequestAnAccessTokenRequestUnauthorizedError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 401,
+      "docs": "Unauthorized",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

@@ -7469,6 +7469,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -7656,6 +7668,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -8256,6 +8280,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Transaction or account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -8781,6 +8817,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -8889,6 +8937,18 @@
             "description": "Returned batch of transaction enrichment results."
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Batch with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -9423,6 +9483,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -9527,6 +9599,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -9613,6 +9697,18 @@
             "description": "Successful Response"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -9759,6 +9855,18 @@
             "description": "Successful Response"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Bank statement with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -9918,6 +10026,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -10011,6 +10131,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -10254,6 +10386,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Account holder with the provided id already exists.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -10380,6 +10524,18 @@
             "description": "Successful Response"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Account holder with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -10887,6 +11043,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Webhook with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -11255,6 +11423,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided ruleset has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -11402,6 +11594,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided rule has invalid structure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 413,
+              "description": "Ruleset after append was larger than 50KiB",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -11514,6 +11730,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -11612,6 +11840,18 @@
             "description": "Successful Response"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Provided index does not exist in ruleset",
+              "name": "BadRequestError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -12044,6 +12284,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -12145,6 +12397,18 @@
           "queryParameters": [],
           "headers": [],
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Report with the provided id not found.",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -12747,6 +13011,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "HTTPValidationError"
                 }
@@ -12754,6 +13030,18 @@
               "statusCode": 422,
               "description": "Validation Error",
               "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 423,
+              "description": "Not enough credits.",
+              "name": "LockedError",
               "examples": []
             }
           ],
@@ -12856,6 +13144,30 @@
             "description": "Entity"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Entity does not exist for ID",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",

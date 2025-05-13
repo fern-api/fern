@@ -6981,7 +6981,124 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ExperimentalStreamCreateRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "experimentalStreamCreateRequestBadRequestError",
+                    "safeName": "experimentalStreamCreateRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "experimental_stream_create_request_bad_request_error",
+                    "safeName": "experimental_stream_create_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ExperimentalStreamCreateRequestBadRequestError",
+                    "safeName": "ExperimentalStreamCreateRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ExperimentalStreamCreateRequestBadRequestError"
+              },
+              "docs": "Invalid request params"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+                  "camelCase": {
+                    "unsafeName": "experimentalStreamCreateRequestPaymentRequiredError",
+                    "safeName": "experimentalStreamCreateRequestPaymentRequiredError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "experimental_stream_create_request_payment_required_error",
+                    "safeName": "experimental_stream_create_request_payment_required_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR",
+                    "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+                    "safeName": "ExperimentalStreamCreateRequestPaymentRequiredError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ExperimentalStreamCreateRequestPaymentRequiredError"
+              },
+              "docs": "Insufficient credits"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ExperimentalStreamCreateRequestForbiddenError",
+                  "camelCase": {
+                    "unsafeName": "experimentalStreamCreateRequestForbiddenError",
+                    "safeName": "experimentalStreamCreateRequestForbiddenError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "experimental_stream_create_request_forbidden_error",
+                    "safeName": "experimental_stream_create_request_forbidden_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR",
+                    "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ExperimentalStreamCreateRequestForbiddenError",
+                    "safeName": "ExperimentalStreamCreateRequestForbiddenError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ExperimentalStreamCreateRequestForbiddenError"
+              },
+              "docs": "Request access rejected"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "ExperimentalStreamCreateRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "experimentalStreamCreateRequestInternalServerError",
+                    "safeName": "experimentalStreamCreateRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "experimental_stream_create_request_internal_server_error",
+                    "safeName": "experimental_stream_create_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ExperimentalStreamCreateRequestInternalServerError",
+                    "safeName": "ExperimentalStreamCreateRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ExperimentalStreamCreateRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Gets the stream speech for the given input",
           "userSpecifiedExamples": [],
@@ -7427,7 +7544,124 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetSpeechRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getSpeechRequestBadRequestError",
+                    "safeName": "getSpeechRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_speech_request_bad_request_error",
+                    "safeName": "get_speech_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetSpeechRequestBadRequestError",
+                    "safeName": "GetSpeechRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetSpeechRequestBadRequestError"
+              },
+              "docs": "Invalid request params"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetSpeechRequestPaymentRequiredError",
+                  "camelCase": {
+                    "unsafeName": "getSpeechRequestPaymentRequiredError",
+                    "safeName": "getSpeechRequestPaymentRequiredError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_speech_request_payment_required_error",
+                    "safeName": "get_speech_request_payment_required_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR",
+                    "safeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetSpeechRequestPaymentRequiredError",
+                    "safeName": "GetSpeechRequestPaymentRequiredError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetSpeechRequestPaymentRequiredError"
+              },
+              "docs": "Insufficient credits"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetSpeechRequestForbiddenError",
+                  "camelCase": {
+                    "unsafeName": "getSpeechRequestForbiddenError",
+                    "safeName": "getSpeechRequestForbiddenError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_speech_request_forbidden_error",
+                    "safeName": "get_speech_request_forbidden_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR",
+                    "safeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetSpeechRequestForbiddenError",
+                    "safeName": "GetSpeechRequestForbiddenError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetSpeechRequestForbiddenError"
+              },
+              "docs": "Request access rejected"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetSpeechRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "getSpeechRequestInternalServerError",
+                    "safeName": "getSpeechRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_speech_request_internal_server_error",
+                    "safeName": "get_speech_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetSpeechRequestInternalServerError",
+                    "safeName": "GetSpeechRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetSpeechRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Gets the speech data for the given input",
           "userSpecifiedExamples": [],
@@ -8104,7 +8338,124 @@
             },
             "type": "reference"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetStreamRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "getStreamRequestBadRequestError",
+                    "safeName": "getStreamRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_stream_request_bad_request_error",
+                    "safeName": "get_stream_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetStreamRequestBadRequestError",
+                    "safeName": "GetStreamRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetStreamRequestBadRequestError"
+              },
+              "docs": "Invalid request params"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetStreamRequestPaymentRequiredError",
+                  "camelCase": {
+                    "unsafeName": "getStreamRequestPaymentRequiredError",
+                    "safeName": "getStreamRequestPaymentRequiredError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_stream_request_payment_required_error",
+                    "safeName": "get_stream_request_payment_required_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR",
+                    "safeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetStreamRequestPaymentRequiredError",
+                    "safeName": "GetStreamRequestPaymentRequiredError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetStreamRequestPaymentRequiredError"
+              },
+              "docs": "Insufficient credits"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetStreamRequestForbiddenError",
+                  "camelCase": {
+                    "unsafeName": "getStreamRequestForbiddenError",
+                    "safeName": "getStreamRequestForbiddenError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_stream_request_forbidden_error",
+                    "safeName": "get_stream_request_forbidden_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR",
+                    "safeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetStreamRequestForbiddenError",
+                    "safeName": "GetStreamRequestForbiddenError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetStreamRequestForbiddenError"
+              },
+              "docs": "Request access rejected"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetStreamRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "getStreamRequestInternalServerError",
+                    "safeName": "getStreamRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_stream_request_internal_server_error",
+                    "safeName": "get_stream_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetStreamRequestInternalServerError",
+                    "safeName": "GetStreamRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetStreamRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Gets the stream speech for the given input",
           "userSpecifiedExamples": [],
@@ -9816,7 +10167,66 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetVoicesRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "getVoicesRequestNotFoundError",
+                    "safeName": "getVoicesRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_voices_request_not_found_error",
+                    "safeName": "get_voices_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetVoicesRequestNotFoundError",
+                    "safeName": "GetVoicesRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetVoicesRequestNotFoundError"
+              },
+              "docs": "No voices found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "GetVoicesRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "getVoicesRequestInternalServerError",
+                    "safeName": "getVoicesRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "get_voices_request_internal_server_error",
+                    "safeName": "get_voices_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "GetVoicesRequestInternalServerError",
+                    "safeName": "GetVoicesRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "GetVoicesRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Gets the list of voices available for the user",
           "userSpecifiedExamples": [],
@@ -10050,7 +10460,95 @@
             },
             "type": "fileUpload"
           },
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "CreateVoiceRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "createVoiceRequestBadRequestError",
+                    "safeName": "createVoiceRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "create_voice_request_bad_request_error",
+                    "safeName": "create_voice_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreateVoiceRequestBadRequestError",
+                    "safeName": "CreateVoiceRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "CreateVoiceRequestBadRequestError"
+              },
+              "docs": "Invalid request params"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "CreateVoiceRequestPaymentRequiredError",
+                  "camelCase": {
+                    "unsafeName": "createVoiceRequestPaymentRequiredError",
+                    "safeName": "createVoiceRequestPaymentRequiredError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "create_voice_request_payment_required_error",
+                    "safeName": "create_voice_request_payment_required_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR",
+                    "safeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreateVoiceRequestPaymentRequiredError",
+                    "safeName": "CreateVoiceRequestPaymentRequiredError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "CreateVoiceRequestPaymentRequiredError"
+              },
+              "docs": "Current billing plan does not have access to voice cloning"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "CreateVoiceRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "createVoiceRequestInternalServerError",
+                    "safeName": "createVoiceRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "create_voice_request_internal_server_error",
+                    "safeName": "create_voice_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "CreateVoiceRequestInternalServerError",
+                    "safeName": "CreateVoiceRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "CreateVoiceRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Create a personal (cloned) voice for the user",
           "userSpecifiedExamples": [],
@@ -10163,7 +10661,95 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteVoiceRequestBadRequestError",
+                  "camelCase": {
+                    "unsafeName": "deleteVoiceRequestBadRequestError",
+                    "safeName": "deleteVoiceRequestBadRequestError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_voice_request_bad_request_error",
+                    "safeName": "delete_voice_request_bad_request_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+                    "safeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteVoiceRequestBadRequestError",
+                    "safeName": "DeleteVoiceRequestBadRequestError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteVoiceRequestBadRequestError"
+              },
+              "docs": "Missing or invalid voice ID"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteVoiceRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "deleteVoiceRequestNotFoundError",
+                    "safeName": "deleteVoiceRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_voice_request_not_found_error",
+                    "safeName": "delete_voice_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteVoiceRequestNotFoundError",
+                    "safeName": "DeleteVoiceRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteVoiceRequestNotFoundError"
+              },
+              "docs": "Voice not found"
+            },
+            {
+              "error": {
+                "name": {
+                  "originalName": "DeleteVoiceRequestInternalServerError",
+                  "camelCase": {
+                    "unsafeName": "deleteVoiceRequestInternalServerError",
+                    "safeName": "deleteVoiceRequestInternalServerError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "delete_voice_request_internal_server_error",
+                    "safeName": "delete_voice_request_internal_server_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+                    "safeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "DeleteVoiceRequestInternalServerError",
+                    "safeName": "DeleteVoiceRequestInternalServerError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "DeleteVoiceRequestInternalServerError"
+              },
+              "docs": "Internal server error"
+            }
+          ],
           "auth": true,
           "docs": "Delete a personal (cloned) voice",
           "userSpecifiedExamples": [],
@@ -10299,7 +10885,1148 @@
       ]
     }
   },
-  "errors": {},
+  "errors": {
+    "ExperimentalStreamCreateRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestBadRequestError",
+            "safeName": "experimentalStreamCreateRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_bad_request_error",
+            "safeName": "experimental_stream_create_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestBadRequestError",
+            "safeName": "ExperimentalStreamCreateRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ExperimentalStreamCreateRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestBadRequestError",
+            "safeName": "experimentalStreamCreateRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_bad_request_error",
+            "safeName": "experimental_stream_create_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestBadRequestError",
+            "safeName": "ExperimentalStreamCreateRequestBadRequestError"
+          }
+        },
+        "wireValue": "ExperimentalStreamCreateRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid request params",
+      "examples": []
+    },
+    "ExperimentalStreamCreateRequestPaymentRequiredError": {
+      "name": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestPaymentRequiredError",
+            "safeName": "experimentalStreamCreateRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_payment_required_error",
+            "safeName": "experimental_stream_create_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+            "safeName": "ExperimentalStreamCreateRequestPaymentRequiredError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ExperimentalStreamCreateRequestPaymentRequiredError"
+      },
+      "displayName": "PaymentRequiredError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestPaymentRequiredError",
+            "safeName": "experimentalStreamCreateRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_payment_required_error",
+            "safeName": "experimental_stream_create_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestPaymentRequiredError",
+            "safeName": "ExperimentalStreamCreateRequestPaymentRequiredError"
+          }
+        },
+        "wireValue": "ExperimentalStreamCreateRequestPaymentRequiredError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 402,
+      "docs": "Insufficient credits",
+      "examples": []
+    },
+    "ExperimentalStreamCreateRequestForbiddenError": {
+      "name": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestForbiddenError",
+            "safeName": "experimentalStreamCreateRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_forbidden_error",
+            "safeName": "experimental_stream_create_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestForbiddenError",
+            "safeName": "ExperimentalStreamCreateRequestForbiddenError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ExperimentalStreamCreateRequestForbiddenError"
+      },
+      "displayName": "ForbiddenError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestForbiddenError",
+            "safeName": "experimentalStreamCreateRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_forbidden_error",
+            "safeName": "experimental_stream_create_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestForbiddenError",
+            "safeName": "ExperimentalStreamCreateRequestForbiddenError"
+          }
+        },
+        "wireValue": "ExperimentalStreamCreateRequestForbiddenError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 403,
+      "docs": "Request access rejected",
+      "examples": []
+    },
+    "ExperimentalStreamCreateRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestInternalServerError",
+            "safeName": "experimentalStreamCreateRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_internal_server_error",
+            "safeName": "experimental_stream_create_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestInternalServerError",
+            "safeName": "ExperimentalStreamCreateRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ExperimentalStreamCreateRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ExperimentalStreamCreateRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "experimentalStreamCreateRequestInternalServerError",
+            "safeName": "experimentalStreamCreateRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "experimental_stream_create_request_internal_server_error",
+            "safeName": "experimental_stream_create_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "EXPERIMENTAL_STREAM_CREATE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ExperimentalStreamCreateRequestInternalServerError",
+            "safeName": "ExperimentalStreamCreateRequestInternalServerError"
+          }
+        },
+        "wireValue": "ExperimentalStreamCreateRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    },
+    "GetSpeechRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetSpeechRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestBadRequestError",
+            "safeName": "getSpeechRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_bad_request_error",
+            "safeName": "get_speech_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestBadRequestError",
+            "safeName": "GetSpeechRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetSpeechRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetSpeechRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestBadRequestError",
+            "safeName": "getSpeechRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_bad_request_error",
+            "safeName": "get_speech_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestBadRequestError",
+            "safeName": "GetSpeechRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetSpeechRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid request params",
+      "examples": []
+    },
+    "GetSpeechRequestPaymentRequiredError": {
+      "name": {
+        "name": {
+          "originalName": "GetSpeechRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestPaymentRequiredError",
+            "safeName": "getSpeechRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_payment_required_error",
+            "safeName": "get_speech_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestPaymentRequiredError",
+            "safeName": "GetSpeechRequestPaymentRequiredError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetSpeechRequestPaymentRequiredError"
+      },
+      "displayName": "PaymentRequiredError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetSpeechRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestPaymentRequiredError",
+            "safeName": "getSpeechRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_payment_required_error",
+            "safeName": "get_speech_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestPaymentRequiredError",
+            "safeName": "GetSpeechRequestPaymentRequiredError"
+          }
+        },
+        "wireValue": "GetSpeechRequestPaymentRequiredError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 402,
+      "docs": "Insufficient credits",
+      "examples": []
+    },
+    "GetSpeechRequestForbiddenError": {
+      "name": {
+        "name": {
+          "originalName": "GetSpeechRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestForbiddenError",
+            "safeName": "getSpeechRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_forbidden_error",
+            "safeName": "get_speech_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestForbiddenError",
+            "safeName": "GetSpeechRequestForbiddenError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetSpeechRequestForbiddenError"
+      },
+      "displayName": "ForbiddenError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetSpeechRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestForbiddenError",
+            "safeName": "getSpeechRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_forbidden_error",
+            "safeName": "get_speech_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestForbiddenError",
+            "safeName": "GetSpeechRequestForbiddenError"
+          }
+        },
+        "wireValue": "GetSpeechRequestForbiddenError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 403,
+      "docs": "Request access rejected",
+      "examples": []
+    },
+    "GetSpeechRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "GetSpeechRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestInternalServerError",
+            "safeName": "getSpeechRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_internal_server_error",
+            "safeName": "get_speech_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestInternalServerError",
+            "safeName": "GetSpeechRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetSpeechRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetSpeechRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getSpeechRequestInternalServerError",
+            "safeName": "getSpeechRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_speech_request_internal_server_error",
+            "safeName": "get_speech_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_SPEECH_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetSpeechRequestInternalServerError",
+            "safeName": "GetSpeechRequestInternalServerError"
+          }
+        },
+        "wireValue": "GetSpeechRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    },
+    "GetStreamRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "GetStreamRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestBadRequestError",
+            "safeName": "getStreamRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_bad_request_error",
+            "safeName": "get_stream_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestBadRequestError",
+            "safeName": "GetStreamRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetStreamRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetStreamRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestBadRequestError",
+            "safeName": "getStreamRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_bad_request_error",
+            "safeName": "get_stream_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "GET_STREAM_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestBadRequestError",
+            "safeName": "GetStreamRequestBadRequestError"
+          }
+        },
+        "wireValue": "GetStreamRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid request params",
+      "examples": []
+    },
+    "GetStreamRequestPaymentRequiredError": {
+      "name": {
+        "name": {
+          "originalName": "GetStreamRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestPaymentRequiredError",
+            "safeName": "getStreamRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_payment_required_error",
+            "safeName": "get_stream_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestPaymentRequiredError",
+            "safeName": "GetStreamRequestPaymentRequiredError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetStreamRequestPaymentRequiredError"
+      },
+      "displayName": "PaymentRequiredError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetStreamRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestPaymentRequiredError",
+            "safeName": "getStreamRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_payment_required_error",
+            "safeName": "get_stream_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "GET_STREAM_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestPaymentRequiredError",
+            "safeName": "GetStreamRequestPaymentRequiredError"
+          }
+        },
+        "wireValue": "GetStreamRequestPaymentRequiredError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 402,
+      "docs": "Insufficient credits",
+      "examples": []
+    },
+    "GetStreamRequestForbiddenError": {
+      "name": {
+        "name": {
+          "originalName": "GetStreamRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestForbiddenError",
+            "safeName": "getStreamRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_forbidden_error",
+            "safeName": "get_stream_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestForbiddenError",
+            "safeName": "GetStreamRequestForbiddenError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetStreamRequestForbiddenError"
+      },
+      "displayName": "ForbiddenError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetStreamRequestForbiddenError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestForbiddenError",
+            "safeName": "getStreamRequestForbiddenError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_forbidden_error",
+            "safeName": "get_stream_request_forbidden_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR",
+            "safeName": "GET_STREAM_REQUEST_FORBIDDEN_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestForbiddenError",
+            "safeName": "GetStreamRequestForbiddenError"
+          }
+        },
+        "wireValue": "GetStreamRequestForbiddenError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 403,
+      "docs": "Request access rejected",
+      "examples": []
+    },
+    "GetStreamRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "GetStreamRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestInternalServerError",
+            "safeName": "getStreamRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_internal_server_error",
+            "safeName": "get_stream_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestInternalServerError",
+            "safeName": "GetStreamRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetStreamRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetStreamRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getStreamRequestInternalServerError",
+            "safeName": "getStreamRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_stream_request_internal_server_error",
+            "safeName": "get_stream_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_STREAM_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetStreamRequestInternalServerError",
+            "safeName": "GetStreamRequestInternalServerError"
+          }
+        },
+        "wireValue": "GetStreamRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    },
+    "GetVoicesRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "GetVoicesRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getVoicesRequestNotFoundError",
+            "safeName": "getVoicesRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_voices_request_not_found_error",
+            "safeName": "get_voices_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetVoicesRequestNotFoundError",
+            "safeName": "GetVoicesRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetVoicesRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetVoicesRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "getVoicesRequestNotFoundError",
+            "safeName": "getVoicesRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_voices_request_not_found_error",
+            "safeName": "get_voices_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "GET_VOICES_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetVoicesRequestNotFoundError",
+            "safeName": "GetVoicesRequestNotFoundError"
+          }
+        },
+        "wireValue": "GetVoicesRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "No voices found",
+      "examples": []
+    },
+    "GetVoicesRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "GetVoicesRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getVoicesRequestInternalServerError",
+            "safeName": "getVoicesRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_voices_request_internal_server_error",
+            "safeName": "get_voices_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetVoicesRequestInternalServerError",
+            "safeName": "GetVoicesRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "GetVoicesRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "GetVoicesRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "getVoicesRequestInternalServerError",
+            "safeName": "getVoicesRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "get_voices_request_internal_server_error",
+            "safeName": "get_voices_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "GET_VOICES_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "GetVoicesRequestInternalServerError",
+            "safeName": "GetVoicesRequestInternalServerError"
+          }
+        },
+        "wireValue": "GetVoicesRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    },
+    "CreateVoiceRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "CreateVoiceRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestBadRequestError",
+            "safeName": "createVoiceRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_bad_request_error",
+            "safeName": "create_voice_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestBadRequestError",
+            "safeName": "CreateVoiceRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "CreateVoiceRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "CreateVoiceRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestBadRequestError",
+            "safeName": "createVoiceRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_bad_request_error",
+            "safeName": "create_voice_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestBadRequestError",
+            "safeName": "CreateVoiceRequestBadRequestError"
+          }
+        },
+        "wireValue": "CreateVoiceRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Invalid request params",
+      "examples": []
+    },
+    "CreateVoiceRequestPaymentRequiredError": {
+      "name": {
+        "name": {
+          "originalName": "CreateVoiceRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestPaymentRequiredError",
+            "safeName": "createVoiceRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_payment_required_error",
+            "safeName": "create_voice_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestPaymentRequiredError",
+            "safeName": "CreateVoiceRequestPaymentRequiredError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "CreateVoiceRequestPaymentRequiredError"
+      },
+      "displayName": "PaymentRequiredError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "CreateVoiceRequestPaymentRequiredError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestPaymentRequiredError",
+            "safeName": "createVoiceRequestPaymentRequiredError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_payment_required_error",
+            "safeName": "create_voice_request_payment_required_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_PAYMENT_REQUIRED_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestPaymentRequiredError",
+            "safeName": "CreateVoiceRequestPaymentRequiredError"
+          }
+        },
+        "wireValue": "CreateVoiceRequestPaymentRequiredError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 402,
+      "docs": "Current billing plan does not have access to voice cloning",
+      "examples": []
+    },
+    "CreateVoiceRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "CreateVoiceRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestInternalServerError",
+            "safeName": "createVoiceRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_internal_server_error",
+            "safeName": "create_voice_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestInternalServerError",
+            "safeName": "CreateVoiceRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "CreateVoiceRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "CreateVoiceRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "createVoiceRequestInternalServerError",
+            "safeName": "createVoiceRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "create_voice_request_internal_server_error",
+            "safeName": "create_voice_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "CREATE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateVoiceRequestInternalServerError",
+            "safeName": "CreateVoiceRequestInternalServerError"
+          }
+        },
+        "wireValue": "CreateVoiceRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    },
+    "DeleteVoiceRequestBadRequestError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteVoiceRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestBadRequestError",
+            "safeName": "deleteVoiceRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_bad_request_error",
+            "safeName": "delete_voice_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestBadRequestError",
+            "safeName": "DeleteVoiceRequestBadRequestError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteVoiceRequestBadRequestError"
+      },
+      "displayName": "BadRequestError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteVoiceRequestBadRequestError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestBadRequestError",
+            "safeName": "deleteVoiceRequestBadRequestError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_bad_request_error",
+            "safeName": "delete_voice_request_bad_request_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_BAD_REQUEST_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestBadRequestError",
+            "safeName": "DeleteVoiceRequestBadRequestError"
+          }
+        },
+        "wireValue": "DeleteVoiceRequestBadRequestError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 400,
+      "docs": "Missing or invalid voice ID",
+      "examples": []
+    },
+    "DeleteVoiceRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteVoiceRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestNotFoundError",
+            "safeName": "deleteVoiceRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_not_found_error",
+            "safeName": "delete_voice_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestNotFoundError",
+            "safeName": "DeleteVoiceRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteVoiceRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteVoiceRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestNotFoundError",
+            "safeName": "deleteVoiceRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_not_found_error",
+            "safeName": "delete_voice_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestNotFoundError",
+            "safeName": "DeleteVoiceRequestNotFoundError"
+          }
+        },
+        "wireValue": "DeleteVoiceRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "Voice not found",
+      "examples": []
+    },
+    "DeleteVoiceRequestInternalServerError": {
+      "name": {
+        "name": {
+          "originalName": "DeleteVoiceRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestInternalServerError",
+            "safeName": "deleteVoiceRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_internal_server_error",
+            "safeName": "delete_voice_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestInternalServerError",
+            "safeName": "DeleteVoiceRequestInternalServerError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "DeleteVoiceRequestInternalServerError"
+      },
+      "displayName": "InternalServerError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "DeleteVoiceRequestInternalServerError",
+          "camelCase": {
+            "unsafeName": "deleteVoiceRequestInternalServerError",
+            "safeName": "deleteVoiceRequestInternalServerError"
+          },
+          "snakeCase": {
+            "unsafeName": "delete_voice_request_internal_server_error",
+            "safeName": "delete_voice_request_internal_server_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR",
+            "safeName": "DELETE_VOICE_REQUEST_INTERNAL_SERVER_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "DeleteVoiceRequestInternalServerError",
+            "safeName": "DeleteVoiceRequestInternalServerError"
+          }
+        },
+        "wireValue": "DeleteVoiceRequestInternalServerError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 500,
+      "docs": "Internal server error",
+      "examples": []
+    }
+  },
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],

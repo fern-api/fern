@@ -201,7 +201,32 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "authGetTokenExample",
