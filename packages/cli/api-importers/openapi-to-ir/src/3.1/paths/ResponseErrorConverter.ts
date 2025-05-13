@@ -41,7 +41,37 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     public convert(): ResponseErrorConverter.Output | undefined {
         if (!this.responseError.content) {
             // TODO: Handle 204 in a first class manner.
-            return undefined;
+            const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode];
+            if (errorName == null) {
+                this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
+                return undefined;
+            }
+
+            const errorId = this.context.enableUniqueErrorsPerEndpoint
+                ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
+                : errorName;
+
+            const error: ResponseError = {
+                error: {
+                    name: this.context.casingsGenerator.generateName(errorId),
+                    fernFilepath: {
+                        allParts: [],
+                        packagePath: [],
+                        file: undefined
+                    },
+                    errorId
+                },
+                docs: this.responseError.description
+            };
+
+            return {
+                error,
+                errorType: TypeReference.unknown(),
+                displayName: errorName,
+                statusCode: this.statusCode,
+                inlinedTypes: {},
+                examples: {}
+            };
         }
 
         const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes("json"));
