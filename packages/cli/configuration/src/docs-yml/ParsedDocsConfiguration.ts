@@ -167,7 +167,11 @@ export interface ProductInfo {
     icon: string;
 }
 
-export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation | ProductGroupDocsNavigation;
+export type DocsNavigationConfiguration =
+    | UntabbedDocsNavigation
+    | TabbedDocsNavigation
+    | VersionedDocsNavigation
+    | ProductGroupDocsNavigation;
 
 export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
 
