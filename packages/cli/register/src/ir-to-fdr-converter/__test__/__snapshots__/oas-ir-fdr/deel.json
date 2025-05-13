@@ -16983,7 +16983,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/eor/validations/",
+              "path": "/eor/validations/US",
               "pathParameters": {
                 "country_code": "US"
               },
@@ -19724,7 +19724,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/preview",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -19912,7 +19912,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/amendments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20125,7 +20125,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/terminations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20301,7 +20301,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/premium",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -20545,7 +20545,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/premium",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21132,7 +21132,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21526,7 +21526,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21751,7 +21751,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/documents",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -21975,7 +21975,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/documents",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22150,7 +22150,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/alternate_emails",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22356,7 +22356,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/signatures",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22532,7 +22532,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/archive",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22736,7 +22736,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -22940,7 +22940,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invitations",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23139,7 +23139,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/final-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23712,7 +23712,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -23936,7 +23936,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -24157,7 +24157,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/many/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -24418,7 +24418,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/foo/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "task_id": "foo"
@@ -24673,7 +24673,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/tasks/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "task_id": "foo"
@@ -24959,7 +24959,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/timesheets",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -25829,7 +25829,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26132,7 +26132,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26336,7 +26336,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26555,7 +26555,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/timesheets/",
+              "path": "/timesheets/42/reviews",
               "pathParameters": {
                 "timesheet_id": 42
               },
@@ -26969,7 +26969,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -27205,7 +27205,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -27429,7 +27429,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -27665,7 +27665,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -27888,7 +27888,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/foo/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "milestone_id": "foo"
@@ -28106,7 +28106,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/milestones/many/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28324,7 +28324,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28572,7 +28572,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -28794,7 +28794,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/off-cycle-payments/foo",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "offcycle_payment_id": "foo"
@@ -28995,7 +28995,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -29406,7 +29406,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -29846,7 +29846,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "timeoff_id": "12345"
@@ -30272,7 +30272,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/time-offs/12345",
               "pathParameters": {
                 "contract_id": "37nex2x",
                 "timeoff_id": "12345"
@@ -30423,7 +30423,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/entitlements",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -31582,7 +31582,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/time-offs/",
+              "path": "/time-offs/12345/review",
               "pathParameters": {
                 "timeoff_id": "12345"
               },
@@ -31906,7 +31906,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/contracts/",
+              "path": "/contracts/37nex2x/invoice-adjustments",
               "pathParameters": {
                 "contract_id": "37nex2x"
               },
@@ -32818,7 +32818,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -33022,7 +33022,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -33239,7 +33239,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/invoice-adjustments/",
+              "path": "/invoice-adjustments/42/reviews",
               "pathParameters": {
                 "invoice_adjustment_id": 42
               },
@@ -35805,7 +35805,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/invoices/",
+              "path": "/invoices/42/download",
               "pathParameters": {
                 "invoice_id": 42
               },
@@ -35998,7 +35998,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/billing/",
+              "path": "/billing/42/download",
               "pathParameters": {
                 "invoice_id": 42
               },
@@ -36433,7 +36433,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/",
+              "path": "/payments/foo/breakdown",
               "pathParameters": {
                 "payment_id": "foo"
               },
@@ -37707,7 +37707,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37908,7 +37908,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38093,7 +38093,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },

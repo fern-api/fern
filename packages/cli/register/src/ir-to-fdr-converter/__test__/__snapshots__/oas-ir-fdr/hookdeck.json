@@ -17578,7 +17578,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -17817,7 +17817,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -17984,7 +17984,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -18110,7 +18110,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo/disable",
               "pathParameters": {
                 "id": "foo"
               },
@@ -18272,7 +18272,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-triggers/",
+              "path": "/issue-triggers/foo/enable",
               "pathParameters": {
                 "id": "foo"
               },
@@ -18698,7 +18698,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/attempts/",
+              "path": "/attempts/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19394,7 +19394,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19647,7 +19647,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19810,7 +19810,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -19985,7 +19985,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bookmarks/",
+              "path": "/bookmarks/foo/trigger",
               "pathParameters": {
                 "id": "foo"
               },
@@ -20954,7 +20954,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21239,7 +21239,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21394,7 +21394,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -21540,7 +21540,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/destinations/",
+              "path": "/destinations/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22162,7 +22162,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22338,7 +22338,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/raw_body",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22464,7 +22464,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/retry",
               "pathParameters": {
                 "id": "foo"
               },
@@ -22690,7 +22690,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/events/",
+              "path": "/events/foo/mute",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23491,7 +23491,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/events/retry/",
+              "path": "/bulk/events/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23645,7 +23645,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/events/retry/",
+              "path": "/bulk/events/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -24424,7 +24424,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/ignored-events/retry/",
+              "path": "/bulk/ignored-events/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -24578,7 +24578,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/ignored-events/retry/",
+              "path": "/bulk/ignored-events/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25172,7 +25172,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25418,7 +25418,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25583,7 +25583,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25739,7 +25739,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo/attach/foo",
               "pathParameters": {
                 "id": "foo",
                 "source_id": "foo"
@@ -25896,7 +25896,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/integrations/",
+              "path": "/integrations/foo/detach/foo",
               "pathParameters": {
                 "id": "foo",
                 "source_id": "foo"
@@ -26760,7 +26760,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -27079,7 +27079,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -27268,7 +27268,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -27862,7 +27862,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -28034,7 +28034,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/raw_body",
               "pathParameters": {
                 "id": "foo"
               },
@@ -28212,7 +28212,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/retry",
               "pathParameters": {
                 "id": "foo"
               },
@@ -28760,7 +28760,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/events",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29057,7 +29057,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/requests/",
+              "path": "/requests/foo/ignored_events",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29846,7 +29846,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/requests/retry/",
+              "path": "/bulk/requests/retry/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30000,7 +30000,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bulk/requests/retry/",
+              "path": "/bulk/requests/retry/foo/cancel",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30850,7 +30850,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31100,7 +31100,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31259,7 +31259,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31413,7 +31413,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/rulesets/",
+              "path": "/rulesets/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32227,7 +32227,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32453,7 +32453,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32614,7 +32614,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32770,7 +32770,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/sources/",
+              "path": "/sources/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33725,7 +33725,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33944,7 +33944,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34446,7 +34446,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo/executions",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34675,7 +34675,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transformations/",
+              "path": "/transformations/foo/executions/foo",
               "pathParameters": {
                 "id": "foo",
                 "execution_id": "foo"
@@ -36084,7 +36084,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36445,7 +36445,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36716,7 +36716,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/archive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36982,7 +36982,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/unarchive",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37248,7 +37248,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/pause",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37514,7 +37514,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/webhooks/",
+              "path": "/webhooks/foo/unpause",
               "pathParameters": {
                 "id": "foo"
               },

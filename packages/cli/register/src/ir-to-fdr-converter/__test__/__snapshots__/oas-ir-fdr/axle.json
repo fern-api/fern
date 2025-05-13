@@ -1622,7 +1622,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/accounts/",
+              "path": "/accounts/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -1790,7 +1790,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/policies/",
+              "path": "/policies/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -2060,7 +2060,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/carriers/",
+              "path": "/carriers/foo",
               "pathParameters": {
                 "id": "foo"
               },

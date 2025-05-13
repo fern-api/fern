@@ -5182,7 +5182,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -5677,7 +5677,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6191,7 +6191,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/srt",
               "pathParameters": {
                 "transcript_id": "foo",
                 "subtitle_format": "srt"
@@ -6335,7 +6335,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/sentences",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6528,7 +6528,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/paragraphs",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6735,7 +6735,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/word-search",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -6924,7 +6924,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/transcript/",
+              "path": "/v2/transcript/foo/redacted-audio",
               "pathParameters": {
                 "transcript_id": "foo"
               },
@@ -7937,7 +7937,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/lemur/v3/",
+              "path": "/lemur/v3/foo",
               "pathParameters": {
                 "request_id": "foo"
               },

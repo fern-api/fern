@@ -13656,7 +13656,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/algo/orders/",
+              "path": "/algo/orders/foo",
               "pathParameters": {
                 "algo_id": "foo"
               },
@@ -13772,7 +13772,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/algo/orders/",
+              "path": "/algo/orders/foo",
               "pathParameters": {
                 "algo_id": "foo"
               },
@@ -14166,7 +14166,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bbo/",
+              "path": "/bbo/foo",
               "pathParameters": {
                 "market": "foo"
               },
@@ -14987,7 +14987,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/orderbook/",
+              "path": "/orderbook/foo",
               "pathParameters": {
                 "market": "foo"
               },

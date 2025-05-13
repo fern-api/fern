@@ -8586,7 +8586,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/iam/members",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -8755,7 +8755,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "member": "foo"
@@ -8933,7 +8933,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "member": "foo"
@@ -9099,7 +9099,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/iam/test",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -9444,7 +9444,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -9584,7 +9584,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -9715,7 +9715,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/join",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -9887,7 +9887,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/invite",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -10046,7 +10046,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/invite",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -10191,7 +10191,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/invite/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "org_invite_id": "foo"
@@ -10300,7 +10300,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/domains",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -10455,7 +10455,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/domains",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -10605,7 +10605,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/domains/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "domain_id": "foo"
@@ -10751,7 +10751,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/avatar",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -11237,7 +11237,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -11397,7 +11397,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -11553,7 +11553,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -11746,7 +11746,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -11873,7 +11873,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -12062,7 +12062,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -12263,7 +12263,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/avatar",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -12437,7 +12437,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/iam/members",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -12624,7 +12624,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -12820,7 +12820,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -13004,7 +13004,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/iam/test",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -13216,7 +13216,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -13412,7 +13412,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -13604,7 +13604,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -13802,7 +13802,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -13993,7 +13993,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/stats",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -14203,7 +14203,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/chat",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -14407,7 +14407,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/query",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -14563,7 +14563,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/update_summary",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -14741,7 +14741,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/add",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -14953,7 +14953,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/remove",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -15164,7 +15164,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/iam/members",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -15369,7 +15369,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -15583,7 +15583,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -15785,7 +15785,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/collection/foo/iam/test",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -16060,7 +16060,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -16284,7 +16284,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -16492,7 +16492,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/upload",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -16701,7 +16701,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/create/status/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -16887,7 +16887,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/query",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17054,7 +17054,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17258,7 +17258,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17457,7 +17457,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17631,7 +17631,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/embeddings",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17801,7 +17801,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/embedding/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -17976,7 +17976,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/iam/members",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -18181,7 +18181,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -18395,7 +18395,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -18597,7 +18597,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/document/foo/iam/test",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -18863,7 +18863,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19013,7 +19013,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19159,7 +19159,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/config",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19329,7 +19329,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/config",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19642,7 +19642,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/query",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19788,7 +19788,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/iam/members",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -19957,7 +19957,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/iam/members/foo",
               "pathParameters": {
                 "chat_id": "foo",
                 "member": "foo"
@@ -20135,7 +20135,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/iam/members/foo",
               "pathParameters": {
                 "chat_id": "foo",
                 "member": "foo"
@@ -20301,7 +20301,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/chat/",
+              "path": "/chat/foo/iam/test",
               "pathParameters": {
                 "chat_id": "foo"
               },
@@ -20475,7 +20475,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -20645,7 +20645,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -20848,7 +20848,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -21002,7 +21002,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -21148,7 +21148,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -21324,7 +21324,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -21538,7 +21538,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -21726,7 +21726,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -21900,7 +21900,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/box/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -22150,7 +22150,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -22320,7 +22320,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -22523,7 +22523,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -22677,7 +22677,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -22823,7 +22823,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -22999,7 +22999,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -23213,7 +23213,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -23401,7 +23401,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -23575,7 +23575,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/confluence/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -23825,7 +23825,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -23995,7 +23995,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -24198,7 +24198,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -24352,7 +24352,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -24498,7 +24498,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -24674,7 +24674,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -24888,7 +24888,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -25076,7 +25076,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -25250,7 +25250,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/dropbox/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -25500,7 +25500,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -25670,7 +25670,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -25873,7 +25873,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -26027,7 +26027,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -26173,7 +26173,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -26349,7 +26349,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -26563,7 +26563,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -26751,7 +26751,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -26925,7 +26925,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/gdrive/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -27175,7 +27175,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -27345,7 +27345,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -27548,7 +27548,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -27702,7 +27702,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -27848,7 +27848,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -28024,7 +28024,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -28238,7 +28238,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -28426,7 +28426,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -28600,7 +28600,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/notion/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -28850,7 +28850,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -29020,7 +29020,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -29223,7 +29223,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -29377,7 +29377,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -29523,7 +29523,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -29699,7 +29699,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -29913,7 +29913,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -30101,7 +30101,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -30275,7 +30275,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/onedrive/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -30525,7 +30525,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/list-files",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -30695,7 +30695,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/fetch",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -30898,7 +30898,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -31052,7 +31052,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/authorize",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -31198,7 +31198,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -31374,7 +31374,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -31588,7 +31588,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/run",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -31776,7 +31776,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -31950,7 +31950,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/datasource/sharepoint/foo/config",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -32282,7 +32282,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/internal/project/",
+              "path": "/internal/project/foo/register_oauth_client",
               "pathParameters": {
                 "project_id": "foo"
               },
@@ -32664,7 +32664,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/scrape",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -32778,7 +32778,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/scrape/start",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -32948,7 +32948,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/scrape/run/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -33119,7 +33119,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/scrape/runs",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -33325,7 +33325,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/compose",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -33472,7 +33472,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/compose/generate",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -33639,7 +33639,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/compose/update_section",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -33810,7 +33810,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/compose/section_talking_points",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -33973,7 +33973,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/compose/topic",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"
@@ -34175,7 +34175,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
@@ -34403,7 +34403,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
@@ -34661,7 +34661,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -34890,7 +34890,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -35166,7 +35166,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74/run",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -35619,7 +35619,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/task/foo/iam/members",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -35824,7 +35824,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/task/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -36038,7 +36038,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/task/foo/iam/members/foo",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -36240,7 +36240,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/task/foo/iam/test",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo",
@@ -36441,7 +36441,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task/01909843-3596-da54-4756-28af46917e74/run/129c78d7-2e1f-4a77-adf3-68d69b0a3c71",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -36666,7 +36666,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
@@ -36862,7 +36862,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001"
@@ -37068,7 +37068,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -37265,7 +37265,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/123e4567-e89b-12d3-a456-426614174000/project/123e4567-e89b-12d3-a456-426614174001/task_forwarder/01909843-3596-da54-4756-28af46917e74",
               "pathParameters": {
                 "org_id": "123e4567-e89b-12d3-a456-426614174000",
                 "project_id": "123e4567-e89b-12d3-a456-426614174001",
@@ -37720,7 +37720,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/org/",
+              "path": "/org/foo/project/foo/guardrail",
               "pathParameters": {
                 "org_id": "foo",
                 "project_id": "foo"

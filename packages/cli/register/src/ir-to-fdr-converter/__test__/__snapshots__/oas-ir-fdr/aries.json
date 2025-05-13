@@ -18576,7 +18576,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/close",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18660,7 +18660,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/fetch",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18757,7 +18757,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/perform",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18856,7 +18856,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/request",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18953,7 +18953,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/send-menu",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -19889,7 +19889,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20015,7 +20015,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20141,7 +20141,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/accept-invitation",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20282,7 +20282,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/accept-request",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20408,7 +20408,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/endpoints",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20516,7 +20516,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/establish-inbound/foo",
               "pathParameters": {
                 "conn_id": "foo",
                 "ref_id": "foo"
@@ -20615,7 +20615,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/metadata",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20716,7 +20716,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/metadata",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20836,7 +20836,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/send-message",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20952,7 +20952,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/send-ping",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -21083,7 +21083,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/start-introduction",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -21463,7 +21463,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential-definitions/",
+              "path": "/credential-definitions/foo",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -21564,7 +21564,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential-definitions/",
+              "path": "/credential-definitions/foo/write_record",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -21674,7 +21674,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/mime-types/",
+              "path": "/credential/mime-types/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -21795,7 +21795,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/revoked/",
+              "path": "/credential/revoked/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -21883,7 +21883,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/w3c/",
+              "path": "/credential/w3c/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22023,7 +22023,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/w3c/",
+              "path": "/credential/w3c/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22107,7 +22107,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/",
+              "path": "/credential/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22209,7 +22209,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/credential/",
+              "path": "/credential/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -23155,7 +23155,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/didexchange/",
+              "path": "/didexchange/foo/accept-invitation",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -23310,7 +23310,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/didexchange/",
+              "path": "/didexchange/foo/accept-request",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -24371,7 +24371,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24496,7 +24496,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24594,7 +24594,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/issue",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24741,7 +24741,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/problem-report",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24848,7 +24848,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/send-offer",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24981,7 +24981,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/send-request",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -25118,7 +25118,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/store",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26432,7 +26432,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26559,7 +26559,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26657,7 +26657,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/issue",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26806,7 +26806,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/problem-report",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26913,7 +26913,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/send-offer",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -27045,7 +27045,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/send-request",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -27185,7 +27185,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/store",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -29275,7 +29275,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/keylists/",
+              "path": "/mediation/keylists/foo/send-keylist-query",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -29390,7 +29390,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/keylists/",
+              "path": "/mediation/keylists/foo/send-keylist-update",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -29540,7 +29540,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/request/",
+              "path": "/mediation/request/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -29899,7 +29899,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30024,7 +30024,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30162,7 +30162,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo/deny",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30292,7 +30292,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo/grant",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30405,7 +30405,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/update-keylist/",
+              "path": "/mediation/update-keylist/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -30525,7 +30525,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/mediation/",
+              "path": "/mediation/foo/default-mediator",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30782,7 +30782,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -30893,7 +30893,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -31025,7 +31025,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo/remove",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -31130,7 +31130,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo/token",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -32654,7 +32654,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -32775,7 +32775,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -32919,7 +32919,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/credentials",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33053,7 +33053,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/problem-report",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33160,7 +33160,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/send-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33303,7 +33303,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/send-request",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33435,7 +33435,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/verify-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34223,7 +34223,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34344,7 +34344,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34488,7 +34488,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/credentials",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34622,7 +34622,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/problem-report",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34729,7 +34729,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/send-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34902,7 +34902,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/send-request",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -35034,7 +35034,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/verify-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -35563,7 +35563,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/resolver/resolve/",
+              "path": "/resolver/resolve/foo",
               "pathParameters": {
                 "did": "foo"
               },
@@ -35664,7 +35664,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/active-registry/",
+              "path": "/revocation/active-registry/foo",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -36467,7 +36467,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -36607,7 +36607,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -36770,7 +36770,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/definition",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -36928,7 +36928,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/entry",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37066,7 +37066,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/fix-revocation-entry-state",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37161,7 +37161,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37250,7 +37250,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued/details",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37385,7 +37385,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued/indy_recs",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37483,7 +37483,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/set-state",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37601,7 +37601,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file-less-deets",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37674,7 +37674,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37751,7 +37751,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -38198,7 +38198,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/schemas/",
+              "path": "/schemas/foo",
               "pathParameters": {
                 "schema_id": "foo"
               },
@@ -38307,7 +38307,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/schemas/",
+              "path": "/schemas/foo/write_record",
               "pathParameters": {
                 "schema_id": "foo"
               },
@@ -38425,7 +38425,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transaction/",
+              "path": "/transaction/foo/resend",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -38989,7 +38989,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/set-endorser-info",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -39093,7 +39093,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/set-endorser-role",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -39183,7 +39183,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39335,7 +39335,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/cancel",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39487,7 +39487,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/refuse",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39639,7 +39639,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/write",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -40573,7 +40573,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/transactions/",
+            "path": "/transactions/foo/endorse",
             "pathParameters": {
               "tran_id": "foo"
             },

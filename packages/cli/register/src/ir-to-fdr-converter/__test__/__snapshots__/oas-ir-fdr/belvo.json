@@ -30224,7 +30224,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/links/",
+              "path": "/api/links/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30461,7 +30461,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/links/",
+              "path": "/api/links/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30608,7 +30608,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/links/",
+              "path": "/api/links/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30815,7 +30815,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/links/",
+              "path": "/api/links/e4bb1afb-4a4f-4dd6-8be0-e615d233185b/",
               "pathParameters": {
                 "id": "e4bb1afb-4a4f-4dd6-8be0-e615d233185b"
               },
@@ -32326,7 +32326,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/accounts/",
+              "path": "/api/accounts/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32496,7 +32496,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/accounts/",
+              "path": "/api/accounts/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34243,7 +34243,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/transactions/",
+              "path": "/api/transactions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34457,7 +34457,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/transactions/",
+              "path": "/api/transactions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -35714,7 +35714,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/balances/",
+              "path": "/api/balances/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -35898,7 +35898,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/balances/",
+              "path": "/api/balances/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36441,7 +36441,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/institutions/",
+              "path": "/api/institutions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37513,7 +37513,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/owners/",
+              "path": "/api/owners/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37663,7 +37663,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/owners/",
+              "path": "/api/owners/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -39168,7 +39168,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/invoices/",
+              "path": "/api/invoices/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -39396,7 +39396,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/invoices/",
+              "path": "/api/invoices/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -40944,7 +40944,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-returns/",
+              "path": "/api/tax-returns/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -41466,7 +41466,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-returns/",
+              "path": "/api/tax-returns/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -42373,7 +42373,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-status/",
+              "path": "/api/tax-status/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -42633,7 +42633,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-status/",
+              "path": "/api/tax-status/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -43284,7 +43284,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-compliance-status/",
+              "path": "/api/tax-compliance-status/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -43416,7 +43416,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-compliance-status/",
+              "path": "/api/tax-compliance-status/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -44446,7 +44446,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/incomes/",
+              "path": "/api/incomes/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -44648,7 +44648,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/incomes/",
+              "path": "/api/incomes/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -46125,7 +46125,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/recurring-expenses/",
+              "path": "/api/recurring-expenses/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -46464,7 +46464,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/recurring-expenses/",
+              "path": "/api/recurring-expenses/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -47533,7 +47533,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/investments/portfolios/",
+              "path": "/investments/portfolios/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -47747,7 +47747,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/investments/portfolios/",
+              "path": "/investments/portfolios/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -48565,7 +48565,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/receivables/transactions/",
+              "path": "/receivables/transactions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -48739,7 +48739,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/receivables/transactions/",
+              "path": "/receivables/transactions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -49974,7 +49974,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/risk-insights/",
+              "path": "/api/risk-insights/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -50242,7 +50242,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/risk-insights/",
+              "path": "/api/risk-insights/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -50964,7 +50964,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-retentions/",
+              "path": "/api/tax-retentions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -51138,7 +51138,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-retentions/",
+              "path": "/api/tax-retentions/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -52124,7 +52124,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-declarations/",
+              "path": "/api/tax-declarations/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -52388,7 +52388,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/tax-declarations/",
+              "path": "/api/tax-declarations/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -53144,7 +53144,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/employment-records/",
+              "path": "/api/employment-records/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -53376,7 +53376,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/api/employment-records/",
+              "path": "/api/employment-records/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -54668,7 +54668,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/webhooks/",
+              "path": "/payments/webhooks/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -54800,7 +54800,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/webhooks/",
+              "path": "/payments/webhooks/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -55216,7 +55216,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/institutions/",
+              "path": "/payments/institutions/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -55880,7 +55880,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/customers/",
+              "path": "/payments/customers/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -56607,7 +56607,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/bank-accounts/",
+              "path": "/payments/bank-accounts/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -57526,7 +57526,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/payment-links/",
+              "path": "/payments/payment-links/YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU/",
               "pathParameters": {
                 "access_token": "YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU"
               },
@@ -59195,7 +59195,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/payment-intents/",
+              "path": "/payments/payment-intents/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -59703,7 +59703,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/payment-intents/",
+              "path": "/payments/payment-intents/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },
@@ -60644,7 +60644,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/payments/transactions/",
+              "path": "/payments/transactions/a3b92311-1888-449f-acaa-49ae28d68fcd/",
               "pathParameters": {
                 "id": "a3b92311-1888-449f-acaa-49ae28d68fcd"
               },

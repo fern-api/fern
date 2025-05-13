@@ -11310,7 +11310,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/foo",
               "pathParameters": {
                 "project_id": "foo"
               },
@@ -11446,7 +11446,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11590,7 +11590,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11728,7 +11728,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -11889,7 +11889,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/balances/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "balance_id": "123456-7890-1234-5678-901234"
@@ -12010,7 +12010,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/models",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12190,7 +12190,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/undefined/models/undefined",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
@@ -12328,7 +12328,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12493,7 +12493,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -12650,7 +12650,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -12815,7 +12815,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "key_id": "123456789012345678901234"
@@ -12932,7 +12932,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13074,7 +13074,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13209,7 +13209,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13363,7 +13363,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "member_id": "123456789012345678901234"
@@ -13462,7 +13462,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13603,7 +13603,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -13748,7 +13748,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe@example.com",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "email": "john.doe@example.com"
@@ -13865,7 +13865,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/leave",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14052,7 +14052,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14192,7 +14192,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "request_id": "123456-7890-1234-5678-901234"
@@ -14369,7 +14369,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14527,7 +14527,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/fields",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14729,7 +14729,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/usage/breakdown",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -14920,7 +14920,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/purchases",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15209,7 +15209,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/models/",
+              "path": "/v1/models/af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
               "pathParameters": {
                 "model_id": "af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291"
               },
@@ -15345,7 +15345,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15503,7 +15503,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234"
               },
@@ -15636,7 +15636,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
@@ -15795,7 +15795,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v1/projects/",
+              "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
                 "project_id": "123456-7890-1234-5678-901234",
                 "distribution_credentials_id": "8b36cfd0-472f-4a21-833f-2d6343c3a2f3"
