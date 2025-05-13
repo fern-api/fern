@@ -1,4 +1,4 @@
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 
 import { docsYml } from "@fern-api/configuration-loader";
@@ -343,7 +343,9 @@ export class ApiReferenceNodeConverter {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
         // We need to determine which one it is.
-        const subpackage = this.#holder.getSubpackageByIdOrLocator(unknownIdentifier);
+        const subpackage =
+            this.#holder.getSubpackageByIdOrLocator(unknownIdentifier) ??
+            this.#holder.getSubpackageByIdOrLocator(camelCase(unknownIdentifier));
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
