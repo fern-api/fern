@@ -155,9 +155,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsSearchExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/foo/search",
               "pathParameters": {
                 "id": "foo",
                 "organization_id": "foo"
@@ -244,9 +244,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "user_id": "foo"
             },
@@ -340,9 +340,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getOrganizationUserExample",
             "description": "",
-            "path": "/organizations/",
+            "path": "/organizations/foo/users/foo",
             "pathParameters": {
               "organization_id": "foo",
               "user_id": "foo"

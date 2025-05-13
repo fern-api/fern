@@ -72,7 +72,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getVndFernUserJsonVersion1Example",
             "description": "",
             "path": "/vnd.fern.user+json;version=1",
             "pathParameters": {},
@@ -134,7 +134,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getApplicationJsonExample",
             "description": "",
             "path": "/application-json",
             "pathParameters": {},

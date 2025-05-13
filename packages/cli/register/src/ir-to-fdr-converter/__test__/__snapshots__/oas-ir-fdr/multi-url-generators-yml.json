@@ -150,7 +150,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -242,9 +242,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserInformationExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -318,7 +318,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAuthenticationTokenExample",
             "description": "",
             "path": "/token",
             "pathParameters": {},

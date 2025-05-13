@@ -15,7 +15,7 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.constants import RESPONSE_VARIABLE
+from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -1562,10 +1562,10 @@ class EndpointFunctionGenerator:
                 if self._is_async:
                     body = [
                         AST.ForStatement(
-                            target=data_attribute,
+                            target=CHUNK_VARIABLE,
                             iterable=AST.Expression(f"{response_variable}.{data_attribute}"),
                             is_async=True,
-                            body=[AST.YieldStatement(AST.Expression(data_attribute))],
+                            body=[AST.YieldStatement(AST.Expression(CHUNK_VARIABLE))],
                         )
                     ]
                 else:

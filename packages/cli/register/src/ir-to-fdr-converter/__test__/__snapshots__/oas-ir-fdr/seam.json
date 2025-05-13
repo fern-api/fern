@@ -152,6 +152,32 @@
             }
           },
           {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
+            "description": "Collection of warnings associated with the access code, structured in a dictionary format. A unique \"warning_code\" keys each warning. Each warning entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the warning. \"created_at\" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "description": "Indicates whether Seam manages the access code.",
             "key": "is_managed",
             "valueType": {
@@ -372,6 +398,32 @@
               "value": {
                 "type": "string",
                 "format": "date-time"
+              }
+            }
+          },
+          {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
+            "description": "Collection of warnings associated with the access code, structured in a dictionary format. A unique \"warning_code\" keys each warning. Each warning entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the warning. \"created_at\" is a date that indicates when the warning was generated. This structure enables detailed tracking and timely response to potential issues that are not critical but that may require attention.",
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -2751,6 +2803,18 @@
               "type": "id",
               "value": "ActionAttemptOneOf25ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -3004,6 +3068,18 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf28ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
             }
           }
         ]
@@ -3259,6 +3335,18 @@
               "type": "id",
               "value": "ActionAttemptOneOf31ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -3512,6 +3600,18 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf34ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
             }
           }
         ]
@@ -3767,6 +3867,18 @@
               "type": "id",
               "value": "ActionAttemptOneOf37ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -4021,6 +4133,18 @@
               "type": "id",
               "value": "ActionAttemptOneOf40ActionType"
             }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -4274,6 +4398,18 @@
             "valueType": {
               "type": "id",
               "value": "ActionAttemptOneOf43ActionType"
+            }
+          },
+          {
+            "key": "result",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
             }
           }
         ]
@@ -4942,6 +5078,19 @@
             }
           },
           {
+            "description": "Collection of errors associated with the access code, structured in a dictionary format. A unique \"error_code\" keys each error. Each error entry is an object containing two fields: \"message\" and \"created_at.\" \"message\" is a string that describes the error. \"created_at\" is a date that indicates when the error was generated. This structure enables detailed tracking and timely response to critical issues.",
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "key": "automatic_heating_enabled",
             "valueType": {
               "type": "optional",
@@ -5072,47 +5221,25 @@
         ]
       }
     },
-    "ConnectWebviewCustomMetadata0": {
-      "name": "ConnectWebviewCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectWebviewCustomMetadata1": {
-      "name": "ConnectWebviewCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectWebviewCustomMetadata": {
       "name": "ConnectWebviewCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -5401,47 +5528,25 @@
         ]
       }
     },
-    "ConnectedAccountCustomMetadata0": {
-      "name": "ConnectedAccountCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectedAccountCustomMetadata1": {
-      "name": "ConnectedAccountCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectedAccountCustomMetadata": {
       "name": "ConnectedAccountCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -5507,6 +5612,30 @@
               "type": "primitive",
               "value": {
                 "type": "string"
+              }
+            }
+          },
+          {
+            "key": "errors",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
+            "key": "warnings",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -5831,47 +5960,25 @@
         ]
       }
     },
-    "DeviceCustomMetadata0": {
-      "name": "DeviceCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DeviceCustomMetadata1": {
-      "name": "DeviceCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DeviceCustomMetadata": {
       "name": "DeviceCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DeviceCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "DeviceCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DeviceCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "DeviceCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -9334,47 +9441,25 @@
         ]
       }
     },
-    "PhoneCustomMetadata0": {
-      "name": "PhoneCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "PhoneCustomMetadata1": {
-      "name": "PhoneCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "PhoneCustomMetadata": {
       "name": "PhoneCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "PhoneCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "PhoneCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "PhoneCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "PhoneCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -10454,68 +10539,35 @@
         ]
       }
     },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2": {
-      "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata": {
       "name": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsCreatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -10589,47 +10641,25 @@
         ]
       }
     },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ConnectWebviewsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -10766,47 +10796,25 @@
         ]
       }
     },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -10840,68 +10848,35 @@
         ]
       }
     },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2": {
-      "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata": {
       "name": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "ConnectedAccountsUpdatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -11419,47 +11394,25 @@
         ]
       }
     },
-    "DevicesListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DevicesListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DevicesListPostRequestBodySchemaCustomMetadataHas": {
       "name": "DevicesListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DevicesListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "DevicesListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -11626,68 +11579,35 @@
         ]
       }
     },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata0": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "maxLength": 500
-          }
-        }
-      }
-    },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata1": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "DevicesUpdatePostRequestBodySchemaCustomMetadata2": {
-      "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "null"
-          }
-        }
-      }
-    },
     "DevicesUpdatePostRequestBodySchemaCustomMetadata": {
       "name": "DevicesUpdatePostRequestBodySchemaCustomMetadata",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata0",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata0"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "maxLength": 500
+              }
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata1",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "DevicesUpdatePostRequestBodySchemaCustomMetadata2",
             "type": {
-              "type": "id",
-              "value": "DevicesUpdatePostRequestBodySchemaCustomMetadata2"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "null"
+              }
             }
           }
         ]
@@ -11751,48 +11671,26 @@
         ]
       }
     },
-    "EventsListPostRequestBodySchemaBetweenItems0": {
-      "name": "EventsListPostRequestBodySchemaBetweenItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "EventsListPostRequestBodySchemaBetweenItems1": {
-      "name": "EventsListPostRequestBodySchemaBetweenItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      }
-    },
     "EventsListPostRequestBodySchemaBetweenItems": {
       "name": "EventsListPostRequestBodySchemaBetweenItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItems0",
             "type": {
-              "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "EventsListPostRequestBodySchemaBetweenItems1",
             "type": {
-              "type": "id",
-              "value": "EventsListPostRequestBodySchemaBetweenItems1"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "date-time"
+              }
             }
           }
         ]
@@ -12666,47 +12564,25 @@
         ]
       }
     },
-    "LocksListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "LocksListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "LocksListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "LocksListPostRequestBodySchemaCustomMetadataHas": {
       "name": "LocksListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "LocksListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "LocksListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -13501,47 +13377,25 @@
         ]
       }
     },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ThermostatsListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "ThermostatsListPostRequestBodySchemaCustomMetadataHas": {
       "name": "ThermostatsListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "ThermostatsListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -16064,47 +15918,25 @@
         ]
       }
     },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1": {
-      "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas": {
       "name": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0",
             "type": {
-              "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1",
             "type": {
-              "type": "id",
-              "value": "DevicesUnmanagedListPostRequestBodySchemaCustomMetadataHas1"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
@@ -17155,7 +16987,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesCreateExample",
               "description": "",
               "path": "/access_codes/create",
               "pathParameters": {},
@@ -17496,7 +17328,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesCreateMultipleExample",
               "description": "",
               "path": "/access_codes/create_multiple",
               "pathParameters": {},
@@ -17674,7 +17506,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesDeleteExample",
               "description": "",
               "path": "/access_codes/delete",
               "pathParameters": {},
@@ -17786,7 +17618,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesGenerateCodeExample",
               "description": "",
               "path": "/access_codes/generate_code",
               "pathParameters": {},
@@ -17958,7 +17790,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesGetExample",
               "description": "",
               "path": "/access_codes/get",
               "pathParameters": {},
@@ -18129,7 +17961,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesListExample",
               "description": "",
               "path": "/access_codes/list",
               "pathParameters": {},
@@ -18273,7 +18105,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesPullBackupAccessCodeExample",
               "description": "",
               "path": "/access_codes/pull_backup_access_code",
               "pathParameters": {},
@@ -18623,7 +18455,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUpdateExample",
               "description": "",
               "path": "/access_codes/update",
               "pathParameters": {},
@@ -18748,7 +18580,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "actionAttemptsGetExample",
               "description": "",
               "path": "/action_attempts/get",
               "pathParameters": {},
@@ -18863,7 +18695,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "actionAttemptsListExample",
               "description": "",
               "path": "/action_attempts/list",
               "pathParameters": {},
@@ -19057,7 +18889,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsCreateExample",
               "description": "",
               "path": "/client_sessions/create",
               "pathParameters": {},
@@ -19185,7 +19017,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsDeleteExample",
               "description": "",
               "path": "/client_sessions/delete",
               "pathParameters": {},
@@ -19297,7 +19129,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsGetExample",
               "description": "",
               "path": "/client_sessions/get",
               "pathParameters": {},
@@ -19489,7 +19321,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsGetOrCreateExample",
               "description": "",
               "path": "/client_sessions/get_or_create",
               "pathParameters": {},
@@ -19676,7 +19508,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsGrantAccessExample",
               "description": "",
               "path": "/client_sessions/grant_access",
               "pathParameters": {},
@@ -19854,7 +19686,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsListExample",
               "description": "",
               "path": "/client_sessions/list",
               "pathParameters": {},
@@ -19986,7 +19818,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clientSessionsRevokeExample",
               "description": "",
               "path": "/client_sessions/revoke",
               "pathParameters": {},
@@ -20186,7 +20018,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectWebviewsCreateExample",
               "description": "",
               "path": "/connect_webviews/create",
               "pathParameters": {},
@@ -20330,7 +20162,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectWebviewsDeleteExample",
               "description": "",
               "path": "/connect_webviews/delete",
               "pathParameters": {},
@@ -20428,7 +20260,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectWebviewsGetExample",
               "description": "",
               "path": "/connect_webviews/get",
               "pathParameters": {},
@@ -20614,7 +20446,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectWebviewsListExample",
               "description": "",
               "path": "/connect_webviews/list",
               "pathParameters": {},
@@ -20785,7 +20617,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectedAccountsDeleteExample",
               "description": "",
               "path": "/connected_accounts/delete",
               "pathParameters": {},
@@ -20874,7 +20706,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectedAccountsGetExample",
               "description": "",
               "path": "/connected_accounts/get",
               "pathParameters": {},
@@ -21016,7 +20848,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectedAccountsListExample",
               "description": "",
               "path": "/connected_accounts/list",
               "pathParameters": {},
@@ -21179,7 +21011,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectedAccountsUpdateExample",
               "description": "",
               "path": "/connected_accounts/update",
               "pathParameters": {},
@@ -21321,7 +21153,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesDeleteExample",
               "description": "",
               "path": "/devices/delete",
               "pathParameters": {},
@@ -21434,7 +21266,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesGetExample",
               "description": "",
               "path": "/devices/get",
               "pathParameters": {},
@@ -21775,7 +21607,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesListExample",
               "description": "",
               "path": "/devices/list",
               "pathParameters": {},
@@ -21949,7 +21781,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesListDeviceProvidersExample",
               "description": "",
               "path": "/devices/list_device_providers",
               "pathParameters": {},
@@ -22120,7 +21952,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesUpdateExample",
               "description": "",
               "path": "/devices/update",
               "pathParameters": {},
@@ -22259,7 +22091,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "eventsGetExample",
               "description": "",
               "path": "/events/get",
               "pathParameters": {},
@@ -22508,7 +22340,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "eventsListExample",
               "description": "",
               "path": "/events/list",
               "pathParameters": {},
@@ -22659,7 +22491,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "locksGetExample",
               "description": "",
               "path": "/locks/get",
               "pathParameters": {},
@@ -23076,7 +22908,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "locksListExample",
               "description": "",
               "path": "/locks/list",
               "pathParameters": {},
@@ -23343,7 +23175,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "locksLockDoorExample",
               "description": "",
               "path": "/locks/lock_door",
               "pathParameters": {},
@@ -23468,7 +23300,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "locksUnlockDoorExample",
               "description": "",
               "path": "/locks/unlock_door",
               "pathParameters": {},
@@ -23590,7 +23422,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "networksGetExample",
               "description": "",
               "path": "/networks/get",
               "pathParameters": {},
@@ -23689,7 +23521,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "networksListExample",
               "description": "",
               "path": "/networks/list",
               "pathParameters": {},
@@ -23808,7 +23640,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "phonesDeactivateExample",
               "description": "",
               "path": "/phones/deactivate",
               "pathParameters": {},
@@ -23909,7 +23741,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "phonesListExample",
               "description": "",
               "path": "/phones/list",
               "pathParameters": {},
@@ -24150,7 +23982,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsCoolExample",
               "description": "",
               "path": "/thermostats/cool",
               "pathParameters": {},
@@ -24277,7 +24109,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsGetExample",
               "description": "",
               "path": "/thermostats/get",
               "pathParameters": {},
@@ -24484,7 +24316,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsHeatExample",
               "description": "",
               "path": "/thermostats/heat",
               "pathParameters": {},
@@ -24657,7 +24489,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsHeatCoolExample",
               "description": "",
               "path": "/thermostats/heat_cool",
               "pathParameters": {},
@@ -24940,7 +24772,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsListExample",
               "description": "",
               "path": "/thermostats/list",
               "pathParameters": {},
@@ -25127,7 +24959,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsOffExample",
               "description": "",
               "path": "/thermostats/off",
               "pathParameters": {},
@@ -25272,7 +25104,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsSetFanModeExample",
               "description": "",
               "path": "/thermostats/set_fan_mode",
               "pathParameters": {},
@@ -25391,7 +25223,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsUpdateExample",
               "description": "",
               "path": "/thermostats/update",
               "pathParameters": {},
@@ -25513,7 +25345,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesAddAcsUserExample",
               "description": "",
               "path": "/user_identities/add_acs_user",
               "pathParameters": {},
@@ -25666,7 +25498,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesCreateExample",
               "description": "",
               "path": "/user_identities/create",
               "pathParameters": {},
@@ -25780,7 +25612,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesDeleteExample",
               "description": "",
               "path": "/user_identities/delete",
               "pathParameters": {},
@@ -25869,7 +25701,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesGetExample",
               "description": "",
               "path": "/user_identities/get",
               "pathParameters": {},
@@ -25997,7 +25829,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesGrantAccessToDeviceExample",
               "description": "",
               "path": "/user_identities/grant_access_to_device",
               "pathParameters": {},
@@ -26100,7 +25932,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesListExample",
               "description": "",
               "path": "/user_identities/list",
               "pathParameters": {},
@@ -26218,7 +26050,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesListAccessibleDevicesExample",
               "description": "",
               "path": "/user_identities/list_accessible_devices",
               "pathParameters": {},
@@ -26476,7 +26308,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesListAcsSystemsExample",
               "description": "",
               "path": "/user_identities/list_acs_systems",
               "pathParameters": {},
@@ -26636,7 +26468,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesListAcsUsersExample",
               "description": "",
               "path": "/user_identities/list_acs_users",
               "pathParameters": {},
@@ -26794,7 +26626,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesRemoveAcsUserExample",
               "description": "",
               "path": "/user_identities/remove_acs_user",
               "pathParameters": {},
@@ -26904,7 +26736,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesRevokeAccessToDeviceExample",
               "description": "",
               "path": "/user_identities/revoke_access_to_device",
               "pathParameters": {},
@@ -27067,7 +26899,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesUpdateExample",
               "description": "",
               "path": "/user_identities/update",
               "pathParameters": {},
@@ -27192,7 +27024,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksCreateExample",
               "description": "",
               "path": "/webhooks/create",
               "pathParameters": {},
@@ -27305,7 +27137,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksDeleteExample",
               "description": "",
               "path": "/webhooks/delete",
               "pathParameters": {},
@@ -27402,7 +27234,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksGetExample",
               "description": "",
               "path": "/webhooks/get",
               "pathParameters": {},
@@ -27494,7 +27326,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/webhooks/list",
               "pathParameters": {},
@@ -27614,7 +27446,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksUpdateExample",
               "description": "",
               "path": "/webhooks/update",
               "pathParameters": {},
@@ -27790,7 +27622,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "workspacesCreateExample",
               "description": "",
               "path": "/workspaces/create",
               "pathParameters": {},
@@ -27880,7 +27712,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
               "path": "/workspaces/get",
               "pathParameters": {},
@@ -27961,7 +27793,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/workspaces/list",
               "pathParameters": {},
@@ -28046,7 +27878,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "resetSandboxExample",
               "description": "",
               "path": "/workspaces/reset_sandbox",
               "pathParameters": {},
@@ -28180,7 +28012,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesSimulateCreateUnmanagedAccessCodeExample",
               "description": "",
               "path": "/access_codes/simulate/create_unmanaged_access_code",
               "pathParameters": {},
@@ -28369,7 +28201,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUnmanagedConvertToManagedExample",
               "description": "",
               "path": "/access_codes/unmanaged/convert_to_managed",
               "pathParameters": {},
@@ -28480,7 +28312,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUnmanagedDeleteExample",
               "description": "",
               "path": "/access_codes/unmanaged/delete",
               "pathParameters": {},
@@ -28620,7 +28452,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUnmanagedGetExample",
               "description": "",
               "path": "/access_codes/unmanaged/get",
               "pathParameters": {},
@@ -28754,7 +28586,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUnmanagedListExample",
               "description": "",
               "path": "/access_codes/unmanaged/list",
               "pathParameters": {},
@@ -28929,7 +28761,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "accessCodesUnmanagedUpdateExample",
               "description": "",
               "path": "/access_codes/unmanaged/update",
               "pathParameters": {},
@@ -29066,7 +28898,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsAccessGroupsAddUserExample",
               "description": "",
               "path": "/acs/access_groups/add_user",
               "pathParameters": {},
@@ -29166,7 +28998,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsAccessGroupsGetExample",
               "description": "",
               "path": "/acs/access_groups/get",
               "pathParameters": {},
@@ -29304,7 +29136,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsAccessGroupsListExample",
               "description": "",
               "path": "/acs/access_groups/list",
               "pathParameters": {},
@@ -29426,7 +29258,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsAccessGroupsListUsersExample",
               "description": "",
               "path": "/acs/access_groups/list_users",
               "pathParameters": {},
@@ -29584,7 +29416,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsAccessGroupsRemoveUserExample",
               "description": "",
               "path": "/acs/access_groups/remove_user",
               "pathParameters": {},
@@ -29694,7 +29526,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialPoolsListExample",
               "description": "",
               "path": "/acs/credential_pools/list",
               "pathParameters": {},
@@ -29872,7 +29704,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialProvisioningAutomationsLaunchExample",
               "description": "",
               "path": "/acs/credential_provisioning_automations/launch",
               "pathParameters": {},
@@ -30006,7 +29838,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsAssignExample",
               "description": "",
               "path": "/acs/credentials/assign",
               "pathParameters": {},
@@ -30290,7 +30122,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsCreateExample",
               "description": "",
               "path": "/acs/credentials/create",
               "pathParameters": {},
@@ -30476,7 +30308,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsDeleteExample",
               "description": "",
               "path": "/acs/credentials/delete",
               "pathParameters": {},
@@ -30574,7 +30406,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsGetExample",
               "description": "",
               "path": "/acs/credentials/get",
               "pathParameters": {},
@@ -30760,7 +30592,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsListExample",
               "description": "",
               "path": "/acs/credentials/list",
               "pathParameters": {},
@@ -30948,7 +30780,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsListAccessibleEntrancesExample",
               "description": "",
               "path": "/acs/credentials/list_accessible_entrances",
               "pathParameters": {},
@@ -31116,7 +30948,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsUnassignExample",
               "description": "",
               "path": "/acs/credentials/unassign",
               "pathParameters": {},
@@ -31327,7 +31159,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsCredentialsUpdateExample",
               "description": "",
               "path": "/acs/credentials/update",
               "pathParameters": {},
@@ -31521,7 +31353,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsEntrancesGetExample",
               "description": "",
               "path": "/acs/entrances/get",
               "pathParameters": {},
@@ -31685,7 +31517,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsEntrancesGrantAccessExample",
               "description": "",
               "path": "/acs/entrances/grant_access",
               "pathParameters": {},
@@ -31801,7 +31633,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsEntrancesListExample",
               "description": "",
               "path": "/acs/entrances/list",
               "pathParameters": {},
@@ -31968,7 +31800,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsEntrancesListCredentialsWithAccessExample",
               "description": "",
               "path": "/acs/entrances/list_credentials_with_access",
               "pathParameters": {},
@@ -32166,7 +31998,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsSystemsGetExample",
               "description": "",
               "path": "/acs/systems/get",
               "pathParameters": {},
@@ -32325,7 +32157,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsSystemsListExample",
               "description": "",
               "path": "/acs/systems/list",
               "pathParameters": {},
@@ -32481,7 +32313,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsSystemsListCompatibleCredentialManagerAcsSystemsExample",
               "description": "",
               "path": "/acs/systems/list_compatible_credential_manager_acs_systems",
               "pathParameters": {},
@@ -32661,7 +32493,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersAddToAccessGroupExample",
               "description": "",
               "path": "/acs/users/add_to_access_group",
               "pathParameters": {},
@@ -32854,7 +32686,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersCreateExample",
               "description": "",
               "path": "/acs/users/create",
               "pathParameters": {},
@@ -32998,7 +32830,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersDeleteExample",
               "description": "",
               "path": "/acs/users/delete",
               "pathParameters": {},
@@ -33096,7 +32928,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersGetExample",
               "description": "",
               "path": "/acs/users/get",
               "pathParameters": {},
@@ -33283,7 +33115,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersListExample",
               "description": "",
               "path": "/acs/users/list",
               "pathParameters": {},
@@ -33427,7 +33259,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersListAccessibleEntrancesExample",
               "description": "",
               "path": "/acs/users/list_accessible_entrances",
               "pathParameters": {},
@@ -33595,7 +33427,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersRemoveFromAccessGroupExample",
               "description": "",
               "path": "/acs/users/remove_from_access_group",
               "pathParameters": {},
@@ -33695,7 +33527,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersRevokeAccessToAllEntrancesExample",
               "description": "",
               "path": "/acs/users/revoke_access_to_all_entrances",
               "pathParameters": {},
@@ -33793,7 +33625,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersSuspendExample",
               "description": "",
               "path": "/acs/users/suspend",
               "pathParameters": {},
@@ -33891,7 +33723,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersUnsuspendExample",
               "description": "",
               "path": "/acs/users/unsuspend",
               "pathParameters": {},
@@ -34066,7 +33898,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acsUsersUpdateExample",
               "description": "",
               "path": "/acs/users/update",
               "pathParameters": {},
@@ -34174,7 +34006,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesSimulateConnectExample",
               "description": "",
               "path": "/devices/simulate/connect",
               "pathParameters": {},
@@ -34272,7 +34104,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesSimulateDisconnectExample",
               "description": "",
               "path": "/devices/simulate/disconnect",
               "pathParameters": {},
@@ -34370,7 +34202,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesSimulateRemoveExample",
               "description": "",
               "path": "/devices/simulate/remove",
               "pathParameters": {},
@@ -34493,7 +34325,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesUnmanagedGetExample",
               "description": "",
               "path": "/devices/unmanaged/get",
               "pathParameters": {},
@@ -34876,7 +34708,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesUnmanagedListExample",
               "description": "",
               "path": "/devices/unmanaged/list",
               "pathParameters": {},
@@ -35101,7 +34933,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "devicesUnmanagedUpdateExample",
               "description": "",
               "path": "/devices/unmanaged/update",
               "pathParameters": {},
@@ -35290,7 +35122,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsNoiseThresholdsCreateExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/create",
               "pathParameters": {},
@@ -35447,7 +35279,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsNoiseThresholdsDeleteExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/delete",
               "pathParameters": {},
@@ -35561,7 +35393,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsNoiseThresholdsGetExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/get",
               "pathParameters": {},
@@ -35689,7 +35521,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsNoiseThresholdsListExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/list",
               "pathParameters": {},
@@ -35892,7 +35724,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsNoiseThresholdsUpdateExample",
               "description": "",
               "path": "/noise_sensors/noise_thresholds/update",
               "pathParameters": {},
@@ -36016,7 +35848,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "noiseSensorsSimulateTriggerNoiseThresholdExample",
               "description": "",
               "path": "/noise_sensors/simulate/trigger_noise_threshold",
               "pathParameters": {},
@@ -36156,7 +35988,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "phonesSimulateCreateSandboxPhoneExample",
               "description": "",
               "path": "/phones/simulate/create_sandbox_phone",
               "pathParameters": {},
@@ -36491,7 +36323,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsClimateSettingSchedulesCreateExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/create",
               "pathParameters": {},
@@ -36629,7 +36461,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsClimateSettingSchedulesDeleteExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/delete",
               "pathParameters": {},
@@ -36743,7 +36575,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsClimateSettingSchedulesGetExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/get",
               "pathParameters": {},
@@ -36885,7 +36717,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsClimateSettingSchedulesListExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/list",
               "pathParameters": {},
@@ -37163,7 +36995,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "thermostatsClimateSettingSchedulesUpdateExample",
               "description": "",
               "path": "/thermostats/climate_setting_schedules/update",
               "pathParameters": {},
@@ -37307,7 +37139,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesEnrollmentAutomationsDeleteExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/delete",
               "pathParameters": {},
@@ -37405,7 +37237,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesEnrollmentAutomationsGetExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/get",
               "pathParameters": {},
@@ -37565,7 +37397,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesEnrollmentAutomationsLaunchExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/launch",
               "pathParameters": {},
@@ -37681,7 +37513,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "userIdentitiesEnrollmentAutomationsListExample",
               "description": "",
               "path": "/user_identities/enrollment_automations/list",
               "pathParameters": {},

@@ -4826,9 +4826,19 @@
     "ListKeyMetadata": {
       "name": "ListKeyMetadata",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "ListData": {
@@ -7435,7 +7445,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/transactions",
             "pathParameters": {},
@@ -7665,9 +7675,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
-            "path": "/transactions/",
+            "path": "/transactions/foo",
             "pathParameters": {
               "transactionId": "foo"
             },
@@ -7884,7 +7894,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
             "path": "/events/transaction",
             "pathParameters": {},
@@ -7920,6 +7930,18 @@
                   "vpnUsed": true
                 }
               }
+            },
+            "responseStatusCode": 201
+          },
+          {
+            "name": "example-1",
+            "description": "",
+            "path": "/events/transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
             },
             "responseStatusCode": 201,
             "responseBody": {
@@ -8138,7 +8160,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/consumer/users",
             "pathParameters": {},
@@ -8392,9 +8414,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
-            "path": "/consumer/users/",
+            "path": "/consumer/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -8597,7 +8619,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/business/users",
             "pathParameters": {},
@@ -8733,9 +8755,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
-            "path": "/business/users/",
+            "path": "/business/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -9178,7 +9200,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postUserEventExample",
             "description": "",
             "path": "/events/consumer/user",
             "pathParameters": {},
@@ -10418,7 +10440,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "postBusinessUserEventExample",
             "description": "",
             "path": "/events/business/user",
             "pathParameters": {},

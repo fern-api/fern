@@ -83,7 +83,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
             "path": "/user",
             "pathParameters": {},
@@ -146,7 +146,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},

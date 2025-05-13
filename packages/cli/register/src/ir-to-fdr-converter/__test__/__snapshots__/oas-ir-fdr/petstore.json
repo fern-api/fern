@@ -168,7 +168,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listPetExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -293,7 +293,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createPetExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},
@@ -396,7 +396,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getPetExample",
             "description": "",
             "path": "/{apiKey}",
             "pathParameters": {},

@@ -160,7 +160,15 @@
       "shape": {
         "type": "object",
         "extends": [],
-        "properties": []
+        "properties": [
+          {
+            "description": "The value for the setting.",
+            "key": "value",
+            "valueType": {
+              "type": "unknown"
+            }
+          }
+        ]
       }
     },
     "ContentsDto": {
@@ -242,6 +250,13 @@
               "value": {
                 "type": "string"
               }
+            }
+          },
+          {
+            "description": "The data of the content item.",
+            "key": "data",
+            "valueType": {
+              "type": "unknown"
             }
           },
           {
@@ -466,9 +481,19 @@
     "ContentFieldData": {
       "name": "ContentFieldData",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "ScheduleJobDto": {
@@ -2758,6 +2783,19 @@
                 }
               }
             }
+          },
+          {
+            "description": "The optional json query.",
+            "key": "q",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
           }
         ]
       }
@@ -3098,6 +3136,18 @@
         "type": "object",
         "extends": [],
         "properties": [
+          {
+            "key": "filter",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
           {
             "key": "fullText",
             "valueType": {
@@ -7470,6 +7520,26 @@
             }
           },
           {
+            "description": "The source event.",
+            "key": "event",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
+            "description": "The enriched event.",
+            "key": "enrichedEvent",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "description": "The data for the action.",
             "key": "actionName",
             "valueType": {
@@ -8434,6 +8504,19 @@
             }
           },
           {
+            "description": "The optional json query.",
+            "key": "q",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "optional",
+                "itemType": {
+                  "type": "unknown"
+                }
+              }
+            }
+          },
+          {
             "description": "The parent id (for assets).",
             "key": "parentId",
             "valueType": {
@@ -9267,15 +9350,6 @@
         ]
       }
     },
-    "AssetDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "AssetDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "AssetDto": {
       "name": "AssetDto",
       "shape": {
@@ -9400,8 +9474,16 @@
             "description": "The asset metadata.",
             "key": "metadata",
             "valueType": {
-              "type": "id",
-              "value": "AssetDtoMetadata"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -9649,15 +9731,6 @@
         ]
       }
     },
-    "BulkUpdateAssetsJobDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "BulkUpdateAssetsJobDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BulkUpdateAssetsJobDto": {
       "name": "BulkUpdateAssetsJobDto",
       "shape": {
@@ -9776,8 +9849,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BulkUpdateAssetsJobDtoMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -9827,15 +9908,6 @@
             "value": "Delete"
           }
         ]
-      }
-    },
-    "AnnotateAssetDtoMetadata": {
-      "description": "The asset metadata.",
-      "name": "AnnotateAssetDtoMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "AnnotateAssetDto": {
@@ -9919,8 +9991,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "AnnotateAssetDtoMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -10675,8 +10755,16 @@
             "description": "Associated list of UI properties.",
             "key": "properties",
             "valueType": {
-              "type": "id",
-              "value": "RoleDto"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -10727,21 +10815,20 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "UpdateRoleDto"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
         ]
-      }
-    },
-    "AppDtoRoleProperties": {
-      "description": "The properties from the role.",
-      "name": "AppDtoRoleProperties",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "AppDto": {
@@ -10907,8 +10994,16 @@
             "description": "The properties from the role.",
             "key": "roleProperties",
             "valueType": {
-              "type": "id",
-              "value": "AppDtoRoleProperties"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           }
         ]
@@ -11684,7 +11779,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUsersExample",
               "description": "",
               "path": "/api/user-management",
               "pathParameters": {},
@@ -11819,7 +11914,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "userManagementPostUserExample",
               "description": "",
               "path": "/api/user-management",
               "pathParameters": {},
@@ -11952,9 +12047,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserExample",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12096,9 +12191,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "userManagementPutUserExample",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12244,9 +12339,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12360,9 +12455,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lockUserExample",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo/lock",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12502,9 +12597,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unlockUserExample",
               "description": "",
-              "path": "/api/user-management/",
+              "path": "/api/user-management/foo/unlock",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12609,7 +12704,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserResourcesExample",
               "description": "",
               "path": "/api",
               "pathParameters": {},
@@ -12708,7 +12803,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUsersExample",
               "description": "",
               "path": "/api/users",
               "pathParameters": {},
@@ -12826,9 +12921,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserExample",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12938,9 +13033,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserPictureExample",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/picture",
               "pathParameters": {
                 "id": "foo"
               },
@@ -13066,9 +13161,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "translationsPostTranslationExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/translations",
               "pathParameters": {
                 "app": "foo"
               },
@@ -13172,7 +13267,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTemplatesExample",
               "description": "",
               "path": "/api/templates",
               "pathParameters": {},
@@ -13290,9 +13385,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTemplateExample",
               "description": "",
-              "path": "/api/templates/",
+              "path": "/api/templates/foo",
               "pathParameters": {
                 "name": "foo"
               },
@@ -13404,9 +13499,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContributorsExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13560,9 +13655,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "teamsPostContributorExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13710,9 +13805,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteMyselfExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors/me",
               "pathParameters": {
                 "team": "foo"
               },
@@ -13869,9 +13964,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteContributorExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/contributors/foo",
               "pathParameters": {
                 "team": "foo",
                 "id": "foo"
@@ -13983,7 +14078,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamsExample",
               "description": "",
               "path": "/api/teams",
               "pathParameters": {},
@@ -14122,7 +14217,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "teamsPostTeamExample",
               "description": "",
               "path": "/api/teams",
               "pathParameters": {},
@@ -14243,9 +14338,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo",
               "pathParameters": {
                 "team": "foo"
               },
@@ -14385,9 +14480,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "teamsPutTeamExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo",
               "pathParameters": {
                 "team": "foo"
               },
@@ -14518,9 +14613,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getLogExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/log",
               "pathParameters": {
                 "app": "foo"
               },
@@ -14658,9 +14753,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUsagesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/calls/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "fromDate": "foo",
@@ -14816,9 +14911,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getUsagesForTeamExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/calls/foo/foo",
               "pathParameters": {
                 "team": "foo",
                 "fromDate": "foo",
@@ -14936,9 +15031,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCurrentStorageSizeExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/storage/today",
               "pathParameters": {
                 "app": "foo"
               },
@@ -15040,9 +15135,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamCurrentStorageSizeForTeamExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/storage/today",
               "pathParameters": {
                 "team": "foo"
               },
@@ -15185,9 +15280,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getStorageSizesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/usages/storage/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "fromDate": "foo",
@@ -15338,9 +15433,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getStorageSizesForTeamExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/usages/storage/foo/foo",
               "pathParameters": {
                 "team": "foo",
                 "fromDate": "foo",
@@ -15477,9 +15572,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSearchResultsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/search",
               "pathParameters": {
                 "app": "foo"
               },
@@ -15658,9 +15753,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPostFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -16041,9 +16136,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPostNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -16394,9 +16489,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutSchemaUiFieldsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/ui",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -16730,9 +16825,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutSchemaFieldOrderingExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/ordering",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -17092,9 +17187,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutNestedFieldOrderingExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/ordering",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -17455,9 +17550,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -17809,9 +17904,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18177,9 +18272,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18550,9 +18645,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -18887,9 +18982,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lockFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/lock",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -19241,9 +19336,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "lockNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/lock",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -19578,9 +19673,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "hideFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/hide",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -19932,9 +20027,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "hideNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/hide",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20269,9 +20364,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "showFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/show",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20623,9 +20718,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "showNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/show",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -20960,9 +21055,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "enableFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/enable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -21314,9 +21409,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "enableNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/enable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -21651,9 +21746,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "disableFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/disable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -22005,9 +22100,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "disableNestedFieldExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/disable",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -22292,9 +22387,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSchemasExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas",
               "pathParameters": {
                 "app": "foo"
               },
@@ -22627,9 +22722,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPostSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas",
               "pathParameters": {
                 "app": "foo"
               },
@@ -22944,9 +23039,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23275,9 +23370,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23589,9 +23684,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -23726,9 +23821,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutSchemaSyncExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/sync",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24070,9 +24165,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutCategoryExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/category",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24406,9 +24501,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutPreviewUrlsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/preview-urls",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -24742,9 +24837,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutScriptsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/scripts",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25078,9 +25173,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "schemasPutRulesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/rules",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25399,9 +25494,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "publishSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/publish",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -25715,9 +25810,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "unpublishSchemaExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/schemas/foo/unpublish",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -26000,7 +26095,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getActionsExample",
               "description": "",
               "path": "/api/rules/actions",
               "pathParameters": {},
@@ -26096,9 +26191,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRulesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26272,9 +26367,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesPostRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26429,9 +26524,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRuleRunExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/run",
               "pathParameters": {
                 "app": "foo"
               },
@@ -26565,9 +26660,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesPutRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -26727,9 +26822,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -26849,9 +26944,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "enableRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/enable",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27017,9 +27112,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "disableRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/disable",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27174,9 +27269,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "triggerRuleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/trigger",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27300,9 +27395,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "putRuleRunExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/run",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27411,9 +27506,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRuleEventsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/events",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27530,9 +27625,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "rulesSimulatePostExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/simulate",
               "pathParameters": {
                 "app": "foo"
               },
@@ -27701,9 +27796,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "simulateGetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/foo/simulate",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -27878,9 +27973,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28012,9 +28107,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteEventsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28122,9 +28217,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "putEventExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -28233,9 +28328,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteEventExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/rules/events/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -28310,7 +28405,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventTypesExample",
               "description": "",
               "path": "/api/rules/eventtypes",
               "pathParameters": {},
@@ -28382,6 +28477,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Rule event type found."
+          },
           "errorsV2": [
             {
               "type": {
@@ -28399,9 +28504,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventSchemaExample",
               "description": "",
-              "path": "/api/rules/eventtypes/",
+              "path": "/api/rules/eventtypes/foo",
               "pathParameters": {
                 "type": "foo"
               },
@@ -28499,9 +28604,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPlansExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/plans",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28675,9 +28780,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "plansPutPlanExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/plan",
               "pathParameters": {
                 "app": "foo"
               },
@@ -28786,9 +28891,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamPlansExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/plans",
               "pathParameters": {
                 "team": "foo"
               },
@@ -28962,9 +29067,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "plansPutTeamPlanExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/plan",
               "pathParameters": {
                 "team": "foo"
               },
@@ -29064,7 +29169,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getInfoExample",
               "description": "",
               "path": "/api/info",
               "pathParameters": {},
@@ -29131,7 +29236,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPingExample",
               "description": "",
               "path": "/api/ping",
               "pathParameters": {},
@@ -29209,9 +29314,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAppPingExample",
               "description": "",
-              "path": "/api/ping/",
+              "path": "/api/ping/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -29305,7 +29410,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getNewsExample",
               "description": "",
               "path": "/api/news/features",
               "pathParameters": {},
@@ -29412,7 +29517,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getLanguagesExample",
               "description": "",
               "path": "/api/languages",
               "pathParameters": {},
@@ -29547,9 +29652,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAppHistoryExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/history",
               "pathParameters": {
                 "app": "foo"
               },
@@ -29680,9 +29785,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamHistoryExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/history",
               "pathParameters": {
                 "team": "foo"
               },
@@ -29787,7 +29892,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEventConsumersExample",
               "description": "",
               "path": "/api/event-consumers",
               "pathParameters": {},
@@ -29922,9 +30027,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "startEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/start",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30049,9 +30154,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "stopEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/stop",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30176,9 +30281,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "resetEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/",
+              "path": "/api/event-consumers/foo/reset",
               "pathParameters": {
                 "consumerName": "foo"
               },
@@ -30283,7 +30388,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getDumpExample",
               "description": "",
               "path": "/api/diagnostics/dump",
               "pathParameters": {},
@@ -30354,7 +30459,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getGcDumpExample",
               "description": "",
               "path": "/api/diagnostics/gcdump",
               "pathParameters": {},
@@ -30498,9 +30603,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContentsExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -30854,9 +30959,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPostContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -31175,9 +31280,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsGetContentsPostExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/query",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -31501,9 +31606,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -31852,9 +31957,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPostUpsertContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32192,9 +32297,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPutContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32533,9 +32638,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -32690,9 +32795,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPatchContentExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33004,9 +33109,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContentValidityExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/validity",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33147,9 +33252,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getReferencesExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/references",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33468,9 +33573,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getReferencingExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/referencing",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33790,9 +33895,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContentVersionExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/42",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -33934,9 +34039,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPostContentsExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/import",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -34128,9 +34233,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsBulkUpdateContentsExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/bulk",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo"
@@ -34337,9 +34442,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "contentsPutContentStatusExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/status",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -34666,9 +34771,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteContentStatusExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/status",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -34986,9 +35091,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "createDraftExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/draft",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -35306,9 +35411,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVersionExample",
               "description": "",
-              "path": "/api/content/",
+              "path": "/api/content/foo/foo/foo/draft",
               "pathParameters": {
                 "app": "foo",
                 "schema": "foo",
@@ -35609,9 +35714,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getWatchingUsersExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/watching/foo",
               "pathParameters": {
                 "app": "foo",
                 "resource": "foo"
@@ -35746,9 +35851,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCommentsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo"
@@ -35937,9 +36042,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "commentsPostCommentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo"
@@ -36110,9 +36215,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "commentsPutCommentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo",
@@ -36249,9 +36354,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCommentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/comments/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "commentsId": "foo",
@@ -36367,9 +36472,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getNotificationsExample",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/notifications",
               "pathParameters": {
                 "userId": "foo"
               },
@@ -36531,9 +36636,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCommentExample",
               "description": "",
-              "path": "/api/users/",
+              "path": "/api/users/foo/notifications/foo",
               "pathParameters": {
                 "userId": "foo",
                 "commentId": "foo"
@@ -36646,9 +36751,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBackupContentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -36757,9 +36862,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBackupExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -36872,9 +36977,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBackupContentV2Example",
               "description": "",
-              "path": "/api/apps/backups/",
+              "path": "/api/apps/backups/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -36962,9 +37067,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBackupsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups",
               "pathParameters": {
                 "app": "foo"
               },
@@ -37088,9 +37193,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "postBackupExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/backups",
               "pathParameters": {
                 "app": "foo"
               },
@@ -37159,7 +37264,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRestoreJobExample",
               "description": "",
               "path": "/api/apps/restore",
               "pathParameters": {},
@@ -37269,7 +37374,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "backupsPostRestoreJobExample",
               "description": "",
               "path": "/api/apps/restore",
               "pathParameters": {},
@@ -37587,9 +37692,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetContentBySlugExample",
               "description": "",
-              "path": "/api/assets/",
+              "path": "/api/assets/foo/foo/foo",
               "pathParameters": {
                 "app": "foo",
                 "idOrSlug": "foo",
@@ -37855,9 +37960,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetContentExample",
               "description": "",
-              "path": "/api/assets/",
+              "path": "/api/assets/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -37971,9 +38076,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetFoldersExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38139,9 +38244,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPostAssetFolderExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38304,9 +38409,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutAssetFolderExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38444,9 +38549,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAssetFolderExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38581,9 +38686,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutAssetFolderParentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/folders/foo/parent",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -38709,9 +38814,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTagsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/tags",
               "pathParameters": {
                 "app": "foo"
               },
@@ -38864,9 +38969,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutTagExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/tags/foo",
               "pathParameters": {
                 "app": "foo",
                 "name": "foo"
@@ -39065,9 +39170,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39322,9 +39427,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPostAssetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39519,9 +39624,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsGetAssetsPostExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/query",
               "pathParameters": {
                 "app": "foo"
               },
@@ -39712,9 +39817,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -39963,9 +40068,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPostUpsertAssetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40178,9 +40283,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutAssetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40389,9 +40494,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAssetExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40511,9 +40616,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsBulkUpdateAssetsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/bulk",
               "pathParameters": {
                 "app": "foo"
               },
@@ -40711,9 +40816,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutAssetContentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo/content",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -40926,9 +41031,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "assetsPutAssetParentExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/foo/parent",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41100,9 +41205,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAssetScriptsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/scripts",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41246,9 +41351,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutAssetScriptsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/assets/scripts",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41370,9 +41475,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getClientsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41525,9 +41630,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostClientExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients",
               "pathParameters": {
                 "app": "foo"
               },
@@ -41707,9 +41812,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutClientExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41871,9 +41976,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteClientExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/clients/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -41998,9 +42103,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getContributorsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42154,9 +42259,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostContributorExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42304,9 +42409,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteMyselfExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors/me",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42463,9 +42568,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteContributorExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/contributors/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -42588,9 +42693,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getImageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42711,9 +42816,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsUploadImageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42866,9 +42971,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteImageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/image",
               "pathParameters": {
                 "app": "foo"
               },
@@ -42998,9 +43103,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getLanguagesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43152,9 +43257,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostLanguageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43333,9 +43438,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutLanguageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages/foo",
               "pathParameters": {
                 "app": "foo",
                 "language": "foo"
@@ -43496,9 +43601,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteLanguageExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/languages/foo",
               "pathParameters": {
                 "app": "foo",
                 "language": "foo"
@@ -43623,9 +43728,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getRolesExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43779,9 +43884,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostRoleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles",
               "pathParameters": {
                 "app": "foo"
               },
@@ -43921,9 +44026,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getPermissionsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/permissions",
               "pathParameters": {
                 "app": "foo"
               },
@@ -44069,9 +44174,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutRoleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/foo",
               "pathParameters": {
                 "app": "foo",
                 "roleName": "foo"
@@ -44242,9 +44347,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRoleExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/roles/foo",
               "pathParameters": {
                 "app": "foo",
                 "roleName": "foo"
@@ -44356,7 +44461,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAppsExample",
               "description": "",
               "path": "/api/apps",
               "pathParameters": {},
@@ -44513,7 +44618,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostAppExample",
               "description": "",
               "path": "/api/apps",
               "pathParameters": {},
@@ -44656,9 +44761,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTeamAppsExample",
               "description": "",
-              "path": "/api/teams/",
+              "path": "/api/teams/foo/apps",
               "pathParameters": {
                 "team": "foo"
               },
@@ -44792,9 +44897,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAppExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -44952,9 +45057,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutAppExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45091,9 +45196,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAppExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45209,9 +45314,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutAppTeamExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/team",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45346,9 +45451,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSettingsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/settings",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45508,9 +45613,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutSettingsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/settings",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45673,9 +45778,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getWorkflowsExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows",
               "pathParameters": {
                 "app": "foo"
               },
@@ -45833,9 +45938,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPostWorkflowExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows",
               "pathParameters": {
                 "app": "foo"
               },
@@ -46020,9 +46125,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "appsPutWorkflowExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"
@@ -46195,9 +46300,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteWorkflowExample",
               "description": "",
-              "path": "/api/apps/",
+              "path": "/api/apps/foo/workflows/foo",
               "pathParameters": {
                 "app": "foo",
                 "id": "foo"

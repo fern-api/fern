@@ -337,7 +337,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -454,9 +454,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -569,7 +569,7 @@
         ],
         "examples": [
           {
-            "name": "",
+            "name": "validateAUserObjectExample",
             "description": "",
             "path": "/users/validate",
             "pathParameters": {},

@@ -3,7 +3,7 @@
  */
 
 import * as FernDefinition from "../../../index";
-3;
+
 export interface ExampleEndpointCallSchema extends FernDefinition.WithName, FernDefinition.WithDocsSchema {
     id?: string;
     "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;

@@ -33,6 +33,11 @@ export class ArraySchemaConverter extends AbstractConverter<
 
     public convert(): ArraySchemaConverter.Output | undefined {
         if (this.schema.items != null) {
+            if (Array.isArray(this.schema.items)) {
+                this.schema.items = {
+                    oneOf: this.schema.items
+                };
+            }
             const schemaOrReferenceConverter = new SchemaOrReferenceConverter({
                 context: this.context,
                 breadcrumbs: [...this.breadcrumbs, "items"],

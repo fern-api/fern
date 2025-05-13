@@ -287,6 +287,15 @@
         ]
       }
     },
+    "ActionModel": {
+      "name": "ActionModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "Address": {
       "name": "Address",
       "shape": {
@@ -3104,6 +3113,15 @@
             "value": "outgoing"
           }
         ]
+      }
+    },
+    "FilterModel": {
+      "name": "FilterModel",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "HTTPValidationError": {
@@ -6074,47 +6092,25 @@
         ]
       }
     },
-    "ValidationErrorLocItems0": {
-      "name": "ValidationErrorLocItems0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItems1": {
-      "name": "ValidationErrorLocItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItems0",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems0"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItems1",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItems1"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -6435,66 +6431,33 @@
         ]
       }
     },
-    "Expr0": {
-      "name": "Expr0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "Expr1": {
-      "name": "Expr1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "Expr2": {
-      "name": "Expr2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "double"
-          }
-        }
-      }
-    },
     "Expr": {
       "name": "Expr",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "Expr0",
             "type": {
-              "type": "id",
-              "value": "Expr0"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           },
           {
-            "typeName": "Expr1",
             "type": {
-              "type": "id",
-              "value": "Expr1"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "Expr2",
             "type": {
-              "type": "id",
-              "value": "Expr2"
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
             }
           },
           {
@@ -7518,9 +7481,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getTransactionV3TransactionsIdGetExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -7709,9 +7672,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTransactionV3TransactionsIdDeleteExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -7852,7 +7815,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listTransactionsV3TransactionsGetExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -8057,7 +8020,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsPostTransactionsV3TransactionsPostExample",
               "description": "",
               "path": "/v3/transactions",
               "pathParameters": {},
@@ -8305,9 +8268,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
               "description": "",
-              "path": "/v3/transactions/",
+              "path": "/v3/transactions/foo/assign",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8577,7 +8540,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchesV3BatchesGetExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -8692,7 +8655,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "batchesPostBatchV3BatchesPostExample",
               "description": "",
               "path": "/v3/batches",
               "pathParameters": {},
@@ -8830,9 +8793,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSingleBatchV3BatchesIdGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -8942,9 +8905,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBatchResultsV3BatchesIdResultsGetExample",
               "description": "",
-              "path": "/v3/batches/",
+              "path": "/v3/batches/foo/results",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9221,7 +9184,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementsV3BankStatementsGetExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
@@ -9299,6 +9262,26 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "fileUpload",
+              "value": {
+                "name": "Bank statements_post_bank_statement_v3_bank_statements_post_Request",
+                "properties": [
+                  {
+                    "type": "file",
+                    "value": {
+                      "type": "file",
+                      "key": "file",
+                      "isOptional": false,
+                      "contentType": "multipart/form-data"
+                    }
+                  }
+                ]
+              },
+              "contentType": "multipart/form-data"
+            }
+          },
           "response": {
             "type": {
               "type": "reference",
@@ -9327,12 +9310,24 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "bankStatementsPostBankStatementV3BankStatementsPostExample",
               "description": "",
               "path": "/v3/bank_statements",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
+              },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
@@ -9440,9 +9435,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementV3BankStatementsIdGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9544,9 +9539,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBankStatementV3BankStatementsIdDeleteExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9634,9 +9629,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementStatementInfoV3BankStatementsIdOverviewPostExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo/overview",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9780,9 +9775,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getBankStatementResultV3BankStatementsIdResultsGetExample",
               "description": "",
-              "path": "/v3/bank_statements/",
+              "path": "/v3/bank_statements/foo/results",
               "pathParameters": {
                 "id": "foo"
               },
@@ -9935,9 +9930,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderV3AccountHoldersIdGetExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10032,9 +10027,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAccountHolderV3AccountHoldersIdDeleteExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10161,7 +10156,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHoldersV3AccountHoldersGetExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -10271,7 +10266,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "accountHoldersCreateAccountHolderV3AccountHoldersPostExample",
               "description": "",
               "path": "/v3/account_holders",
               "pathParameters": {},
@@ -10401,9 +10396,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostExample",
               "description": "",
-              "path": "/v3/account_holders/",
+              "path": "/v3/account_holders/foo/recurring_groups",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10545,7 +10540,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhooksV3WebhooksGetExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -10666,7 +10661,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPostWebhookV3WebhooksPostExample",
               "description": "",
               "path": "/v3/webhooks",
               "pathParameters": {},
@@ -10797,9 +10792,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getWebhookV3WebhooksIdGetExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -10904,9 +10899,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteWebhookV3WebhooksIdDeleteExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -11007,9 +11002,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "webhooksPatchWebhookV3WebhooksIdPatchExample",
               "description": "",
-              "path": "/v3/webhooks/",
+              "path": "/v3/webhooks/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -11122,7 +11117,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "filterGetV3RulesGetExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -11245,6 +11240,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11262,7 +11267,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPostV3RulesPostExample",
               "description": "",
               "path": "/v3/rules",
               "pathParameters": {},
@@ -11382,6 +11387,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11399,7 +11414,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterAppendV3RulesAppendPostExample",
               "description": "",
               "path": "/v3/rules/append",
               "pathParameters": {},
@@ -11484,6 +11499,16 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11501,9 +11526,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "filterDeleteV3RulesIndexDeleteExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -11576,6 +11601,16 @@
               }
             }
           },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [
             {
               "type": {
@@ -11593,9 +11628,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "personalizationFilterPatchV3RulesIndexPatchExample",
               "description": "",
-              "path": "/v3/rules/",
+              "path": "/v3/rules/42",
               "pathParameters": {
                 "index": 42
               },
@@ -11769,7 +11804,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportsV3ReportsGetExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -11890,7 +11925,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "reportsPostReportV3ReportsPostExample",
               "description": "",
               "path": "/v3/reports",
               "pathParameters": {},
@@ -12021,9 +12056,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getReportV3ReportsIdGetExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12126,9 +12161,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteReportV3ReportsIdDeleteExample",
               "description": "",
-              "path": "/v3/reports/",
+              "path": "/v3/reports/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12224,9 +12259,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getCategorySetV3CategoriesAccountHolderTypeGetExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12389,9 +12424,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "categoriesCustomCategoriesPostV3CategoriesAccountHolderTypePostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12538,9 +12573,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCustomCategorySetV3CategoriesAccountHolderTypeResetPostExample",
               "description": "",
-              "path": "/v3/categories/",
+              "path": "/v3/categories/consumer/reset",
               "pathParameters": {
                 "account_holder_type": "consumer"
               },
@@ -12724,7 +12759,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "searchEntityV3EntitiesLookupGetExample",
               "description": "",
               "path": "/v3/entities/lookup",
               "pathParameters": {},
@@ -12837,9 +12872,9 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getEntityByIdV3EntitiesIdGetExample",
               "description": "",
-              "path": "/v3/entities/",
+              "path": "/v3/entities/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -12895,6 +12930,7 @@
       "AccountHolderType",
       "AccountType",
       "AccountingCategory",
+      "ActionModel",
       "Address",
       "AsyncEnrichmentInput",
       "BankStatement",
@@ -12924,6 +12960,7 @@
       "Entities",
       "Entity",
       "EntryType",
+      "FilterModel",
       "HTTPValidationError",
       "Intermediary",
       "IntermediaryType",
