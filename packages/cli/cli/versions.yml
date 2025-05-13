@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Add support for products and versioned products in the docs config file.
+    type: feat
+  irVersion: 57
+  version: 0.60.30
+
+- changelogEntry: 
+  - summary: |
       Add support for `propertyAccess` in the IR -> FDR SDK conversion.
     type: feat
   irVersion: 57

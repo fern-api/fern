@@ -76,6 +76,19 @@
         }
       ]
     },
+    "products": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.ProductConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "landing-page": {
       "oneOf": [
         {
@@ -803,6 +816,95 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.VersionAvailability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "display-name",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ProductConfig": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "display-name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "versions": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.VersionConfig"
+              }
             },
             {
               "type": "null"
