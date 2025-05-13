@@ -6951,7 +6951,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/users/"
+                    "path": "/users/foo"
                   },
                   "pathParameters": {
                     "userId": "foo"

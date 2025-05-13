@@ -46581,7 +46581,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v0/batch/jobs/"
+                    "path": "/v0/batch/jobs/foo/predictions"
                   },
                   "environment": "https://api.hume.ai",
                   "pathParameters": {
@@ -46973,7 +46973,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v0/batch/jobs/"
+                    "path": "/v0/batch/jobs/foo/artifacts"
                   },
                   "environment": "https://api.hume.ai",
                   "pathParameters": {
@@ -51531,7 +51531,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v0/batch/jobs/"
+                    "path": "/v0/batch/jobs/foo"
                   },
                   "environment": "https://api.hume.ai",
                   "pathParameters": {

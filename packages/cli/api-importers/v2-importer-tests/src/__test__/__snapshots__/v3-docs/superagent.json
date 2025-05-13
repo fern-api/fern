@@ -3589,7 +3589,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/agents/"
+                    "path": "/api/v1/agents/foo"
                   },
                   "pathParameters": {
                     "agentId": "foo"
@@ -3854,7 +3854,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/api/v1/agents/"
+                    "path": "/api/v1/agents/foo"
                   },
                   "pathParameters": {
                     "agentId": "foo"
@@ -4157,7 +4157,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PATCH",
-                    "path": "/api/v1/agents/"
+                    "path": "/api/v1/agents/foo"
                   },
                   "pathParameters": {
                     "agentId": "foo"
@@ -4657,7 +4657,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/api/v1/agents/"
+                    "path": "/api/v1/agents/foo/predict"
                   },
                   "pathParameters": {
                     "agentId": "foo"
@@ -5998,7 +5998,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/users/"
+                    "path": "/api/v1/users/foo"
                   },
                   "pathParameters": {
                     "userId": "foo"
@@ -6715,7 +6715,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/api-tokens/"
+                    "path": "/api/v1/api-tokens/foo"
                   },
                   "pathParameters": {
                     "tokenId": "foo"
@@ -6980,7 +6980,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/api/v1/api-tokens/"
+                    "path": "/api/v1/api-tokens/foo"
                   },
                   "pathParameters": {
                     "tokenId": "foo"
@@ -8135,7 +8135,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/documents/"
+                    "path": "/api/v1/documents/foo"
                   },
                   "pathParameters": {
                     "documentId": "foo"
@@ -8400,7 +8400,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/api/v1/documents/"
+                    "path": "/api/v1/documents/foo"
                   },
                   "pathParameters": {
                     "documentId": "foo"
@@ -9289,7 +9289,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/prompts/"
+                    "path": "/api/v1/prompts/foo"
                   },
                   "pathParameters": {
                     "promptId": "foo"
@@ -9554,7 +9554,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/api/v1/prompts/"
+                    "path": "/api/v1/prompts/foo"
                   },
                   "pathParameters": {
                     "promptId": "foo"
@@ -9857,7 +9857,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PATCH",
-                    "path": "/api/v1/prompts/"
+                    "path": "/api/v1/prompts/foo"
                   },
                   "pathParameters": {
                     "promptId": "foo"
@@ -10726,7 +10726,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/api/v1/tools/"
+                    "path": "/api/v1/tools/foo"
                   },
                   "pathParameters": {
                     "toolId": "foo"
@@ -10991,7 +10991,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/api/v1/tools/"
+                    "path": "/api/v1/tools/foo"
                   },
                   "pathParameters": {
                     "toolId": "foo"

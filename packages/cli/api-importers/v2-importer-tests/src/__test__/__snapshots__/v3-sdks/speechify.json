@@ -9471,7 +9471,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/token/"
+                    "path": "/v1/token/foo"
                   },
                   "environment": "https://api.sws.speechify.com",
                   "pathParameters": {
@@ -9712,7 +9712,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PATCH",
-                    "path": "/v1/token/"
+                    "path": "/v1/token/foo"
                   },
                   "environment": "https://api.sws.speechify.com",
                   "pathParameters": {
@@ -10278,7 +10278,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/voices/"
+                    "path": "/v1/voices/foo"
                   },
                   "environment": "https://api.sws.speechify.com",
                   "pathParameters": {

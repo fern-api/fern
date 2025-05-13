@@ -6162,7 +6162,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/end-users/v1/"
+                    "path": "/end-users/v1/foo"
                   },
                   "environment": "The subdomain of the client",
                   "pathParameters": {
@@ -9665,7 +9665,7 @@
                 "request": {
                   "endpoint": {
                     "method": "PATCH",
-                    "path": "/end-users/v1/"
+                    "path": "/end-users/v1/foo"
                   },
                   "environment": "The subdomain of the client",
                   "pathParameters": {
