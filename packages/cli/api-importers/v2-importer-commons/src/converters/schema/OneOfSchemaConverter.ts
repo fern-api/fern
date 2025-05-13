@@ -198,7 +198,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
                 const typeShape = convertedSchema.convertedSchema.typeDeclaration.shape;
-                if (typeShape.type === "alias" && typeShape.aliasOf.type === "primitive") {
+                if (typeShape.type === "alias" && this.typeReferenceIsWrappedPrimitive(typeShape.aliasOf)) {
                     unionTypes.push({
                         type: typeShape.aliasOf,
                         docs: subSchema.description
@@ -295,6 +295,43 @@ export class OneOfSchemaConverter extends AbstractConverter<
             referencedTypes: convertedSchema.schema?.typeDeclaration.referencedTypes ?? new Set(),
             inlinedTypes: convertedSchema.inlinedTypes
         };
+    }
+
+    private typeReferenceIsWrappedPrimitive(type: TypeReference): boolean {
+        switch (type.type) {
+            case "container":
+                return this.containerTypeIsWrappedPrimitive(type.container);
+            case "named":
+                return false;
+            case "primitive":
+                return true;
+            case "unknown":
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    private containerTypeIsWrappedPrimitive(type: ContainerType): boolean {
+        switch (type.type) {
+            case "list":
+                return this.typeReferenceIsWrappedPrimitive(type.list);
+            case "map":
+                return (
+                    this.typeReferenceIsWrappedPrimitive(type.keyType) &&
+                    this.typeReferenceIsWrappedPrimitive(type.valueType)
+                );
+            case "nullable":
+                return this.typeReferenceIsWrappedPrimitive(type.nullable);
+            case "optional":
+                return this.typeReferenceIsWrappedPrimitive(type.optional);
+            case "set":
+                return this.typeReferenceIsWrappedPrimitive(type.set);
+            case "literal":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private wrapInNullable(type: TypeReference): TypeReference {

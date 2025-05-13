@@ -736,22 +736,6 @@
         }
       }
     },
-    "EthGetBlockByHashResultTransactions0": {
-      "name": "EthGetBlockByHashResultTransactions0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
-          }
-        }
-      }
-    },
     "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems": {
       "name": "EthGetBlockByHashResultTransactionsOneOf1ItemsOneOf0AccessListItems",
       "shape": {
@@ -1548,10 +1532,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByHashResultTransactions0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockByHashResultTransactions0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -1927,22 +1916,6 @@
           "itemType": {
             "type": "id",
             "value": "EthGetBlockByHashResult"
-          }
-        }
-      }
-    },
-    "EthGetBlockByNumberResultTransactions0": {
-      "name": "EthGetBlockByNumberResultTransactions0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
           }
         }
       }
@@ -2743,10 +2716,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetBlockByNumberResultTransactions0",
             "type": {
-              "type": "id",
-              "value": "EthGetBlockByNumberResultTransactions0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -3340,22 +3318,6 @@
         }
       }
     },
-    "EthGetLogsResult0": {
-      "name": "EthGetLogsResult0",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
-          }
-        }
-      }
-    },
     "EthGetLogsResultOneOf1Items": {
       "name": "EthGetLogsResultOneOf1Items",
       "shape": {
@@ -3500,10 +3462,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResult0",
             "type": {
-              "type": "id",
-              "value": "EthGetLogsResult0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
@@ -3514,22 +3481,6 @@
             }
           }
         ]
-      }
-    },
-    "MethodsParams0Address1": {
-      "name": "MethodsParams0Address1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-fA-F]{40}$"
-            }
-          }
-        }
       }
     },
     "MethodsParams0Address": {
@@ -3547,29 +3498,18 @@
             }
           },
           {
-            "typeName": "MethodsParams0Address1",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0Address1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-fA-F]{40}$"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "MethodsParams0TopicsItems1": {
-      "name": "MethodsParams0TopicsItems1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^0x[0-9a-f]{64}$"
-            }
-          }
-        }
       }
     },
     "MethodsParams0TopicsItems": {
@@ -3587,10 +3527,15 @@
             }
           },
           {
-            "typeName": "MethodsParams0TopicsItems1",
             "type": {
-              "type": "id",
-              "value": "MethodsParams0TopicsItems1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           }
         ]
@@ -3666,10 +3611,15 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "EthGetLogsResult0",
             "type": {
-              "type": "id",
-              "value": "EthGetLogsResult0"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[0-9a-f]{64}$"
+                }
+              }
             }
           },
           {
