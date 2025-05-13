@@ -40,9 +40,9 @@ export namespace V2HttpEndpointResponseBody {
 export const V2HttpEndpointResponseBody = {
     error: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Error_ => {
         return {
-            value,
+            value: value,
             type: "error",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.V2HttpEndpointResponseBody.Error_,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
@@ -53,9 +53,9 @@ export const V2HttpEndpointResponseBody = {
 
     json: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Json => {
         return {
-            value,
+            value: value,
             type: "json",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.V2HttpEndpointResponseBody.Json,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
@@ -66,9 +66,9 @@ export const V2HttpEndpointResponseBody = {
 
     stream: (value: unknown[]): FernIr.V2HttpEndpointResponseBody.Stream => {
         return {
-            value,
+            value: value,
             type: "stream",
-            _visit <_Result>(
+            _visit: function <_Result>(
                 this: FernIr.V2HttpEndpointResponseBody.Stream,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
