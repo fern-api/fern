@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.19.7
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to type-shadowing `data` variables in generated streaming endpoints.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
 - version: 4.19.6
   changelogEntry:
     - summary: |

@@ -117,8 +117,8 @@ class AsyncDummyClient:
         asyncio.run(main())
         """
         async with self._raw_client.generate_stream(num_events=num_events, request_options=request_options) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk
 
     async def generate(
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
