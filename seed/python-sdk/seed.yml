@@ -91,6 +91,9 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        introduction: |
+          This is a test introduction
+          split across multiple lines.
         features:
           asyncClient:
             - GET /movie/{movieId}
