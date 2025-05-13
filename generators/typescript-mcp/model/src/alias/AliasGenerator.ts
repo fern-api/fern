@@ -2,9 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
-import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ExportDefaultNode, typeReferenceMapper } from "../utils";
 
 export class AliasGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -22,38 +23,24 @@ export class AliasGenerator extends FileGenerator<
     }
 
     public doGenerate(): TypescriptMcpFile {
+        const schemaVariableName = this.context.project.builder.getSchemaVariableName(
+            this.typeDeclaration.name.name,
+            this.typeDeclaration.name.fernFilepath
+        );
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine('import z from "zod";');
-                writer.writeLine("\n");
-                writer.writeLine(
-                    `export default ${this.aliasDeclaration.aliasOf._visit<string>({
-                        container: () => "z.unknown",
-                        named: () => "z.unknown",
-                        primitive: (value) =>
-                            `z.${PrimitiveTypeV1._visit(value.v1, {
-                                integer: () => "number",
-                                long: () => "number",
-                                uint: () => "number",
-                                uint64: () => "number",
-                                float: () => "number",
-                                double: () => "number",
-                                boolean: () => "boolean",
-                                string: () => "string",
-                                date: () => "date",
-                                dateTime: () => "date",
-                                uuid: () => "string",
-                                base64: () => "string",
-                                bigInteger: () => "bigint",
-                                _other: () => "any"
-                            })}`,
-                        unknown: () => "z.unknown",
-                        _other: () => "z.any"
-                    })}();`
+                writer.writeLine("import z from \"zod\";");
+                writer.newLine();
+                writer.writeNodeStatement(
+                    new ExportDefaultNode({
+                        initializer: ts.codeblock((writer) => {
+                            writer.write(`z.${typeReferenceMapper(this.aliasDeclaration.aliasOf)}`);
+                        })
+                    })
                 );
             }),
             directory: this.getFilepath(),
-            filename: `${this.context.project.builder.getSchemaVariableName(this.typeDeclaration.name.name, this.typeDeclaration.name.fernFilepath)}.ts`,
+            filename: `${schemaVariableName}.ts`,
             customConfig: this.context.customConfig
         });
     }

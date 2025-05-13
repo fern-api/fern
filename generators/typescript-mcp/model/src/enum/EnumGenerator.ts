@@ -22,14 +22,19 @@ export class EnumGenerator extends FileGenerator<
     }
 
     public doGenerate(): TypescriptMcpFile {
+        const schemaVariableName = this.context.project.builder.getSchemaVariableName(
+            this.typeDeclaration.name.name,
+            this.typeDeclaration.name.fernFilepath
+        );
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                writer.writeLine('import z from "zod";');
-                writer.writeLine("\n");
+                writer.writeLine("import z from \"zod\";");
+                writer.newLine();
+                // TODO: implement this
                 writer.writeLine("export default z.enum([]);");
             }),
             directory: this.getFilepath(),
-            filename: `${this.context.project.builder.getSchemaVariableName(this.typeDeclaration.name.name, this.typeDeclaration.name.fernFilepath)}.ts`,
+            filename: `${schemaVariableName}.ts`,
             customConfig: this.context.customConfig
         });
     }

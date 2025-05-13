@@ -107,6 +107,7 @@ export class ToolsGenerator extends FileGenerator<
                   ? `${paramsFromSchema}.shape`
                   : paramsFromPath;
 
+        // TODO: clean this up to use AST
         writer.writeLine(`// ${JSON.stringify(endpoint.method)}`);
         writer.writeLine(`export const ${toolVariableName} = {`);
         writer.writeLine("    register: function(server: McpServer) {");

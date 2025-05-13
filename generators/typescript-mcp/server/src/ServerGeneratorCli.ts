@@ -8,7 +8,6 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { TypescriptCustomConfigSchema } from "../../../typescript-v2/ast/src";
 import { ServerGeneratorContext } from "./ServerGeneratorContext";
 import { ReadmeGenerator } from "./readme/ReadmeGenerator";
-import { ServerGenerator } from "./server/ServerGenerator";
 import { ToolsGenerator } from "./tools/ToolsGenerator";
 
 export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
@@ -51,15 +50,9 @@ export class ServerGeneratorCLI extends AbstractTypescriptMcpGeneratorCli<
 
     protected async generate(context: ServerGeneratorContext): Promise<void> {
         generateModels(context);
-        this.generateServer(context);
         this.generateTools(context);
         this.generateReadme(context);
         await context.project.persist();
-    }
-
-    private generateServer(context: ServerGeneratorContext) {
-        const server = new ServerGenerator(context);
-        context.project.addSrcFile(server.generate());
     }
 
     private generateTools(context: ServerGeneratorContext) {

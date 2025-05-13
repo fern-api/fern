@@ -1,33 +1,36 @@
-import { TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
-
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { AliasGenerator } from "./alias/AliasGenerator";
 import { EnumGenerator } from "./enum/EnumGenerator";
-import { generateModelsIndex } from "./generateModelsIndex";
+import { IndexGenerator } from "./index/IndexGenerator";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { UnionGenerator } from "./union/UnionGenerator";
 
 export function generateModels(context: ModelGeneratorContext): void {
-    for (const typeDeclaration of Object.values(context.ir.types)) {
-        const file = typeDeclaration.shape._visit<TypescriptMcpFile | undefined>({
-            alias: (aliasDeclaration) => {
-                return new AliasGenerator(context, typeDeclaration, aliasDeclaration).generate();
-            },
-            enum: (enumDeclaration) => {
-                return new EnumGenerator(context, typeDeclaration, enumDeclaration).generate();
-            },
-            object: (objectDeclaration) => {
-                return new ObjectGenerator(context, typeDeclaration, objectDeclaration).generate();
-            },
-            undiscriminatedUnion: () => undefined,
-            union: (unionDeclaration) => {
-                return new UnionGenerator(context, typeDeclaration, unionDeclaration).generate();
-            },
-            _other: () => undefined
-        });
+    const typeDeclarations = Object.values(context.ir.types);
+    for (const typeDeclaration of typeDeclarations) {
+        let file;
+        switch (typeDeclaration.shape.type) {
+            case "alias":
+                file = new AliasGenerator(context, typeDeclaration, typeDeclaration.shape).generate();
+                break;
+            case "enum":
+                file = new EnumGenerator(context, typeDeclaration, typeDeclaration.shape).generate();
+                break;
+            case "object":
+                file = new ObjectGenerator(context, typeDeclaration, typeDeclaration.shape).generate();
+                break;
+            case "undiscriminatedUnion":
+                break;
+            case "union":
+                file = new UnionGenerator(context, typeDeclaration, typeDeclaration.shape).generate();
+                break;
+            default:
+                break;
+        }
         if (file != null) {
             context.project.addSchemasFile(file);
         }
     }
-    generateModelsIndex(context);
+    const indexFile = new IndexGenerator(context, typeDeclarations).generate();
+    context.project.addSchemasFile(indexFile);
 }

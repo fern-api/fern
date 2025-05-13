@@ -5,5 +5,6 @@ export enum AsIsFiles {
 
     // src files.
     IndexTs = "src/index.ts",
-    ServerCustomTs = "src/server.custom.ts"
+    ServerCustomTs = "src/server.custom.ts",
+    ServerTs = "src/server.ts"
 }
