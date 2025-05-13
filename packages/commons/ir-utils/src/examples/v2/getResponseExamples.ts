@@ -71,8 +71,25 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
             }
             break;
         }
-        case "streaming":
+        case "streaming": {
+            const jsonBody = endpoint.response.body.value;
+            if (jsonBody.type === "json") {
+                const { userExamples, autoExamples } = getV2Examples(jsonBody.v2Examples);
+                for (const [name, example] of Object.entries(userExamples)) {
+                    userResponseExamples[name] = {
+                        ...baseResponseExample,
+                        body: V2HttpEndpointResponseBody.stream([example])
+                    };
+                }
+                for (const [name, example] of Object.entries(autoExamples)) {
+                    autoResponseExamples[name] = {
+                        ...baseResponseExample,
+                        body: V2HttpEndpointResponseBody.stream([example])
+                    };
+                }
+            }
             break;
+        }
         case "streamParameter":
             break;
         default: {

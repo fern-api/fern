@@ -188,10 +188,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -213,16 +216,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -278,10 +288,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -303,16 +316,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],
@@ -368,10 +388,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "User"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "User"
+              }
             }
           },
           "statusCode": 200,
@@ -393,16 +416,23 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "id": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "id": "foo"
+                  }
+                }
+              ]
             }
           }
         ],

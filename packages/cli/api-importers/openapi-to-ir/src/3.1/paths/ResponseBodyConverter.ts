@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { HttpResponseBody, JsonResponse } from "@fern-api/ir-sdk";
+import { HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
 import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
@@ -14,6 +14,7 @@ export declare namespace ResponseBodyConverter {
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
         responseBody: HttpResponseBody;
+        streamResponseBody: HttpResponseBody | undefined;
     }
 }
 
@@ -49,24 +50,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             if (convertedSchema == null) {
                 continue;
             }
-
+            if (this.streamingExtension != null) {
+                return this.convertStreamingResponse({
+                    mediaTypeObject,
+                    convertedSchema
+                });
+            }
             if (contentType.includes("json")) {
-                const responseBody = HttpResponseBody.json(
-                    JsonResponse.response({
-                        responseBodyType: convertedSchema.type,
-                        docs: this.responseBody.description,
-                        v2Examples: this.convertMediaTypeObjectExamples({
-                            mediaTypeObject,
-                            generateOptionalProperties: true,
-                            exampleGenerationStrategy: "response"
-                        })
-                    })
-                );
-                return {
-                    responseBody,
-                    inlinedTypes: convertedSchema.inlinedTypes,
-                    examples: convertedSchema.examples
-                };
+                return this.returnJsonResponse({
+                    mediaTypeObject,
+                    convertedSchema
+                });
             }
         }
 
@@ -84,35 +78,137 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             }
             if (this.isBinarySchema(convertedSchema)) {
                 if (this.context.settings?.useBytesForBinaryResponse && this.streamingExtension == null) {
-                    const responseBody = HttpResponseBody.bytes({
-                        docs: this.responseBody.description,
-                        v2Examples: this.convertMediaTypeObjectExamples({
-                            mediaTypeObject,
-                            generateOptionalProperties: true,
-                            exampleGenerationStrategy: "response"
-                        })
+                    return this.returnBytesResponse({
+                        mediaTypeObject
                     });
-                    return {
-                        responseBody,
-                        inlinedTypes: {}
-                    };
                 }
-                const responseBody = HttpResponseBody.fileDownload({
+                return this.returnFileDownloadResponse({
+                    mediaTypeObject
+                });
+            }
+        }
+
+        return undefined;
+    }
+
+    private convertStreamingResponse({
+        mediaTypeObject,
+        convertedSchema
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
+    }): ResponseBodyConverter.Output | undefined {
+        if (this.streamingExtension == null) {
+            return undefined;
+        }
+        const format = this.streamingExtension.format;
+        switch (format) {
+            case "json": {
+                // TODO: continue this impl. here
+                return {
+                    responseBody: HttpResponseBody.streaming(
+                        StreamingResponse.json({
+                            docs: this.responseBody.description,
+                            payload: convertedSchema.type,
+                            terminator: undefined,
+                            v2Examples: this.convertMediaTypeObjectExamples({
+                                mediaTypeObject,
+                                generateOptionalProperties: true,
+                                exampleGenerationStrategy: "response"
+                            })
+                        })
+                    ),
+                    streamResponseBody: undefined,
+                    inlinedTypes: {},
+                    examples: {}
+                };
+            }
+            case "sse": {
+                return {
+                    responseBody: HttpResponseBody.streaming(
+                        StreamingResponse.sse({
+                            docs: this.responseBody.description,
+                            payload: convertedSchema.type,
+                            terminator: undefined,
+                            v2Examples: this.convertMediaTypeObjectExamples({
+                                mediaTypeObject,
+                                generateOptionalProperties: true,
+                                exampleGenerationStrategy: "response"
+                            })
+                        })
+                    ),
+                    streamResponseBody: undefined,
+                    inlinedTypes: {},
+                    examples: {}
+                };
+            }
+            default: {
+                return undefined;
+            }
+        }
+    }
+
+    private returnJsonResponse({
+        mediaTypeObject,
+        convertedSchema
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+        convertedSchema: Converters.AbstractConverters.AbstractMediaTypeObjectConverter.MediaTypeObject;
+    }): ResponseBodyConverter.Output | undefined {
+        return {
+            responseBody: HttpResponseBody.json(
+                JsonResponse.response({
+                    responseBodyType: convertedSchema.type,
                     docs: this.responseBody.description,
                     v2Examples: this.convertMediaTypeObjectExamples({
                         mediaTypeObject,
                         generateOptionalProperties: true,
                         exampleGenerationStrategy: "response"
                     })
-                });
-                return {
-                    responseBody,
-                    inlinedTypes: {}
-                };
-            }
-        }
+                })
+            ),
+            streamResponseBody: undefined,
+            inlinedTypes: convertedSchema.inlinedTypes,
+            examples: convertedSchema.examples
+        };
+    }
 
-        return undefined;
+    private returnBytesResponse({
+        mediaTypeObject
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+    }): ResponseBodyConverter.Output | undefined {
+        return {
+            responseBody: HttpResponseBody.bytes({
+                docs: this.responseBody.description,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    generateOptionalProperties: true,
+                    exampleGenerationStrategy: "response"
+                })
+            }),
+            streamResponseBody: undefined,
+            inlinedTypes: {}
+        };
+    }
+
+    private returnFileDownloadResponse({
+        mediaTypeObject
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+    }): ResponseBodyConverter.Output | undefined {
+        return {
+            responseBody: HttpResponseBody.fileDownload({
+                docs: this.responseBody.description,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    generateOptionalProperties: true,
+                    exampleGenerationStrategy: "response"
+                })
+            }),
+            streamResponseBody: undefined,
+            inlinedTypes: {}
+        };
     }
 
     private isBinarySchema(convertedSchema: SchemaOrReferenceConverter.Output): boolean {
