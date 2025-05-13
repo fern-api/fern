@@ -10040,7 +10040,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "speechToTextListenExample",
               "description": "",
               "path": "/v1/listen",
               "pathParameters": {},
@@ -10688,7 +10688,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "textIntelligenceTextReadExample",
               "description": "",
               "path": "/v1/read",
               "pathParameters": {},
@@ -11097,7 +11097,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "textToSpeechSpeakExample",
               "description": "",
               "path": "/v1/speak",
               "pathParameters": {},
@@ -11191,7 +11191,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectsExample",
               "description": "",
               "path": "/v1/projects",
               "pathParameters": {},
@@ -11385,7 +11385,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectExample",
               "description": "",
               "path": "/v1/projects/foo",
               "pathParameters": {
@@ -11521,7 +11521,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
@@ -11665,7 +11665,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234",
               "pathParameters": {
@@ -11803,7 +11803,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalances_example",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/balances",
               "pathParameters": {
@@ -11964,7 +11964,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_getProjectBalance_example",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/balances/123456-7890-1234-5678-901234",
               "pathParameters": {
@@ -12085,7 +12085,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectModelsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/models",
               "pathParameters": {
@@ -12265,7 +12265,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectModelExample",
               "description": "",
               "path": "/v1/projects/undefined/models/undefined",
               "pathParameters": {},
@@ -12403,7 +12403,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectKeysExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
@@ -12568,7 +12568,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectKeyExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/keys",
               "pathParameters": {
@@ -12725,7 +12725,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectKeyExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
@@ -12890,7 +12890,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "Management API_deleteProjectKey_example",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/keys/123456789012345678901234",
               "pathParameters": {
@@ -13007,7 +13007,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMembersExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/members",
               "pathParameters": {
@@ -13149,7 +13149,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectMemberExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234",
               "pathParameters": {
@@ -13284,7 +13284,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectMemberScopesExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
@@ -13438,7 +13438,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiUpdateProjectMemberScopesExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/members/123456789012345678901234/scopes",
               "pathParameters": {
@@ -13537,7 +13537,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectInvitesExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
@@ -13678,7 +13678,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateProjectInviteExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/invites",
               "pathParameters": {
@@ -13823,7 +13823,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectInviteExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/invites/john.doe@example.com",
               "pathParameters": {
@@ -13940,7 +13940,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectLeaveExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/leave",
               "pathParameters": {
@@ -14127,7 +14127,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectRequestsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/requests",
               "pathParameters": {
@@ -14267,7 +14267,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectRequestExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234",
               "pathParameters": {
@@ -14444,7 +14444,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/usage",
               "pathParameters": {
@@ -14602,7 +14602,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectUsageFieldsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/usage/fields",
               "pathParameters": {
@@ -14804,7 +14804,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectUsageBreakdownExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/usage/breakdown",
               "pathParameters": {
@@ -14995,7 +14995,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectPurchasesExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/purchases",
               "pathParameters": {
@@ -15111,7 +15111,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listModelsExample",
               "description": "",
               "path": "/v1/models",
               "pathParameters": {},
@@ -15284,7 +15284,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getModelExample",
               "description": "",
               "path": "/v1/models/af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
               "pathParameters": {
@@ -15420,7 +15420,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "listSelfHostedDistCredsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
@@ -15578,7 +15578,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "managementApiCreateSelfHostedDistCredsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
               "pathParameters": {
@@ -15711,7 +15711,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "getSelfHostedCredentialsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {
@@ -15870,7 +15870,7 @@
           ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteSelfHostedDistCredsExample",
               "description": "",
               "path": "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials/8b36cfd0-472f-4a21-833f-2d6343c3a2f3",
               "pathParameters": {

@@ -204,7 +204,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "authGetTokenExample",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},

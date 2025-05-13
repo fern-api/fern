@@ -155,7 +155,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsSearchExample",
               "description": "",
               "path": "/organizations/foo/search",
               "pathParameters": {
@@ -244,7 +244,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getUserExample",
             "description": "",
             "path": "/users/foo",
             "pathParameters": {
@@ -340,7 +340,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getOrganizationUserExample",
             "description": "",
             "path": "/organizations/foo/users/foo",
             "pathParameters": {

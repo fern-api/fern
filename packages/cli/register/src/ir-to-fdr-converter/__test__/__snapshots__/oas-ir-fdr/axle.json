@@ -1311,7 +1311,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Ignition_StartIgnition_example",
               "description": "",
               "path": "/ignition",
               "pathParameters": {},
@@ -1459,7 +1459,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "tokensExchangeTokenExample",
               "description": "",
               "path": "/token/exchange",
               "pathParameters": {},
@@ -1620,7 +1620,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAccountExample",
               "description": "",
               "path": "/accounts/foo",
               "pathParameters": {
@@ -1788,7 +1788,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPolicyExample",
               "description": "",
               "path": "/policies/foo",
               "pathParameters": {
@@ -2058,7 +2058,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarrierExample",
               "description": "",
               "path": "/carriers/foo",
               "pathParameters": {
@@ -2188,7 +2188,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCarriersExample",
               "description": "",
               "path": "/carriers",
               "pathParameters": {},
