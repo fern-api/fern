@@ -43,6 +43,11 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     ```
     """
 
+    use_inheritance_for_extended_models: bool = True
+    """
+    Whether to generate Pydantic models that implement inheritance when a model utilizes the Fern `extends` keyword.
+    """
+
     use_pydantic_field_aliases: bool = True
 
     @pydantic.model_validator(mode="after")
