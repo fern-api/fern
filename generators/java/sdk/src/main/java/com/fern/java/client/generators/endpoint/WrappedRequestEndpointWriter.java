@@ -256,7 +256,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock.Builder requestBodyCodeBlock,
             boolean sendContentType,
             String contentType) {
-        System.out.println("Initializing json request body for " + this.httpEndpoint.getId());
 
         boolean isOptional = false;
         if (this.httpEndpoint.getRequestBody().isPresent()) {
