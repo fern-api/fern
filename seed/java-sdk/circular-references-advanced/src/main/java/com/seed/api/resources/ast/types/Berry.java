@@ -17,13 +17,13 @@ import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
-@JsonDeserialize(builder = Acai.Builder.class)
-public final class Acai implements IBerry {
+@JsonDeserialize(builder = Berry.Builder.class)
+public final class Berry implements IBerry {
     private final Animal animal;
 
     private final Map<String, Object> additionalProperties;
 
-    private Acai(Animal animal, Map<String, Object> additionalProperties) {
+    private Berry(Animal animal, Map<String, Object> additionalProperties) {
         this.animal = animal;
         this.additionalProperties = additionalProperties;
     }
@@ -37,7 +37,7 @@ public final class Acai implements IBerry {
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
-        return other instanceof Acai && equalTo((Acai) other);
+        return other instanceof Berry && equalTo((Berry) other);
     }
 
     @JsonAnyGetter
@@ -45,7 +45,7 @@ public final class Acai implements IBerry {
         return this.additionalProperties;
     }
 
-    private boolean equalTo(Acai other) {
+    private boolean equalTo(Berry other) {
         return animal.equals(other.animal);
     }
 
@@ -66,11 +66,11 @@ public final class Acai implements IBerry {
     public interface AnimalStage {
         _FinalStage animal(@NotNull Animal animal);
 
-        Builder from(Acai other);
+        Builder from(Berry other);
     }
 
     public interface _FinalStage {
-        Acai build();
+        Berry build();
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -83,7 +83,7 @@ public final class Acai implements IBerry {
         private Builder() {}
 
         @java.lang.Override
-        public Builder from(Acai other) {
+        public Builder from(Berry other) {
             animal(other.getAnimal());
             return this;
         }
@@ -96,8 +96,8 @@ public final class Acai implements IBerry {
         }
 
         @java.lang.Override
-        public Acai build() {
-            return new Acai(animal, additionalProperties);
+        public Berry build() {
+            return new Berry(animal, additionalProperties);
         }
     }
 }
