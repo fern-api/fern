@@ -147,7 +147,32 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "listUsersExample",
@@ -239,7 +264,32 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "getUserInformationExample",
@@ -315,7 +365,20 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
             "name": "getAuthenticationTokenExample",

@@ -48164,7 +48164,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ValsDeleteRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "valsDeleteRequestNotFoundError",
+                    "safeName": "valsDeleteRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "vals_delete_request_not_found_error",
+                    "safeName": "vals_delete_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValsDeleteRequestNotFoundError",
+                    "safeName": "ValsDeleteRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ValsDeleteRequestNotFoundError"
+              },
+              "docs": "The val was not found"
+            }
+          ],
           "auth": true,
           "docs": "Delete a val",
           "userSpecifiedExamples": [],
@@ -54227,7 +54257,37 @@
           ],
           "queryParameters": [],
           "headers": [],
-          "errors": [],
+          "errors": [
+            {
+              "error": {
+                "name": {
+                  "originalName": "ValsDeleteVersionRequestNotFoundError",
+                  "camelCase": {
+                    "unsafeName": "valsDeleteVersionRequestNotFoundError",
+                    "safeName": "valsDeleteVersionRequestNotFoundError"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "vals_delete_version_request_not_found_error",
+                    "safeName": "vals_delete_version_request_not_found_error"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR",
+                    "safeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ValsDeleteVersionRequestNotFoundError",
+                    "safeName": "ValsDeleteVersionRequestNotFoundError"
+                  }
+                },
+                "fernFilepath": {
+                  "allParts": [],
+                  "packagePath": []
+                },
+                "errorId": "ValsDeleteVersionRequestNotFoundError"
+              },
+              "docs": "The val was not found"
+            }
+          ],
           "auth": true,
           "docs": "Delete a specific version of a val",
           "userSpecifiedExamples": [],
@@ -56613,6 +56673,120 @@
       },
       "statusCode": 500,
       "docs": "Default Response",
+      "examples": []
+    },
+    "ValsDeleteRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "ValsDeleteRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "valsDeleteRequestNotFoundError",
+            "safeName": "valsDeleteRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "vals_delete_request_not_found_error",
+            "safeName": "vals_delete_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ValsDeleteRequestNotFoundError",
+            "safeName": "ValsDeleteRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ValsDeleteRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ValsDeleteRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "valsDeleteRequestNotFoundError",
+            "safeName": "valsDeleteRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "vals_delete_request_not_found_error",
+            "safeName": "vals_delete_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_DELETE_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ValsDeleteRequestNotFoundError",
+            "safeName": "ValsDeleteRequestNotFoundError"
+          }
+        },
+        "wireValue": "ValsDeleteRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "The val was not found",
+      "examples": []
+    },
+    "ValsDeleteVersionRequestNotFoundError": {
+      "name": {
+        "name": {
+          "originalName": "ValsDeleteVersionRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "valsDeleteVersionRequestNotFoundError",
+            "safeName": "valsDeleteVersionRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "vals_delete_version_request_not_found_error",
+            "safeName": "vals_delete_version_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ValsDeleteVersionRequestNotFoundError",
+            "safeName": "ValsDeleteVersionRequestNotFoundError"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [],
+          "packagePath": []
+        },
+        "errorId": "ValsDeleteVersionRequestNotFoundError"
+      },
+      "displayName": "NotFoundError",
+      "discriminantValue": {
+        "name": {
+          "originalName": "ValsDeleteVersionRequestNotFoundError",
+          "camelCase": {
+            "unsafeName": "valsDeleteVersionRequestNotFoundError",
+            "safeName": "valsDeleteVersionRequestNotFoundError"
+          },
+          "snakeCase": {
+            "unsafeName": "vals_delete_version_request_not_found_error",
+            "safeName": "vals_delete_version_request_not_found_error"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR",
+            "safeName": "VALS_DELETE_VERSION_REQUEST_NOT_FOUND_ERROR"
+          },
+          "pascalCase": {
+            "unsafeName": "ValsDeleteVersionRequestNotFoundError",
+            "safeName": "ValsDeleteVersionRequestNotFoundError"
+          }
+        },
+        "wireValue": "ValsDeleteVersionRequestNotFoundError"
+      },
+      "type": {
+        "type": "unknown"
+      },
+      "statusCode": 404,
+      "docs": "The val was not found",
       "examples": []
     },
     "ValsCancelRequestNotFoundError": {

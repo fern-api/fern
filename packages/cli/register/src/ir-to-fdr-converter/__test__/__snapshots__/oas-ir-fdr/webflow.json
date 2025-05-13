@@ -41076,6 +41076,66 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 409,
+              "description": "To access this feature, the site needs to be republished.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -41083,6 +41143,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -41321,6 +41393,54 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -41328,6 +41448,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -41510,6 +41642,54 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -41517,6 +41697,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -41673,6 +41865,54 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -41680,6 +41920,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -41816,6 +42068,66 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 409,
+              "description": "To access this feature, the site needs to be republished.",
+              "name": "ConflictError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -41823,6 +42135,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -41969,6 +42293,30 @@
             "description": "Request was successful"
           },
           "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
             {
               "type": {
                 "type": "alias",
@@ -42329,6 +42677,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -42336,6 +42720,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -42473,6 +42869,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -42480,6 +42912,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -42644,6 +43088,42 @@
               "statusCode": 400,
               "description": "Bad Request",
               "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -42863,6 +43343,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -42870,6 +43374,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -42896,6 +43412,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -43771,6 +44299,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -43778,6 +44330,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -43804,6 +44368,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -44404,6 +44980,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -44411,6 +45011,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -44437,6 +45049,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -45004,6 +45628,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -45011,6 +45659,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -45037,6 +45697,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -45577,6 +46249,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -45584,6 +46280,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -45610,6 +46318,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -46169,6 +46889,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -46176,6 +46920,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -46202,6 +46958,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -47659,6 +48427,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -47666,6 +48458,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -47692,6 +48496,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -47860,6 +48676,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -47867,6 +48707,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -47893,6 +48745,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -48107,6 +48971,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -48120,6 +49008,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -48127,6 +49027,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -48397,6 +49309,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -48410,6 +49346,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -48417,6 +49365,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -48549,6 +49509,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -48562,6 +49546,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -48569,6 +49565,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -48712,6 +49720,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -48725,6 +49757,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -48732,6 +49776,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -48922,6 +49978,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -48929,6 +50009,18 @@
               "statusCode": 403,
               "description": "Forbidden",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -48955,6 +50047,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -49586,6 +50690,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -49593,6 +50733,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -49812,6 +50964,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -49819,6 +51007,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -50199,6 +51399,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -50206,6 +51442,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -50412,6 +51660,54 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -50419,6 +51715,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -50621,6 +51929,54 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 403,
+              "description": "Provided access token does not have access rights to this content.",
+              "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -50628,6 +51984,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -50879,6 +52247,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -50962,7 +52342,20 @@
             "statusCode": 200,
             "description": "Request was successful"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
               "name": "introspectExample",
@@ -51143,6 +52536,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51150,6 +52555,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -51304,6 +52721,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51311,6 +52764,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -51504,6 +52969,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51511,6 +53012,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -51651,6 +53164,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51658,6 +53207,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -51774,6 +53335,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51781,6 +53378,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -51874,6 +53483,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -51881,6 +53526,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -52037,6 +53694,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -52044,6 +53737,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -52239,6 +53944,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -52246,6 +53987,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -52478,6 +54231,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -52485,6 +54274,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -52765,6 +54566,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -52772,6 +54609,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -53009,6 +54858,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -53016,6 +54901,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -53296,6 +55193,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -53303,6 +55236,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -53563,6 +55508,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -53570,6 +55551,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -53705,6 +55698,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -53712,6 +55741,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -53852,6 +55893,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -53859,6 +55936,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54080,6 +56169,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54087,6 +56212,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54259,6 +56396,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54266,6 +56439,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54406,6 +56591,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54413,6 +56634,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54634,6 +56867,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54641,6 +56910,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54806,6 +57087,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54813,6 +57130,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -54945,6 +57274,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -54952,6 +57317,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55137,6 +57514,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55144,6 +57557,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55301,6 +57726,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55308,6 +57769,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55403,6 +57876,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55410,6 +57919,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55595,6 +58116,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55602,6 +58159,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55753,6 +58322,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55760,6 +58365,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -55872,6 +58489,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -55879,6 +58532,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56077,6 +58742,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56084,6 +58785,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56300,6 +59013,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56307,6 +59056,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56503,6 +59264,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56510,6 +59307,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56640,6 +59449,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56647,6 +59492,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56834,6 +59691,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56841,6 +59734,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -56991,6 +59896,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -56998,6 +59939,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57126,6 +60079,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57133,6 +60122,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57241,6 +60242,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57248,6 +60285,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57396,6 +60445,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57403,6 +60488,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57569,6 +60666,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57576,6 +60709,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57700,6 +60845,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57707,6 +60888,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -57832,6 +61025,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -57839,6 +61068,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -58128,6 +61369,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -58135,6 +61412,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -58255,6 +61544,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -58262,6 +61587,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -58360,6 +61697,42 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -58367,6 +61740,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -58500,6 +61885,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -58513,6 +61922,18 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "TooManyRequestsError"
                 }
@@ -58520,6 +61941,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -58696,6 +62129,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Validation failure",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -58703,6 +62160,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -58729,6 +62198,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -59040,6 +62521,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -59047,6 +62552,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -59073,6 +62590,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -59342,6 +62871,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -59349,6 +62902,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -59375,6 +62940,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -59686,6 +63263,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -59693,6 +63294,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -59719,6 +63332,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -59994,6 +63619,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -60001,6 +63650,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -60027,6 +63688,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -60280,6 +63953,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -60287,6 +63984,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -60313,6 +64022,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
@@ -60495,6 +64216,30 @@
               "type": {
                 "type": "alias",
                 "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Request body was incorrectly formatted. Likely invalid JSON being sent up.",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Provided access token is invalid or does not have access to requested resource",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
                   "type": "id",
                   "value": "ForbiddenError"
                 }
@@ -60502,6 +64247,18 @@
               "statusCode": 403,
               "description": "Provided access token is valid, but is missing the required scopes.",
               "name": "ForbiddenError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "Requested resource not found",
+              "name": "NotFoundError",
               "examples": []
             },
             {
@@ -60528,6 +64285,18 @@
               "statusCode": 429,
               "description": "The rate limit of the provided access_token has been reached. Please have your application respect the X-RateLimit-Remaining header we include on API responses.",
               "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 500,
+              "description": "We had a problem with our server. Try again later.",
+              "name": "InternalServerError",
               "examples": []
             }
           ],
