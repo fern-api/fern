@@ -17,6 +17,9 @@ export const V2HttpEndpointResponseBody: core.serialization.Schema<
         json: core.serialization.object({
             value: core.serialization.unknown(),
         }),
+        stream: core.serialization.object({
+            value: core.serialization.unknown(),
+        }),
     })
     .transform<FernIr.V2HttpEndpointResponseBody>({
         transform: (value) => {
@@ -25,6 +28,8 @@ export const V2HttpEndpointResponseBody: core.serialization.Schema<
                     return FernIr.V2HttpEndpointResponseBody.error(value.value);
                 case "json":
                     return FernIr.V2HttpEndpointResponseBody.json(value.value);
+                case "stream":
+                    return FernIr.V2HttpEndpointResponseBody.stream(value.value);
                 default:
                     return value as FernIr.V2HttpEndpointResponseBody;
             }
@@ -33,7 +38,10 @@ export const V2HttpEndpointResponseBody: core.serialization.Schema<
     });
 
 export declare namespace V2HttpEndpointResponseBody {
-    export type Raw = V2HttpEndpointResponseBody.Error | V2HttpEndpointResponseBody.Json;
+    export type Raw =
+        | V2HttpEndpointResponseBody.Error
+        | V2HttpEndpointResponseBody.Json
+        | V2HttpEndpointResponseBody.Stream;
 
     export interface Error {
         type: "error";
@@ -42,6 +50,11 @@ export declare namespace V2HttpEndpointResponseBody {
 
     export interface Json {
         type: "json";
+        value?: unknown;
+    }
+
+    export interface Stream {
+        type: "stream";
         value?: unknown;
     }
 }

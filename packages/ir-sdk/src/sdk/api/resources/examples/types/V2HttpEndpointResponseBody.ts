@@ -6,7 +6,8 @@ import * as FernIr from "../../../index";
 
 export type V2HttpEndpointResponseBody =
     | FernIr.V2HttpEndpointResponseBody.Error_
-    | FernIr.V2HttpEndpointResponseBody.Json;
+    | FernIr.V2HttpEndpointResponseBody.Json
+    | FernIr.V2HttpEndpointResponseBody.Stream;
 
 export namespace V2HttpEndpointResponseBody {
     export interface Error_ extends _Utils {
@@ -19,6 +20,11 @@ export namespace V2HttpEndpointResponseBody {
         value: unknown;
     }
 
+    export interface Stream extends _Utils {
+        type: "stream";
+        value: unknown;
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>) => _Result;
     }
@@ -26,6 +32,7 @@ export namespace V2HttpEndpointResponseBody {
     export interface _Visitor<_Result> {
         error: (value: unknown) => _Result;
         json: (value: unknown) => _Result;
+        stream: (value: unknown) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -33,9 +40,9 @@ export namespace V2HttpEndpointResponseBody {
 export const V2HttpEndpointResponseBody = {
     error: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Error_ => {
         return {
-            value: value,
+            value,
             type: "error",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2HttpEndpointResponseBody.Error_,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
@@ -46,10 +53,23 @@ export const V2HttpEndpointResponseBody = {
 
     json: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Json => {
         return {
-            value: value,
+            value,
             type: "json",
-            _visit: function <_Result>(
+            _visit <_Result>(
                 this: FernIr.V2HttpEndpointResponseBody.Json,
+                visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
+            ) {
+                return FernIr.V2HttpEndpointResponseBody._visit(this, visitor);
+            },
+        };
+    },
+
+    stream: (value?: unknown): FernIr.V2HttpEndpointResponseBody.Stream => {
+        return {
+            value,
+            type: "stream",
+            _visit <_Result>(
+                this: FernIr.V2HttpEndpointResponseBody.Stream,
                 visitor: FernIr.V2HttpEndpointResponseBody._Visitor<_Result>,
             ) {
                 return FernIr.V2HttpEndpointResponseBody._visit(this, visitor);
@@ -66,6 +86,8 @@ export const V2HttpEndpointResponseBody = {
                 return visitor.error(value.value);
             case "json":
                 return visitor.json(value.value);
+            case "stream":
+                return visitor.stream(value.value);
             default:
                 return visitor._other(value as any);
         }
