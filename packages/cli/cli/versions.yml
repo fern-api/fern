@@ -1,5 +1,12 @@
 - changelogEntry: 
   - summary: |
+      Improve the naming for nexted primitive types in union schemas.
+    type: fix
+  irVersion: 57
+  version: 0.61.2
+
+- changelogEntry: 
+  - summary: |
       Fix a bug where unknown identifiers in the API Reference layout would not be resolved correctly.
     type: fix
   irVersion: 57
