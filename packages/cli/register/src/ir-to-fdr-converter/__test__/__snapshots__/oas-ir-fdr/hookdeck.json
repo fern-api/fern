@@ -80,21 +80,6 @@
         ]
       }
     },
-    "SeekPaginationOrderBy1": {
-      "name": "SeekPaginationOrderBy1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "SeekPaginationOrderBy": {
       "name": "SeekPaginationOrderBy",
       "shape": {
@@ -109,10 +94,14 @@
             }
           },
           {
-            "typeName": "SeekPaginationOrderBy1",
             "type": {
-              "type": "id",
-              "value": "SeekPaginationOrderBy1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -251,21 +240,6 @@
         ]
       }
     },
-    "IssueTriggerDeliveryConfigsConnections1": {
-      "name": "IssueTriggerDeliveryConfigsConnections1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "IssueTriggerDeliveryConfigsConnections": {
       "description": "A pattern to match on the connection name or array of connection IDs. Use `*` as wildcard.",
       "name": "IssueTriggerDeliveryConfigsConnections",
@@ -281,10 +255,14 @@
             }
           },
           {
-            "typeName": "IssueTriggerDeliveryConfigsConnections1",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerDeliveryConfigsConnections1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -339,21 +317,6 @@
         ]
       }
     },
-    "IssueTriggerTransformationConfigsTransformations1": {
-      "name": "IssueTriggerTransformationConfigsTransformations1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "IssueTriggerTransformationConfigsTransformations": {
       "description": "A pattern to match on the transformation name or array of transformation IDs. Use `*` as wildcard.",
       "name": "IssueTriggerTransformationConfigsTransformations",
@@ -369,10 +332,14 @@
             }
           },
           {
-            "typeName": "IssueTriggerTransformationConfigsTransformations1",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerTransformationConfigsTransformations1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -418,21 +385,6 @@
         }
       }
     },
-    "IssueTriggerBackpressureConfigsDestinations1": {
-      "name": "IssueTriggerBackpressureConfigsDestinations1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "IssueTriggerBackpressureConfigsDestinations": {
       "description": "A pattern to match on the destination name or array of destination IDs. Use `*` as wildcard.",
       "name": "IssueTriggerBackpressureConfigsDestinations",
@@ -448,10 +400,14 @@
             }
           },
           {
-            "typeName": "IssueTriggerBackpressureConfigsDestinations1",
             "type": {
-              "type": "id",
-              "value": "IssueTriggerBackpressureConfigsDestinations1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -7224,19 +7180,6 @@
         ]
       }
     },
-    "AttemptsGetParametersSchema1": {
-      "name": "AttemptsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "AttemptsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "AttemptsGetParametersSchema": {
       "description": "Sort direction",
       "name": "AttemptsGetParametersSchema",
@@ -7288,15 +7231,15 @@
         ]
       }
     },
-    "BookmarksGetParametersSchema1": {
-      "name": "BookmarksGetParametersSchema1",
+    "AttemptsGetParametersSchema1": {
+      "name": "AttemptsGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "BookmarksGetParametersSchemaOneOf1Items"
+            "value": "AttemptsGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -7322,6 +7265,19 @@
             }
           }
         ]
+      }
+    },
+    "BookmarksGetParametersSchema1": {
+      "name": "BookmarksGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "BookmarksGetParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "BookmarksGetParametersSchema0": {
@@ -7367,19 +7323,6 @@
         ]
       }
     },
-    "DestinationsGetParametersSchema1": {
-      "name": "DestinationsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "DestinationsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "DestinationsGetParametersSchema": {
       "description": "Sort direction",
       "name": "DestinationsGetParametersSchema",
@@ -7403,18 +7346,15 @@
         ]
       }
     },
-    "DestinationsGetParametersSchema2": {
-      "name": "DestinationsGetParametersSchema2",
+    "DestinationsGetParametersSchema1": {
+      "name": "DestinationsGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
+            "type": "id",
+            "value": "DestinationsGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -7501,19 +7441,6 @@
         ]
       }
     },
-    "EventsGetParametersSchema1": {
-      "name": "EventsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "EventsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "EventsGetParametersSchema": {
       "description": "Sort direction",
       "name": "EventsGetParametersSchema",
@@ -7537,17 +7464,15 @@
         ]
       }
     },
-    "EventsGetParametersSchema2": {
-      "name": "EventsGetParametersSchema2",
+    "EventsGetParametersSchema1": {
+      "name": "EventsGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
+            "type": "id",
+            "value": "EventsGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -7616,22 +7541,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaId1": {
-      "name": "BulkEventsRetryGetParametersSchemaId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaId": {
       "description": "Filter by event IDs",
       "name": "BulkEventsRetryGetParametersSchemaId",
@@ -7649,10 +7558,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -7694,22 +7608,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaIssueId1": {
-      "name": "BulkEventsRetryGetParametersSchemaIssueId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaIssueId": {
       "name": "BulkEventsRetryGetParametersSchemaIssueId",
       "shape": {
@@ -7725,29 +7623,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaIssueId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaIssueId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaWebhookId1": {
-      "name": "BulkEventsRetryGetParametersSchemaWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaWebhookId": {
@@ -7767,29 +7654,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaDestinationId1": {
-      "name": "BulkEventsRetryGetParametersSchemaDestinationId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaDestinationId": {
@@ -7809,29 +7685,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaDestinationId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaDestinationId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaSourceId1": {
-      "name": "BulkEventsRetryGetParametersSchemaSourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaSourceId": {
@@ -7851,10 +7716,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaSourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaSourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -8062,23 +7932,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaResponseStatus2": {
-      "name": "BulkEventsRetryGetParametersSchemaResponseStatus2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 200,
-              "maximum": 600
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
       "name": "BulkEventsRetryGetParametersSchemaResponseStatus",
@@ -8103,10 +7956,16 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaResponseStatus2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaResponseStatus2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 200,
+                  "maximum": 600
+                }
+              }
             }
           }
         ]
@@ -8308,22 +8167,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaErrorCode1": {
-      "name": "BulkEventsRetryGetParametersSchemaErrorCode1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaErrorCode": {
       "name": "BulkEventsRetryGetParametersSchemaErrorCode",
       "shape": {
@@ -8339,10 +8182,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaErrorCode1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaErrorCode1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -8369,21 +8217,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaCliId2": {
-      "name": "BulkEventsRetryGetParametersSchemaCliId2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
       "name": "BulkEventsRetryGetParametersSchemaCliId",
@@ -8406,28 +8239,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCliId2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCliId2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryGetParametersSchemaCliUserId1": {
-      "name": "BulkEventsRetryGetParametersSchemaCliUserId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryGetParametersSchemaCliUserId": {
@@ -8444,10 +8266,14 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaCliUserId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaCliUserId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -8551,22 +8377,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaEventDataId1": {
-      "name": "BulkEventsRetryGetParametersSchemaEventDataId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaEventDataId": {
       "name": "BulkEventsRetryGetParametersSchemaEventDataId",
       "shape": {
@@ -8582,10 +8392,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaEventDataId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaEventDataId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -8687,22 +8502,6 @@
         ]
       }
     },
-    "BulkEventsRetryGetParametersSchemaBulkRetryId1": {
-      "name": "BulkEventsRetryGetParametersSchemaBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryGetParametersSchemaBulkRetryId": {
       "name": "BulkEventsRetryGetParametersSchemaBulkRetryId",
       "shape": {
@@ -8718,10 +8517,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryGetParametersSchemaBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryGetParametersSchemaBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -8901,22 +8705,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryId": {
       "description": "Filter by event IDs",
       "name": "BulkEventsRetryPostRequestBodySchemaQueryId",
@@ -8934,10 +8722,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -8979,22 +8772,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryIssueId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryIssueId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryIssueId": {
       "name": "BulkEventsRetryPostRequestBodySchemaQueryIssueId",
       "shape": {
@@ -9010,29 +8787,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryIssueId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryIssueId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryWebhookId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryWebhookId": {
@@ -9052,29 +8818,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryDestinationId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryDestinationId": {
@@ -9094,29 +8849,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryDestinationId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQuerySourceId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQuerySourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQuerySourceId": {
@@ -9136,10 +8880,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQuerySourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQuerySourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -9347,23 +9096,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus2": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 200,
-              "maximum": 600
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus": {
       "description": "Filter by HTTP response status code",
       "name": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus",
@@ -9388,10 +9120,16 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryResponseStatus2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 200,
+                  "maximum": 600
+                }
+              }
             }
           }
         ]
@@ -9593,22 +9331,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryErrorCode1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryErrorCode": {
       "name": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode",
       "shape": {
@@ -9624,10 +9346,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryErrorCode1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -9654,21 +9381,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryCliId2": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryCliId2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
       "name": "BulkEventsRetryPostRequestBodySchemaQueryCliId",
@@ -9691,28 +9403,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryCliId2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryCliId2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPostRequestBodySchemaQueryCliUserId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPostRequestBodySchemaQueryCliUserId": {
@@ -9729,10 +9430,14 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryCliUserId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -9836,22 +9541,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryEventDataId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryEventDataId": {
       "name": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId",
       "shape": {
@@ -9867,10 +9556,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryEventDataId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -9972,22 +9666,6 @@
         ]
       }
     },
-    "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId1": {
-      "name": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId": {
       "name": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId",
       "shape": {
@@ -10003,10 +9681,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPostRequestBodySchemaQueryBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -10254,22 +9937,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaId": {
       "description": "Filter by event IDs",
       "name": "BulkEventsRetryPlanGetParametersSchemaId",
@@ -10287,10 +9954,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -10332,22 +10004,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaIssueId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaIssueId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaIssueId": {
       "name": "BulkEventsRetryPlanGetParametersSchemaIssueId",
       "shape": {
@@ -10363,29 +10019,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaIssueId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaIssueId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaWebhookId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaWebhookId": {
@@ -10405,29 +10050,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaDestinationId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaDestinationId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaDestinationId": {
@@ -10447,29 +10081,18 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaDestinationId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaDestinationId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaSourceId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaSourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaSourceId": {
@@ -10489,10 +10112,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaSourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaSourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -10700,23 +10328,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaResponseStatus2": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaResponseStatus2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 200,
-              "maximum": 600
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
       "name": "BulkEventsRetryPlanGetParametersSchemaResponseStatus",
@@ -10741,10 +10352,16 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaResponseStatus2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaResponseStatus2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 200,
+                  "maximum": 600
+                }
+              }
             }
           }
         ]
@@ -10946,22 +10563,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaErrorCode1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaErrorCode1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaErrorCode": {
       "name": "BulkEventsRetryPlanGetParametersSchemaErrorCode",
       "shape": {
@@ -10977,10 +10578,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaErrorCode1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaErrorCode1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -11007,21 +10613,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaCliId2": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliId2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
       "name": "BulkEventsRetryPlanGetParametersSchemaCliId",
@@ -11044,28 +10635,17 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCliId2",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCliId2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkEventsRetryPlanGetParametersSchemaCliUserId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaCliUserId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
       }
     },
     "BulkEventsRetryPlanGetParametersSchemaCliUserId": {
@@ -11082,10 +10662,14 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaCliUserId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaCliUserId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -11189,22 +10773,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaEventDataId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaEventDataId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaEventDataId": {
       "name": "BulkEventsRetryPlanGetParametersSchemaEventDataId",
       "shape": {
@@ -11220,10 +10788,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaEventDataId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaEventDataId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -11325,22 +10898,6 @@
         ]
       }
     },
-    "BulkEventsRetryPlanGetParametersSchemaBulkRetryId1": {
-      "name": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkEventsRetryPlanGetParametersSchemaBulkRetryId": {
       "name": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId",
       "shape": {
@@ -11356,10 +10913,15 @@
             }
           },
           {
-            "typeName": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkEventsRetryPlanGetParametersSchemaBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -11643,22 +11205,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryGetParametersSchemaCause1": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaCause1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkIgnoredEventsRetryGetParametersSchemaCause": {
       "description": "The cause of the ignored event",
       "name": "BulkIgnoredEventsRetryGetParametersSchemaCause",
@@ -11675,29 +11221,18 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryGetParametersSchemaCause1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryGetParametersSchemaCause1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1": {
-      "name": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryGetParametersSchemaWebhookId": {
@@ -11716,10 +11251,15 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -11753,22 +11293,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause1": {
-      "name": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause": {
       "description": "The cause of the ignored event",
       "name": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause",
@@ -11785,29 +11309,18 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryCause1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId1": {
-      "name": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId": {
@@ -11826,10 +11339,15 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPostRequestBodySchemaQueryWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -11881,22 +11399,6 @@
         ]
       }
     },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1": {
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkIgnoredEventsRetryPlanGetParametersSchemaCause": {
       "description": "The cause of the ignored event",
       "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause",
@@ -11913,29 +11415,18 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaCause1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId1": {
-      "name": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId": {
@@ -11954,10 +11445,15 @@
             }
           },
           {
-            "typeName": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "BulkIgnoredEventsRetryPlanGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -12097,19 +11593,6 @@
         ]
       }
     },
-    "IssuesGetParametersSchema1": {
-      "name": "IssuesGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "IssuesGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "IssuesGetParametersSchema": {
       "description": "Sort direction",
       "name": "IssuesGetParametersSchema",
@@ -12161,17 +11644,15 @@
         ]
       }
     },
-    "IssuesGetParametersSchemaWebhookId1": {
-      "name": "IssuesGetParametersSchemaWebhookId1",
+    "IssuesGetParametersSchema1": {
+      "name": "IssuesGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
+            "type": "id",
+            "value": "IssuesGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -12190,28 +11671,17 @@
             }
           },
           {
-            "typeName": "IssuesGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "IssuesGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "IssuesGetParametersSchemaResponseStatus1": {
-      "name": "IssuesGetParametersSchemaResponseStatus1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "double"
-            }
-          }
-        }
       }
     },
     "IssuesGetParametersSchemaResponseStatus": {
@@ -12228,10 +11698,14 @@
             }
           },
           {
-            "typeName": "IssuesGetParametersSchemaResponseStatus1",
             "type": {
-              "type": "id",
-              "value": "IssuesGetParametersSchemaResponseStatus1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
             }
           }
         ]
@@ -12270,19 +11744,6 @@
             }
           }
         ]
-      }
-    },
-    "IssuesCountGetParametersSchema1": {
-      "name": "IssuesCountGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "IssuesCountGetParametersSchemaOneOf1Items"
-          }
-        }
       }
     },
     "IssuesCountGetParametersSchema": {
@@ -12336,17 +11797,15 @@
         ]
       }
     },
-    "IssuesCountGetParametersSchemaWebhookId1": {
-      "name": "IssuesCountGetParametersSchemaWebhookId1",
+    "IssuesCountGetParametersSchema1": {
+      "name": "IssuesCountGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
+            "type": "id",
+            "value": "IssuesCountGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -12365,28 +11824,17 @@
             }
           },
           {
-            "typeName": "IssuesCountGetParametersSchemaWebhookId1",
             "type": {
-              "type": "id",
-              "value": "IssuesCountGetParametersSchemaWebhookId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "IssuesCountGetParametersSchemaResponseStatus1": {
-      "name": "IssuesCountGetParametersSchemaResponseStatus1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "double"
-            }
-          }
-        }
       }
     },
     "IssuesCountGetParametersSchemaResponseStatus": {
@@ -12403,10 +11851,14 @@
             }
           },
           {
-            "typeName": "IssuesCountGetParametersSchemaResponseStatus1",
             "type": {
-              "type": "id",
-              "value": "IssuesCountGetParametersSchemaResponseStatus1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
             }
           }
         ]
@@ -12468,19 +11920,6 @@
         ]
       }
     },
-    "RequestsGetParametersSchema1": {
-      "name": "RequestsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "RequestsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "RequestsGetParametersSchema": {
       "description": "Sort direction",
       "name": "RequestsGetParametersSchema",
@@ -12504,6 +11943,19 @@
         ]
       }
     },
+    "RequestsGetParametersSchema1": {
+      "name": "RequestsGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "RequestsGetParametersSchemaOneOf1Items"
+          }
+        }
+      }
+    },
     "RequestsGetParametersSchema2": {
       "name": "RequestsGetParametersSchema2",
       "shape": {
@@ -12511,11 +11963,8 @@
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
+            "type": "id",
+            "value": "RequestRejectionCause"
           }
         }
       }
@@ -12548,19 +11997,6 @@
         ]
       }
     },
-    "RequestsIdEventsGetParametersSchema1": {
-      "name": "RequestsIdEventsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "RequestsIdEventsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "RequestsIdEventsGetParametersSchema": {
       "description": "Sort direction",
       "name": "RequestsIdEventsGetParametersSchema",
@@ -12584,17 +12020,15 @@
         ]
       }
     },
-    "RequestsIdEventsGetParametersSchema2": {
-      "name": "RequestsIdEventsGetParametersSchema2",
+    "RequestsIdEventsGetParametersSchema1": {
+      "name": "RequestsIdEventsGetParametersSchema1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
+            "type": "id",
+            "value": "RequestsIdEventsGetParametersSchemaOneOf1Items"
           }
         }
       }
@@ -12625,19 +12059,6 @@
             "value": "desc"
           }
         ]
-      }
-    },
-    "RequestsIdIgnoredEventsGetParametersSchema1": {
-      "name": "RequestsIdIgnoredEventsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items"
-          }
-        }
       }
     },
     "RequestsIdIgnoredEventsGetParametersSchema": {
@@ -12691,6 +12112,19 @@
         ]
       }
     },
+    "RequestsIdIgnoredEventsGetParametersSchema1": {
+      "name": "RequestsIdIgnoredEventsGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "RequestsIdIgnoredEventsGetParametersSchemaOneOf1Items"
+          }
+        }
+      }
+    },
     "BulkRequestsRetryGetParametersSchema1": {
       "name": "BulkRequestsRetryGetParametersSchema1",
       "shape": {
@@ -12727,22 +12161,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaId1": {
-      "name": "BulkRequestsRetryGetParametersSchemaId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaId": {
       "description": "Filter by requests IDs",
       "name": "BulkRequestsRetryGetParametersSchemaId",
@@ -12760,10 +12178,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -12983,22 +12406,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaIgnoredCount2": {
-      "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaIgnoredCount": {
       "name": "BulkRequestsRetryGetParametersSchemaIgnoredCount",
       "shape": {
@@ -13021,10 +12428,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaIgnoredCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaIgnoredCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
@@ -13116,22 +12528,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaEventsCount2": {
-      "name": "BulkRequestsRetryGetParametersSchemaEventsCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaEventsCount": {
       "name": "BulkRequestsRetryGetParametersSchemaEventsCount",
       "shape": {
@@ -13154,29 +12550,18 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaEventsCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaEventsCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryGetParametersSchemaSourceId1": {
-      "name": "BulkRequestsRetryGetParametersSchemaSourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkRequestsRetryGetParametersSchemaSourceId": {
@@ -13196,10 +12581,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaSourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaSourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -13495,22 +12885,6 @@
         ]
       }
     },
-    "BulkRequestsRetryGetParametersSchemaBulkRetryId1": {
-      "name": "BulkRequestsRetryGetParametersSchemaBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryGetParametersSchemaBulkRetryId": {
       "name": "BulkRequestsRetryGetParametersSchemaBulkRetryId",
       "shape": {
@@ -13526,10 +12900,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryGetParametersSchemaBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryGetParametersSchemaBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -13702,22 +13081,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryId1": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPostRequestBodySchemaQueryId": {
       "description": "Filter by requests IDs",
       "name": "BulkRequestsRetryPostRequestBodySchemaQueryId",
@@ -13735,10 +13098,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -13958,22 +13326,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount2": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount": {
       "name": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount",
       "shape": {
@@ -13996,10 +13348,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryIgnoredCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
@@ -14091,22 +13448,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount2": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount": {
       "name": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount",
       "shape": {
@@ -14129,29 +13470,18 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryEventsCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPostRequestBodySchemaQuerySourceId1": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkRequestsRetryPostRequestBodySchemaQuerySourceId": {
@@ -14171,10 +13501,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQuerySourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -14470,22 +13805,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId1": {
-      "name": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId": {
       "name": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId",
       "shape": {
@@ -14501,10 +13820,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPostRequestBodySchemaQueryBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -14675,22 +13999,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaId1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaId": {
       "description": "Filter by requests IDs",
       "name": "BulkRequestsRetryPlanGetParametersSchemaId",
@@ -14708,10 +14016,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -14931,22 +14244,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount2": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount": {
       "name": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount",
       "shape": {
@@ -14969,10 +14266,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaIgnoredCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
@@ -15064,22 +14366,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaEventsCount2": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaEventsCount2",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "integer",
-              "minimum": 0
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaEventsCount": {
       "name": "BulkRequestsRetryPlanGetParametersSchemaEventsCount",
       "shape": {
@@ -15102,29 +14388,18 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaEventsCount2",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaEventsCount2"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "BulkRequestsRetryPlanGetParametersSchemaSourceId1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaSourceId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
       }
     },
     "BulkRequestsRetryPlanGetParametersSchemaSourceId": {
@@ -15144,10 +14419,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaSourceId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaSourceId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -15443,22 +14723,6 @@
         ]
       }
     },
-    "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId1": {
-      "name": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "maxLength": 255
-            }
-          }
-        }
-      }
-    },
     "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId": {
       "name": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId",
       "shape": {
@@ -15474,10 +14738,15 @@
             }
           },
           {
-            "typeName": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId1",
             "type": {
-              "type": "id",
-              "value": "BulkRequestsRetryPlanGetParametersSchemaBulkRetryId1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "maxLength": 255
+                }
+              }
             }
           }
         ]
@@ -15648,19 +14917,6 @@
         ]
       }
     },
-    "RulesetsGetParametersSchema1": {
-      "name": "RulesetsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "RulesetsGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "RulesetsGetParametersSchema": {
       "description": "Sort direction",
       "name": "RulesetsGetParametersSchema",
@@ -15684,23 +14940,6 @@
         ]
       }
     },
-    "RulesetsGetParametersSchema01": {
-      "name": "RulesetsGetParametersSchema01",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
-      }
-    },
     "RulesetsGetParametersSchema0": {
       "name": "RulesetsGetParametersSchema0",
       "shape": {
@@ -15713,23 +14952,6 @@
             "value": "desc"
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Gt1": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gt1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Gt": {
@@ -15748,30 +14970,19 @@
             }
           },
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Gt1",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Gt1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[A-z0-9-_]+$",
+                  "maxLength": 155
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Gte1": {
-      "name": "RulesetsGetParametersSchemaOneOf1Gte1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Gte": {
@@ -15790,30 +15001,19 @@
             }
           },
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Gte1",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Gte1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[A-z0-9-_]+$",
+                  "maxLength": 155
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Le1": {
-      "name": "RulesetsGetParametersSchemaOneOf1Le1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Le": {
@@ -15832,30 +15032,19 @@
             }
           },
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Le1",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Le1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[A-z0-9-_]+$",
+                  "maxLength": 155
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Lte1": {
-      "name": "RulesetsGetParametersSchemaOneOf1Lte1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Lte": {
@@ -15874,30 +15063,19 @@
             }
           },
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Lte1",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Lte1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[A-z0-9-_]+$",
+                  "maxLength": 155
+                }
+              }
             }
           }
         ]
-      }
-    },
-    "RulesetsGetParametersSchemaOneOf1Contains1": {
-      "name": "RulesetsGetParametersSchemaOneOf1Contains1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "regex": "^[A-z0-9-_]+$",
-              "maxLength": 155
-            }
-          }
-        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Contains": {
@@ -15916,13 +15094,32 @@
             }
           },
           {
-            "typeName": "RulesetsGetParametersSchemaOneOf1Contains1",
             "type": {
-              "type": "id",
-              "value": "RulesetsGetParametersSchemaOneOf1Contains1"
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[A-z0-9-_]+$",
+                  "maxLength": 155
+                }
+              }
             }
           }
         ]
+      }
+    },
+    "RulesetsGetParametersSchema1": {
+      "name": "RulesetsGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "RulesetsGetParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "RulesetsGetParametersSchemaOneOf1Items": {
@@ -15937,19 +15134,6 @@
             "value": "desc"
           }
         ]
-      }
-    },
-    "SourcesGetParametersSchema1": {
-      "name": "SourcesGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "SourcesGetParametersSchemaOneOf1Items"
-          }
-        }
       }
     },
     "SourcesGetParametersSchema": {
@@ -15973,6 +15157,19 @@
             }
           }
         ]
+      }
+    },
+    "SourcesGetParametersSchema1": {
+      "name": "SourcesGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "SourcesGetParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "SourcesGetParametersSchema0": {
@@ -16001,19 +15198,6 @@
             "value": "desc"
           }
         ]
-      }
-    },
-    "TransformationsGetParametersSchema1": {
-      "name": "TransformationsGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "TransformationsGetParametersSchemaOneOf1Items"
-          }
-        }
       }
     },
     "TransformationsGetParametersSchema": {
@@ -16065,6 +15249,19 @@
             "value": "desc"
           }
         ]
+      }
+    },
+    "TransformationsGetParametersSchema1": {
+      "name": "TransformationsGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "TransformationsGetParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "TransformationsPostRequestBodySchemaEnv": {
@@ -16289,19 +15486,6 @@
         ]
       }
     },
-    "WebhooksGetParametersSchema1": {
-      "name": "WebhooksGetParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "id",
-            "value": "WebhooksGetParametersSchemaOneOf1Items"
-          }
-        }
-      }
-    },
     "WebhooksGetParametersSchema": {
       "description": "Sort direction",
       "name": "WebhooksGetParametersSchema",
@@ -16323,6 +15507,19 @@
             }
           }
         ]
+      }
+    },
+    "WebhooksGetParametersSchema1": {
+      "name": "WebhooksGetParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "WebhooksGetParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "WebhooksGetParametersSchema0": {
