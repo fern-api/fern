@@ -7677,7 +7677,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/transactions/",
+            "path": "/transactions/foo",
             "pathParameters": {
               "transactionId": "foo"
             },
@@ -8404,7 +8404,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/consumer/users/",
+            "path": "/consumer/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -8745,7 +8745,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/business/users/",
+            "path": "/business/users/foo",
             "pathParameters": {
               "userId": "foo"
             },

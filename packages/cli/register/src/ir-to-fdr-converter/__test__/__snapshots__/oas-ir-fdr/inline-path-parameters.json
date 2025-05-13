@@ -157,7 +157,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/foo/search",
               "pathParameters": {
                 "id": "foo",
                 "organization_id": "foo"
@@ -246,7 +246,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "user_id": "foo"
             },
@@ -342,7 +342,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/organizations/",
+            "path": "/organizations/foo/users/foo",
             "pathParameters": {
               "organization_id": "foo",
               "user_id": "foo"

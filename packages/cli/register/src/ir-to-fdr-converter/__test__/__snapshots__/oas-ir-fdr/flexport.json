@@ -19721,7 +19721,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/booking_line_items/",
+              "path": "/booking_line_items/42",
               "pathParameters": {
                 "id": 42
               },
@@ -21334,7 +21334,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/bookings/",
+              "path": "/bookings/42",
               "pathParameters": {
                 "id": 42
               },
@@ -22935,7 +22935,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/commercial_invoices/",
+              "path": "/commercial_invoices/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23389,7 +23389,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/customs_entries/",
+              "path": "/customs_entries/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -23921,7 +23921,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/documents/",
+              "path": "/documents/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -24060,7 +24060,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/documents/",
+              "path": "/documents/foo/download",
               "pathParameters": {
                 "id": "foo"
               },
@@ -25912,7 +25912,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/events/",
+              "path": "/events/42",
               "pathParameters": {
                 "id": 42
               },
@@ -28376,7 +28376,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/invoices/",
+              "path": "/invoices/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29368,7 +29368,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/companies/",
+              "path": "/network/companies/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -29579,7 +29579,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/companies/",
+              "path": "/network/companies/K67EZV1K8cQ5afQErZwk1Q",
               "pathParameters": {
                 "id": "K67EZV1K8cQ5afQErZwk1Q"
               },
@@ -30327,7 +30327,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/company_entities/",
+              "path": "/network/company_entities/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -30498,7 +30498,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/company_entities/",
+              "path": "/network/company_entities/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31026,7 +31026,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/contacts/",
+              "path": "/network/contacts/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31181,7 +31181,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/contacts/",
+              "path": "/network/contacts/FHLKEFHHoW8nwh9UVOMpw",
               "pathParameters": {
                 "id": "FHLKEFHHoW8nwh9UVOMpw"
               },
@@ -31771,7 +31771,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/locations/",
+              "path": "/network/locations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -31952,7 +31952,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/network/locations/",
+              "path": "/network/locations/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -32343,7 +32343,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ocean/shipment_container_legs/",
+              "path": "/ocean/shipment_container_legs/42",
               "pathParameters": {
                 "id": 42
               },
@@ -32787,7 +32787,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/ocean/shipment_containers/",
+              "path": "/ocean/shipment_containers/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33693,7 +33693,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/products/",
+              "path": "/products/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -33879,7 +33879,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/products/",
+              "path": "/products/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -34462,7 +34462,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/purchase_order_line_items/",
+              "path": "/purchase_order_line_items/42",
               "pathParameters": {
                 "id": 42
               },
@@ -35760,7 +35760,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/purchase_orders/",
+              "path": "/purchase_orders/42",
               "pathParameters": {
                 "id": 42
               },
@@ -35875,7 +35875,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/purchase_orders/",
+              "path": "/purchase_orders/42",
               "pathParameters": {
                 "id": 42
               },
@@ -36621,7 +36621,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/shipment_legs/",
+              "path": "/shipment_legs/42",
               "pathParameters": {
                 "id": 42
               },
@@ -37993,7 +37993,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/shipments/",
+              "path": "/shipments/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -38616,7 +38616,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/shipments/",
+              "path": "/shipments/12345",
               "pathParameters": {
                 "id": 12345
               },

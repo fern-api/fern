@@ -7715,7 +7715,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -7819,7 +7819,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -7923,7 +7923,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -8410,7 +8410,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8520,7 +8520,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8624,7 +8624,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8777,7 +8777,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo/stats",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9090,7 +9090,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -9238,7 +9238,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -9398,7 +9398,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9537,7 +9537,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9660,7 +9660,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9828,7 +9828,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo/copy",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -10070,7 +10070,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -10241,7 +10241,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -10486,7 +10486,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10704,7 +10704,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10909,7 +10909,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11051,7 +11051,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11306,7 +11306,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11486,7 +11486,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11678,7 +11678,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11847,7 +11847,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12008,7 +12008,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12224,7 +12224,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12408,7 +12408,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12614,7 +12614,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12789,7 +12789,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12950,7 +12950,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "resource_id": "foo",
                 "action_group_id": "foo",
@@ -13168,7 +13168,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13358,7 +13358,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13572,7 +13572,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13751,7 +13751,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13912,7 +13912,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14130,7 +14130,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14346,7 +14346,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14548,7 +14548,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14747,7 +14747,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14974,7 +14974,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15154,7 +15154,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15348,7 +15348,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15551,7 +15551,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15712,7 +15712,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15925,7 +15925,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -16100,7 +16100,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -16289,7 +16289,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16486,7 +16486,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16642,7 +16642,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16865,7 +16865,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -17042,7 +17042,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -17235,7 +17235,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17393,7 +17393,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17535,7 +17535,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17732,7 +17732,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17927,7 +17927,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18108,7 +18108,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18286,7 +18286,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18527,7 +18527,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -18730,7 +18730,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -18973,7 +18973,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -19159,7 +19159,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -19301,7 +19301,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -19574,7 +19574,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -19810,7 +19810,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20061,7 +20061,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -20254,7 +20254,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -20507,7 +20507,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20742,7 +20742,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20985,7 +20985,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21127,7 +21127,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21368,7 +21368,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21542,7 +21542,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21749,7 +21749,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "tenant_id": "foo",
@@ -21989,7 +21989,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22156,7 +22156,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22347,7 +22347,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -22505,7 +22505,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -22647,7 +22647,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -22828,7 +22828,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -23024,7 +23024,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23183,7 +23183,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23340,7 +23340,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23478,7 +23478,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23632,7 +23632,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23855,7 +23855,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24015,7 +24015,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24174,7 +24174,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24342,7 +24342,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24503,7 +24503,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24692,7 +24692,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -24850,7 +24850,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -24992,7 +24992,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -25180,7 +25180,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -25327,7 +25327,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -25474,7 +25474,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -25617,7 +25617,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -25766,7 +25766,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"

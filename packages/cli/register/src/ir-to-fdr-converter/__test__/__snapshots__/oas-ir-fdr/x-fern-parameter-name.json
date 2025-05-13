@@ -80,7 +80,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/user/",
+            "path": "/user/foo",
             "pathParameters": {
               "userId": "foo"
             },

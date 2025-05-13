@@ -35888,7 +35888,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/deployments/"
+                    "path": "/v1/deployments/foo"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -64200,7 +64200,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/v1/model-versions/"
+                    "path": "/v1/model-versions/foo"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -64985,7 +64985,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/model-versions/"
+                    "path": "/v1/model-versions/foo/compile-prompt"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -74231,7 +74231,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/sandboxes/"
+                    "path": "/v1/sandboxes/foo/scenarios"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -74607,7 +74607,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/sandboxes/"
+                    "path": "/v1/sandboxes/foo/scenarios/foo"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -75920,7 +75920,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/v1/test-suites/"
+                    "path": "/v1/test-suites/foo/test-cases"
                   },
                   "environment": "Default",
                   "pathParameters": {
@@ -76268,7 +76268,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/v1/test-suites/"
+                    "path": "/v1/test-suites/foo/test-cases/foo"
                   },
                   "environment": "Default",
                   "pathParameters": {

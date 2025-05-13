@@ -303,7 +303,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/collection/",
+            "path": "/collection/foo/foo/foo/foo",
             "pathParameters": {
               "id": "foo",
               "active_id": "foo",

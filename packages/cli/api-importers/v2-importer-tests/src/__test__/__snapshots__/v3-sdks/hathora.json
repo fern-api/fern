@@ -19001,7 +19001,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/apps/v1/update/"
+                    "path": "/apps/v1/update/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -20546,7 +20546,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/apps/v1/info/"
+                    "path": "/apps/v1/info/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -20903,7 +20903,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/apps/v1/delete/"
+                    "path": "/apps/v1/delete/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -21411,7 +21411,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/auth/v1/"
+                    "path": "/auth/v1/foo/login/anonymous"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -21992,7 +21992,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/auth/v1/"
+                    "path": "/auth/v1/foo/login/nickname"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -22605,7 +22605,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/auth/v1/"
+                    "path": "/auth/v1/foo/login/google"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -25737,7 +25737,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/builds/v1/"
+                    "path": "/builds/v1/foo/list"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -27618,7 +27618,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/builds/v1/"
+                    "path": "/builds/v1/foo/info/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -29370,7 +29370,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/builds/v1/"
+                    "path": "/builds/v1/foo/create"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -29822,7 +29822,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/builds/v1/"
+                    "path": "/builds/v1/foo/run/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -30376,7 +30376,7 @@
                 "request": {
                   "endpoint": {
                     "method": "DELETE",
-                    "path": "/builds/v1/"
+                    "path": "/builds/v1/foo/delete/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -33594,7 +33594,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/deployments/v1/"
+                    "path": "/deployments/v1/foo/list"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -35524,7 +35524,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/deployments/v1/"
+                    "path": "/deployments/v1/foo/info/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -38373,7 +38373,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/deployments/v1/"
+                    "path": "/deployments/v1/foo/create/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -40006,7 +40006,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v1/"
+                    "path": "/lobby/v1/foo/create/private"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -40721,7 +40721,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v1/"
+                    "path": "/lobby/v1/foo/create/public"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -43078,7 +43078,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/lobby/v1/"
+                    "path": "/lobby/v1/foo/list"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -44925,7 +44925,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/create/private"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -46719,7 +46719,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/create/public"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -48513,7 +48513,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/create/local"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -50445,7 +50445,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/create"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -52630,7 +52630,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/list/public"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -54044,7 +54044,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/info/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -55648,7 +55648,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/lobby/v2/"
+                    "path": "/lobby/v2/foo/setState/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -56207,7 +56207,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/logs/v1/"
+                    "path": "/logs/v1/foo/all"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -56814,7 +56814,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/logs/v1/"
+                    "path": "/logs/v1/foo/process/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -57420,7 +57420,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/logs/v1/"
+                    "path": "/logs/v1/foo/deployment/42"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -58332,7 +58332,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/metrics/v1/"
+                    "path": "/metrics/v1/foo/process/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -62012,7 +62012,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/processes/v1/"
+                    "path": "/processes/v1/foo/list/running"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -65090,7 +65090,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/processes/v1/"
+                    "path": "/processes/v1/foo/list/stopped"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -66936,7 +66936,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/processes/v1/"
+                    "path": "/processes/v1/foo/info/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -67622,7 +67622,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/create"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -69886,7 +69886,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/info/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -70599,7 +70599,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/list/foo/active"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -71296,7 +71296,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/list/foo/inactive"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -71828,7 +71828,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/destroy/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -72352,7 +72352,7 @@
                 "request": {
                   "endpoint": {
                     "method": "POST",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/suspend/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {
@@ -73235,7 +73235,7 @@
                 "request": {
                   "endpoint": {
                     "method": "GET",
-                    "path": "/rooms/v1/"
+                    "path": "/rooms/v1/foo/connectioninfo/foo"
                   },
                   "environment": "https://api.hathora.dev",
                   "pathParameters": {

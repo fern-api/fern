@@ -365,7 +365,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/trees/",
+            "path": "/trees/foo",
             "pathParameters": {
               "treeId": "foo"
             },
@@ -555,7 +555,7 @@
           {
             "name": "",
             "description": "",
-            "path": "/ferns/",
+            "path": "/ferns/foo",
             "pathParameters": {
               "fernId": "foo"
             },

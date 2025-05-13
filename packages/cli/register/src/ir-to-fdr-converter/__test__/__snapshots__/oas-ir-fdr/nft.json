@@ -17425,7 +17425,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTsForOwner",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -18029,7 +18029,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getOwnersForNFT",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -18296,7 +18296,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getOwnersForContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -18562,7 +18562,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/isHolderOfContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -18889,7 +18889,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getContractsForOwner",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -19235,7 +19235,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getCollectionsForOwner",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -19553,7 +19553,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTsForContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -19992,7 +19992,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTsForCollection",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -20388,7 +20388,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -20790,7 +20790,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTMetadataBatch",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -21156,7 +21156,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getContractMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -21425,7 +21425,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getCollectionMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -21680,7 +21680,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/invalidateContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -21937,7 +21937,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getContractMetadataBatch",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -22213,7 +22213,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/summarizeNFTAttributes",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -22879,7 +22879,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/searchContractMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -23163,7 +23163,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/computeRarity",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -23439,7 +23439,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/refreshNftMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -23677,7 +23677,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getSpamContracts",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -23914,7 +23914,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/isSpamContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -24160,7 +24160,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/isAirdropNFT",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -24398,7 +24398,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/reportSpam",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -24656,7 +24656,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getFloorPrice",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -25031,7 +25031,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v3/",
+              "path": "/v3/docs-demo/getNFTSales",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -25520,7 +25520,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getNFTs",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -25990,7 +25990,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getNFTMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -26418,7 +26418,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getNFTMetadataBatch",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -26810,7 +26810,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getContractMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -27103,7 +27103,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getContractMetadataBatch",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -27481,7 +27481,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getNFTsForCollection",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -27863,7 +27863,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getOwnersForToken",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -28135,7 +28135,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getOwnersForCollection",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -28358,7 +28358,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getSpamContracts",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -28597,7 +28597,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/isSpamContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -28841,7 +28841,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/isAirdrop",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -29073,7 +29073,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/invalidateContract",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -29310,7 +29310,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getFloorPrice",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -29568,7 +29568,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/computeRarity",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -29819,7 +29819,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/searchContractMetadata",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -30096,7 +30096,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/summarizeNFTAttributes",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -30346,7 +30346,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/isHolderOfCollection",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -30712,7 +30712,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getNFTSales",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -31152,7 +31152,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/getContractsForOwner",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
@@ -31437,7 +31437,7 @@
             {
               "name": "",
               "description": "",
-              "path": "/v2/",
+              "path": "/v2/docs-demo/reportSpam",
               "pathParameters": {
                 "apiKey": "docs-demo"
               },
