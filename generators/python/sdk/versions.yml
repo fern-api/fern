@@ -1,4 +1,13 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Generate standalone Pydantic models for each class definition for models that utilize the Fern `extends` keyword,
+        as opposed to generating Pydantic models that implement inheritance.
+      type: feat
+  createdAt: '2025-05-13'
+  irVersion: 57
+
 - version: 4.19.7
   changelogEntry:
     - summary: |
