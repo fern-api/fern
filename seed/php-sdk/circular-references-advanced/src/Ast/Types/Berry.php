@@ -3,12 +3,19 @@
 namespace Seed\Ast\Types;
 
 use Seed\Core\Json\JsonSerializableType;
-use Seed\Ast\Traits\Berry;
+use Seed\Core\Json\JsonProperty;
+use Seed\Core\Types\Union;
 
-class Acai extends JsonSerializableType
+class Berry extends JsonSerializableType
 {
-    use Berry;
-
+    /**
+     * @var (
+     *    Cat
+     *   |Dog
+     * ) $animal
+     */
+    #[JsonProperty('animal'), Union(Cat::class, Dog::class)]
+    public Cat|Dog $animal;
 
     /**
      * @param array{
