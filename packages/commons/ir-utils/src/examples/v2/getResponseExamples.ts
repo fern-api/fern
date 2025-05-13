@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, V2HttpEndpointResponse, V2HttpEndpointResponseBody, V2SchemaExample } from "@fern-api/ir-sdk";
 
-import { getV2Examples } from "./getFirstExamples";
+import { getV2Examples } from "./getV2Examples";
 
 export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
     userResponseExamples: Record<string, V2HttpEndpointResponse>;

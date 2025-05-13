@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { getFirstExamples } from "./getFirstExamples";
+import { getFirstExamples } from "./getV2Examples";
 
 export function getParameterExamples({
     service,

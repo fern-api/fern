@@ -8,8 +8,8 @@ import {
     V2SchemaExample
 } from "@fern-api/ir-sdk";
 
-import { getFirstExamples, getV2Examples } from "./getFirstExamples";
 import { getParameterExamples } from "./getParameterExamples";
+import { getFirstExamples, getV2Examples } from "./getV2Examples";
 
 export function getRequestBodyExamples({
     endpoint,
