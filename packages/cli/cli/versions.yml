@@ -1,3 +1,11 @@
+- changelogEntry:
+  - summary: |
+      Implement the first iteration of the `fern diff` command, which can be used
+      to verify backwards compatibility between API changes.
+    type: feat
+  irVersion: 57
+  version: 0.61.0
+
 - changelogEntry: 
   - summary: |
       Various bugfixes and improvements to the v3 parser.
