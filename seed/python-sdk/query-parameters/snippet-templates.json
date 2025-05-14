@@ -16,7 +16,7 @@
                     "from seed import SeedQueryParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedQueryParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -534,7 +534,7 @@
                         "from seed import AsyncSeedQueryParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedQueryParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

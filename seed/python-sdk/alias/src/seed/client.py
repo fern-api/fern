@@ -30,7 +30,10 @@ class SeedAlias:
     Examples
     --------
     from seed import SeedAlias
-    client = SeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedAlias(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -82,8 +85,13 @@ class SeedAlias:
         Examples
         --------
         from seed import SeedAlias
-        client = SeedAlias(base_url="https://yourhost.com/path/to/api", )
-        client.get(type_id='typeId', )
+
+        client = SeedAlias(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get(
+            type_id="typeId",
+        )
         """
         _response = self._raw_client.get(type_id, request_options=request_options)
         return _response.data
@@ -110,7 +118,10 @@ class AsyncSeedAlias:
     Examples
     --------
     from seed import AsyncSeedAlias
-    client = AsyncSeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedAlias(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -161,11 +172,21 @@ class AsyncSeedAlias:
 
         Examples
         --------
-        from seed import AsyncSeedAlias
         import asyncio
-        client = AsyncSeedAlias(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedAlias
+
+        client = AsyncSeedAlias(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.get(type_id='typeId', )
+            await client.get(
+                type_id="typeId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(type_id, request_options=request_options)

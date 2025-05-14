@@ -41,8 +41,14 @@ class MigrationClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.migration.get_attempted_migrations(admin_key_header='admin-key-header', )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.migration.get_attempted_migrations(
+            admin_key_header="admin-key-header",
+        )
         """
         _response = self._raw_client.get_attempted_migrations(
             admin_key_header=admin_key_header, request_options=request_options
@@ -82,11 +88,22 @@ class AsyncMigrationClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.migration.get_attempted_migrations(admin_key_header='admin-key-header', )
+            await client.migration.get_attempted_migrations(
+                admin_key_header="admin-key-header",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_attempted_migrations(

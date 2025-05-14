@@ -14,8 +14,14 @@
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_list_of_primitives(
+    request=["string", "string"],
+)
 
 ```
 </dd>
@@ -66,8 +72,21 @@ client.endpoints.container.get_and_return_list_of_primitives(request=['string', 
 ```python
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_list_of_objects(request=[ObjectWithRequiredField(string='string', ), ObjectWithRequiredField(string='string', )], )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_list_of_objects(
+    request=[
+        ObjectWithRequiredField(
+            string="string",
+        ),
+        ObjectWithRequiredField(
+            string="string",
+        ),
+    ],
+)
 
 ```
 </dd>
@@ -117,8 +136,14 @@ client.endpoints.container.get_and_return_list_of_objects(request=[ObjectWithReq
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_set_of_primitives(request={'string'}, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_set_of_primitives(
+    request={"string"},
+)
 
 ```
 </dd>
@@ -169,8 +194,18 @@ client.endpoints.container.get_and_return_set_of_primitives(request={'string'}, 
 ```python
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_set_of_objects(request=[ObjectWithRequiredField(string='string', )], )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_set_of_objects(
+    request=[
+        ObjectWithRequiredField(
+            string="string",
+        )
+    ],
+)
 
 ```
 </dd>
@@ -220,8 +255,14 @@ client.endpoints.container.get_and_return_set_of_objects(request=[ObjectWithRequ
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_map_prim_to_prim(request={'string': 'string'}, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_map_prim_to_prim(
+    request={"string": "string"},
+)
 
 ```
 </dd>
@@ -272,8 +313,18 @@ client.endpoints.container.get_and_return_map_prim_to_prim(request={'string': 's
 ```python
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_map_of_prim_to_object(request={'string': ObjectWithRequiredField(string='string', )}, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_map_of_prim_to_object(
+    request={
+        "string": ObjectWithRequiredField(
+            string="string",
+        )
+    },
+)
 
 ```
 </dd>
@@ -324,8 +375,16 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request={'string
 ```python
 from seed import SeedExhaustive
 from seed.types.object import ObjectWithRequiredField
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string='string', ), )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_optional(
+    request=ObjectWithRequiredField(
+        string="string",
+    ),
+)
 
 ```
 </dd>
@@ -375,11 +434,36 @@ client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredFie
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.content_type.post_json_patch_content_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.content_type.post_json_patch_content_type(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
 
 ```
 </dd>
@@ -524,11 +608,36 @@ client.endpoints.content_type.post_json_patch_content_type(string='string', inte
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.content_type.post_json_patch_content_with_charset_type(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.content_type.post_json_patch_content_with_charset_type(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
 
 ```
 </dd>
@@ -675,8 +784,14 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(string='
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.enum.get_and_return_enum(request="SUNNY", )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.enum.get_and_return_enum(
+    request="SUNNY",
+)
 
 ```
 </dd>
@@ -727,8 +842,14 @@ client.endpoints.enum.get_and_return_enum(request="SUNNY", )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.http_methods.test_get(id='id', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.http_methods.test_get(
+    id="id",
+)
 
 ```
 </dd>
@@ -778,8 +899,14 @@ client.endpoints.http_methods.test_get(id='id', )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.http_methods.test_post(string='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.http_methods.test_post(
+    string="string",
+)
 
 ```
 </dd>
@@ -829,8 +956,15 @@ client.endpoints.http_methods.test_post(string='string', )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.http_methods.test_put(id='id', string='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.http_methods.test_put(
+    id="id",
+    string="string",
+)
 
 ```
 </dd>
@@ -887,11 +1021,37 @@ client.endpoints.http_methods.test_put(id='id', string='string', )
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.http_methods.test_patch(
+    id="id",
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
 
 ```
 </dd>
@@ -1045,8 +1205,14 @@ client.endpoints.http_methods.test_patch(id='id', string='string', integer=1, lo
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.http_methods.test_delete(id='id', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.http_methods.test_delete(
+    id="id",
+)
 
 ```
 </dd>
@@ -1096,11 +1262,36 @@ client.endpoints.http_methods.test_delete(id='id', )
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_with_optional_field(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_with_optional_field(
+    string="string",
+    integer=1,
+    long_=1000000,
+    double=1.1,
+    bool_=True,
+    datetime=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    date=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+    uuid_=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+    base_64="SGVsbG8gd29ybGQh",
+    list_=["list", "list"],
+    set_={"set"},
+    map_={1: "map"},
+    bigint=1000000,
+)
 
 ```
 </dd>
@@ -1246,8 +1437,14 @@ client.endpoints.object.get_and_return_with_optional_field(string='string', inte
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_with_required_field(string='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_with_required_field(
+    string="string",
+)
 
 ```
 </dd>
@@ -1297,8 +1494,14 @@ client.endpoints.object.get_and_return_with_required_field(string='string', )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_with_map_of_map(map_={'map': {'map': 'map'}}, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_with_map_of_map(
+    map_={"map": {"map": "map"}},
+)
 
 ```
 </dd>
@@ -1347,12 +1550,40 @@ client.endpoints.object.get_and_return_with_map_of_map(map_={'map': {'map': 'map
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_nested_with_optional_field(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
+
+from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_nested_with_optional_field(
+    string="string",
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
+        uuid_=uuid.UUID(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=["list", "list"],
+        set_={"set"},
+        map_={1: "map"},
+        bigint=1000000,
+    ),
+)
 
 ```
 </dd>
@@ -1409,12 +1640,41 @@ client.endpoints.object.get_and_return_nested_with_optional_field(string='string
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_nested_with_required_field(string_='string', string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
+
+from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_nested_with_required_field(
+    string_="string",
+    string="string",
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
+        uuid_=uuid.UUID(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=["list", "list"],
+        set_={"set"},
+        map_={1: "map"},
+        bigint=1000000,
+    ),
+)
 
 ```
 </dd>
@@ -1479,13 +1739,71 @@ client.endpoints.object.get_and_return_nested_with_required_field(string_='strin
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import NestedObjectWithRequiredField
-from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.object.get_and_return_nested_with_required_field_as_list(request=[NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), ), NestedObjectWithRequiredField(string='string', nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )], )
+
+from seed import SeedExhaustive
+from seed.types.object import (
+    NestedObjectWithRequiredField,
+    ObjectWithOptionalField,
+)
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+    request=[
+        NestedObjectWithRequiredField(
+            string="string",
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["list", "list"],
+                set_={"set"},
+                map_={1: "map"},
+                bigint=1000000,
+            ),
+        ),
+        NestedObjectWithRequiredField(
+            string="string",
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                uuid_=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=["list", "list"],
+                set_={"set"},
+                map_={1: "map"},
+                bigint=1000000,
+            ),
+        ),
+    ],
+)
 
 ```
 </dd>
@@ -1550,8 +1868,14 @@ GET with path param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_path(param='param', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_path(
+    param="param",
+)
 
 ```
 </dd>
@@ -1615,8 +1939,14 @@ GET with path param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_inline_path(param='param', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_inline_path(
+    param="param",
+)
 
 ```
 </dd>
@@ -1680,8 +2010,15 @@ GET with query param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_query(query='query', number=1, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_query(
+    query="query",
+    number=1,
+)
 
 ```
 </dd>
@@ -1753,8 +2090,15 @@ GET with multiple of same query param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_allow_multiple_query(query='query', number=1, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_allow_multiple_query(
+    query="query",
+    number=1,
+)
 
 ```
 </dd>
@@ -1826,8 +2170,15 @@ GET with path and query params
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_path_and_query(param='param', query='query', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_path_and_query(
+    param="param",
+    query="query",
+)
 
 ```
 </dd>
@@ -1899,8 +2250,15 @@ GET with path and query params
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.get_with_inline_path_and_query(param='param', query='query', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.get_with_inline_path_and_query(
+    param="param",
+    query="query",
+)
 
 ```
 </dd>
@@ -1972,8 +2330,15 @@ PUT to update with path param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.modify_with_path(param='param', request='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.modify_with_path(
+    param="param",
+    request="string",
+)
 
 ```
 </dd>
@@ -2045,8 +2410,15 @@ PUT to update with path param
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.params.modify_with_inline_path(param='param', request='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.modify_with_inline_path(
+    param="param",
+    request="string",
+)
 
 ```
 </dd>
@@ -2105,8 +2477,14 @@ client.endpoints.params.modify_with_inline_path(param='param', request='string',
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_string(request='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_string(
+    request="string",
+)
 
 ```
 </dd>
@@ -2156,8 +2534,14 @@ client.endpoints.primitive.get_and_return_string(request='string', )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_int(request=1, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_int(
+    request=1,
+)
 
 ```
 </dd>
@@ -2207,8 +2591,14 @@ client.endpoints.primitive.get_and_return_int(request=1, )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_long(request=1000000, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_long(
+    request=1000000,
+)
 
 ```
 </dd>
@@ -2258,8 +2648,14 @@ client.endpoints.primitive.get_and_return_long(request=1000000, )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_double(request=1.1, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_double(
+    request=1.1,
+)
 
 ```
 </dd>
@@ -2309,8 +2705,14 @@ client.endpoints.primitive.get_and_return_double(request=1.1, )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_bool(request=True, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_bool(
+    request=True,
+)
 
 ```
 </dd>
@@ -2359,10 +2761,19 @@ client.endpoints.primitive.get_and_return_bool(request=True, )
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_datetime(request=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_datetime(
+    request=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
 
 ```
 </dd>
@@ -2411,10 +2822,19 @@ client.endpoints.primitive.get_and_return_datetime(request=datetime.datetime.fro
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import datetime
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_date(request=datetime.date.fromisoformat("2023-01-15", ), )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_date(
+    request=datetime.date.fromisoformat(
+        "2023-01-15",
+    ),
+)
 
 ```
 </dd>
@@ -2463,10 +2883,19 @@ client.endpoints.primitive.get_and_return_date(request=datetime.date.fromisoform
 <dd>
 
 ```python
-from seed import SeedExhaustive
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_uuid(request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), )
+
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_uuid(
+    request=uuid.UUID(
+        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ),
+)
 
 ```
 </dd>
@@ -2516,8 +2945,14 @@ client.endpoints.primitive.get_and_return_uuid(request=uuid.UUID("d5e9c84f-c2b2-
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.primitive.get_and_return_base_64(request='SGVsbG8gd29ybGQh', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.primitive.get_and_return_base_64(
+    request="SGVsbG8gd29ybGQh",
+)
 
 ```
 </dd>
@@ -2568,8 +3003,14 @@ client.endpoints.primitive.get_and_return_base_64(request='SGVsbG8gd29ybGQh', )
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.put.add(id='id', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.put.add(
+    id="id",
+)
 
 ```
 </dd>
@@ -2621,8 +3062,17 @@ client.endpoints.put.add(id='id', )
 ```python
 from seed import SeedExhaustive
 from seed.types.union import Animal_Dog
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.union.get_and_return_union(request=Animal_Dog(name='name', likes_to_woof=True, ), )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.union.get_and_return_union(
+    request=Animal_Dog(
+        name="name",
+        likes_to_woof=True,
+    ),
+)
 
 ```
 </dd>
@@ -2686,12 +3136,41 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.inlined_requests.post_with_object_bodyand_response(string='string', integer=1, nested_object=ObjectWithOptionalField(string='string', integer=1, long_=1000000, double=1.1, bool_=True, datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), date=datetime.date.fromisoformat("2023-01-15", ), uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), base_64='SGVsbG8gd29ybGQh', list_=['list', 'list'], set_={'set'}, map_={1: 'map'}, bigint=1000000, ), )
+
+from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.inlined_requests.post_with_object_bodyand_response(
+    string="string",
+    integer=1,
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
+        uuid_=uuid.UUID(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=["list", "list"],
+        set_={"set"},
+        map_={1: "map"},
+        bigint=1000000,
+    ),
+)
 
 ```
 </dd>
@@ -2772,9 +3251,14 @@ POST request with no auth
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.no_auth.post_with_no_auth(request={'key': 'value'}
-, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.no_auth.post_with_no_auth(
+    request={"key": "value"},
+)
 
 ```
 </dd>
@@ -2825,7 +3309,11 @@ client.no_auth.post_with_no_auth(request={'key': 'value'}
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.no_req_body.get_with_no_request_body()
 
 ```
@@ -2868,7 +3356,11 @@ client.no_req_body.get_with_no_request_body()
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
 client.no_req_body.post_with_no_request_body()
 
 ```
@@ -2912,8 +3404,16 @@ client.no_req_body.post_with_no_request_body()
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.req_with_headers.get_with_custom_header(x_test_service_header='X-TEST-SERVICE-HEADER', x_test_endpoint_header='X-TEST-ENDPOINT-HEADER', request='string', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.req_with_headers.get_with_custom_header(
+    x_test_service_header="X-TEST-SERVICE-HEADER",
+    x_test_endpoint_header="X-TEST-ENDPOINT-HEADER",
+    request="string",
+)
 
 ```
 </dd>

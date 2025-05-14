@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_resource(
 	resource_id="rsc-xyz"
 )
@@ -12,7 +14,9 @@ client.service.get_resource(
 ```python
 
 
-client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.get_resource(
 	resource_id="ResourceID"
 )
@@ -23,7 +27,9 @@ client.service.get_resource(
 ```python
 
 
-client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.list_resources(
 	page_limit=10,
 	before_date="2023-01-01"
@@ -35,7 +41,9 @@ client.service.list_resources(
 ```python
 
 
-client = SeedMixedCase(base_url="https://yourhost.com/path/to/api", )        
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.service.list_resources(
 	page_limit=1,
 	before_date="2023-01-15"

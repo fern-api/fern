@@ -12,7 +12,12 @@ class Exception_Generic(UniversalBaseModel):
     Examples
     --------
     from seed.types import Exception_Generic
-    Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
+    
+    Exception_Generic(
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
+    )
     """
     type: typing.Literal["generic"] = "generic"
     exception_type: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionType")]
@@ -31,7 +36,12 @@ class Exception_Timeout(UniversalBaseModel):
     Examples
     --------
     from seed.types import Exception_Generic
-    Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
+    
+    Exception_Generic(
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
+    )
     """
     type: typing.Literal["timeout"] = "timeout"
     
@@ -44,6 +54,11 @@ class Exception_Timeout(UniversalBaseModel):
             extra = pydantic.Extra.allow
 """
 from seed.types import Exception_Generic
-Exception_Generic(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
+
+Exception_Generic(
+    exception_type="Unavailable",
+    exception_message="This component is unavailable!",
+    exception_stacktrace="<logs>",
+)
 """
 Exception = typing.Union[Exception_Generic, Exception_Timeout]

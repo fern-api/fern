@@ -16,7 +16,7 @@
                     "from seed import SeedExtends"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedExtends(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -87,7 +87,7 @@
                         "from seed import AsyncSeedExtends"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedExtends(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

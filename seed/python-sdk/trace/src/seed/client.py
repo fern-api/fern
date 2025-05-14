@@ -27,6 +27,8 @@ class SeedTrace:
     environment : SeedTraceEnvironment
         The environment to use for requests from the client. from .environment import SeedTraceEnvironment
 
+
+
         Defaults to SeedTraceEnvironment.PROD
 
 
@@ -45,7 +47,11 @@ class SeedTrace:
     Examples
     --------
     from seed import SeedTrace
-    client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+    client = SeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(
@@ -95,6 +101,8 @@ class AsyncSeedTrace:
     environment : SeedTraceEnvironment
         The environment to use for requests from the client. from .environment import SeedTraceEnvironment
 
+
+
         Defaults to SeedTraceEnvironment.PROD
 
 
@@ -113,7 +121,11 @@ class AsyncSeedTrace:
     Examples
     --------
     from seed import AsyncSeedTrace
-    client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+    client = AsyncSeedTrace(
+        x_random_header="YOUR_X_RANDOM_HEADER",
+        token="YOUR_TOKEN",
+    )
     """
 
     def __init__(

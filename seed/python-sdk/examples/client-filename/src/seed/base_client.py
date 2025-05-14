@@ -43,7 +43,11 @@ class BaseSeedExhaustive:
     --------
     from seed import SeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
-    client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+    client = SeedExhaustive(
+        token="YOUR_TOKEN",
+        environment=SeedExhaustiveEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -102,8 +106,14 @@ class BaseSeedExhaustive:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.echo(
+            request="Hello world!\\n\\nwith\\n\\tnewlines",
+        )
         """
         _response = self._raw_client.echo(request=request, request_options=request_options)
         return _response.data
@@ -125,8 +135,14 @@ class BaseSeedExhaustive:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.create_type(request="primitive", )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.create_type(
+            request="primitive",
+        )
         """
         _response = self._raw_client.create_type(request=request, request_options=request_options)
         return _response.data
@@ -158,7 +174,11 @@ class AsyncBaseSeedExhaustive:
     --------
     from seed import AsyncSeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
-    client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+    client = AsyncSeedExhaustive(
+        token="YOUR_TOKEN",
+        environment=SeedExhaustiveEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -215,12 +235,23 @@ class AsyncBaseSeedExhaustive:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+            await client.echo(
+                request="Hello world!\\n\\nwith\\n\\tnewlines",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.echo(request=request, request_options=request_options)
@@ -243,12 +274,23 @@ class AsyncBaseSeedExhaustive:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.create_type(request="primitive", )
+            await client.create_type(
+                request="primitive",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_type(request=request, request_options=request_options)

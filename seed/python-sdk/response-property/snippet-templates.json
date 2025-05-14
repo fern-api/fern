@@ -16,7 +16,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -145,7 +145,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -196,7 +196,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -235,7 +235,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -286,7 +286,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -325,7 +325,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -376,7 +376,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -415,7 +415,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -466,7 +466,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -505,7 +505,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -556,7 +556,7 @@
                     "from seed import SeedResponseProperty"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -595,7 +595,7 @@
                         "from seed import AsyncSeedResponseProperty"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedResponseProperty(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedResponseProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

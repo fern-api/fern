@@ -36,7 +36,10 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedPlainText
-        client = SeedPlainText(base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.service.get_text()
         """
         _response = self._raw_client.get_text(request_options=request_options)
@@ -71,11 +74,19 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedPlainText
         import asyncio
-        client = AsyncSeedPlainText(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedPlainText
+
+        client = AsyncSeedPlainText(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.service.get_text()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_text(request_options=request_options)

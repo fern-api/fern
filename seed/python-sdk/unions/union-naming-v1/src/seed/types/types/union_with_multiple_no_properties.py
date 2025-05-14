@@ -13,7 +13,10 @@ class FooUnionWithMultipleNoProperties(UniversalBaseModel):
     Examples
     --------
     from seed.types import FooUnionWithMultipleNoProperties
-    FooUnionWithMultipleNoProperties(name='example', )
+
+    FooUnionWithMultipleNoProperties(
+        name="example",
+    )
     """
 
     type: typing.Literal["foo"] = "foo"
@@ -34,7 +37,10 @@ class Empty1UnionWithMultipleNoProperties(UniversalBaseModel):
     Examples
     --------
     from seed.types import FooUnionWithMultipleNoProperties
-    FooUnionWithMultipleNoProperties(name='example', )
+
+    FooUnionWithMultipleNoProperties(
+        name="example",
+    )
     """
 
     type: typing.Literal["empty1"] = "empty1"
@@ -54,7 +60,10 @@ class Empty2UnionWithMultipleNoProperties(UniversalBaseModel):
     Examples
     --------
     from seed.types import FooUnionWithMultipleNoProperties
-    FooUnionWithMultipleNoProperties(name='example', )
+
+    FooUnionWithMultipleNoProperties(
+        name="example",
+    )
     """
 
     type: typing.Literal["empty2"] = "empty2"
@@ -71,7 +80,10 @@ class Empty2UnionWithMultipleNoProperties(UniversalBaseModel):
 
 """
 from seed.types import FooUnionWithMultipleNoProperties
-FooUnionWithMultipleNoProperties(name='example', )
+
+FooUnionWithMultipleNoProperties(
+    name="example",
+)
 """
 UnionWithMultipleNoProperties = typing.Union[
     FooUnionWithMultipleNoProperties, Empty1UnionWithMultipleNoProperties, Empty2UnionWithMultipleNoProperties

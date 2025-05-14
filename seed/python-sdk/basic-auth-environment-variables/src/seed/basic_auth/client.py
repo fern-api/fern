@@ -41,7 +41,12 @@ class BasicAuthClient:
         Examples
         --------
         from seed import SeedBasicAuthEnvironmentVariables
-        client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedBasicAuthEnvironmentVariables(
+            username="YOUR_USERNAME",
+            access_token="YOUR_ACCESS_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.basic_auth.get_with_basic_auth()
         """
         _response = self._raw_client.get_with_basic_auth(request_options=request_options)
@@ -67,9 +72,15 @@ class BasicAuthClient:
         Examples
         --------
         from seed import SeedBasicAuthEnvironmentVariables
-        client = SeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-        , )
+
+        client = SeedBasicAuthEnvironmentVariables(
+            username="YOUR_USERNAME",
+            access_token="YOUR_ACCESS_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.basic_auth.post_with_basic_auth(
+            request={"key": "value"},
+        )
         """
         _response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
         return _response.data
@@ -105,11 +116,21 @@ class AsyncBasicAuthClient:
 
         Examples
         --------
-        from seed import AsyncSeedBasicAuthEnvironmentVariables
         import asyncio
-        client = AsyncSeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedBasicAuthEnvironmentVariables
+
+        client = AsyncSeedBasicAuthEnvironmentVariables(
+            username="YOUR_USERNAME",
+            access_token="YOUR_ACCESS_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.basic_auth.get_with_basic_auth()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_basic_auth(request_options=request_options)
@@ -134,12 +155,23 @@ class AsyncBasicAuthClient:
 
         Examples
         --------
-        from seed import AsyncSeedBasicAuthEnvironmentVariables
         import asyncio
-        client = AsyncSeedBasicAuthEnvironmentVariables(username="YOUR_USERNAME", access_token="YOUR_ACCESS_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedBasicAuthEnvironmentVariables
+
+        client = AsyncSeedBasicAuthEnvironmentVariables(
+            username="YOUR_USERNAME",
+            access_token="YOUR_ACCESS_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-            , )
+            await client.basic_auth.post_with_basic_auth(
+                request={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
