@@ -1,4 +1,3 @@
-export * from "./fetcher";
-export * from "./runtime";
-export * from "./streaming-fetcher";
-export * as serialization from "./schemas";
+export * from "./fetcher/index.js";
+export * from "./runtime/index.js";
+export * from "./streaming-fetcher/index.js";

@@ -1,2 +1,2 @@
-export { SeedPathParametersError } from "./SeedPathParametersError";
-export { SeedPathParametersTimeoutError } from "./SeedPathParametersTimeoutError";
+export { SeedPathParametersError } from "./SeedPathParametersError.js";
+export { SeedPathParametersTimeoutError } from "./SeedPathParametersTimeoutError.js";

@@ -129,7 +129,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.migration.getAttemptedMigrations({\n    adminKeyHeader: \"admin-key-header\"\n});\n"
+                "client": "import { SeedTraceClient } from \"@fern/trace\";\n\nconst client = new SeedTraceClient({ token: \"YOUR_TOKEN\", xRandomHeader: \"YOUR_X_RANDOM_HEADER\" });\nawait client.migration.getAttemptedMigrations({\n    \"admin-key-header\": \"admin-key-header\"\n});\n"
             }
         },
         {

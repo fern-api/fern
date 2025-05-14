@@ -6,8 +6,8 @@
  * @example
  *     {
  *         userName: "username",
- *         metadataTags: ["tag1", "tag2"],
- *         extraProperties: {
+ *         metadata_tags: ["tag1", "tag2"],
+ *         EXTRA_PROPERTIES: {
  *             "foo": "bar",
  *             "baz": "qux"
  *         }
@@ -15,6 +15,6 @@
  */
 export interface User {
     userName: string;
-    metadataTags: string[];
-    extraProperties: Record<string, string>;
+    metadata_tags: string[];
+    EXTRA_PROPERTIES: Record<string, string>;
 }

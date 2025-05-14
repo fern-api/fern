@@ -24,7 +24,7 @@ import { SeedStreamingClient } from "@fern/streaming";
 
 const client = new SeedStreamingClient({ environment: "YOUR_BASE_URL" });
 const response = await client.dummy.generateStream({
-    numEvents: 1,
+    num_events: 1,
 });
 for await (const item of response) {
     console.log(item);

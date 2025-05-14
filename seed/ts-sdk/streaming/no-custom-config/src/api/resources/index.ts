@@ -1,3 +1,3 @@
-export * as dummy from "./dummy";
-export * from "./dummy/types";
-export * from "./dummy/client/requests";
+export * as dummy from "./dummy/index.js";
+export * from "./dummy/types/index.js";
+export * from "./dummy/client/requests/index.js";

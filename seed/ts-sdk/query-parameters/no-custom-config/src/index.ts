@@ -1,4 +1,3 @@
-export * as SeedQueryParameters from "./api";
-export { SeedQueryParametersClient } from "./Client";
-export { SeedQueryParametersError, SeedQueryParametersTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedQueryParameters from "./api/index.js";
+export { SeedQueryParametersClient } from "./Client.js";
+export { SeedQueryParametersError, SeedQueryParametersTimeoutError } from "./errors/index.js";

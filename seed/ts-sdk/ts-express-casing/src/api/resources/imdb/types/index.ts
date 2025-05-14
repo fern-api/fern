@@ -1,2 +1,2 @@
-export * from "./MovieId";
-export * from "./Movie";
+export * from "./MovieId.js";
+export * from "./Movie.js";

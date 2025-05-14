@@ -1,4 +1,3 @@
-export * as SeedUndiscriminatedUnions from "./api";
-export { SeedUndiscriminatedUnionsClient } from "./Client";
-export { SeedUndiscriminatedUnionsError, SeedUndiscriminatedUnionsTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedUndiscriminatedUnions from "./api/index.js";
+export { SeedUndiscriminatedUnionsClient } from "./Client.js";
+export { SeedUndiscriminatedUnionsError, SeedUndiscriminatedUnionsTimeoutError } from "./errors/index.js";

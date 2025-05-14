@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 
-import { RUNTIME } from "../runtime";
+import { RUNTIME } from "../runtime/index.js";
 
 export declare namespace Stream {
     interface Args {

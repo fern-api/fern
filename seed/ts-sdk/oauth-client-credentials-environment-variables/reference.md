@@ -16,8 +16,8 @@
 
 ```typescript
 await client.auth.getTokenWithClientCredentials({
-    clientId: "client_id",
-    clientSecret: "client_secret",
+    client_id: "client_id",
+    client_secret: "client_secret",
     scope: "scope",
 });
 ```
@@ -68,9 +68,9 @@ await client.auth.getTokenWithClientCredentials({
 
 ```typescript
 await client.auth.refreshToken({
-    clientId: "client_id",
-    clientSecret: "client_secret",
-    refreshToken: "refresh_token",
+    client_id: "client_id",
+    client_secret: "client_secret",
+    refresh_token: "refresh_token",
     scope: "scope",
 });
 ```

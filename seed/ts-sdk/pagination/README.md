@@ -25,8 +25,8 @@ import { SeedPaginationClient } from "@fern/pagination";
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -41,8 +41,8 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -98,8 +98,8 @@ import { SeedPaginationClient } from "@fern/pagination";
 const client = new SeedPaginationClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
 const response = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",
@@ -114,8 +114,8 @@ for await (const item of response) {
 // Or you can manually iterate page-by-page
 const page = await client.complex.search({
     pagination: {
-        perPage: 1,
-        startingAfter: "starting_after",
+        per_page: 1,
+        starting_after: "starting_after",
     },
     query: {
         field: "field",

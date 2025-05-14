@@ -105,7 +105,7 @@ await client.endpoints.container.getAndReturnListOfObjects([
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> Set<string></code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> string[]</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"])
 <dl>
 <dd>
 
-**request:** `Set<string>`
+**request:** `string[]`
 
 </dd>
 </dl>
@@ -1002,7 +1002,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithOptionalField({
     string: "string",
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -1069,7 +1069,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     string: "string",
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -1145,7 +1145,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
     {
         string: "string",
-        nestedObject: {
+        NestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
@@ -1165,7 +1165,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
     },
     {
         string: "string",
-        nestedObject: {
+        NestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
@@ -1283,7 +1283,7 @@ await client.endpoints.params.getWithPath("param");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePath</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1311,7 +1311,9 @@ GET with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePath("param");
+await client.endpoints.params.getWithInlinePath({
+    param: "param",
+});
 ```
 
 </dd>
@@ -1323,14 +1325,6 @@ await client.endpoints.params.getWithInlinePath("param");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1559,7 +1553,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>(param, { ...params }) -> void</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">getWithInlinePathAndQuery</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1587,7 +1581,8 @@ GET with path and query params
 <dd>
 
 ```typescript
-await client.endpoints.params.getWithInlinePathAndQuery("param", {
+await client.endpoints.params.getWithInlinePathAndQuery({
+    param: "param",
     query: "query",
 });
 ```
@@ -1601,14 +1596,6 @@ await client.endpoints.params.getWithInlinePathAndQuery("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -1703,7 +1690,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>(param, { ...params }) -> string</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">modifyWithInlinePath</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -1731,7 +1718,8 @@ PUT to update with path param
 <dd>
 
 ```typescript
-await client.endpoints.params.modifyWithInlinePath("param", {
+await client.endpoints.params.modifyWithInlinePath({
+    param: "param",
     body: "string",
 });
 ```
@@ -1745,14 +1733,6 @@ await client.endpoints.params.modifyWithInlinePath("param", {
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**param:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -2018,7 +1998,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> Date</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
 
@@ -2047,7 +2027,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**request:** `Date`
+**request:** `string`
 
 </dd>
 </dl>
@@ -2212,7 +2192,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 
 ## Endpoints Put
 
-<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>(id, { ...params }) -> SeedExhaustive.PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/src/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -2225,7 +2205,9 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dd>
 
 ```typescript
-await client.endpoints.put.add("id");
+await client.endpoints.put.add({
+    id: "id",
+});
 ```
 
 </dd>
@@ -2237,14 +2219,6 @@ await client.endpoints.put.add("id");
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**id:** `string`
-
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -2355,7 +2329,7 @@ POST with custom object in request body, response is an object
 await client.inlinedRequests.postWithObjectBodyandResponse({
     string: "string",
     integer: 1,
-    nestedObject: {
+    NestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
@@ -2572,8 +2546,8 @@ await client.noReqBody.postWithNoRequestBody();
 
 ```typescript
 await client.reqWithHeaders.getWithCustomHeader({
-    xTestServiceHeader: "X-TEST-SERVICE-HEADER",
-    xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+    "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
+    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
     body: "string",
 });
 ```
