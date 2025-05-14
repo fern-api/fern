@@ -11,7 +11,10 @@ class GetShapeRequest(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import GetShapeRequest
-    GetShapeRequest(id='example', )
+
+    GetShapeRequest(
+        id="example",
+    )
     """
 
     id: str

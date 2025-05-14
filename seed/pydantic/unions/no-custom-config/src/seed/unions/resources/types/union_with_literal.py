@@ -13,6 +13,7 @@ class Base(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import UnionWithLiteral_Fern
+
     UnionWithLiteral_Fern()
     """
 
@@ -33,6 +34,7 @@ class UnionWithLiteral_Fern(Base):
 
 """
 from seed.unions.resources import UnionWithLiteral_Fern
+
 UnionWithLiteral_Fern()
 """
 UnionWithLiteral = UnionWithLiteral_Fern
