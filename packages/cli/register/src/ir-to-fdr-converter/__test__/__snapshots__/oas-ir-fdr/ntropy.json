@@ -7495,9 +7495,9 @@
             {
               "name": "getTransactionV3TransactionsIdGetExample",
               "description": "",
-              "path": "/v3/transactions/foo",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7698,9 +7698,9 @@
             {
               "name": "deleteTransactionV3TransactionsIdDeleteExample",
               "description": "",
-              "path": "/v3/transactions/foo",
+              "path": "/v3/transactions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8306,9 +8306,9 @@
             {
               "name": "transactionsSetTransactionAhV3TransactionsIdAssignPostExample",
               "description": "",
-              "path": "/v3/transactions/foo/assign",
+              "path": "/v3/transactions/id/assign",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8843,9 +8843,9 @@
             {
               "name": "getSingleBatchV3BatchesIdGetExample",
               "description": "",
-              "path": "/v3/batches/foo",
+              "path": "/v3/batches/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8967,9 +8967,9 @@
             {
               "name": "getBatchResultsV3BatchesIdResultsGetExample",
               "description": "",
-              "path": "/v3/batches/foo/results",
+              "path": "/v3/batches/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9509,9 +9509,9 @@
             {
               "name": "getBankStatementV3BankStatementsIdGetExample",
               "description": "",
-              "path": "/v3/bank_statements/foo",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9625,9 +9625,9 @@
             {
               "name": "deleteBankStatementV3BankStatementsIdDeleteExample",
               "description": "",
-              "path": "/v3/bank_statements/foo",
+              "path": "/v3/bank_statements/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9727,9 +9727,9 @@
             {
               "name": "getBankStatementStatementInfoV3BankStatementsIdOverviewPostExample",
               "description": "",
-              "path": "/v3/bank_statements/foo/overview",
+              "path": "/v3/bank_statements/id/overview",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -9885,9 +9885,9 @@
             {
               "name": "getBankStatementResultV3BankStatementsIdResultsGetExample",
               "description": "",
-              "path": "/v3/bank_statements/foo/results",
+              "path": "/v3/bank_statements/id/results",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10052,9 +10052,9 @@
             {
               "name": "getAccountHolderV3AccountHoldersIdGetExample",
               "description": "",
-              "path": "/v3/account_holders/foo",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10161,9 +10161,9 @@
             {
               "name": "deleteAccountHolderV3AccountHoldersIdDeleteExample",
               "description": "",
-              "path": "/v3/account_holders/foo",
+              "path": "/v3/account_holders/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10554,9 +10554,9 @@
             {
               "name": "getAccountHolderRecurringPaymentsV3AccountHoldersIdRecurringGroupsPostExample",
               "description": "",
-              "path": "/v3/account_holders/foo/recurring_groups",
+              "path": "/v3/account_holders/id/recurring_groups",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -10950,9 +10950,9 @@
             {
               "name": "getWebhookV3WebhooksIdGetExample",
               "description": "",
-              "path": "/v3/webhooks/foo",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -11069,9 +11069,9 @@
             {
               "name": "deleteWebhookV3WebhooksIdDeleteExample",
               "description": "",
-              "path": "/v3/webhooks/foo",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -11172,9 +11172,9 @@
             {
               "name": "webhooksPatchWebhookV3WebhooksIdPatchExample",
               "description": "",
-              "path": "/v3/webhooks/foo",
+              "path": "/v3/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12310,9 +12310,9 @@
             {
               "name": "getReportV3ReportsIdGetExample",
               "description": "",
-              "path": "/v3/reports/foo",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12427,9 +12427,9 @@
             {
               "name": "deleteReportV3ReportsIdDeleteExample",
               "description": "",
-              "path": "/v3/reports/foo",
+              "path": "/v3/reports/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13186,9 +13186,9 @@
             {
               "name": "getEntityByIdV3EntitiesIdGetExample",
               "description": "",
-              "path": "/v3/entities/foo",
+              "path": "/v3/entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

@@ -590,12 +590,12 @@
           {
             "name": "getAUserExample",
             "description": "",
-            "path": "/users/foo",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {
-              "activated": "foo"
+              "activated": "activated"
             },
             "headers": {},
             "responseStatusCode": 200,

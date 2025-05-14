@@ -72,7 +72,7 @@
               "description": "",
               "path": "/generateContent",
               "pathParameters": {
-                "model": "foo"
+                "model": "model"
               },
               "queryParameters": {},
               "headers": {},

@@ -1925,9 +1925,9 @@
             {
               "name": "deleteApiKeyExample",
               "description": "",
-              "path": "/v1/token/foo",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -2006,9 +2006,9 @@
             {
               "name": "apikeyUpdateApiKeyExample",
               "description": "",
-              "path": "/v1/token/foo",
+              "path": "/v1/token/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -2345,9 +2345,9 @@
             {
               "name": "deleteVoiceExample",
               "description": "",
-              "path": "/v1/voices/foo",
+              "path": "/v1/voices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

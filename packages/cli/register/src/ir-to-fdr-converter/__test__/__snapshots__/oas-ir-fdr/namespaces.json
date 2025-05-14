@@ -2462,9 +2462,9 @@
             {
               "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2594,9 +2594,9 @@
             {
               "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -2690,9 +2690,9 @@
             {
               "name": "deleteUserExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4741,9 +4741,9 @@
             {
               "name": "getUserByNameExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4873,9 +4873,9 @@
             {
               "name": "userUpdateUserExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -4969,9 +4969,9 @@
             {
               "name": "deleteUserExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},

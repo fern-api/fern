@@ -30224,9 +30224,9 @@
             {
               "name": "detailLinkExample",
               "description": "",
-              "path": "/api/links/foo/",
+              "path": "/api/links/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30461,9 +30461,9 @@
             {
               "name": "linksUpdateLinkExample",
               "description": "",
-              "path": "/api/links/foo/",
+              "path": "/api/links/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30608,9 +30608,9 @@
             {
               "name": "destroyLinkExample",
               "description": "",
-              "path": "/api/links/foo/",
+              "path": "/api/links/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33294,9 +33294,9 @@
             {
               "name": "AccountsBankingChecking",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33367,9 +33367,9 @@
             {
               "name": "AccountsBankingCreditCard",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33460,9 +33460,9 @@
             {
               "name": "AcccountsBankingLoan",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33587,9 +33587,9 @@
             {
               "name": "AccountsBankingPension",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33730,9 +33730,9 @@
             {
               "name": "AccountsBankingSavings",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33900,9 +33900,9 @@
             {
               "name": "destroyAccountExample",
               "description": "",
-              "path": "/api/accounts/foo/",
+              "path": "/api/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36521,9 +36521,9 @@
             {
               "name": "TransactionsChecking",
               "description": "",
-              "path": "/api/transactions/foo/",
+              "path": "/api/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36638,9 +36638,9 @@
             {
               "name": "TransactionsSavings",
               "description": "",
-              "path": "/api/transactions/foo/",
+              "path": "/api/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36755,9 +36755,9 @@
             {
               "name": "TransactionsCreditCard",
               "description": "",
-              "path": "/api/transactions/foo/",
+              "path": "/api/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36999,9 +36999,9 @@
             {
               "name": "destroyTransactionExample",
               "description": "",
-              "path": "/api/transactions/foo/",
+              "path": "/api/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38256,9 +38256,9 @@
             {
               "name": "BalancesExamplePaginated",
               "description": "",
-              "path": "/api/balances/foo/",
+              "path": "/api/balances/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38440,9 +38440,9 @@
             {
               "name": "destroyBalanceExample",
               "description": "",
-              "path": "/api/balances/foo/",
+              "path": "/api/balances/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38983,9 +38983,9 @@
             {
               "name": "detailInstitutionExample",
               "description": "",
-              "path": "/api/institutions/foo/",
+              "path": "/api/institutions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40055,9 +40055,9 @@
             {
               "name": "OwnerBankingAccount",
               "description": "",
-              "path": "/api/owners/foo/",
+              "path": "/api/owners/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40205,9 +40205,9 @@
             {
               "name": "destroyOwnerExample",
               "description": "",
-              "path": "/api/owners/foo/",
+              "path": "/api/owners/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -42998,9 +42998,9 @@
             {
               "name": "InvoiceIngresso",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43129,9 +43129,9 @@
             {
               "name": "InvoicePago",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43306,9 +43306,9 @@
             {
               "name": "InvoiceNomina",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43455,9 +43455,9 @@
             {
               "name": "InvoiceEgreso",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43586,9 +43586,9 @@
             {
               "name": "InvoiceTraslado",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43812,9 +43812,9 @@
             {
               "name": "destroyInvoiceExample",
               "description": "",
-              "path": "/api/invoices/foo/",
+              "path": "/api/invoices/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -45964,9 +45964,9 @@
             {
               "name": "TaxReturnPersonal",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -46389,9 +46389,9 @@
             {
               "name": "TaxReturnPersonalMonthlyPFAE",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -46448,9 +46448,9 @@
             {
               "name": "TaxReturnPersonalMonthlyPFAI",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -46507,9 +46507,9 @@
             {
               "name": "TaxReturnBusiness",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -46572,9 +46572,9 @@
             {
               "name": "TaxReturnBusinessMonthly",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -46730,9 +46730,9 @@
             {
               "name": "destroyTaxReturnExample",
               "description": "",
-              "path": "/api/tax-returns/foo/",
+              "path": "/api/tax-returns/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -47982,9 +47982,9 @@
             {
               "name": "TaxStatusPersonal",
               "description": "",
-              "path": "/api/tax-status/foo/",
+              "path": "/api/tax-status/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -48145,9 +48145,9 @@
             {
               "name": "TaxStatusBusiness",
               "description": "",
-              "path": "/api/tax-status/foo/",
+              "path": "/api/tax-status/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -48405,9 +48405,9 @@
             {
               "name": "destroyTaxStatusExample",
               "description": "",
-              "path": "/api/tax-status/foo/",
+              "path": "/api/tax-status/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -49056,9 +49056,9 @@
             {
               "name": "detailTaxComplianceStatusExample",
               "description": "",
-              "path": "/api/tax-compliance-status/foo/",
+              "path": "/api/tax-compliance-status/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -49188,9 +49188,9 @@
             {
               "name": "destroyTaxComplianceStatusExample",
               "description": "",
-              "path": "/api/tax-compliance-status/foo/",
+              "path": "/api/tax-compliance-status/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -50218,9 +50218,9 @@
             {
               "name": "detailIncomeExample",
               "description": "",
-              "path": "/api/incomes/foo/",
+              "path": "/api/incomes/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -50420,9 +50420,9 @@
             {
               "name": "destroyIncomesExample",
               "description": "",
-              "path": "/api/incomes/foo/",
+              "path": "/api/incomes/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -51897,9 +51897,9 @@
             {
               "name": "detailRecurringExpenseExample",
               "description": "",
-              "path": "/api/recurring-expenses/foo/",
+              "path": "/api/recurring-expenses/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -52236,9 +52236,9 @@
             {
               "name": "destroyRecurringExpenseExample",
               "description": "",
-              "path": "/api/recurring-expenses/foo/",
+              "path": "/api/recurring-expenses/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -53305,9 +53305,9 @@
             {
               "name": "detailPortfolioExample",
               "description": "",
-              "path": "/investments/portfolios/foo/",
+              "path": "/investments/portfolios/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -53519,9 +53519,9 @@
             {
               "name": "destroyPortfolioExample",
               "description": "",
-              "path": "/investments/portfolios/foo/",
+              "path": "/investments/portfolios/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -54337,9 +54337,9 @@
             {
               "name": "detailReceivableTransactionExample",
               "description": "",
-              "path": "/receivables/transactions/foo/",
+              "path": "/receivables/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -54511,9 +54511,9 @@
             {
               "name": "destroyReceivableTransactionExample",
               "description": "",
-              "path": "/receivables/transactions/foo/",
+              "path": "/receivables/transactions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -55746,9 +55746,9 @@
             {
               "name": "detailRiskInsightsExample",
               "description": "",
-              "path": "/api/risk-insights/foo/",
+              "path": "/api/risk-insights/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -56014,9 +56014,9 @@
             {
               "name": "destroyRiskInsightsExample",
               "description": "",
-              "path": "/api/risk-insights/foo/",
+              "path": "/api/risk-insights/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -56736,9 +56736,9 @@
             {
               "name": "detailTaxRetentionsExample",
               "description": "",
-              "path": "/api/tax-retentions/foo/",
+              "path": "/api/tax-retentions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -56910,9 +56910,9 @@
             {
               "name": "destroyTaxRetentionExample",
               "description": "",
-              "path": "/api/tax-retentions/foo/",
+              "path": "/api/tax-retentions/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -57896,9 +57896,9 @@
             {
               "name": "detailTaxDeclarationExample",
               "description": "",
-              "path": "/api/tax-declarations/foo/",
+              "path": "/api/tax-declarations/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -58160,9 +58160,9 @@
             {
               "name": "destroyTaxDeclarationExample",
               "description": "",
-              "path": "/api/tax-declarations/foo/",
+              "path": "/api/tax-declarations/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -58916,9 +58916,9 @@
             {
               "name": "detailEmploymentRecordExample",
               "description": "",
-              "path": "/api/employment-records/foo/",
+              "path": "/api/employment-records/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -59148,9 +59148,9 @@
             {
               "name": "destroyEmploymentRecordExample",
               "description": "",
-              "path": "/api/employment-records/foo/",
+              "path": "/api/employment-records/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -60572,9 +60572,9 @@
             {
               "name": "deletePaymentWebhooksExample",
               "description": "",
-              "path": "/payments/webhooks/foo/",
+              "path": "/payments/webhooks/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

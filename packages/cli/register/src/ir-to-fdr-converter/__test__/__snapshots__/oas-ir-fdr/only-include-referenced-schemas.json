@@ -22988,9 +22988,9 @@
             {
               "name": "successful",
               "description": "",
-              "path": "/contacts/foo/companies",
+              "path": "/contacts/id/companies",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23008,9 +23008,9 @@
             {
               "name": "company_not_found",
               "description": "",
-              "path": "/contacts/foo/companies",
+              "path": "/contacts/id/companies",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23028,9 +23028,9 @@
             {
               "name": "Successful",
               "description": "",
-              "path": "/contacts/foo/companies",
+              "path": "/contacts/id/companies",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24599,9 +24599,9 @@
             {
               "name": "successful",
               "description": "",
-              "path": "/contacts/foo",
+              "path": "/contacts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34755,7 +34755,7 @@
                 "filter": {
                   "user_id": "foo"
                 },
-                "type": "foo"
+                "type": "type"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -35185,9 +35185,9 @@
             {
               "name": "successful",
               "description": "",
-              "path": "/export/content/data/foo",
+              "path": "/export/content/data/job_identifier",
               "pathParameters": {
-                "job_identifier": "foo"
+                "job_identifier": "job_identifier"
               },
               "queryParameters": {},
               "headers": {},
@@ -35297,9 +35297,9 @@
             {
               "name": "successful",
               "description": "",
-              "path": "/export/cancel/foo",
+              "path": "/export/cancel/job_identifier",
               "pathParameters": {
-                "job_identifier": "foo"
+                "job_identifier": "job_identifier"
               },
               "queryParameters": {},
               "headers": {},
@@ -35398,9 +35398,9 @@
             {
               "name": "downloadDataExportExample",
               "description": "",
-              "path": "/download/content/data/foo",
+              "path": "/download/content/data/job_identifier",
               "pathParameters": {
-                "job_identifier": "foo"
+                "job_identifier": "job_identifier"
               },
               "queryParameters": {},
               "headers": {},
@@ -38031,9 +38031,9 @@
             {
               "name": "ticket_type_attribute_created",
               "description": "",
-              "path": "/ticket_types/foo/attributes",
+              "path": "/ticket_types/ticket_type_id/attributes",
               "pathParameters": {
-                "ticket_type_id": "foo"
+                "ticket_type_id": "ticket_type_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38057,9 +38057,9 @@
             {
               "name": "Ticket Type Attribute created",
               "description": "",
-              "path": "/ticket_types/foo/attributes",
+              "path": "/ticket_types/ticket_type_id/attributes",
               "pathParameters": {
-                "ticket_type_id": "foo"
+                "ticket_type_id": "ticket_type_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38249,10 +38249,10 @@
             {
               "name": "ticket_type_attribute_updated",
               "description": "",
-              "path": "/ticket_types/foo/attributes/foo",
+              "path": "/ticket_types/ticket_type_id/attributes/id",
               "pathParameters": {
-                "ticket_type_id": "foo",
-                "id": "foo"
+                "ticket_type_id": "ticket_type_id",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38270,10 +38270,10 @@
             {
               "name": "Ticket Type Attribute updated",
               "description": "",
-              "path": "/ticket_types/foo/attributes/foo",
+              "path": "/ticket_types/ticket_type_id/attributes/id",
               "pathParameters": {
-                "ticket_type_id": "foo",
-                "id": "foo"
+                "ticket_type_id": "ticket_type_id",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38702,9 +38702,9 @@
             {
               "name": "Ticket type found",
               "description": "",
-              "path": "/ticket_types/foo",
+              "path": "/ticket_types/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38861,9 +38861,9 @@
             {
               "name": "ticket_type_updated",
               "description": "",
-              "path": "/ticket_types/foo",
+              "path": "/ticket_types/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38881,9 +38881,9 @@
             {
               "name": "Ticket type updated",
               "description": "",
-              "path": "/ticket_types/foo",
+              "path": "/ticket_types/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -39694,9 +39694,9 @@
             {
               "name": "Ticket found",
               "description": "",
-              "path": "/tickets/foo",
+              "path": "/tickets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -39969,9 +39969,9 @@
             {
               "name": "successful_response",
               "description": "",
-              "path": "/tickets/foo",
+              "path": "/tickets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40009,9 +40009,9 @@
             {
               "name": "admin_not_found",
               "description": "",
-              "path": "/tickets/foo",
+              "path": "/tickets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40045,9 +40045,9 @@
             {
               "name": "assignee_not_found",
               "description": "",
-              "path": "/tickets/foo",
+              "path": "/tickets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40081,9 +40081,9 @@
             {
               "name": "Successful response",
               "description": "",
-              "path": "/tickets/foo",
+              "path": "/tickets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40825,7 +40825,7 @@
               "path": "/visitors",
               "pathParameters": {},
               "queryParameters": {
-                "user_id": "foo"
+                "user_id": "user_id"
               },
               "headers": {},
               "responseStatusCode": 200,

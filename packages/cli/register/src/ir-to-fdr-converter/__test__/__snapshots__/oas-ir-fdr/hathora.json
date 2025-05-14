@@ -2048,9 +2048,9 @@
             {
               "name": "appV1UpdateAppExample",
               "description": "",
-              "path": "/apps/v1/update/foo",
+              "path": "/apps/v1/update/appId",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2192,9 +2192,9 @@
             {
               "name": "getAppInfoExample",
               "description": "",
-              "path": "/apps/v1/info/foo",
+              "path": "/apps/v1/info/appId",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2329,9 +2329,9 @@
             {
               "name": "deleteAppExample",
               "description": "",
-              "path": "/apps/v1/delete/foo",
+              "path": "/apps/v1/delete/appId",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2432,9 +2432,9 @@
             {
               "name": "loginAnonymousExample",
               "description": "",
-              "path": "/auth/v1/foo/login/anonymous",
+              "path": "/auth/v1/appId/login/anonymous",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2558,9 +2558,9 @@
             {
               "name": "authV1LoginNicknameExample",
               "description": "",
-              "path": "/auth/v1/foo/login/nickname",
+              "path": "/auth/v1/appId/login/nickname",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2708,9 +2708,9 @@
             {
               "name": "authV1LoginGoogleExample",
               "description": "",
-              "path": "/auth/v1/foo/login/google",
+              "path": "/auth/v1/appId/login/google",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2835,9 +2835,9 @@
             {
               "name": "getBuildsExample",
               "description": "",
-              "path": "/builds/v1/foo/list",
+              "path": "/builds/v1/appId/list",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2987,9 +2987,9 @@
             {
               "name": "getBuildInfoExample",
               "description": "",
-              "path": "/builds/v1/foo/info/42",
+              "path": "/builds/v1/appId/info/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "buildId": 42
               },
               "queryParameters": {},
@@ -3151,9 +3151,9 @@
             {
               "name": "createBuildExample",
               "description": "",
-              "path": "/builds/v1/foo/create",
+              "path": "/builds/v1/appId/create",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -3331,9 +3331,9 @@
             {
               "name": "buildV1RunBuildExample",
               "description": "",
-              "path": "/builds/v1/foo/run/42",
+              "path": "/builds/v1/appId/run/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "buildId": 42
               },
               "queryParameters": {},
@@ -3479,9 +3479,9 @@
             {
               "name": "deleteBuildExample",
               "description": "",
-              "path": "/builds/v1/foo/delete/42",
+              "path": "/builds/v1/appId/delete/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "buildId": 42
               },
               "queryParameters": {},
@@ -3586,9 +3586,9 @@
             {
               "name": "getDeploymentsExample",
               "description": "",
-              "path": "/deployments/v1/foo/list",
+              "path": "/deployments/v1/appId/list",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -3742,9 +3742,9 @@
             {
               "name": "getDeploymentInfoExample",
               "description": "",
-              "path": "/deployments/v1/foo/info/42",
+              "path": "/deployments/v1/appId/info/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "deploymentId": 42
               },
               "queryParameters": {},
@@ -3938,9 +3938,9 @@
             {
               "name": "deploymentV1CreateDeploymentExample",
               "description": "",
-              "path": "/deployments/v1/foo/create/42",
+              "path": "/deployments/v1/appId/create/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "buildId": 42
               },
               "queryParameters": {},
@@ -4297,13 +4297,13 @@
             {
               "name": "createPrivateLobbyDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/foo/create/private",
+              "path": "/lobby/v1/appId/create/private",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -4495,13 +4495,13 @@
             {
               "name": "createPublicLobbyDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/foo/create/public",
+              "path": "/lobby/v1/appId/create/public",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -4651,13 +4651,13 @@
             {
               "name": "listActivePublicLobbiesDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/foo/list",
+              "path": "/lobby/v1/appId/list",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -4896,13 +4896,13 @@
             {
               "name": "lobbyV2CreatePrivateLobbyExample",
               "description": "",
-              "path": "/lobby/v2/foo/create/private",
+              "path": "/lobby/v2/appId/create/private",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "requestBody": {
                 "initialConfig": {},
@@ -5138,13 +5138,13 @@
             {
               "name": "lobbyV2CreatePublicLobbyExample",
               "description": "",
-              "path": "/lobby/v2/foo/create/public",
+              "path": "/lobby/v2/appId/create/public",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "requestBody": {
                 "initialConfig": {},
@@ -5380,13 +5380,13 @@
             {
               "name": "lobbyV2CreateLocalLobbyExample",
               "description": "",
-              "path": "/lobby/v2/foo/create/local",
+              "path": "/lobby/v2/appId/create/local",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "requestBody": {
                 "initialConfig": {},
@@ -5628,13 +5628,13 @@
             {
               "name": "lobbyV2CreateLobbyExample",
               "description": "",
-              "path": "/lobby/v2/foo/create",
+              "path": "/lobby/v2/appId/create",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {
-                "Authorization": "foo"
+                "Authorization": "Authorization"
               },
               "requestBody": {
                 "visibility": "public",
@@ -5762,9 +5762,9 @@
             {
               "name": "listActivePublicLobbiesExample",
               "description": "",
-              "path": "/lobby/v2/foo/list/public",
+              "path": "/lobby/v2/appId/list/public",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -5902,10 +5902,10 @@
             {
               "name": "getLobbyInfoExample",
               "description": "",
-              "path": "/lobby/v2/foo/info/foo",
+              "path": "/lobby/v2/appId/info/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},
@@ -6073,10 +6073,10 @@
             {
               "name": "lobbyV2SetLobbyStateExample",
               "description": "",
-              "path": "/lobby/v2/foo/setState/foo",
+              "path": "/lobby/v2/appId/setState/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},
@@ -6245,9 +6245,9 @@
             {
               "name": "getLogsForAppExample",
               "description": "",
-              "path": "/logs/v1/foo/all",
+              "path": "/logs/v1/appId/all",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -6382,10 +6382,10 @@
             {
               "name": "getLogsForProcessExample",
               "description": "",
-              "path": "/logs/v1/foo/process/foo",
+              "path": "/logs/v1/appId/process/processId",
               "pathParameters": {
-                "appId": "foo",
-                "processId": "foo"
+                "appId": "appId",
+                "processId": "processId"
               },
               "queryParameters": {},
               "headers": {},
@@ -6520,9 +6520,9 @@
             {
               "name": "getLogsForDeploymentExample",
               "description": "",
-              "path": "/logs/v1/foo/deployment/42",
+              "path": "/logs/v1/appId/deployment/42",
               "pathParameters": {
-                "appId": "foo",
+                "appId": "appId",
                 "deploymentId": 42
               },
               "queryParameters": {},
@@ -6705,10 +6705,10 @@
             {
               "name": "getMetricsExample",
               "description": "",
-              "path": "/metrics/v1/foo/process/foo",
+              "path": "/metrics/v1/appId/process/processId",
               "pathParameters": {
-                "appId": "foo",
-                "processId": "foo"
+                "appId": "appId",
+                "processId": "processId"
               },
               "queryParameters": {},
               "headers": {},
@@ -6881,9 +6881,9 @@
             {
               "name": "getRunningProcessesExample",
               "description": "",
-              "path": "/processes/v1/foo/list/running",
+              "path": "/processes/v1/appId/list/running",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7042,9 +7042,9 @@
             {
               "name": "getStoppedProcessesExample",
               "description": "",
-              "path": "/processes/v1/foo/list/stopped",
+              "path": "/processes/v1/appId/list/stopped",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7196,10 +7196,10 @@
             {
               "name": "getProcessInfoExample",
               "description": "",
-              "path": "/processes/v1/foo/info/foo",
+              "path": "/processes/v1/appId/info/processId",
               "pathParameters": {
-                "appId": "foo",
-                "processId": "foo"
+                "appId": "appId",
+                "processId": "processId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7376,9 +7376,9 @@
             {
               "name": "roomV1CreateRoomExample",
               "description": "",
-              "path": "/rooms/v1/foo/create",
+              "path": "/rooms/v1/appId/create",
               "pathParameters": {
-                "appId": "foo"
+                "appId": "appId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7501,10 +7501,10 @@
             {
               "name": "getRoomInfoExample",
               "description": "",
-              "path": "/rooms/v1/foo/info/foo",
+              "path": "/rooms/v1/appId/info/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7657,10 +7657,10 @@
             {
               "name": "getActiveRoomsForProcessExample",
               "description": "",
-              "path": "/rooms/v1/foo/list/foo/active",
+              "path": "/rooms/v1/appId/list/processId/active",
               "pathParameters": {
-                "appId": "foo",
-                "processId": "foo"
+                "appId": "appId",
+                "processId": "processId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7781,10 +7781,10 @@
             {
               "name": "getInactiveRoomsForProcessExample",
               "description": "",
-              "path": "/rooms/v1/foo/list/foo/inactive",
+              "path": "/rooms/v1/appId/list/processId/inactive",
               "pathParameters": {
-                "appId": "foo",
-                "processId": "foo"
+                "appId": "appId",
+                "processId": "processId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7906,10 +7906,10 @@
             {
               "name": "destroyRoomExample",
               "description": "",
-              "path": "/rooms/v1/foo/destroy/foo",
+              "path": "/rooms/v1/appId/destroy/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},
@@ -8019,10 +8019,10 @@
             {
               "name": "suspendRoomExample",
               "description": "",
-              "path": "/rooms/v1/foo/suspend/foo",
+              "path": "/rooms/v1/appId/suspend/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},
@@ -8158,10 +8158,10 @@
             {
               "name": "getConnectionInfoExample",
               "description": "",
-              "path": "/rooms/v1/foo/connectioninfo/foo",
+              "path": "/rooms/v1/appId/connectioninfo/roomId",
               "pathParameters": {
-                "appId": "foo",
-                "roomId": "foo"
+                "appId": "appId",
+                "roomId": "roomId"
               },
               "queryParameters": {},
               "headers": {},

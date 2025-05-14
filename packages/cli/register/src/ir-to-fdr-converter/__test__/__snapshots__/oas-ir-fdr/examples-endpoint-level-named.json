@@ -490,9 +490,9 @@
           {
             "name": "oak",
             "description": "",
-            "path": "/trees/foo",
+            "path": "/trees/treeId",
             "pathParameters": {
-              "treeId": "foo"
+              "treeId": "treeId"
             },
             "queryParameters": {},
             "headers": {},
@@ -754,9 +754,9 @@
           {
             "name": "getFernExample",
             "description": "",
-            "path": "/ferns/foo",
+            "path": "/ferns/fernId",
             "pathParameters": {
-              "fernId": "foo"
+              "fernId": "fernId"
             },
             "queryParameters": {},
             "headers": {},
