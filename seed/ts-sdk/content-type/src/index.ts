@@ -1,4 +1,3 @@
-export { SeedContentTypesClient } from "./Client";
-export * as SeedContentTypes from "./api";
-export { SeedContentTypesError, SeedContentTypesTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export { SeedContentTypesClient } from "./Client.js";
+export * as SeedContentTypes from "./api/index.js";
+export { SeedContentTypesError, SeedContentTypesTimeoutError } from "./errors/index.js";

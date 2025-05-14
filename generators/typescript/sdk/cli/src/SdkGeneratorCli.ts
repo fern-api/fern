@@ -34,7 +34,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? false;
+        const noSerdeLayer = parsed?.noSerdeLayer ?? true;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? false,
@@ -50,7 +50,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
-            skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? false),
+            skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
             extraDevDependencies: parsed?.extraDevDependencies ?? {},
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
@@ -63,16 +63,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
-            inlineFileProperties: parsed?.inlineFileProperties ?? false,
-            inlinePathParameters: parsed?.inlinePathParameters ?? false,
-            enableInlineTypes: parsed?.enableInlineTypes ?? false,
+            inlineFileProperties: parsed?.inlineFileProperties ?? true,
+            inlinePathParameters: parsed?.inlinePathParameters ?? true,
+            enableInlineTypes: parsed?.enableInlineTypes ?? true,
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
-            omitUndefined: parsed?.omitUndefined ?? false,
+            omitUndefined: parsed?.omitUndefined ?? true,
             generateWireTests: parsed?.generateWireTests ?? false,
             noScripts: parsed?.noScripts ?? false,
             useBigInt: parsed?.useBigInt ?? false,
-            useLegacyExports: parsed?.useLegacyExports ?? true
+            useLegacyExports: parsed?.useLegacyExports ?? false
         };
     }
 
@@ -89,7 +89,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         generatorContext: GeneratorContext;
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject> {
-        const useLegacyExports = customConfig.useLegacyExports ?? true;
+        const useLegacyExports = customConfig.useLegacyExports ?? false;
         const namespaceExport = getNamespaceExport({
             organization: config.organization,
             workspaceName: config.workspaceName,
@@ -145,15 +145,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 noOptionalProperties: customConfig.noOptionalProperties,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
-                inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                inlinePathParameters: customConfig.inlinePathParameters ?? false,
+                inlineFileProperties: customConfig.inlineFileProperties ?? true,
+                inlinePathParameters: customConfig.inlinePathParameters ?? true,
                 writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
                 executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
-                omitUndefined: customConfig.omitUndefined ?? false,
+                omitUndefined: customConfig.omitUndefined ?? true,
                 useBigInt: customConfig.useBigInt ?? false,
-                enableInlineTypes: customConfig.enableInlineTypes ?? false,
+                enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports
             }
         });

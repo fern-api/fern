@@ -143,7 +143,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "pageLimit: $FERN_INPUT",
+                                        "templateString": "page_limit: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

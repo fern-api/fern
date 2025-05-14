@@ -3,22 +3,22 @@
  */
 
 import * as fs from "fs";
-import * as SeedFileUpload from "../../../../index";
+import * as SeedFileUpload from "../../../../index.js";
 
 export interface MyRequest {
-    maybeString?: string;
+    maybe_string?: string;
     integer: number;
     file: File | fs.ReadStream | Blob;
-    fileList: File[] | fs.ReadStream[] | Blob[];
-    maybeFile?: File | fs.ReadStream | Blob | undefined;
-    maybeFileList?: File[] | fs.ReadStream[] | Blob[] | undefined;
-    maybeInteger?: number;
-    optionalListOfStrings?: string[];
-    listOfObjects: SeedFileUpload.MyObject[];
-    optionalMetadata?: unknown;
-    optionalObjectType?: SeedFileUpload.ObjectType;
-    optionalId?: SeedFileUpload.Id;
-    aliasObject: SeedFileUpload.MyAliasObject;
-    listOfAliasObject: SeedFileUpload.MyAliasObject[];
-    aliasListOfObject: SeedFileUpload.MyCollectionAliasObject;
+    file_list: File[] | fs.ReadStream[] | Blob[];
+    maybe_file?: File | fs.ReadStream | Blob | undefined;
+    maybe_file_list?: File[] | fs.ReadStream[] | Blob[] | undefined;
+    maybe_integer?: number;
+    optional_list_of_strings?: string[];
+    list_of_objects: SeedFileUpload.MyObject[];
+    optional_metadata?: unknown;
+    optional_object_type?: SeedFileUpload.ObjectType;
+    optional_id?: SeedFileUpload.Id;
+    alias_object: SeedFileUpload.MyAliasObject;
+    list_of_alias_object: SeedFileUpload.MyAliasObject[];
+    alias_list_of_object: SeedFileUpload.MyCollectionAliasObject;
 }

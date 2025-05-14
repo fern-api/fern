@@ -1,10 +1,6 @@
-import { TypeReferenceNode, getTextOfTsNode } from "@fern-typescript/commons";
+import { TypeReferenceNode, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
-
-import { assertNever } from "@fern-api/core-utils";
-
-import { NamedType, ObjectProperty, SingleUnionTypeProperty, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SingleUnionTypeGenerator } from "../SingleUnionTypeGenerator";
 
@@ -69,7 +65,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
         const type = this.getReferenceToPropertyType(context);
         return [
             {
-                name: this.propertyName,
+                name: getPropertyKey(this.propertyName),
                 type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                 hasQuestionToken: !this.noOptionalProperties && type.isOptional
             }

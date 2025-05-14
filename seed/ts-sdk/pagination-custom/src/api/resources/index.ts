@@ -1,2 +1,2 @@
-export * as users from "./users";
-export * from "./users/client/requests";
+export * as users from "./users/index.js";
+export * from "./users/client/requests/index.js";

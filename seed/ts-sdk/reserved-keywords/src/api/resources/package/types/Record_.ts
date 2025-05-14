@@ -4,5 +4,5 @@
 
 export interface Record_ {
     foo: Record<string, string>;
-    "3D": number;
+    "3d": number;
 }

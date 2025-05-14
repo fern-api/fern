@@ -7,8 +7,8 @@ const client = new SeedPaginationClient({
 });
 await client.complex.search({
   pagination: {
-    perPage: 1,
-    startingAfter: "starting_after",
+    per_page: 1,
+    starting_after: "starting_after",
   },
 });
 
@@ -24,8 +24,8 @@ const client = new SeedPaginationClient({
 });
 await client.users.listWithCursorPagination({
   page: 1,
-  perPage: 1,
-  startingAfter: "starting_after",
+  per_page: 1,
+  starting_after: "starting_after",
 });
 
 ```
@@ -70,8 +70,8 @@ const client = new SeedPaginationClient({
 });
 await client.users.listWithOffsetPagination({
   page: 1,
-  perPage: 1,
-  startingAfter: "starting_after",
+  per_page: 1,
+  starting_after: "starting_after",
 });
 
 ```
@@ -86,8 +86,8 @@ const client = new SeedPaginationClient({
 });
 await client.users.listWithDoubleOffsetPagination({
   page: 1.1,
-  perPage: 1.1,
-  startingAfter: "starting_after",
+  per_page: 1.1,
+  starting_after: "starting_after",
 });
 
 ```
@@ -175,7 +175,7 @@ const client = new SeedPaginationClient({
   token: "YOUR_TOKEN",
 });
 await client.users.listUsernames({
-  startingAfter: "starting_after",
+  starting_after: "starting_after",
 });
 
 ```

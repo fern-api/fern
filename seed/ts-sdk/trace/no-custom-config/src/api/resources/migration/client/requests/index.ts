@@ -1,1 +1,1 @@
-export { type GetAttemptedMigrationsRequest } from "./GetAttemptedMigrationsRequest";
+export { type GetAttemptedMigrationsRequest } from "./GetAttemptedMigrationsRequest.js";

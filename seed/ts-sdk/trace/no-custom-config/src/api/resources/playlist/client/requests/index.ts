@@ -1,2 +1,2 @@
-export { type CreatePlaylistRequest } from "./CreatePlaylistRequest";
-export { type GetPlaylistsRequest } from "./GetPlaylistsRequest";
+export { type CreatePlaylistRequest } from "./CreatePlaylistRequest.js";
+export { type GetPlaylistsRequest } from "./GetPlaylistsRequest.js";

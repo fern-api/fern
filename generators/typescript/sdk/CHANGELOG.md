@@ -5,9 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-05-14
+
+This release changes the defaults for the following custom configuration in _generators.yml_.
+
+| Option | Before | Now |
+|--------|--------|-----|
+| `inlineFileProperties` | `false` | `true` |
+| `inlinePathParameters` | `false` | `true` |
+| `enableInlineTypes` | `false` | `true` |
+| `noSerdeLayer` | `false` | `true` |
+| `omitUndefined` | `false` | `true` |
+| `skipResponseValidation` | `false` | `true` |
+| `useLegacyExports` | `true` | `false` |
+
+To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
+in _generators.yml_.
+
+- Fix: When generating properties for interfaces and classes, we only surround the property name with quotes if necessary.
+  In some cases where the property name wasn't a valid identifier before, we now surround it with quotes too. 
+
+
 ## [0.51.7] - 2025-05-14
 
 - Fix: If an object extends an alias, the generator now visits the alias that is being extended (instead of throwing an error).
+
 
 ## [0.51.6] - 2025-05-13
 

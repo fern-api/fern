@@ -1,7 +1,7 @@
-export * as unknown from "./unknown";
-export * from "./unknown/types";
-export * as inlinedRequest from "./inlinedRequest";
-export * as pathParam from "./pathParam";
-export * as queryParam from "./queryParam";
-export * from "./inlinedRequest/client/requests";
-export * from "./queryParam/client/requests";
+export * as unknown from "./unknown/index.js";
+export * from "./unknown/types/index.js";
+export * as inlinedRequest from "./inlinedRequest/index.js";
+export * as pathParam from "./pathParam/index.js";
+export * as queryParam from "./queryParam/index.js";
+export * from "./inlinedRequest/client/requests/index.js";
+export * from "./queryParam/client/requests/index.js";

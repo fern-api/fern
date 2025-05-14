@@ -31,7 +31,7 @@ await client.auth.getTokenWithClientCredentials({
     cid: "cid",
     csr: "csr",
     scp: "scp",
-    entityId: "entity_id",
+    entity_id: "entity_id",
     scope: "scope",
 });
 ```

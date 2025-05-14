@@ -1,5 +1,6 @@
 import {
     GetReferenceOpts,
+    getPropertyKey,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
     maybeAddDocsStructure
@@ -15,7 +16,6 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
     WriterFunction,
-    WriterFunctionOrValue,
     ts
 } from "ts-morph";
 
@@ -226,7 +226,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     properties: [
                         ...this.shape.values.map(
                             (enumValue): OptionalKind<PropertySignatureStructure> => ({
-                                name: this.getEnumValueVisitPropertyName(enumValue),
+                                name: getPropertyKey(this.getEnumValueVisitPropertyName(enumValue)),
                                 type: getTextOfTsNode(
                                     ts.factory.createFunctionTypeNode(
                                         undefined,

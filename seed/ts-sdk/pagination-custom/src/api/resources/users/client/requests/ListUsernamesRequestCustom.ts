@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         startingAfter: "starting_after"
+ *         starting_after: "starting_after"
  *     }
  */
 export interface ListUsernamesRequestCustom {
@@ -13,5 +13,5 @@ export interface ListUsernamesRequestCustom {
      * The cursor used for pagination in order to fetch
      * the next page of results.
      */
-    startingAfter?: string;
+    starting_after?: string;
 }
