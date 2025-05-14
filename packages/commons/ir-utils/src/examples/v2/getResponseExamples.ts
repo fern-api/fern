@@ -46,8 +46,25 @@ export function getResponseExamples({ endpoint }: { endpoint: HttpEndpoint }): {
             break;
         case "fileDownload":
             break;
-        case "text":
+        case "text": {
+            const textBody = endpoint.response.body;
+            const { userExamples, autoExamples } = getV2Examples(textBody.v2Examples);
+            for (const [name, example] of Object.entries(userExamples)) {
+                const wrappedExample = endpoint.source?.type === "openrpc" ? wrapAsJsonRpcResponse(example) : example;
+                userResponseExamples[name] = {
+                    ...baseResponseExample,
+                    body: V2HttpEndpointResponseBody.json(wrappedExample)
+                };
+            }
+            for (const [name, example] of Object.entries(autoExamples)) {
+                const wrappedExample = endpoint.source?.type === "openrpc" ? wrapAsJsonRpcResponse(example) : example;
+                autoResponseExamples[name] = {
+                    ...baseResponseExample,
+                    body: V2HttpEndpointResponseBody.json(wrappedExample)
+                };
+            }
             break;
+        }
         case "json": {
             const jsonBody = endpoint.response.body.value;
             if (jsonBody.type === "response") {

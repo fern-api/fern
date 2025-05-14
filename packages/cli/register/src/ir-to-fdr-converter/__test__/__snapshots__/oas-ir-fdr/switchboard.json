@@ -3754,7 +3754,35 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "event": "foo",
+                    "eventTimeMillis": 42,
+                    "id": "foo",
+                    "status": "awaiting_capacity"
+                  },
+                  "event": "foo",
+                  "id": 42,
+                  "retry": 42
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "data": {
+                    "event": "foo",
+                    "eventTimeMillis": 42,
+                    "id": "foo",
+                    "status": "awaiting_capacity"
+                  },
+                  "event": "foo",
+                  "id": 42,
+                  "retry": 42
+                }
+              }
             }
           ],
           "protocol": {
