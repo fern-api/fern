@@ -34,6 +34,13 @@ export abstract class AbstractExtension<Output> {
         if (fallbackKey != null) {
             return (value as Record<string, unknown>)[fallbackKey];
         }
+
+        const fernlessKey = this.key.replace("-fern", "");
+        const fernlessExtensionValue = (value as Record<string, unknown>)[fernlessKey];
+        if (fernlessExtensionValue) {
+            return fernlessExtensionValue;
+        }
+
         return undefined;
     }
 
