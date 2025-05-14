@@ -14,6 +14,17 @@ import { ResponseErrorConverter } from "../ResponseErrorConverter";
 
 const PATH_PARAM_REGEX = /{([^}]+)}/g;
 
+const HEADERS_TO_SKIP = new Set([
+    "user-agent",
+    "content-length",
+    "content-type",
+    "x-forwarded-for",
+    "cookie",
+    "origin",
+    "content-disposition",
+    "x-ping-custom-domain"
+]);
+
 export declare namespace AbstractOperationConverter {
     export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         operation: OpenAPIV3_1.OperationObject;
@@ -110,9 +121,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                     case "query":
                         queryParameters.push(convertedParameter.parameter);
                         break;
-                    case "header":
-                        headers.push(convertedParameter.parameter);
+                    case "header": {
+                        const headerName = convertedParameter.parameter.name.name.originalName;
+                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase())) {
+                            headers.push(convertedParameter.parameter);
+                        }
                         break;
+                    }
                 }
             }
         }
