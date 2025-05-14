@@ -4,5 +4,4 @@
 
 from .types import UnauthorizedRequestErrorBody
 from .errors import BadRequest, UnauthorizedRequest
-
 __all__ = ["BadRequest", "UnauthorizedRequest", "UnauthorizedRequestErrorBody"]
