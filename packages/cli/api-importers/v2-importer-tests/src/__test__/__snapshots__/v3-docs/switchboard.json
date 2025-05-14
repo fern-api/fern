@@ -43710,7 +43710,21 @@
                   "headers": {}
                 },
                 "response": {
-                  "statusCode": 200
+                  "statusCode": 200,
+                  "body": {
+                    "value": {
+                      "data": {
+                        "event": "foo",
+                        "eventTimeMillis": 42,
+                        "id": "foo",
+                        "status": "awaiting_capacity"
+                      },
+                      "event": "foo",
+                      "id": 42,
+                      "retry": 42
+                    },
+                    "type": "json"
+                  }
                 }
               }
             },

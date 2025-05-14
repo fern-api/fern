@@ -6357,7 +6357,15 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "WEBVTT\n00:12.340 --> 00:16.220\nLast year I showed these two slides said that demonstrate\n00:16.200 --> 00:20.040\nthat the Arctic ice cap which for most of the last 3,000,000 years has been the\n00:20.020 --> 00:25.040\nsize of the lower 48 States has shrunk by 40% but this understates\n"
+              }
             }
           ],
           "protocol": {
