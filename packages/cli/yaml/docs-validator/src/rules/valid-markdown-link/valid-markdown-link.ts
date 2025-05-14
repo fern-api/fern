@@ -73,6 +73,18 @@ export const ValidMarkdownLinks: Rule = {
             absoluteFilePathsToSlugs.set(absoluteFilePath, slugs);
         });
 
+        const specialDocPages = ["llms-full.txt", "llms.txt"];
+        
+        for (const specialPage of specialDocPages) {
+            // If there's a basePath in the URL, add variations with that too
+            if (baseUrl.basePath) {
+                const basePath = baseUrl.basePath;
+                visitableSlugs.add(`${basePath}/${specialPage}`);
+            } else {
+                visitableSlugs.add(specialPage);
+            }
+        }
+
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);
