@@ -11,8 +11,10 @@ class Request(UniversalBaseModel):
     Examples
     --------
     from seed.examples.resources.types import Request
-    Request(request={}
-    , )
+
+    Request(
+        request={},
+    )
     """
 
     request: typing.Optional[typing.Any] = None

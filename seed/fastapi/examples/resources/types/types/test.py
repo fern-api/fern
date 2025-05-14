@@ -30,6 +30,7 @@ class Test(UniversalRootModel):
     Examples
     --------
     from seed.examples.resources.types import Test_And
+
     Test_And(value=True)
     """
 

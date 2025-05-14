@@ -8,6 +8,7 @@ class EnumWithCustom(str, enum.Enum):
     Examples
     --------
     from seed.enum import EnumWithCustom
+    
     EnumWithCustom.SAFE
     """
     SAFE = "safe"
