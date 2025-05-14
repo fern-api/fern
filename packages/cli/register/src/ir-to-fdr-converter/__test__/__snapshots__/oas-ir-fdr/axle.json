@@ -1622,9 +1622,9 @@
             {
               "name": "getAccountExample",
               "description": "",
-              "path": "/accounts/foo",
+              "path": "/accounts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
@@ -1790,9 +1790,9 @@
             {
               "name": "getPolicyExample",
               "description": "",
-              "path": "/policies/foo",
+              "path": "/policies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
@@ -2060,9 +2060,9 @@
             {
               "name": "getCarrierExample",
               "description": "",
-              "path": "/carriers/foo",
+              "path": "/carriers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
