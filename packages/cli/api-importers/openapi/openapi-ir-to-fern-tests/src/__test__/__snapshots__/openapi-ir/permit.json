@@ -3,7 +3,8 @@
   "description": "\nAuthorization as a service\n",
   "servers": [
     {
-      "url": "https://api.permit.io"
+      "url": "https://api.permit.io",
+      "name": "Cloud"
     }
   ],
   "websocketServers": [],

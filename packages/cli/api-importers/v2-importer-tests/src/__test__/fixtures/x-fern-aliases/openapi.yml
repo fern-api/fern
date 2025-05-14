@@ -1,0 +1,28 @@
+openapi: 3.1.0
+info:
+  title: Tree API
+  version: 1.0.0
+  description: API for working with tree data structures
+x-version:
+  header: X-API-Version
+  default: "2.0.0"
+  values:
+    - "1.0.0"
+    - "2.0.0"
+    - "Latest"
+servers:
+  - url: https://api.com
+    x-server-name: production
+    x-audiences: ["public"]
+  - url: https://private.api.com
+    x-server-name: sandbox
+    x-audiences: ["private"]
+
+paths:
+  /inventory:
+    get:
+      summary: List inventory
+      description: Retrieve a list of inventory items
+      operationId: listInventory
+      x-sdk-group-name: inventory
+      x-sdk-method-name: list

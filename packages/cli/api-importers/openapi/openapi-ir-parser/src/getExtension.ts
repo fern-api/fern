@@ -24,8 +24,11 @@ type Extension<T> =
  * @param extension The extension to get.
  */
 export function getExtension<T>(object: object, extension: Extension<T>): T | undefined {
-    const extensions = Array.isArray(extension) ? extension : [extension];
-    for (const extension of extensions) {
+    const baseExtensions = Array.isArray(extension) ? extension : [extension];
+
+    const allExtensionsToCheck = [...baseExtensions, ...baseExtensions.map((e) => e.replace("-fern", ""))];
+
+    for (const extension of allExtensionsToCheck) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const extensionValue = (object as any)[extension];
         if (extensionValue != null) {
