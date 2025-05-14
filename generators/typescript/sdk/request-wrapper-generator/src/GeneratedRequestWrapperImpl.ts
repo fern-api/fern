@@ -413,10 +413,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             return false;
                         }
                     }
-                    for (const extension of inlinedRequestBody.extends) {
+                    for (let extension of inlinedRequestBody.extends) {
+                        const typeDeclaration = context.type.getTypeDeclaration(extension);
+                        if (typeDeclaration.shape.type === "alias" && typeDeclaration.shape.aliasOf.type === "named") {
+                            extension = {
+                                ...typeDeclaration.shape.aliasOf
+                            }
+                        }
                         const generatedType = context.type.getGeneratedType(extension);
                         if (generatedType.type !== "object") {
-                            throw new Error("Inlined request extends a non-object");
+                            throw new Error("Inlined request extends a non-object")
                         }
                         const propertiesFromExtension = generatedType.getAllPropertiesIncludingExtensions(context);
                         for (const property of propertiesFromExtension) {
