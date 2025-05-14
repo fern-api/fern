@@ -74,12 +74,14 @@ export const ValidMarkdownLinks: Rule = {
         });
 
         const specialDocPages = ["/llms-full.txt", "/llms.txt"];
-        
+
         for (const specialPage of specialDocPages) {
-            const pageWithBasePath = baseUrl.basePath ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}` : specialPage;
+            const pageWithBasePath = baseUrl.basePath
+                ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}`
+                : specialPage;
             visitableSlugs.add(pageWithBasePath);
         }
-        
+
         return {
             markdownPage: async ({ content, absoluteFilepath }) => {
                 const slugs = absoluteFilePathsToSlugs.get(absoluteFilepath);

@@ -40,11 +40,6 @@ export async function checkIfPathnameExists({
         basePath?: string;
     };
 }): Promise<true | string[]> {
-    // Check if pathname includes "llms.tx" and print it if it does
-    if (pathname.includes("llms.tx")) {
-        console.log(`Found pathname with llms.tx: ${pathname}`);
-    }
-
     pathname = removeTrailingSlash(pathname);
     const slugs = absoluteFilepath != null ? (absoluteFilePathsToSlugs.get(absoluteFilepath) ?? []) : [];
 
@@ -109,10 +104,6 @@ export async function checkIfPathnameExists({
     for (const slug of slugs) {
         const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
         const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
-        // Debug log for paths containing llms.txt or llms-full.txt
-        if (targetSlug.includes("llms.txt") || targetSlug.includes("llms-full.txt")) {
-            console.log(`Found target slug with llms: ${targetSlug}`);
-        }
         if (!pageSlugs.has(removeLeadingSlash(targetSlug))) {
             brokenSlugs.push(slug);
         }
