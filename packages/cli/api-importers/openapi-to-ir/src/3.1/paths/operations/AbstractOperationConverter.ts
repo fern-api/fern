@@ -94,6 +94,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const headers: HttpHeader[] = [];
 
         if (!this.operation.parameters) {
+            this.checkMissingPathParameters(pathParameters, this.path);
             return { pathParameters, queryParameters, headers };
         }
 
@@ -149,6 +150,11 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
         }
 
+        this.checkMissingPathParameters(pathParameters, this.path);
+        return { pathParameters, queryParameters, headers };
+    }
+
+    protected checkMissingPathParameters(pathParameters: PathParameter[], path: string): void {
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
         const missingPathParams = pathParams.filter(
             (param) => !pathParameters.some((p) => p.name.originalName === param)
@@ -172,12 +178,6 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                 }
             });
         }
-
-        return {
-            pathParameters,
-            queryParameters,
-            headers
-        };
     }
 
     protected convertRequestBody({
