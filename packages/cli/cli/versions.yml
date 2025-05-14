@@ -3,6 +3,14 @@
         Check for extensions without `-fern` in the name.
       type: chore
   irVersion: 57
+  version: 0.61.8
+
+- changelogEntry:
+    - summary: |
+        Support text/plain content type response examples in the v3 parser.
+        Skip certain headers from being added to the IR.
+      type: fix
+  irVersion: 57
   version: 0.61.7
 
 - changelogEntry:
