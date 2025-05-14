@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_.echo"
             },
             "snippet": {
-                "sync_client": "from seed import SeedPackageYml\nclient = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nclient.echo(id='id-ksfd9c1', name='Hello world!', size=20, )\n",
-                "async_client": "from seed import AsyncSeedPackageYml\nimport asyncio\nclient = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.echo(\n    id=\"id-ksfd9c1\",\n    name=\"Hello world!\",\n    size=20,\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.echo(\n        id=\"id-ksfd9c1\",\n        name=\"Hello world!\",\n        size=20,\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         },
@@ -22,8 +22,8 @@
                 "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
-                "sync_client": "from seed import SeedPackageYml\nclient = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nclient.service.nop(id='id-a2ijs82', nested_id='id-219xca8', )\n",
-                "async_client": "from seed import AsyncSeedPackageYml\nimport asyncio\nclient = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.service.nop(id='id-a2ijs82', nested_id='id-219xca8', )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedPackageYml\n\nclient = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.nop(\n    id=\"id-a2ijs82\",\n    nested_id=\"id-219xca8\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPackageYml\n\nclient = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.nop(\n        id=\"id-a2ijs82\",\n        nested_id=\"id-219xca8\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

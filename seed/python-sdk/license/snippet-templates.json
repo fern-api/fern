@@ -16,7 +16,7 @@
                     "from seed import SeedLicense"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLicense(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedLicense(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedLicense"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLicense(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedLicense(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

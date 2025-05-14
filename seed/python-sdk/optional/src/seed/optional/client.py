@@ -47,9 +47,13 @@ class OptionalClient:
         Examples
         --------
         from seed import SeedObjectsWithImports
-        client = SeedObjectsWithImports(base_url="https://yourhost.com/path/to/api", )
-        client.optional.send_optional_body(request={'string': {'key': 'value'}
-        }, )
+
+        client = SeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.optional.send_optional_body(
+            request={"string": {"key": "value"}},
+        )
         """
         _response = self._raw_client.send_optional_body(request=request, request_options=request_options)
         return _response.data
@@ -91,12 +95,21 @@ class AsyncOptionalClient:
 
         Examples
         --------
-        from seed import AsyncSeedObjectsWithImports
         import asyncio
-        client = AsyncSeedObjectsWithImports(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedObjectsWithImports
+
+        client = AsyncSeedObjectsWithImports(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.optional.send_optional_body(request={'string': {'key': 'value'}
-            }, )
+            await client.optional.send_optional_body(
+                request={"string": {"key": "value"}},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send_optional_body(request=request, request_options=request_options)

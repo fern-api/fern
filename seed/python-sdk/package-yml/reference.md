@@ -13,8 +13,15 @@
 
 ```python
 from seed import SeedPackageYml
-client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
-client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
+
+client = SeedPackageYml(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.echo(
+    id="id-ksfd9c1",
+    name="Hello world!",
+    size=20,
+)
 
 ```
 </dd>
@@ -81,8 +88,14 @@ client.echo(id='id-ksfd9c1', name='Hello world!', size=20, )
 
 ```python
 from seed import SeedPackageYml
-client = SeedPackageYml(base_url="https://yourhost.com/path/to/api", )
-client.service.nop(id='id-a2ijs82', nested_id='id-219xca8', )
+
+client = SeedPackageYml(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.nop(
+    id="id-a2ijs82",
+    nested_id="id-219xca8",
+)
 
 ```
 </dd>

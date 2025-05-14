@@ -38,7 +38,10 @@ class FolderClient:
         Examples
         --------
         from seed import SeedApi
-        client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.folder.foo()
         """
         _response = self._raw_client.foo(request_options=request_options)
@@ -74,11 +77,19 @@ class AsyncFolderClient:
 
         Examples
         --------
-        from seed import AsyncSeedApi
         import asyncio
-        client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.folder.foo()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.foo(request_options=request_options)

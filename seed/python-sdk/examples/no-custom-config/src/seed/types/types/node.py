@@ -12,9 +12,31 @@ class Node(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.types import Node
-    from seed.types import Tree
-    Node(name='root', nodes=[Node(name='left', ), Node(name='right', )], trees=[Tree(nodes=[Node(name='left', ), Node(name='right', )], )], )
+    from seed.types import Node, Tree
+
+    Node(
+        name="root",
+        nodes=[
+            Node(
+                name="left",
+            ),
+            Node(
+                name="right",
+            ),
+        ],
+        trees=[
+            Tree(
+                nodes=[
+                    Node(
+                        name="left",
+                    ),
+                    Node(
+                        name="right",
+                    ),
+                ],
+            )
+        ],
+    )
     """
 
     name: str

@@ -12,10 +12,22 @@ class Moment(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples.resources.types import Moment
-    import uuid
     import datetime
-    Moment(id=uuid.UUID("656f12d6-f592-444c-a1d3-a3cfd46d5b39", ), date=datetime.date.fromisoformat("1994-01-01", ), datetime=datetime.datetime.fromisoformat("1994-01-01 01:01:01+00:00", ), )
+    import uuid
+
+    from seed.examples.resources.types import Moment
+
+    Moment(
+        id=uuid.UUID(
+            "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
+        ),
+        date=datetime.date.fromisoformat(
+            "1994-01-01",
+        ),
+        datetime=datetime.datetime.fromisoformat(
+            "1994-01-01 01:01:01+00:00",
+        ),
+    )
     """
 
     id: uuid.UUID

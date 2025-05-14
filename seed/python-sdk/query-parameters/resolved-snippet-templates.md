@@ -2,7 +2,9 @@
 from seed.user import User
 from seed.user import NestedUser
 
-client = SeedQueryParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedQueryParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.get_username(
 	limit=1,
 	id="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

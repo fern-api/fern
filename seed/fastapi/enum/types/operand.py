@@ -11,6 +11,7 @@ class Operand(str, enum.Enum):
     Examples
     --------
     from seed.enum import Operand
+    
     Operand.GREATER_THAN
     """
     GREATER_THAN = ">"

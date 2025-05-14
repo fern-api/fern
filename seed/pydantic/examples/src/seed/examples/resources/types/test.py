@@ -19,6 +19,7 @@ class Test_Or(UniversalBaseModel):
 
 """
 from seed.examples.resources import Test_And
+
 Test_And(value=True)
 """
 Test = typing.Union[Test_And, Test_Or]

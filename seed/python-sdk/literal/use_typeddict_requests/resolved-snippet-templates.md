@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.headers.send(
 	query="What is the weather today"
 )
@@ -12,7 +14,9 @@ client.headers.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.headers.send(
 	query="query"
 )
@@ -23,7 +27,9 @@ client.headers.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.inlined.send(
 	query="What is the weather today",
 	temperature=10.1,
@@ -40,7 +46,9 @@ client.inlined.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.inlined.send(
 	query="query",
 	temperature=1.1,
@@ -57,7 +65,9 @@ client.inlined.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.path.send(
 	
 )
@@ -68,7 +78,9 @@ client.path.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.path.send(
 	
 )
@@ -79,7 +91,9 @@ client.path.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.query.send(
 	query="What is the weather today"
 )
@@ -90,7 +104,9 @@ client.query.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.query.send(
 	query="query"
 )
@@ -101,7 +117,9 @@ client.query.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.reference.send(
 	query="What is the weather today",
 	container_object={
@@ -119,7 +137,9 @@ client.reference.send(
 ```python
 
 
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )        
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.reference.send(
 	query="query",
 	container_object={

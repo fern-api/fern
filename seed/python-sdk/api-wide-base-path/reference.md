@@ -14,8 +14,16 @@
 
 ```python
 from seed import SeedApiWideBasePath
-client = SeedApiWideBasePath(base_url="https://yourhost.com/path/to/api", )
-client.service.post(path_param='pathParam', service_param='serviceParam', resource_param='resourceParam', endpoint_param=1, )
+
+client = SeedApiWideBasePath(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.post(
+    path_param="pathParam",
+    service_param="serviceParam",
+    resource_param="resourceParam",
+    endpoint_param=1,
+)
 
 ```
 </dd>

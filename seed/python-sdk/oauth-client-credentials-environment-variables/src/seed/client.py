@@ -34,7 +34,12 @@ class SeedOauthClientCredentialsEnvironmentVariables:
     Examples
     --------
     from seed import SeedOauthClientCredentialsEnvironmentVariables
-    client = SeedOauthClientCredentialsEnvironmentVariables(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+
+    client = SeedOauthClientCredentialsEnvironmentVariables(
+        base_url="https://yourhost.com/path/to/api",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
+    )
     """
 
     def __init__(
@@ -105,7 +110,12 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
     Examples
     --------
     from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
-    client = AsyncSeedOauthClientCredentialsEnvironmentVariables(base_url="https://yourhost.com/path/to/api", client_id="YOUR_CLIENT_ID", client_secret="YOUR_CLIENT_SECRET", )
+
+    client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
+        base_url="https://yourhost.com/path/to/api",
+        client_id="YOUR_CLIENT_ID",
+        client_secret="YOUR_CLIENT_SECRET",
+    )
     """
 
     def __init__(

@@ -32,7 +32,11 @@ class SeedMultiUrlEnvironmentNoDefault:
     --------
     from seed import SeedMultiUrlEnvironmentNoDefault
     from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-    client = SeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+    client = SeedMultiUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(
@@ -84,7 +88,11 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
     --------
     from seed import AsyncSeedMultiUrlEnvironmentNoDefault
     from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-    client = AsyncSeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+    client = AsyncSeedMultiUrlEnvironmentNoDefault(
+        token="YOUR_TOKEN",
+        environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    )
     """
 
     def __init__(

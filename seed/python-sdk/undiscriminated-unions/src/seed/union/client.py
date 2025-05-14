@@ -44,8 +44,13 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUndiscriminatedUnions
-        client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.union.get(request='string', )
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.get(
+            request="string",
+        )
         """
         _response = self._raw_client.get(request=request, request_options=request_options)
         return _response.data
@@ -64,7 +69,10 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUndiscriminatedUnions
-        client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.union.get_metadata()
         """
         _response = self._raw_client.get_metadata(request_options=request_options)
@@ -88,9 +96,13 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUndiscriminatedUnions
-        client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.union.update_metadata(request={'string': {'key': 'value'}
-        }, )
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.update_metadata(
+            request={"string": {"key": "value"}},
+        )
         """
         _response = self._raw_client.update_metadata(request=request, request_options=request_options)
         return _response.data
@@ -113,9 +125,13 @@ class UnionClient:
         Examples
         --------
         from seed import SeedUndiscriminatedUnions
-        client = SeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
-        client.union.call(union={'union': {'key': 'value'}
-        }, )
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.call(
+            union={"union": {"key": "value"}},
+        )
         """
         _response = self._raw_client.call(union=union, request_options=request_options)
         return _response.data
@@ -151,11 +167,21 @@ class AsyncUnionClient:
 
         Examples
         --------
-        from seed import AsyncSeedUndiscriminatedUnions
         import asyncio
-        client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.union.get(request='string', )
+            await client.union.get(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(request=request, request_options=request_options)
@@ -174,11 +200,19 @@ class AsyncUnionClient:
 
         Examples
         --------
-        from seed import AsyncSeedUndiscriminatedUnions
         import asyncio
-        client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.union.get_metadata()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_metadata(request_options=request_options)
@@ -201,12 +235,21 @@ class AsyncUnionClient:
 
         Examples
         --------
-        from seed import AsyncSeedUndiscriminatedUnions
         import asyncio
-        client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.union.update_metadata(request={'string': {'key': 'value'}
-            }, )
+            await client.union.update_metadata(
+                request={"string": {"key": "value"}},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update_metadata(request=request, request_options=request_options)
@@ -229,12 +272,21 @@ class AsyncUnionClient:
 
         Examples
         --------
-        from seed import AsyncSeedUndiscriminatedUnions
         import asyncio
-        client = AsyncSeedUndiscriminatedUnions(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedUndiscriminatedUnions
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.union.call(union={'union': {'key': 'value'}
-            }, )
+            await client.union.call(
+                union={"union": {"key": "value"}},
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.call(union=union, request_options=request_options)

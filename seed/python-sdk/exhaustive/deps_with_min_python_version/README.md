@@ -21,8 +21,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_list_of_primitives(
+    request=["string", "string"],
+)
 ```
 
 ## Async Client
@@ -30,11 +36,22 @@ client.endpoints.container.get_and_return_list_of_primitives(request=['string', 
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedExhaustive
 import asyncio
-client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedExhaustive
+
+client = AsyncSeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+    await client.endpoints.container.get_and_return_list_of_primitives(
+        request=["string", "string"],
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +62,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.endpoints.container.get_and_return_list_of_primitives(...)
 except ApiError as e:
@@ -61,8 +79,13 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedExhaustive
-client = SeedExhaustive(..., )
-response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(...)
+
+client = SeedExhaustive(
+    ...,
+)
+response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(
+    ...
+)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 ```
@@ -94,7 +117,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedExhaustive
-client = SeedExhaustive(..., timeout=20.0, )
+
+client = SeedExhaustive(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
@@ -108,9 +136,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedExhaustive
 import httpx
-client = SeedExhaustive(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

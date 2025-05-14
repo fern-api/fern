@@ -22,8 +22,14 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-client = SeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
-client.ec_2.boot_instance(size='size', )
+
+client = SeedMultiUrlEnvironmentNoDefault(
+    token="YOUR_TOKEN",
+    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+)
+client.ec_2.boot_instance(
+    size="size",
+)
 ```
 
 ## Async Client
@@ -31,12 +37,23 @@ client.ec_2.boot_instance(size='size', )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed import AsyncSeedMultiUrlEnvironmentNoDefault
 from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
-import asyncio
-client = AsyncSeedMultiUrlEnvironmentNoDefault(token="YOUR_TOKEN", environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, )
+
+client = AsyncSeedMultiUrlEnvironmentNoDefault(
+    token="YOUR_TOKEN",
+    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+)
+
+
 async def main() -> None:
-    await client.ec_2.boot_instance(size='size', )
+    await client.ec_2.boot_instance(
+        size="size",
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -47,6 +64,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.ec_2.boot_instance(...)
 except ApiError as e:
@@ -63,7 +81,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedMultiUrlEnvironmentNoDefault
-client = SeedMultiUrlEnvironmentNoDefault(..., )
+
+client = SeedMultiUrlEnvironmentNoDefault(
+    ...,
+)
 response = client.ec_2.with_raw_response.boot_instance(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -96,7 +117,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedMultiUrlEnvironmentNoDefault
-client = SeedMultiUrlEnvironmentNoDefault(..., timeout=20.0, )
+
+client = SeedMultiUrlEnvironmentNoDefault(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.ec_2.boot_instance(..., request_options={
@@ -110,9 +136,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedMultiUrlEnvironmentNoDefault
 import httpx
-client = SeedMultiUrlEnvironmentNoDefault(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedMultiUrlEnvironmentNoDefault
+
+client = SeedMultiUrlEnvironmentNoDefault(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

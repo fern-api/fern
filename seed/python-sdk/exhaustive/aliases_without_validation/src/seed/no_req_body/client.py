@@ -39,7 +39,11 @@ class NoReqBodyClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.no_req_body.get_with_no_request_body()
         """
         _response = self._raw_client.get_with_no_request_body(request_options=request_options)
@@ -59,7 +63,11 @@ class NoReqBodyClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.no_req_body.post_with_no_request_body()
         """
         _response = self._raw_client.post_with_no_request_body(request_options=request_options)
@@ -96,11 +104,20 @@ class AsyncNoReqBodyClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.no_req_body.get_with_no_request_body()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_with_no_request_body(request_options=request_options)
@@ -119,11 +136,20 @@ class AsyncNoReqBodyClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.no_req_body.post_with_no_request_body()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.post_with_no_request_body(request_options=request_options)

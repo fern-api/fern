@@ -35,7 +35,10 @@ class SeedAudiences:
     --------
     from seed import SeedAudiences
     from seed.environment import SeedAudiencesEnvironment
-    client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
+
+    client = SeedAudiences(
+        environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+    )
     """
 
     def __init__(
@@ -89,7 +92,10 @@ class AsyncSeedAudiences:
     --------
     from seed import AsyncSeedAudiences
     from seed.environment import SeedAudiencesEnvironment
-    client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
+
+    client = AsyncSeedAudiences(
+        environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+    )
     """
 
     def __init__(

@@ -21,7 +21,10 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedErrorProperty
-client = SeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedErrorProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.property_based_error.throw_error()
 ```
 
@@ -30,11 +33,19 @@ client.property_based_error.throw_error()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedErrorProperty
 import asyncio
-client = AsyncSeedErrorProperty(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedErrorProperty
+
+client = AsyncSeedErrorProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
     await client.property_based_error.throw_error()
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +56,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.property_based_error.throw_error()
 except ApiError as e:
@@ -61,7 +73,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedErrorProperty
-client = SeedErrorProperty(..., )
+
+client = SeedErrorProperty(
+    ...,
+)
 response = client.property_based_error.with_raw_response.throw_error()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -94,7 +109,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedErrorProperty
-client = SeedErrorProperty(..., timeout=20.0, )
+
+client = SeedErrorProperty(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.property_based_error.throw_error(request_options={
@@ -108,9 +128,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedErrorProperty
 import httpx
-client = SeedErrorProperty(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedErrorProperty
+
+client = SeedErrorProperty(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 
