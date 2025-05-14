@@ -1,0 +1,75 @@
+{
+  "types": {},
+  "subpackages": {
+    "subpackage_inventory": {
+      "subpackageId": "subpackage_inventory",
+      "name": "inventory",
+      "endpoints": [
+        {
+          "auth": false,
+          "description": "Retrieve a list of inventory items",
+          "method": "GET",
+          "defaultEnvironment": "https://api.com",
+          "environments": [
+            {
+              "id": "https://api.com",
+              "baseUrl": "https://api.com"
+            },
+            {
+              "id": "https://private.api.com",
+              "baseUrl": "https://private.api.com"
+            }
+          ],
+          "id": "list",
+          "originalEndpointId": "inventory.list",
+          "name": "List inventory",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/inventory"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "errorsV2": [],
+          "examples": [
+            {
+              "name": "listExample",
+              "description": "",
+              "path": "/inventory",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [],
+    "subpackages": [
+      "subpackage_inventory"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}
