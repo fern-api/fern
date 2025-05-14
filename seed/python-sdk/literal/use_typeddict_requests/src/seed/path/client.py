@@ -37,7 +37,10 @@ class PathClient:
         Examples
         --------
         from seed import SeedLiteral
-        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.path.send()
         """
         _response = self._raw_client.send(request_options=request_options)
@@ -72,11 +75,19 @@ class AsyncPathClient:
 
         Examples
         --------
-        from seed import AsyncSeedLiteral
         import asyncio
-        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedLiteral
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.path.send()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.send(request_options=request_options)

@@ -22,8 +22,15 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedAudiences
 from seed.environment import SeedAudiencesEnvironment
-client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
-client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
+
+client = SeedAudiences(
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+)
+client.foo.find(
+    optional_string="optionalString",
+    public_property="publicProperty",
+    private_property=1,
+)
 ```
 
 ## Async Client
@@ -31,12 +38,24 @@ client.foo.find(optional_string='optionalString', public_property='publicPropert
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
+import asyncio
+
 from seed import AsyncSeedAudiences
 from seed.environment import SeedAudiencesEnvironment
-import asyncio
-client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )
+
+client = AsyncSeedAudiences(
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+)
+
+
 async def main() -> None:
-    await client.foo.find(optional_string='optionalString', public_property='publicProperty', private_property=1, )
+    await client.foo.find(
+        optional_string="optionalString",
+        public_property="publicProperty",
+        private_property=1,
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -47,6 +66,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.foo.find(...)
 except ApiError as e:
@@ -63,7 +83,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedAudiences
-client = SeedAudiences(..., )
+
+client = SeedAudiences(
+    ...,
+)
 response = client.foo.with_raw_response.find(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -96,7 +119,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedAudiences
-client = SeedAudiences(..., timeout=20.0, )
+
+client = SeedAudiences(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.foo.find(..., request_options={
@@ -110,9 +138,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedAudiences
 import httpx
-client = SeedAudiences(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedAudiences
+
+client = SeedAudiences(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

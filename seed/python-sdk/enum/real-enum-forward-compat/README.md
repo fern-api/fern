@@ -20,11 +20,15 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedEnum
-from seed import Operand
-from seed import Color
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )
+from seed import Color, Operand, SeedEnum
+
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.inlined_request.send(
+    operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
+)
 ```
 
 ## Async Client
@@ -32,13 +36,22 @@ client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedEnum
-from seed import Operand
-from seed import Color
 import asyncio
-client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedEnum, Color, Operand
+
+client = AsyncSeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )
+    await client.inlined_request.send(
+        operand=Operand.GREATER_THAN,
+        operand_or_color=Color.RED,
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -49,6 +62,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.inlined_request.send(...)
 except ApiError as e:
@@ -65,7 +79,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedEnum
-client = SeedEnum(..., )
+
+client = SeedEnum(
+    ...,
+)
 response = client.inlined_request.with_raw_response.send(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -98,7 +115,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedEnum
-client = SeedEnum(..., timeout=20.0, )
+
+client = SeedEnum(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.inlined_request.send(..., request_options={
@@ -112,9 +134,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedEnum
 import httpx
-client = SeedEnum(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedEnum
+
+client = SeedEnum(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

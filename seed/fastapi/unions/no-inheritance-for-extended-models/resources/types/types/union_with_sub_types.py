@@ -36,7 +36,10 @@ class UnionWithSubTypes(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithSubTypes_Foo
-    UnionWithSubTypes_Foo(name='example1', )
+
+    UnionWithSubTypes_Foo(
+        name="example1",
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

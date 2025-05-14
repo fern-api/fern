@@ -11,7 +11,10 @@ class ThankfulFactor(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import ThankfulFactor
-    ThankfulFactor(value='example1', )
+
+    ThankfulFactor(
+        value="example1",
+    )
     """
 
     value: str

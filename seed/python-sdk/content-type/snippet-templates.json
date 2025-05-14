@@ -16,7 +16,7 @@
                     "from seed import SeedContentTypes"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedContentTypes(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -71,7 +71,7 @@
                         "from seed import AsyncSeedContentTypes"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedContentTypes(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedContentTypes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

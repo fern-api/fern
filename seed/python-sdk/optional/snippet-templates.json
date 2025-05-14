@@ -16,7 +16,7 @@
                     "from seed import SeedObjectsWithImports"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedObjectsWithImports(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -80,7 +80,7 @@
                         "from seed import AsyncSeedObjectsWithImports"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedObjectsWithImports(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedObjectsWithImports(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

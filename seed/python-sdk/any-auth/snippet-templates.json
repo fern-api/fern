@@ -16,7 +16,7 @@
                     "from seed import SeedAnyAuth"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                "templateString": "client = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -87,7 +87,7 @@
                         "from seed import AsyncSeedAnyAuth"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                    "templateString": "client = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -170,7 +170,7 @@
                     "from seed import SeedAnyAuth"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                "templateString": "client = SeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -192,7 +192,7 @@
                         "from seed import AsyncSeedAnyAuth"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAnyAuth(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                    "templateString": "client = AsyncSeedAnyAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

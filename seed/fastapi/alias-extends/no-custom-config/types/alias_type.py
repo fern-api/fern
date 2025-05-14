@@ -4,6 +4,9 @@ from .parent import Parent
 
 """
 from seed.alias_extends import Parent
-Parent(parent='Property from the parent', )
+
+Parent(
+    parent="Property from the parent",
+)
 """
 AliasType = Parent

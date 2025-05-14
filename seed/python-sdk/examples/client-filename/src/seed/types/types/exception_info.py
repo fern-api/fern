@@ -13,7 +13,12 @@ class ExceptionInfo(UniversalBaseModel):
     Examples
     --------
     from seed.types import ExceptionInfo
-    ExceptionInfo(exception_type='Unavailable', exception_message='This component is unavailable!', exception_stacktrace='<logs>', )
+
+    ExceptionInfo(
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
+    )
     """
 
     exception_type: typing_extensions.Annotated[str, FieldMetadata(alias="exceptionType")]

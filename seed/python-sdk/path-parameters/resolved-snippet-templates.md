@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.organizations.get_organization(
 	
 )
@@ -12,7 +14,9 @@ client.organizations.get_organization(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.organizations.get_organization_user(
 	user_id="user_id"
 )
@@ -23,7 +27,9 @@ client.organizations.get_organization_user(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.organizations.search_organizations(
 	limit=1
 )
@@ -34,7 +40,9 @@ client.organizations.search_organizations(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.get_user(
 	user_id="user_id"
 )
@@ -45,7 +53,9 @@ client.user.get_user(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.create_user(
 	name="name",
 	tags=[
@@ -60,7 +70,9 @@ client.user.create_user(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.update_user(
 	user_id="user_id",
 	name="name",
@@ -76,7 +88,9 @@ client.user.update_user(
 ```python
 
 
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )        
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)        
 client.user.search_users(
 	user_id="user_id",
 	limit=1

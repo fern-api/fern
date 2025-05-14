@@ -30,7 +30,12 @@ class SeedBasicAuth:
     Examples
     --------
     from seed import SeedBasicAuth
-    client = SeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedBasicAuth(
+        username="YOUR_USERNAME",
+        password="YOUR_PASSWORD",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -83,7 +88,12 @@ class AsyncSeedBasicAuth:
     Examples
     --------
     from seed import AsyncSeedBasicAuth
-    client = AsyncSeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedBasicAuth(
+        username="YOUR_USERNAME",
+        password="YOUR_PASSWORD",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

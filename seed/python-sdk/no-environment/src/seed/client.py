@@ -29,7 +29,11 @@ class SeedNoEnvironment:
     Examples
     --------
     from seed import SeedNoEnvironment
-    client = SeedNoEnvironment(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedNoEnvironment(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -79,7 +83,11 @@ class AsyncSeedNoEnvironment:
     Examples
     --------
     from seed import AsyncSeedNoEnvironment
-    client = AsyncSeedNoEnvironment(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedNoEnvironment(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

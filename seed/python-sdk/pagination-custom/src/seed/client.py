@@ -28,7 +28,11 @@ class SeedPagination:
     Examples
     --------
     from seed import SeedPagination
-    client = SeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+    
+    client = SeedPagination(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
     def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.Client] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -57,7 +61,11 @@ class AsyncSeedPagination:
     Examples
     --------
     from seed import AsyncSeedPagination
-    client = AsyncSeedPagination(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+    
+    client = AsyncSeedPagination(
+        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
     def __init__(self, *, base_url: str, token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, timeout: typing.Optional[float] = None, follow_redirects: typing.Optional[bool] = True, httpx_client: typing.Optional[httpx.AsyncClient] = None):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read

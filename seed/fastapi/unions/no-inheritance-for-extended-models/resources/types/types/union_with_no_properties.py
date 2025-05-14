@@ -33,7 +33,10 @@ class UnionWithNoProperties(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithNoProperties_Foo
-    UnionWithNoProperties_Foo(name='example', )
+
+    UnionWithNoProperties_Foo(
+        name="example",
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

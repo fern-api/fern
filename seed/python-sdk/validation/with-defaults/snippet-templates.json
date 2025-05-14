@@ -16,7 +16,7 @@
                     "from seed import SeedValidation"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -105,7 +105,7 @@
                         "from seed import AsyncSeedValidation"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -206,7 +206,7 @@
                     "from seed import SeedValidation"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedValidation(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -277,7 +277,7 @@
                         "from seed import AsyncSeedValidation"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedValidation(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

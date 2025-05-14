@@ -14,8 +14,14 @@
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.echo(
+    request="Hello world!\\n\\nwith\\n\\tnewlines",
+)
 
 ```
 </dd>
@@ -66,8 +72,14 @@ client.echo(request='Hello world!\\n\\nwith\\n\\tnewlines', )
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.create_type(request="primitive", )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.create_type(
+    request="primitive",
+)
 
 ```
 </dd>
@@ -119,8 +131,14 @@ client.create_type(request="primitive", )
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.file.notification.service.get_exception(notification_id='notification-hsy129x', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.file.notification.service.get_exception(
+    notification_id="notification-hsy129x",
+)
 
 ```
 </dd>
@@ -186,8 +204,15 @@ This endpoint returns a file by its name.
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.file.service.get_file(filename='file.txt', x_file_api_version='0.0.2', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.file.service.get_file(
+    filename="file.txt",
+    x_file_api_version="0.0.2",
+)
 
 ```
 </dd>
@@ -261,8 +286,14 @@ This endpoint checks the health of a resource.
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.health.service.check(id='id-3tey93i', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.health.service.check(
+    id="id-3tey93i",
+)
 
 ```
 </dd>
@@ -327,7 +358,11 @@ This endpoint checks the health of the service.
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
 client.health.service.ping()
 
 ```
@@ -372,8 +407,14 @@ client.health.service.ping()
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.service.get_movie(movie_id='movie-c06a4ad7', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.service.get_movie(
+    movie_id="movie-c06a4ad7",
+)
 
 ```
 </dd>
@@ -424,11 +465,25 @@ client.service.get_movie(movie_id='movie-c06a4ad7', )
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
-, 'releaseDate': '2023-12-08'
-, 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
-}, revenue=1000000, )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.service.create_movie(
+    id="movie-c06a4ad7",
+    prequel="movie-cv9b914f",
+    title="The Boy and the Heron",
+    from_="Hayao Miyazaki",
+    rating=8.0,
+    tag="tag-wf9as23d",
+    metadata={
+        "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+        "releaseDate": "2023-12-08",
+        "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+    },
+    revenue=1000000,
+)
 
 ```
 </dd>
@@ -543,8 +598,16 @@ client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='development', )
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.service.get_metadata(
+    x_api_version="0.0.1",
+    shallow=False,
+    tag="development",
+)
 
 ```
 </dd>
@@ -609,28 +672,232 @@ client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='developme
 <dd>
 
 ```python
-from seed import SeedExhaustive
-from seed.environment import SeedExhaustiveEnvironment
-from seed.types import Actor
-from seed.types import ExtendedMovie
-from seed.types import Entity
-from seed.types import Metadata_Html
-from seed.commons.types import Metadata
-from seed.commons.types import EventInfo_Metadata
-from seed.commons.types import Data_String
-from seed.types import Migration
-from seed.types import Exception_Generic
-from seed.types import Test_And
-from seed.types import Node
-from seed.types import Tree
-from seed.types import Directory
-from seed.types import File
-from seed.types import Moment
-import uuid
 import datetime
-client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-client.service.create_big_entity(cast_member=Actor(name='name', id='id', ), extended_movie=ExtendedMovie(id='id', prequel='prequel', title='title', from_='from', rating=1.1, tag='tag', book='book', metadata={'metadata': {'key': 'value'}
-}, revenue=1000000, cast=['cast', 'cast'], ), entity=Entity(type="primitive", name='name', ), metadata=Metadata_Html(value='metadata'), common_metadata=Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), event_info=EventInfo_Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), data=Data_String(value='data'), migration=Migration(name='name', status="RUNNING", ), exception=Exception_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), test=Test_And(value=True), node=Node(name='name', nodes=[Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], ), Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], )], trees=[Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], ), Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], )], ), directory=Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], ), Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], )], ), moment=Moment(id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), ), )
+import uuid
+
+from seed import SeedExhaustive
+from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
+from seed.environment import SeedExhaustiveEnvironment
+from seed.types import (
+    Actor,
+    Directory,
+    Entity,
+    Exception_Generic,
+    ExtendedMovie,
+    File,
+    Metadata_Html,
+    Migration,
+    Moment,
+    Node,
+    Test_And,
+    Tree,
+)
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
+)
+client.service.create_big_entity(
+    cast_member=Actor(
+        name="name",
+        id="id",
+    ),
+    extended_movie=ExtendedMovie(
+        id="id",
+        prequel="prequel",
+        title="title",
+        from_="from",
+        rating=1.1,
+        tag="tag",
+        book="book",
+        metadata={"metadata": {"key": "value"}},
+        revenue=1000000,
+        cast=["cast", "cast"],
+    ),
+    entity=Entity(
+        type="primitive",
+        name="name",
+    ),
+    metadata=Metadata_Html(value="metadata"),
+    common_metadata=Metadata(
+        id="id",
+        data={"data": "data"},
+        json_string="jsonString",
+    ),
+    event_info=EventInfo_Metadata(
+        id="id",
+        data={"data": "data"},
+        json_string="jsonString",
+    ),
+    data=Data_String(value="data"),
+    migration=Migration(
+        name="name",
+        status="RUNNING",
+    ),
+    exception=Exception_Generic(
+        exception_type="exceptionType",
+        exception_message="exceptionMessage",
+        exception_stacktrace="exceptionStacktrace",
+    ),
+    test=Test_And(value=True),
+    node=Node(
+        name="name",
+        nodes=[
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    ),
+                ],
+            ),
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    ),
+                ],
+            ),
+        ],
+        trees=[
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+            ),
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                ],
+            ),
+        ],
+    ),
+    directory=Directory(
+        name="name",
+        files=[
+            File(
+                name="name",
+                contents="contents",
+            ),
+            File(
+                name="name",
+                contents="contents",
+            ),
+        ],
+        directories=[
+            Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                ],
+            ),
+            Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[],
+                        directories=[],
+                    ),
+                ],
+            ),
+        ],
+    ),
+    moment=Moment(
+        id=uuid.UUID(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        date=datetime.date.fromisoformat(
+            "2023-01-15",
+        ),
+        datetime=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+    ),
+)
 
 ```
 </dd>

@@ -39,7 +39,10 @@ class UnionWithDuplicateTypes(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithDuplicateTypes_Foo1
-    UnionWithDuplicateTypes_Foo1(name='example1', )
+
+    UnionWithDuplicateTypes_Foo1(
+        name="example1",
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
