@@ -5,13 +5,14 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodAliasNode, ZodImportNode } from "../utils";
+import { ExportDefaultNode, ZodAliasNode } from "../utils";
 
 export class AliasGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
+    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
     constructor(
         context: ModelGeneratorContext,
@@ -19,6 +20,10 @@ export class AliasGenerator extends FileGenerator<
         private readonly aliasDeclaration: AliasTypeDeclaration
     ) {
         super(context);
+        this.zodReference = ts.reference({
+            name: "z",
+            importFrom: { type: "default", moduleName: "zod" }
+        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -29,14 +34,9 @@ export class AliasGenerator extends FileGenerator<
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ZodImportNode({
-                        importFrom: { type: "default", moduleName: "zod" }
-                    })
-                );
-                writer.newLine();
-                writer.writeNodeStatement(
                     new ExportDefaultNode({
                         initializer: new ZodAliasNode({
+                            zodReference: this.zodReference,
                             typeReference: this.aliasDeclaration.aliasOf
                         })
                     })

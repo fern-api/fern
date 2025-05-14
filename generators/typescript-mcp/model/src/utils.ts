@@ -82,36 +82,37 @@ export class ExportDefaultNode extends ts.AstNode {
     }
 }
 
-export declare namespace ZodImportNode {
-    interface Args {
-        importFrom: ts.Reference.ModuleImport;
-    }
-}
+// export declare namespace ZodImportNode {
+//     interface Args {
+//         importFrom: ts.Reference.ModuleImport;
+//     }
+// }
 
-export class ZodImportNode extends ts.AstNode {
-    public constructor(private readonly args: ZodImportNode.Args) {
-        super();
-    }
+// export class ZodImportNode extends ts.AstNode {
+//     public constructor(private readonly args: ZodImportNode.Args) {
+//         super();
+//     }
 
-    public write(writer: ts.Writer) {
-        writer.write("import ");
-        switch (this.args.importFrom.type) {
-            case "default":
-                writer.write("z");
-                break;
-            case "star":
-                writer.write("* as z");
-                break;
-            case "named":
-                writer.write("{ z }");
-                break;
-        }
-        writer.write(` from "${this.args.importFrom.moduleName}"`);
-    }
-}
+//     public write(writer: ts.Writer) {
+//         writer.write("import ");
+//         switch (this.args.importFrom.type) {
+//             case "default":
+//                 writer.write("z");
+//                 break;
+//             case "star":
+//                 writer.write("* as z");
+//                 break;
+//             case "named":
+//                 writer.write("{ z }");
+//                 break;
+//         }
+//         writer.write(` from "${this.args.importFrom.moduleName}"`);
+//     }
+// }
 
 export declare namespace ZodAliasNode {
     interface Args {
+        zodReference: ts.Reference;
         typeReference: TypeReference;
     }
 }
@@ -122,12 +123,14 @@ export class ZodAliasNode extends ts.AstNode {
     }
 
     public write(writer: ts.Writer) {
-        writer.write(`z.${typeReferenceMapper(this.args.typeReference)}`);
+        writer.writeNode(this.args.zodReference);
+        writer.write(`.${typeReferenceMapper(this.args.typeReference)}`);
     }
 }
 
 export declare namespace ZodObjectNode {
     interface Args {
+        zodReference: ts.Reference;
         fields: {
             name: string;
             value: ts.AstNode;
@@ -141,7 +144,8 @@ export class ZodObjectNode extends ts.AstNode {
     }
 
     public write(writer: ts.Writer) {
-        writer.write("z.object({");
+        writer.writeNode(this.args.zodReference);
+        writer.write(".object({");
         writer.newLine();
         writer.indent();
         for (const field of this.args.fields) {

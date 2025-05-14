@@ -5,13 +5,14 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodAliasNode, ZodImportNode, ZodObjectNode } from "../utils";
+import { ExportDefaultNode, ZodAliasNode, ZodObjectNode } from "../utils";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
+    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
     constructor(
         context: ModelGeneratorContext,
@@ -19,6 +20,10 @@ export class ObjectGenerator extends FileGenerator<
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
+        this.zodReference = ts.reference({
+            name: "z",
+            importFrom: { type: "default", moduleName: "zod" }
+        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -29,17 +34,13 @@ export class ObjectGenerator extends FileGenerator<
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ZodImportNode({
-                        importFrom: { type: "default", moduleName: "zod" }
-                    })
-                );
-                writer.newLine();
-                writer.writeNodeStatement(
                     new ExportDefaultNode({
                         initializer: new ZodObjectNode({
+                            zodReference: this.zodReference,
                             fields: this.objectDeclaration.properties.map((field) => ({
                                 name: field.name.name.camelCase.safeName,
                                 value: new ZodAliasNode({
+                                    zodReference: this.zodReference,
                                     typeReference: field.valueType
                                 })
                             }))

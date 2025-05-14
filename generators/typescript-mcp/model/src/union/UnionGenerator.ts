@@ -5,13 +5,14 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ZodImportNode } from "../utils";
+import { ExportDefaultNode } from "../utils";
 
 export class UnionGenerator extends FileGenerator<
     TypescriptMcpFile,
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
+    private readonly zodReference: ts.Reference;
     private readonly schemaVariableName: string;
     constructor(
         context: ModelGeneratorContext,
@@ -19,6 +20,10 @@ export class UnionGenerator extends FileGenerator<
         private readonly unionDeclaration: UnionTypeDeclaration
     ) {
         super(context);
+        this.zodReference = ts.reference({
+            name: "z",
+            importFrom: { type: "default", moduleName: "zod" }
+        });
         this.schemaVariableName = this.context.project.builder.getSchemaVariableName(
             this.typeDeclaration.name.name,
             this.typeDeclaration.name.fernFilepath
@@ -29,13 +34,13 @@ export class UnionGenerator extends FileGenerator<
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
                 writer.writeNodeStatement(
-                    new ZodImportNode({
-                        importFrom: { type: "default", moduleName: "zod" }
+                    new ExportDefaultNode({
+                        initializer: ts.codeblock((writer) => {
+                            // TODO: implement this
+                            writer.write(`${this.zodReference}.union([])`);
+                        })
                     })
                 );
-                writer.newLine();
-                // TODO: implement this
-                writer.writeLine("export default z.union([]);");
             }),
             directory: this.getFilepath(),
             filename: `${this.schemaVariableName}.ts`,
