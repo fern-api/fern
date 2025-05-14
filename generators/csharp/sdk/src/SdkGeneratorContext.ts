@@ -698,6 +698,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return protobufService.name.originalName;
     }
 
+    #doesIrHaveCustomPagination: boolean | undefined;
+
+    public shouldCreateCustomPagination(): boolean {
+        if (this.#doesIrHaveCustomPagination === undefined) {
+            this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+            );
+        }
+        return this.#doesIrHaveCustomPagination;
+    }
+
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         const segmentNames =
             this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
