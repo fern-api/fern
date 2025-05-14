@@ -231,9 +231,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     private shouldConvertAsNullableSchemaOrReference(): boolean {
         if (this.schema.oneOf != null) {
-            return this.schema.oneOf.some((subSchema) => "type" in subSchema && subSchema.type === "null");
+            return this.schema.oneOf.some(
+                (subSchema) =>
+                    subSchema && typeof subSchema === "object" && "type" in subSchema && subSchema.type === "null"
+            );
         } else if (this.schema.anyOf != null) {
-            return this.schema.anyOf.some((subSchema) => "type" in subSchema && subSchema.type === "null");
+            return this.schema.anyOf.some(
+                (subSchema) =>
+                    subSchema && typeof subSchema === "object" && "type" in subSchema && subSchema.type === "null"
+            );
         }
         return false;
     }
