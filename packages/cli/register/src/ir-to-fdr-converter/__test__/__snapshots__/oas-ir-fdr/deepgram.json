@@ -14917,9 +14917,9 @@
             {
               "name": "getProjectExample",
               "description": "",
-              "path": "/v1/projects/foo",
+              "path": "/v1/projects/project_id",
               "pathParameters": {
-                "project_id": "foo"
+                "project_id": "project_id"
               },
               "queryParameters": {
                 "limit": 10,
@@ -15737,7 +15737,26 @@
           "originalEndpointId": "Management API.getProjectModel",
           "name": "Get a Project Model",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "project_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "key": "model_id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -15797,8 +15816,11 @@
             {
               "name": "getProjectModelExample",
               "description": "",
-              "path": "/v1/projects/undefined/models/undefined",
-              "pathParameters": {},
+              "path": "/v1/projects/project_id/models/model_id",
+              "pathParameters": {
+                "project_id": "project_id",
+                "model_id": "model_id"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
