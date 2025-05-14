@@ -26688,9 +26688,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/commercial_invoices/foo",
+              "path": "/commercial_invoices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27142,9 +27142,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/customs_entries/foo",
+              "path": "/customs_entries/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27674,9 +27674,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/documents/foo",
+              "path": "/documents/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27813,9 +27813,9 @@
             {
               "name": "documentsDownloadExample",
               "description": "",
-              "path": "/documents/foo/download",
+              "path": "/documents/id/download",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32129,9 +32129,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/invoices/foo",
+              "path": "/invoices/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33121,9 +33121,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/companies/foo",
+              "path": "/network/companies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34080,9 +34080,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/company_entities/foo",
+              "path": "/network/company_entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34251,9 +34251,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/company_entities/foo",
+              "path": "/network/company_entities/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34779,9 +34779,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/contacts/foo",
+              "path": "/network/contacts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35524,9 +35524,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/locations/foo",
+              "path": "/network/locations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35705,9 +35705,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/network/locations/foo",
+              "path": "/network/locations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36540,9 +36540,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/ocean/shipment_containers/foo",
+              "path": "/ocean/shipment_containers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37446,9 +37446,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/products/foo",
+              "path": "/products/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37632,9 +37632,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/products/foo",
+              "path": "/products/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41772,9 +41772,9 @@
             {
               "name": "response",
               "description": "",
-              "path": "/shipments/foo",
+              "path": "/shipments/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

@@ -8696,7 +8696,7 @@
               "path": "/auth-tokens.get",
               "pathParameters": {},
               "queryParameters": {
-                "token_id": "foo"
+                "token_id": "token_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -9978,7 +9978,7 @@
               "path": "/dev-orgs.auth-connections.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -15362,7 +15362,7 @@
               "path": "/timeline-entries.get",
               "pathParameters": {},
               "queryParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "headers": {},
               "responseStatusCode": 200,

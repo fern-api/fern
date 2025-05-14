@@ -1895,9 +1895,9 @@
             {
               "name": "retrieveAccountExample",
               "description": "",
-              "path": "/api/v2/accounts/foo/",
+              "path": "/api/v2/accounts/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -2237,9 +2237,9 @@
             {
               "name": "retrieveGameExample",
               "description": "",
-              "path": "/api/v2/games/foo/",
+              "path": "/api/v2/games/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -2649,9 +2649,9 @@
             {
               "name": "retrieveGroupExample",
               "description": "",
-              "path": "/api/v2/groups/foo/",
+              "path": "/api/v2/groups/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -2976,9 +2976,9 @@
             {
               "name": "retrievePlayerExample",
               "description": "",
-              "path": "/api/v2/players/foo/",
+              "path": "/api/v2/players/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -3181,9 +3181,9 @@
             {
               "name": "retrieveLocationExample",
               "description": "",
-              "path": "/api/v2/rooms/foo/",
+              "path": "/api/v2/rooms/id/",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -3380,9 +3380,9 @@
             {
               "name": "retrievePhotoExample",
               "description": "",
-              "path": "/api/v2/photos/foo/",
+              "path": "/api/v2/photos/photo_id/",
               "pathParameters": {
-                "photo_id": "foo"
+                "photo_id": "photo_id"
               },
               "queryParameters": {},
               "headers": {},

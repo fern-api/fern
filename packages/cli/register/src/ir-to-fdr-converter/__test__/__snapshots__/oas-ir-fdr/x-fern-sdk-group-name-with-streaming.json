@@ -160,9 +160,9 @@
             {
               "name": "userGetExample",
               "description": "",
-              "path": "/user/foo",
+              "path": "/user/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},

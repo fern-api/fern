@@ -341,9 +341,9 @@
             {
               "name": "listOrganizationUsersExample",
               "description": "",
-              "path": "/organizations/foo/users",
+              "path": "/organizations/organizationId/users",
               "pathParameters": {
-                "organizationId": "foo"
+                "organizationId": "organizationId"
               },
               "queryParameters": {},
               "headers": {},
@@ -593,9 +593,9 @@
           {
             "name": "getAUserExample",
             "description": "",
-            "path": "/users/foo",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},

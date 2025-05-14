@@ -456,9 +456,9 @@
           {
             "name": "getAUserExample",
             "description": "",
-            "path": "/users/foo",
+            "path": "/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},

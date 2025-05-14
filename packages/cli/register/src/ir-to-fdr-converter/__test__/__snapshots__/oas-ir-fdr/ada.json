@@ -917,9 +917,9 @@
             {
               "name": "getEndUserByIdExample",
               "description": "",
-              "path": "/end-users/v1/foo",
+              "path": "/end-users/v1/end_user_id",
               "pathParameters": {
-                "end_user_id": "foo"
+                "end_user_id": "end_user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -1152,9 +1152,9 @@
             {
               "name": "endUsersUpdateEndUserByIdExample",
               "description": "",
-              "path": "/end-users/v1/foo",
+              "path": "/end-users/v1/end_user_id",
               "pathParameters": {
-                "end_user_id": "foo"
+                "end_user_id": "end_user_id"
               },
               "queryParameters": {},
               "headers": {},

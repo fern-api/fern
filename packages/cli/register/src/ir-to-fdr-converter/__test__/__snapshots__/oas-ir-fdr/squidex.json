@@ -12061,9 +12061,9 @@
             {
               "name": "getUserExample",
               "description": "",
-              "path": "/api/user-management/foo",
+              "path": "/api/user-management/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12217,9 +12217,9 @@
             {
               "name": "userManagementPutUserExample",
               "description": "",
-              "path": "/api/user-management/foo",
+              "path": "/api/user-management/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12377,9 +12377,9 @@
             {
               "name": "deleteUserExample",
               "description": "",
-              "path": "/api/user-management/foo",
+              "path": "/api/user-management/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12505,9 +12505,9 @@
             {
               "name": "lockUserExample",
               "description": "",
-              "path": "/api/user-management/foo/lock",
+              "path": "/api/user-management/id/lock",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12659,9 +12659,9 @@
             {
               "name": "unlockUserExample",
               "description": "",
-              "path": "/api/user-management/foo/unlock",
+              "path": "/api/user-management/id/unlock",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12995,9 +12995,9 @@
             {
               "name": "getUserExample",
               "description": "",
-              "path": "/api/users/foo",
+              "path": "/api/users/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13119,9 +13119,9 @@
             {
               "name": "getUserPictureExample",
               "description": "",
-              "path": "/api/users/foo/picture",
+              "path": "/api/users/id/picture",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13247,9 +13247,9 @@
             {
               "name": "translationsPostTranslationExample",
               "description": "",
-              "path": "/api/apps/foo/translations",
+              "path": "/api/apps/app/translations",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -13483,9 +13483,9 @@
             {
               "name": "getTemplateExample",
               "description": "",
-              "path": "/api/templates/foo",
+              "path": "/api/templates/name",
               "pathParameters": {
-                "name": "foo"
+                "name": "name"
               },
               "queryParameters": {},
               "headers": {},
@@ -13609,9 +13609,9 @@
             {
               "name": "getContributorsExample",
               "description": "",
-              "path": "/api/teams/foo/contributors",
+              "path": "/api/teams/team/contributors",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -13777,9 +13777,9 @@
             {
               "name": "teamsPostContributorExample",
               "description": "",
-              "path": "/api/teams/foo/contributors",
+              "path": "/api/teams/team/contributors",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -13939,9 +13939,9 @@
             {
               "name": "deleteMyselfExample",
               "description": "",
-              "path": "/api/teams/foo/contributors/me",
+              "path": "/api/teams/team/contributors/me",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -14110,10 +14110,10 @@
             {
               "name": "deleteContributorExample",
               "description": "",
-              "path": "/api/teams/foo/contributors/foo",
+              "path": "/api/teams/team/contributors/id",
               "pathParameters": {
-                "team": "foo",
-                "id": "foo"
+                "team": "team",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -14496,9 +14496,9 @@
             {
               "name": "getTeamExample",
               "description": "",
-              "path": "/api/teams/foo",
+              "path": "/api/teams/team",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -14650,9 +14650,9 @@
             {
               "name": "teamsPutTeamExample",
               "description": "",
-              "path": "/api/teams/foo",
+              "path": "/api/teams/team",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -14795,9 +14795,9 @@
             {
               "name": "getLogExample",
               "description": "",
-              "path": "/api/apps/foo/usages/log",
+              "path": "/api/apps/app/usages/log",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -14947,11 +14947,11 @@
             {
               "name": "getUsagesExample",
               "description": "",
-              "path": "/api/apps/foo/usages/calls/foo/foo",
+              "path": "/api/apps/app/usages/calls/fromDate/toDate",
               "pathParameters": {
-                "app": "foo",
-                "fromDate": "foo",
-                "toDate": "foo"
+                "app": "app",
+                "fromDate": "fromDate",
+                "toDate": "toDate"
               },
               "queryParameters": {},
               "headers": {},
@@ -15117,11 +15117,11 @@
             {
               "name": "getUsagesForTeamExample",
               "description": "",
-              "path": "/api/teams/foo/usages/calls/foo/foo",
+              "path": "/api/teams/team/usages/calls/fromDate/toDate",
               "pathParameters": {
-                "team": "foo",
-                "fromDate": "foo",
-                "toDate": "foo"
+                "team": "team",
+                "fromDate": "fromDate",
+                "toDate": "toDate"
               },
               "queryParameters": {},
               "headers": {},
@@ -15249,9 +15249,9 @@
             {
               "name": "getCurrentStorageSizeExample",
               "description": "",
-              "path": "/api/apps/foo/usages/storage/today",
+              "path": "/api/apps/app/usages/storage/today",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -15365,9 +15365,9 @@
             {
               "name": "getTeamCurrentStorageSizeForTeamExample",
               "description": "",
-              "path": "/api/teams/foo/usages/storage/today",
+              "path": "/api/teams/team/usages/storage/today",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -15522,11 +15522,11 @@
             {
               "name": "getStorageSizesExample",
               "description": "",
-              "path": "/api/apps/foo/usages/storage/foo/foo",
+              "path": "/api/apps/app/usages/storage/fromDate/toDate",
               "pathParameters": {
-                "app": "foo",
-                "fromDate": "foo",
-                "toDate": "foo"
+                "app": "app",
+                "fromDate": "fromDate",
+                "toDate": "toDate"
               },
               "queryParameters": {},
               "headers": {},
@@ -15687,11 +15687,11 @@
             {
               "name": "getStorageSizesForTeamExample",
               "description": "",
-              "path": "/api/teams/foo/usages/storage/foo/foo",
+              "path": "/api/teams/team/usages/storage/fromDate/toDate",
               "pathParameters": {
-                "team": "foo",
-                "fromDate": "foo",
-                "toDate": "foo"
+                "team": "team",
+                "fromDate": "fromDate",
+                "toDate": "toDate"
               },
               "queryParameters": {},
               "headers": {},
@@ -15838,9 +15838,9 @@
             {
               "name": "getSearchResultsExample",
               "description": "",
-              "path": "/api/apps/foo/search",
+              "path": "/api/apps/app/search",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -16031,10 +16031,10 @@
             {
               "name": "schemasPostFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields",
+              "path": "/api/apps/app/schemas/schema/fields",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -16426,10 +16426,10 @@
             {
               "name": "schemasPostNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42
               },
               "queryParameters": {},
@@ -16791,10 +16791,10 @@
             {
               "name": "schemasPutSchemaUiFieldsExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/ui",
+              "path": "/api/apps/app/schemas/schema/fields/ui",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -17139,10 +17139,10 @@
             {
               "name": "schemasPutSchemaFieldOrderingExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/ordering",
+              "path": "/api/apps/app/schemas/schema/fields/ordering",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -17513,10 +17513,10 @@
             {
               "name": "schemasPutNestedFieldOrderingExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/ordering",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/ordering",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42
               },
               "queryParameters": {},
@@ -17888,10 +17888,10 @@
             {
               "name": "schemasPutFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42",
+              "path": "/api/apps/app/schemas/schema/fields/42",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -18254,10 +18254,10 @@
             {
               "name": "deleteFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42",
+              "path": "/api/apps/app/schemas/schema/fields/42",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -18634,10 +18634,10 @@
             {
               "name": "schemasPutNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -19019,10 +19019,10 @@
             {
               "name": "deleteNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -19368,10 +19368,10 @@
             {
               "name": "lockFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/lock",
+              "path": "/api/apps/app/schemas/schema/fields/42/lock",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -19734,10 +19734,10 @@
             {
               "name": "lockNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/lock",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42/lock",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -20083,10 +20083,10 @@
             {
               "name": "hideFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/hide",
+              "path": "/api/apps/app/schemas/schema/fields/42/hide",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -20449,10 +20449,10 @@
             {
               "name": "hideNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/hide",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42/hide",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -20798,10 +20798,10 @@
             {
               "name": "showFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/show",
+              "path": "/api/apps/app/schemas/schema/fields/42/show",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -21164,10 +21164,10 @@
             {
               "name": "showNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/show",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42/show",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -21513,10 +21513,10 @@
             {
               "name": "enableFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/enable",
+              "path": "/api/apps/app/schemas/schema/fields/42/enable",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -21879,10 +21879,10 @@
             {
               "name": "enableNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/enable",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42/enable",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -22228,10 +22228,10 @@
             {
               "name": "disableFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/disable",
+              "path": "/api/apps/app/schemas/schema/fields/42/disable",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "id": 42
               },
               "queryParameters": {},
@@ -22594,10 +22594,10 @@
             {
               "name": "disableNestedFieldExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/fields/42/nested/42/disable",
+              "path": "/api/apps/app/schemas/schema/fields/42/nested/42/disable",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
+                "app": "app",
+                "schema": "schema",
                 "parentId": 42,
                 "id": 42
               },
@@ -22893,9 +22893,9 @@
             {
               "name": "getSchemasExample",
               "description": "",
-              "path": "/api/apps/foo/schemas",
+              "path": "/api/apps/app/schemas",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -23228,9 +23228,9 @@
             {
               "name": "schemasPostSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas",
+              "path": "/api/apps/app/schemas",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -23557,10 +23557,10 @@
             {
               "name": "getSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo",
+              "path": "/api/apps/app/schemas/schema",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -23900,10 +23900,10 @@
             {
               "name": "schemasPutSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo",
+              "path": "/api/apps/app/schemas/schema",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -24226,10 +24226,10 @@
             {
               "name": "deleteSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo",
+              "path": "/api/apps/app/schemas/schema",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -24375,10 +24375,10 @@
             {
               "name": "schemasPutSchemaSyncExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/sync",
+              "path": "/api/apps/app/schemas/schema/sync",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -24731,10 +24731,10 @@
             {
               "name": "schemasPutCategoryExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/category",
+              "path": "/api/apps/app/schemas/schema/category",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -25079,10 +25079,10 @@
             {
               "name": "schemasPutPreviewUrlsExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/preview-urls",
+              "path": "/api/apps/app/schemas/schema/preview-urls",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -25427,10 +25427,10 @@
             {
               "name": "schemasPutScriptsExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/scripts",
+              "path": "/api/apps/app/schemas/schema/scripts",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -25775,10 +25775,10 @@
             {
               "name": "schemasPutRulesExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/rules",
+              "path": "/api/apps/app/schemas/schema/rules",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -26108,10 +26108,10 @@
             {
               "name": "publishSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/publish",
+              "path": "/api/apps/app/schemas/schema/publish",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -26436,10 +26436,10 @@
             {
               "name": "unpublishSchemaExample",
               "description": "",
-              "path": "/api/apps/foo/schemas/foo/unpublish",
+              "path": "/api/apps/app/schemas/schema/unpublish",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -26829,9 +26829,9 @@
             {
               "name": "getRulesExample",
               "description": "",
-              "path": "/api/apps/foo/rules",
+              "path": "/api/apps/app/rules",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -27017,9 +27017,9 @@
             {
               "name": "rulesPostRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules",
+              "path": "/api/apps/app/rules",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -27174,9 +27174,9 @@
             {
               "name": "deleteRuleRunExample",
               "description": "",
-              "path": "/api/apps/foo/rules/run",
+              "path": "/api/apps/app/rules/run",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -27322,10 +27322,10 @@
             {
               "name": "rulesPutRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo",
+              "path": "/api/apps/app/rules/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27496,10 +27496,10 @@
             {
               "name": "deleteRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo",
+              "path": "/api/apps/app/rules/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27630,10 +27630,10 @@
             {
               "name": "enableRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/enable",
+              "path": "/api/apps/app/rules/id/enable",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27810,10 +27810,10 @@
             {
               "name": "disableRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/disable",
+              "path": "/api/apps/app/rules/id/disable",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27979,10 +27979,10 @@
             {
               "name": "triggerRuleExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/trigger",
+              "path": "/api/apps/app/rules/id/trigger",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28105,10 +28105,10 @@
             {
               "name": "putRuleRunExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/run",
+              "path": "/api/apps/app/rules/id/run",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28216,10 +28216,10 @@
             {
               "name": "deleteRuleEventsExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/events",
+              "path": "/api/apps/app/rules/id/events",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28347,9 +28347,9 @@
             {
               "name": "rulesSimulatePostExample",
               "description": "",
-              "path": "/api/apps/foo/rules/simulate",
+              "path": "/api/apps/app/rules/simulate",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -28530,10 +28530,10 @@
             {
               "name": "simulateGetExample",
               "description": "",
-              "path": "/api/apps/foo/rules/foo/simulate",
+              "path": "/api/apps/app/rules/id/simulate",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28719,9 +28719,9 @@
             {
               "name": "getEventsExample",
               "description": "",
-              "path": "/api/apps/foo/rules/events",
+              "path": "/api/apps/app/rules/events",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -28853,9 +28853,9 @@
             {
               "name": "deleteEventsExample",
               "description": "",
-              "path": "/api/apps/foo/rules/events",
+              "path": "/api/apps/app/rules/events",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -28975,10 +28975,10 @@
             {
               "name": "putEventExample",
               "description": "",
-              "path": "/api/apps/foo/rules/events/foo",
+              "path": "/api/apps/app/rules/events/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29098,10 +29098,10 @@
             {
               "name": "deleteEventExample",
               "description": "",
-              "path": "/api/apps/foo/rules/events/foo",
+              "path": "/api/apps/app/rules/events/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29286,9 +29286,9 @@
             {
               "name": "getEventSchemaExample",
               "description": "",
-              "path": "/api/rules/eventtypes/foo",
+              "path": "/api/rules/eventtypes/type",
               "pathParameters": {
-                "type": "foo"
+                "type": "type"
               },
               "queryParameters": {},
               "headers": {},
@@ -29398,9 +29398,9 @@
             {
               "name": "getPlansExample",
               "description": "",
-              "path": "/api/apps/foo/plans",
+              "path": "/api/apps/app/plans",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -29586,9 +29586,9 @@
             {
               "name": "plansPutPlanExample",
               "description": "",
-              "path": "/api/apps/foo/plan",
+              "path": "/api/apps/app/plan",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -29709,9 +29709,9 @@
             {
               "name": "getTeamPlansExample",
               "description": "",
-              "path": "/api/teams/foo/plans",
+              "path": "/api/teams/team/plans",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -29897,9 +29897,9 @@
             {
               "name": "plansPutTeamPlanExample",
               "description": "",
-              "path": "/api/teams/foo/plan",
+              "path": "/api/teams/team/plan",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -30144,9 +30144,9 @@
             {
               "name": "getAppPingExample",
               "description": "",
-              "path": "/api/ping/foo",
+              "path": "/api/ping/app",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -30494,9 +30494,9 @@
             {
               "name": "getAppHistoryExample",
               "description": "",
-              "path": "/api/apps/foo/history",
+              "path": "/api/apps/app/history",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -30639,9 +30639,9 @@
             {
               "name": "getTeamHistoryExample",
               "description": "",
-              "path": "/api/teams/foo/history",
+              "path": "/api/teams/team/history",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -30893,9 +30893,9 @@
             {
               "name": "startEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/foo/start",
+              "path": "/api/event-consumers/consumerName/start",
               "pathParameters": {
-                "consumerName": "foo"
+                "consumerName": "consumerName"
               },
               "queryParameters": {},
               "headers": {},
@@ -31032,9 +31032,9 @@
             {
               "name": "stopEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/foo/stop",
+              "path": "/api/event-consumers/consumerName/stop",
               "pathParameters": {
-                "consumerName": "foo"
+                "consumerName": "consumerName"
               },
               "queryParameters": {},
               "headers": {},
@@ -31171,9 +31171,9 @@
             {
               "name": "resetEventConsumerExample",
               "description": "",
-              "path": "/api/event-consumers/foo/reset",
+              "path": "/api/event-consumers/consumerName/reset",
               "pathParameters": {
-                "consumerName": "foo"
+                "consumerName": "consumerName"
               },
               "queryParameters": {},
               "headers": {},
@@ -31505,10 +31505,10 @@
             {
               "name": "getContentsExample",
               "description": "",
-              "path": "/api/content/foo/foo",
+              "path": "/api/content/app/schema",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -31873,10 +31873,10 @@
             {
               "name": "contentsPostContentExample",
               "description": "",
-              "path": "/api/content/foo/foo",
+              "path": "/api/content/app/schema",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -32206,10 +32206,10 @@
             {
               "name": "contentsGetContentsPostExample",
               "description": "",
-              "path": "/api/content/foo/foo/query",
+              "path": "/api/content/app/schema/query",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -32544,11 +32544,11 @@
             {
               "name": "getContentExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo",
+              "path": "/api/content/app/schema/id",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32907,11 +32907,11 @@
             {
               "name": "contentsPostUpsertContentExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo",
+              "path": "/api/content/app/schema/id",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33259,11 +33259,11 @@
             {
               "name": "contentsPutContentExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo",
+              "path": "/api/content/app/schema/id",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33612,11 +33612,11 @@
             {
               "name": "deleteContentExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo",
+              "path": "/api/content/app/schema/id",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33781,11 +33781,11 @@
             {
               "name": "contentsPatchContentExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo",
+              "path": "/api/content/app/schema/id",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34107,11 +34107,11 @@
             {
               "name": "getContentValidityExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/validity",
+              "path": "/api/content/app/schema/id/validity",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34262,11 +34262,11 @@
             {
               "name": "getReferencesExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/references",
+              "path": "/api/content/app/schema/id/references",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34595,11 +34595,11 @@
             {
               "name": "getReferencingExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/referencing",
+              "path": "/api/content/app/schema/id/referencing",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34929,11 +34929,11 @@
             {
               "name": "getContentVersionExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/42",
+              "path": "/api/content/app/schema/id/42",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo",
+                "app": "app",
+                "schema": "schema",
+                "id": "id",
                 "version": 42
               },
               "queryParameters": {},
@@ -35085,10 +35085,10 @@
             {
               "name": "contentsPostContentsExample",
               "description": "",
-              "path": "/api/content/foo/foo/import",
+              "path": "/api/content/app/schema/import",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -35291,10 +35291,10 @@
             {
               "name": "contentsBulkUpdateContentsExample",
               "description": "",
-              "path": "/api/content/foo/foo/bulk",
+              "path": "/api/content/app/schema/bulk",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo"
+                "app": "app",
+                "schema": "schema"
               },
               "queryParameters": {},
               "headers": {},
@@ -35512,11 +35512,11 @@
             {
               "name": "contentsPutContentStatusExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/status",
+              "path": "/api/content/app/schema/id/status",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35853,11 +35853,11 @@
             {
               "name": "deleteContentStatusExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/status",
+              "path": "/api/content/app/schema/id/status",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36185,11 +36185,11 @@
             {
               "name": "createDraftExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/draft",
+              "path": "/api/content/app/schema/id/draft",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36517,11 +36517,11 @@
             {
               "name": "deleteVersionExample",
               "description": "",
-              "path": "/api/content/foo/foo/foo/draft",
+              "path": "/api/content/app/schema/id/draft",
               "pathParameters": {
-                "app": "foo",
-                "schema": "foo",
-                "id": "foo"
+                "app": "app",
+                "schema": "schema",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36832,10 +36832,10 @@
             {
               "name": "getWatchingUsersExample",
               "description": "",
-              "path": "/api/apps/foo/watching/foo",
+              "path": "/api/apps/app/watching/resource",
               "pathParameters": {
-                "app": "foo",
-                "resource": "foo"
+                "app": "app",
+                "resource": "resource"
               },
               "queryParameters": {},
               "headers": {},
@@ -36981,10 +36981,10 @@
             {
               "name": "getCommentsExample",
               "description": "",
-              "path": "/api/apps/foo/comments/foo",
+              "path": "/api/apps/app/comments/commentsId",
               "pathParameters": {
-                "app": "foo",
-                "commentsId": "foo"
+                "app": "app",
+                "commentsId": "commentsId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37184,10 +37184,10 @@
             {
               "name": "commentsPostCommentExample",
               "description": "",
-              "path": "/api/apps/foo/comments/foo",
+              "path": "/api/apps/app/comments/commentsId",
               "pathParameters": {
-                "app": "foo",
-                "commentsId": "foo"
+                "app": "app",
+                "commentsId": "commentsId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37369,11 +37369,11 @@
             {
               "name": "commentsPutCommentExample",
               "description": "",
-              "path": "/api/apps/foo/comments/foo/foo",
+              "path": "/api/apps/app/comments/commentsId/commentId",
               "pathParameters": {
-                "app": "foo",
-                "commentsId": "foo",
-                "commentId": "foo"
+                "app": "app",
+                "commentsId": "commentsId",
+                "commentId": "commentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37520,11 +37520,11 @@
             {
               "name": "deleteCommentExample",
               "description": "",
-              "path": "/api/apps/foo/comments/foo/foo",
+              "path": "/api/apps/app/comments/commentsId/commentId",
               "pathParameters": {
-                "app": "foo",
-                "commentsId": "foo",
-                "commentId": "foo"
+                "app": "app",
+                "commentsId": "commentsId",
+                "commentId": "commentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37638,9 +37638,9 @@
             {
               "name": "getNotificationsExample",
               "description": "",
-              "path": "/api/users/foo/notifications",
+              "path": "/api/users/userId/notifications",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37814,10 +37814,10 @@
             {
               "name": "deleteCommentExample",
               "description": "",
-              "path": "/api/users/foo/notifications/foo",
+              "path": "/api/users/userId/notifications/commentId",
               "pathParameters": {
-                "userId": "foo",
-                "commentId": "foo"
+                "userId": "userId",
+                "commentId": "commentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -37941,10 +37941,10 @@
             {
               "name": "getBackupContentExample",
               "description": "",
-              "path": "/api/apps/foo/backups/foo",
+              "path": "/api/apps/app/backups/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38064,10 +38064,10 @@
             {
               "name": "deleteBackupExample",
               "description": "",
-              "path": "/api/apps/foo/backups/foo",
+              "path": "/api/apps/app/backups/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38191,9 +38191,9 @@
             {
               "name": "getBackupContentV2Example",
               "description": "",
-              "path": "/api/apps/backups/foo",
+              "path": "/api/apps/backups/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38293,9 +38293,9 @@
             {
               "name": "getBackupsExample",
               "description": "",
-              "path": "/api/apps/foo/backups",
+              "path": "/api/apps/app/backups",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -38431,9 +38431,9 @@
             {
               "name": "postBackupExample",
               "description": "",
-              "path": "/api/apps/foo/backups",
+              "path": "/api/apps/app/backups",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -38942,11 +38942,11 @@
             {
               "name": "getAssetContentBySlugExample",
               "description": "",
-              "path": "/api/assets/foo/foo/foo",
+              "path": "/api/assets/app/idOrSlug/more",
               "pathParameters": {
-                "app": "foo",
-                "idOrSlug": "foo",
-                "more": "foo"
+                "app": "app",
+                "idOrSlug": "idOrSlug",
+                "more": "more"
               },
               "queryParameters": {},
               "headers": {},
@@ -39222,9 +39222,9 @@
             {
               "name": "getAssetContentExample",
               "description": "",
-              "path": "/api/assets/foo",
+              "path": "/api/assets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -39350,9 +39350,9 @@
             {
               "name": "getAssetFoldersExample",
               "description": "",
-              "path": "/api/apps/foo/assets/folders",
+              "path": "/api/apps/app/assets/folders",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -39530,9 +39530,9 @@
             {
               "name": "assetsPostAssetFolderExample",
               "description": "",
-              "path": "/api/apps/foo/assets/folders",
+              "path": "/api/apps/app/assets/folders",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -39707,10 +39707,10 @@
             {
               "name": "assetsPutAssetFolderExample",
               "description": "",
-              "path": "/api/apps/foo/assets/folders/foo",
+              "path": "/api/apps/app/assets/folders/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -39859,10 +39859,10 @@
             {
               "name": "deleteAssetFolderExample",
               "description": "",
-              "path": "/api/apps/foo/assets/folders/foo",
+              "path": "/api/apps/app/assets/folders/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40008,10 +40008,10 @@
             {
               "name": "assetsPutAssetFolderParentExample",
               "description": "",
-              "path": "/api/apps/foo/assets/folders/foo/parent",
+              "path": "/api/apps/app/assets/folders/id/parent",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -40148,9 +40148,9 @@
             {
               "name": "getTagsExample",
               "description": "",
-              "path": "/api/apps/foo/assets/tags",
+              "path": "/api/apps/app/assets/tags",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -40315,10 +40315,10 @@
             {
               "name": "assetsPutTagExample",
               "description": "",
-              "path": "/api/apps/foo/assets/tags/foo",
+              "path": "/api/apps/app/assets/tags/name",
               "pathParameters": {
-                "app": "foo",
-                "name": "foo"
+                "app": "app",
+                "name": "name"
               },
               "queryParameters": {},
               "headers": {},
@@ -40528,9 +40528,9 @@
             {
               "name": "getAssetsExample",
               "description": "",
-              "path": "/api/apps/foo/assets",
+              "path": "/api/apps/app/assets",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -40797,9 +40797,9 @@
             {
               "name": "assetsPostAssetExample",
               "description": "",
-              "path": "/api/apps/foo/assets",
+              "path": "/api/apps/app/assets",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -41006,9 +41006,9 @@
             {
               "name": "assetsGetAssetsPostExample",
               "description": "",
-              "path": "/api/apps/foo/assets/query",
+              "path": "/api/apps/app/assets/query",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -41211,10 +41211,10 @@
             {
               "name": "getAssetExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo",
+              "path": "/api/apps/app/assets/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41474,10 +41474,10 @@
             {
               "name": "assetsPostUpsertAssetExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo",
+              "path": "/api/apps/app/assets/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41701,10 +41701,10 @@
             {
               "name": "assetsPutAssetExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo",
+              "path": "/api/apps/app/assets/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41924,10 +41924,10 @@
             {
               "name": "deleteAssetExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo",
+              "path": "/api/apps/app/assets/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -42058,9 +42058,9 @@
             {
               "name": "assetsBulkUpdateAssetsExample",
               "description": "",
-              "path": "/api/apps/foo/assets/bulk",
+              "path": "/api/apps/app/assets/bulk",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -42270,10 +42270,10 @@
             {
               "name": "assetsPutAssetContentExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo/content",
+              "path": "/api/apps/app/assets/id/content",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -42497,10 +42497,10 @@
             {
               "name": "assetsPutAssetParentExample",
               "description": "",
-              "path": "/api/apps/foo/assets/foo/parent",
+              "path": "/api/apps/app/assets/id/parent",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -42683,9 +42683,9 @@
             {
               "name": "getAssetScriptsExample",
               "description": "",
-              "path": "/api/apps/foo/assets/scripts",
+              "path": "/api/apps/app/assets/scripts",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -42841,9 +42841,9 @@
             {
               "name": "appsPutAssetScriptsExample",
               "description": "",
-              "path": "/api/apps/foo/assets/scripts",
+              "path": "/api/apps/app/assets/scripts",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -42977,9 +42977,9 @@
             {
               "name": "getClientsExample",
               "description": "",
-              "path": "/api/apps/foo/clients",
+              "path": "/api/apps/app/clients",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -43144,9 +43144,9 @@
             {
               "name": "appsPostClientExample",
               "description": "",
-              "path": "/api/apps/foo/clients",
+              "path": "/api/apps/app/clients",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -43338,10 +43338,10 @@
             {
               "name": "appsPutClientExample",
               "description": "",
-              "path": "/api/apps/foo/clients/foo",
+              "path": "/api/apps/app/clients/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43514,10 +43514,10 @@
             {
               "name": "deleteClientExample",
               "description": "",
-              "path": "/api/apps/foo/clients/foo",
+              "path": "/api/apps/app/clients/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -43653,9 +43653,9 @@
             {
               "name": "getContributorsExample",
               "description": "",
-              "path": "/api/apps/foo/contributors",
+              "path": "/api/apps/app/contributors",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -43821,9 +43821,9 @@
             {
               "name": "appsPostContributorExample",
               "description": "",
-              "path": "/api/apps/foo/contributors",
+              "path": "/api/apps/app/contributors",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -43983,9 +43983,9 @@
             {
               "name": "deleteMyselfExample",
               "description": "",
-              "path": "/api/apps/foo/contributors/me",
+              "path": "/api/apps/app/contributors/me",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -44154,10 +44154,10 @@
             {
               "name": "deleteContributorExample",
               "description": "",
-              "path": "/api/apps/foo/contributors/foo",
+              "path": "/api/apps/app/contributors/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -44291,9 +44291,9 @@
             {
               "name": "getImageExample",
               "description": "",
-              "path": "/api/apps/foo/image",
+              "path": "/api/apps/app/image",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -44426,9 +44426,9 @@
             {
               "name": "appsUploadImageExample",
               "description": "",
-              "path": "/api/apps/foo/image",
+              "path": "/api/apps/app/image",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -44593,9 +44593,9 @@
             {
               "name": "deleteImageExample",
               "description": "",
-              "path": "/api/apps/foo/image",
+              "path": "/api/apps/app/image",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -44737,9 +44737,9 @@
             {
               "name": "getLanguagesExample",
               "description": "",
-              "path": "/api/apps/foo/languages",
+              "path": "/api/apps/app/languages",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -44903,9 +44903,9 @@
             {
               "name": "appsPostLanguageExample",
               "description": "",
-              "path": "/api/apps/foo/languages",
+              "path": "/api/apps/app/languages",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -45096,10 +45096,10 @@
             {
               "name": "appsPutLanguageExample",
               "description": "",
-              "path": "/api/apps/foo/languages/foo",
+              "path": "/api/apps/app/languages/language",
               "pathParameters": {
-                "app": "foo",
-                "language": "foo"
+                "app": "app",
+                "language": "language"
               },
               "queryParameters": {},
               "headers": {},
@@ -45271,10 +45271,10 @@
             {
               "name": "deleteLanguageExample",
               "description": "",
-              "path": "/api/apps/foo/languages/foo",
+              "path": "/api/apps/app/languages/language",
               "pathParameters": {
-                "app": "foo",
-                "language": "foo"
+                "app": "app",
+                "language": "language"
               },
               "queryParameters": {},
               "headers": {},
@@ -45410,9 +45410,9 @@
             {
               "name": "getRolesExample",
               "description": "",
-              "path": "/api/apps/foo/roles",
+              "path": "/api/apps/app/roles",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -45578,9 +45578,9 @@
             {
               "name": "appsPostRoleExample",
               "description": "",
-              "path": "/api/apps/foo/roles",
+              "path": "/api/apps/app/roles",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -45732,9 +45732,9 @@
             {
               "name": "getPermissionsExample",
               "description": "",
-              "path": "/api/apps/foo/roles/permissions",
+              "path": "/api/apps/app/roles/permissions",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -45892,10 +45892,10 @@
             {
               "name": "appsPutRoleExample",
               "description": "",
-              "path": "/api/apps/foo/roles/foo",
+              "path": "/api/apps/app/roles/roleName",
               "pathParameters": {
-                "app": "foo",
-                "roleName": "foo"
+                "app": "app",
+                "roleName": "roleName"
               },
               "queryParameters": {},
               "headers": {},
@@ -46077,10 +46077,10 @@
             {
               "name": "deleteRoleExample",
               "description": "",
-              "path": "/api/apps/foo/roles/foo",
+              "path": "/api/apps/app/roles/roleName",
               "pathParameters": {
-                "app": "foo",
-                "roleName": "foo"
+                "app": "app",
+                "roleName": "roleName"
               },
               "queryParameters": {},
               "headers": {},
@@ -46491,9 +46491,9 @@
             {
               "name": "getTeamAppsExample",
               "description": "",
-              "path": "/api/teams/foo/apps",
+              "path": "/api/teams/team/apps",
               "pathParameters": {
-                "team": "foo"
+                "team": "team"
               },
               "queryParameters": {},
               "headers": {},
@@ -46639,9 +46639,9 @@
             {
               "name": "getAppExample",
               "description": "",
-              "path": "/api/apps/foo",
+              "path": "/api/apps/app",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -46811,9 +46811,9 @@
             {
               "name": "appsPutAppExample",
               "description": "",
-              "path": "/api/apps/foo",
+              "path": "/api/apps/app",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -46962,9 +46962,9 @@
             {
               "name": "deleteAppExample",
               "description": "",
-              "path": "/api/apps/foo",
+              "path": "/api/apps/app",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47092,9 +47092,9 @@
             {
               "name": "appsPutAppTeamExample",
               "description": "",
-              "path": "/api/apps/foo/team",
+              "path": "/api/apps/app/team",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47241,9 +47241,9 @@
             {
               "name": "getSettingsExample",
               "description": "",
-              "path": "/api/apps/foo/settings",
+              "path": "/api/apps/app/settings",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47415,9 +47415,9 @@
             {
               "name": "appsPutSettingsExample",
               "description": "",
-              "path": "/api/apps/foo/settings",
+              "path": "/api/apps/app/settings",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47592,9 +47592,9 @@
             {
               "name": "getWorkflowsExample",
               "description": "",
-              "path": "/api/apps/foo/workflows",
+              "path": "/api/apps/app/workflows",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47764,9 +47764,9 @@
             {
               "name": "appsPostWorkflowExample",
               "description": "",
-              "path": "/api/apps/foo/workflows",
+              "path": "/api/apps/app/workflows",
               "pathParameters": {
-                "app": "foo"
+                "app": "app"
               },
               "queryParameters": {},
               "headers": {},
@@ -47963,10 +47963,10 @@
             {
               "name": "appsPutWorkflowExample",
               "description": "",
-              "path": "/api/apps/foo/workflows/foo",
+              "path": "/api/apps/app/workflows/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -48150,10 +48150,10 @@
             {
               "name": "deleteWorkflowExample",
               "description": "",
-              "path": "/api/apps/foo/workflows/foo",
+              "path": "/api/apps/app/workflows/id",
               "pathParameters": {
-                "app": "foo",
-                "id": "foo"
+                "app": "app",
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
