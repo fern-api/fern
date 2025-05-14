@@ -134,7 +134,7 @@
             "description": "",
             "path": "/test",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},
@@ -248,7 +248,7 @@
             "description": "",
             "path": "/example",
             "pathParameters": {
-              "corpus_key": "foo"
+              "corpus_key": "corpus_key"
             },
             "queryParameters": {},
             "headers": {},

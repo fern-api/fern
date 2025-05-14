@@ -59539,7 +59539,7 @@
                 "page_id": "63c720f9347c2139b248e552"
               },
               "queryParameters": {
-                "locale": "foo"
+                "locale": "locale"
               },
               "headers": {},
               "requestBody": {

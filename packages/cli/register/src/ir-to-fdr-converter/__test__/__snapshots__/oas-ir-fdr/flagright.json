@@ -7677,9 +7677,9 @@
           {
             "name": "example-1",
             "description": "",
-            "path": "/transactions/foo",
+            "path": "/transactions/transactionId",
             "pathParameters": {
-              "transactionId": "foo"
+              "transactionId": "transactionId"
             },
             "queryParameters": {},
             "headers": {},
@@ -8429,9 +8429,9 @@
           {
             "name": "example-1",
             "description": "",
-            "path": "/consumer/users/foo",
+            "path": "/consumer/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},
@@ -8783,9 +8783,9 @@
           {
             "name": "example-2",
             "description": "",
-            "path": "/business/users/foo",
+            "path": "/business/users/userId",
             "pathParameters": {
-              "userId": "foo"
+              "userId": "userId"
             },
             "queryParameters": {},
             "headers": {},

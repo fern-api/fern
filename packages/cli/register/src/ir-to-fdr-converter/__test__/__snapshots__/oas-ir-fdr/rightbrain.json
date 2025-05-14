@@ -11935,9 +11935,9 @@
             {
               "name": "organizationIamListMembersExample",
               "description": "",
-              "path": "/org/foo/iam/members",
+              "path": "/org/org_id/iam/members",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12104,10 +12104,10 @@
             {
               "name": "organizationGetMemberExample",
               "description": "",
-              "path": "/org/foo/iam/members/foo",
+              "path": "/org/org_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -12282,10 +12282,10 @@
             {
               "name": "orgOrganizationIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/org/foo/iam/members/foo",
+              "path": "/org/org_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -12448,9 +12448,9 @@
             {
               "name": "orgOrganizationIamTestPermissionsExample",
               "description": "",
-              "path": "/org/foo/iam/test",
+              "path": "/org/org_id/iam/test",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12793,9 +12793,9 @@
             {
               "name": "getOrgOrgIdGetExample",
               "description": "",
-              "path": "/org/foo",
+              "path": "/org/org_id",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -12933,9 +12933,9 @@
             {
               "name": "orgUpdateOrgOrgIdPostExample",
               "description": "",
-              "path": "/org/foo",
+              "path": "/org/org_id",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13064,9 +13064,9 @@
             {
               "name": "joinOrgOrgIdJoinPostExample",
               "description": "",
-              "path": "/org/foo/join",
+              "path": "/org/org_id/join",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13236,9 +13236,9 @@
             {
               "name": "invitesListOrgOrgIdInviteGetExample",
               "description": "",
-              "path": "/org/foo/invite",
+              "path": "/org/org_id/invite",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13395,9 +13395,9 @@
             {
               "name": "orgInvitesCreateOrgOrgIdInvitePostExample",
               "description": "",
-              "path": "/org/foo/invite",
+              "path": "/org/org_id/invite",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13540,10 +13540,10 @@
             {
               "name": "invitesDeleteOrgOrgIdInviteOrgInviteIdDeleteExample",
               "description": "",
-              "path": "/org/foo/invite/foo",
+              "path": "/org/org_id/invite/org_invite_id",
               "pathParameters": {
-                "org_id": "foo",
-                "org_invite_id": "foo"
+                "org_id": "org_id",
+                "org_invite_id": "org_invite_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13649,9 +13649,9 @@
             {
               "name": "domainsListOrgOrgIdDomainsGetExample",
               "description": "",
-              "path": "/org/foo/domains",
+              "path": "/org/org_id/domains",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13804,9 +13804,9 @@
             {
               "name": "orgDomainsPostOrgOrgIdDomainsPostExample",
               "description": "",
-              "path": "/org/foo/domains",
+              "path": "/org/org_id/domains",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13954,10 +13954,10 @@
             {
               "name": "domainDeleteOrgOrgIdDomainsDomainIdDeleteExample",
               "description": "",
-              "path": "/org/foo/domains/foo",
+              "path": "/org/org_id/domains/domain_id",
               "pathParameters": {
-                "org_id": "foo",
-                "domain_id": "foo"
+                "org_id": "org_id",
+                "domain_id": "domain_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -14100,9 +14100,9 @@
             {
               "name": "orgUpdateAvatarOrgOrgIdAvatarPostExample",
               "description": "",
-              "path": "/org/foo/avatar",
+              "path": "/org/org_id/avatar",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -14586,9 +14586,9 @@
             {
               "name": "listProjectOrgOrgIdProjectGetExample",
               "description": "",
-              "path": "/org/foo/project",
+              "path": "/org/org_id/project",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -14746,9 +14746,9 @@
             {
               "name": "projectCreateProjectOrgOrgIdProjectPostExample",
               "description": "",
-              "path": "/org/foo/project",
+              "path": "/org/org_id/project",
               "pathParameters": {
-                "org_id": "foo"
+                "org_id": "org_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -14902,10 +14902,10 @@
             {
               "name": "getProjectOrgOrgIdProjectProjectIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo",
+              "path": "/org/org_id/project/project_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15095,10 +15095,10 @@
             {
               "name": "projectUpdateProjectOrgOrgIdProjectProjectIdPostExample",
               "description": "",
-              "path": "/org/foo/project/foo",
+              "path": "/org/org_id/project/project_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15222,10 +15222,10 @@
             {
               "name": "getProjectConfigOrgOrgIdProjectProjectIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/config",
+              "path": "/org/org_id/project/project_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15411,10 +15411,10 @@
             {
               "name": "projectSetProjectConfigOrgOrgIdProjectProjectIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/config",
+              "path": "/org/org_id/project/project_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15612,10 +15612,10 @@
             {
               "name": "projectUpdateAvatarOrgOrgIdProjectProjectIdAvatarPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/avatar",
+              "path": "/org/org_id/project/project_id/avatar",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15786,10 +15786,10 @@
             {
               "name": "iamListMembersExample",
               "description": "",
-              "path": "/org/foo/project/foo/iam/members",
+              "path": "/org/org_id/project/project_id/iam/members",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -15973,11 +15973,11 @@
             {
               "name": "getMemberExample",
               "description": "",
-              "path": "/org/foo/project/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -16169,11 +16169,11 @@
             {
               "name": "projectIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/org/foo/project/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -16353,10 +16353,10 @@
             {
               "name": "projectIamTestPermissionsExample",
               "description": "",
-              "path": "/org/foo/project/foo/iam/test",
+              "path": "/org/org_id/project/project_id/iam/test",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -16565,10 +16565,10 @@
             {
               "name": "listCollectionsOrgOrgIdProjectProjectIdCollectionGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection",
+              "path": "/org/org_id/project/project_id/collection",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -16761,10 +16761,10 @@
             {
               "name": "collectionCreateCollectionOrgOrgIdProjectProjectIdCollectionPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection",
+              "path": "/org/org_id/project/project_id/collection",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -16953,11 +16953,11 @@
             {
               "name": "getCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo",
+              "path": "/org/org_id/project/project_id/collection/collection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17151,11 +17151,11 @@
             {
               "name": "collectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo",
+              "path": "/org/org_id/project/project_id/collection/collection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17342,11 +17342,11 @@
             {
               "name": "statsOrgOrgIdProjectProjectIdCollectionCollectionIdStatsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/stats",
+              "path": "/org/org_id/project/project_id/collection/collection_id/stats",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17552,11 +17552,11 @@
             {
               "name": "listChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/chat",
+              "path": "/org/org_id/project/project_id/collection/collection_id/chat",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17756,11 +17756,11 @@
             {
               "name": "collectionQueryCollectionOrgOrgIdProjectProjectIdCollectionCollectionIdQueryPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/query",
+              "path": "/org/org_id/project/project_id/collection/collection_id/query",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17912,11 +17912,11 @@
             {
               "name": "updateSummaryOrgOrgIdProjectProjectIdCollectionCollectionIdUpdateSummaryPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/update_summary",
+              "path": "/org/org_id/project/project_id/collection/collection_id/update_summary",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18090,11 +18090,11 @@
             {
               "name": "collectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/add",
+              "path": "/org/org_id/project/project_id/collection/collection_id/add",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18302,11 +18302,11 @@
             {
               "name": "collectionRemoveOrgOrgIdProjectProjectIdCollectionCollectionIdRemovePostExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/remove",
+              "path": "/org/org_id/project/project_id/collection/collection_id/remove",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18513,11 +18513,11 @@
             {
               "name": "iamListMembersExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/iam/members",
+              "path": "/org/org_id/project/project_id/collection/collection_id/iam/members",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18718,12 +18718,12 @@
             {
               "name": "getMemberExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/collection/collection_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -18932,12 +18932,12 @@
             {
               "name": "collectionIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/collection/collection_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -19134,11 +19134,11 @@
             {
               "name": "collectionIamTestPermissionsExample",
               "description": "",
-              "path": "/org/foo/project/foo/collection/foo/iam/test",
+              "path": "/org/org_id/project/project_id/collection/collection_id/iam/test",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "collection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "collection_id": "collection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -19409,10 +19409,10 @@
             {
               "name": "listOrgOrgIdProjectProjectIdDocumentGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document",
+              "path": "/org/org_id/project/project_id/document",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -19633,10 +19633,10 @@
             {
               "name": "documentCreateOrgOrgIdProjectProjectIdDocumentPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/document",
+              "path": "/org/org_id/project/project_id/document",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -19841,10 +19841,10 @@
             {
               "name": "documentUploadOrgOrgIdProjectProjectIdDocumentUploadPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/upload",
+              "path": "/org/org_id/project/project_id/document/upload",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20050,11 +20050,11 @@
             {
               "name": "taskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/create/status/foo",
+              "path": "/org/org_id/project/project_id/document/create/status/group_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "group_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "group_id": "group_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20236,14 +20236,14 @@
             {
               "name": "queryOrgOrgIdProjectProjectIdDocumentDocumentIdQueryGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/query",
+              "path": "/org/org_id/project/project_id/document/document_id/query",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {
-                "query": "foo"
+                "query": "query"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -20403,11 +20403,11 @@
             {
               "name": "fetchOrgOrgIdProjectProjectIdDocumentDocumentIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo",
+              "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20607,11 +20607,11 @@
             {
               "name": "documentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo",
+              "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20806,11 +20806,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo",
+              "path": "/org/org_id/project/project_id/document/document_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20980,11 +20980,11 @@
             {
               "name": "embeddingQueryOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/embeddings",
+              "path": "/org/org_id/project/project_id/document/document_id/embeddings",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21150,12 +21150,12 @@
             {
               "name": "embeddingGetOrgOrgIdProjectProjectIdDocumentDocumentIdEmbeddingEmbeddingIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/embedding/foo",
+              "path": "/org/org_id/project/project_id/document/document_id/embedding/embedding_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo",
-                "embedding_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id",
+                "embedding_id": "embedding_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21325,11 +21325,11 @@
             {
               "name": "iamListMembersExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/iam/members",
+              "path": "/org/org_id/project/project_id/document/document_id/iam/members",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21530,12 +21530,12 @@
             {
               "name": "getMemberExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/document/document_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -21744,12 +21744,12 @@
             {
               "name": "documentIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/document/document_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -21946,11 +21946,11 @@
             {
               "name": "documentIamTestPermissionsExample",
               "description": "",
-              "path": "/org/foo/project/foo/document/foo/iam/test",
+              "path": "/org/org_id/project/project_id/document/document_id/iam/test",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "document_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "document_id": "document_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22212,9 +22212,9 @@
             {
               "name": "getChatChatChatIdGetExample",
               "description": "",
-              "path": "/chat/foo",
+              "path": "/chat/chat_id",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22362,9 +22362,9 @@
             {
               "name": "chatUpdateChatChatChatIdPostExample",
               "description": "",
-              "path": "/chat/foo",
+              "path": "/chat/chat_id",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22508,9 +22508,9 @@
             {
               "name": "getChatConfigChatChatIdConfigGetExample",
               "description": "",
-              "path": "/chat/foo/config",
+              "path": "/chat/chat_id/config",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22678,9 +22678,9 @@
             {
               "name": "chatSetChatConfigChatChatIdConfigPostExample",
               "description": "",
-              "path": "/chat/foo/config",
+              "path": "/chat/chat_id/config",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22991,12 +22991,12 @@
             {
               "name": "queryChatChatChatIdQueryGetExample",
               "description": "",
-              "path": "/chat/foo/query",
+              "path": "/chat/chat_id/query",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {
-                "query": "foo"
+                "query": "query"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23137,9 +23137,9 @@
             {
               "name": "iamListMembersExample",
               "description": "",
-              "path": "/chat/foo/iam/members",
+              "path": "/chat/chat_id/iam/members",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23306,10 +23306,10 @@
             {
               "name": "getMemberExample",
               "description": "",
-              "path": "/chat/foo/iam/members/foo",
+              "path": "/chat/chat_id/iam/members/member",
               "pathParameters": {
-                "chat_id": "foo",
-                "member": "foo"
+                "chat_id": "chat_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -23484,10 +23484,10 @@
             {
               "name": "chatIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/chat/foo/iam/members/foo",
+              "path": "/chat/chat_id/iam/members/member",
               "pathParameters": {
-                "chat_id": "foo",
-                "member": "foo"
+                "chat_id": "chat_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -23650,9 +23650,9 @@
             {
               "name": "chatIamTestPermissionsExample",
               "description": "",
-              "path": "/chat/foo/iam/test",
+              "path": "/chat/chat_id/iam/test",
               "pathParameters": {
-                "chat_id": "foo"
+                "chat_id": "chat_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23824,11 +23824,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23994,11 +23994,11 @@
             {
               "name": "datasourceBoxFetchOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24197,10 +24197,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceBoxAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/authorize",
+              "path": "/org/org_id/project/project_id/datasource/box/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24351,10 +24351,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/box/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -24497,11 +24497,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24673,11 +24673,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24887,14 +24887,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -25075,11 +25075,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25249,11 +25249,11 @@
             {
               "name": "datasourceBoxSetConfigurationOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/box/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/box/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25499,11 +25499,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25669,11 +25669,11 @@
             {
               "name": "datasourceConfluenceFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25872,10 +25872,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceConfluenceAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/authorize",
+              "path": "/org/org_id/project/project_id/datasource/confluence/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26026,10 +26026,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/confluence/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -26172,11 +26172,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26348,11 +26348,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26562,14 +26562,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -26750,11 +26750,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26924,11 +26924,11 @@
             {
               "name": "datasourceConfluenceSetConfigurationOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/confluence/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/confluence/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27174,11 +27174,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27344,11 +27344,11 @@
             {
               "name": "datasourceDropboxFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27547,10 +27547,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceDropboxAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/authorize",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27701,10 +27701,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -27847,11 +27847,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28023,11 +28023,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28237,14 +28237,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28425,11 +28425,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28599,11 +28599,11 @@
             {
               "name": "datasourceDropboxSetConfigurationOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/dropbox/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/dropbox/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28849,11 +28849,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29019,11 +29019,11 @@
             {
               "name": "datasourceGdriveFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29222,10 +29222,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceGdriveAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/authorize",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29376,10 +29376,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -29522,11 +29522,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29698,11 +29698,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29912,14 +29912,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -30100,11 +30100,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30274,11 +30274,11 @@
             {
               "name": "datasourceGdriveSetConfigurationOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/gdrive/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/gdrive/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30524,11 +30524,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30694,11 +30694,11 @@
             {
               "name": "datasourceNotionFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30897,10 +30897,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceNotionAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/authorize",
+              "path": "/org/org_id/project/project_id/datasource/notion/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31051,10 +31051,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/notion/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -31197,11 +31197,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31373,11 +31373,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31587,14 +31587,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -31775,11 +31775,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31949,11 +31949,11 @@
             {
               "name": "datasourceNotionSetConfigurationOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/notion/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/notion/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32199,11 +32199,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32369,11 +32369,11 @@
             {
               "name": "datasourceOnedriveFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32572,10 +32572,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceOnedriveAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/authorize",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32726,10 +32726,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -32872,11 +32872,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33048,11 +33048,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33262,14 +33262,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -33450,11 +33450,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33624,11 +33624,11 @@
             {
               "name": "datasourceOnedriveSetConfigurationOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/onedrive/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/onedrive/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33874,11 +33874,11 @@
             {
               "name": "listFilesOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdListFilesGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/list-files",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/list-files",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34044,11 +34044,11 @@
             {
               "name": "datasourceSharepointFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/fetch",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/fetch",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34247,10 +34247,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceSharepointAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/authorize",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34401,10 +34401,10 @@
             {
               "name": "authorizeOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdAuthorizeGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/authorize",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/foo/authorize",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
+                "org_id": "org_id",
+                "project_id": "project_id",
                 "connection_id": "foo"
               },
               "queryParameters": {},
@@ -34547,11 +34547,11 @@
             {
               "name": "deleteOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdDeleteExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34723,11 +34723,11 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/runs",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -34937,14 +34937,14 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdRunGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/run",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/run",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {
-                "sync_run_id": "foo"
+                "sync_run_id": "sync_run_id"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -35125,11 +35125,11 @@
             {
               "name": "getConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35299,11 +35299,11 @@
             {
               "name": "datasourceSharepointSetConfigurationOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdConfigPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/datasource/sharepoint/foo/config",
+              "path": "/org/org_id/project/project_id/datasource/sharepoint/connection_id/config",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "connection_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "connection_id": "connection_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35631,9 +35631,9 @@
             {
               "name": "internalRegisterOauthClientInternalProjectProjectIdRegisterOauthClientPostExample",
               "description": "",
-              "path": "/internal/project/foo/register_oauth_client",
+              "path": "/internal/project/project_id/register_oauth_client",
               "pathParameters": {
-                "project_id": "foo"
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36013,10 +36013,10 @@
             {
               "name": "enableOrgOrgIdProjectProjectIdScrapePostExample",
               "description": "",
-              "path": "/org/foo/project/foo/scrape",
+              "path": "/org/org_id/project/project_id/scrape",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36127,10 +36127,10 @@
             {
               "name": "scrapeFetchOrgOrgIdProjectProjectIdScrapeStartPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/scrape/start",
+              "path": "/org/org_id/project/project_id/scrape/start",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36297,11 +36297,11 @@
             {
               "name": "checkStatusOrgOrgIdProjectProjectIdScrapeRunSyncRunIdGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/scrape/run/foo",
+              "path": "/org/org_id/project/project_id/scrape/run/sync_run_id",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "sync_run_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "sync_run_id": "sync_run_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36468,10 +36468,10 @@
             {
               "name": "listRunsOrgOrgIdProjectProjectIdScrapeRunsGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/scrape/runs",
+              "path": "/org/org_id/project/project_id/scrape/runs",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36674,10 +36674,10 @@
             {
               "name": "composeInitialiseOrgOrgIdProjectProjectIdComposePostExample",
               "description": "",
-              "path": "/org/foo/project/foo/compose",
+              "path": "/org/org_id/project/project_id/compose",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36821,10 +36821,10 @@
             {
               "name": "composeGenerateOrgOrgIdProjectProjectIdComposeGeneratePostExample",
               "description": "",
-              "path": "/org/foo/project/foo/compose/generate",
+              "path": "/org/org_id/project/project_id/compose/generate",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36988,10 +36988,10 @@
             {
               "name": "composeUpdateSectionOrgOrgIdProjectProjectIdComposeUpdateSectionPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/compose/update_section",
+              "path": "/org/org_id/project/project_id/compose/update_section",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37159,10 +37159,10 @@
             {
               "name": "composeSectionTalkingPointsOrgOrgIdProjectProjectIdComposeSectionTalkingPointsPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/compose/section_talking_points",
+              "path": "/org/org_id/project/project_id/compose/section_talking_points",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37322,10 +37322,10 @@
             {
               "name": "composeTopicOrgOrgIdProjectProjectIdComposeTopicPostExample",
               "description": "",
-              "path": "/org/foo/project/foo/compose/topic",
+              "path": "/org/org_id/project/project_id/compose/topic",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38968,11 +38968,11 @@
             {
               "name": "taskIamListMembersExample",
               "description": "",
-              "path": "/org/foo/project/foo/task/foo/iam/members",
+              "path": "/org/org_id/project/project_id/task/task_id/iam/members",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "task_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "task_id": "task_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -39173,12 +39173,12 @@
             {
               "name": "taskGetMemberExample",
               "description": "",
-              "path": "/org/foo/project/foo/task/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/task/task_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "task_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "task_id": "task_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -39387,12 +39387,12 @@
             {
               "name": "tasksTaskIamUpdateMemberRolesExample",
               "description": "",
-              "path": "/org/foo/project/foo/task/foo/iam/members/foo",
+              "path": "/org/org_id/project/project_id/task/task_id/iam/members/member",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "task_id": "foo",
-                "member": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "task_id": "task_id",
+                "member": "member"
               },
               "queryParameters": {},
               "headers": {},
@@ -39589,11 +39589,11 @@
             {
               "name": "tasksTaskIamTestPermissionsExample",
               "description": "",
-              "path": "/org/foo/project/foo/task/foo/iam/test",
+              "path": "/org/org_id/project/project_id/task/task_id/iam/test",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo",
-                "task_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id",
+                "task_id": "task_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -41069,10 +41069,10 @@
             {
               "name": "listAvailableGuardrailsOrgOrgIdProjectProjectIdGuardrailGetExample",
               "description": "",
-              "path": "/org/foo/project/foo/guardrail",
+              "path": "/org/org_id/project/project_id/guardrail",
               "pathParameters": {
-                "org_id": "foo",
-                "project_id": "foo"
+                "org_id": "org_id",
+                "project_id": "project_id"
               },
               "queryParameters": {},
               "headers": {},

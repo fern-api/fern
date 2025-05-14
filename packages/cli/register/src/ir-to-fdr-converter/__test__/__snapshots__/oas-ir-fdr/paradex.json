@@ -13656,9 +13656,9 @@
             {
               "name": "getAlgoOrderByIdExample",
               "description": "",
-              "path": "/algo/orders/foo",
+              "path": "/algo/orders/algo_id",
               "pathParameters": {
-                "algo_id": "foo"
+                "algo_id": "algo_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13772,9 +13772,9 @@
             {
               "name": "cancelAlgoOrderExample",
               "description": "",
-              "path": "/algo/orders/foo",
+              "path": "/algo/orders/algo_id",
               "pathParameters": {
-                "algo_id": "foo"
+                "algo_id": "algo_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -13928,9 +13928,9 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo",
-                "PARADEX-TIMESTAMP": "foo"
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE",
+                "PARADEX-TIMESTAMP": "PARADEX-TIMESTAMP"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -14062,9 +14062,9 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-ETHEREUM-ACCOUNT": "foo",
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo"
+                "PARADEX-ETHEREUM-ACCOUNT": "PARADEX-ETHEREUM-ACCOUNT",
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE"
               },
               "requestBody": {},
               "requestBodyV3": {
@@ -14166,9 +14166,9 @@
             {
               "name": "getBboExample",
               "description": "",
-              "path": "/bbo/foo",
+              "path": "/bbo/market",
               "pathParameters": {
-                "market": "foo"
+                "market": "market"
               },
               "queryParameters": {},
               "headers": {},
@@ -14703,9 +14703,9 @@
               "pathParameters": {},
               "queryParameters": {
                 "end_at": 42,
-                "resolution": "foo",
+                "resolution": "resolution",
                 "start_at": 42,
-                "symbol": "foo"
+                "symbol": "symbol"
               },
               "headers": {},
               "responseStatusCode": 200
@@ -14987,9 +14987,9 @@
             {
               "name": "getOrderbookExample",
               "description": "",
-              "path": "/orderbook/foo",
+              "path": "/orderbook/market",
               "pathParameters": {
-                "market": "foo"
+                "market": "market"
               },
               "queryParameters": {},
               "headers": {},
@@ -16201,10 +16201,10 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "PARADEX-PARENT-ACCOUNT": "foo",
-                "PARADEX-STARKNET-SIGNATURE": "foo",
-                "PARADEX-STARKNET-ACCOUNT": "foo",
-                "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH": "foo"
+                "PARADEX-PARENT-ACCOUNT": "PARADEX-PARENT-ACCOUNT",
+                "PARADEX-STARKNET-SIGNATURE": "PARADEX-STARKNET-SIGNATURE",
+                "PARADEX-STARKNET-ACCOUNT": "PARADEX-STARKNET-ACCOUNT",
+                "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH": "PARADEX-STARKNET-ACCOUNT-DERIVATION-PATH"
               },
               "requestBody": {},
               "requestBodyV3": {
@@ -16466,7 +16466,7 @@
               "path": "/vaults/balance",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16694,7 +16694,7 @@
               "path": "/vaults/history",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo",
+                "address": "address",
                 "type": "pnl",
                 "resolution": "alltime"
               },
@@ -16824,7 +16824,7 @@
               "path": "/vaults/positions",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -17121,7 +17121,7 @@
               "path": "/vaults/transfers",
               "pathParameters": {},
               "queryParameters": {
-                "address": "foo"
+                "address": "address"
               },
               "headers": {},
               "responseStatusCode": 200,

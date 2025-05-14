@@ -159,7 +159,7 @@
               "description": "",
               "path": "/organizations/foo/search",
               "pathParameters": {
-                "id": "foo",
+                "id": "id",
                 "organization_id": "foo"
               },
               "queryParameters": {},
@@ -246,9 +246,9 @@
           {
             "name": "getUserExample",
             "description": "",
-            "path": "/users/foo",
+            "path": "/users/user_id",
             "pathParameters": {
-              "user_id": "foo"
+              "user_id": "user_id"
             },
             "queryParameters": {},
             "headers": {},
@@ -342,10 +342,10 @@
           {
             "name": "getOrganizationUserExample",
             "description": "",
-            "path": "/organizations/foo/users/foo",
+            "path": "/organizations/organization_id/users/user_id",
             "pathParameters": {
-              "organization_id": "foo",
-              "user_id": "foo"
+              "organization_id": "organization_id",
+              "user_id": "user_id"
             },
             "queryParameters": {
               "limit": 42

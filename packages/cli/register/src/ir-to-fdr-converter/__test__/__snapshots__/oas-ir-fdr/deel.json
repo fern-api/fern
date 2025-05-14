@@ -24446,10 +24446,10 @@
             {
               "name": "tasksCreateTaskReviewByIdExample",
               "description": "",
-              "path": "/contracts/37nex2x/tasks/foo/reviews",
+              "path": "/contracts/37nex2x/tasks/task_id/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "task_id": "foo"
+                "task_id": "task_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24701,10 +24701,10 @@
             {
               "name": "deleteContractPgoTakExample",
               "description": "",
-              "path": "/contracts/37nex2x/tasks/foo",
+              "path": "/contracts/37nex2x/tasks/task_id",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "task_id": "foo"
+                "task_id": "task_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27457,10 +27457,10 @@
             {
               "name": "getMilestonesByContractAndIdExample",
               "description": "",
-              "path": "/contracts/37nex2x/milestones/foo",
+              "path": "/contracts/37nex2x/milestones/milestone_id",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "milestone_id": "foo"
+                "milestone_id": "milestone_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27693,10 +27693,10 @@
             {
               "name": "deleteMilestoneByIdExample",
               "description": "",
-              "path": "/contracts/37nex2x/milestones/foo",
+              "path": "/contracts/37nex2x/milestones/milestone_id",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "milestone_id": "foo"
+                "milestone_id": "milestone_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27916,10 +27916,10 @@
             {
               "name": "milestonesCreateMilestoneReviewExample",
               "description": "",
-              "path": "/contracts/37nex2x/milestones/foo/reviews",
+              "path": "/contracts/37nex2x/milestones/milestone_id/reviews",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "milestone_id": "foo"
+                "milestone_id": "milestone_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28822,10 +28822,10 @@
             {
               "name": "getOffCyclePaymentByContractAndIdExample",
               "description": "",
-              "path": "/contracts/37nex2x/off-cycle-payments/foo",
+              "path": "/contracts/37nex2x/off-cycle-payments/offcycle_payment_id",
               "pathParameters": {
                 "contract_id": "37nex2x",
-                "offcycle_payment_id": "foo"
+                "offcycle_payment_id": "offcycle_payment_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36461,9 +36461,9 @@
             {
               "name": "getPaymentsBreakDownByIdExample",
               "description": "",
-              "path": "/payments/foo/breakdown",
+              "path": "/payments/payment_id/breakdown",
               "pathParameters": {
-                "payment_id": "foo"
+                "payment_id": "payment_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37735,9 +37735,9 @@
             {
               "name": "webhookControllerGetByIdExample",
               "description": "",
-              "path": "/webhooks/foo",
+              "path": "/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -37936,9 +37936,9 @@
             {
               "name": "webhookControllerDeleteByIdExample",
               "description": "",
-              "path": "/webhooks/foo",
+              "path": "/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -38121,9 +38121,9 @@
             {
               "name": "webhooksWebhookControllerEditByIdExample",
               "description": "",
-              "path": "/webhooks/foo",
+              "path": "/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

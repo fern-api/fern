@@ -303,12 +303,12 @@
           {
             "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamExample",
             "description": "",
-            "path": "/collection/foo/foo/foo/foo",
+            "path": "/collection/id/active_id/deprecated_ref_id/x-fern-availability_path_param",
             "pathParameters": {
-              "id": "foo",
-              "active_id": "foo",
-              "deprecated_ref_id": "foo",
-              "x-fern-availability_path_param": "foo"
+              "id": "id",
+              "active_id": "active_id",
+              "deprecated_ref_id": "deprecated_ref_id",
+              "x-fern-availability_path_param": "x-fern-availability_path_param"
             },
             "queryParameters": {},
             "headers": {},
