@@ -164,13 +164,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
@@ -272,14 +270,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/list-with-step",
             "pathParameters": {},
-            "queryParameters": {
-              "pageNumber": 42,
-              "limit": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {

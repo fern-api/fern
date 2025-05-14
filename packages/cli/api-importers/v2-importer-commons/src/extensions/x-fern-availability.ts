@@ -17,7 +17,7 @@ export class FernAvailabilityExtension extends AbstractExtension<AvailabilitySta
         this.node = node;
     }
 
-    public async convert(): Promise<AvailabilityStatus | undefined> {
+    public convert(): AvailabilityStatus | undefined {
         const extensionValue = this.getExtensionValue(this.node);
         if (extensionValue == null) {
             return undefined;

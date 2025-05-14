@@ -37,7 +37,7 @@ class RawPropertyBasedErrorClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 str,
@@ -50,15 +50,16 @@ class RawPropertyBasedErrorClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PropertyBasedErrorTest":
                 raise PropertyBasedErrorTest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PropertyBasedErrorTestBody,
                         parse_obj_as(
                             type_=PropertyBasedErrorTestBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
 class AsyncRawPropertyBasedErrorClient:
@@ -86,7 +87,7 @@ class AsyncRawPropertyBasedErrorClient:
         try:
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         if 200 <= _response.status_code < 300:
             _data = typing.cast(
                 str,
@@ -99,12 +100,13 @@ class AsyncRawPropertyBasedErrorClient:
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PropertyBasedErrorTest":
                 raise PropertyBasedErrorTest(
-                    typing.cast(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
                         PropertyBasedErrorTestBody,
                         parse_obj_as(
                             type_=PropertyBasedErrorTestBody,  # type: ignore
                             object_=_response_json["content"],
                         ),
-                    )
+                    ),
                 )
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

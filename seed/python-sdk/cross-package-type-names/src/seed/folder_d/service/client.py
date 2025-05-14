@@ -37,11 +37,14 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedCrossPackageTypeNames
-        client = SeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedCrossPackageTypeNames(
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.folder_d.service.get_direct_thread()
         """
-        response = self._raw_client.get_direct_thread(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_direct_thread(request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -72,12 +75,20 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedCrossPackageTypeNames
         import asyncio
-        client = AsyncSeedCrossPackageTypeNames(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedCrossPackageTypeNames
+
+        client = AsyncSeedCrossPackageTypeNames(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.folder_d.service.get_direct_thread()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_direct_thread(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_direct_thread(request_options=request_options)
+        return _response.data

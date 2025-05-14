@@ -6,8 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...commons.types.variable_value import VariableValue
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...core.serialization import FieldMetadata
 from .exception_v_2 import ExceptionV2
 
@@ -29,9 +28,9 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
 class TestCaseGrade_NonHidden(UniversalBaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
     passed: bool
-    actual_result: typing_extensions.Annotated[typing.Optional[VariableValue], FieldMetadata(alias="actualResult")] = (
-        None
-    )
+    actual_result: typing_extensions.Annotated[
+        typing.Optional["VariableValue"], FieldMetadata(alias="actualResult")
+    ] = None
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
@@ -45,4 +44,9 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ...commons.types.key_value_pair import KeyValuePair  # noqa: E402, F401, I001
+from ...commons.types.map_value import MapValue  # noqa: E402, F401, I001
+from ...commons.types.variable_value import VariableValue  # noqa: E402, F401, I001
+
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
+update_forward_refs(TestCaseGrade_NonHidden)

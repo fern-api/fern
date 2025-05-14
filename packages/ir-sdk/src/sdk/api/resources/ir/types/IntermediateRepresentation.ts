@@ -43,4 +43,5 @@ export interface IntermediateRepresentation {
     sourceConfig: FernIr.SourceConfig | undefined;
     publishConfig: FernIr.PublishingConfig | undefined;
     dynamic: FernIr.dynamic.DynamicIntermediateRepresentation | undefined;
+    selfHosted: boolean | undefined;
 }

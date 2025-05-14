@@ -63,8 +63,8 @@
         }
       }
     },
-    "l_i_s_t___p_e_t_s_Request_limit": {
-      "name": "MethodsParams",
+    "list_pets_Param_limit": {
+      "name": "list_pets_Param_limit",
       "shape": {
         "type": "alias",
         "value": {
@@ -76,8 +76,8 @@
         }
       }
     },
-    "c_r_e_a_t_e___p_e_t_Request_newPetName": {
-      "name": "MethodsParams",
+    "create_pet_Param_newPetName": {
+      "name": "create_pet_Param_newPetName",
       "shape": {
         "type": "alias",
         "value": {
@@ -88,8 +88,8 @@
         }
       }
     },
-    "c_r_e_a_t_e___p_e_t_Request_newPetTag": {
-      "name": "MethodsParams",
+    "create_pet_Param_newPetTag": {
+      "name": "create_pet_Param_newPetTag",
       "shape": {
         "type": "alias",
         "value": {
@@ -118,29 +118,11 @@
         "originalEndpointId": "list_pets",
         "name": "list_pets",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -186,18 +168,51 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listPetExample",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              1
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                1
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": [
+                  {
+                    "id": 7,
+                    "name": "fluffy",
+                    "tag": "poodle"
+                  }
+                ]
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": [
+                  {
+                    "id": 7,
+                    "name": "fluffy",
+                    "tag": "poodle"
+                  }
+                ]
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -219,29 +234,11 @@
         "originalEndpointId": "create_pet",
         "name": "create_pet",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -296,18 +293,41 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createPetExample",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "fluffy",
+              "poodle"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "fluffy",
+                "poodle"
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": 7
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": 7
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {
@@ -329,29 +349,11 @@
         "originalEndpointId": "get_pet",
         "name": "get_pet",
         "path": {
-          "pathParameters": [
-            {
-              "key": "apiKey",
-              "type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
+          "pathParameters": [],
           "parts": [
             {
               "type": "literal",
               "value": ""
-            },
-            {
-              "type": "literal",
-              "value": "/"
-            },
-            {
-              "type": "pathParameter",
-              "value": "apiKey"
             },
             {
               "type": "literal",
@@ -394,18 +396,47 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getPetExample",
             "description": "",
-            "path": "/",
-            "pathParameters": {
-              "apiKey": "apiKey"
-            },
+            "path": "/{apiKey}",
+            "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              7
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                7
+              ]
             },
-            "responseStatusCode": 200
+            "responseStatusCode": 200,
+            "responseBody": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": {
+                  "name": "fluffy",
+                  "tag": "poodle",
+                  "id": 7
+                }
+              }
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "jsonrpc": "2.0",
+                "id": "1",
+                "result": {
+                  "name": "fluffy",
+                  "tag": "poodle",
+                  "id": 7
+                }
+              }
+            },
+            "codeSamples": []
           }
         ],
         "protocol": {

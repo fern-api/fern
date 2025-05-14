@@ -1,0 +1,5 @@
+# Inspired by the user guide from at https://github.com/bufbuild/protobuf-es/blob/main/MANUAL.md#example-hello-world-plugin
+version: v2
+plugins:
+  - local: ["tsx", "../../bin/protoc-gen-fern"]
+    out: output

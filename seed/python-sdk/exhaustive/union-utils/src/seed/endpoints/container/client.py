@@ -44,11 +44,17 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_list_of_primitives(
+            request=["string", "string"],
+        )
         """
-        response = self._raw_client.get_and_return_list_of_primitives(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_list_of_primitives(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_list_of_objects(
         self,
@@ -72,11 +78,24 @@ class ContainerClient:
         --------
         from seed import SeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_list_of_objects(request=[ObjectWithRequiredField(string='string', ), ObjectWithRequiredField(string='string', )], )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_list_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                ),
+                ObjectWithRequiredField(
+                    string="string",
+                ),
+            ],
+        )
         """
-        response = self._raw_client.get_and_return_list_of_objects(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_list_of_objects(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_set_of_primitives(
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
@@ -96,11 +115,17 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_set_of_primitives(request={'string'}, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_set_of_primitives(
+            request={"string"},
+        )
         """
-        response = self._raw_client.get_and_return_set_of_primitives(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_set_of_primitives(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_set_of_objects(
         self,
@@ -124,11 +149,21 @@ class ContainerClient:
         --------
         from seed import SeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_set_of_objects(request=[ObjectWithRequiredField(string='string', )], )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_set_of_objects(
+            request=[
+                ObjectWithRequiredField(
+                    string="string",
+                )
+            ],
+        )
         """
-        response = self._raw_client.get_and_return_set_of_objects(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_set_of_objects(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_map_prim_to_prim(
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
@@ -148,11 +183,17 @@ class ContainerClient:
         Examples
         --------
         from seed import SeedExhaustive
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_map_prim_to_prim(request={'string': 'string'}, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_prim_to_prim(
+            request={"string": "string"},
+        )
         """
-        response = self._raw_client.get_and_return_map_prim_to_prim(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_map_prim_to_prim(request=request, request_options=request_options)
+        return _response.data
 
     def get_and_return_map_of_prim_to_object(
         self,
@@ -176,13 +217,23 @@ class ContainerClient:
         --------
         from seed import SeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_map_of_prim_to_object(request={'string': ObjectWithRequiredField(string='string', )}, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_map_of_prim_to_object(
+            request={
+                "string": ObjectWithRequiredField(
+                    string="string",
+                )
+            },
+        )
         """
-        response = self._raw_client.get_and_return_map_of_prim_to_object(
+        _response = self._raw_client.get_and_return_map_of_prim_to_object(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def get_and_return_optional(
         self,
@@ -206,11 +257,19 @@ class ContainerClient:
         --------
         from seed import SeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        client = SeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
-        client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string='string', ), )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.container.get_and_return_optional(
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
+        )
         """
-        response = self._raw_client.get_and_return_optional(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncContainerClient:
@@ -245,17 +304,28 @@ class AsyncContainerClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_list_of_primitives(request=['string', 'string'], )
+            await client.endpoints.container.get_and_return_list_of_primitives(
+                request=["string", "string"],
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_list_of_primitives(
+        _response = await self._raw_client.get_and_return_list_of_primitives(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_list_of_objects(
         self,
@@ -277,18 +347,36 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_list_of_objects(request=[ObjectWithRequiredField(string='string', ), ObjectWithRequiredField(string='string', )], )
+            await client.endpoints.container.get_and_return_list_of_objects(
+                request=[
+                    ObjectWithRequiredField(
+                        string="string",
+                    ),
+                    ObjectWithRequiredField(
+                        string="string",
+                    ),
+                ],
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_list_of_objects(
+        _response = await self._raw_client.get_and_return_list_of_objects(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_set_of_primitives(
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
@@ -307,17 +395,28 @@ class AsyncContainerClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_set_of_primitives(request={'string'}, )
+            await client.endpoints.container.get_and_return_set_of_primitives(
+                request={"string"},
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_set_of_primitives(
+        _response = await self._raw_client.get_and_return_set_of_primitives(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_set_of_objects(
         self,
@@ -339,18 +438,33 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_set_of_objects(request=[ObjectWithRequiredField(string='string', )], )
+            await client.endpoints.container.get_and_return_set_of_objects(
+                request=[
+                    ObjectWithRequiredField(
+                        string="string",
+                    )
+                ],
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_set_of_objects(
+        _response = await self._raw_client.get_and_return_set_of_objects(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_map_prim_to_prim(
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
@@ -369,17 +483,28 @@ class AsyncContainerClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_map_prim_to_prim(request={'string': 'string'}, )
+            await client.endpoints.container.get_and_return_map_prim_to_prim(
+                request={"string": "string"},
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_map_prim_to_prim(
+        _response = await self._raw_client.get_and_return_map_prim_to_prim(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_map_of_prim_to_object(
         self,
@@ -401,18 +526,33 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_map_of_prim_to_object(request={'string': ObjectWithRequiredField(string='string', )}, )
+            await client.endpoints.container.get_and_return_map_of_prim_to_object(
+                request={
+                    "string": ObjectWithRequiredField(
+                        string="string",
+                    )
+                },
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_map_of_prim_to_object(
+        _response = await self._raw_client.get_and_return_map_of_prim_to_object(
             request=request, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get_and_return_optional(
         self,
@@ -434,13 +574,26 @@ class AsyncContainerClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.types.object import ObjectWithRequiredField
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.endpoints.container.get_and_return_optional(request=ObjectWithRequiredField(string='string', ), )
+            await client.endpoints.container.get_and_return_optional(
+                request=ObjectWithRequiredField(
+                    string="string",
+                ),
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_and_return_optional(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_and_return_optional(request=request, request_options=request_options)
+        return _response.data

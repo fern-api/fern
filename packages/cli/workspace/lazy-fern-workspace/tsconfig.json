@@ -32,6 +32,9 @@
       "path": "../../api-importers/openapi/openapi-ir"
     },
     {
+      "path": "../../configuration"
+    },
+    {
       "path": "../../configuration-loader"
     },
     {

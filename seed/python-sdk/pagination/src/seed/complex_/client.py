@@ -63,8 +63,7 @@ class ComplexClient:
         for page in response.iter_pages():
             yield page
         """
-        response = self._raw_client.search(query=query, pagination=pagination, request_options=request_options)
-        return response.data
+        return self._raw_client.search(query=query, pagination=pagination, request_options=request_options)
 
 
 class AsyncComplexClient:
@@ -120,5 +119,4 @@ class AsyncComplexClient:
                 yield page
         asyncio.run(main())
         """
-        response = await self._raw_client.search(query=query, pagination=pagination, request_options=request_options)
-        return response.data
+        return await self._raw_client.search(query=query, pagination=pagination, request_options=request_options)

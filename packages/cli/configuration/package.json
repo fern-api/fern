@@ -30,7 +30,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
-    "@fern-fern/fdr-cjs-sdk": "0.135.1-006907ca6",
+    "@fern-fern/fdr-cjs-sdk": "0.136.5-d26998f38",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "zod": "^3.22.3"
   },

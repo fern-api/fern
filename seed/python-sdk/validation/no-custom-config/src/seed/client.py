@@ -34,7 +34,10 @@ class SeedValidation:
     Examples
     --------
     from seed import SeedValidation
-    client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedValidation(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -100,13 +103,21 @@ class SeedValidation:
         Examples
         --------
         from seed import SeedValidation
-        client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
-        client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+
+        client = SeedValidation(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.create(
+            decimal=2.2,
+            even=100,
+            name="fern",
+            shape="SQUARE",
+        )
         """
-        response = self._raw_client.create(
+        _response = self._raw_client.create(
             decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def get(
         self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
@@ -130,11 +141,18 @@ class SeedValidation:
         Examples
         --------
         from seed import SeedValidation
-        client = SeedValidation(base_url="https://yourhost.com/path/to/api", )
-        client.get(decimal=2.2, even=100, name='foo', )
+
+        client = SeedValidation(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get(
+            decimal=2.2,
+            even=100,
+            name="fern",
+        )
         """
-        response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return _response.data
 
 
 class AsyncSeedValidation:
@@ -158,7 +176,10 @@ class AsyncSeedValidation:
     Examples
     --------
     from seed import AsyncSeedValidation
-    client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedValidation(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -223,17 +244,30 @@ class AsyncSeedValidation:
 
         Examples
         --------
-        from seed import AsyncSeedValidation
         import asyncio
-        client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedValidation
+
+        client = AsyncSeedValidation(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.create(decimal=2.2, even=100, name='foo', shape="SQUARE", )
+            await client.create(
+                decimal=2.2,
+                even=100,
+                name="fern",
+                shape="SQUARE",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.create(
+        _response = await self._raw_client.create(
             decimal=decimal, even=even, name=name, shape=shape, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def get(
         self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
@@ -256,12 +290,24 @@ class AsyncSeedValidation:
 
         Examples
         --------
-        from seed import AsyncSeedValidation
         import asyncio
-        client = AsyncSeedValidation(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedValidation
+
+        client = AsyncSeedValidation(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.get(decimal=2.2, even=100, name='foo', )
+            await client.get(
+                decimal=2.2,
+                even=100,
+                name="fern",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
+        return _response.data

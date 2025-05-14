@@ -20,7 +20,6 @@ export { convertIrToDynamicSnippetsIr } from "./dynamic-snippets/convertIrToDyna
 export * as ExampleValidators from "./examples";
 export { constructFernFileContext, constructRootApiFileContext, type FernFileContext } from "./FernFileContext";
 export { generateIntermediateRepresentation } from "./generateIntermediateRepresentation";
-export { IdGenerator } from "./IdGenerator";
 export { EndpointResolverImpl, type EndpointResolver } from "./resolvers/EndpointResolver";
 export { ErrorResolverImpl, type ErrorResolver } from "./resolvers/ErrorResolver";
 export { ExampleResolverImpl, type ExampleResolver } from "./resolvers/ExampleResolver";

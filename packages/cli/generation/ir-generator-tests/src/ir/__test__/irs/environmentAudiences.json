@@ -1,4 +1,5 @@
 {
+    "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
@@ -1347,6 +1348,8 @@
                 "inline": null
             },
             "examples": [],
+            "v2Examples": null,
+            "displayName": null,
             "docs": null
         }
     },
@@ -1522,8 +1525,9 @@
                             "default": null,
                             "inline": null
                         },
+                        "docs": null,
                         "contentType": null,
-                        "docs": null
+                        "v2Examples": null
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1598,8 +1602,9 @@
                                     "default": null,
                                     "inline": null
                                 },
+                                "docs": null,
                                 "contentType": null,
-                                "docs": null
+                                "v2Examples": null
                             }
                         },
                         "requestParameterName": {

@@ -432,47 +432,25 @@
         ]
       }
     },
-    "ValidationErrorLocItemsOneOfZero": {
-      "name": "ValidationErrorLocItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItemsOneOfOne": {
-      "name": "ValidationErrorLocItemsOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItemsOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -517,9 +495,9 @@
     }
   },
   "subpackages": {
-    "Agent": {
-      "subpackageId": "Agent",
-      "name": "Agent",
+    "subpackage_agent": {
+      "subpackageId": "subpackage_agent",
+      "name": "agent",
       "endpoints": [
         {
           "auth": true,
@@ -543,10 +521,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAllAgentsApiV1AgentsGetExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -594,10 +582,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "agentCreateAgentApiV1AgentsPostExample",
               "description": "",
               "path": "/api/v1/agents",
               "pathParameters": {},
@@ -661,12 +673,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAgentApiV1AgentsAgentIdGetExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -719,12 +755,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAgentApiV1AgentsAgentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -788,12 +848,36 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -864,12 +948,36 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
               "description": "",
-              "path": "/api/v1/agents/",
+              "path": "/api/v1/agents/foo/predict",
               "pathParameters": {
                 "agentId": "foo"
               },
@@ -897,9 +1005,9 @@
       "types": [],
       "subpackages": []
     },
-    "Auth": {
-      "subpackageId": "Auth",
-      "name": "Auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
+      "name": "auth",
       "endpoints": [
         {
           "auth": false,
@@ -935,10 +1043,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignInApiV1AuthSignInPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-in",
               "pathParameters": {},
@@ -996,10 +1128,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authSignUpApiV1AuthSignUpPostExample",
               "description": "",
               "path": "/api/v1/auth/sign-up",
               "pathParameters": {},
@@ -1029,9 +1185,9 @@
       "types": [],
       "subpackages": []
     },
-    "User": {
-      "subpackageId": "User",
-      "name": "User",
+    "subpackage_user": {
+      "subpackageId": "subpackage_user",
+      "name": "user",
       "endpoints": [
         {
           "auth": true,
@@ -1054,10 +1210,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "readUserMeApiV1UsersMeGetExample",
               "description": "",
               "path": "/api/v1/users/me",
               "pathParameters": {},
@@ -1109,12 +1275,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "readUserApiV1UsersUserIdGetExample",
               "description": "",
-              "path": "/api/v1/users/",
+              "path": "/api/v1/users/foo",
               "pathParameters": {
                 "userId": "foo"
               },
@@ -1133,9 +1323,9 @@
       "types": [],
       "subpackages": []
     },
-    "Api token": {
-      "subpackageId": "Api token",
-      "name": "Api token",
+    "subpackage_apiToken": {
+      "subpackageId": "subpackage_apiToken",
+      "name": "apiToken",
       "endpoints": [
         {
           "auth": true,
@@ -1159,10 +1349,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listApiTokensApiV1ApiTokensGetExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1210,10 +1410,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "apiTokenCreateApiTokenApiV1ApiTokensPostExample",
               "description": "",
               "path": "/api/v1/api-tokens",
               "pathParameters": {},
@@ -1275,12 +1499,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getApiTokenApiV1ApiTokensTokenIdGetExample",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1333,12 +1581,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteApiTokenApiV1ApiTokensTokenIdDeleteExample",
               "description": "",
-              "path": "/api/v1/api-tokens/",
+              "path": "/api/v1/api-tokens/foo",
               "pathParameters": {
                 "tokenId": "foo"
               },
@@ -1357,9 +1629,9 @@
       "types": [],
       "subpackages": []
     },
-    "Documents": {
-      "subpackageId": "Documents",
-      "name": "Documents",
+    "subpackage_documents": {
+      "subpackageId": "subpackage_documents",
+      "name": "documents",
       "endpoints": [
         {
           "auth": true,
@@ -1383,10 +1655,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listDocumentsApiV1DocumentsGetExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1434,10 +1716,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "documentsCreateDocumentApiV1DocumentsPostExample",
               "description": "",
               "path": "/api/v1/documents",
               "pathParameters": {},
@@ -1503,12 +1809,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getDocumentApiV1DocumentsDocumentIdGetExample",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -1561,12 +1891,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteDocumentApiV1DocumentsDocumentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/documents/",
+              "path": "/api/v1/documents/foo",
               "pathParameters": {
                 "documentId": "foo"
               },
@@ -1585,9 +1939,9 @@
       "types": [],
       "subpackages": []
     },
-    "Prompts": {
-      "subpackageId": "Prompts",
-      "name": "Prompts",
+    "subpackage_prompts": {
+      "subpackageId": "subpackage_prompts",
+      "name": "prompts",
       "endpoints": [
         {
           "auth": true,
@@ -1611,10 +1965,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPromptsApiV1PromptsGetExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -1662,10 +2026,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsCreateAPromptApiV1PromptsPostExample",
               "description": "",
               "path": "/api/v1/prompts",
               "pathParameters": {},
@@ -1735,12 +2123,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getPromptApiV1PromptsPromptIdGetExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -1793,12 +2205,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deletePromptApiV1PromptsPromptIdDeleteExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -1862,12 +2298,36 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
               "description": "",
-              "path": "/api/v1/prompts/",
+              "path": "/api/v1/prompts/foo",
               "pathParameters": {
                 "promptId": "foo"
               },
@@ -1891,9 +2351,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tools": {
-      "subpackageId": "Tools",
-      "name": "Tools",
+    "subpackage_tools": {
+      "subpackageId": "subpackage_tools",
+      "name": "tools",
       "endpoints": [
         {
           "auth": true,
@@ -1917,10 +2377,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listToolsApiV1ToolsGetExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -1968,10 +2438,34 @@
               }
             }
           },
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "toolsCreateAToolApiV1ToolsPostExample",
               "description": "",
               "path": "/api/v1/tools",
               "pathParameters": {},
@@ -2035,12 +2529,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getToolApiV1ToolsToolIdGetExample",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },
@@ -2093,12 +2611,36 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteToolApiV1ToolsToolIdDeleteExample",
               "description": "",
-              "path": "/api/v1/tools/",
+              "path": "/api/v1/tools/foo",
               "pathParameters": {
                 "toolId": "foo"
               },
@@ -2117,9 +2659,9 @@
       "types": [],
       "subpackages": []
     },
-    "Traces": {
-      "subpackageId": "Traces",
-      "name": "Traces",
+    "subpackage_traces": {
+      "subpackageId": "subpackage_traces",
+      "name": "traces",
       "endpoints": [
         {
           "auth": true,
@@ -2143,10 +2685,20 @@
           },
           "queryParameters": [],
           "headers": [],
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 200,
+            "description": "Successful Response"
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAgentTracesApiV1TracesGetExample",
               "description": "",
               "path": "/api/v1/traces",
               "pathParameters": {},
@@ -2183,14 +2735,14 @@
       "ValidationError"
     ],
     "subpackages": [
-      "Agent",
-      "Auth",
-      "User",
-      "Api token",
-      "Documents",
-      "Prompts",
-      "Tools",
-      "Traces"
+      "subpackage_agent",
+      "subpackage_auth",
+      "subpackage_user",
+      "subpackage_apiToken",
+      "subpackage_documents",
+      "subpackage_prompts",
+      "subpackage_tools",
+      "subpackage_traces"
     ]
   },
   "snippetsConfiguration": {},

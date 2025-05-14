@@ -22,6 +22,7 @@ export function convertEnum({
     description,
     availability,
     wrapAsNullable,
+    namespace,
     groupName,
     context,
     source,
@@ -37,6 +38,7 @@ export function convertEnum({
     description: string | undefined;
     availability: Availability | undefined;
     wrapAsNullable: boolean;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     context: SchemaParserContext | undefined;
     source: Source;
@@ -82,6 +84,7 @@ export function convertEnum({
         _default: _defaultEnumValue,
         description,
         availability,
+        namespace,
         groupName,
         source,
         inline
@@ -97,6 +100,7 @@ export function wrapEnum({
     _default,
     description,
     availability,
+    namespace,
     groupName,
     source,
     inline
@@ -109,6 +113,7 @@ export function wrapEnum({
     _default: EnumValue | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
     source: Source;
     inline: boolean | undefined;
@@ -127,12 +132,14 @@ export function wrapEnum({
                 default: _default,
                 availability,
                 example: undefined,
+                namespace,
                 groupName,
                 source,
                 inline
             }),
             description,
             availability,
+            namespace,
             groupName,
             inline
         });
@@ -146,6 +153,7 @@ export function wrapEnum({
         availability,
         default: _default,
         example: undefined,
+        namespace,
         groupName,
         source,
         inline

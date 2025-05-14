@@ -74,8 +74,8 @@
     }
   },
   "subpackages": {
-    "chatCompletions": {
-      "subpackageId": "chatCompletions",
+    "subpackage_chatCompletions": {
+      "subpackageId": "subpackage_chatCompletions",
       "name": "chatCompletions",
       "endpoints": [
         {
@@ -128,7 +128,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "chatCompletionsCreateExample",
               "description": "",
               "path": "/completions/chat",
               "pathParameters": {},
@@ -175,7 +175,7 @@
       "CompletionChunk"
     ],
     "subpackages": [
-      "chatCompletions"
+      "subpackage_chatCompletions"
     ]
   },
   "snippetsConfiguration": {},

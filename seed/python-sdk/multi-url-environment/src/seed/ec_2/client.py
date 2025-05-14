@@ -41,11 +41,16 @@ class Ec2Client:
         Examples
         --------
         from seed import SeedMultiUrlEnvironment
-        client = SeedMultiUrlEnvironment(token="YOUR_TOKEN", )
-        client.ec_2.boot_instance(size='size', )
+
+        client = SeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+        client.ec_2.boot_instance(
+            size="size",
+        )
         """
-        response = self._raw_client.boot_instance(size=size, request_options=request_options)
-        return response.data
+        _response = self._raw_client.boot_instance(size=size, request_options=request_options)
+        return _response.data
 
 
 class AsyncEc2Client:
@@ -78,12 +83,22 @@ class AsyncEc2Client:
 
         Examples
         --------
-        from seed import AsyncSeedMultiUrlEnvironment
         import asyncio
-        client = AsyncSeedMultiUrlEnvironment(token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedMultiUrlEnvironment
+
+        client = AsyncSeedMultiUrlEnvironment(
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.ec_2.boot_instance(size='size', )
+            await client.ec_2.boot_instance(
+                size="size",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.boot_instance(size=size, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.boot_instance(size=size, request_options=request_options)
+        return _response.data

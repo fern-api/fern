@@ -16,7 +16,7 @@
                     "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateString": "client = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateString": "client = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -72,7 +72,7 @@
                     "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateString": "client = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -94,7 +94,7 @@
                         "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateString": "client = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -128,7 +128,7 @@
                     "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateString": "client = SeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -199,7 +199,7 @@
                         "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateString": "client = AsyncSeedAudiences(\n    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

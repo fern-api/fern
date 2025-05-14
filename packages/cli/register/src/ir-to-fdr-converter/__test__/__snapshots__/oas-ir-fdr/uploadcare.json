@@ -2390,6 +2390,15 @@
         ]
       }
     },
+    "Upload_multipartFileUploadPart_Request": {
+      "description": "Part of the uploaded file.\n\nDon't include `https://upload.uploadcare.com/` in this request:\n\n```\ncurl -X PUT \"<presigned-url-x>\" -H \"Content-Type: application/octet-stream\" --data <data-part>\n```\n",
+      "name": "Upload_multipartFileUploadPart_Request",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
     "FromUrlPostRequestBodySchemaCheckUrlDuplicates": {
       "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n",
       "name": "FromUrlPostRequestBodySchemaCheckUrlDuplicates",
@@ -2488,9 +2497,9 @@
     }
   },
   "subpackages": {
-    "Upload": {
-      "subpackageId": "Upload",
-      "name": "Upload",
+    "subpackage_upload": {
+      "subpackageId": "subpackage_upload",
+      "name": "upload",
       "endpoints": [
         {
           "auth": false,
@@ -2600,7 +2609,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2617,15 +2627,98 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "one-file",
               "description": "",
               "path": "/base/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
                 "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "two-files",
+              "description": "",
+              "path": "/base/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "{filename}": [
+                  "foo"
+                ]
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "{filename}": {
+                    "type": "filenames",
+                    "value": [
+                      "foo"
+                    ]
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2798,7 +2891,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2815,15 +2909,55 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadStart_example",
               "description": "",
               "path": "/multipart/start/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "UPLOADCARE_STORE": "auto",
+                "filename": "myfile.mp4",
+                "size": 27796904,
+                "content_type": "video/mp4"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "UPLOADCARE_STORE": {
+                    "type": "json",
+                    "value": "auto"
+                  },
+                  "filename": {
+                    "type": "json",
+                    "value": "myfile.mp4"
+                  },
+                  "size": {
+                    "type": "json",
+                    "value": 27796904
+                  },
+                  "part_size": {
+                    "type": "json"
+                  },
+                  "content_type": {
+                    "type": "json",
+                    "value": "video/mp4"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2887,10 +3021,17 @@
           },
           "queryParameters": [],
           "headers": [],
+          "request": {
+            "type": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
+          },
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multipartFileUploadPartExample",
               "description": "",
               "path": "/<presigned-url-x>",
               "pathParameters": {},
@@ -2963,7 +3104,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -2980,15 +3122,28 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_multipartFileUploadComplete_example",
               "description": "",
               "path": "/multipart/complete/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "UPLOADCARE_PUB_KEY": "YOUR_PUBLIC_KEY",
+                "uuid": "67947755-1584-4e3f-902b-d4e2bf76a841"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "UPLOADCARE_PUB_KEY": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "uuid": {
+                    "type": "json",
+                    "value": "67947755-1584-4e3f-902b-d4e2bf76a841"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -3277,7 +3432,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3294,7 +3450,54 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Upload_fromURLUpload_example",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "source_url": "https://source.unsplash.com/featured"
+              },
+              "requestBodyV3": {
+                "type": "form",
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "source_url": {
+                    "type": "json",
+                    "value": "https://source.unsplash.com/featured"
+                  },
+                  "store": {
+                    "type": "json"
+                  },
+                  "filename": {
+                    "type": "json"
+                  },
+                  "check_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "save_URL_duplicates": {
+                    "type": "json"
+                  },
+                  "metadata[{key}]": {
+                    "type": "json"
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "type-token",
               "description": "",
               "path": "/from_url/",
               "pathParameters": {},
@@ -3317,6 +3520,31 @@
                 "value": {
                   "type": "token",
                   "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+                }
+              }
+            },
+            {
+              "name": "type-file-info",
+              "description": "",
+              "path": "/from_url/",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBodyV3": {
+                "type": "form",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "type": "token"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "token"
                 }
               }
             }
@@ -3380,7 +3608,99 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "status-waiting",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-progress",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-success",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-error",
+              "description": "",
+              "path": "/from_url/status/",
+              "pathParameters": {},
+              "queryParameters": {
+                "token": "945ebb27-1fd6-46c6-a859-b9893712d650"
+              },
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "status": "waiting"
+                }
+              }
+            },
+            {
+              "name": "status-unknown",
               "description": "",
               "path": "/from_url/status/",
               "pathParameters": {},
@@ -3469,7 +3789,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "fileUploadInfoExample",
               "description": "",
               "path": "/info/",
               "pathParameters": {},
@@ -3615,9 +3935,9 @@
       "types": [],
       "subpackages": []
     },
-    "Groups": {
-      "subpackageId": "Groups",
-      "name": "Groups",
+    "subpackage_groups": {
+      "subpackageId": "subpackage_groups",
+      "name": "groups",
       "endpoints": [
         {
           "auth": false,
@@ -3707,7 +4027,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {
@@ -3724,15 +4045,40 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "Groups_createFilesGroup_example",
               "description": "",
               "path": "/group/",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "pub_key": "YOUR_PUBLIC_KEY",
+                "files[]": [
+                  "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                  "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                ]
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "pub_key": {
+                    "type": "json",
+                    "value": "YOUR_PUBLIC_KEY"
+                  },
+                  "files[]": {
+                    "type": "json",
+                    "value": [
+                      "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+                      "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+                    ]
+                  },
+                  "signature": {
+                    "type": "json"
+                  },
+                  "expire": {
+                    "type": "json"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -3830,7 +4176,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "filesGroupInfoExample",
               "description": "",
               "path": "/group/info/",
               "pathParameters": {},
@@ -3969,8 +4315,8 @@
       "metadata"
     ],
     "subpackages": [
-      "Upload",
-      "Groups"
+      "subpackage_upload",
+      "subpackage_groups"
     ]
   },
   "snippetsConfiguration": {},

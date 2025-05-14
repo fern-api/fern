@@ -28,7 +28,10 @@ class SeedApiWideBasePath:
     Examples
     --------
     from seed import SeedApiWideBasePath
-    client = SeedApiWideBasePath(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedApiWideBasePath(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedApiWideBasePath:
     Examples
     --------
     from seed import AsyncSeedApiWideBasePath
-    client = AsyncSeedApiWideBasePath(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedApiWideBasePath(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

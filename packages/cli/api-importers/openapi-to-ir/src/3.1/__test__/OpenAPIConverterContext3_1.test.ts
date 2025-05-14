@@ -26,10 +26,11 @@ describe("OpenAPIConverterContext3_1", async () => {
             errorCollector: new ErrorCollector({
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 logger: undefined as any
-            })
+            }),
+            enableUniqueErrorsPerEndpoint: false
         });
 
-        const result = await context.resolveReference<OpenAPIV3_1.SchemaObject>({
+        const result = await context.resolveMaybeExternalReference<OpenAPIV3_1.SchemaObject>({
             $ref: "https://raw.githubusercontent.com/OpenAPITools/openapi-petstore/refs/heads/master/src/main/resources/openapi.yaml#/components/schemas/Pet"
         });
 

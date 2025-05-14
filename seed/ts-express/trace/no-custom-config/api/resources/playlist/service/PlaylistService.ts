@@ -141,7 +141,9 @@ export class PlaylistService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
@@ -181,7 +183,9 @@ export class PlaylistService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
@@ -211,7 +215,9 @@ export class PlaylistService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     switch (error.errorName) {
@@ -252,7 +258,9 @@ export class PlaylistService {
                         },
                         next,
                     );
-                    next();
+                    if (res.writableEnded) {
+                        next();
+                    }
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
                         switch (error.errorName) {
@@ -293,7 +301,9 @@ export class PlaylistService {
                     },
                     next,
                 );
-                next();
+                if (res.writableEnded) {
+                    next();
+                }
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(

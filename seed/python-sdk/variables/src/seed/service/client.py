@@ -38,11 +38,16 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedVariables
-        client = SeedVariables(base_url="https://yourhost.com/path/to/api", )
-        client.service.post(endpoint_param='endpointParam', )
+
+        client = SeedVariables(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.post(
+            endpoint_param="endpointParam",
+        )
         """
-        response = self._raw_client.post(endpoint_param, request_options=request_options)
-        return response.data
+        _response = self._raw_client.post(endpoint_param, request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -75,12 +80,22 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedVariables
         import asyncio
-        client = AsyncSeedVariables(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedVariables
+
+        client = AsyncSeedVariables(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.post(endpoint_param='endpointParam', )
+            await client.service.post(
+                endpoint_param="endpointParam",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.post(endpoint_param, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.post(endpoint_param, request_options=request_options)
+        return _response.data

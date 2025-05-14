@@ -16,7 +16,7 @@
                     "from seed import SeedOauthClientCredentialsEnvironmentVariables"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -87,7 +87,7 @@
                         "from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                    "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -170,7 +170,7 @@
                     "from seed import SeedOauthClientCredentialsEnvironmentVariables"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                "templateString": "client = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -257,7 +257,7 @@
                         "from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", client_id=\"YOUR_CLIENT_ID\", client_secret=\"YOUR_CLIENT_SECRET\", )",
+                    "templateString": "client = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

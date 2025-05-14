@@ -16,7 +16,7 @@
                     "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -161,7 +161,7 @@
                         "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

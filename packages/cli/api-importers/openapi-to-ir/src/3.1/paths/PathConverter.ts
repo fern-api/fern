@@ -1,60 +1,61 @@
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
-import { TypeDeclaration } from "@fern-api/ir-sdk";
-import { AbstractConverter } from "@fern-api/v2-importer-commons";
+import { AuthScheme } from "@fern-api/ir-sdk";
+import { AbstractConverter, Converters } from "@fern-api/v2-importer-commons";
 
 import { HttpMethods } from "../../constants/HttpMethods";
 import { FernIdempotentExtension } from "../../extensions/x-fern-idempotent";
 import { FernPaginationExtension } from "../../extensions/x-fern-pagination";
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
 import { FernWebhookExtension } from "../../extensions/x-fern-webhook";
-import { OpenAPIConverter } from "../OpenAPIConverter";
 import { OpenAPIConverterContext3_1 } from "../OpenAPIConverterContext3_1";
 import { OperationConverter } from "./operations/OperationConverter";
 import { WebhookConverter } from "./operations/WebhookConverter";
 
 export declare namespace PathConverter {
-    export interface Args extends OpenAPIConverter.Args {
+    export interface Args extends AbstractConverter.Args<OpenAPIConverterContext3_1> {
         pathItem: OpenAPIV3_1.PathItemObject;
         path: string;
-        servers?: OpenAPIV3_1.ServerObject[];
+        topLevelServers?: OpenAPIV3_1.ServerObject[];
+        idToAuthScheme?: Record<string, AuthScheme>;
     }
 
     export interface Output {
         endpoints: OperationConverter.Output[];
         webhooks: WebhookConverter.Output[];
-        inlinedTypes: Record<string, TypeDeclaration>;
+        inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
 
 export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1, PathConverter.Output> {
     private readonly pathItem: OpenAPIV3_1.PathItemObject;
     private readonly path: string;
-    private readonly servers?: OpenAPIV3_1.ServerObject[];
+    private readonly idToAuthScheme?: Record<string, AuthScheme>;
+    private readonly topLevelServers?: OpenAPIV3_1.ServerObject[];
 
-    constructor({ context, breadcrumbs, pathItem, path, servers }: PathConverter.Args) {
+    constructor({ context, breadcrumbs, pathItem, path, idToAuthScheme, topLevelServers }: PathConverter.Args) {
         super({ context, breadcrumbs });
         this.pathItem = pathItem;
         this.path = path;
-        this.servers = servers;
+        this.idToAuthScheme = idToAuthScheme;
+        this.topLevelServers = topLevelServers;
     }
 
-    public async convert(): Promise<PathConverter.Output | undefined> {
+    public convert(): PathConverter.Output | undefined {
         const endpoints: OperationConverter.Output[] = [];
         const webhooks: WebhookConverter.Output[] = [];
-        const inlinedTypes: Record<string, TypeDeclaration> = {};
+        const inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
         for (const method of HttpMethods) {
             const operation = this.pathItem[method];
 
             if (operation == null) {
-                // TODO: log the skip here
                 continue;
             }
 
             const operationBreadcrumbs = [...this.breadcrumbs, method];
 
-            const convertedWebhook = await this.tryParseAsWebhook({
+            const convertedWebhook = this.tryParseAsWebhook({
                 operationBreadcrumbs,
                 operation,
                 method,
@@ -77,7 +78,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 // Use streamFormat to modify response conversion.
             }
 
-            const convertedEndpoint = await this.tryParseAsHttpEndpoint({
+            const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
                 operation,
                 method
@@ -95,7 +96,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         };
     }
 
-    private async tryParseAsWebhook({
+    private tryParseAsWebhook({
         operation,
         method,
         operationBreadcrumbs,
@@ -105,7 +106,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         method: string;
         operationBreadcrumbs: string[];
         context: OpenAPIConverterContext3_1;
-    }): Promise<WebhookConverter.Output | undefined> {
+    }): WebhookConverter.Output | undefined {
         const webhookExtensionConverter = new FernWebhookExtension({
             breadcrumbs: operationBreadcrumbs,
             operation,
@@ -123,10 +124,10 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path
         });
-        return await webhookConverter.convert();
+        return webhookConverter.convert();
     }
 
-    private async tryParseAsHttpEndpoint({
+    private tryParseAsHttpEndpoint({
         operation,
         method,
         operationBreadcrumbs
@@ -134,7 +135,7 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         operation: OpenAPIV3_1.OperationObject;
         method: string;
         operationBreadcrumbs: string[];
-    }): Promise<OperationConverter.Output | undefined> {
+    }): OperationConverter.Output | undefined {
         const paginationExtensionConverter = new FernPaginationExtension({
             breadcrumbs: operationBreadcrumbs,
             operation,
@@ -160,8 +161,10 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             operation,
             method: OpenAPIV3.HttpMethods[method.toUpperCase() as keyof typeof OpenAPIV3.HttpMethods],
             path: this.path,
-            idempotent: isIdempotent
+            idempotent: isIdempotent,
+            idToAuthScheme: this.idToAuthScheme,
+            topLevelServers: this.topLevelServers
         });
-        return await operationConverter.convert();
+        return operationConverter.convert();
     }
 }

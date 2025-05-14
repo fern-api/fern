@@ -2,7 +2,8 @@
 FROM node:20.18-alpine3.20 AS node
 
 RUN apk --no-cache add git zip
-RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
 
 COPY ./generators/python-v2/sdk/dist/cli.cjs /dist/cli.cjs
 
@@ -54,5 +55,10 @@ COPY ./generators/python/core_utilities/shared /assets/core_utilities
 COPY ./generators/python/sdk/features.yml /assets/features.yml
 COPY ./generators/python/tests /assets/tests
 COPY ./generators/python/src ./src
+
+RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
+    git config --global user.name "fern-api"
+
+RUN npm install -f -g @fern-api/generator-cli    
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]

@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .test_case_function import TestCaseFunction
 from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_template_id import TestCaseTemplateId
@@ -29,6 +29,10 @@ class TestCaseImplementationReference_Implementation(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ....commons.list_type import ListType  # noqa: E402, F401, I001
+from ....commons.map_type import MapType  # noqa: E402, F401, I001
+
 TestCaseImplementationReference = typing.Union[
     TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]
+update_forward_refs(TestCaseImplementationReference_Implementation)

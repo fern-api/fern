@@ -46,11 +46,16 @@ class EventsClient:
         Examples
         --------
         from seed import SeedMixedFileDirectory
-        client = SeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
-        client.user.events.list_events(limit=1, )
+
+        client = SeedMixedFileDirectory(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.events.list_events(
+            limit=1,
+        )
         """
-        response = self._raw_client.list_events(limit=limit, request_options=request_options)
-        return response.data
+        _response = self._raw_client.list_events(limit=limit, request_options=request_options)
+        return _response.data
 
 
 class AsyncEventsClient:
@@ -89,12 +94,22 @@ class AsyncEventsClient:
 
         Examples
         --------
-        from seed import AsyncSeedMixedFileDirectory
         import asyncio
-        client = AsyncSeedMixedFileDirectory(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedMixedFileDirectory
+
+        client = AsyncSeedMixedFileDirectory(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.user.events.list_events(limit=1, )
+            await client.user.events.list_events(
+                limit=1,
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.list_events(limit=limit, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.list_events(limit=limit, request_options=request_options)
+        return _response.data

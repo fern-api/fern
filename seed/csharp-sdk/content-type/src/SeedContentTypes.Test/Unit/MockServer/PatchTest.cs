@@ -27,11 +27,10 @@ public class PatchTest : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Service.PatchAsync(
-                    new PatchProxyRequest { Application = "application", RequireAuth = true }
-                )
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Service.PatchAsync(
+                new PatchProxyRequest { Application = "application", RequireAuth = true }
+            )
         );
     }
 }

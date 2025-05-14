@@ -81,7 +81,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -118,7 +119,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -184,7 +186,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -222,7 +225,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -235,7 +239,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -252,9 +257,9 @@
     }
   },
   "subpackages": {
-    "OrganizationUsers": {
-      "subpackageId": "OrganizationUsers",
-      "name": "OrganizationUsers",
+    "subpackage_organizationUsers": {
+      "subpackageId": "subpackage_organizationUsers",
+      "name": "organizationUsers",
       "endpoints": [
         {
           "auth": false,
@@ -334,16 +339,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listOrganizationUsersExample",
               "description": "",
-              "path": "/organizations/",
+              "path": "/organizations/foo/users",
               "pathParameters": {
                 "organizationId": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -404,9 +406,9 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": false,
@@ -468,14 +470,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listUsersExample",
               "description": "",
               "path": "/users",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "pageSize": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -592,9 +591,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -656,8 +655,8 @@
       "UserStats"
     ],
     "subpackages": [
-      "OrganizationUsers",
-      "Users"
+      "subpackage_organizationUsers",
+      "subpackage_users"
     ]
   },
   "snippetsConfiguration": {},

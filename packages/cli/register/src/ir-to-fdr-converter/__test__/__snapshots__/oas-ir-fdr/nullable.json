@@ -353,7 +353,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -457,7 +457,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "updateAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -588,15 +588,14 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
             "queryParameters": {
-              "activated": "foo",
-              "email": "foo"
+              "activated": "foo"
             },
             "headers": {},
             "responseStatusCode": 200,

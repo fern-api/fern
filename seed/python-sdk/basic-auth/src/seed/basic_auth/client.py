@@ -41,11 +41,16 @@ class BasicAuthClient:
         Examples
         --------
         from seed import SeedBasicAuth
-        client = SeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.basic_auth.get_with_basic_auth()
         """
-        response = self._raw_client.get_with_basic_auth(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_with_basic_auth(request_options=request_options)
+        return _response.data
 
     def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -67,12 +72,18 @@ class BasicAuthClient:
         Examples
         --------
         from seed import SeedBasicAuth
-        client = SeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
-        client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-        , )
+
+        client = SeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.basic_auth.post_with_basic_auth(
+            request={"key": "value"},
+        )
         """
-        response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
-        return response.data
+        _response = self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return _response.data
 
 
 class AsyncBasicAuthClient:
@@ -105,15 +116,25 @@ class AsyncBasicAuthClient:
 
         Examples
         --------
-        from seed import AsyncSeedBasicAuth
         import asyncio
-        client = AsyncSeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedBasicAuth
+
+        client = AsyncSeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.basic_auth.get_with_basic_auth()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_basic_auth(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_with_basic_auth(request_options=request_options)
+        return _response.data
 
     async def post_with_basic_auth(
         self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
@@ -134,13 +155,24 @@ class AsyncBasicAuthClient:
 
         Examples
         --------
-        from seed import AsyncSeedBasicAuth
         import asyncio
-        client = AsyncSeedBasicAuth(username="YOUR_USERNAME", password="YOUR_PASSWORD", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedBasicAuth
+
+        client = AsyncSeedBasicAuth(
+            username="YOUR_USERNAME",
+            password="YOUR_PASSWORD",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.basic_auth.post_with_basic_auth(request={'key': 'value'}
-            , )
+            await client.basic_auth.post_with_basic_auth(
+                request={"key": "value"},
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.post_with_basic_auth(request=request, request_options=request_options)
+        return _response.data

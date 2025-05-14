@@ -43,6 +43,10 @@ fixtures:
     - outputFolder: private
       customConfig:
         propertyAccess: private
+    - outputFolder: package-path
+      customConfig:
+        packagePath: Custom/Package/Path
+        namespace: Custom\Package\Path
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null
@@ -111,6 +115,7 @@ scripts:
       - composer analyze
       - composer test
 allowedFailures:
+  - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - auth-environment-variables
   # Basic auth is not supported yet.

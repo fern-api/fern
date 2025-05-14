@@ -27,7 +27,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "integration",
@@ -39,7 +40,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "integration_slug",
@@ -51,7 +53,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "category",
@@ -76,7 +79,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "end_user_organization_name",
@@ -88,7 +92,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "end_user_email_address",
@@ -101,7 +106,8 @@
                   "format": "email"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "status",
@@ -113,7 +119,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "webhook_listener_url",
@@ -126,7 +133,8 @@
                   "format": "uri"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
@@ -142,29 +150,58 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
     },
     "AccountDetailsAndActionsCategory": {
+      "description": "* `hris` - hris\n* `ats` - ats\n* `accounting` - accounting\n* `ticketing` - ticketing\n* `crm` - crm\n* `mktg` - mktg\n* `filestorage` - filestorage",
       "name": "AccountDetailsAndActionsCategory",
       "shape": {
-        "type": "object",
-        "extends": [
-          "CategoryEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "hris"
+          },
+          {
+            "value": "ats"
+          },
+          {
+            "value": "accounting"
+          },
+          {
+            "value": "ticketing"
+          },
+          {
+            "value": "crm"
+          },
+          {
+            "value": "mktg"
+          },
+          {
+            "value": "filestorage"
+          }
+        ]
       }
     },
     "AccountDetailsAndActionsStatus": {
+      "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED",
       "name": "AccountDetailsAndActionsStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AccountDetailsAndActionsStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "COMPLETE"
+          },
+          {
+            "value": "INCOMPLETE"
+          },
+          {
+            "value": "RELINK_NEEDED"
+          }
+        ]
       }
     },
     "AccountDetailsAndActions": {
@@ -390,15 +427,6 @@
         ]
       }
     },
-    "AccountIntegrationApiEndpointsToDocumentationUrls": {
-      "description": "Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}",
-      "name": "AccountIntegrationApiEndpointsToDocumentationUrls",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "AccountIntegration": {
       "name": "AccountIntegration",
       "shape": {
@@ -488,7 +516,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "If checked, this integration will not appear in the linking flow, and will appear elsewhere with a Beta tag.",
@@ -509,8 +538,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "AccountIntegrationApiEndpointsToDocumentationUrls"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -607,14 +644,6 @@
         "properties": []
       }
     },
-    "BankInfoFieldMappings": {
-      "name": "BankInfoFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "BankInfo": {
       "description": "# The BankInfo Object\n### Description\nThe `BankInfo` object is used to represent the Bank Account information for an Employee.\n\n### Usage Example\nFetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank information.",
       "name": "BankInfo",
@@ -633,7 +662,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -759,7 +789,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -773,7 +804,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -782,11 +814,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BankInfoFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -802,17 +843,10 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "BenefitFieldMappings": {
-      "name": "BenefitFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Benefit": {
@@ -833,7 +867,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -977,7 +1012,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -991,7 +1027,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -1000,11 +1037,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "BenefitFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -1020,7 +1066,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1127,14 +1174,6 @@
         ]
       }
     },
-    "CompanyFieldMappings": {
-      "name": "CompanyFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Company": {
       "description": "# The Company Object\n### Description\nThe `Company` object is used to represent a company within the HRIS / Payroll system.\n\n### Usage Example\nFetch from the `LIST Companies` endpoint and filter by `ID` to show all companies.",
       "name": "Company",
@@ -1153,7 +1192,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -1233,7 +1273,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -1247,7 +1288,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -1256,11 +1298,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "CompanyFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -1276,20 +1327,40 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
     },
     "ConditionSchemaConditionType": {
-      "description": "The type of value(s) that can be set for this condition.\n\n* `BOOLEAN` - BOOLEAN\n* `DATE` - DATE\n* `DATE_TIME` - DATE_TIME\n* `INTEGER` - INTEGER\n* `FLOAT` - FLOAT\n* `STRING` - STRING\n* `LIST_OF_STRINGS` - LIST_OF_STRINGS",
+      "description": "* `BOOLEAN` - BOOLEAN\n* `DATE` - DATE\n* `DATE_TIME` - DATE_TIME\n* `INTEGER` - INTEGER\n* `FLOAT` - FLOAT\n* `STRING` - STRING\n* `LIST_OF_STRINGS` - LIST_OF_STRINGS",
       "name": "ConditionSchemaConditionType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionTypeEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "BOOLEAN"
+          },
+          {
+            "value": "DATE"
+          },
+          {
+            "value": "DATE_TIME"
+          },
+          {
+            "value": "INTEGER"
+          },
+          {
+            "value": "FLOAT"
+          },
+          {
+            "value": "STRING"
+          },
+          {
+            "value": "LIST_OF_STRINGS"
+          }
+        ]
       }
     },
     "ConditionSchema": {
@@ -1320,7 +1391,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "User-facing *native condition* name. e.g. \"Skip Manager\".",
@@ -2170,22 +2242,33 @@
       }
     },
     "DataPassthroughRequestMethod": {
+      "description": "* `GET` - GET\n* `OPTIONS` - OPTIONS\n* `HEAD` - HEAD\n* `POST` - POST\n* `PUT` - PUT\n* `PATCH` - PATCH\n* `DELETE` - DELETE",
       "name": "DataPassthroughRequestMethod",
       "shape": {
-        "type": "object",
-        "extends": [
-          "MethodEnum"
-        ],
-        "properties": []
-      }
-    },
-    "DataPassthroughRequestHeaders": {
-      "description": "The headers to use for the request (Merge will handle the account's authorization headers). `Content-Type` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
-      "name": "DataPassthroughRequestHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "GET"
+          },
+          {
+            "value": "OPTIONS"
+          },
+          {
+            "value": "HEAD"
+          },
+          {
+            "value": "POST"
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "PATCH"
+          },
+          {
+            "value": "DELETE"
+          }
+        ]
       }
     },
     "DataPassthroughRequestRequestFormat": {
@@ -2279,8 +2362,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "DataPassthroughRequestHeaders"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -2384,14 +2475,6 @@
         ]
       }
     },
-    "DeductionFieldMappings": {
-      "name": "DeductionFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Deduction": {
       "description": "# The Deduction Object\n### Description\nThe `Deduction` object is used to represent an array of the wages withheld from total earnings for the purpose of paying taxes.\n\n### Usage Example\nFetch from the `LIST Deductions` endpoint and filter by `ID` to show all deductions.",
       "name": "Deduction",
@@ -2410,7 +2493,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -2517,7 +2601,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -2526,11 +2611,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "DeductionFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -2546,7 +2640,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2559,14 +2654,6 @@
         "extends": [
           "EarningTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "EarningFieldMappings": {
-      "name": "EarningFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -2588,7 +2675,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -2677,7 +2765,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -2686,11 +2775,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EarningFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -2706,7 +2804,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -2776,23 +2875,6 @@
         "properties": []
       }
     },
-    "EmployeeCustomFields": {
-      "description": "Custom fields configured for a given model.",
-      "name": "EmployeeCustomFields",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "EmployeeFieldMappings": {
-      "name": "EmployeeFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Employee": {
       "description": "# The Employee Object\n### Description\nThe `Employee` object is used to represent any person who has been employed by a company.\n\n### Usage Example\nFetch from the `LIST Employee` endpoint and filter by `ID` to show all employees.",
       "name": "Employee",
@@ -2811,7 +2893,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -3281,8 +3364,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeCustomFields"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -3297,7 +3388,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -3311,7 +3403,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -3320,11 +3413,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -3340,7 +3442,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -3361,14 +3464,6 @@
         ]
       }
     },
-    "EmployeePayrollRunFieldMappings": {
-      "name": "EmployeePayrollRunFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "EmployeePayrollRun": {
       "description": "# The EmployeePayrollRun Object\n### Description\nThe `EmployeePayrollRun` object is used to represent an employee's pay statement for a specific payroll run.\n\n### Usage Example\nFetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all employee payroll runs.",
       "name": "EmployeePayrollRun",
@@ -3387,7 +3482,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -3533,7 +3629,8 @@
                   "value": "Earning"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "deductions",
@@ -3546,7 +3643,8 @@
                   "value": "Deduction"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "taxes",
@@ -3559,7 +3657,8 @@
                   "value": "Tax"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Indicates whether or not this object has been deleted by third party webhooks.",
@@ -3572,7 +3671,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -3586,7 +3686,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -3595,11 +3696,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeePayrollRunFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -3615,7 +3725,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -3661,22 +3772,6 @@
         "extends": [
           "EmploymentStatusEnum"
         ],
-        "properties": []
-      }
-    },
-    "EmployeeRequestIntegrationParams": {
-      "name": "EmployeeRequestIntegrationParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "EmployeeRequestLinkedAccountParams": {
-      "name": "EmployeeRequestLinkedAccountParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -4121,11 +4216,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeRequestIntegrationParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "linked_account_params",
@@ -4134,11 +4238,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmployeeRequestLinkedAccountParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -4247,14 +4360,6 @@
         "properties": []
       }
     },
-    "EmploymentFieldMappings": {
-      "name": "EmploymentFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Employment": {
       "description": "# The Employment Object\n### Description\nThe `Employment` object is used to represent a job position at a company.\n\nPlease note: When there is a change in pay or title, integrations with historical data will create new Employment objects while integrations without historical data will update existing ones.\n\n### Usage Example\nFetch from the `LIST Employments` endpoint and filter by `ID` to show all employees.",
       "name": "Employment",
@@ -4273,7 +4378,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -4455,7 +4561,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -4469,7 +4576,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -4478,11 +4586,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EmploymentFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -4498,7 +4615,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -4856,14 +4974,6 @@
         "properties": []
       }
     },
-    "GroupFieldMappings": {
-      "name": "GroupFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Group": {
       "description": "# The Group Object\n### Description\nThe `Group` object is used to represent any subset of employees, such as `PayGroup` or `Team`. Employees can be in multiple Groups.\n\n### Usage Example\nFetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.",
       "name": "Group",
@@ -4882,7 +4992,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -4958,7 +5069,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -4972,7 +5084,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -4981,11 +5094,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "GroupFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -5001,7 +5123,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5031,13 +5154,21 @@
       }
     },
     "IgnoreCommonModelRequestReason": {
+      "description": "* `GENERAL_CUSTOMER_REQUEST` - GENERAL_CUSTOMER_REQUEST\n* `GDPR` - GDPR\n* `OTHER` - OTHER",
       "name": "IgnoreCommonModelRequestReason",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ReasonEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "GENERAL_CUSTOMER_REQUEST"
+          },
+          {
+            "value": "GDPR"
+          },
+          {
+            "value": "OTHER"
+          }
+        ]
       }
     },
     "IgnoreCommonModelRequest": {
@@ -5071,22 +5202,18 @@
       }
     },
     "IssueStatus": {
-      "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
+      "description": "* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
       "name": "IssueStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "IssueStatusEnum"
-        ],
-        "properties": []
-      }
-    },
-    "IssueEndUser": {
-      "name": "IssueEndUser",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "ONGOING"
+          },
+          {
+            "value": "RESOLVED"
+          }
+        ]
       }
     },
     "Issue": {
@@ -5106,7 +5233,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')\n\n* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
@@ -5133,10 +5261,19 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "IssueEndUser"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "first_incident_time",
@@ -5180,7 +5317,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "error_details",
@@ -5195,7 +5333,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5285,7 +5424,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "User-facing *native condition* name. e.g. \"Skip Manager\".",
@@ -5309,6 +5449,17 @@
                 "type": "string"
               }
             }
+          },
+          {
+            "description": "The value for a condition.",
+            "key": "value",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "unknown"
+              }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The name of the field on the common model that this condition corresponds to, if they conceptually match. e.g. \"location_type\".",
@@ -5353,6 +5504,13 @@
                 "minLength": 1
               }
             }
+          },
+          {
+            "description": "The value for a specific condition.",
+            "key": "value",
+            "valueType": {
+              "type": "unknown"
+            }
           }
         ]
       }
@@ -5375,7 +5533,8 @@
                   "value": "LinkedAccountCondition"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5469,14 +5628,6 @@
         "properties": []
       }
     },
-    "LocationFieldMappings": {
-      "name": "LocationFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Location": {
       "description": "# The Location Object\n### Description\nThe `Location` object is used to represent an address that can be associated with an employee.\n\n### Usage Example\nFetch from the `LIST Locations` endpoint and filter by `ID` to show all office locations.",
       "name": "Location",
@@ -5495,7 +5646,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -5664,7 +5816,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -5678,7 +5831,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -5687,11 +5841,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "LocationFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -5707,7 +5870,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -5751,22 +5915,6 @@
         ]
       }
     },
-    "MetaResponseRequestSchema": {
-      "name": "MetaResponseRequestSchema",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "MetaResponseRemoteFieldClasses": {
-      "name": "MetaResponseRemoteFieldClasses",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "MetaResponse": {
       "name": "MetaResponse",
       "shape": {
@@ -5776,8 +5924,16 @@
           {
             "key": "request_schema",
             "valueType": {
-              "type": "id",
-              "value": "MetaResponseRequestSchema"
+              "type": "map",
+              "keyType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              },
+              "valueType": {
+                "type": "unknown"
+              }
             }
           },
           {
@@ -5785,8 +5941,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "MetaResponseRemoteFieldClasses"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -6014,7 +6178,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Whether the operator can be repeated multiple times.",
@@ -6027,7 +6192,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -7879,14 +8045,6 @@
         ]
       }
     },
-    "PayGroupFieldMappings": {
-      "name": "PayGroupFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "PayGroup": {
       "description": "# The PayGroup Object\n### Description\nThe `PayGroup` object is used to represent a subset of employees that are put together for payroll processing purposes.\n\n### Usage Example\nFetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.",
       "name": "PayGroup",
@@ -7905,7 +8063,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -7950,7 +8109,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -7964,7 +8124,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -7973,11 +8134,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PayGroupFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -7993,7 +8163,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -8056,14 +8227,6 @@
         "properties": []
       }
     },
-    "PayrollRunFieldMappings": {
-      "name": "PayrollRunFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "PayrollRun": {
       "description": "# The PayrollRun Object\n### Description\nThe `PayrollRun` object is used to represent a group of pay statements for a specific pay schedule.\n\n### Usage Example\nFetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payroll runs.",
       "name": "PayrollRun",
@@ -8082,7 +8245,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8190,7 +8354,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -8204,7 +8369,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8213,11 +8379,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "PayrollRunFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8233,7 +8408,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -8283,14 +8459,6 @@
         ]
       }
     },
-    "RemoteDataData": {
-      "name": "RemoteDataData",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RemoteData": {
       "name": "RemoteData",
       "shape": {
@@ -8311,8 +8479,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteDataData"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -8367,30 +8543,19 @@
         ]
       }
     },
-    "RemoteResponseResponseHeaders": {
-      "name": "RemoteResponseResponseHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "RemoteResponseResponseType": {
+      "description": "* `JSON` - JSON\n* `BASE64_GZIP` - BASE64_GZIP",
       "name": "RemoteResponseResponseType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ResponseTypeEnum"
-        ],
-        "properties": []
-      }
-    },
-    "RemoteResponseHeaders": {
-      "name": "RemoteResponseHeaders",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "JSON"
+          },
+          {
+            "value": "BASE64_GZIP"
+          }
+        ]
       }
     },
     "RemoteResponse": {
@@ -8428,12 +8593,26 @@
             }
           },
           {
+            "key": "response",
+            "valueType": {
+              "type": "unknown"
+            }
+          },
+          {
             "key": "response_headers",
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteResponseResponseHeaders"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -8452,8 +8631,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "RemoteResponseHeaders"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           }
@@ -8584,13 +8771,30 @@
       }
     },
     "SyncStatusStatus": {
+      "description": "* `SYNCING` - SYNCING\n* `DONE` - DONE\n* `FAILED` - FAILED\n* `DISABLED` - DISABLED\n* `PAUSED` - PAUSED\n* `PARTIALLY_SYNCED` - PARTIALLY_SYNCED",
       "name": "SyncStatusStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "SyncStatusStatusEnum"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "SYNCING"
+          },
+          {
+            "value": "DONE"
+          },
+          {
+            "value": "FAILED"
+          },
+          {
+            "value": "DISABLED"
+          },
+          {
+            "value": "PAUSED"
+          },
+          {
+            "value": "PARTIALLY_SYNCED"
+          }
+        ]
       }
     },
     "SyncStatus": {
@@ -8700,14 +8904,6 @@
         ]
       }
     },
-    "TaxFieldMappings": {
-      "name": "TaxFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "Tax": {
       "description": "# The Tax Object\n### Description\nThe `Tax` object is used to represent an array of the tax deductions for a given employee's payroll run.\n\n### Usage Example\nFetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.",
       "name": "Tax",
@@ -8726,7 +8922,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8833,7 +9030,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8842,11 +9040,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TaxFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8862,17 +9069,10 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "TeamFieldMappings": {
-      "name": "TeamFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "Team": {
@@ -8893,7 +9093,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -8955,7 +9156,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -8969,7 +9171,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -8978,11 +9181,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TeamFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -8998,7 +9210,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9036,14 +9249,6 @@
         "properties": []
       }
     },
-    "TimeOffFieldMappings": {
-      "name": "TimeOffFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "TimeOff": {
       "description": "# The TimeOff Object\n### Description\nThe `TimeOff` object is used to represent all employees' Time Off entries.\n\n### Usage Example\nFetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off requests.",
       "name": "TimeOff",
@@ -9062,7 +9267,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -9232,7 +9438,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -9246,7 +9453,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -9255,11 +9463,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -9275,7 +9492,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9288,14 +9506,6 @@
         "extends": [
           "PolicyTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "TimeOffBalanceFieldMappings": {
-      "name": "TimeOffBalanceFieldMappings",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -9317,7 +9527,8 @@
                   "format": "uuid"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The third-party API ID of the matching object.",
@@ -9409,7 +9620,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "This is the datetime that this object was last updated by Merge",
@@ -9423,7 +9635,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "field_mappings",
@@ -9432,11 +9645,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffBalanceFieldMappings"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "remote_data",
@@ -9452,7 +9674,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -9503,22 +9726,6 @@
         "extends": [
           "RequestTypeEnum"
         ],
-        "properties": []
-      }
-    },
-    "TimeOffRequestIntegrationParams": {
-      "name": "TimeOffRequestIntegrationParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
-    "TimeOffRequestLinkedAccountParams": {
-      "name": "TimeOffRequestLinkedAccountParams",
-      "shape": {
-        "type": "object",
-        "extends": [],
         "properties": []
       }
     },
@@ -9678,11 +9885,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffRequestIntegrationParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "linked_account_params",
@@ -9691,11 +9907,20 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "TimeOffRequestLinkedAccountParams"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -10441,9 +10666,9 @@
     }
   },
   "subpackages": {
-    "account-details": {
-      "subpackageId": "account-details",
-      "name": "account-details",
+    "subpackage_accountDetails": {
+      "subpackageId": "subpackage_accountDetails",
+      "name": "accountDetails",
       "endpoints": [
         {
           "auth": true,
@@ -10503,7 +10728,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/account-details",
               "pathParameters": {},
@@ -10554,9 +10779,9 @@
       "types": [],
       "subpackages": []
     },
-    "account-token": {
-      "subpackageId": "account-token",
-      "name": "account-token",
+    "subpackage_accountToken": {
+      "subpackageId": "subpackage_accountToken",
+      "name": "accountToken",
       "endpoints": [
         {
           "auth": true,
@@ -10623,9 +10848,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/account-token/",
+              "path": "/account-token/foo",
               "pathParameters": {
                 "public_token": "foo"
               },
@@ -10680,9 +10905,9 @@
       "types": [],
       "subpackages": []
     },
-    "available-actions": {
-      "subpackageId": "available-actions",
-      "name": "available-actions",
+    "subpackage_availableActions": {
+      "subpackageId": "subpackage_availableActions",
+      "name": "availableActions",
       "endpoints": [
         {
           "auth": true,
@@ -10742,7 +10967,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
               "path": "/available-actions",
               "pathParameters": {},
@@ -10827,9 +11052,9 @@
       "types": [],
       "subpackages": []
     },
-    "bank-info": {
-      "subpackageId": "bank-info",
-      "name": "bank-info",
+    "subpackage_bankInfo": {
+      "subpackageId": "subpackage_bankInfo",
+      "name": "bankInfo",
       "endpoints": [
         {
           "auth": true,
@@ -11092,26 +11317,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/bank-info",
               "pathParameters": {},
               "queryParameters": {
-                "account_type": "CHECKING",
-                "bank_name": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "order_by": "-remote_created_at",
-                "page_size": 42,
                 "remote_fields": "account_type",
-                "remote_id": "foo",
                 "show_enum_origins": "account_type"
               },
               "headers": {
@@ -11304,15 +11518,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/bank-info/",
+              "path": "/bank-info/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
                 "expand": "employee",
-                "include_remote_data": true,
                 "remote_fields": "account_type",
                 "show_enum_origins": "account_type"
               },
@@ -11376,8 +11589,8 @@
       "types": [],
       "subpackages": []
     },
-    "benefits": {
-      "subpackageId": "benefits",
+    "subpackage_benefits": {
+      "subpackageId": "subpackage_benefits",
       "name": "benefits",
       "endpoints": [
         {
@@ -11584,22 +11797,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/benefits",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
-                "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "expand": "employee"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -11771,15 +11976,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/benefits/",
+              "path": "/benefits/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "employee",
-                "include_remote_data": true
+                "expand": "employee"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -11843,8 +12047,8 @@
       "types": [],
       "subpackages": []
     },
-    "companies": {
-      "subpackageId": "companies",
+    "subpackage_companies": {
+      "subpackageId": "subpackage_companies",
       "name": "companies",
       "endpoints": [
         {
@@ -12027,20 +12231,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/companies",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -12197,15 +12393,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/companies/",
+              "path": "/companies/foo",
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "include_remote_data": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -12264,9 +12458,9 @@
       "types": [],
       "subpackages": []
     },
-    "delete-account": {
-      "subpackageId": "delete-account",
-      "name": "delete-account",
+    "subpackage_deleteAccount": {
+      "subpackageId": "subpackage_deleteAccount",
+      "name": "deleteAccount",
       "endpoints": [
         {
           "auth": true,
@@ -12315,7 +12509,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "createExample",
               "description": "",
               "path": "/delete-account",
               "pathParameters": {},
@@ -12336,9 +12530,9 @@
       "types": [],
       "subpackages": []
     },
-    "employee-payroll-runs": {
-      "subpackageId": "employee-payroll-runs",
-      "name": "employee-payroll-runs",
+    "subpackage_employeePayrollRuns": {
+      "subpackageId": "subpackage_employeePayrollRuns",
+      "name": "employeePayrollRuns",
       "endpoints": [
         {
           "auth": true,
@@ -12613,27 +12807,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employee-payroll-runs",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
-                "ended_after": "foo",
-                "ended_before": "foo",
                 "expand": "employee,payroll_run",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "payroll_run_id": "foo",
-                "remote_id": "foo",
-                "started_after": "foo",
-                "started_before": "foo"
+                "payroll_run_id": "foo"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -12917,15 +13099,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/employee-payroll-runs/",
+              "path": "/employee-payroll-runs/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "employee,payroll_run",
-                "include_remote_data": true
+                "expand": "employee,payroll_run"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -13101,8 +13282,8 @@
       "types": [],
       "subpackages": []
     },
-    "employees": {
-      "subpackageId": "employees",
+    "subpackage_employees": {
+      "subpackageId": "subpackage_employees",
       "name": "employees",
       "endpoints": [
         {
@@ -13543,39 +13724,19 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
               "queryParameters": {
                 "company_id": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "display_full_name": "foo",
-                "employment_status": "ACTIVE",
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                "first_name": "foo",
-                "groups": "foo",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "include_sensitive_fields": true,
-                "last_name": "foo",
                 "manager_id": "foo",
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "pay_group_id": "foo",
-                "personal_email": "foo",
                 "remote_fields": "employment_status,ethnicity,gender,marital_status",
-                "remote_id": "foo",
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status",
-                "started_after": "foo",
-                "started_before": "foo",
                 "team_id": "foo",
-                "terminated_after": "foo",
-                "terminated_before": "foo",
-                "work_email": "foo",
                 "work_location_id": "foo"
               },
               "headers": {
@@ -13794,14 +13955,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "employeesCreateExample",
               "description": "",
               "path": "/employees",
               "pathParameters": {},
-              "queryParameters": {
-                "is_debug_mode": true,
-                "run_async": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -14120,16 +14278,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/employees/",
+              "path": "/employees/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                "include_remote_data": true,
-                "include_sensitive_fields": true,
                 "remote_fields": "employment_status,ethnicity,gender,marital_status",
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status"
               },
@@ -14318,9 +14474,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "employeesIgnoreCreateExample",
               "description": "",
-              "path": "/employees/ignore/",
+              "path": "/employees/ignore/foo",
               "pathParameters": {
                 "model_id": "foo"
               },
@@ -14402,7 +14558,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/employees/meta/post",
               "pathParameters": {},
@@ -14449,8 +14605,8 @@
       "types": [],
       "subpackages": []
     },
-    "employments": {
-      "subpackageId": "employments",
+    "subpackage_employments": {
+      "subpackageId": "subpackage_employments",
       "name": "employments",
       "endpoints": [
         {
@@ -14690,24 +14846,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/employments",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee,pay_group",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "order_by": "-effective_date",
-                "page_size": 42,
                 "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
-                "remote_id": "foo",
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
               "headers": {
@@ -14908,15 +15055,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/employments/",
+              "path": "/employments/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
                 "expand": "employee,pay_group",
-                "include_remote_data": true,
                 "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
@@ -14988,9 +15134,9 @@
       "types": [],
       "subpackages": []
     },
-    "generate-key": {
-      "subpackageId": "generate-key",
-      "name": "generate-key",
+    "subpackage_generateKey": {
+      "subpackageId": "subpackage_generateKey",
+      "name": "generateKey",
       "endpoints": [
         {
           "auth": true,
@@ -15052,7 +15198,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "generateKeyCreateExample",
               "description": "",
               "path": "/generate-key",
               "pathParameters": {},
@@ -15094,8 +15240,8 @@
       "types": [],
       "subpackages": []
     },
-    "groups": {
-      "subpackageId": "groups",
+    "subpackage_groups": {
+      "subpackageId": "subpackage_groups",
       "name": "groups",
       "endpoints": [
         {
@@ -15313,23 +15459,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/groups",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "type",
-                "remote_id": "foo",
-                "show_enum_origins": "type",
-                "types": "foo"
+                "show_enum_origins": "type"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -15504,14 +15641,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/groups/",
+              "path": "/groups/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "type",
                 "show_enum_origins": "type"
               },
@@ -15569,8 +15705,8 @@
       "types": [],
       "subpackages": []
     },
-    "issues": {
-      "subpackageId": "issues",
+    "subpackage_issues": {
+      "subpackageId": "subpackage_issues",
       "name": "issues",
       "endpoints": [
         {
@@ -15789,24 +15925,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/issues",
               "pathParameters": {},
               "queryParameters": {
-                "account_token": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "end_date": "foo",
-                "end_user_organization_name": "foo",
-                "first_incident_time_after": "foo",
-                "first_incident_time_before": "foo",
-                "include_muted": "foo",
-                "integration_name": "foo",
-                "last_incident_time_after": "foo",
-                "last_incident_time_before": "foo",
-                "page_size": 42,
-                "start_date": "foo",
-                "status": "ONGOING"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -15924,9 +16048,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/issues/",
+              "path": "/issues/foo",
               "pathParameters": {
                 "id": "foo"
               },
@@ -15975,9 +16099,9 @@
       "types": [],
       "subpackages": []
     },
-    "link-token": {
-      "subpackageId": "link-token",
-      "name": "link-token",
+    "subpackage_linkToken": {
+      "subpackageId": "subpackage_linkToken",
+      "name": "linkToken",
       "endpoints": [
         {
           "auth": true,
@@ -16039,7 +16163,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "linkTokenCreateExample",
               "description": "",
               "path": "/link-token",
               "pathParameters": {},
@@ -16093,9 +16217,9 @@
       "types": [],
       "subpackages": []
     },
-    "linked-accounts": {
-      "subpackageId": "linked-accounts",
-      "name": "linked-accounts",
+    "subpackage_linkedAccounts": {
+      "subpackageId": "subpackage_linkedAccounts",
+      "name": "linkedAccounts",
       "endpoints": [
         {
           "auth": true,
@@ -16312,24 +16436,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/linked-accounts",
               "pathParameters": {},
               "queryParameters": {
-                "category": "accounting",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "end_user_email_address": "foo",
-                "end_user_organization_name": "foo",
-                "end_user_origin_id": "foo",
-                "end_user_origin_ids": "foo",
-                "id": "foo",
-                "ids": "foo",
-                "include_duplicates": true,
-                "integration_name": "foo",
-                "is_test_account": "foo",
-                "page_size": 42,
-                "status": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -16435,8 +16547,8 @@
       "types": [],
       "subpackages": []
     },
-    "locations": {
-      "subpackageId": "locations",
+    "subpackage_locations": {
+      "subpackageId": "subpackage_locations",
       "name": "locations",
       "endpoints": [
         {
@@ -16641,21 +16753,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/locations",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "location_type",
-                "remote_id": "foo",
                 "show_enum_origins": "location_type"
               },
               "headers": {
@@ -16843,14 +16947,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/locations/",
+              "path": "/locations/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "location_type",
                 "show_enum_origins": "location_type"
               },
@@ -16920,8 +17023,8 @@
       "types": [],
       "subpackages": []
     },
-    "passthrough": {
-      "subpackageId": "passthrough",
+    "subpackage_passthrough": {
+      "subpackageId": "subpackage_passthrough",
       "name": "passthrough",
       "endpoints": [
         {
@@ -16995,7 +17098,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "passthroughCreateExample",
               "description": "",
               "path": "/passthrough",
               "pathParameters": {},
@@ -17051,9 +17154,9 @@
       "types": [],
       "subpackages": []
     },
-    "pay-groups": {
-      "subpackageId": "pay-groups",
-      "name": "pay-groups",
+    "subpackage_payGroups": {
+      "subpackageId": "subpackage_payGroups",
+      "name": "payGroups",
       "endpoints": [
         {
           "auth": true,
@@ -17235,20 +17338,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/pay-groups",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "remote_id": "foo"
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -17397,15 +17492,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/pay-groups/",
+              "path": "/pay-groups/foo",
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "include_remote_data": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -17456,9 +17549,9 @@
       "types": [],
       "subpackages": []
     },
-    "payroll-runs": {
-      "subpackageId": "payroll-runs",
-      "name": "payroll-runs",
+    "subpackage_payrollRuns": {
+      "subpackageId": "subpackage_payrollRuns",
+      "name": "payrollRuns",
       "endpoints": [
         {
           "auth": true,
@@ -17729,27 +17822,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/payroll-runs",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "ended_after": "foo",
-                "ended_before": "foo",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "run_state,run_type",
-                "remote_id": "foo",
-                "run_type": "CORRECTION",
-                "show_enum_origins": "run_state,run_type",
-                "started_after": "foo",
-                "started_before": "foo"
+                "show_enum_origins": "run_state,run_type"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -17928,14 +18008,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/payroll-runs/",
+              "path": "/payroll-runs/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "include_remote_data": true,
                 "remote_fields": "run_state,run_type",
                 "show_enum_origins": "run_state,run_type"
               },
@@ -17997,9 +18076,9 @@
       "types": [],
       "subpackages": []
     },
-    "regenerate-key": {
-      "subpackageId": "regenerate-key",
-      "name": "regenerate-key",
+    "subpackage_regenerateKey": {
+      "subpackageId": "subpackage_regenerateKey",
+      "name": "regenerateKey",
       "endpoints": [
         {
           "auth": true,
@@ -18061,7 +18140,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "regenerateKeyCreateExample",
               "description": "",
               "path": "/regenerate-key",
               "pathParameters": {},
@@ -18103,9 +18182,9 @@
       "types": [],
       "subpackages": []
     },
-    "selective-sync": {
-      "subpackageId": "selective-sync",
-      "name": "selective-sync",
+    "subpackage_selectiveSync": {
+      "subpackageId": "subpackage_selectiveSync",
+      "name": "selectiveSync",
       "endpoints": [
         {
           "auth": true,
@@ -18168,7 +18247,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "StartDateConditionExample",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -18291,7 +18370,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "StartDateConditionRequestExample",
               "description": "",
               "path": "/selective-sync/configurations",
               "pathParameters": {},
@@ -18327,6 +18406,20 @@
                     }
                   ]
                 }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "StartDateConditionExample",
+              "description": "",
+              "path": "/selective-sync/configurations",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {
+                "X-Account-Token": "foo"
+              },
+              "requestBodyV3": {
+                "type": "json"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18466,14 +18559,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "PaginatedConditionSchemaListExample",
               "description": "",
               "path": "/selective-sync/meta",
               "pathParameters": {},
               "queryParameters": {
-                "common_model": "foo",
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "page_size": 42
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -18545,9 +18636,9 @@
       "types": [],
       "subpackages": []
     },
-    "sync-status": {
-      "subpackageId": "sync-status",
-      "name": "sync-status",
+    "subpackage_syncStatus": {
+      "subpackageId": "subpackage_syncStatus",
+      "name": "syncStatus",
       "endpoints": [
         {
           "auth": true,
@@ -18634,13 +18725,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/sync-status",
               "pathParameters": {},
               "queryParameters": {
-                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "page_size": 42
+                "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -18694,9 +18784,9 @@
       "types": [],
       "subpackages": []
     },
-    "force-resync": {
-      "subpackageId": "force-resync",
-      "name": "force-resync",
+    "subpackage_forceResync": {
+      "subpackageId": "subpackage_forceResync",
+      "name": "forceResync",
       "endpoints": [
         {
           "auth": true,
@@ -18759,7 +18849,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "syncStatusResyncCreateExample",
               "description": "",
               "path": "/sync-status/resync",
               "pathParameters": {},
@@ -18808,8 +18898,8 @@
       "types": [],
       "subpackages": []
     },
-    "teams": {
-      "subpackageId": "teams",
+    "subpackage_teams": {
+      "subpackageId": "subpackage_teams",
       "name": "teams",
       "endpoints": [
         {
@@ -19016,22 +19106,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/teams",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "expand": "parent_team",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "parent_team_id": "foo",
-                "remote_id": "foo"
+                "parent_team_id": "foo"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19193,15 +19275,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/teams/",
+              "path": "/teams/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
-                "expand": "parent_team",
-                "include_remote_data": true
+                "expand": "parent_team"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19255,9 +19336,9 @@
       "types": [],
       "subpackages": []
     },
-    "time-off": {
-      "subpackageId": "time-off",
-      "name": "time-off",
+    "subpackage_timeOff": {
+      "subpackageId": "subpackage_timeOff",
+      "name": "timeOff",
       "endpoints": [
         {
           "auth": true,
@@ -19520,27 +19601,17 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
               "queryParameters": {
                 "approver_id": "foo",
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee,approver",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
                 "remote_fields": "request_type,status,units",
-                "remote_id": "foo",
-                "request_type": "BEREAVEMENT",
-                "show_enum_origins": "request_type,status,units",
-                "status": "APPROVED"
+                "show_enum_origins": "request_type,status,units"
               },
               "headers": {
                 "X-Account-Token": "foo"
@@ -19712,14 +19783,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "timeOffCreateExample",
               "description": "",
               "path": "/time-off",
               "pathParameters": {},
-              "queryParameters": {
-                "is_debug_mode": true,
-                "run_async": true
-              },
+              "queryParameters": {},
               "headers": {
                 "X-Account-Token": "foo"
               },
@@ -19979,15 +20047,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/time-off/",
+              "path": "/time-off/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
                 "expand": "employee,approver",
-                "include_remote_data": true,
                 "remote_fields": "request_type,status,units",
                 "show_enum_origins": "request_type,status,units"
               },
@@ -20109,7 +20176,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "metaPostRetrieveExample",
               "description": "",
               "path": "/time-off/meta/post",
               "pathParameters": {},
@@ -20156,9 +20223,9 @@
       "types": [],
       "subpackages": []
     },
-    "time-off-balances": {
-      "subpackageId": "time-off-balances",
-      "name": "time-off-balances",
+    "subpackage_timeOffBalances": {
+      "subpackageId": "subpackage_timeOffBalances",
+      "name": "timeOffBalances",
       "endpoints": [
         {
           "auth": true,
@@ -20397,24 +20464,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/time-off-balances",
               "pathParameters": {},
               "queryParameters": {
-                "created_after": "foo",
-                "created_before": "foo",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "employee_id": "foo",
                 "expand": "employee",
-                "include_deleted_data": true,
-                "include_remote_data": true,
-                "modified_after": "foo",
-                "modified_before": "foo",
-                "page_size": 42,
-                "policy_type": "BEREAVEMENT",
                 "remote_fields": "policy_type",
-                "remote_id": "foo",
                 "show_enum_origins": "policy_type"
               },
               "headers": {
@@ -20603,15 +20661,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveExample",
               "description": "",
-              "path": "/time-off-balances/",
+              "path": "/time-off-balances/foo",
               "pathParameters": {
                 "id": "foo"
               },
               "queryParameters": {
                 "expand": "employee",
-                "include_remote_data": true,
                 "remote_fields": "policy_type",
                 "show_enum_origins": "policy_type"
               },
@@ -20671,9 +20728,9 @@
       "types": [],
       "subpackages": []
     },
-    "webhook-receivers": {
-      "subpackageId": "webhook-receivers",
-      "name": "webhook-receivers",
+    "subpackage_webhookReceivers": {
+      "subpackageId": "subpackage_webhookReceivers",
+      "name": "webhookReceivers",
       "endpoints": [
         {
           "auth": true,
@@ -20736,7 +20793,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -20842,7 +20899,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "webhookReceiversCreateExample",
               "description": "",
               "path": "/webhook-receivers",
               "pathParameters": {},
@@ -21006,33 +21063,33 @@
       "WebhookReceiverRequest"
     ],
     "subpackages": [
-      "account-details",
-      "account-token",
-      "available-actions",
-      "bank-info",
-      "benefits",
-      "companies",
-      "delete-account",
-      "employee-payroll-runs",
-      "employees",
-      "employments",
-      "generate-key",
-      "groups",
-      "issues",
-      "link-token",
-      "linked-accounts",
-      "locations",
-      "passthrough",
-      "pay-groups",
-      "payroll-runs",
-      "regenerate-key",
-      "selective-sync",
-      "sync-status",
-      "force-resync",
-      "teams",
-      "time-off",
-      "time-off-balances",
-      "webhook-receivers"
+      "subpackage_accountDetails",
+      "subpackage_accountToken",
+      "subpackage_availableActions",
+      "subpackage_bankInfo",
+      "subpackage_benefits",
+      "subpackage_companies",
+      "subpackage_deleteAccount",
+      "subpackage_employeePayrollRuns",
+      "subpackage_employees",
+      "subpackage_employments",
+      "subpackage_generateKey",
+      "subpackage_groups",
+      "subpackage_issues",
+      "subpackage_linkToken",
+      "subpackage_linkedAccounts",
+      "subpackage_locations",
+      "subpackage_passthrough",
+      "subpackage_payGroups",
+      "subpackage_payrollRuns",
+      "subpackage_regenerateKey",
+      "subpackage_selectiveSync",
+      "subpackage_syncStatus",
+      "subpackage_forceResync",
+      "subpackage_teams",
+      "subpackage_timeOff",
+      "subpackage_timeOffBalances",
+      "subpackage_webhookReceivers"
     ]
   },
   "auth": {

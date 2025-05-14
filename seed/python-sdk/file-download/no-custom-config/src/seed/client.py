@@ -28,7 +28,10 @@ class SeedFileDownload:
     Examples
     --------
     from seed import SeedFileDownload
-    client = SeedFileDownload(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedFileDownload(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedFileDownload:
     Examples
     --------
     from seed import AsyncSeedFileDownload
-    client = AsyncSeedFileDownload(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedFileDownload(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

@@ -7,12 +7,14 @@ import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints";
 import { ValidFileTypes } from "./rules/valid-file-types";
 import { ValidFrontmatter } from "./rules/valid-frontmatter";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
+import { ValidateProductFileRule } from "./rules/validate-product-file";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 const allRules = [
     FilepathsExistRule,
     OnlyVersionedNavigation,
     ValidateVersionFileRule,
+    ValidateProductFileRule,
     AccentColorContrastRule,
     ValidMarkdownLinks,
     ValidFileTypes,

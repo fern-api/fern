@@ -1,3 +1,9 @@
+- version: 0.15.0
+  changelogEntry:
+    - type: feat
+      summary: Support custom package path
+  irVersion: 55
+
 - version: 0.14.2
   changelogEntry:
     - type: fix

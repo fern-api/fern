@@ -13,7 +13,9 @@ ordered-set = "^4.1.0"
 pydantic-core = "^2.18.2"
 fern-fern-fdr-sdk = { version = "0.98.20", source = "fern-prod" }
 fern-fern-generator-cli-sdk = { version = "0.0.18", source = "fern-prod" }
-fern_fern_ir_v57 = "57.0.0"
+fern_fern_ir_v57 = "57.10.0"
+black = "^25.1.0"
+isort = "^6.0.1"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
@@ -55,7 +57,7 @@ ignore = [
     "F841"   # Local variable ... is assigned to but never used
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]

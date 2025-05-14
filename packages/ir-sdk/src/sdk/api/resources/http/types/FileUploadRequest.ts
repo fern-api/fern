@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface FileUploadRequest extends FernIr.WithDocs, FernIr.WithV2Examples {
+export interface FileUploadRequest extends FernIr.WithDocs, FernIr.WithV2Examples, FernIr.WithContentType {
     name: FernIr.Name;
     properties: FernIr.FileUploadRequestProperty[];
 }

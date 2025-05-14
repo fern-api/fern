@@ -153,14 +153,30 @@
       }
     },
     "AttributeBlockEditableType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "AttributeBlockEditableType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "AttributeBlockEditable": {
@@ -194,14 +210,30 @@
       }
     },
     "AttributeBlockReadType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "AttributeBlockReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "AttributeBlockRead": {
@@ -330,39 +362,18 @@
       }
     },
     "ConditionSetCreateType": {
-      "description": "the type of the set: UserSet or ResourceSet",
+      "description": "An enumeration.",
       "name": "ConditionSetCreateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
-      }
-    },
-    "ConditionSetCreateResourceIdOneOfZero": {
-      "name": "ConditionSetCreateResourceIdOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
           }
-        }
-      }
-    },
-    "ConditionSetCreateResourceIdOneOfOne": {
-      "name": "ConditionSetCreateResourceIdOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
+        ]
       }
     },
     "ConditionSetCreateResourceId": {
@@ -372,17 +383,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConditionSetCreateResourceIdOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ConditionSetCreateResourceIdOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConditionSetCreateResourceIdOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ConditionSetCreateResourceIdOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ]
@@ -397,31 +411,6 @@
         "properties": []
       }
     },
-    "ConditionSetCreateParentIdOneOfZero": {
-      "name": "ConditionSetCreateParentIdOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConditionSetCreateParentIdOneOfOne": {
-      "name": "ConditionSetCreateParentIdOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      }
-    },
     "ConditionSetCreateParentId": {
       "description": "Parent Condition Set",
       "name": "ConditionSetCreateParentId",
@@ -429,17 +418,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConditionSetCreateParentIdOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ConditionSetCreateParentIdOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConditionSetCreateParentIdOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ConditionSetCreateParentIdOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ]
@@ -548,39 +540,18 @@
       }
     },
     "ConditionSetReadType": {
-      "description": "the type of the set: UserSet or ResourceSet",
+      "description": "An enumeration.",
       "name": "ConditionSetReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
-      }
-    },
-    "ConditionSetReadResourceIdOneOfZero": {
-      "name": "ConditionSetReadResourceIdOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
           }
-        }
-      }
-    },
-    "ConditionSetReadResourceIdOneOfOne": {
-      "name": "ConditionSetReadResourceIdOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
+        ]
       }
     },
     "ConditionSetReadResourceId": {
@@ -590,17 +561,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConditionSetReadResourceIdOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ConditionSetReadResourceIdOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConditionSetReadResourceIdOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ConditionSetReadResourceIdOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ]
@@ -615,31 +589,6 @@
         "properties": []
       }
     },
-    "ConditionSetReadParentIdOneOfZero": {
-      "name": "ConditionSetReadParentIdOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConditionSetReadParentIdOneOfOne": {
-      "name": "ConditionSetReadParentIdOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      }
-    },
     "ConditionSetReadParentId": {
       "description": "Parent Condition Set",
       "name": "ConditionSetReadParentId",
@@ -647,17 +596,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConditionSetReadParentIdOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ConditionSetReadParentIdOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConditionSetReadParentIdOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ConditionSetReadParentIdOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ]
@@ -1112,31 +1064,6 @@
         "properties": []
       }
     },
-    "ConditionSetUpdateParentIdOneOfZero": {
-      "name": "ConditionSetUpdateParentIdOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ConditionSetUpdateParentIdOneOfOne": {
-      "name": "ConditionSetUpdateParentIdOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string",
-            "format": "uuid"
-          }
-        }
-      }
-    },
     "ConditionSetUpdateParentId": {
       "description": "Parent Condition Set",
       "name": "ConditionSetUpdateParentId",
@@ -1144,17 +1071,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ConditionSetUpdateParentIdOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ConditionSetUpdateParentIdOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ConditionSetUpdateParentIdOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ConditionSetUpdateParentIdOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ]
@@ -2074,25 +2004,45 @@
       }
     },
     "InviteReadRole": {
-      "description": "The role the member will be assigned with",
+      "description": "An enumeration.",
       "name": "InviteReadRole",
       "shape": {
-        "type": "object",
-        "extends": [
-          "MemberAccessLevel"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "admin"
+          },
+          {
+            "value": "write"
+          },
+          {
+            "value": "read"
+          },
+          {
+            "value": "no_access"
+          }
+        ]
       }
     },
     "InviteReadStatus": {
-      "description": "The status of the invite (pending, failed, etc)",
+      "description": "An enumeration.",
       "name": "InviteReadStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "InviteStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "pending"
+          },
+          {
+            "value": "accepted"
+          },
+          {
+            "value": "failed"
+          },
+          {
+            "value": "canceled"
+          }
+        ]
       }
     },
     "InviteRead": {
@@ -2327,14 +2277,36 @@
       }
     },
     "OrgMemberReadWithGrantsOnboardingStep": {
-      "description": "the step the user is currently going through in onboarding",
+      "description": "An enumeration.",
       "name": "OrgMemberReadWithGrantsOnboardingStep",
       "shape": {
-        "type": "object",
-        "extends": [
-          "OnboardingStep"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "create_organization"
+          },
+          {
+            "value": "create_project"
+          },
+          {
+            "value": "create_resource"
+          },
+          {
+            "value": "create_actions"
+          },
+          {
+            "value": "assign_permissions"
+          },
+          {
+            "value": "assign_user_roles"
+          },
+          {
+            "value": "connect_sdk"
+          },
+          {
+            "value": "done"
+          }
+        ]
       }
     },
     "OrgMemberReadWithGrantsSettings": {
@@ -4225,14 +4197,30 @@
       }
     },
     "ResourceAttributeCreateType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeCreateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeCreate": {
@@ -4277,14 +4265,30 @@
       }
     },
     "ResourceAttributeReadType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeReadType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeRead": {
@@ -4425,14 +4429,30 @@
       }
     },
     "ResourceAttributeUpdateType": {
-      "description": "The type of the attribute, we currently support: `bool`, `number` (ints, floats), `time` (a timestamp), `string`, and `json`.",
+      "description": "supported attribute primitives",
       "name": "ResourceAttributeUpdateType",
       "shape": {
-        "type": "object",
-        "extends": [
-          "AttributeType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "bool"
+          },
+          {
+            "value": "number"
+          },
+          {
+            "value": "string"
+          },
+          {
+            "value": "time"
+          },
+          {
+            "value": "array"
+          },
+          {
+            "value": "json"
+          }
+        ]
       }
     },
     "ResourceAttributeUpdate": {
@@ -5168,8 +5188,8 @@
         ]
       }
     },
-    "ResourceRoleListRolesOneOfZero": {
-      "name": "ResourceRoleListRolesOneOfZero",
+    "ResourceRoleListRoles0": {
+      "name": "ResourceRoleListRoles0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5187,10 +5207,10 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ResourceRoleListRolesOneOfZero",
+            "typeName": "ResourceRoleListRoles0",
             "type": {
               "type": "id",
-              "value": "ResourceRoleListRolesOneOfZero"
+              "value": "ResourceRoleListRoles0"
             }
           },
           {
@@ -5903,8 +5923,8 @@
         ]
       }
     },
-    "RoleListRolesOneOfZero": {
-      "name": "RoleListRolesOneOfZero",
+    "RoleListRoles0": {
+      "name": "RoleListRoles0",
       "shape": {
         "type": "alias",
         "value": {
@@ -5922,10 +5942,10 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "RoleListRolesOneOfZero",
+            "typeName": "RoleListRoles0",
             "type": {
               "type": "id",
-              "value": "RoleListRolesOneOfZero"
+              "value": "RoleListRoles0"
             }
           },
           {
@@ -6738,14 +6758,18 @@
       }
     },
     "UserInTenantStatus": {
-      "description": "Whether the user has signed in or not",
+      "description": "An enumeration.",
       "name": "UserInTenantStatus",
       "shape": {
-        "type": "object",
-        "extends": [
-          "UserStatus"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "active"
+          },
+          {
+            "value": "pending"
+          }
+        ]
       }
     },
     "UserInTenant": {
@@ -7136,47 +7160,25 @@
         ]
       }
     },
-    "ValidationErrorLocItemsOneOfZero": {
-      "name": "ValidationErrorLocItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ValidationErrorLocItemsOneOfOne": {
-      "name": "ValidationErrorLocItemsOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ValidationErrorLocItems": {
       "name": "ValidationErrorLocItems",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ValidationErrorLocItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ValidationErrorLocItemsOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ValidationErrorLocItemsOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -7219,8 +7221,8 @@
         ]
       }
     },
-    "V2SchemaProjIdEnvIdResourcesGetResponsesSchemaOneOfOne": {
-      "name": "V2SchemaProjIdEnvIdResourcesGetResponsesSchemaOneOfOne",
+    "ResourcesListResourcesResponse2001": {
+      "name": "ResourcesListResourcesResponse2001",
       "shape": {
         "type": "alias",
         "value": {
@@ -7245,17 +7247,17 @@
             }
           },
           {
-            "typeName": "V2SchemaProjIdEnvIdResourcesGetResponsesSchemaOneOfOne",
+            "typeName": "ResourcesListResourcesResponse2001",
             "type": {
               "type": "id",
-              "value": "V2SchemaProjIdEnvIdResourcesGetResponsesSchemaOneOfOne"
+              "value": "ResourcesListResourcesResponse2001"
             }
           }
         ]
       }
     },
-    "V2SchemaProjIdEnvIdRolesGetResponsesSchemaOneOfOne": {
-      "name": "V2SchemaProjIdEnvIdRolesGetResponsesSchemaOneOfOne",
+    "RolesListRolesResponse2001": {
+      "name": "RolesListRolesResponse2001",
       "shape": {
         "type": "alias",
         "value": {
@@ -7280,28 +7282,32 @@
             }
           },
           {
-            "typeName": "V2SchemaProjIdEnvIdRolesGetResponsesSchemaOneOfOne",
+            "typeName": "RolesListRolesResponse2001",
             "type": {
               "type": "id",
-              "value": "V2SchemaProjIdEnvIdRolesGetResponsesSchemaOneOfOne"
+              "value": "RolesListRolesResponse2001"
             }
           }
         ]
       }
     },
     "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema": {
-      "description": "if provided, will return only the condition sets of the specified type. e.g: only user sets.",
+      "description": "An enumeration.",
       "name": "V2SchemaProjIdEnvIdConditionSetsGetParametersSchema",
       "shape": {
-        "type": "object",
-        "extends": [
-          "ConditionSetType"
-        ],
-        "properties": []
+        "type": "enum",
+        "values": [
+          {
+            "value": "userset"
+          },
+          {
+            "value": "resourceset"
+          }
+        ]
       }
     },
-    "V2SchemaProjIdEnvIdConditionSetsGetResponsesSchemaOneOfOne": {
-      "name": "V2SchemaProjIdEnvIdConditionSetsGetResponsesSchemaOneOfOne",
+    "ConditionSetsListConditionSetsResponse2001": {
+      "name": "ConditionSetsListConditionSetsResponse2001",
       "shape": {
         "type": "alias",
         "value": {
@@ -7326,17 +7332,17 @@
             }
           },
           {
-            "typeName": "V2SchemaProjIdEnvIdConditionSetsGetResponsesSchemaOneOfOne",
+            "typeName": "ConditionSetsListConditionSetsResponse2001",
             "type": {
               "type": "id",
-              "value": "V2SchemaProjIdEnvIdConditionSetsGetResponsesSchemaOneOfOne"
+              "value": "ConditionSetsListConditionSetsResponse2001"
             }
           }
         ]
       }
     },
-    "V2FactsProjIdEnvIdTenantsGetResponsesSchemaOneOfOne": {
-      "name": "V2FactsProjIdEnvIdTenantsGetResponsesSchemaOneOfOne",
+    "TenantsListTenantsResponse2001": {
+      "name": "TenantsListTenantsResponse2001",
       "shape": {
         "type": "alias",
         "value": {
@@ -7361,10 +7367,10 @@
             }
           },
           {
-            "typeName": "V2FactsProjIdEnvIdTenantsGetResponsesSchemaOneOfOne",
+            "typeName": "TenantsListTenantsResponse2001",
             "type": {
               "type": "id",
-              "value": "V2FactsProjIdEnvIdTenantsGetResponsesSchemaOneOfOne"
+              "value": "TenantsListTenantsResponse2001"
             }
           }
         ]
@@ -7372,9 +7378,9 @@
     }
   },
   "subpackages": {
-    "Organizations": {
-      "subpackageId": "Organizations",
-      "name": "Organizations",
+    "subpackage_organizations": {
+      "subpackageId": "subpackage_organizations",
+      "name": "organizations",
       "endpoints": [
         {
           "auth": true,
@@ -7451,17 +7457,28 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listOrganizationsExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -7551,10 +7568,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsCreateOrganizationExample",
               "description": "",
               "path": "/v2/orgs",
               "pathParameters": {},
@@ -7665,12 +7696,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getOrganizationExample",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -7755,12 +7800,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteOrganizationExample",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -7845,12 +7904,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "organizationsUpdateOrganizationExample",
               "description": "",
-              "path": "/v2/orgs/",
+              "path": "/v2/orgs/foo",
               "pathParameters": {
                 "org_id": "foo"
               },
@@ -7932,10 +8005,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getActiveOrganizationExample",
               "description": "",
               "path": "/v2/orgs/active/org",
               "pathParameters": {},
@@ -7978,9 +8065,9 @@
       "types": [],
       "subpackages": []
     },
-    "Projects": {
-      "subpackageId": "Projects",
-      "name": "Projects",
+    "subpackage_projects": {
+      "subpackageId": "subpackage_projects",
+      "name": "projects",
       "endpoints": [
         {
           "auth": true,
@@ -8057,17 +8144,28 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listProjectsExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -8163,10 +8261,24 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "projectsCreateProjectExample",
               "description": "",
               "path": "/v2/projects",
               "pathParameters": {},
@@ -8279,12 +8391,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProjectExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8375,12 +8501,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteProjectExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8465,12 +8605,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "projectsUpdateProjectExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -8524,9 +8678,9 @@
       "types": [],
       "subpackages": []
     },
-    "Environments": {
-      "subpackageId": "Environments",
-      "name": "Environments",
+    "subpackage_environments": {
+      "subpackageId": "subpackage_environments",
+      "name": "environments",
       "endpoints": [
         {
           "auth": true,
@@ -8604,12 +8758,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "statsEnvironmentsExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo/stats",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -8666,8 +8834,8 @@
                         "onboarding_step": "create_organization",
                         "created_at": "foo",
                         "last_login": "foo",
-                        "last_ip": "foo",
-                        "logins_count": 42,
+                        "last_ip": "0.0.0.0",
+                        "logins_count": 0,
                         "identities": [
                           {
                             "user_id": "foo",
@@ -8759,8 +8927,8 @@
                         "onboarding_step": "create_organization",
                         "created_at": "foo",
                         "last_login": "foo",
-                        "last_ip": "foo",
-                        "logins_count": 42,
+                        "last_ip": "0.0.0.0",
+                        "logins_count": 0,
                         "identities": [
                           {
                             "user_id": "foo",
@@ -8903,19 +9071,30 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listEnvironmentsExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs",
               "pathParameters": {
                 "proj_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -9040,12 +9219,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsCreateEnvironmentExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs",
               "pathParameters": {
                 "proj_id": "foo"
               },
@@ -9186,12 +9379,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getEnvironmentExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9311,12 +9518,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteEnvironmentExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9420,12 +9641,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsUpdateEnvironmentExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9574,12 +9809,26 @@
             "statusCode": 201,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "environmentsCopyEnvironmentExample",
               "description": "",
-              "path": "/v2/projects/",
+              "path": "/v2/projects/foo/envs/foo/copy",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -9648,9 +9897,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resources": {
-      "subpackageId": "Resources",
-      "name": "Resources",
+    "subpackage_resources": {
+      "subpackageId": "subpackage_resources",
+      "name": "resources",
       "endpoints": [
         {
           "auth": true,
@@ -9802,23 +10051,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourcesExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_built_in": true,
-                "include_total_count": true,
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -9842,7 +10099,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -9866,7 +10123,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -9965,12 +10222,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesCreateResourceExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -10196,12 +10467,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10400,12 +10685,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesReplaceResourceExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10591,12 +10890,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10719,12 +11032,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourcesUpdateResourceExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -10826,9 +11153,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Actions": {
-      "subpackageId": "Resource Actions",
-      "name": "Resource Actions",
+    "subpackage_resourceActions": {
+      "subpackageId": "subpackage_resourceActions",
+      "name": "resourceActions",
       "endpoints": [
         {
           "auth": true,
@@ -10960,21 +11287,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceActionsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -11129,12 +11467,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionsCreateResourceActionExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11307,12 +11659,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceActionExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11462,12 +11828,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceActionExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11609,12 +11989,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionsUpdateResourceActionExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/actions/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -11677,9 +12071,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Action Groups": {
-      "subpackageId": "Resource Action Groups",
-      "name": "Resource Action Groups",
+    "subpackage_resourceActionGroups": {
+      "subpackageId": "subpackage_resourceActionGroups",
+      "name": "resourceActionGroups",
       "endpoints": [
         {
           "auth": true,
@@ -11811,21 +12205,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceActionGroupsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -11984,12 +12389,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionGroupsCreateResourceActionGroupExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12176,12 +12595,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceActionGroupExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12337,12 +12770,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceActionGroupExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -12484,12 +12931,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceActionGroupsUpdateResourceActionGroupExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/action_groups/foo",
               "pathParameters": {
                 "resource_id": "foo",
                 "action_group_id": "foo",
@@ -12554,9 +13015,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Roles": {
-      "subpackageId": "Resource Roles",
-      "name": "Resource Roles",
+    "subpackage_resourceRoles": {
+      "subpackageId": "subpackage_resourceRoles",
+      "name": "resourceRoles",
       "endpoints": [
         {
           "auth": true,
@@ -12688,21 +13149,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceRolesExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -12867,12 +13339,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesCreateResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13067,12 +13553,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13232,12 +13732,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13379,12 +13893,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesUpdateResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13583,12 +14111,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesAssignPermissionsToResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13785,12 +14327,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceRolesRemovePermissionsFromResourceRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -13973,12 +14529,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleAncestorsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14158,12 +14728,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceRoleDescendantsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/roles/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14237,9 +14821,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Attributes": {
-      "subpackageId": "Resource Attributes",
-      "name": "Resource Attributes",
+    "subpackage_resourceAttributes": {
+      "subpackageId": "subpackage_resourceAttributes",
+      "name": "resourceAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -14371,21 +14955,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceAttributesExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "resource_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -14540,12 +15135,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceAttributesCreateResourceAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14720,12 +15329,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -14909,22 +15532,33 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "resource_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -15059,12 +15693,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceAttributesUpdateResourceAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/resources/foo/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -15129,9 +15777,9 @@
       "types": [],
       "subpackages": []
     },
-    "User Attributes": {
-      "subpackageId": "User Attributes",
-      "name": "User Attributes",
+    "subpackage_userAttributes": {
+      "subpackageId": "subpackage_userAttributes",
+      "name": "userAttributes",
       "endpoints": [
         {
           "auth": true,
@@ -15258,21 +15906,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listUserAttributesExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15423,19 +16081,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userAttributesCreateUserAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "key": "private",
@@ -15600,20 +16270,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -15785,22 +16467,32 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -15931,20 +16623,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "userAttributesUpdateUserAttributeExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/users/attributes/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "attribute_id": "foo"
               },
-              "queryParameters": {
-                "resource_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "description": "whether or not the github repository is private"
@@ -16002,9 +16706,9 @@
       "types": [],
       "subpackages": []
     },
-    "Roles": {
-      "subpackageId": "Roles",
-      "name": "Roles",
+    "subpackage_roles": {
+      "subpackageId": "subpackage_roles",
+      "name": "roles",
       "endpoints": [
         {
           "auth": true,
@@ -16142,22 +16846,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listRolesExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_total_count": true,
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -16184,7 +16897,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -16211,7 +16924,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -16310,12 +17023,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesCreateRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -16489,12 +17216,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16633,12 +17374,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16761,12 +17516,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesUpdateRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -16944,12 +17713,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesAssignPermissionsToRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17125,12 +17908,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "rolesRemovePermissionsFromRoleExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/permissions",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17292,12 +18089,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleAncestorsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17456,12 +18267,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoleDescendantsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/roles/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -17532,9 +18357,9 @@
       "types": [],
       "subpackages": []
     },
-    "Condition Sets": {
-      "subpackageId": "Condition Sets",
-      "name": "Condition Sets",
+    "subpackage_conditionSets": {
+      "subpackageId": "subpackage_conditionSets",
+      "name": "conditionSets",
       "endpoints": [
         {
           "auth": true,
@@ -17683,23 +18508,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listConditionSetsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "type": "userset",
-                "include_total_count": true,
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -17709,7 +18542,7 @@
                     {
                       "key": "foo",
                       "type": "userset",
-                      "autogenerated": true,
+                      "autogenerated": false,
                       "resource_id": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17739,7 +18572,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -17749,7 +18582,7 @@
                     {
                       "key": "foo",
                       "type": "userset",
-                      "autogenerated": true,
+                      "autogenerated": false,
                       "resource_id": "foo",
                       "id": "foo",
                       "organization_id": "foo",
@@ -17779,7 +18612,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -17878,12 +18711,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetsCreateConditionSetExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -18107,12 +18954,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18279,12 +19140,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteConditionSetExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18407,12 +19282,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetsUpdateConditionSetExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -18666,21 +19555,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetAncestorsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo/ancestors",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "condition_set_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18689,7 +19589,7 @@
                   {
                     "key": "foo",
                     "type": "userset",
-                    "autogenerated": true,
+                    "autogenerated": false,
                     "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -18725,7 +19625,7 @@
                   {
                     "key": "foo",
                     "type": "userset",
-                    "autogenerated": true,
+                    "autogenerated": false,
                     "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -18891,21 +19791,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getConditionSetDescendantsExample",
               "description": "",
-              "path": "/v2/schema/",
+              "path": "/v2/schema/foo/foo/condition_sets/foo/descendants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
                 "condition_set_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -18914,7 +19825,7 @@
                   {
                     "key": "foo",
                     "type": "userset",
-                    "autogenerated": true,
+                    "autogenerated": false,
                     "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -18950,7 +19861,7 @@
                   {
                     "key": "foo",
                     "type": "userset",
-                    "autogenerated": true,
+                    "autogenerated": false,
                     "resource_id": "foo",
                     "id": "foo",
                     "organization_id": "foo",
@@ -18992,9 +19903,9 @@
       "types": [],
       "subpackages": []
     },
-    "Users": {
-      "subpackageId": "Users",
-      "name": "Users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
+      "name": "users",
       "endpoints": [
         {
           "auth": true,
@@ -19131,22 +20042,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listUsersExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "role": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19181,7 +20101,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -19216,7 +20136,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -19315,12 +20235,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "usersCreateUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -19554,12 +20488,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -19775,12 +20723,26 @@
             "statusCode": 200,
             "description": "An existing user was replaced"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "usersReplaceUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20004,12 +20966,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20132,12 +21108,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "usersUpdateUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20359,12 +21349,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "usersAssignRoleToUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20519,12 +21523,26 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "usersUnassignRoleFromUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/users/foo/roles",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -20556,9 +21574,9 @@
       "types": [],
       "subpackages": []
     },
-    "Tenants": {
-      "subpackageId": "Tenants",
-      "name": "Tenants",
+    "subpackage_tenants": {
+      "subpackageId": "subpackage_tenants",
+      "name": "tenants",
       "endpoints": [
         {
           "auth": true,
@@ -20712,23 +21730,32 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listTenantUsersExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "tenant_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "role": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20763,7 +21790,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -20798,7 +21825,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -20943,22 +21970,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listTenantsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "search": "foo",
-                "include_total_count": true,
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20980,7 +22016,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               },
               "responseBodyV3": {
@@ -21002,7 +22038,7 @@
                     }
                   ],
                   "total_count": 42,
-                  "page_count": 42
+                  "page_count": 0
                 }
               }
             }
@@ -21101,12 +22137,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "tenantsCreateTenantExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -21278,12 +22328,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getTenantExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21422,12 +22486,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTenantExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21550,12 +22628,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "tenantsUpdateTenantExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21717,12 +22809,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTenantUserExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/tenants/foo/users/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -21744,9 +22850,9 @@
       "types": [],
       "subpackages": []
     },
-    "Role Assignments": {
-      "subpackageId": "Role Assignments",
-      "name": "Role Assignments",
+    "subpackage_roleAssignments": {
+      "subpackageId": "subpackage_roleAssignments",
+      "name": "roleAssignments",
       "endpoints": [
         {
           "auth": true,
@@ -21899,23 +23005,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listRoleAssignmentsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "user": "foo",
-                "role": "foo",
-                "tenant": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22050,12 +23164,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsAssignRoleExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22193,12 +23321,26 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsUnassignRoleExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22317,32 +23459,60 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsBulkAssignRoleExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {
+                  "role": "foo",
+                  "tenant": "foo",
+                  "user": "foo"
+                }
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {
+                    "role": "foo",
+                    "tenant": "foo",
+                    "user": "foo"
+                  }
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "assignments_created": 42
+                  "assignments_created": 0
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "assignments_created": 42
+                  "assignments_created": 0
                 }
               }
             }
@@ -22443,32 +23613,60 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "roleAssignmentsBulkUnassignRoleExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/role_assignments/bulk",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": [
+                {
+                  "role": "foo",
+                  "tenant": "foo",
+                  "user": "foo"
+                }
+              ],
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": [
+                  {
+                    "role": "foo",
+                    "tenant": "foo",
+                    "user": "foo"
+                  }
+                ]
               },
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "assignments_removed": 42
+                  "assignments_removed": 0
                 }
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "assignments_removed": 42
+                  "assignments_removed": 0
                 }
               }
             }
@@ -22483,9 +23681,9 @@
       "types": [],
       "subpackages": []
     },
-    "Condition Set Rules": {
-      "subpackageId": "Condition Set Rules",
-      "name": "Condition Set Rules",
+    "subpackage_conditionSetRules": {
+      "subpackageId": "subpackage_conditionSetRules",
+      "name": "conditionSetRules",
       "endpoints": [
         {
           "auth": true,
@@ -22638,23 +23836,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listSetPermissionsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "user_set": "foo",
-                "permission": "foo",
-                "resource_set": "foo",
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22790,12 +23996,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetRulesAssignSetPermissionsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22935,12 +24155,26 @@
               }
             }
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "conditionSetRulesUnassignSetPermissionsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/set_rules",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -22973,9 +24207,9 @@
       "types": [],
       "subpackages": []
     },
-    "Resource Instances": {
-      "subpackageId": "Resource Instances",
-      "name": "Resource Instances",
+    "subpackage_resourceInstances": {
+      "subpackageId": "subpackage_resourceInstances",
+      "name": "resourceInstances",
       "endpoints": [
         {
           "auth": true,
@@ -23089,20 +24323,31 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listResourceInstancesExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
               },
-              "queryParameters": {
-                "page": 42,
-                "per_page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23239,12 +24484,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceInstancesCreateResourceInstanceExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23414,12 +24673,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getResourceInstanceExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -23558,12 +24831,26 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteResourceInstanceExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -23686,12 +24973,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "resourceInstancesUpdateResourceInstanceExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/resource_instances/foo",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo",
@@ -23767,9 +25068,9 @@
       "types": [],
       "subpackages": []
     },
-    "Bulk Operations": {
-      "subpackageId": "Bulk Operations",
-      "name": "Bulk Operations",
+    "subpackage_bulkOperations": {
+      "subpackageId": "subpackage_bulkOperations",
+      "name": "bulkOperations",
       "endpoints": [
         {
           "auth": true,
@@ -23860,12 +25161,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkCreateUsersExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -23993,12 +25308,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkReplaceUsersExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24126,12 +25455,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkDeleteUsersExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/users",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24255,12 +25598,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkCreateTenantsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24390,12 +25747,26 @@
             "statusCode": 200,
             "description": "Successful Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "HTTPValidationError"
+                }
+              },
+              "statusCode": 422,
+              "description": "Validation Error",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "bulkOperationsBulkDeleteTenantsExample",
               "description": "",
-              "path": "/v2/facts/",
+              "path": "/v2/facts/foo/foo/bulk/tenants",
               "pathParameters": {
                 "proj_id": "foo",
                 "env_id": "foo"
@@ -24545,23 +25916,23 @@
       "ValidationError"
     ],
     "subpackages": [
-      "Organizations",
-      "Projects",
-      "Environments",
-      "Resources",
-      "Resource Actions",
-      "Resource Action Groups",
-      "Resource Roles",
-      "Resource Attributes",
-      "User Attributes",
-      "Roles",
-      "Condition Sets",
-      "Users",
-      "Tenants",
-      "Role Assignments",
-      "Condition Set Rules",
-      "Resource Instances",
-      "Bulk Operations"
+      "subpackage_organizations",
+      "subpackage_projects",
+      "subpackage_environments",
+      "subpackage_resources",
+      "subpackage_resourceActions",
+      "subpackage_resourceActionGroups",
+      "subpackage_resourceRoles",
+      "subpackage_resourceAttributes",
+      "subpackage_userAttributes",
+      "subpackage_roles",
+      "subpackage_conditionSets",
+      "subpackage_users",
+      "subpackage_tenants",
+      "subpackage_roleAssignments",
+      "subpackage_conditionSetRules",
+      "subpackage_resourceInstances",
+      "subpackage_bulkOperations"
     ]
   },
   "auth": {

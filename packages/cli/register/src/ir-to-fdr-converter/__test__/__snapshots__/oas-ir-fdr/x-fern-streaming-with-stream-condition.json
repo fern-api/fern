@@ -182,10 +182,13 @@
         },
         "response": {
           "type": {
-            "type": "reference",
-            "value": {
-              "type": "id",
-              "value": "ChatFullResponse"
+            "type": "stream",
+            "shape": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "ChatFullResponse"
+              }
             }
           },
           "statusCode": 200,
@@ -194,15 +197,12 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "chatExample",
             "description": "",
             "path": "/v2/chats",
             "pathParameters": {},
             "queryParameters": {},
-            "headers": {
-              "Request-Timeout": 42,
-              "Request-Timeout-Millis": 42
-            },
+            "headers": {},
             "requestBody": {
               "query": "How can I use the Vectara platform?"
             },
@@ -214,20 +214,27 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "chat_id": "foo",
-                "turn_id": "foo",
-                "answer": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "chat_id": "foo",
+                  "turn_id": "foo",
+                  "answer": "foo"
+                }
+              ]
             },
             "responseBodyV3": {
-              "type": "json",
-              "value": {
-                "chat_id": "foo",
-                "turn_id": "foo",
-                "answer": "foo"
-              }
+              "type": "stream",
+              "value": [
+                {
+                  "type": "json",
+                  "value": {
+                    "chat_id": "foo",
+                    "turn_id": "foo",
+                    "answer": "foo"
+                  }
+                }
+              ]
             }
           }
         ],

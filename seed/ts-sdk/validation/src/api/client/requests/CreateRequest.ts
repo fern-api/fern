@@ -9,7 +9,7 @@ import * as SeedValidation from "../../index";
  *     {
  *         decimal: 2.2,
  *         even: 100,
- *         name: "foo",
+ *         name: "fern",
  *         shape: "SQUARE"
  *     }
  */

@@ -110,92 +110,83 @@ public class StoreTracedWorkspaceV2Test : BaseMockServerTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrowAsync(
-            async () =>
-                await Client.Admin.StoreTracedWorkspaceV2Async(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    new List<TraceResponseV2>()
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.Admin.StoreTracedWorkspaceV2Async(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                new List<TraceResponseV2>()
+                {
+                    new TraceResponseV2
                     {
-                        new TraceResponseV2
+                        SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        LineNumber = 1,
+                        File = new TracedFile { Filename = "filename", Directory = "directory" },
+                        ReturnValue = 1,
+                        ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                        Stack = new StackInformation
                         {
-                            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                            LineNumber = 1,
-                            File = new TracedFile
+                            NumStackFrames = 1,
+                            TopStackFrame = new StackFrame
                             {
-                                Filename = "filename",
-                                Directory = "directory",
-                            },
-                            ReturnValue = 1,
-                            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-                            Stack = new StackInformation
-                            {
-                                NumStackFrames = 1,
-                                TopStackFrame = new StackFrame
+                                MethodName = "methodName",
+                                LineNumber = 1,
+                                Scopes = new List<Scope>()
                                 {
-                                    MethodName = "methodName",
-                                    LineNumber = 1,
-                                    Scopes = new List<Scope>()
+                                    new Scope
                                     {
-                                        new Scope
+                                        Variables = new Dictionary<string, object>()
                                         {
-                                            Variables = new Dictionary<string, object>()
-                                            {
-                                                { "variables", 1 },
-                                            },
+                                            { "variables", 1 },
                                         },
-                                        new Scope
+                                    },
+                                    new Scope
+                                    {
+                                        Variables = new Dictionary<string, object>()
                                         {
-                                            Variables = new Dictionary<string, object>()
-                                            {
-                                                { "variables", 1 },
-                                            },
+                                            { "variables", 1 },
                                         },
                                     },
                                 },
                             },
-                            Stdout = "stdout",
                         },
-                        new TraceResponseV2
+                        Stdout = "stdout",
+                    },
+                    new TraceResponseV2
+                    {
+                        SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        LineNumber = 1,
+                        File = new TracedFile { Filename = "filename", Directory = "directory" },
+                        ReturnValue = 1,
+                        ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                        Stack = new StackInformation
                         {
-                            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                            LineNumber = 1,
-                            File = new TracedFile
+                            NumStackFrames = 1,
+                            TopStackFrame = new StackFrame
                             {
-                                Filename = "filename",
-                                Directory = "directory",
-                            },
-                            ReturnValue = 1,
-                            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
-                            Stack = new StackInformation
-                            {
-                                NumStackFrames = 1,
-                                TopStackFrame = new StackFrame
+                                MethodName = "methodName",
+                                LineNumber = 1,
+                                Scopes = new List<Scope>()
                                 {
-                                    MethodName = "methodName",
-                                    LineNumber = 1,
-                                    Scopes = new List<Scope>()
+                                    new Scope
                                     {
-                                        new Scope
+                                        Variables = new Dictionary<string, object>()
                                         {
-                                            Variables = new Dictionary<string, object>()
-                                            {
-                                                { "variables", 1 },
-                                            },
+                                            { "variables", 1 },
                                         },
-                                        new Scope
+                                    },
+                                    new Scope
+                                    {
+                                        Variables = new Dictionary<string, object>()
                                         {
-                                            Variables = new Dictionary<string, object>()
-                                            {
-                                                { "variables", 1 },
-                                            },
+                                            { "variables", 1 },
                                         },
                                     },
                                 },
                             },
-                            Stdout = "stdout",
                         },
-                    }
-                )
+                        Stdout = "stdout",
+                    },
+                }
+            )
         );
     }
 }

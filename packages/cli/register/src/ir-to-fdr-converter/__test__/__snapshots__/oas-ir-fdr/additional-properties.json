@@ -132,14 +132,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/object-with-array-of-objects",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -218,14 +220,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getImplicitObjectWithArrayOfObjectsExample",
             "description": "",
             "path": "/implicit-object-with-array-of-objects",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": null,
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": null
             },
             "responseStatusCode": 200,
             "responseBody": {

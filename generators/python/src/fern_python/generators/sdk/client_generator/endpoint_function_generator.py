@@ -15,6 +15,7 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
+from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -72,7 +73,6 @@ class GeneratedEndpointFunction:
 
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
-    STREAM_FUNC_NAME = "stream"
 
     def __init__(
         self,
@@ -599,13 +599,16 @@ class EndpointFunctionGenerator:
                     path=(
                         self._get_path_for_endpoint(endpoint=endpoint) if not is_endpoint_path_empty(endpoint) else None
                     ),
+                    content_type=endpoint.request_body.get_as_union().content_type
+                    if endpoint.request_body is not None
+                    else None,
                     url=self._get_environment_as_str(endpoint=endpoint),
                     method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint, parent_writer=writer),
                     request_body=json_request_body_var,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=files,
-                    response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
+                    response_variable_name=RESPONSE_VARIABLE,
                     request_options_variable_name=request_options_variable_name,
                     headers=self._get_headers_for_endpoint(
                         service=service,
@@ -618,6 +621,9 @@ class EndpointFunctionGenerator:
                         f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
                     ),
                     is_default_body_parameter_used=self.is_default_body_parameter_used,
+                    force_multipart=True
+                    if endpoint.request_body is not None and endpoint.request_body.get_as_union().type == "fileUpload"
+                    else False,
                 )
 
             if self._endpoint.sdk_request is not None and self._endpoint.sdk_request.stream_parameter is not None:
@@ -1048,14 +1054,13 @@ class EndpointFunctionGenerator:
         streaming_parameter: Optional[StreamingParameterType] = None,
     ) -> AST.TypeHint:
         # First get the underlying type without any wrappers
-        underlying_type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
+        type_hint = self._get_response_body_underlying_type(response_body, is_async, streaming_parameter)
 
-        # Apply pagination if needed
+        # Handle pagination case. Note that we don't wrap the type hint in an HTTP response wrapper here, because the
+        # paginator type wraps the underlying HTTP response wrapper.
         if self.is_paginated:
-            underlying_type_hint = self._get_pagination_results_type(underlying_type_hint)
-            type_hint = self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
-        else:
-            type_hint = underlying_type_hint
+            underlying_type_hint = self._get_pagination_results_type(type_hint)
+            return self._context.core_utilities.get_paginator_type(underlying_type_hint, is_async=is_async)
 
         # Handle streaming case
         is_streaming = response_body and is_streaming_endpoint(self._endpoint)
@@ -1070,15 +1075,13 @@ class EndpointFunctionGenerator:
                     AST.TypeHint.async_iterator(type_hint) if is_async else AST.TypeHint.iterator(type_hint)
                 )
 
-            result_type = streaming_type
-        else:
-            result_type = type_hint
+            return streaming_type
 
         # Finally add HTTP response wrapper for raw clients
-        if self._is_raw_client and not is_streaming:
-            return self._get_http_response_wrapper_type(is_async, result_type)
+        if self._is_raw_client:
+            return self._get_http_response_wrapper_type(is_async, type_hint)
 
-        return result_type
+        return type_hint
 
     def _get_response_body_underlying_type(
         self,
@@ -1279,9 +1282,8 @@ class EndpointFunctionGenerator:
 
         if endpoint.request_body is not None:
             unioned_value = endpoint.request_body.get_as_union()
-            if unioned_value.type == "inlinedRequestBody":
-                if unioned_value.content_type is not None:
-                    headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
+            if unioned_value.content_type is not None and endpoint.request_body.get_as_union().type != "fileUpload":
+                headers.append(("content-type", AST.Expression(f'"{unioned_value.content_type}"')))
 
         for header in ir_headers:
             literal_header_value = self._context.get_literal_header_value(header)
@@ -1556,41 +1558,46 @@ class EndpointFunctionGenerator:
             )
             data_attribute = "data"
             if is_streaming_endpoint(self._endpoint):
-                response_alias = "r"
+                response_variable = "r"
                 if self._is_async:
                     body = [
                         AST.ForStatement(
-                            target=data_attribute,
-                            iterable=AST.Expression(f"{response_alias}.{data_attribute}"),
+                            target=CHUNK_VARIABLE,
+                            iterable=AST.Expression(f"{response_variable}.{data_attribute}"),
                             is_async=True,
-                            body=[AST.YieldStatement(AST.Expression(data_attribute))],
+                            body=[AST.YieldStatement(AST.Expression(CHUNK_VARIABLE))],
                         )
                     ]
                 else:
                     body = [
-                        AST.YieldStatement(AST.Expression(f"{response_alias}.{data_attribute}"), is_yield_from=True)
+                        AST.YieldStatement(AST.Expression(f"{response_variable}.{data_attribute}"), is_yield_from=True)
                     ]
 
                 writer.write_node(
                     AST.WithStatement(
                         context_managers=[
-                            AST.WithContextManager(expression=func_invocation_expr, as_variable=response_alias)
+                            AST.WithContextManager(expression=func_invocation_expr, as_variable=response_variable)
                         ],
                         body=body,
                         is_async=self._is_async,
                     )
                 )
+            elif self.is_paginated:
+                writer.write_node(
+                    AST.ReturnStatement(
+                        AST.AwaitExpression(func_invocation_expr) if self._is_async else func_invocation_expr
+                    )
+                )
             else:
-                response_alias = "response"
                 writer.write_node(
                     AST.VariableDeclaration(
-                        name=response_alias,
+                        name=RESPONSE_VARIABLE,
                         initializer=(
                             AST.AwaitExpression(func_invocation_expr) if self._is_async else func_invocation_expr
                         ),
                     )
                 )
-                writer.write_node(AST.ReturnStatement(f"{response_alias}.{data_attribute}"))
+                writer.write_node(AST.ReturnStatement(f"{RESPONSE_VARIABLE}.{data_attribute}"))
 
         return AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),

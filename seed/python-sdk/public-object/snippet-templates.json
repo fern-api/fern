@@ -16,7 +16,7 @@
                     "from seed import SeedPublicObject"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPublicObject(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPublicObject(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedPublicObject"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPublicObject(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPublicObject(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -1,5 +1,89 @@
 - changelogEntry:
     - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+  version: 2.36.1
+- changelogEntry:
+    - summary: |
+        Support sending requests with content type application/x-www-form-urlencoded.
+      type: feat
+  createdAt: '2025-05-11'
+  irVersion: 57
+  version: 2.36.0
+- changelogEntry:
+    - summary: |
+        Rerelease with the latest generator-cli. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.3
+- changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.2
+- changelogEntry:
+    - summary: |
+        Self hosted github user defaults to `fern-api[bot]`.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.1
+- changelogEntry:
+    - summary: |
+        Support pushing to GitHub enterprise.
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.35.0
+- changelogEntry:
+    - summary: |
+        Upgrade to irV57
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 2.34.0
+- changelogEntry:
+    - summary: |
+        (Corrected from 2.33.2) Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.4
+- changelogEntry:
+    - summary: |
+        Suppress unchecked cast warning for undiscriminated union visitor
+      type: fix
+  createdAt: '2025-04-28'
+  irVersion: 55
+  version: 2.33.3
+- changelogEntry:
+    - summary: |
+        Use non-deprecated method to create request body
+      type: fix
+  createdAt: '2025-04-25'
+  irVersion: 55
+  version: 2.33.2
+- changelogEntry:
+    - summary: |
+        Fix inline overrides undoing allow-multiple parameterization
+      type: fix
+  createdAt: '2025-04-24'
+  irVersion: 55
+  version: 2.33.1
+- changelogEntry:
+    - summary: |
+        Support for literals in union types
+      type: fix
+  createdAt: '2025-04-23'
+  irVersion: 55
+  version: 2.33.0
+- changelogEntry:
+    - summary: |
         Auth header prefix should prepend with a concatenation operator
       type: fix
   createdAt: '2025-04-21'

@@ -1115,7 +1115,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Routing state of connection",
@@ -1239,7 +1240,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "DID for connection invitation",
@@ -2988,7 +2990,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -3091,7 +3094,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -3583,7 +3587,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "DID of exchange",
@@ -3975,7 +3980,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "List of protocol descriptors",
@@ -4029,7 +4035,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "List of protocol or goal_code descriptors",
@@ -7871,7 +7878,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Query dictionary object",
@@ -7991,7 +7999,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "List of update rules",
@@ -8469,7 +8478,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "mediator_terms",
@@ -8534,7 +8544,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "endpoint on which messages destined for the recipient are received.",
@@ -8781,7 +8792,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Introductory text for the menu",
@@ -9507,7 +9519,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -9565,7 +9578,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -9698,7 +9712,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "queries",
@@ -9746,7 +9761,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "comment",
@@ -9883,7 +9899,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "DID for connection invitation",
@@ -14773,7 +14790,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -14902,7 +14920,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -15203,7 +15222,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -15286,7 +15306,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -15729,7 +15750,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -16299,7 +16321,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -16466,7 +16489,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Human-readable comment",
@@ -18485,9 +18509,9 @@
     }
   },
   "subpackages": {
-    "action-menu": {
-      "subpackageId": "action-menu",
-      "name": "action-menu",
+    "subpackage_actionMenu": {
+      "subpackageId": "subpackage_actionMenu",
+      "name": "actionMenu",
       "endpoints": [
         {
           "auth": true,
@@ -18550,9 +18574,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "closeMenuByConnIdExample",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/close",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18634,9 +18658,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "fetchMenuByConnIdExample",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/fetch",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18731,9 +18755,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "actionMenuPerformActionByConnIdExample",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/perform",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18830,9 +18854,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "requestMenuByConnIdExample",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/request",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -18927,21 +18951,35 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "actionMenuSendMenuToConnIdExample",
               "description": "",
-              "path": "/action-menu/",
+              "path": "/action-menu/foo/send-menu",
               "pathParameters": {
                 "conn_id": "foo"
               },
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "menu": {}
+                "menu": {
+                  "options": [
+                    {
+                      "name": "window_prefs",
+                      "title": "Window Preferences"
+                    }
+                  ]
+                }
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "menu": {}
+                  "menu": {
+                    "options": [
+                      {
+                        "name": "window_prefs",
+                        "title": "Window Preferences"
+                      }
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -18965,8 +19003,8 @@
       "types": [],
       "subpackages": []
     },
-    "connection": {
-      "subpackageId": "connection",
+    "subpackage_connection": {
+      "subpackageId": "subpackage_connection",
       "name": "connection",
       "endpoints": [
         {
@@ -19128,21 +19166,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingConnectionsExample",
               "description": "",
               "path": "/connections",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "connection_protocol": "connections/1.0",
-                "invitation_key": "foo",
-                "invitation_msg_id": "foo",
-                "my_did": "foo",
-                "state": "start",
-                "their_did": "foo",
-                "their_public_did": "foo",
-                "their_role": "invitee"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -19361,16 +19389,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectionCreateConnectionInvitationExample",
               "description": "",
               "path": "/connections/create-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "multi_use": true,
-                "public": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -19511,7 +19534,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectionCreateStaticConnectionExample",
               "description": "",
               "path": "/connections/create-static",
               "pathParameters": {},
@@ -19707,19 +19730,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectionReceiveConnectionInvitationExample",
               "description": "",
               "path": "/connections/receive-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "imageUrl": "http://192.168.56.101/img/logo.jpg",
                 "label": "Bob",
@@ -19737,7 +19755,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "imageUrl": "http://192.168.56.101/img/logo.jpg",
                   "label": "Bob",
@@ -19870,9 +19887,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionRecordExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -19996,9 +20013,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteConnectionRecordExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20122,17 +20139,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acceptConnectionInvitationExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/accept-invitation",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "mediation_id": "foo",
-                "my_endpoint": "foo",
-                "my_label": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20267,15 +20280,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acceptConnectionRequestExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/accept-request",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20395,9 +20406,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionEndpointExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/endpoints",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20503,9 +20514,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setInboundConnectionExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/establish-inbound/foo",
               "pathParameters": {
                 "conn_id": "foo",
                 "ref_id": "foo"
@@ -20602,15 +20613,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionMetadataExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/metadata",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "key": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -20705,9 +20714,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "connectionSetConnectionMetadataExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/metadata",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20747,8 +20756,8 @@
       "types": [],
       "subpackages": []
     },
-    "basicmessage": {
-      "subpackageId": "basicmessage",
+    "subpackage_basicmessage": {
+      "subpackageId": "subpackage_basicmessage",
       "name": "basicmessage",
       "endpoints": [
         {
@@ -20825,9 +20834,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "basicmessageSendMessageExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/send-message",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20863,8 +20872,8 @@
       "types": [],
       "subpackages": []
     },
-    "trustping": {
-      "subpackageId": "trustping",
+    "subpackage_trustping": {
+      "subpackageId": "subpackage_trustping",
       "name": "trustping",
       "endpoints": [
         {
@@ -20941,9 +20950,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "trustpingSendPingExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/send-ping",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -20983,8 +20992,8 @@
       "types": [],
       "subpackages": []
     },
-    "introduction": {
-      "subpackageId": "introduction",
+    "subpackage_introduction": {
+      "subpackageId": "subpackage_introduction",
       "name": "introduction",
       "endpoints": [
         {
@@ -21072,15 +21081,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "startConnectionIntroductionExample",
               "description": "",
-              "path": "/connections/",
+              "path": "/connections/foo/start-introduction",
               "pathParameters": {
                 "conn_id": "foo"
               },
               "queryParameters": {
-                "target_connection_id": "foo",
-                "message": "foo"
+                "target_connection_id": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -21104,9 +21112,9 @@
       "types": [],
       "subpackages": []
     },
-    "credential-definition": {
-      "subpackageId": "credential-definition",
-      "name": "credential-definition",
+    "subpackage_credentialDefinition": {
+      "subpackageId": "subpackage_credentialDefinition",
+      "name": "credentialDefinition",
       "endpoints": [
         {
           "auth": true,
@@ -21190,14 +21198,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "credentialDefinitionPublishCredentialDefinitionExample",
               "description": "",
               "path": "/credential-definitions",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "revocation_registry_size": 1000,
@@ -21363,18 +21368,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCreatedCredDefsExample",
               "description": "",
               "path": "/credential-definitions/created",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "issuer_did": "foo",
-                "schema_id": "foo",
-                "schema_issuer_did": "foo",
-                "schema_name": "foo",
-                "schema_version": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21463,9 +21461,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredentialDefinitionExample",
               "description": "",
-              "path": "/credential-definitions/",
+              "path": "/credential-definitions/foo",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -21564,9 +21562,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "writeCredentialDefinitionExample",
               "description": "",
-              "path": "/credential-definitions/",
+              "path": "/credential-definitions/foo/write_record",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -21609,8 +21607,8 @@
       "types": [],
       "subpackages": []
     },
-    "credentials": {
-      "subpackageId": "credentials",
+    "subpackage_credentials": {
+      "subpackageId": "subpackage_credentials",
       "name": "credentials",
       "endpoints": [
         {
@@ -21674,9 +21672,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredentialMimeTypesExample",
               "description": "",
-              "path": "/credential/mime-types/",
+              "path": "/credential/mime-types/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -21795,16 +21793,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getRevocationStatusExample",
               "description": "",
-              "path": "/credential/revoked/",
+              "path": "/credential/revoked/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
-              "queryParameters": {
-                "from": "foo",
-                "to": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -21886,9 +21881,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getW3CCredentialExample",
               "description": "",
-              "path": "/credential/w3c/",
+              "path": "/credential/w3c/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22026,9 +22021,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteW3CCredentialExample",
               "description": "",
-              "path": "/credential/w3c/",
+              "path": "/credential/w3c/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22110,9 +22105,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredentialRecordExample",
               "description": "",
-              "path": "/credential/",
+              "path": "/credential/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22212,9 +22207,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCredentialRecordExample",
               "description": "",
-              "path": "/credential/",
+              "path": "/credential/foo",
               "pathParameters": {
                 "credential_id": "foo"
               },
@@ -22320,15 +22315,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredentialsExample",
               "description": "",
               "path": "/credentials",
               "pathParameters": {},
-              "queryParameters": {
-                "count": "foo",
-                "start": "foo",
-                "wql": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -22489,15 +22480,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "credentialsGetW3CCredentialsExample",
               "description": "",
               "path": "/credentials/w3c",
               "pathParameters": {},
-              "queryParameters": {
-                "count": "foo",
-                "start": "foo",
-                "wql": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "contexts": [
@@ -22701,9 +22688,9 @@
       "types": [],
       "subpackages": []
     },
-    "did-exchange": {
-      "subpackageId": "did-exchange",
-      "name": "did-exchange",
+    "subpackage_didExchange": {
+      "subpackageId": "subpackage_didExchange",
+      "name": "didExchange",
       "endpoints": [
         {
           "auth": true,
@@ -22826,17 +22813,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "createDidexRequestExample",
               "description": "",
               "path": "/didexchange/create-request",
               "pathParameters": {},
               "queryParameters": {
-                "their_public_did": "foo",
-                "alias": "foo",
-                "mediation_id": "foo",
-                "my_endpoint": "foo",
-                "my_label": "foo",
-                "use_public_did": true
+                "their_public_did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -23006,20 +22988,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "didExchangeReceiveDidexRequestExample",
               "description": "",
               "path": "/didexchange/receive-request",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo",
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                 "did": "WgWxqztrNooG92RXvxSTWv",
                 "label": "Request to connect with Bob"
               },
@@ -23027,7 +23003,6 @@
                 "type": "json",
                 "value": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "label": "Request to connect with Bob"
                 }
@@ -23178,16 +23153,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acceptDidexInvitationExample",
               "description": "",
-              "path": "/didexchange/",
+              "path": "/didexchange/foo/accept-invitation",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "my_endpoint": "foo",
-                "my_label": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23336,16 +23308,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "acceptDidexRequestExample",
               "description": "",
-              "path": "/didexchange/",
+              "path": "/didexchange/foo/accept-request",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "mediation_id": "foo",
-                "my_endpoint": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23410,9 +23379,9 @@
       "types": [],
       "subpackages": []
     },
-    "discover-features v2.0": {
-      "subpackageId": "discover-features v2.0",
-      "name": "discover-features v2.0",
+    "subpackage_discoverFeaturesV20": {
+      "subpackageId": "subpackage_discoverFeaturesV20",
+      "name": "discoverFeaturesV20",
       "endpoints": [
         {
           "auth": true,
@@ -23496,15 +23465,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getV20FeaturesQueriesExample",
               "description": "",
               "path": "/discover-features-2.0/queries",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "query_goal_code": "foo",
-                "query_protocol": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23577,13 +23542,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getV20FeatureRecordsExample",
               "description": "",
               "path": "/discover-features-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23616,9 +23579,9 @@
       "types": [],
       "subpackages": []
     },
-    "discover-features": {
-      "subpackageId": "discover-features",
-      "name": "discover-features",
+    "subpackage_discoverFeatures": {
+      "subpackageId": "subpackage_discoverFeatures",
+      "name": "discoverFeatures",
       "endpoints": [
         {
           "auth": true,
@@ -23702,15 +23665,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getV10FeaturesQueryExample",
               "description": "",
               "path": "/discover-features/query",
               "pathParameters": {},
-              "queryParameters": {
-                "comment": "foo",
-                "connection_id": "foo",
-                "query": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23799,13 +23758,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getV10FeatureRecordsExample",
               "description": "",
               "path": "/discover-features/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -23838,9 +23795,9 @@
       "types": [],
       "subpackages": []
     },
-    "issue-credential v2.0": {
-      "subpackageId": "issue-credential v2.0",
-      "name": "issue-credential v2.0",
+    "subpackage_issueCredentialV20": {
+      "subpackageId": "subpackage_issueCredentialV20",
+      "name": "issueCredentialV20",
       "endpoints": [
         {
           "auth": true,
@@ -23897,7 +23854,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20CreateCredentialRecordExample",
               "description": "",
               "path": "/issue-credential-2.0/create",
               "pathParameters": {},
@@ -24048,7 +24005,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20CreateFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential-2.0/create-offer",
               "pathParameters": {},
@@ -24239,16 +24196,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingCredExRecordsV2Example",
               "description": "",
               "path": "/issue-credential-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "issuer",
-                "state": "proposal-sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -24417,9 +24369,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredExRecordExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24542,9 +24494,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCredExRecordExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24640,9 +24592,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20IssueCredentialToHolderExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/issue",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24787,9 +24739,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20ReportCredExProblemExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/problem-report",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -24894,9 +24846,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendCredentialOfferExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/send-offer",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -25027,9 +24979,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendCredentialRequestExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/send-request",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -25164,9 +25116,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20StoreReceivedCredentialExample",
               "description": "",
-              "path": "/issue-credential-2.0/records/",
+              "path": "/issue-credential-2.0/records/foo/store",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -25291,7 +25243,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendFreeCredentialExample",
               "description": "",
               "path": "/issue-credential-2.0/send",
               "pathParameters": {},
@@ -25446,7 +25398,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential-2.0/send-offer",
               "pathParameters": {},
@@ -25601,7 +25553,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendFreeCredentialProposalExample",
               "description": "",
               "path": "/issue-credential-2.0/send-proposal",
               "pathParameters": {},
@@ -25756,7 +25708,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV20SendFreeCredentialRequestExample",
               "description": "",
               "path": "/issue-credential-2.0/send-request",
               "pathParameters": {},
@@ -25766,7 +25718,24 @@
                 "auto_remove": true,
                 "comment": "comment",
                 "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "filter": {},
+                "filter": {
+                  "ld_proof": {
+                    "credential": {
+                      "@context": [
+                        {}
+                      ],
+                      "credentialSubject": {},
+                      "issuanceDate": "2010-01-01 19:23:24+00:00",
+                      "issuer": {},
+                      "type": [
+                        "foo"
+                      ]
+                    },
+                    "options": {
+                      "proofType": "Ed25519Signature2018"
+                    }
+                  }
+                },
                 "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                 "trace": false
               },
@@ -25776,7 +25745,24 @@
                   "auto_remove": true,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [
+                          {}
+                        ],
+                        "credentialSubject": {},
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "type": [
+                          "foo"
+                        ]
+                      },
+                      "options": {
+                        "proofType": "Ed25519Signature2018"
+                      }
+                    }
+                  },
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                   "trace": false
                 }
@@ -25832,9 +25818,9 @@
       "types": [],
       "subpackages": []
     },
-    "issue-credential v1.0": {
-      "subpackageId": "issue-credential v1.0",
-      "name": "issue-credential v1.0",
+    "subpackage_issueCredentialV10": {
+      "subpackageId": "subpackage_issueCredentialV10",
+      "name": "issueCredentialV10",
       "endpoints": [
         {
           "auth": true,
@@ -25891,7 +25877,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10CreateCredentialRecordExample",
               "description": "",
               "path": "/issue-credential/create",
               "pathParameters": {},
@@ -26064,7 +26050,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10CreateFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential/create-offer",
               "pathParameters": {},
@@ -26267,16 +26253,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingCredExRecordsExample",
               "description": "",
               "path": "/issue-credential/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "issuer",
-                "state": "proposal_sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -26449,9 +26430,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredExRecordExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26576,9 +26557,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteCredExRecordExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26674,9 +26655,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10IssueCredentialToHolderExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/issue",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26823,9 +26804,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10ReportCredExProblemExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/problem-report",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -26930,9 +26911,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10SendCredentialOfferExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/send-offer",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -27062,9 +27043,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sendCredentialRequestExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/send-request",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -27202,9 +27183,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10StoreReceivedCredentialExample",
               "description": "",
-              "path": "/issue-credential/records/",
+              "path": "/issue-credential/records/foo/store",
               "pathParameters": {
                 "cred_ex_id": "foo"
               },
@@ -27331,7 +27312,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10SendFreeCredentialExample",
               "description": "",
               "path": "/issue-credential/send",
               "pathParameters": {},
@@ -27506,7 +27487,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10SendFreeCredentialOfferExample",
               "description": "",
               "path": "/issue-credential/send-offer",
               "pathParameters": {},
@@ -27673,7 +27654,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "issueCredentialV10SendFreeCredentialProposalExample",
               "description": "",
               "path": "/issue-credential/send-proposal",
               "pathParameters": {},
@@ -27799,8 +27780,8 @@
       "types": [],
       "subpackages": []
     },
-    "jsonld": {
-      "subpackageId": "jsonld",
+    "subpackage_jsonld": {
+      "subpackageId": "subpackage_jsonld",
       "name": "jsonld",
       "endpoints": [
         {
@@ -27858,7 +27839,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "jsonldSignExample",
               "description": "",
               "path": "/jsonld/sign",
               "pathParameters": {},
@@ -27867,7 +27848,10 @@
               "requestBody": {
                 "doc": {
                   "credential": {},
-                  "options": {}
+                  "options": {
+                    "proofPurpose": "foo",
+                    "verificationMethod": "foo"
+                  }
                 },
                 "verkey": "verkey"
               },
@@ -27876,7 +27860,10 @@
                 "value": {
                   "doc": {
                     "credential": {},
-                    "options": {}
+                    "options": {
+                      "proofPurpose": "foo",
+                      "verificationMethod": "foo"
+                    }
                   },
                   "verkey": "verkey"
                 }
@@ -27957,20 +27944,30 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "jsonldVerifyExample",
               "description": "",
               "path": "/jsonld/verify",
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
               "requestBody": {
-                "doc": {},
+                "doc": {
+                  "proof": {
+                    "proofPurpose": "foo",
+                    "verificationMethod": "foo"
+                  }
+                },
                 "verkey": "verkey"
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "doc": {},
+                  "doc": {
+                    "proof": {
+                      "proofPurpose": "foo",
+                      "verificationMethod": "foo"
+                    }
+                  },
                   "verkey": "verkey"
                 }
               },
@@ -28001,8 +27998,8 @@
       "types": [],
       "subpackages": []
     },
-    "ledger": {
-      "subpackageId": "ledger",
+    "subpackage_ledger": {
+      "subpackageId": "subpackage_ledger",
       "name": "ledger",
       "endpoints": [
         {
@@ -28070,13 +28067,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPublishedDidEndpointExample",
               "description": "",
               "path": "/ledger/did-endpoint",
               "pathParameters": {},
               "queryParameters": {
-                "did": "foo",
-                "endpoint_type": "Endpoint"
+                "did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28152,7 +28148,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDidVerkeyExample",
               "description": "",
               "path": "/ledger/did-verkey",
               "pathParameters": {},
@@ -28233,7 +28229,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDidNymRoleExample",
               "description": "",
               "path": "/ledger/get-nym-role",
               "pathParameters": {},
@@ -28302,7 +28298,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMultipleLedgerConfigExample",
               "description": "",
               "path": "/ledger/multiple/config",
               "pathParameters": {},
@@ -28399,7 +28395,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getWriteLedgerExample",
               "description": "",
               "path": "/ledger/multiple/get-write-ledger",
               "pathParameters": {},
@@ -28539,17 +28535,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "registerNymExample",
               "description": "",
               "path": "/ledger/register-nym",
               "pathParameters": {},
               "queryParameters": {
                 "did": "foo",
-                "verkey": "foo",
-                "alias": "foo",
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true,
-                "role": "STEWARD"
+                "verkey": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -28613,7 +28605,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "rotatePublicDidKeypairExample",
               "description": "",
               "path": "/ledger/rotate-public-did-keypair",
               "pathParameters": {},
@@ -28676,7 +28668,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getTaaExample",
               "description": "",
               "path": "/ledger/taa",
               "pathParameters": {},
@@ -28792,7 +28784,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "ledgerAcceptTaaExample",
               "description": "",
               "path": "/ledger/taa/accept",
               "pathParameters": {},
@@ -28832,8 +28824,8 @@
       "types": [],
       "subpackages": []
     },
-    "mediation": {
-      "subpackageId": "mediation",
+    "subpackage_mediation": {
+      "subpackageId": "subpackage_mediation",
       "name": "mediation",
       "endpoints": [
         {
@@ -28878,7 +28870,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDefaultMediatorExample",
               "description": "",
               "path": "/mediation/default-mediator",
               "pathParameters": {},
@@ -28981,7 +28973,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "clearDefaultMediatorExample",
               "description": "",
               "path": "/mediation/default-mediator",
               "pathParameters": {},
@@ -29110,14 +29102,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getKeylistsExample",
               "description": "",
               "path": "/mediation/keylists",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "role": "client"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29284,16 +29273,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "mediationSendKeylistQueryToMediatorExample",
               "description": "",
-              "path": "/mediation/keylists/",
+              "path": "/mediation/keylists/foo/send-keylist-query",
               "pathParameters": {
                 "mediation_id": "foo"
               },
-              "queryParameters": {
-                "paginate_limit": 42,
-                "paginate_offset": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "filter": {}
@@ -29402,9 +29388,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "mediationSendKeylistUpdateToMediatorExample",
               "description": "",
-              "path": "/mediation/keylists/",
+              "path": "/mediation/keylists/foo/send-keylist-update",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -29552,9 +29538,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "mediationRequestMediationForConnectionExample",
               "description": "",
-              "path": "/mediation/request/",
+              "path": "/mediation/request/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -29738,20 +29724,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingMediationRecordsExample",
               "description": "",
               "path": "/mediation/requests",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "mediator_terms": [
-                  "foo"
-                ],
-                "recipient_terms": [
-                  "foo"
-                ],
-                "state": "request"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -29920,9 +29897,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMediationRecordExample",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30045,9 +30022,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteMediationRecordExample",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30183,9 +30160,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "mediationDenyMediationRequestExample",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo/deny",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30313,9 +30290,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "grantMediationRequestExample",
               "description": "",
-              "path": "/mediation/requests/",
+              "path": "/mediation/requests/foo/grant",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30426,9 +30403,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "mediationUpdateKeylistForConnIdExample",
               "description": "",
-              "path": "/mediation/update-keylist/",
+              "path": "/mediation/update-keylist/foo",
               "pathParameters": {
                 "conn_id": "foo"
               },
@@ -30546,9 +30523,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setDefaultMediatorExample",
               "description": "",
-              "path": "/mediation/",
+              "path": "/mediation/foo/default-mediator",
               "pathParameters": {
                 "mediation_id": "foo"
               },
@@ -30615,8 +30592,8 @@
       "types": [],
       "subpackages": []
     },
-    "multitenancy": {
-      "subpackageId": "multitenancy",
+    "subpackage_multitenancy": {
+      "subpackageId": "subpackage_multitenancy",
       "name": "multitenancy",
       "endpoints": [
         {
@@ -30674,7 +30651,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multitenancyCreateWalletExample",
               "description": "",
               "path": "/multitenancy/wallet",
               "pathParameters": {},
@@ -30803,9 +30780,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getWalletRecordExample",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -30914,9 +30891,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multitenancyUpdateWalletExample",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -31046,9 +31023,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multitenancyDeleteWalletExample",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo/remove",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -31151,9 +31128,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "multitenancyGetAuthTokenExample",
               "description": "",
-              "path": "/multitenancy/wallet/",
+              "path": "/multitenancy/wallet/foo/token",
               "pathParameters": {
                 "wallet_id": "foo"
               },
@@ -31243,13 +31220,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingWalletsExample",
               "description": "",
               "path": "/multitenancy/wallets",
               "pathParameters": {},
-              "queryParameters": {
-                "wallet_name": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -31310,9 +31285,9 @@
       "types": [],
       "subpackages": []
     },
-    "out-of-band": {
-      "subpackageId": "out-of-band",
-      "name": "out-of-band",
+    "subpackage_outOfBand": {
+      "subpackageId": "subpackage_outOfBand",
+      "name": "outOfBand",
       "endpoints": [
         {
           "auth": true,
@@ -31396,14 +31371,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "outOfBandCreateOobInvitationExample",
               "description": "",
               "path": "/out-of-band/create-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "auto_accept": true,
-                "multi_use": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "accept": [
@@ -31602,16 +31574,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "outOfBandReceiveOobInvitationExample",
               "description": "",
               "path": "/out-of-band/receive-invitation",
               "pathParameters": {},
-              "queryParameters": {
-                "alias": "foo",
-                "auto_accept": true,
-                "mediation_id": "foo",
-                "use_existing_connection": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -31813,8 +31780,8 @@
       "types": [],
       "subpackages": []
     },
-    "server": {
-      "subpackageId": "server",
+    "subpackage_server": {
+      "subpackageId": "subpackage_server",
       "name": "server",
       "endpoints": [
         {
@@ -31859,7 +31826,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getLoadedPluginsExample",
               "description": "",
               "path": "/plugins",
               "pathParameters": {},
@@ -31932,7 +31899,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "shutdownServerExample",
               "description": "",
               "path": "/shutdown",
               "pathParameters": {},
@@ -31995,7 +31962,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getStatusExample",
               "description": "",
               "path": "/status",
               "pathParameters": {},
@@ -32068,7 +32035,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getConfigExample",
               "description": "",
               "path": "/status/config",
               "pathParameters": {},
@@ -32135,7 +32102,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getLivelinessExample",
               "description": "",
               "path": "/status/live",
               "pathParameters": {},
@@ -32202,7 +32169,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getReadinessExample",
               "description": "",
               "path": "/status/ready",
               "pathParameters": {},
@@ -32269,7 +32236,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "resetStatisticsExample",
               "description": "",
               "path": "/status/reset",
               "pathParameters": {},
@@ -32296,9 +32263,9 @@
       "types": [],
       "subpackages": []
     },
-    "present-proof v2.0": {
-      "subpackageId": "present-proof v2.0",
-      "name": "present-proof v2.0",
+    "subpackage_presentProofV20": {
+      "subpackageId": "subpackage_presentProofV20",
+      "name": "presentProofV20",
       "endpoints": [
         {
           "auth": true,
@@ -32355,7 +32322,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20CreateProofRequestExample",
               "description": "",
               "path": "/present-proof-2.0/create-request",
               "pathParameters": {},
@@ -32520,16 +32487,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingPresExRecordsV2Example",
               "description": "",
               "path": "/present-proof-2.0/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "prover",
-                "state": "proposal-sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -32690,9 +32652,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPresExRecordExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -32811,9 +32773,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deletePresExRecordExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -32955,26 +32917,31 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPresExCredentialsV2Example",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/credentials",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
-              "queryParameters": {
-                "count": "foo",
-                "extra_query": "foo",
-                "referent": "foo",
-                "start": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -32985,8 +32952,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -33074,9 +33051,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20ReportPresExProblemExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/problem-report",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33181,9 +33158,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20SendProofPresentationExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/send-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33324,9 +33301,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20SendProofPresentationRequestExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/send-request",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33456,9 +33433,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "verifyReceivedPresentationExample",
               "description": "",
-              "path": "/present-proof-2.0/records/",
+              "path": "/present-proof-2.0/records/foo/verify-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -33570,7 +33547,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20SendPresentationProposalExample",
               "description": "",
               "path": "/present-proof-2.0/send-proposal",
               "pathParameters": {},
@@ -33699,7 +33676,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV20SendFreePresentationRequestExample",
               "description": "",
               "path": "/present-proof-2.0/send-request",
               "pathParameters": {},
@@ -33779,9 +33756,9 @@
       "types": [],
       "subpackages": []
     },
-    "present-proof v1.0": {
-      "subpackageId": "present-proof v1.0",
-      "name": "present-proof v1.0",
+    "subpackage_presentProofV10": {
+      "subpackageId": "subpackage_presentProofV10",
+      "name": "presentProofV10",
       "endpoints": [
         {
           "auth": true,
@@ -33838,7 +33815,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10CreateFreeProofRequestExample",
               "description": "",
               "path": "/present-proof/create-request",
               "pathParameters": {},
@@ -34079,16 +34056,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingPresExRecordsExample",
               "description": "",
               "path": "/present-proof/records",
               "pathParameters": {},
-              "queryParameters": {
-                "connection_id": "foo",
-                "role": "prover",
-                "state": "proposal_sent",
-                "thread_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -34249,9 +34221,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPresExRecordExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34370,9 +34342,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deletePresExRecordExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34514,26 +34486,31 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPresExCredentialsExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/credentials",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
-              "queryParameters": {
-                "count": "foo",
-                "extra_query": "foo",
-                "referent": "foo",
-                "start": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -34544,8 +34521,18 @@
                 "type": "json",
                 "value": [
                   {
-                    "cred_info": {},
-                    "interval": {},
+                    "cred_info": {
+                      "attrs": {},
+                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "cred_rev_id": "12345",
+                      "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+                    },
+                    "interval": {
+                      "from": 1640995199,
+                      "to": 1640995199
+                    },
                     "presentation_referents": [
                       "1_age_uuid"
                     ]
@@ -34633,9 +34620,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10ReportPresExProblemExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/problem-report",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34740,9 +34727,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10SendProofPresentationExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/send-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -34913,9 +34900,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10SendProofPresentationRequestExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/send-request",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -35045,9 +35032,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "verifyReceivedPresentationExample",
               "description": "",
-              "path": "/present-proof/records/",
+              "path": "/present-proof/records/foo/verify-presentation",
               "pathParameters": {
                 "pres_ex_id": "foo"
               },
@@ -35159,7 +35146,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10SendPresentationProposalExample",
               "description": "",
               "path": "/present-proof/send-proposal",
               "pathParameters": {},
@@ -35352,7 +35339,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "presentProofV10SendFreePresentationRequestExample",
               "description": "",
               "path": "/present-proof/send-request",
               "pathParameters": {},
@@ -35508,8 +35495,8 @@
       "types": [],
       "subpackages": []
     },
-    "resolver": {
-      "subpackageId": "resolver",
+    "subpackage_resolver": {
+      "subpackageId": "subpackage_resolver",
       "name": "resolver",
       "endpoints": [
         {
@@ -35574,9 +35561,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDidDocumentExample",
               "description": "",
-              "path": "/resolver/resolve/",
+              "path": "/resolver/resolve/foo",
               "pathParameters": {
                 "did": "foo"
               },
@@ -35609,8 +35596,8 @@
       "types": [],
       "subpackages": []
     },
-    "revocation": {
-      "subpackageId": "revocation",
+    "subpackage_revocation": {
+      "subpackageId": "subpackage_revocation",
       "name": "revocation",
       "endpoints": [
         {
@@ -35675,9 +35662,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getActiveRegistryForCredDefIdExample",
               "description": "",
-              "path": "/revocation/active-registry/",
+              "path": "/revocation/active-registry/foo",
               "pathParameters": {
                 "cred_def_id": "foo"
               },
@@ -35795,7 +35782,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "revocationClearPendingRevocationsExample",
               "description": "",
               "path": "/revocation/clear-pending-revocations",
               "pathParameters": {},
@@ -35904,7 +35891,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "revocationCreateRevocationRegistryExample",
               "description": "",
               "path": "/revocation/create-registry",
               "pathParameters": {},
@@ -36063,15 +36050,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCredentialRevocationRecordExample",
               "description": "",
               "path": "/revocation/credential-record",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_ex_id": "foo",
-                "cred_rev_id": "foo",
-                "rev_reg_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36167,7 +36150,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "revocationPublishRevocationsExample",
               "description": "",
               "path": "/revocation/publish-revocations",
               "pathParameters": {},
@@ -36293,14 +36276,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getCreatedRegistriesExample",
               "description": "",
               "path": "/revocation/registries/created",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "state": "init"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36398,14 +36378,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteTailsFileExample",
               "description": "",
               "path": "/revocation/registry/delete-tails-file",
               "pathParameters": {},
-              "queryParameters": {
-                "cred_def_id": "foo",
-                "rev_reg_id": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36488,9 +36465,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getRevocationRegistryExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -36628,9 +36605,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "revocationUpdateRevocationRegistryExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -36791,16 +36768,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "publishRevocationRegistryDefinitionExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/definition",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -36952,16 +36926,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "publishRevocationRegistryEntryExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/entry",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -37093,9 +37064,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "updateRevocationEntryStateExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/fix-revocation-entry-state",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37188,9 +37159,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getIssuedCredentialsCountExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37277,9 +37248,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getIssuedCredentialDetailsExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued/details",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37412,9 +37383,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPublishedCredentialDetailsExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/issued/indy_recs",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37510,9 +37481,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setRevocationRegistryStateExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/set-state",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37628,9 +37599,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "downloadTailsFileSparseExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file-less-deets",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37701,9 +37672,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "downloadTailsFileExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37778,9 +37749,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "uploadTailsFileExample",
               "description": "",
-              "path": "/revocation/registry/",
+              "path": "/revocation/registry/foo/tails-file",
               "pathParameters": {
                 "rev_reg_id": "foo"
               },
@@ -37856,7 +37827,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "revocationRevokeIssuedCredentialExample",
               "description": "",
               "path": "/revocation/revoke",
               "pathParameters": {},
@@ -37908,8 +37879,8 @@
       "types": [],
       "subpackages": []
     },
-    "schema": {
-      "subpackageId": "schema",
+    "subpackage_schema": {
+      "subpackageId": "subpackage_schema",
       "name": "schema",
       "endpoints": [
         {
@@ -37994,14 +37965,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "schemaPublishSchemaExample",
               "description": "",
               "path": "/schemas",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "attributes": [
@@ -38135,16 +38103,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getMatchingCreatedSchemasExample",
               "description": "",
               "path": "/schemas/created",
               "pathParameters": {},
-              "queryParameters": {
-                "schema_id": "foo",
-                "schema_issuer_did": "foo",
-                "schema_name": "foo",
-                "schema_version": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -38233,9 +38196,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getSchemaExample",
               "description": "",
-              "path": "/schemas/",
+              "path": "/schemas/foo",
               "pathParameters": {
                 "schema_id": "foo"
               },
@@ -38342,9 +38305,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "writeSchemaRecordToWalletExample",
               "description": "",
-              "path": "/schemas/",
+              "path": "/schemas/foo/write_record",
               "pathParameters": {
                 "schema_id": "foo"
               },
@@ -38395,9 +38358,9 @@
       "types": [],
       "subpackages": []
     },
-    "endorse-transaction": {
-      "subpackageId": "endorse-transaction",
-      "name": "endorse-transaction",
+    "subpackage_endorseTransaction": {
+      "subpackageId": "subpackage_endorseTransaction",
+      "name": "endorseTransaction",
       "endpoints": [
         {
           "auth": true,
@@ -38460,9 +38423,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "resendTransactionRequestExample",
               "description": "",
-              "path": "/transaction/",
+              "path": "/transaction/foo/resend",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -38593,7 +38556,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getTransactionListExample",
               "description": "",
               "path": "/transactions",
               "pathParameters": {},
@@ -38839,13 +38802,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "endorseTransactionCreateTransactionRequestExample",
               "description": "",
               "path": "/transactions/create-request",
               "pathParameters": {},
               "queryParameters": {
-                "tran_id": "foo",
-                "endorser_write_txn": true
+                "tran_id": "foo"
               },
               "headers": {},
               "requestBody": {
@@ -39025,15 +38987,14 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setEndorserInfoForConnIdExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/set-endorser-info",
               "pathParameters": {
                 "conn_id": "foo"
               },
               "queryParameters": {
-                "endorser_did": "foo",
-                "endorser_name": "foo"
+                "endorser_did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -39130,15 +39091,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setEndorserRoleForConnIdExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/set-endorser-role",
               "pathParameters": {
                 "conn_id": "foo"
               },
-              "queryParameters": {
-                "transaction_my_job": "TRANSACTION_AUTHOR"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39222,9 +39181,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getTransactionRecordExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39374,9 +39333,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "cancelTransactionRequestExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/cancel",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39526,9 +39485,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "refuseTransactionExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/refuse",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39678,9 +39637,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "publishEndorsedTransactionExample",
               "description": "",
-              "path": "/transactions/",
+              "path": "/transactions/foo/write",
               "pathParameters": {
                 "tran_id": "foo"
               },
@@ -39775,8 +39734,8 @@
       "types": [],
       "subpackages": []
     },
-    "wallet": {
-      "subpackageId": "wallet",
+    "subpackage_wallet": {
+      "subpackageId": "subpackage_wallet",
       "name": "wallet",
       "endpoints": [
         {
@@ -39883,17 +39842,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDidsExample",
               "description": "",
               "path": "/wallet/did",
               "pathParameters": {},
-              "queryParameters": {
-                "did": "foo",
-                "key_type": "ed25519",
-                "method": "key",
-                "posture": "public",
-                "verkey": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -39999,7 +39952,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "walletCreateLocalDidExample",
               "description": "",
               "path": "/wallet/did/create",
               "pathParameters": {},
@@ -40101,7 +40054,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "rotateKeypairExample",
               "description": "",
               "path": "/wallet/did/local/rotate-keypair",
               "pathParameters": {},
@@ -40166,7 +40119,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPublicDidExample",
               "description": "",
               "path": "/wallet/did/public",
               "pathParameters": {},
@@ -40296,15 +40249,12 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "setPublicDidExample",
               "description": "",
               "path": "/wallet/did/public",
               "pathParameters": {},
               "queryParameters": {
-                "did": "foo",
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true,
-                "mediation_id": "foo"
+                "did": "foo"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -40392,7 +40342,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getDidEndpointExample",
               "description": "",
               "path": "/wallet/get-did-endpoint",
               "pathParameters": {},
@@ -40503,14 +40453,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "walletSetDidEndpointExample",
               "description": "",
               "path": "/wallet/set-did-endpoint",
               "pathParameters": {},
-              "queryParameters": {
-                "conn_id": "foo",
-                "create_transaction_for_endorser": true
-              },
+              "queryParameters": {},
               "headers": {},
               "requestBody": {
                 "did": "WgWxqztrNooG92RXvxSTWv",
@@ -40624,15 +40571,13 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "endorseTransactionExample",
             "description": "",
-            "path": "/transactions/",
+            "path": "/transactions/foo/endorse",
             "pathParameters": {
               "tran_id": "foo"
             },
-            "queryParameters": {
-              "endorser_did": "foo"
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
@@ -41091,31 +41036,31 @@
       "VerifyRequest_doc"
     ],
     "subpackages": [
-      "action-menu",
-      "connection",
-      "basicmessage",
-      "trustping",
-      "introduction",
-      "credential-definition",
-      "credentials",
-      "did-exchange",
-      "discover-features v2.0",
-      "discover-features",
-      "issue-credential v2.0",
-      "issue-credential v1.0",
-      "jsonld",
-      "ledger",
-      "mediation",
-      "multitenancy",
-      "out-of-band",
-      "server",
-      "present-proof v2.0",
-      "present-proof v1.0",
-      "resolver",
-      "revocation",
-      "schema",
-      "endorse-transaction",
-      "wallet"
+      "subpackage_actionMenu",
+      "subpackage_connection",
+      "subpackage_basicmessage",
+      "subpackage_trustping",
+      "subpackage_introduction",
+      "subpackage_credentialDefinition",
+      "subpackage_credentials",
+      "subpackage_didExchange",
+      "subpackage_discoverFeaturesV20",
+      "subpackage_discoverFeatures",
+      "subpackage_issueCredentialV20",
+      "subpackage_issueCredentialV10",
+      "subpackage_jsonld",
+      "subpackage_ledger",
+      "subpackage_mediation",
+      "subpackage_multitenancy",
+      "subpackage_outOfBand",
+      "subpackage_server",
+      "subpackage_presentProofV20",
+      "subpackage_presentProofV10",
+      "subpackage_resolver",
+      "subpackage_revocation",
+      "subpackage_schema",
+      "subpackage_endorseTransaction",
+      "subpackage_wallet"
     ]
   },
   "auth": {

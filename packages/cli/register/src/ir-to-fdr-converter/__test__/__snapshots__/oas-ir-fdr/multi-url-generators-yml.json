@@ -147,10 +147,35 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "listUsersExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -239,12 +264,37 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          },
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 404,
+            "description": "User not found",
+            "name": "NotFoundError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "getUserInformationExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -315,10 +365,23 @@
           "statusCode": 200,
           "description": "Successful response"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 401,
+            "description": "Unauthorized",
+            "name": "UnauthorizedError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "getAuthenticationTokenExample",
             "description": "",
             "path": "/token",
             "pathParameters": {},

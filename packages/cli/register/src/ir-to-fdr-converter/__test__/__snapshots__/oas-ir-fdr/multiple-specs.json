@@ -109,21 +109,40 @@
                   "exploded": false
                 }
               ]
-            }
+            },
+            "contentType": "multipart/form-data"
           }
         },
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "uploadWithContentTypeExample",
             "description": "",
             "path": "/upload-with-content-type",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "file": "foo"
+            },
             "requestBodyV3": {
               "type": "form",
-              "value": {}
+              "value": {
+                "file": {
+                  "type": "filename",
+                  "value": "foo"
+                },
+                "maybe_file": {
+                  "type": "filename",
+                  "value": "<file1>"
+                },
+                "metadata": {
+                  "type": "json"
+                },
+                "data": {
+                  "type": "json"
+                }
+              }
             },
             "responseStatusCode": 200
           }

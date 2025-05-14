@@ -342,12 +342,66 @@ components:
           const: How super cool
       required:
         - myLiteral
+    DiscriminatedLiteral:
+      title: DiscriminatedLiteral
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - customName
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - defaultName
+            value:
+              type: string
+              const: Bob
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - george
+            value:
+              type: boolean
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - literalGeorge
+            value:
+              type: boolean
+              const: true
+          required:
+            - type
     UndiscriminatedLiteral:
       title: UndiscriminatedLiteral
       oneOf:
         - type: string
         - type: string
           const: $ending
+        - type: string
+          const: >-
+            10 non-alphanumeric string literals you're going to love & why
+            (number 8 will surprise you)
+        - type: boolean
+          const: true
+        - type: boolean
+          const: false
+        - type: boolean
     AliasToPrompt:
       title: AliasToPrompt
       type: string

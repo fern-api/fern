@@ -268,7 +268,7 @@ ignore = [
     "F841"   # Local variable ... is assigned to but never used
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party"]
 """
 

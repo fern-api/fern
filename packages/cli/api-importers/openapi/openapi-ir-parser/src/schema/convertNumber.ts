@@ -17,6 +17,7 @@ export function convertNumber({
     availability,
     wrapAsNullable,
     example,
+    namespace,
     groupName
 }: {
     nameOverride: string | undefined;
@@ -33,6 +34,7 @@ export function convertNumber({
     availability: Availability | undefined;
     wrapAsNullable: boolean;
     example: number | undefined;
+    namespace: string | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
     if (format == null || format === "double") {
@@ -52,6 +54,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "float") {
@@ -65,6 +68,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "int32") {
@@ -84,6 +88,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "int64") {
@@ -98,6 +103,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "uint32") {
@@ -112,6 +118,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "uint64") {
@@ -126,6 +133,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     } else if (format === "time-delta") {
@@ -139,6 +147,7 @@ export function convertNumber({
             wrapAsNullable,
             description,
             availability,
+            namespace,
             groupName
         });
     }
@@ -152,6 +161,7 @@ export function convertNumber({
         wrapAsNullable,
         description,
         availability,
+        namespace,
         groupName
     });
 }

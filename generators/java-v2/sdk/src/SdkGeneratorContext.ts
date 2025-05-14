@@ -35,7 +35,8 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         this.generatorAgent = new JavaGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
     }
 
@@ -180,6 +181,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getRootClientClassName(): string {
         return this.customConfig?.["client-class-name"] ?? `${this.getBaseNamePrefix()}Client`;
+    }
+
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
     }
 
     private joinPackageTokens(tokens: string[]): string {

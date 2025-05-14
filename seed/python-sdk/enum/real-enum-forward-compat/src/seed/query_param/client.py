@@ -53,20 +53,24 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed import SeedEnum
-        from seed import Operand
-        from seed import Color
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )
+        from seed import Color, Operand, SeedEnum
+
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query_param.send(
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+        )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def send_list(
         self,
@@ -97,20 +101,26 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed import SeedEnum
-        from seed import Operand
-        from seed import Color
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.query_param.send_list(operand=Operand.GREATER_THAN, maybe_operand=Operand.GREATER_THAN, operand_or_color=Color.RED, maybe_operand_or_color=Color.RED, )
+        from seed import Color, Operand, SeedEnum
+
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query_param.send_list(
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
+        )
         """
-        response = self._raw_client.send_list(
+        _response = self._raw_client.send_list(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncQueryParamClient:
@@ -157,23 +167,32 @@ class AsyncQueryParamClient:
 
         Examples
         --------
-        from seed import AsyncSeedEnum
-        from seed import Operand
-        from seed import Color
         import asyncio
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedEnum, Color, Operand
+
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED, )
+            await client.query_param.send(
+                operand=Operand.GREATER_THAN,
+                operand_or_color=Color.RED,
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def send_list(
         self,
@@ -204,20 +223,31 @@ class AsyncQueryParamClient:
 
         Examples
         --------
-        from seed import AsyncSeedEnum
-        from seed import Operand
-        from seed import Color
         import asyncio
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedEnum, Color, Operand
+
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.query_param.send_list(operand=Operand.GREATER_THAN, maybe_operand=Operand.GREATER_THAN, operand_or_color=Color.RED, maybe_operand_or_color=Color.RED, )
+            await client.query_param.send_list(
+                operand=Operand.GREATER_THAN,
+                maybe_operand=Operand.GREATER_THAN,
+                operand_or_color=Color.RED,
+                maybe_operand_or_color=Color.RED,
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.send_list(
+        _response = await self._raw_client.send_list(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

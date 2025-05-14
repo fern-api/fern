@@ -4826,9 +4826,19 @@
     "ListKeyMetadata": {
       "name": "ListKeyMetadata",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyType": {
+            "type": "primitive",
+            "value": {
+              "type": "string"
+            }
+          },
+          "valueType": {
+            "type": "unknown"
+          }
+        }
       }
     },
     "ListData": {
@@ -7269,7 +7279,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -7434,24 +7445,115 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/transactions",
             "pathParameters": {},
-            "queryParameters": {
-              "validateOriginUserId": "foo",
-              "validateDestinationUserId": "foo"
-            },
+            "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "transactionId": "foo",
-              "timestamp": 42
+              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              "timestamp": 1641654664000,
+              "originUserId": "8650a2611d0771cba03310f74bf6",
+              "destinationUserId": "9350a2611e0771cba03310f74bf6",
+              "originAmountDetails": {
+                "transactionAmount": 800,
+                "transactionCurrency": "EUR",
+                "country": "DE"
+              },
+              "destinationAmountDetails": {
+                "transactionAmount": 68351.34,
+                "transactionCurrency": "INR",
+                "country": "IN"
+              },
+              "originPaymentDetails": {
+                "method": "CARD",
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "US",
+                "transactionReferenceField": "Deposit",
+                "3dsDone": true
+              },
+              "destinationPaymentDetails": {
+                "method": "CARD",
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "IN",
+                "transactionReferenceField": "Deposit",
+                "3dsDone": true
+              },
+              "promotionCodeUsed": true,
+              "reference": "loan repayment",
+              "deviceData": {
+                "batteryLevel": 95,
+                "deviceLatitude": 13.0033,
+                "deviceLongitude": 76.1004,
+                "ipAddress": "10.23.191.2",
+                "deviceIdentifier": "3c49f915d04485e34caba",
+                "vpnUsed": false,
+                "operatingSystem": "Android 11.2",
+                "deviceMaker": "ASUS",
+                "deviceModel": "Zenphone M2 Pro Max",
+                "deviceYear": "2018",
+                "appVersion": "1.1.0"
+              },
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue"
+                }
+              ]
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "transactionId": "foo",
-                "timestamp": 42
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                "timestamp": 1641654664000,
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "originAmountDetails": {
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                  "country": "DE"
+                },
+                "destinationAmountDetails": {
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                  "country": "IN"
+                },
+                "originPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "destinationPaymentDetails": {
+                  "method": "CARD",
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "transactionReferenceField": "Deposit",
+                  "3dsDone": true
+                },
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "deviceData": {
+                  "batteryLevel": 95,
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "ipAddress": "10.23.191.2",
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "vpnUsed": false,
+                  "operatingSystem": "Android 11.2",
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "appVersion": "1.1.0"
+                },
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue"
+                  }
+                ]
               }
             },
             "responseStatusCode": 201,
@@ -7573,9 +7675,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
-            "path": "/transactions/",
+            "path": "/transactions/foo",
             "pathParameters": {
               "transactionId": "foo"
             },
@@ -7792,24 +7894,54 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
             "path": "/events/transaction",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
             "requestBody": {
-              "transactionState": "CREATED",
-              "timestamp": 42,
-              "transactionId": "foo"
+              "transactionState": "SUCCESSFUL",
+              "timestamp": 1431231244001,
+              "transactionId": "443dea26147a406b957d9ee3a1247b11",
+              "eventId": "aaeeb166147a406b957dd9147a406b957",
+              "eventDescription": "Transaction created",
+              "metaData": {
+                "batteryLevel": 76.3,
+                "deviceLatitude": 13.009711,
+                "deviceLongitude": 76.102898,
+                "ipAddress": "79.144.2.20",
+                "vpnUsed": true
+              }
             },
             "requestBodyV3": {
               "type": "json",
               "value": {
-                "transactionState": "CREATED",
-                "timestamp": 42,
-                "transactionId": "foo"
+                "transactionState": "SUCCESSFUL",
+                "timestamp": 1431231244001,
+                "transactionId": "443dea26147a406b957d9ee3a1247b11",
+                "eventId": "aaeeb166147a406b957dd9147a406b957",
+                "eventDescription": "Transaction created",
+                "metaData": {
+                  "batteryLevel": 76.3,
+                  "deviceLatitude": 13.009711,
+                  "deviceLongitude": 76.102898,
+                  "ipAddress": "79.144.2.20",
+                  "vpnUsed": true
+                }
               }
+            },
+            "responseStatusCode": 201
+          },
+          {
+            "name": "example-1",
+            "description": "",
+            "path": "/events/transaction",
+            "pathParameters": {},
+            "queryParameters": {},
+            "headers": {},
+            "requestBodyV3": {
+              "type": "json"
             },
             "responseStatusCode": 201,
             "responseBody": {
@@ -8025,10 +8157,23 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/consumer/users",
             "pathParameters": {},
@@ -8282,9 +8427,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
-            "path": "/consumer/users/",
+            "path": "/consumer/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -8484,10 +8629,23 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "example-1",
             "description": "",
             "path": "/business/users",
             "pathParameters": {},
@@ -8623,9 +8781,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "example-2",
             "description": "",
-            "path": "/business/users/",
+            "path": "/business/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -9065,10 +9223,23 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "postUserEventExample",
             "description": "",
             "path": "/events/consumer/user",
             "pathParameters": {},
@@ -10305,10 +10476,23 @@
           "statusCode": 201,
           "description": "Created"
         },
-        "errorsV2": [],
+        "errorsV2": [
+          {
+            "type": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            },
+            "statusCode": 400,
+            "description": "Bad Request",
+            "name": "BadRequestError",
+            "examples": []
+          }
+        ],
         "examples": [
           {
-            "name": "",
+            "name": "postBusinessUserEventExample",
             "description": "",
             "path": "/events/business/user",
             "pathParameters": {},

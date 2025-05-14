@@ -277,3 +277,15 @@ function convertToFdrApiDefinitionSources(
         ])
     );
 }
+
+/**
+ * Type guard to check if a GitHub configuration is a self-hosted configuration
+ */
+function isGithubSelfhosted(
+    github: generatorsYml.GithubConfigurationSchema | undefined
+): github is generatorsYml.GithubSelfhostedSchema {
+    if (github == null) {
+        return false;
+    }
+    return "uri" in github && "token" in github;
+}

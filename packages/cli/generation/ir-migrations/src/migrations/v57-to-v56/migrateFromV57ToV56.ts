@@ -24,9 +24,9 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_SDK]: "0.49.0",
         [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: "1.8.0",
+        [GeneratorName.JAVA_SDK]: "2.34.0",
+        [GeneratorName.JAVA_SPRING]: "1.6.0",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: "1.6.3",
@@ -55,7 +55,7 @@ export const V57_TO_V56_MIGRATION: IrMigration<
         return {
             ...v57,
             dynamic: v57.dynamic != null ? convertDynamicIr(v57.dynamic) : undefined
-        };
+        } as IrVersions.V56.ir.IntermediateRepresentation;
     }
 };
 

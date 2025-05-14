@@ -57,17 +57,23 @@ class InlinedRequestClient:
         Examples
         --------
         from seed import SeedEnum
-        client = SeedEnum(base_url="https://yourhost.com/path/to/api", )
-        client.inlined_request.send(operand=">", operand_or_color="red", )
+
+        client = SeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.inlined_request.send(
+            operand=">",
+            operand_or_color="red",
+        )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncInlinedRequestClient:
@@ -114,18 +120,29 @@ class AsyncInlinedRequestClient:
 
         Examples
         --------
-        from seed import AsyncSeedEnum
         import asyncio
-        client = AsyncSeedEnum(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedEnum
+
+        client = AsyncSeedEnum(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.inlined_request.send(operand=">", operand_or_color="red", )
+            await client.inlined_request.send(
+                operand=">",
+                operand_or_color="red",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             operand=operand,
             operand_or_color=operand_or_color,
             maybe_operand=maybe_operand,
             maybe_operand_or_color=maybe_operand_or_color,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

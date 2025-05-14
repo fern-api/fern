@@ -66,5 +66,5 @@ class AsyncServiceClient:
         typing.AsyncIterator[bytes]
         """
         async with self._raw_client.download_file(request_options=request_options) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk

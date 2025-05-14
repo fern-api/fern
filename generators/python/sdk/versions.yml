@@ -1,4 +1,220 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Support formatting the generated README.md and python code snippets.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Generate standalone Pydantic models for each class definition for models that utilize the Fern `extends` keyword,
+        as opposed to generating Pydantic models that implement inheritance.
+      type: feat
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.19.7
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to type-shadowing `data` variables in generated streaming endpoints.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
+- version: 4.19.6
+  changelogEntry:
+    - summary: |
+        Fix mypy errors related to automatic pagination in the python client.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.5
+  changelogEntry:
+    - summary: |
+        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients, 
+        preventing collisions with endpoint parameters that might also be named "stream", 
+        while maintaining proper functionality for streaming responses.
+      type: fix
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.4
+  changelogEntry:
+    - summary: |
+        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
+        for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
+      type: feat
+  createdAt: '2025-05-11'
+  irVersion: 57
+
+- version: 4.19.3
+  changelogEntry:
+    - summary: |
+        Fix pagination support in raw clients by properly indexing into response data, ensuring that raw client endpoints with pagination correctly iterate through paginated results.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.2
+  changelogEntry:
+    - summary: |
+        Fix SSE streaming response handling by adding proper type casting to sse.data, ensuring correct data type conversion during stream processing.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.1
+  changelogEntry:
+    - summary: |
+        Fix a mypy error in pydantic_utilities.py by properly handling type annotations for Pydantic v1 and v2 compatibility, ensuring type checking passes correctly across different Pydantic versions.
+      type: fix
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for generating proper Pydantic models that contain forward references wrapped in containers (e.g. list, optional, etc.)
+      type: feat
+  createdAt: '2025-05-09'
+  irVersion: 57
+
+- version: 4.18.6
+  changelogEntry:
+    - summary: |
+        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
+        ensuring valid Python syntax for both single and double quoted string literals.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.5
+  changelogEntry:
+    - summary: |
+        Support application/x-www-form-urlencoded content type for requests, allowing proper encoding of form data in API calls.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.4
+  changelogEntry:
+    - summary: |
+        Fix requirements.txt generation to properly handle dependency version constraints, ensuring compatibility markers are correctly formatted.
+      type: fix
+  createdAt: '2025-05-08'
+  irVersion: 57
+
+- version: 4.18.3
+  changelogEntry:
+    - summary: |
+        Install the generator-cli at build time as a fallback if runtime installation fails. 
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+
+- version: 4.18.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README g
+
+- version: 4.18.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update python-v2 generator invocation so that all relevant files like pyproject.toml and poetry.lock are pushed
+        to the GitHub repository.
+
+- version: 4.18.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Update python-v2 generator invocation so that all relevant files like pyproject.toml and poetry.lock are pushed
+        to the GitHub repository.
+
+- version: 4.18.0
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Add support for self-hosted mode, allowing users to push generated SDKs to their own GitHub repositories.
+        This feature enables organizations to maintain private SDK repositories with custom configurations.
+
+- version: 4.17.1
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix an issue where response `headers` were not available in the strongly typed error classes.
+
+- version: 4.17.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for retrieving response headers for each page of paginated responses, instead of just the first page.
+
+- version: 4.16.2
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where `bytes` and `text` responses were not handled correctly.
+
+- version: 4.16.1
+  irVersion: 57
+  changelogEntry:
+    - type: internal
+      summary: |
+        Fixes an internal release issue in `4.16.0`.
+
+- version: 4.16.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+         Add support for retrieving response headers from the generated `ApiError` class.
+
+- version: 4.15.0
+  irVersion: 57
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for offset step pagination, where the offset position represents the element's index rather
+        than the page number.
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where paginated endpoints were not returning the underlying data.
+
+- version: 4.14.6
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue where multipart/form-data content types are now explicitly sent when configured in the API definition.
+
+- version: 4.14.5
+  irVersion: 57
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed an issue introduced in 4.14.0, where SSE streaming responses were not yielded correctly.
+
 - version: 4.14.4
   irVersion: 57
   changelogEntry:

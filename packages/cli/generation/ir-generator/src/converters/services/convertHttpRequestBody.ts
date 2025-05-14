@@ -51,6 +51,7 @@ export function convertHttpRequestBody({
     const fileUploadRequest = parseFileUploadRequest(request);
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
+            contentType: request["content-type"],
             name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
@@ -152,7 +153,8 @@ export function convertReferenceHttpRequestBody({
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
-        contentType
+        contentType,
+        v2Examples: undefined
     };
 }
 

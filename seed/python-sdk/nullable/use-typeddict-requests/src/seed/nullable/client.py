@@ -60,10 +60,19 @@ class NullableClient:
         Examples
         --------
         from seed import SeedNullable
-        client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
-        client.nullable.get_users(usernames='usernames', avatar='avatar', activated=True, tags='tags', extra=True, )
+
+        client = SeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.nullable.get_users(
+            usernames="usernames",
+            avatar="avatar",
+            activated=True,
+            tags="tags",
+            extra=True,
+        )
         """
-        response = self._raw_client.get_users(
+        _response = self._raw_client.get_users(
             usernames=usernames,
             avatar=avatar,
             activated=activated,
@@ -71,7 +80,7 @@ class NullableClient:
             extra=extra,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def create_user(
         self,
@@ -102,15 +111,35 @@ class NullableClient:
 
         Examples
         --------
-        from seed import SeedNullable
         import datetime
-        client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
-        client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata={'created_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'updated_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'avatar': 'avatar', 'activated': True, 'status': {'type': 'active'}, 'values': {'values': 'values'}}, avatar='avatar', )
+
+        from seed import SeedNullable
+
+        client = SeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.nullable.create_user(
+            username="username",
+            tags=["tags", "tags"],
+            metadata={
+                "created_at": datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                "updated_at": datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                "avatar": "avatar",
+                "activated": True,
+                "status": {"type": "active"},
+                "values": {"values": "values"},
+            },
+            avatar="avatar",
+        )
         """
-        response = self._raw_client.create_user(
+        _response = self._raw_client.create_user(
             username=username, tags=tags, metadata=metadata, avatar=avatar, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -131,11 +160,16 @@ class NullableClient:
         Examples
         --------
         from seed import SeedNullable
-        client = SeedNullable(base_url="https://yourhost.com/path/to/api", )
-        client.nullable.delete_user(username='xy', )
+
+        client = SeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.nullable.delete_user(
+            username="xy",
+        )
         """
-        response = self._raw_client.delete_user(username=username, request_options=request_options)
-        return response.data
+        _response = self._raw_client.delete_user(username=username, request_options=request_options)
+        return _response.data
 
 
 class AsyncNullableClient:
@@ -185,14 +219,28 @@ class AsyncNullableClient:
 
         Examples
         --------
-        from seed import AsyncSeedNullable
         import asyncio
-        client = AsyncSeedNullable(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedNullable
+
+        client = AsyncSeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.nullable.get_users(usernames='usernames', avatar='avatar', activated=True, tags='tags', extra=True, )
+            await client.nullable.get_users(
+                usernames="usernames",
+                avatar="avatar",
+                activated=True,
+                tags="tags",
+                extra=True,
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_users(
+        _response = await self._raw_client.get_users(
             usernames=usernames,
             avatar=avatar,
             activated=activated,
@@ -200,7 +248,7 @@ class AsyncNullableClient:
             extra=extra,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def create_user(
         self,
@@ -231,18 +279,42 @@ class AsyncNullableClient:
 
         Examples
         --------
-        from seed import AsyncSeedNullable
-        import datetime
         import asyncio
-        client = AsyncSeedNullable(base_url="https://yourhost.com/path/to/api", )
+        import datetime
+
+        from seed import AsyncSeedNullable
+
+        client = AsyncSeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.nullable.create_user(username='username', tags=['tags', 'tags'], metadata={'created_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'updated_at': datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), 'avatar': 'avatar', 'activated': True, 'status': {'type': 'active'}, 'values': {'values': 'values'}}, avatar='avatar', )
+            await client.nullable.create_user(
+                username="username",
+                tags=["tags", "tags"],
+                metadata={
+                    "created_at": datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    "updated_at": datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                    "avatar": "avatar",
+                    "activated": True,
+                    "status": {"type": "active"},
+                    "values": {"values": "values"},
+                },
+                avatar="avatar",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.create_user(
+        _response = await self._raw_client.create_user(
             username=username, tags=tags, metadata=metadata, avatar=avatar, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def delete_user(
         self, *, username: typing.Optional[str] = OMIT, request_options: typing.Optional[RequestOptions] = None
@@ -262,12 +334,22 @@ class AsyncNullableClient:
 
         Examples
         --------
-        from seed import AsyncSeedNullable
         import asyncio
-        client = AsyncSeedNullable(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedNullable
+
+        client = AsyncSeedNullable(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.nullable.delete_user(username='xy', )
+            await client.nullable.delete_user(
+                username="xy",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.delete_user(username=username, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.delete_user(username=username, request_options=request_options)
+        return _response.data

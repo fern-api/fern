@@ -59,7 +59,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -95,7 +96,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           },
           {
             "key": "createdAt",
@@ -108,7 +110,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "settings",
@@ -212,7 +215,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "lastLoginTime",
@@ -225,7 +229,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "accountStatus",
@@ -235,7 +240,8 @@
                 "type": "id",
                 "value": "UserStatsAccountStatus"
               }
-            }
+            },
+            "propertyAccess": "WRITE_ONLY"
           }
         ]
       }
@@ -292,7 +298,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "createAUserExample",
             "description": "",
             "path": "/users",
             "pathParameters": {},
@@ -310,17 +316,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             },
@@ -330,17 +333,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }
@@ -403,9 +403,9 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getAUserExample",
             "description": "",
-            "path": "/users/",
+            "path": "/users/foo",
             "pathParameters": {
               "userId": "foo"
             },
@@ -418,17 +418,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             },
@@ -438,17 +435,14 @@
                 "id": "foo",
                 "name": "foo",
                 "email": "foo",
-                "password": "foo",
                 "createdAt": "foo",
                 "settings": {
                   "theme": "foo",
-                  "notifications": true,
-                  "lastModified": "foo"
+                  "notifications": true
                 },
                 "stats": {
                   "totalLogins": 42,
-                  "lastLoginTime": "foo",
-                  "accountStatus": "active"
+                  "lastLoginTime": "foo"
                 }
               }
             }

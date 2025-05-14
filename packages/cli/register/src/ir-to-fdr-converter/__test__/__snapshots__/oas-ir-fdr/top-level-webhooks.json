@@ -32,8 +32,8 @@
     }
   },
   "subpackages": {
-    "status": {
-      "subpackageId": "status",
+    "subpackage_status": {
+      "subpackageId": "subpackage_status",
       "name": "status",
       "endpoints": [],
       "webhooks": [
@@ -108,7 +108,7 @@
       "Update"
     ],
     "subpackages": [
-      "status"
+      "subpackage_status"
     ]
   },
   "snippetsConfiguration": {},

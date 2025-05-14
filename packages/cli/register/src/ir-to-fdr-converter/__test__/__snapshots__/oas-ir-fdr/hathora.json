@@ -981,6 +981,15 @@
         ]
       }
     },
+    "MetricsResponse": {
+      "name": "MetricsResponse",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
     "MetricName": {
       "name": "MetricName",
       "shape": {
@@ -1290,6 +1299,25 @@
             }
           }
         ]
+      }
+    },
+    "Omit_Room.allocations_": {
+      "description": "Construct a type with the properties of T except for those in type K.",
+      "name": "Omit_Room.allocations_",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    "RoomWithoutAllocations": {
+      "name": "RoomWithoutAllocations",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
       }
     },
     "ProcessWithRooms": {
@@ -1610,9 +1638,9 @@
     }
   },
   "subpackages": {
-    "AppV1": {
-      "subpackageId": "AppV1",
-      "name": "AppV1",
+    "subpackage_appV1": {
+      "subpackageId": "subpackage_appV1",
+      "name": "appV1",
       "endpoints": [
         {
           "auth": true,
@@ -1663,7 +1691,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getAppsExample",
               "description": "",
               "path": "/apps/v1/list",
               "pathParameters": {},
@@ -1814,10 +1842,41 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "appV1CreateAppExample",
               "description": "",
               "path": "/apps/v1/create",
               "pathParameters": {},
@@ -1953,12 +2012,43 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "appV1UpdateAppExample",
               "description": "",
-              "path": "/apps/v1/update/",
+              "path": "/apps/v1/update/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2081,12 +2171,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getAppInfoExample",
               "description": "",
-              "path": "/apps/v1/info/",
+              "path": "/apps/v1/info/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2187,12 +2293,43 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteAppExample",
               "description": "",
-              "path": "/apps/v1/delete/",
+              "path": "/apps/v1/delete/foo",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2211,9 +2348,9 @@
       "types": [],
       "subpackages": []
     },
-    "AuthV1": {
-      "subpackageId": "AuthV1",
-      "name": "AuthV1",
+    "subpackage_authV1": {
+      "subpackageId": "subpackage_authV1",
+      "name": "authV1",
       "endpoints": [
         {
           "auth": true,
@@ -2274,12 +2411,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "loginAnonymousExample",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/anonymous",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2384,12 +2537,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authV1LoginNicknameExample",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/nickname",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2503,12 +2672,43 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authV1LoginGoogleExample",
               "description": "",
-              "path": "/auth/v1/",
+              "path": "/auth/v1/foo/login/google",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2548,9 +2748,9 @@
       "types": [],
       "subpackages": []
     },
-    "BuildV1": {
-      "subpackageId": "BuildV1",
-      "name": "BuildV1",
+    "subpackage_buildV1": {
+      "subpackageId": "subpackage_buildV1",
+      "name": "buildV1",
       "endpoints": [
         {
           "auth": true,
@@ -2614,12 +2814,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBuildsExample",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -2750,12 +2966,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getBuildInfoExample",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/info/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -2868,12 +3100,58 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "createBuildExample",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -3005,26 +3283,82 @@
                     }
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "buildV1RunBuildExample",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/run/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "file": "foo"
+              },
               "requestBodyV3": {
                 "type": "form",
-                "value": {}
+                "value": {
+                  "file": {
+                    "type": "filename",
+                    "value": "foo"
+                  }
+                }
               },
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
             }
           ],
           "protocol": {
@@ -3094,12 +3428,58 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteBuildExample",
               "description": "",
-              "path": "/builds/v1/",
+              "path": "/builds/v1/foo/delete/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -3119,9 +3499,9 @@
       "types": [],
       "subpackages": []
     },
-    "DeploymentV1": {
-      "subpackageId": "DeploymentV1",
-      "name": "DeploymentV1",
+    "subpackage_deploymentV1": {
+      "subpackageId": "subpackage_deploymentV1",
+      "name": "deploymentV1",
       "endpoints": [
         {
           "auth": true,
@@ -3185,12 +3565,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getDeploymentsExample",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -3325,12 +3721,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getDeploymentInfoExample",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/info/42",
               "pathParameters": {
                 "appId": "foo",
                 "deploymentId": 42
@@ -3475,12 +3887,58 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deploymentV1CreateDeploymentExample",
               "description": "",
-              "path": "/deployments/v1/",
+              "path": "/deployments/v1/foo/create/42",
               "pathParameters": {
                 "appId": "foo",
                 "buildId": 42
@@ -3571,9 +4029,9 @@
       "types": [],
       "subpackages": []
     },
-    "DiscoveryV1": {
-      "subpackageId": "DiscoveryV1",
-      "name": "DiscoveryV1",
+    "subpackage_discoveryV1": {
+      "subpackageId": "subpackage_discoveryV1",
+      "name": "discoveryV1",
       "endpoints": [
         {
           "auth": true,
@@ -3621,7 +4079,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getPingServiceEndpointsExample",
               "description": "",
               "path": "/discovery/v1/ping",
               "pathParameters": {},
@@ -3660,9 +4118,9 @@
       "types": [],
       "subpackages": []
     },
-    "LobbyV1": {
-      "subpackageId": "LobbyV1",
-      "name": "LobbyV1",
+    "subpackage_lobbyV1": {
+      "subpackageId": "subpackage_lobbyV1",
+      "name": "lobbyV1",
       "endpoints": [
         {
           "availability": "Deprecated",
@@ -3758,19 +4216,92 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "createPrivateLobbyDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/create/private",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle",
-                "local": true
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -3883,19 +4414,92 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "createPublicLobbyDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/create/public",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle",
-                "local": true
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4011,19 +4615,47 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "listActivePublicLobbiesDeprecatedExample",
               "description": "",
-              "path": "/lobby/v1/",
+              "path": "/lobby/v1/foo/list",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "local": true,
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4072,9 +4704,9 @@
       "types": [],
       "subpackages": []
     },
-    "LobbyV2": {
-      "subpackageId": "LobbyV2",
-      "name": "LobbyV2",
+    "subpackage_lobbyV2": {
+      "subpackageId": "subpackage_lobbyV2",
+      "name": "lobbyV2",
       "endpoints": [
         {
           "availability": "Deprecated",
@@ -4183,18 +4815,92 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lobbyV2CreatePrivateLobbyExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/private",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4351,18 +5057,92 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lobbyV2CreatePublicLobbyExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/public",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4519,18 +5299,92 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lobbyV2CreateLocalLobbyExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create/local",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4693,18 +5547,92 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 401,
+              "description": "",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 429,
+              "description": "",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lobbyV2CreateLobbyExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "roomId": "foo"
-              },
+              "queryParameters": {},
               "headers": {
                 "Authorization": "foo"
               },
@@ -4832,15 +5760,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listActivePublicLobbiesExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/list/public",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -4955,12 +5881,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getLobbyInfoExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -5095,12 +6037,43 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "lobbyV2SetLobbyStateExample",
               "description": "",
-              "path": "/lobby/v2/",
+              "path": "/lobby/v2/foo/setState/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -5157,9 +6130,9 @@
       "types": [],
       "subpackages": []
     },
-    "LogV1": {
-      "subpackageId": "LogV1",
-      "name": "LogV1",
+    "subpackage_logV1": {
+      "subpackageId": "subpackage_logV1",
+      "name": "logV1",
       "endpoints": [
         {
           "auth": true,
@@ -5243,22 +6216,50 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getLogsForAppExample",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/all",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42,
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
             }
           ],
           "protocol": {
@@ -5352,22 +6353,51 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getLogsForProcessExample",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/process/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42
-              },
+              "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
             }
           ],
           "protocol": {
@@ -5461,20 +6491,41 @@
             }
           ],
           "headers": [],
-          "errorsV2": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getLogsForDeploymentExample",
               "description": "",
-              "path": "/logs/v1/",
+              "path": "/logs/v1/foo/deployment/42",
               "pathParameters": {
                 "appId": "foo",
                 "deploymentId": 42
               },
-              "queryParameters": {
-                "follow": true,
-                "tailLines": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -5489,9 +6540,9 @@
       "types": [],
       "subpackages": []
     },
-    "MetricsV1": {
-      "subpackageId": "MetricsV1",
-      "name": "MetricsV1",
+    "subpackage_metricsV1": {
+      "subpackageId": "subpackage_metricsV1",
+      "name": "metricsV1",
       "endpoints": [
         {
           "auth": true,
@@ -5618,24 +6669,48 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 422,
+              "description": "",
+              "name": "UnprocessableEntityError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getMetricsExample",
               "description": "",
-              "path": "/metrics/v1/",
+              "path": "/metrics/v1/foo/process/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
               },
-              "queryParameters": {
-                "metrics": [
-                  "cpu"
-                ],
-                "end": 42,
-                "start": 42,
-                "step": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5708,9 +6783,9 @@
       "types": [],
       "subpackages": []
     },
-    "ProcessesV1": {
-      "subpackageId": "ProcessesV1",
-      "name": "ProcessesV1",
+    "subpackage_processesV1": {
+      "subpackageId": "subpackage_processesV1",
+      "name": "processesV1",
       "endpoints": [
         {
           "auth": true,
@@ -5785,18 +6860,32 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRunningProcessesExample",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/list/running",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5932,18 +7021,32 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getStoppedProcessesExample",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/list/stopped",
               "pathParameters": {
                 "appId": "foo"
               },
-              "queryParameters": {
-                "region": "Seattle"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -6072,12 +7175,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getProcessInfoExample",
               "description": "",
-              "path": "/processes/v1/",
+              "path": "/processes/v1/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -6139,9 +7258,9 @@
       "types": [],
       "subpackages": []
     },
-    "RoomV1": {
-      "subpackageId": "RoomV1",
-      "name": "RoomV1",
+    "subpackage_roomV1": {
+      "subpackageId": "subpackage_roomV1",
+      "name": "roomV1",
       "endpoints": [
         {
           "auth": true,
@@ -6221,12 +7340,43 @@
             "statusCode": 201,
             "description": ""
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "roomV1CreateRoomExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/create",
               "pathParameters": {
                 "appId": "foo"
               },
@@ -6330,12 +7480,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getRoomInfoExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/info/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6470,12 +7636,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getActiveRoomsForProcessExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/list/foo/active",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -6578,12 +7760,28 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getInactiveRoomsForProcessExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/list/foo/inactive",
               "pathParameters": {
                 "appId": "foo",
                 "processId": "foo"
@@ -6672,12 +7870,43 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "destroyRoomExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/destroy/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6754,12 +7983,43 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "suspendRoomExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/suspend/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6847,12 +8107,58 @@
             "statusCode": 200,
             "description": "Ok"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 400,
+              "description": "",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 500,
+              "description": "",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getConnectionInfoExample",
               "description": "",
-              "path": "/rooms/v1/",
+              "path": "/rooms/v1/foo/connectioninfo/foo",
               "pathParameters": {
                 "appId": "foo",
                 "roomId": "foo"
@@ -6913,12 +8219,15 @@
       "ProcessId",
       "MetricValue",
       "Record_Partial_MetricName_.MetricValue-Array_",
+      "MetricsResponse",
       "MetricName",
       "Process",
       "RoomStatus",
       "RoomAllocationId",
       "RoomAllocation",
       "Pick_Room.Exclude_keyofRoom.allocations__",
+      "Omit_Room.allocations_",
+      "RoomWithoutAllocations",
       "ProcessWithRooms",
       "Room",
       "StartingConnectionInfo",
@@ -6926,17 +8235,17 @@
       "ConnectionInfo"
     ],
     "subpackages": [
-      "AppV1",
-      "AuthV1",
-      "BuildV1",
-      "DeploymentV1",
-      "DiscoveryV1",
-      "LobbyV1",
-      "LobbyV2",
-      "LogV1",
-      "MetricsV1",
-      "ProcessesV1",
-      "RoomV1"
+      "subpackage_appV1",
+      "subpackage_authV1",
+      "subpackage_buildV1",
+      "subpackage_deploymentV1",
+      "subpackage_discoveryV1",
+      "subpackage_lobbyV1",
+      "subpackage_lobbyV2",
+      "subpackage_logV1",
+      "subpackage_metricsV1",
+      "subpackage_processesV1",
+      "subpackage_roomV1"
     ]
   },
   "auth": {

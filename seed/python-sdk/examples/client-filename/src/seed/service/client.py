@@ -59,11 +59,17 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.service.get_movie(movie_id='movie-c06a4ad7', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.service.get_movie(
+            movie_id="movie-c06a4ad7",
+        )
         """
-        response = self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     def create_movie(
         self,
@@ -112,13 +118,27 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
-        , 'releaseDate': '2023-12-08'
-        , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
-        }, revenue=1000000, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.service.create_movie(
+            id="movie-c06a4ad7",
+            prequel="movie-cv9b914f",
+            title="The Boy and the Heron",
+            from_="Hayao Miyazaki",
+            rating=8.0,
+            tag="tag-wf9as23d",
+            metadata={
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
+            revenue=1000000,
+        )
         """
-        response = self._raw_client.create_movie(
+        _response = self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -130,7 +150,7 @@ class ServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     def get_metadata(
         self,
@@ -160,13 +180,21 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='development', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.service.get_metadata(
+            x_api_version="0.0.1",
+            shallow=False,
+            tag="development",
+        )
         """
-        response = self._raw_client.get_metadata(
+        _response = self._raw_client.get_metadata(
             x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     def create_big_entity(
         self,
@@ -224,30 +252,234 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
-        from seed.types import Actor
-        from seed.types import ExtendedMovie
-        from seed.types import Entity
-        from seed.types import Metadata_Html
-        from seed.commons.types import Metadata
-        from seed.commons.types import EventInfo_Metadata
-        from seed.commons.types import Data_String
-        from seed.types import Migration
-        from seed.types import Exception_Generic
-        from seed.types import Test_And
-        from seed.types import Node
-        from seed.types import Tree
-        from seed.types import Directory
-        from seed.types import File
-        from seed.types import Moment
-        import uuid
         import datetime
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.service.create_big_entity(cast_member=Actor(name='name', id='id', ), extended_movie=ExtendedMovie(id='id', prequel='prequel', title='title', from_='from', rating=1.1, tag='tag', book='book', metadata={'metadata': {'key': 'value'}
-        }, revenue=1000000, cast=['cast', 'cast'], ), entity=Entity(type="primitive", name='name', ), metadata=Metadata_Html(value='metadata'), common_metadata=Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), event_info=EventInfo_Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), data=Data_String(value='data'), migration=Migration(name='name', status="RUNNING", ), exception=Exception_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), test=Test_And(value=True), node=Node(name='name', nodes=[Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], ), Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], )], trees=[Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], ), Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], )], ), directory=Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], ), Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], )], ), moment=Moment(id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), ), )
+        import uuid
+
+        from seed import SeedExhaustive
+        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
+        from seed.environment import SeedExhaustiveEnvironment
+        from seed.types import (
+            Actor,
+            Directory,
+            Entity,
+            Exception_Generic,
+            ExtendedMovie,
+            File,
+            Metadata_Html,
+            Migration,
+            Moment,
+            Node,
+            Test_And,
+            Tree,
+        )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.service.create_big_entity(
+            cast_member=Actor(
+                name="name",
+                id="id",
+            ),
+            extended_movie=ExtendedMovie(
+                id="id",
+                prequel="prequel",
+                title="title",
+                from_="from",
+                rating=1.1,
+                tag="tag",
+                book="book",
+                metadata={"metadata": {"key": "value"}},
+                revenue=1000000,
+                cast=["cast", "cast"],
+            ),
+            entity=Entity(
+                type="primitive",
+                name="name",
+            ),
+            metadata=Metadata_Html(value="metadata"),
+            common_metadata=Metadata(
+                id="id",
+                data={"data": "data"},
+                json_string="jsonString",
+            ),
+            event_info=EventInfo_Metadata(
+                id="id",
+                data={"data": "data"},
+                json_string="jsonString",
+            ),
+            data=Data_String(value="data"),
+            migration=Migration(
+                name="name",
+                status="RUNNING",
+            ),
+            exception=Exception_Generic(
+                exception_type="exceptionType",
+                exception_message="exceptionMessage",
+                exception_stacktrace="exceptionStacktrace",
+            ),
+            test=Test_And(value=True),
+            node=Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                        trees=[
+                            Tree(
+                                nodes=[],
+                            ),
+                            Tree(
+                                nodes=[],
+                            ),
+                        ],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                        trees=[
+                            Tree(
+                                nodes=[],
+                            ),
+                            Tree(
+                                nodes=[],
+                            ),
+                        ],
+                    ),
+                ],
+                trees=[
+                    Tree(
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                    ),
+                    Tree(
+                        nodes=[
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                            Node(
+                                name="name",
+                                nodes=[],
+                                trees=[],
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+            directory=Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                        files=[
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                        ],
+                        directories=[
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                        ],
+                    ),
+                    Directory(
+                        name="name",
+                        files=[
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                            File(
+                                name="name",
+                                contents="contents",
+                            ),
+                        ],
+                        directories=[
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                            Directory(
+                                name="name",
+                                files=[],
+                                directories=[],
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+            moment=Moment(
+                id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+                date=datetime.date.fromisoformat(
+                    "2023-01-15",
+                ),
+                datetime=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+            ),
+        )
         """
-        response = self._raw_client.create_big_entity(
+        _response = self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -263,7 +495,7 @@ class ServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -296,16 +528,27 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.service.get_movie(movie_id='movie-c06a4ad7', )
+            await client.service.get_movie(
+                movie_id="movie-c06a4ad7",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_movie(movie_id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_movie(movie_id, request_options=request_options)
+        return _response.data
 
     async def create_movie(
         self,
@@ -352,18 +595,37 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.service.create_movie(id='movie-c06a4ad7', prequel='movie-cv9b914f', title='The Boy and the Heron', from_='Hayao Miyazaki', rating=8.0, tag='tag-wf9as23d', metadata={'actors': ['Christian Bale', 'Florence Pugh', 'Willem Dafoe']
-            , 'releaseDate': '2023-12-08'
-            , 'ratings': {'rottenTomatoes': 97, 'imdb': 7.6}
-            }, revenue=1000000, )
+            await client.service.create_movie(
+                id="movie-c06a4ad7",
+                prequel="movie-cv9b914f",
+                title="The Boy and the Heron",
+                from_="Hayao Miyazaki",
+                rating=8.0,
+                tag="tag-wf9as23d",
+                metadata={
+                    "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                    "releaseDate": "2023-12-08",
+                    "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+                },
+                revenue=1000000,
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.create_movie(
+        _response = await self._raw_client.create_movie(
             id=id,
             title=title,
             from_=from_,
@@ -375,7 +637,7 @@ class AsyncServiceClient:
             book=book,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
     async def get_metadata(
         self,
@@ -403,18 +665,31 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.service.get_metadata(x_api_version='0.0.1', shallow=False, tag='development', )
+            await client.service.get_metadata(
+                x_api_version="0.0.1",
+                shallow=False,
+                tag="development",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_metadata(
+        _response = await self._raw_client.get_metadata(
             x_api_version=x_api_version, shallow=shallow, tag=tag, request_options=request_options
         )
-        return response.data
+        return _response.data
 
     async def create_big_entity(
         self,
@@ -472,33 +747,241 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedExhaustive
-        from seed.environment import SeedExhaustiveEnvironment
-        from seed.types import Actor
-        from seed.types import ExtendedMovie
-        from seed.types import Entity
-        from seed.types import Metadata_Html
-        from seed.commons.types import Metadata
-        from seed.commons.types import EventInfo_Metadata
-        from seed.commons.types import Data_String
-        from seed.types import Migration
-        from seed.types import Exception_Generic
-        from seed.types import Test_And
-        from seed.types import Node
-        from seed.types import Tree
-        from seed.types import Directory
-        from seed.types import File
-        from seed.types import Moment
-        import uuid
-        import datetime
         import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+        import datetime
+        import uuid
+
+        from seed import AsyncSeedExhaustive
+        from seed.commons.types import Data_String, EventInfo_Metadata, Metadata
+        from seed.environment import SeedExhaustiveEnvironment
+        from seed.types import (
+            Actor,
+            Directory,
+            Entity,
+            Exception_Generic,
+            ExtendedMovie,
+            File,
+            Metadata_Html,
+            Migration,
+            Moment,
+            Node,
+            Test_And,
+            Tree,
+        )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.service.create_big_entity(cast_member=Actor(name='name', id='id', ), extended_movie=ExtendedMovie(id='id', prequel='prequel', title='title', from_='from', rating=1.1, tag='tag', book='book', metadata={'metadata': {'key': 'value'}
-            }, revenue=1000000, cast=['cast', 'cast'], ), entity=Entity(type="primitive", name='name', ), metadata=Metadata_Html(value='metadata'), common_metadata=Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), event_info=EventInfo_Metadata(id='id', data={'data': 'data'}, json_string='jsonString', ), data=Data_String(value='data'), migration=Migration(name='name', status="RUNNING", ), exception=Exception_Generic(exception_type='exceptionType', exception_message='exceptionMessage', exception_stacktrace='exceptionStacktrace', ), test=Test_And(value=True), node=Node(name='name', nodes=[Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], ), Node(name='name', nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], trees=[Tree(nodes=[], ), Tree(nodes=[], )], )], trees=[Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], ), Tree(nodes=[Node(name='name', nodes=[], trees=[], ), Node(name='name', nodes=[], trees=[], )], )], ), directory=Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], ), Directory(name='name', files=[File(name='name', contents='contents', ), File(name='name', contents='contents', )], directories=[Directory(name='name', files=[], directories=[], ), Directory(name='name', files=[], directories=[], )], )], ), moment=Moment(id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", ), date=datetime.date.fromisoformat("2023-01-15", ), datetime=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), ), )
+            await client.service.create_big_entity(
+                cast_member=Actor(
+                    name="name",
+                    id="id",
+                ),
+                extended_movie=ExtendedMovie(
+                    id="id",
+                    prequel="prequel",
+                    title="title",
+                    from_="from",
+                    rating=1.1,
+                    tag="tag",
+                    book="book",
+                    metadata={"metadata": {"key": "value"}},
+                    revenue=1000000,
+                    cast=["cast", "cast"],
+                ),
+                entity=Entity(
+                    type="primitive",
+                    name="name",
+                ),
+                metadata=Metadata_Html(value="metadata"),
+                common_metadata=Metadata(
+                    id="id",
+                    data={"data": "data"},
+                    json_string="jsonString",
+                ),
+                event_info=EventInfo_Metadata(
+                    id="id",
+                    data={"data": "data"},
+                    json_string="jsonString",
+                ),
+                data=Data_String(value="data"),
+                migration=Migration(
+                    name="name",
+                    status="RUNNING",
+                ),
+                exception=Exception_Generic(
+                    exception_type="exceptionType",
+                    exception_message="exceptionMessage",
+                    exception_stacktrace="exceptionStacktrace",
+                ),
+                test=Test_And(value=True),
+                node=Node(
+                    name="name",
+                    nodes=[
+                        Node(
+                            name="name",
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                            trees=[
+                                Tree(
+                                    nodes=[],
+                                ),
+                                Tree(
+                                    nodes=[],
+                                ),
+                            ],
+                        ),
+                        Node(
+                            name="name",
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                            trees=[
+                                Tree(
+                                    nodes=[],
+                                ),
+                                Tree(
+                                    nodes=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                    trees=[
+                        Tree(
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                        ),
+                        Tree(
+                            nodes=[
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                                Node(
+                                    name="name",
+                                    nodes=[],
+                                    trees=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                directory=Directory(
+                    name="name",
+                    files=[
+                        File(
+                            name="name",
+                            contents="contents",
+                        ),
+                        File(
+                            name="name",
+                            contents="contents",
+                        ),
+                    ],
+                    directories=[
+                        Directory(
+                            name="name",
+                            files=[
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                            ],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                            ],
+                        ),
+                        Directory(
+                            name="name",
+                            files=[
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                                File(
+                                    name="name",
+                                    contents="contents",
+                                ),
+                            ],
+                            directories=[
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                                Directory(
+                                    name="name",
+                                    files=[],
+                                    directories=[],
+                                ),
+                            ],
+                        ),
+                    ],
+                ),
+                moment=Moment(
+                    id=uuid.UUID(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                    date=datetime.date.fromisoformat(
+                        "2023-01-15",
+                    ),
+                    datetime=datetime.datetime.fromisoformat(
+                        "2024-01-15 09:30:00+00:00",
+                    ),
+                ),
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.create_big_entity(
+        _response = await self._raw_client.create_big_entity(
             cast_member=cast_member,
             extended_movie=extended_movie,
             entity=entity,
@@ -514,4 +997,4 @@ class AsyncServiceClient:
             moment=moment,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

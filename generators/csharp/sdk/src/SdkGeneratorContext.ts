@@ -69,7 +69,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
             config: this.config,
-            readmeConfigBuilder: new ReadmeConfigBuilder()
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
+            ir: this.ir
         });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
     }
@@ -679,6 +680,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             throw new Error(`Failed to find token endpoint ${endpointId}`);
         }
         return httpEndpoint;
+    }
+
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
     }
 
     public getNameForField(name: NameAndWireValue): string {

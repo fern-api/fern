@@ -15,6 +15,7 @@ export * from "./V2SchemaExample";
 export * from "./V2ValueExamples";
 export * from "./V2WebSocketEndpointLocation";
 export * from "./V2EndpointLocation";
+export * from "./V2EndpointLocationHttpMethod";
 export * from "./V2EnvironmentValues";
 export * from "./MultipleEnvironmentUrlValues";
 export * from "./V2AuthValues";

@@ -26,8 +26,8 @@
     }
   },
   "subpackages": {
-    "testChannel": {
-      "subpackageId": "testChannel",
+    "subpackage_testChannel": {
+      "subpackageId": "subpackage_testChannel",
       "name": "testChannel",
       "endpoints": [],
       "webhooks": [],
@@ -91,8 +91,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel2": {
-      "subpackageId": "testChannel2",
+    "subpackage_testChannel2": {
+      "subpackageId": "subpackage_testChannel2",
       "name": "testChannel2",
       "endpoints": [],
       "webhooks": [],
@@ -207,7 +207,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "listExample",
             "description": "",
             "path": "/pets",
             "pathParameters": {},
@@ -236,8 +236,8 @@
       "testChannel2_sendMessage"
     ],
     "subpackages": [
-      "testChannel",
-      "testChannel2"
+      "subpackage_testChannel",
+      "subpackage_testChannel2"
     ]
   },
   "snippetsConfiguration": {},

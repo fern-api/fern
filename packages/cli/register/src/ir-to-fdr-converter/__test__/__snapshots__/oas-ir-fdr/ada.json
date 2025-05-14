@@ -1,14 +1,5 @@
 {
   "types": {
-    "EndUserProfileMetadata": {
-      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-      "name": "EndUserProfileMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
-      }
-    },
     "EndUserProfileSystemProperties": {
       "description": "Read-only profile information set by Ada",
       "name": "EndUserProfileSystemProperties",
@@ -30,7 +21,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The end user's device information captured by Ada",
@@ -46,7 +38,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The end user's browser information captured by Ada",
@@ -62,7 +55,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The end user's browser version captured by Ada",
@@ -78,7 +72,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "Whether the introductory message of a campaign has been displayed to the end user",
@@ -94,7 +89,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The ID for the last answer displayed to the end user during a conversation",
@@ -110,7 +106,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The last question asked by the end user",
@@ -126,7 +123,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The ID for the first message sent to the end user via Sunshine Conversations",
@@ -142,7 +140,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The ID for the Sunshine Conversation for this end user",
@@ -158,7 +157,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The channel used to communicate with the end user via Sunshine Conversations",
@@ -174,7 +174,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date the end user signed up for Sunshine Conversations",
@@ -190,7 +191,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The Sunshine Conversations user ID for the end user",
@@ -206,7 +208,8 @@
                   }
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -288,8 +291,16 @@
             "valueType": {
               "type": "optional",
               "itemType": {
-                "type": "id",
-                "value": "EndUserProfileMetadata"
+                "type": "map",
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                },
+                "valueType": {
+                  "type": "unknown"
+                }
               }
             }
           },
@@ -324,7 +335,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The end user's profile information",
@@ -348,7 +360,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "description": "The date and time the end user was updated",
@@ -361,18 +374,10 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
-      }
-    },
-    "EndUserRequestProfileMetadata": {
-      "description": "A dictionary of arbitrary key, value pairs assigned to the end user                      - `metadata` keys may only be of type: `string`                      - `metadata` values may only be one of type: `string`, `boolean`, or `integer`                     ",
-      "name": "EndUserRequestProfileMetadata",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
       }
     },
     "EndUserRequestProfile": {
@@ -454,8 +459,16 @@
               "itemType": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "EndUserRequestProfileMetadata"
+                  "type": "map",
+                  "keyType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "valueType": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
@@ -783,9 +796,9 @@
     }
   },
   "subpackages": {
-    "End users": {
-      "subpackageId": "End users",
-      "name": "End users",
+    "subpackage_endUsers": {
+      "subpackageId": "subpackage_endUsers",
+      "name": "endUsers",
       "endpoints": [
         {
           "auth": true,
@@ -846,12 +859,65 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getEndUserByIdExample",
               "description": "",
-              "path": "/end-users/v1/",
+              "path": "/end-users/v1/foo",
               "pathParameters": {
                 "end_user_id": "foo"
               },
@@ -1002,12 +1068,91 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 404,
+              "description": "Not Found",
+              "name": "NotFoundError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 413,
+              "description": "Content Too Large",
+              "name": "ContentTooLargeError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "endUsersUpdateEndUserByIdExample",
               "description": "",
-              "path": "/end-users/v1/",
+              "path": "/end-users/v1/foo",
               "pathParameters": {
                 "end_user_id": "foo"
               },
@@ -1184,17 +1329,67 @@
             "statusCode": 200,
             "description": "OK"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad Request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 429,
+              "description": "Too Many Requests",
+              "name": "TooManyRequestsError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "Errors"
+                }
+              },
+              "statusCode": 500,
+              "description": "Internal Server Error",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "getEndUsersExample",
               "description": "",
               "path": "/end-users/v1",
               "pathParameters": {},
-              "queryParameters": {
-                "cursor": "65a17e3f43bec88e2792d0eb",
-                "limit": 8
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -1296,7 +1491,7 @@
       "EndUserUpdatedWebhookPayload"
     ],
     "subpackages": [
-      "End users"
+      "subpackage_endUsers"
     ]
   },
   "auth": {

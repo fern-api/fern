@@ -125,9 +125,13 @@ export function buildEndpoint({
     }
 
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
-    const globalHeaderNames = context.builder.getGlobalHeaderNames();
+    const alreadyUsedHeaders = context.builder.getGlobalHeaderNames();
+    const authHeaderName = context.builder.getAuthHeaderName();
+    if (authHeaderName != null) {
+        alreadyUsedHeaders.add(authHeaderName);
+    }
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
-        return !globalHeaderNames.has(header.name);
+        return !alreadyUsedHeaders.has(header.name);
     });
     for (const header of endpointSpecificHeaders) {
         const headerSchema = buildHeader({

@@ -109,6 +109,7 @@
                 }
               ]
             },
+            "contentType": "multipart/form-data",
             "description": "Test request body\n"
           },
           "description": "Test request body\n"
@@ -129,7 +130,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testUploadExample",
             "description": "",
             "path": "/test",
             "pathParameters": {
@@ -137,9 +138,23 @@
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {
+              "file": "foo"
+            },
             "requestBodyV3": {
               "type": "form",
-              "value": {}
+              "value": {
+                "metadata": {
+                  "type": "json"
+                },
+                "filename": {
+                  "type": "json"
+                },
+                "file": {
+                  "type": "filename",
+                  "value": "foo"
+                }
+              }
             },
             "responseStatusCode": 201,
             "responseBody": {
@@ -229,7 +244,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "testWithDualContentTypeRequestTypesExample",
             "description": "",
             "path": "/example",
             "pathParameters": {

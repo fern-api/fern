@@ -42,11 +42,17 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
-        client.health.service.check(id='id-2sdx82h', )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+        client.health.service.check(
+            id="id-2sdx82h",
+        )
         """
-        response = self._raw_client.check(id, request_options=request_options)
-        return response.data
+        _response = self._raw_client.check(id, request_options=request_options)
+        return _response.data
 
     def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -65,11 +71,15 @@ class ServiceClient:
         --------
         from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        client = SeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
         client.health.service.ping()
         """
-        response = self._raw_client.ping(request_options=request_options)
-        return response.data
+        _response = self._raw_client.ping(request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -105,16 +115,27 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
-            await client.health.service.check(id='id-2sdx82h', )
+            await client.health.service.check(
+                id="id-2sdx82h",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.check(id, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.check(id, request_options=request_options)
+        return _response.data
 
     async def ping(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
@@ -131,13 +152,22 @@ class AsyncServiceClient:
 
         Examples
         --------
+        import asyncio
+
         from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
-        import asyncio
-        client = AsyncSeedExhaustive(token="YOUR_TOKEN", environment=SeedExhaustiveEnvironment.PRODUCTION, )
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            environment=SeedExhaustiveEnvironment.PRODUCTION,
+        )
+
+
         async def main() -> None:
             await client.health.service.ping()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.ping(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.ping(request_options=request_options)
+        return _response.data

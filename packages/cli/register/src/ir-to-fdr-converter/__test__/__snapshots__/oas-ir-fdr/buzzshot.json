@@ -16,7 +16,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -60,7 +61,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "photo",
@@ -82,7 +84,8 @@
                   "format": "binary"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "ready",
@@ -94,7 +97,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -132,7 +136,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -239,7 +244,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "added_at",
@@ -252,7 +258,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "updated_at",
@@ -265,7 +272,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -310,7 +318,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "group",
@@ -322,7 +331,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "room",
@@ -334,7 +344,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "photos",
@@ -347,7 +358,8 @@
                   "value": "GamePhotosItems"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "extra_fields",
@@ -402,7 +414,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -509,7 +522,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "added_at",
@@ -522,7 +536,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "updated_at",
@@ -535,7 +550,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "name",
@@ -580,7 +596,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "room",
@@ -592,7 +609,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "extra_fields",
@@ -647,7 +665,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -688,7 +707,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "updated_at",
@@ -701,7 +721,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "player",
@@ -713,7 +734,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "first_name",
@@ -780,7 +802,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -802,7 +825,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "game",
@@ -814,7 +838,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "photo",
@@ -836,7 +861,8 @@
                   "format": "binary"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "ready",
@@ -848,7 +874,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -869,7 +896,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "added_at",
@@ -882,7 +910,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "updated_at",
@@ -895,7 +924,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "is_event",
@@ -952,7 +982,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "games",
@@ -965,7 +996,8 @@
                   "value": "GroupGamesItems"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "players",
@@ -988,7 +1020,8 @@
                   "value": "GroupPhotosItems"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1026,7 +1059,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "value",
@@ -1066,7 +1100,8 @@
                   "type": "integer"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "added_at",
@@ -1079,7 +1114,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "updated_at",
@@ -1092,7 +1128,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "first_name",
@@ -1159,7 +1196,8 @@
                   "type": "boolean"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1181,7 +1219,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "game",
@@ -1193,7 +1232,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "group",
@@ -1205,7 +1245,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "photo",
@@ -1227,7 +1268,8 @@
                   "format": "binary"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "ready",
@@ -1239,7 +1281,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ]
       }
@@ -1260,7 +1303,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "added_at",
@@ -1273,7 +1317,8 @@
                   "format": "date-time"
                 }
               }
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "key": "original_image",
@@ -1696,8 +1741,8 @@
     }
   },
   "subpackages": {
-    "api": {
-      "subpackageId": "api",
+    "subpackage_api": {
+      "subpackageId": "subpackage_api",
       "name": "api",
       "endpoints": [
         {
@@ -1750,13 +1795,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listAccountsExample",
               "description": "",
               "path": "/api/v2/accounts/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -1850,9 +1893,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveAccountExample",
               "description": "",
-              "path": "/api/v2/accounts/",
+              "path": "/api/v2/accounts/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -1983,17 +2026,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listGamesExample",
               "description": "",
               "path": "/api/v2/games/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "complete": "foo",
-                "date": "foo",
-                "before": "foo",
-                "after": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2198,18 +2235,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveGameExample",
               "description": "",
-              "path": "/api/v2/games/",
+              "path": "/api/v2/games/foo/",
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "complete": "foo",
-                "date": "foo",
-                "before": "foo",
-                "after": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2368,15 +2400,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listGroupsExample",
               "description": "",
               "path": "/api/v2/groups/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42,
-                "is_event": "foo",
-                "complete": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2619,16 +2647,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveGroupExample",
               "description": "",
-              "path": "/api/v2/groups/",
+              "path": "/api/v2/groups/foo/",
               "pathParameters": {
                 "id": "foo"
               },
-              "queryParameters": {
-                "is_event": "foo",
-                "complete": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2825,13 +2850,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPlayersExample",
               "description": "",
               "path": "/api/v2/players/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -2951,9 +2974,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrievePlayerExample",
               "description": "",
-              "path": "/api/v2/players/",
+              "path": "/api/v2/players/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -3058,13 +3081,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listLocationsExample",
               "description": "",
               "path": "/api/v2/rooms/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3158,9 +3179,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrieveLocationExample",
               "description": "",
-              "path": "/api/v2/rooms/",
+              "path": "/api/v2/rooms/foo/",
               "pathParameters": {
                 "id": "foo"
               },
@@ -3239,13 +3260,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPhotosExample",
               "description": "",
               "path": "/api/v2/photos/",
               "pathParameters": {},
-              "queryParameters": {
-                "page": 42
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -3359,9 +3378,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "retrievePhotoExample",
               "description": "",
-              "path": "/api/v2/photos/",
+              "path": "/api/v2/photos/foo/",
               "pathParameters": {
                 "photo_id": "foo"
               },
@@ -3429,7 +3448,7 @@
       "Photo"
     ],
     "subpackages": [
-      "api"
+      "subpackage_api"
     ]
   },
   "auth": {

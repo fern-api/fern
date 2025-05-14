@@ -3,7 +3,17 @@
 # isort: skip_file
 
 from . import inlined, query, reference
-from .inlined import ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral, UndiscriminatedLiteral
+from .inlined import (
+    ANestedLiteral,
+    ATopLevelLiteral,
+    DiscriminatedLiteral,
+    DiscriminatedLiteral_CustomName,
+    DiscriminatedLiteral_DefaultName,
+    DiscriminatedLiteral_George,
+    DiscriminatedLiteral_LiteralGeorge,
+    SomeAliasedLiteral,
+    UndiscriminatedLiteral,
+)
 from .query import AliasToPrompt, AliasToStream
 from .reference import ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral
 
@@ -13,6 +23,11 @@ __all__ = [
     "AliasToPrompt",
     "AliasToStream",
     "ContainerObject",
+    "DiscriminatedLiteral",
+    "DiscriminatedLiteral_CustomName",
+    "DiscriminatedLiteral_DefaultName",
+    "DiscriminatedLiteral_George",
+    "DiscriminatedLiteral_LiteralGeorge",
     "NestedObjectWithLiterals",
     "SendRequest",
     "SomeAliasedLiteral",

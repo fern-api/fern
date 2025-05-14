@@ -1,0 +1,2283 @@
+asyncapi: 2.6.0
+info:
+    title: WebSocket channels
+    version: 1.0.0
+    description: Channels for real-time updates.
+servers:
+    production:
+        url: wss://ws.api.prod.paradex.trade/v1?
+        protocol: wss
+        description: Production WebSocket server
+channels:
+    /account:
+        description: Private websocket channel for receiving updates of account status
+        subscribe:
+            message:
+                name: accountsummary
+                title: AccountSummaryResponse
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "account"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesAccountSummaryResponse'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel for receiving updates of account status
+                description: Subscribe to account messages
+                tags:
+                    - name: account
+        publish:
+            message:
+                name: accountsummary
+                title: AccountSummaryRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "account"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB account
+        x-fern-address: ""
+    /balance_events:
+        description: Private websocket channel to receive PnL calculation data
+        subscribe:
+            message:
+                name: balanceevent
+                title: BalanceEventResponse
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "balance_events"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesBalanceEventResponse'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive PnL calculation data
+                description: Subscribe to balance event messages
+                tags:
+                    - name: account
+        publish:
+            message:
+                name: balanceevent
+                title: BalanceEventRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "balance_events"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB balance_events
+        x-fern-address: ""
+    /bbo:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^[A-Z0-9]+-[A-Z0-9]+$
+                    type: string
+        description: Public websocket channel for tick updates of orderbook best bid/ask prices and amounts
+        subscribe:
+            message:
+                name: bboresp
+                title: BBOResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^bbo\.[A-Z0-9]+-[A-Z0-9]+$
+                                    examples:
+                                        - "bbo.BTC-USD-PERP"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesBBOResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel for tick updates of orderbook best bid/ask prices and amounts
+                description: Subscribe to market messages
+                tags:
+                    - name: market
+        publish:
+            message:
+                name: bboresp
+                title: BBORespRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^bbo\.[A-Z0-9]+-[A-Z0-9]+$
+                                    examples:
+                                        - "bbo.BTC-USD-PERP"
+                                    description: Channel name including market symbol, e.g., "bbo.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB bbo
+        x-fern-address: ""
+    /fills:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                    type: string
+        description: Private websocket channel to receive details of fills for specific account
+        subscribe:
+            message:
+                name: fillresult
+                title: FillResult
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^fills\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "fills.BTC-USD-PERP"
+                                        - "fills.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesFillResult'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive details of fills for specific account
+                description: Subscribe to fill messages for a market
+                tags:
+                    - name: trading
+        publish:
+            message:
+                name: fillresult
+                title: FillResultRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^fills\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "fills.BTC-USD-PERP"
+                                        - "fills.ALL"
+                                    description: Channel name including market symbol, e.g., "fills.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB fills
+        x-fern-address: ""
+    /funding_data:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                    type: string
+        description: Public websocket channel to receive funding data updates
+        subscribe:
+            message:
+                name: fundingdataresult
+                title: FundingDataResult
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_data\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "funding_data.BTC-USD-PERP"
+                                        - "funding_data.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesFundingDataResult'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel to receive funding data updates
+                description: Subscribe to funding data messages for a market
+                tags:
+                    - name: market
+                    - name: funding
+        publish:
+            message:
+                name: fundingdataresult
+                title: FundingDataResultRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_data\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "funding_data.BTC-USD-PERP"
+                                        - "funding_data.ALL"
+                                    description: Channel name including market symbol, e.g., "funding_data.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB funding_data
+        x-fern-address: ""
+    /funding_payments:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                    type: string
+        description: Private websocket channel to receive funding payments of an account
+        subscribe:
+            message:
+                name: fundingresp
+                title: FundingResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_payments\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "funding_payments.BTC-USD-PERP"
+                                        - "funding_payments.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesFundingResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive funding payments of an account
+                description: Subscribe to funding payment messages for a market
+                tags:
+                    - name: funding
+        publish:
+            message:
+                name: fundingresp
+                title: FundingRespRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_payments\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "funding_payments.BTC-USD-PERP"
+                                        - "funding_payments.ALL"
+                                    description: Channel name including market symbol, e.g., "funding_payments.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB funding_payments
+        x-fern-address: ""
+    /funding_rate_comparison:
+        parameters:
+            refresh_rate:
+                $ref: '#/components/parameters/refresh_rate'
+        subscribe:
+            summary: Public websocket channel for funding rate comparisons across exchanges
+            message:
+                name: fundingratecomparisonresp
+                title: FundingRateComparisonResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_rate_comparison\.(?:[A-Z0-9]+-[A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "funding_rate_comparison.BTC-USD-PERP"
+                                        - "funding_rate_comparison.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesFundingRateComparisonResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel for funding rate comparisons across exchanges
+                description: Subscribe to funding rate comparison messages.
+                tags:
+                    - name: funding
+            x-fern-display-name: SUB funding_rate_comparison
+        publish:
+            message:
+                name: fundingresp
+                title: FundingRateComparisonResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^funding_rate_comparison@(500ms|1000ms)$
+                                    examples:
+                                        - "funding_payments.ALL@500ms"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+
+    /markets_summary:
+        description: Public websocket channel for updates of available markets
+        subscribe:
+            message:
+                name: marketsummaryresp
+                title: MarketSummaryResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "markets_summary"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesMarketSummaryResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel for updates of available markets
+                description: Subscribe to market summary messages
+                tags:
+                    - name: market
+        publish:
+            message:
+                name: marketsummaryresp
+                title: MarketSummaryRespRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "markets_summary"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB markets_summary
+        x-fern-address: ""
+    /order_book:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^[A-Z0-9]+-[A-Z0-9]+$
+                    type: string
+            price_tick:
+                description: Optional price tick parameter for grouping order book prices, valid values are below.
+                schema:
+                    enum:
+                        - "0_0000001"
+                        - "0_0000005"
+                        - "0_000001"
+                        - "0_000005"
+                        - "0_00001"
+                        - "0_00005"
+                        - "0_0001"
+                        - "0_0005"
+                        - "0_001"
+                        - "0_005"
+                        - "0_01"
+                        - "0_05"
+                        - "0_1"
+                        - "0_5"
+                        - "1"
+                        - "5"
+                        - "10"
+                        - "50"
+                        - "100"
+                    type: string
+            refresh_rate:
+                description: Rate of sending updates
+                schema:
+                    enum:
+                        - 50ms
+                        - 100ms
+                    type: string
+        description: Public websocket channel for orderbook snapshot updates of depth 15 at most every 50ms or 100ms, optionally grouped by price tick
+        subscribe:
+            message:
+                name: pricebookupdate
+                title: PriceBookUpdate
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: order_book
+                                    examples:
+                                        - "order_book"
+                                        - "order_book"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesPriceBookUpdate'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel for orderbook snapshot updates of depth 15 at most every 50ms or 100ms, optionally grouped by price tick
+                description: Public websocket channel for orderbook snapshot updates of depth 15 at most every 50ms or 100ms, optionally grouped by price tick
+                tags:
+                    - name: market
+        publish:
+            message:
+                name: pricebookupdate
+                title: PriceBookUpdateRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^order_book\.[A-Z0-9]+-[A-Z0-9]+\.(0_0000001|0_0000005|0_000001|0_000005|0_00001|0_00005|0_0001|0_0005|0_001|0_005|0_01|0_05|0_1|0_5|1|5|10|50|100)\.(50ms|100ms)$
+                                    examples:
+                                        - "order_book.BTC-USD-PERP.snapshot@0_0001@50ms"
+                                    description: Channel name including market symbol, price tick, and refresh rate, e.g., "order_book.{market_symbol}.{price_tick}.{refresh_rate}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB order_book
+        x-fern-address: ""
+    /orders:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                    type: string
+        description: Private websocket channel to receive order updates
+        subscribe:
+            message:
+                name: orderresp
+                title: OrderResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^orders\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "orders.BTC-USD-PERP"
+                                        - "orders.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesOrderResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive order updates
+                description: Subscribe to order messages for a market
+                tags:
+                    - name: trading
+        publish:
+            message:
+                name: orderresp
+                title: OrderRespRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^orders\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "orders.BTC-USD-PERP"
+                                        - "orders.ALL"
+                                    description: Channel name including market symbol, e.g., "orders.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB orders
+        x-fern-address: ""
+    /positions:
+        description: Private websocket channel to receive updates when position is changed
+        subscribe:
+            message:
+                name: positionresp
+                title: PositionResp
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "positions"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesPositionResp'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive updates when position is changed
+                description: Subscribe to position messages
+                tags:
+                    - name: trading
+        publish:
+            message:
+                name: positionresp
+                title: PositionRespRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "positions"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB positions
+        x-fern-address: ""
+    /tradebusts:
+        description: Private websocket channel to receive fills that are busted by a blockchain
+        subscribe:
+            message:
+                name: tradebustresult
+                title: TradebustResult
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "tradebusts"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesTradebustResult'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel to receive fills that are busted by a blockchain
+                description: Private websocket channel to receive fills that are busted by a blockchain
+                tags:
+                    - name: trading
+        publish:
+            message:
+                name: tradebustresult
+                title: TradebustResultRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "tradebusts"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB tradebusts
+        x-fern-address: ""
+    /trades:
+        parameters:
+            market_symbol:
+                description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+                schema:
+                    pattern: ^([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                    type: string
+        description: Public websocket channel to receive updates on trades in particular market
+        subscribe:
+            message:
+                name: traderesult
+                title: TradeResult
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^trades\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "trades.BTC-USD-PERP"
+                                        - "trades.ALL"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesTradeResult'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Public websocket channel to receive updates on trades in particular market
+                description: Subscribe to trade messages for a market
+                tags:
+                    - name: market
+        publish:
+            message:
+                name: traderesult
+                title: TradeResultRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    pattern: ^trades\.([A-Z0-9]+-[A-Z0-9]+|ALL)$
+                                    examples:
+                                        - "trades.BTC-USD-PERP"
+                                        - "trades.ALL"
+                                    description: Channel name including market symbol, e.g., "trades.{market_symbol}"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB trades
+        x-fern-address: ""
+    /transaction:
+        description: Private websocket channel for receiving transaction details of fills
+        subscribe:
+            message:
+                name: transaction
+                title: TransactionResponse
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "transaction"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesTransactionResponse'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Private websocket channel for receiving transaction details of fills
+                description: Subscribe to transaction messages
+                tags:
+                    - name: account
+        publish:
+            message:
+                name: transaction
+                title: TransactionRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "transaction"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB transaction
+        x-fern-address: ""
+    /transfers:
+        description: Websocket channel for receiving transfer updates
+        subscribe:
+            message:
+                name: transferresult
+                title: TransferResult
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscription"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "transfers"
+                                data:
+                                    $ref: '#/components/schemas/ResponsesTransferResult'
+                            required:
+                                - channel
+                                - data
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                summary: Websocket channel for receiving transfer updates
+                description: |-
+                    <p>Meaning of each transfer status:</p>
+                    <ul>
+                    <li><code>PENDING</code>: L2 txn calling Paraclear contract is in flight: For Withdrawals it's the initial status; refers to the L2 txn status being <code>RECEIVED</code>, <code>PENDING</code>, <code>ACCEPTED_ON_L2</code>. For Deposits refers to L2 txn status being <code>RECEIVED</code>, <code>PENDING</code>.</li>
+                    <li><code>AVAILABLE</code>: Action is required from user: For Withdrawals refers to L2 txn status being <code>ACCEPTED_ON_L1</code> and funds available for collection on Ethereum bridge. For Deposits refers to funds being available in the L2 account, ready to be deposited to Paraclear contract.</li>
+                    <li><code>COMPLETED</code>: Transfer has completed (final state): For Withdrawals funds have been collected and have moved to the requested Ethereum account; refers to L1 bridge withdraw txn status <code>SUCCESS</code>. For Deposits funds have become available in Paradex; refers to the L2 txn status being <code>ACCEPTED_ON_L2</code>.</li>
+                    <li><code>FAILED</code>: L2 txn calling Paraclear contract failed with <code>REJECTED</code> status. Deposits can be retried when they fail by repeating the L2 txn.</li>
+                    </ul>
+                tags:
+                    - name: account
+        publish:
+            message:
+                name: transferresult
+                title: TransferResultRequest
+                payload:
+                    type: object
+                    properties:
+                        jsonrpc:
+                            type: string
+                            enum: ["2.0"]
+                        method:
+                            type: string
+                            enum: ["subscribe"]
+                        params:
+                            type: object
+                            properties:
+                                channel:
+                                    type: string
+                                    const: "transfers"
+                            required:
+                                - channel
+                        id:
+                            type: integer
+                            description: Client-generated request identifier
+                    required:
+                        - jsonrpc
+                        - method
+                        - params
+                        - id
+        x-fern-display-name: SUB transfers
+        x-fern-address: ""
+components:
+    parameters:
+        market_symbol:
+            description: Either the symbol of the market (any open market returned by GET /markets) or 'ALL' to subscribe for updates to all markets
+            schema:
+                pattern: ^[A-Z0-9]+-[A-Z0-9]+$
+                type: string
+        price_tick:
+            description: Optional price tick parameter for grouping order book prices, valid values are below.
+            schema:
+                enum:
+                    - "0_0000001"
+                    - "0_0000005"
+                    - "0_000001"
+                    - "0_000005"
+                    - "0_00001"
+                    - "0_00005"
+                    - "0_0001"
+                    - "0_0005"
+                    - "0_001"
+                    - "0_005"
+                    - "0_01"
+                    - "0_05"
+                    - "0_1"
+                    - "0_5"
+                    - "1"
+                    - "5"
+                    - "10"
+                    - "50"
+                    - "100"
+                type: string
+        refresh_rate:
+            description: Rate of sending updates
+            schema:
+                enum:
+                    - 50ms
+                    - 100ms
+                type: string
+    schemas:
+        ResponsesAccountSummaryResponse:
+            additionalProperties: false
+            properties:
+                account:
+                    description: User's starknet account
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                account_value:
+                    description: Current account value [with unrealized P&Ls]
+                    example: "136285.06918911"
+                    type: string
+                free_collateral:
+                    description: Free collateral available (Account value in excess of Initial Margin required)
+                    example: "73276.47229774"
+                    type: string
+                initial_margin_requirement:
+                    description: Amount required to open trade for the existing positions
+                    example: "63008.59689218"
+                    type: string
+                maintenance_margin_requirement:
+                    description: Amount required to maintain exisiting positions
+                    example: "31597.25239676"
+                    type: string
+                margin_cushion:
+                    description: Acc value in excess of maintenance margin required
+                    example: "104687.8167956"
+                    type: string
+                seq_no:
+                    description: Unique increasing number (non-sequential) that is assigned to this account update. Can be used to deduplicate multiple feeds
+                    example: "1681471234972000000"
+                    type: integer
+                settlement_asset:
+                    description: Settlement asset for the account
+                    example: USDC
+                    type: string
+                status:
+                    description: Status of the acc - like ACTIVE, LIQUIDATION
+                    example: ACTIVE
+                    type: string
+                total_collateral:
+                    description: User's total collateral
+                    example: "123003.62047353"
+                    type: string
+                updated_at:
+                    description: Account last updated time
+                    example: "1681471234972"
+                    type: integer
+            required:
+                - account
+                - initial_margin_requirement
+                - maintenance_margin_requirement
+                - account_value
+                - total_collateral
+                - free_collateral
+                - margin_cushion
+                - settlement_asset
+                - updated_at
+                - status
+                - seq_no
+            type: object
+        ResponsesBBOResp:
+            additionalProperties: false
+            properties:
+                ask:
+                    description: Best ask price
+                    example: "30130.15"
+                    type: string
+                ask_size:
+                    description: Best ask size
+                    example: "0.05"
+                    type: string
+                bid:
+                    description: Best bid price
+                    example: "30112.22"
+                    type: string
+                bid_size:
+                    description: Best bid size
+                    example: "0.04"
+                    type: string
+                last_updated_at:
+                    description: Last update to the orderbook in milliseconds
+                    example: "1681493939981"
+                    type: integer
+                market:
+                    description: Symbol of the market
+                    example: BTC-USD-PERP
+                    type: string
+                seq_no:
+                    description: Sequence number of the orderbook
+                    example: "20784"
+                    type: integer
+            required:
+                - market
+                - seq_no
+                - ask
+                - ask_size
+                - bid
+                - bid_size
+                - last_updated_at
+            type: object
+        ResponsesBalanceEventResponse:
+            additionalProperties: false
+            properties:
+                created_at:
+                    description: Unix Millisecond timestamp at which the event occurred
+                    example: "1681497002041"
+                    type: integer
+                fees:
+                    description: Fees in USDC
+                    example: "0.000000000000000000"
+                    type: string
+                fill_id:
+                    description: Unique string ID for the fill
+                    example: "8615262148007718462"
+                    type: string
+                funding_index:
+                    description: Funding index used for the fill
+                    example: "0.000000000000000000"
+                    type: string
+                market:
+                    description: Name of the market the update is referring to
+                    example: ETH-USD-PERP
+                    type: string
+                realized_funding:
+                    description: Fill’s Realized Funding in USDC
+                    example: "0.000000000000000000"
+                    type: string
+                realized_pnl:
+                    description: Fill’s realized PnL (excluding funding) in USDC
+                    example: "0.000000000000000000"
+                    type: string
+                settlement_asset_balance_after:
+                    description: Settlement asset balance after the fill
+                    example: "0.000000000000000000"
+                    type: string
+                settlement_asset_balance_before:
+                    description: Settlement asset balance before the fill
+                    example: "0.000000000000000000"
+                    type: string
+                settlement_asset_price:
+                    description: Settlement asset price
+                    example: "0.000000000000000000"
+                    type: string
+                status:
+                    description: Status of the fill
+                    example: ON_BLOCKCHAIN
+                    type: string
+                type:
+                    description: Type of the event
+                    example: TRANSACTION_FILL
+                    type: string
+            required:
+                - type
+                - fill_id
+                - market
+                - status
+                - settlement_asset_balance_before
+                - settlement_asset_balance_after
+                - settlement_asset_price
+                - funding_index
+                - realized_pnl
+                - fees
+                - realized_funding
+                - created_at
+            type: object
+        ResponsesFillResult:
+            additionalProperties: false
+            properties:
+                client_id:
+                    description: Unique client assigned ID for the order
+                    example: x1234
+                    type: string
+                created_at:
+                    description: Fill time
+                    example: "1681375176910"
+                    type: integer
+                fee:
+                    description: Fee paid by the user
+                    example: "7.56"
+                    type: string
+                fee_currency:
+                    description: Asset that fee is charged in
+                    example: USDC
+                    type: string
+                fill_type:
+                    description: Fill type, can be FILL, LIQUIDATION or TRANSFER
+                    example: FILL
+                    type: string
+                id:
+                    description: Unique string ID of fill per FillType
+                    example: "8615262148007718462"
+                    type: string
+                liquidity:
+                    description: Maker or Taker
+                    enum:
+                        - TAKER
+                        - MAKER
+                    type: string
+                market:
+                    description: Market name
+                    example: BTC-USD-PERP
+                    type: string
+                order_id:
+                    description: Order ID
+                    example: "1681462103821101699438490000"
+                    type: string
+                price:
+                    description: Price at which order was filled
+                    example: "30000.12"
+                    type: string
+                realized_funding:
+                    description: Realized funding of the fill
+                    example: "7.56"
+                    type: string
+                realized_pnl:
+                    description: Realized PnL of the fill
+                    example: "7.56"
+                    type: string
+                remaining_size:
+                    description: Remaining size of the order
+                    example: "0.5"
+                    type: string
+                side:
+                    description: Taker side
+                    enum:
+                        - BUY
+                        - SELL
+                    type: string
+                size:
+                    description: Size of the fill
+                    example: "0.5"
+                    type: string
+            required:
+                - id
+                - side
+                - liquidity
+                - market
+                - order_id
+                - price
+                - size
+                - fee
+                - fee_currency
+                - created_at
+                - remaining_size
+                - client_id
+                - fill_type
+                - realized_pnl
+                - realized_funding
+            type: object
+        ResponsesFundingDataResult:
+            additionalProperties: false
+            properties:
+                created_at:
+                    type: integer
+                funding_index:
+                    type: string
+                funding_premium:
+                    type: string
+                funding_rate:
+                    type: string
+                market:
+                    type: string
+            required:
+                - market
+                - funding_index
+                - funding_premium
+                - funding_rate
+                - created_at
+            type: object
+        ResponsesFundingResp:
+            additionalProperties: false
+            properties:
+                created_at:
+                    description: Funding payments time
+                    example: "1681375481000"
+                    type: integer
+                fill_id:
+                    description: Unique string ID for the fill that triggered the payment (if any)
+                    example: "8615262148007718462"
+                    type: string
+                id:
+                    description: Unique string ID to identify the payment
+                    example: "1681375578221101699352320000"
+                    type: string
+                index:
+                    description: Value of the funding index at the time of payment
+                    example: "-2819.53434361"
+                    type: string
+                market:
+                    description: Perpetual market against which payment is made
+                    example: BTC-USD-PERP
+                    type: string
+                payment:
+                    description: Payment amount in settlement asset
+                    example: "34.4490622"
+                    type: string
+            required:
+                - id
+                - market
+                - payment
+                - index
+                - fill_id
+                - created_at
+            type: object
+        ResponsesFundingRateComparisonResp:
+            additionalProperties: false
+            properties:
+                asset_kind:
+                    description: Asset kind
+                    example: ASSET_KIND_PERPETUAL_FUTURE
+                    type: string
+                hourly_funding_rate:
+                    description: Hourly funding rate
+                    example: "0.0001"
+                    type: string
+                last_updated_at:
+                    description: Last updated timestamp in milliseconds
+                    example: "1681375481000"
+                    type: integer
+                source:
+                    description: Source of the funding rate
+                    example: SOURCE_PARADEX
+                    type: string
+                symbol:
+                    description: Market symbol
+                    example: BTC-USD-PERP
+                    type: string
+            required:
+                - asset_kind
+                - symbol
+                - source
+                - last_updated_at
+                - hourly_funding_rate
+            type: object
+        ResponsesMarketSummaryResp:
+            additionalProperties: false
+            properties:
+                ask:
+                    description: Best ask price
+                    example: "30130.15"
+                    type: string
+                ask_iv:
+                    description: Ask implied volatility, for options
+                    example: "0.2"
+                    type: string
+                bid:
+                    description: Best bid price
+                    example: "30112.22"
+                    type: string
+                bid_iv:
+                    description: Bid implied volatility, for options
+                    example: "0.2"
+                    type: string
+                created_at:
+                    description: Market summary creation time
+                    type: integer
+                delta:
+                    description: 'Deprecated: Use greeks.delta instead'
+                    example: "1"
+                    type: string
+                funding_rate:
+                    description: '[8 hour funding rate](https://docs.paradex.trade/risk-system/funding-mechanism#funding-rate)'
+                    example: "0.3"
+                    type: string
+                future_funding_rate:
+                    description: Future funding rate, for options
+                    example: "0.3"
+                    type: string
+                greeks:
+                    additionalProperties: false
+                    description: Greeks
+                    properties:
+                        delta:
+                            description: Market Delta
+                            example: "1"
+                            type: string
+                        gamma:
+                            description: Market Gamma
+                            example: "0.2"
+                            type: string
+                        vega:
+                            description: Market Vega
+                            example: "0.2"
+                            type: string
+                    required:
+                        - delta
+                        - gamma
+                        - vega
+                    type: object
+                last_iv:
+                    description: Last traded price implied volatility, for options
+                    example: "0.2"
+                    type: string
+                last_traded_price:
+                    description: Last traded price
+                    example: "30109.53"
+                    type: string
+                mark_iv:
+                    description: Mark implied volatility, for options
+                    example: "0.2"
+                    type: string
+                mark_price:
+                    description: '[Mark price](https://docs.paradex.trade/risk-system/mark-price-calculation)'
+                    example: "29799.70877478"
+                    type: string
+                open_interest:
+                    description: Open interest in base currency
+                    example: "6100048.3"
+                    type: string
+                price_change_rate_24h:
+                    description: Price change rate in the last 24 hours
+                    example: "0.05"
+                    type: string
+                symbol:
+                    description: Market symbol
+                    example: BTC-USD-PERP
+                    type: string
+                total_volume:
+                    description: Lifetime total traded volume in USD
+                    example: "141341.0424"
+                    type: string
+                underlying_price:
+                    description: Underlying asset price (spot oracle price)
+                    example: "29876.3"
+                    type: string
+                volume_24h:
+                    description: 24 hour volume in USD
+                    example: "47041.0424"
+                    type: string
+            required:
+                - symbol
+                - mark_price
+                - last_traded_price
+                - bid
+                - ask
+                - volume_24h
+                - total_volume
+                - created_at
+                - underlying_price
+                - open_interest
+                - funding_rate
+                - price_change_rate_24h
+            type: object
+        ResponsesOrderResp:
+            additionalProperties: false
+            properties:
+                account:
+                    description: Account identifier (user's account address)
+                    example: 0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512x
+                    type: string
+                avg_fill_price:
+                    description: Average fill price of the order
+                    example: "26000"
+                    type: string
+                cancel_reason:
+                    description: Reason for order cancellation if it was closed by cancel
+                    example: NOT_ENOUGH_MARGIN
+                    type: string
+                client_id:
+                    description: Client id passed on order creation
+                    example: x1234
+                    type: string
+                created_at:
+                    description: Order creation time
+                    example: "1681493746016"
+                    type: integer
+                flags:
+                    description: 'Order flags, allow flag: REDUCE_ONLY'
+                    items:
+                        type: string
+                    type: array
+                id:
+                    description: Unique order identifier
+                    example: "123456"
+                    type: string
+                instruction:
+                    description: OrderInstruction (GTC, IOC, POST_ONLY)
+                    enum:
+                        - GTC
+                        - POST_ONLY
+                        - IOC
+                    example: GTC
+                    type: string
+                last_updated_at:
+                    description: Order last update time.  No changes once status=CLOSED
+                    example: "1681493746016"
+                    type: integer
+                market:
+                    description: Market to which order belongs
+                    example: BTC-USD-PERP
+                    type: string
+                price:
+                    description: Order price. 0 for MARKET orders
+                    example: "26000"
+                    type: string
+                published_at:
+                    description: Order published to the client time
+                    example: "1681493746016"
+                    type: integer
+                received_at:
+                    description: Order received from the client time
+                    example: "1681493746016"
+                    type: integer
+                remaining_size:
+                    description: Remaining size of the order
+                    example: "0"
+                    type: string
+                request_info:
+                    additionalProperties: false
+                    description: Request info for modify order
+                    properties:
+                        id:
+                            description: Request id
+                            type: string
+                        message:
+                            description: Error message for failed requests
+                            type: string
+                        request_type:
+                            description: Type of request (MODIFY_ORDER)
+                            type: string
+                        status:
+                            description: Status of modify order request
+                            type: string
+                    required:
+                        - id
+                        - status
+                        - message
+                        - request_type
+                    type: object
+                seq_no:
+                    description: Unique increasing number (non-sequential) that is assigned to this order update and changes on every order update. Can be used to deduplicate multiple feeds. WebSocket and REST responses use independently generated seq_no per event.
+                    example: "1681471234972000000"
+                    type: integer
+                side:
+                    description: Order side
+                    enum:
+                        - BUY
+                        - SELL
+                    type: string
+                size:
+                    description: Order size
+                    example: "0.05"
+                    type: string
+                status:
+                    description: Order status
+                    enum:
+                        - NEW
+                        - UNTRIGGERED
+                        - OPEN
+                        - CLOSED
+                    type: string
+                stp:
+                    description: Self Trade Prevention mode (EXEPIRE_MAKER, EXPIRE_TAKER, EXPIRE_BOTH)
+                    enum:
+                        - EXPIRE_MAKER
+                        - EXPIRE_TAKER
+                        - EXPIRE_BOTH
+                    example: EXPIRE_MAKER
+                    type: string
+                timestamp:
+                    description: Order signature timestamp
+                    example: "1681493746016"
+                    type: integer
+                trigger_price:
+                    description: Trigger price for stop order
+                    example: "26000"
+                    type: string
+                type:
+                    description: Order type
+                    enum:
+                        - MARKET
+                        - LIMIT
+                        - STOP_LIMIT
+                        - STOP_MARKET
+                        - TAKE_PROFIT_LIMIT
+                        - TAKE_PROFIT_MARKET
+                        - STOP_LOSS_MARKET
+                        - STOP_LOSS_LIMIT
+                    type: string
+            required:
+                - id
+                - account
+                - market
+                - side
+                - type
+                - size
+                - remaining_size
+                - price
+                - status
+                - created_at
+                - last_updated_at
+                - timestamp
+                - cancel_reason
+                - client_id
+                - seq_no
+                - instruction
+                - avg_fill_price
+                - stp
+                - received_at
+                - published_at
+                - flags
+                - trigger_price
+            type: object
+        ResponsesPositionResp:
+            additionalProperties: false
+            properties:
+                average_entry_price:
+                    description: Average entry price
+                    example: "29001.34"
+                    type: string
+                average_entry_price_usd:
+                    description: Average entry price in USD
+                    example: "29001.34"
+                    type: string
+                average_exit_price:
+                    description: Average exit price
+                    example: "29001.34"
+                    type: string
+                cached_funding_index:
+                    description: Position cached funding index
+                    example: "1234.3"
+                    type: string
+                closed_at:
+                    description: Position closed time
+                    example: "1681493939981"
+                    type: integer
+                cost:
+                    description: Position cost
+                    example: "-10005.4623"
+                    type: string
+                cost_usd:
+                    description: Position cost in USD
+                    example: "-10005.4623"
+                    type: string
+                created_at:
+                    description: Position creation time
+                    example: "1681493939981"
+                    type: integer
+                id:
+                    description: Unique string ID for the position
+                    example: "1234234"
+                    type: string
+                last_fill_id:
+                    description: Last fill ID to which the position is referring
+                    example: "1234234"
+                    type: string
+                last_updated_at:
+                    description: Position last update time
+                    example: "1681493939981"
+                    type: integer
+                leverage:
+                    description: Leverage of the position
+                    type: string
+                liquidation_price:
+                    description: Liquidation price of the position
+                    type: string
+                market:
+                    description: Market for position
+                    example: BTC-USD-PERP
+                    type: string
+                realized_positional_funding_pnl:
+                    description: Realized Funding PnL for the position. Reset to 0 when position is closed or flipped.
+                    type: string
+                realized_positional_pnl:
+                    description: Realized PnL including both positional PnL and funding payments. Reset to 0 when position is closed or flipped.
+                    type: string
+                seq_no:
+                    description: Unique increasing number (non-sequential) that is assigned to this position update. Can be used to deduplicate multiple feeds
+                    example: "1681471234972000000"
+                    type: integer
+                side:
+                    description: 'Position Side : Long or Short'
+                    type: string
+                size:
+                    description: Size of the position with sign (positive if long or negative if short)
+                    example: "-0.345"
+                    type: string
+                status:
+                    description: 'Status of Position : Open or Closed'
+                    type: string
+                unrealized_funding_pnl:
+                    description: Unrealized running funding P&L for the position
+                    example: "12.234"
+                    type: string
+                unrealized_pnl:
+                    description: Unrealized P&L of the position in the quote asset
+                    example: "-123.23"
+                    type: string
+            required:
+                - id
+                - market
+                - status
+                - side
+                - size
+                - average_entry_price
+                - average_entry_price_usd
+                - average_exit_price
+                - unrealized_pnl
+                - unrealized_funding_pnl
+                - cost
+                - cost_usd
+                - cached_funding_index
+                - last_fill_id
+                - seq_no
+                - liquidation_price
+                - leverage
+                - realized_positional_pnl
+                - realized_positional_funding_pnl
+            type: object
+        ResponsesPriceBookUpdate:
+            additionalProperties: false
+            properties:
+                deletes:
+                    items:
+                        additionalProperties: false
+                        properties:
+                            price:
+                                type: string
+                            side:
+                                enum:
+                                    - BUY
+                                    - SELL
+                                type: string
+                            size:
+                                type: string
+                        required:
+                            - side
+                            - price
+                            - size
+                        type: object
+                    type: array
+                inserts:
+                    items:
+                        additionalProperties: false
+                        properties:
+                            price:
+                                type: string
+                            side:
+                                enum:
+                                    - BUY
+                                    - SELL
+                                type: string
+                            size:
+                                type: string
+                        required:
+                            - side
+                            - price
+                            - size
+                        type: object
+                    type: array
+                last_updated_at:
+                    description: in milliseconds
+                    type: integer
+                market:
+                    type: string
+                seq_no:
+                    type: integer
+                update_type:
+                    enum:
+                        - s
+                        - d
+                    type: string
+                updates:
+                    items:
+                        additionalProperties: false
+                        properties:
+                            price:
+                                type: string
+                            side:
+                                enum:
+                                    - BUY
+                                    - SELL
+                                type: string
+                            size:
+                                type: string
+                        required:
+                            - side
+                            - price
+                            - size
+                        type: object
+                    type: array
+            required:
+                - seq_no
+                - market
+                - last_updated_at
+                - update_type
+                - inserts
+                - updates
+                - deletes
+            type: object
+        ResponsesTradeResult:
+            additionalProperties: false
+            properties:
+                created_at:
+                    description: Unix Millisecond timestamp at which trade was done
+                    example: "1681497002041"
+                    type: integer
+                id:
+                    description: Unique Trade ID per TradeType
+                    example: "12345643"
+                    type: string
+                market:
+                    description: Market for which trade was done
+                    example: BTC-USD-PERP
+                    type: string
+                price:
+                    description: Trade price
+                    example: "30001.2"
+                    type: string
+                side:
+                    description: Taker side
+                    enum:
+                        - BUY
+                        - SELL
+                    type: string
+                size:
+                    description: Trade size
+                    example: "0.01"
+                    type: string
+                trade_type:
+                    description: Trade type, can be FILL or LIQUIDATION
+                    example: FILL
+                    type: string
+            required:
+                - id
+                - market
+                - side
+                - size
+                - price
+                - created_at
+                - trade_type
+            type: object
+        ResponsesTradebustResult:
+            additionalProperties: false
+            properties:
+                account:
+                    description: Starknet Account from which fill was created
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                busted_fill_id:
+                    description: Unique string ID of the busted fill
+                    example: "12342345"
+                    type: string
+                created_at:
+                    description: Unix Millis timestamp when bust was created
+                    example: "1681497002041"
+                    type: integer
+            required:
+                - account
+                - busted_fill_id
+                - created_at
+            type: object
+        ResponsesTransactionResponse:
+            additionalProperties: false
+            properties:
+                completed_at:
+                    description: Timestamp from when the transaction was completed
+                    type: integer
+                created_at:
+                    description: Timestamp from when the transaction was sent to blockchain gateway
+                    type: integer
+                hash:
+                    description: Tx Hash of the settled trade
+                    example: 0x445c05d6bfb899e39338440d199971c4d7f4cde7878ed3888df3f716efb8df2
+                    type: string
+                id:
+                    description: Unique string ID of the event that triggered the transaction. For example, fill ID or liquidation ID
+                    example: "12342423"
+                    type: string
+                state:
+                    description: Status of the transaction on Starknet
+                    type: string
+                type:
+                    description: Event that triggered the transaction
+                    type: string
+            required:
+                - id
+                - type
+                - hash
+                - state
+                - created_at
+                - completed_at
+            type: object
+        ResponsesTransferResult:
+            additionalProperties: false
+            properties:
+                account:
+                    description: Starknet Account address
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                amount:
+                    description: Transferred amount
+                    example: "100"
+                    type: string
+                auto_withdrawal_fee:
+                    description: Fee for auto withdrawal in USDC
+                    example: "4.5"
+                    type: string
+                bridge:
+                    description: Bridge used for the transfer
+                    enum:
+                        - ""
+                        - STARKGATE
+                        - LAYERSWAP
+                        - RHINOFI
+                    example: STARKGATE
+                    type: string
+                counterparty:
+                    description: Counterparty address
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                created_at:
+                    description: Unix Millis timestamp transfer was created on L2
+                    example: "1681497002041"
+                    type: integer
+                direction:
+                    description: Transfer direction (IN, OUT)
+                    enum:
+                        - IN
+                        - OUT
+                    example: OUT
+                    type: string
+                external_account:
+                    description: External chain account address
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                external_chain:
+                    description: External chain used for the transfer
+                    example: ETHEREUM
+                    type: string
+                external_txn_hash:
+                    description: Transaction hash on the external chain
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                failure_reason:
+                    description: Reason for transfer failure
+                    example: Gas fee too low
+                    type: string
+                id:
+                    description: Transfer auto-generated ID
+                    example: "123456789"
+                    type: string
+                kind:
+                    description: Transfer Kind (DEPOSIT, WITHDRAWAL)
+                    enum:
+                        - DEPOSIT
+                        - WITHDRAWAL
+                        - UNWINDING
+                        - VAULT_DEPOSIT
+                        - VAULT_WITHDRAWAL
+                        - AUTO_WITHDRAWAL
+                    example: DEPOSIT
+                    type: string
+                last_updated_at:
+                    description: Unix Millis timestamp transfer was last updated on L2
+                    example: "1681497002041"
+                    type: integer
+                socialized_loss_factor:
+                    description: Withdrawal's socialized loss factor
+                    example: "0"
+                    type: string
+                status:
+                    description: Transfer External State (PENDING, AVAILABLE, COMPLETED, FAILED)
+                    enum:
+                        - PENDING
+                        - AVAILABLE
+                        - COMPLETED
+                        - FAILED
+                    example: PENDING
+                    type: string
+                token:
+                    description: Transferred token name
+                    example: USDC
+                    type: string
+                txn_hash:
+                    description: Transaction hash on Paradex chain
+                    example: 0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa
+                    type: string
+                vault_address:
+                    description: Vault address
+                    example: 0x7a3b1c8f9e2d4e6f8a0c2b4d6e8f0a2c4b6e8d0a
+                    type: string
+                vault_unwind_completion_percentage:
+                    description: Vault unwind completion percentage
+                    example: "0.35"
+                    type: string
+            required:
+                - id
+                - account
+                - kind
+                - status
+                - amount
+                - token
+                - created_at
+                - last_updated_at
+                - txn_hash
+                - external_txn_hash
+                - socialized_loss_factor
+                - bridge
+                - external_chain
+                - external_account
+                - failure_reason
+                - direction
+                - vault_address
+                - vault_unwind_completion_percentage
+                - counterparty
+                - auto_withdrawal_fee
+            type: object
+    messages:
+        ResponsesAccountSummaryResponse:
+            name: accountsummary
+            title: AccountSummaryResponse
+            summary: Private websocket channel for receiving updates of account status
+            description: Subscribe to account messages
+            tags:
+                - name: account
+        ResponsesBBOResp:
+            name: bboresp
+            title: BBOResp
+            summary: Public websocket channel for tick updates of orderbook best bid/ask prices and amounts
+            description: Subscribe to market messages
+            tags:
+                - name: market
+        ResponsesBalanceEventResponse:
+            name: balanceevent
+            title: BalanceEventResponse
+            summary: Private websocket channel to receive PnL calculation data
+            description: Subscribe to balance event messages
+            tags:
+                - name: account
+        ResponsesFillResult:
+            name: fillresult
+            title: FillResult
+            summary: Private websocket channel to receive details of fills for specific account
+            description: Subscribe to fill messages for a market
+            tags:
+                - name: trading
+        ResponsesFundingDataResult:
+            name: fundingdataresult
+            title: FundingDataResult
+            summary: Public websocket channel to receive funding data updates
+            description: Subscribe to funding data messages for a market
+            tags:
+                - name: market
+                - name: funding
+        ResponsesFundingResp:
+            name: fundingresp
+            title: FundingResp
+            summary: Private websocket channel to receive funding payments of an account
+            description: Subscribe to funding payment messages for a market
+            tags:
+                - name: funding
+        ResponsesMarketSummaryResp:
+            name: marketsummaryresp
+            title: MarketSummaryResp
+            summary: Public websocket channel for updates of available markets
+            description: Subscribe to market summary messages
+            tags:
+                - name: market
+        ResponsesOrderResp:
+            name: orderresp
+            title: OrderResp
+            summary: Private websocket channel to receive order updates
+            description: Subscribe to order messages for a market
+            tags:
+                - name: trading
+        ResponsesPositionResp:
+            name: positionresp
+            title: PositionResp
+            summary: Private websocket channel to receive updates when position is changed
+            description: Subscribe to position messages
+            tags:
+                - name: trading
+        ResponsesFundingRateComparisonResp:
+            name: fundingratecomparisonresp
+            title: FundingRateComparisonResp
+            summary: Public websocket channel for funding rate comparisons across exchanges
+            description: Subscribe to funding rate comparison messages.
+            tags:
+                - name: trading
+        ResponsesPriceBookUpdate:
+            name: pricebookupdate
+            title: PriceBookUpdate
+            summary: Public websocket channel for orderbook snapshot updates of depth 15 at most every 50ms or 100ms, optionally grouped by price tick
+            description: Public websocket channel for orderbook snapshot updates of depth 15 at most every 50ms or 100ms, optionally grouped by price tick
+            tags:
+                - name: market
+        ResponsesTradeResult:
+            name: traderesult
+            title: TradeResult
+            summary: Public websocket channel to receive updates on trades in particular market
+            description: Subscribe to trade messages for a market
+            tags:
+                - name: market
+        ResponsesTradebustResult:
+            name: tradebustresult
+            title: TradebustResult
+            summary: Private websocket channel to receive fills that are busted by a blockchain
+            description: Private websocket channel to receive fills that are busted by a blockchain
+            tags:
+                - name: trading
+        ResponsesTransactionResponse:
+            name: transaction
+            title: TransactionResponse
+            summary: Private websocket channel for receiving transaction details of fills
+            description: Subscribe to transaction messages
+            tags:
+                - name: account
+        ResponsesTransferResult:
+            name: transferresult
+            title: TransferResult
+            summary: Websocket channel for receiving transfer updates
+            description: |-
+                <p>Meaning of each transfer status:</p>
+                <ul>
+                <li><code>PENDING</code>: L2 txn calling Paraclear contract is in flight: For Withdrawals it's the initial status; refers to the L2 txn status being <code>RECEIVED</code>, <code>PENDING</code>, <code>ACCEPTED_ON_L2</code>. For Deposits refers to L2 txn status being <code>RECEIVED</code>, <code>PENDING</code>.</li>
+                <li><code>AVAILABLE</code>: Action is required from user: For Withdrawals refers to L2 txn status being <code>ACCEPTED_ON_L1</code> and funds available for collection on Ethereum bridge. For Deposits refers to funds being available in the L2 account, ready to be deposited to Paraclear contract.</li>
+                <li><code>COMPLETED</code>: Transfer has completed (final state): For Withdrawals funds have been collected and have moved to the requested Ethereum account; refers to L1 bridge withdraw txn status <code>SUCCESS</code>. For Deposits funds have become available in Paradex; refers to the L2 txn status being <code>ACCEPTED_ON_L2</code>.</li>
+                <li><code>FAILED</code>: L2 txn calling Paraclear contract failed with <code>REJECTED</code> status. Deposits can be retried when they fail by repeating the L2 txn.</li>
+                </ul>
+            tags:
+                - name: account
+defaultContentType: application/json

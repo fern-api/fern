@@ -1,6 +1,5 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-
-import { AudienceId } from "../filtered-ir/ids";
+import { AudienceId } from "@fern-api/ir-utils";
 
 export function getAudienceForEnvironment(
     environmentId: string,

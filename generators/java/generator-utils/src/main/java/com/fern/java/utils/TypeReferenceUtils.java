@@ -393,4 +393,162 @@ public class TypeReferenceUtils {
             return false;
         }
     }
+
+    public static boolean isString(TypeReference typeReference) {
+        return typeReference
+                .getPrimitive()
+                .map(primitive -> primitive.getV1())
+                .map(v1 -> v1.visit(new PrimitiveTypeV1.Visitor<Boolean>() {
+
+                    @Override
+                    public Boolean visitInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitLong() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFloat() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDouble() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBoolean() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitString() {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitDate() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDateTime() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUuid() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBase64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBigInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUnknown(String s) {
+                        return false;
+                    }
+                }))
+                .orElse(false);
+    }
+
+    public static boolean isBoolean(TypeReference typeReference) {
+        return typeReference
+                .getPrimitive()
+                .map(primitive -> primitive.getV1())
+                .map(v1 -> v1.visit(new PrimitiveTypeV1.Visitor<Boolean>() {
+
+                    @Override
+                    public Boolean visitInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitLong() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUint64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitFloat() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDouble() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBoolean() {
+                        return true;
+                    }
+
+                    @Override
+                    public Boolean visitString() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDate() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitDateTime() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUuid() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBase64() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBigInteger() {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitUnknown(String s) {
+                        return false;
+                    }
+                }))
+                .orElse(false);
+    }
 }

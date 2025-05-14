@@ -95,14 +95,20 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithArrayUnionExample",
             "description": "",
             "path": "/search-with-array-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": [
+              "foo"
+            ],
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": [
+                "foo"
+              ]
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -172,14 +178,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithObjectUnionExample",
             "description": "",
             "path": "/search-with-object-union",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
             "responseBody": {

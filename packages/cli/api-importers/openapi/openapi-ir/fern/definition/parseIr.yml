@@ -188,6 +188,7 @@ types:
   ArraySchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -200,6 +201,7 @@ types:
   MapSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -214,6 +216,7 @@ types:
   OptionalSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -225,6 +228,7 @@ types:
   NullableSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -235,9 +239,10 @@ types:
 
   EnumSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -250,6 +255,7 @@ types:
   UnknownSchemaWithExample:
     extends:
       - commons.WithSdkGroupName
+      - commons.WithNamespace
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
@@ -259,9 +265,10 @@ types:
 
   ObjectSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithSource
       - commons.WithTitle
@@ -301,9 +308,10 @@ types:
 
   DiscriminatedOneOfSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -321,9 +329,10 @@ types:
 
   UnDiscriminatedOneOfSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithEncoding
       - commons.WithSource
@@ -334,9 +343,10 @@ types:
 
   PrimitiveSchemaWithExample:
     extends:
-      - commons.WithDescription
-      - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
       - commons.WithAvailability
       - commons.WithTitle
     properties:

@@ -1,4 +1,5 @@
 {
+    "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
@@ -288,7 +289,6 @@
                             }
                         },
                         "extends": [],
-                        "contentType": null,
                         "properties": [
                             {
                                 "name": {
@@ -338,7 +338,8 @@
                         "extra-properties": false,
                         "extendedProperties": [],
                         "docs": null,
-                        "v2Examples": null
+                        "v2Examples": null,
+                        "contentType": null
                     },
                     "sdkRequest": {
                         "shape": {

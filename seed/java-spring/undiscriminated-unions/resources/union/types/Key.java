@@ -7,7 +7,6 @@ package resources.union.types;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
@@ -17,6 +16,7 @@ import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Object;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.util.Objects;
 
 @JsonDeserialize(
@@ -37,6 +37,7 @@ public final class Key {
     return this.value;
   }
 
+  @SuppressWarnings("unchecked")
   public <T> T visit(Visitor<T> visitor) {
     if(this.type == 0) {
       return visitor.visit((KeyType) this.value);
@@ -70,6 +71,12 @@ public final class Key {
     return new Key(value, 0);
   }
 
+  /**
+   * @param value must be one of the following:
+   * <ul>
+   * <li>"default"</li>
+   * </ul>
+   */
   public static Key of(String value) {
     return new Key(value, 1);
   }
@@ -77,6 +84,12 @@ public final class Key {
   public interface Visitor<T> {
     T visit(KeyType value);
 
+    /**
+     * @param value must be one of the following:
+     * <ul>
+     * <li>"default"</li>
+     * </ul>
+     */
     T visit(String value);
   }
 
@@ -93,7 +106,7 @@ public final class Key {
       } catch(IllegalArgumentException e) {
       }
       try {
-        return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<String>() {}));
+        return of(ObjectMappers.JSON_MAPPER.convertValue(value, String.class));
       } catch(IllegalArgumentException e) {
       }
       throw new JsonParseException(p, "Failed to deserialize");

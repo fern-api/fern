@@ -841,7 +841,8 @@
                     "exploded": false
                   }
                 ]
-              }
+              },
+              "contentType": "multipart/form-data"
             }
           },
           "response": {

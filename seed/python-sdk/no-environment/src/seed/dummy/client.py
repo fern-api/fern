@@ -36,11 +36,15 @@ class DummyClient:
         Examples
         --------
         from seed import SeedNoEnvironment
-        client = SeedNoEnvironment(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedNoEnvironment(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.dummy.get_dummy()
         """
-        response = self._raw_client.get_dummy(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_dummy(request_options=request_options)
+        return _response.data
 
 
 class AsyncDummyClient:
@@ -71,12 +75,21 @@ class AsyncDummyClient:
 
         Examples
         --------
-        from seed import AsyncSeedNoEnvironment
         import asyncio
-        client = AsyncSeedNoEnvironment(token="YOUR_TOKEN", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedNoEnvironment
+
+        client = AsyncSeedNoEnvironment(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.dummy.get_dummy()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_dummy(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_dummy(request_options=request_options)
+        return _response.data

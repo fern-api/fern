@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Upgrade to irV57
+      type: fix
+  createdAt: '2025-05-01'
+  irVersion: 57
+  version: 1.8.0
+- changelogEntry:
+    - summary: |
         Upgrade IR version dependency to v55
       type: chore
   createdAt: '2025-02-20'

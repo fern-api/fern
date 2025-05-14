@@ -192,19 +192,11 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getTestExample",
             "description": "",
             "path": "/test",
             "pathParameters": {},
-            "queryParameters": {
-              "boolParam1": true,
-              "boolParam2": true,
-              "boolParam3": true,
-              "boolParam4": true,
-              "stringParam": "foo",
-              "numberParam": 42,
-              "integerParam": 42
-            },
+            "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
@@ -212,8 +204,8 @@
               "value": {
                 "boolField1": true,
                 "boolField2": true,
-                "stringField": "foo",
-                "numberField": 42
+                "stringField": "defaultValue",
+                "numberField": 3.14
               }
             },
             "responseBodyV3": {
@@ -221,8 +213,8 @@
               "value": {
                 "boolField1": true,
                 "boolField2": true,
-                "stringField": "foo",
-                "numberField": 42
+                "stringField": "defaultValue",
+                "numberField": 3.14
               }
             }
           }

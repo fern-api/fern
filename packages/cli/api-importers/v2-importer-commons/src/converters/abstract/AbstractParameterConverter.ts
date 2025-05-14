@@ -1,19 +1,10 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import {
-    ContainerType,
-    HttpHeader,
-    PathParameter,
-    PrimitiveTypeV2,
-    QueryParameter,
-    TypeDeclaration,
-    TypeId,
-    TypeReference,
-    V2SchemaExamples
-} from "@fern-api/ir-sdk";
+import { HttpHeader, PathParameter, QueryParameter, TypeId, TypeReference, V2SchemaExamples } from "@fern-api/ir-sdk";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
 import { ExampleConverter } from "../ExampleConverter";
+import { SchemaConverter } from "../schema/SchemaConverter";
 
 export declare namespace AbstractParameterConverter {
     export interface Args<TParameter extends OpenAPIV3_1.ParameterObject> extends AbstractConverter.AbstractArgs {
@@ -21,7 +12,7 @@ export declare namespace AbstractParameterConverter {
     }
 
     export interface BaseParameterOutput {
-        inlinedTypes?: Record<TypeId, TypeDeclaration>;
+        inlinedTypes?: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }
 
     export interface QueryParameterOutput extends BaseParameterOutput {
@@ -45,16 +36,6 @@ export declare namespace AbstractParameterConverter {
 export abstract class AbstractParameterConverter<
     TParameter extends OpenAPIV3_1.ParameterObject
 > extends AbstractConverter<AbstractConverterContext<object>, AbstractParameterConverter.Output> {
-    public static STRING = TypeReference.primitive({
-        v1: "STRING",
-        v2: PrimitiveTypeV2.string({
-            default: undefined,
-            validation: undefined
-        })
-    });
-
-    public static OPTIONAL_STRING = TypeReference.container(ContainerType.optional(AbstractParameterConverter.STRING));
-
     protected readonly parameter: TParameter;
 
     constructor({ context, breadcrumbs, parameter }: AbstractParameterConverter.Args<TParameter>) {
@@ -62,18 +43,18 @@ export abstract class AbstractParameterConverter<
         this.parameter = parameter;
     }
 
-    public abstract convert(): Promise<AbstractParameterConverter.Output | undefined>;
+    public abstract convert(): AbstractParameterConverter.Output | undefined;
 
-    protected async convertToOutput({
+    protected convertToOutput({
         schema,
         typeReference,
         inlinedTypes
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         typeReference: TypeReference | undefined;
-        inlinedTypes: Record<TypeId, TypeDeclaration> | undefined;
-    }): Promise<AbstractParameterConverter.Output | undefined> {
-        const availability = await this.context.getAvailability({
+        inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema> | undefined;
+    }): AbstractParameterConverter.Output | undefined {
+        const availability = this.context.getAvailability({
             node: this.parameter,
             breadcrumbs: this.breadcrumbs
         });
@@ -88,9 +69,9 @@ export abstract class AbstractParameterConverter<
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.OPTIONAL_STRING,
+                        valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
-                        v2Examples: await this.convertParameterExamples({ schema }),
+                        v2Examples: this.convertParameterExamples({ schema }),
                         availability
                     },
                     inlinedTypes
@@ -104,9 +85,9 @@ export abstract class AbstractParameterConverter<
                             wireValue: this.parameter.name
                         }),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.OPTIONAL_STRING,
+                        valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
-                        v2Examples: await this.convertParameterExamples({ schema }),
+                        v2Examples: this.convertParameterExamples({ schema }),
                         availability
                     },
                     inlinedTypes
@@ -117,10 +98,10 @@ export abstract class AbstractParameterConverter<
                     parameter: {
                         name: this.context.casingsGenerator.generateName(this.parameter.name),
                         docs: this.parameter.description,
-                        valueType: typeReference ?? AbstractParameterConverter.STRING,
+                        valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
-                        v2Examples: await this.convertParameterExamples({ schema })
+                        v2Examples: this.convertParameterExamples({ schema })
                     },
                     inlinedTypes
                 };
@@ -129,11 +110,11 @@ export abstract class AbstractParameterConverter<
         }
     }
 
-    protected async convertParameterExamples({
+    protected convertParameterExamples({
         schema
     }: {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
-    }): Promise<V2SchemaExamples> {
+    }): V2SchemaExamples {
         const v2Examples: V2SchemaExamples = {
             userSpecifiedExamples: {},
             autogeneratedExamples: {}
@@ -143,9 +124,9 @@ export abstract class AbstractParameterConverter<
         const parameterExamples = this.parameter.examples;
 
         for (const [key, example] of Object.entries(parameterExamples ?? {})) {
-            const resolvedExample = await this.context.resolveExampleWithValue(example);
+            const resolvedExample = this.context.resolveExampleWithValue(example);
             if (resolvedExample != null) {
-                v2Examples.userSpecifiedExamples[key] = await this.generateOrValidateExample({
+                v2Examples.userSpecifiedExamples[key] = this.generateOrValidateExample({
                     schema,
                     example: resolvedExample
                 });
@@ -157,14 +138,14 @@ export abstract class AbstractParameterConverter<
                 prefix: `${this.parameter.name}_example`,
                 existingNames: Object.keys(v2Examples.userSpecifiedExamples)
             });
-            v2Examples.userSpecifiedExamples[parameterExampleName] = await this.generateOrValidateExample({
+            v2Examples.userSpecifiedExamples[parameterExampleName] = this.generateOrValidateExample({
                 schema,
                 example: parameterExample
             });
         }
         if (Object.keys(v2Examples.userSpecifiedExamples).length === 0) {
             const exampleName = `${this.parameter.name}_example`;
-            v2Examples.autogeneratedExamples[exampleName] = await this.generateOrValidateExample({
+            v2Examples.autogeneratedExamples[exampleName] = this.generateOrValidateExample({
                 schema,
                 example: undefined,
                 ignoreErrors: true
@@ -173,7 +154,7 @@ export abstract class AbstractParameterConverter<
         return v2Examples;
     }
 
-    private async generateOrValidateExample({
+    private generateOrValidateExample({
         schema,
         ignoreErrors,
         example
@@ -181,14 +162,14 @@ export abstract class AbstractParameterConverter<
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         example: unknown;
         ignoreErrors?: boolean;
-    }): Promise<unknown> {
+    }): unknown {
         const exampleConverter = new ExampleConverter({
             breadcrumbs: this.breadcrumbs,
             context: this.context,
             schema,
             example
         });
-        const { validExample: convertedExample, errors } = await exampleConverter.convert();
+        const { validExample: convertedExample, errors } = exampleConverter.convert();
         if (!ignoreErrors) {
             errors.forEach((error) => {
                 this.context.errorCollector.collect({

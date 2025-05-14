@@ -50,8 +50,8 @@
     }
   },
   "subpackages": {
-    "alpha": {
-      "subpackageId": "alpha",
+    "subpackage_alpha": {
+      "subpackageId": "subpackage_alpha",
       "name": "alpha",
       "endpoints": [
         {
@@ -110,7 +110,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPetsExample",
               "description": "",
               "path": "/pets",
               "pathParameters": {},
@@ -137,8 +137,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel": {
-      "subpackageId": "testChannel",
+    "subpackage_testChannel": {
+      "subpackageId": "subpackage_testChannel",
       "name": "testChannel",
       "endpoints": [],
       "webhooks": [],
@@ -210,8 +210,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannel2": {
-      "subpackageId": "testChannel2",
+    "subpackage_testChannel2": {
+      "subpackageId": "subpackage_testChannel2",
       "name": "testChannel2",
       "endpoints": [],
       "webhooks": [],
@@ -283,8 +283,8 @@
       "types": [],
       "subpackages": []
     },
-    "beta": {
-      "subpackageId": "beta",
+    "subpackage_beta": {
+      "subpackageId": "subpackage_beta",
       "name": "beta",
       "endpoints": [
         {
@@ -343,7 +343,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listPetsExample",
               "description": "",
               "path": "/pets",
               "pathParameters": {},
@@ -370,8 +370,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannels": {
-      "subpackageId": "testChannels",
+    "subpackage_testChannels": {
+      "subpackageId": "subpackage_testChannels",
       "name": "testChannels",
       "endpoints": [],
       "webhooks": [],
@@ -443,8 +443,8 @@
       "types": [],
       "subpackages": []
     },
-    "testChannels2": {
-      "subpackageId": "testChannels2",
+    "subpackage_testChannels2": {
+      "subpackageId": "subpackage_testChannels2",
       "name": "testChannels2",
       "endpoints": [],
       "webhooks": [],
@@ -528,12 +528,12 @@
       "testChannels2_sendMessage"
     ],
     "subpackages": [
-      "alpha",
-      "testChannel",
-      "testChannel2",
-      "beta",
-      "testChannels",
-      "testChannels2"
+      "subpackage_alpha",
+      "subpackage_testChannel",
+      "subpackage_testChannel2",
+      "subpackage_beta",
+      "subpackage_testChannels",
+      "subpackage_testChannels2"
     ]
   },
   "snippetsConfiguration": {},

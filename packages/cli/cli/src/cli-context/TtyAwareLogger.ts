@@ -15,19 +15,22 @@ export class TtyAwareLogger {
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timer | undefined;
 
-    constructor(private readonly stream: NodeJS.WriteStream) {
+    constructor(
+        private readonly stdout: NodeJS.WriteStream,
+        private readonly stderr: NodeJS.WriteStream
+    ) {
         this.start();
     }
 
     private start() {
         if (this.isTTY) {
-            this.write(ansiEscapes.cursorHide);
+            this.writeStdout(ansiEscapes.cursorHide);
             this.paintAndStartInterval();
             this.finish = () => {
                 clearInterval(this.interval);
                 this.interval = undefined;
                 this.repaint();
-                this.write(ansiEscapes.cursorShow);
+                this.writeStdout(ansiEscapes.cursorShow);
                 this.finish = noop;
             };
         }
@@ -40,7 +43,7 @@ export class TtyAwareLogger {
         if (this.interval != null) {
             throw new Error("Cannot start interval because interval already exists");
         }
-        this.write(this.paint());
+        this.writeStdout(this.paint());
         this.interval = setInterval(this.repaint.bind(this), getSpinnerInterval(this.spinner));
     }
 
@@ -50,12 +53,16 @@ export class TtyAwareLogger {
 
     private shouldBuffer = false;
     private buffer = "";
-    private write(content: string) {
+    private writeStdout(content: string) {
         if (this.shouldBuffer) {
             this.buffer += content;
         } else {
-            this.stream.write(content);
+            this.stdout.write(content);
         }
+    }
+
+    private writeStderr(content: string) {
+        this.stderr.write(content);
     }
 
     private startBuffering() {
@@ -64,7 +71,7 @@ export class TtyAwareLogger {
 
     private flushAndStopBuffering() {
         this.shouldBuffer = false;
-        this.write(this.buffer);
+        this.writeStdout(this.buffer);
         this.buffer = "";
     }
 
@@ -76,20 +83,30 @@ export class TtyAwareLogger {
         this.flushAndStopBuffering();
     }
 
-    public log(logs: Log[], { includeDebugInfo = false }: { includeDebugInfo?: boolean } = {}): void {
+    public log(
+        logs: Log[],
+        { includeDebugInfo = false, stderr = false }: { includeDebugInfo?: boolean; stderr?: boolean } = {}
+    ): void {
+        const write = (content: string) => {
+            if (stderr) {
+                this.writeStderr(content);
+            } else {
+                this.writeStdout(content);
+            }
+        };
         for (const log of logs) {
             const content = formatLog(log, { includeDebugInfo });
             const omitOnTTY = log.omitOnTTY ?? false;
             if (!this.isTTY) {
-                this.write(content);
+                write(content);
             } else if (!omitOnTTY) {
-                this.write(this.clear() + content + this.lastPaint);
+                write(this.clear() + content + this.lastPaint);
             }
         }
     }
 
     private repaint(): void {
-        this.write(this.clear() + this.paint());
+        this.writeStdout(this.clear() + this.paint());
     }
 
     private clear(): string {
@@ -124,7 +141,7 @@ export class TtyAwareLogger {
     }
 
     public get isTTY(): boolean {
-        return this.stream.isTTY && !IS_CI;
+        return this.stdout.isTTY && !IS_CI;
     }
 }
 

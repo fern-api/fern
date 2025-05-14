@@ -28,6 +28,7 @@ export function getGlobalHeaders(document: OpenAPIV3.Document): GlobalHeader[] {
                           availability: undefined,
                           generatedName: header.name ?? header.header,
                           title: undefined,
+                          namespace: undefined,
                           groupName: undefined,
                           nameOverride: undefined
                       })

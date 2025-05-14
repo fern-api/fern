@@ -1,9 +1,10 @@
 import { OAuthTokenEndpoint } from "@fern-api/ir-sdk";
+import { IdGenerator } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../FernFileContext";
-import { IdGenerator } from "../IdGenerator";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
+import { generateEndpointIdFromResolvedEndpoint } from "../resolvers/generateEndpointIdFromResolvedEndpoint";
 import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { TokenEndpoint } from "./convertOAuthUtils";
 
@@ -31,9 +32,21 @@ export function convertOAuthTokenEndpoint({
             ? (resolvedEndpoint.endpoint.request.body.properties ?? {})
             : {};
 
+    let expiresIn = undefined;
+    try {
+        expiresIn =
+            tokenEndpoint.responseProperties.expires_in != null
+                ? propertyResolver.resolveResponsePropertyOrThrow({
+                      file,
+                      endpoint: tokenEndpoint.endpoint,
+                      propertyComponents: tokenEndpoint.responseProperties.expires_in
+                  })
+                : undefined;
+    } catch {}
+
     return {
         endpointReference: {
-            endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+            endpointId: generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
             serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath),
             subpackageId: !isRootFernFilepath({ fernFilePath: resolvedEndpoint.file.fernFilepath })
                 ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
@@ -71,14 +84,7 @@ export function convertOAuthTokenEndpoint({
                 endpoint: tokenEndpoint.endpoint,
                 propertyComponents: tokenEndpoint.responseProperties.access_token
             }),
-            expiresIn:
-                tokenEndpoint.responseProperties.expires_in != null
-                    ? propertyResolver.resolveResponsePropertyOrThrow({
-                          file,
-                          endpoint: tokenEndpoint.endpoint,
-                          propertyComponents: tokenEndpoint.responseProperties.expires_in
-                      })
-                    : undefined,
+            expiresIn,
             refreshToken:
                 tokenEndpoint.responseProperties.refresh_token != null
                     ? propertyResolver.resolveResponsePropertyOrThrow({

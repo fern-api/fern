@@ -38,11 +38,16 @@ class PackageClient:
         Examples
         --------
         from seed import SeedNurseryApi
-        client = SeedNurseryApi(base_url="https://yourhost.com/path/to/api", )
-        client.package.test(for_='for', )
+
+        client = SeedNurseryApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.package.test(
+            for_="for",
+        )
         """
-        response = self._raw_client.test(for_=for_, request_options=request_options)
-        return response.data
+        _response = self._raw_client.test(for_=for_, request_options=request_options)
+        return _response.data
 
 
 class AsyncPackageClient:
@@ -75,12 +80,22 @@ class AsyncPackageClient:
 
         Examples
         --------
-        from seed import AsyncSeedNurseryApi
         import asyncio
-        client = AsyncSeedNurseryApi(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedNurseryApi
+
+        client = AsyncSeedNurseryApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.package.test(for_='for', )
+            await client.package.test(
+                for_="for",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.test(for_=for_, request_options=request_options)
-        return response.data
+        _response = await self._raw_client.test(for_=for_, request_options=request_options)
+        return _response.data

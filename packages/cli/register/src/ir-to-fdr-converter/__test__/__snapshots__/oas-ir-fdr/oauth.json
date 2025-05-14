@@ -78,8 +78,8 @@
     }
   },
   "subpackages": {
-    "auth": {
-      "subpackageId": "auth",
+    "subpackage_auth": {
+      "subpackageId": "subpackage_auth",
       "name": "auth",
       "endpoints": [
         {
@@ -201,10 +201,35 @@
             "statusCode": 200,
             "description": "Successful token response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 400,
+              "description": "Bad request",
+              "name": "BadRequestError",
+              "examples": []
+            },
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 401,
+              "description": "Unauthorized",
+              "name": "UnauthorizedError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "authGetTokenExample",
               "description": "",
               "path": "/oauth/token",
               "pathParameters": {},
@@ -261,7 +286,7 @@
     "websockets": [],
     "types": [],
     "subpackages": [
-      "auth"
+      "subpackage_auth"
     ]
   },
   "auth": {

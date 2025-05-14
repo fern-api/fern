@@ -38,11 +38,15 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedBearerTokenEnvironmentVariable
-        client = SeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        client = SeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
         client.service.get_with_bearer_token()
         """
-        response = self._raw_client.get_with_bearer_token(request_options=request_options)
-        return response.data
+        _response = self._raw_client.get_with_bearer_token(request_options=request_options)
+        return _response.data
 
 
 class AsyncServiceClient:
@@ -75,12 +79,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedBearerTokenEnvironmentVariable
         import asyncio
-        client = AsyncSeedBearerTokenEnvironmentVariable(api_key="YOUR_API_KEY", base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedBearerTokenEnvironmentVariable
+
+        client = AsyncSeedBearerTokenEnvironmentVariable(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
             await client.service.get_with_bearer_token()
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.get_with_bearer_token(request_options=request_options)
-        return response.data
+        _response = await self._raw_client.get_with_bearer_token(request_options=request_options)
+        return _response.data

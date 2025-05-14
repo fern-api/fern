@@ -58,10 +58,15 @@ class QueryClient:
         Examples
         --------
         from seed import SeedLiteral
-        client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-        client.query.send(query='What is the weather today', )
+
+        client = SeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.query.send(
+            query="What is the weather today",
+        )
         """
-        response = self._raw_client.send(
+        _response = self._raw_client.send(
             query=query,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
@@ -69,7 +74,7 @@ class QueryClient:
             alias_optional_stream=alias_optional_stream,
             request_options=request_options,
         )
-        return response.data
+        return _response.data
 
 
 class AsyncQueryClient:
@@ -119,14 +124,24 @@ class AsyncQueryClient:
 
         Examples
         --------
-        from seed import AsyncSeedLiteral
         import asyncio
-        client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedLiteral
+
+        client = AsyncSeedLiteral(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.query.send(query='What is the weather today', )
+            await client.query.send(
+                query="What is the weather today",
+            )
+
+
         asyncio.run(main())
         """
-        response = await self._raw_client.send(
+        _response = await self._raw_client.send(
             query=query,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
@@ -134,4 +149,4 @@ class AsyncQueryClient:
             alias_optional_stream=alias_optional_stream,
             request_options=request_options,
         )
-        return response.data
+        return _response.data

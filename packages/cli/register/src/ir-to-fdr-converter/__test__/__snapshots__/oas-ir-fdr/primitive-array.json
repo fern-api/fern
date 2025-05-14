@@ -1,73 +1,27 @@
 {
   "types": {
-    "SearchWithUnionGetRequestBodySchemaOneOfZero": {
-      "name": "SearchWithUnionGetRequestBodySchemaOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "SearchWithUnionGetRequestBodySchemaOneOfOne": {
-      "name": "SearchWithUnionGetRequestBodySchemaOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "getSearchWithUnion_Request": {
       "name": "getSearchWithUnion_Request",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SearchWithUnionGetRequestBodySchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionGetRequestBodySchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "SearchWithUnionGetRequestBodySchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionGetRequestBodySchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne": {
-      "name": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
       }
     },
     "SearchWithUnionAndNullGetRequestBodySchema": {
@@ -76,17 +30,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "SearchWithUnionAndNullGetRequestBodySchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -151,14 +107,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchExample",
             "description": "",
             "path": "/search",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "foo",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "foo"
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -225,7 +183,7 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionExample",
             "description": "",
             "path": "/search-with-union",
             "pathParameters": {},
@@ -304,14 +262,16 @@
         "errorsV2": [],
         "examples": [
           {
-            "name": "",
+            "name": "getSearchWithUnionAndNullExample",
             "description": "",
             "path": "/search-with-union-and-null",
             "pathParameters": {},
             "queryParameters": {},
             "headers": {},
+            "requestBody": "foo",
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": "foo"
             },
             "responseStatusCode": 200,
             "responseBody": {

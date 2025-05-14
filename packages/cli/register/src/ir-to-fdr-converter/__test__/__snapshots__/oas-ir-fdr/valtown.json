@@ -96,30 +96,6 @@
         ]
       }
     },
-    "ResultSetLastInsertRowidOneOfZero": {
-      "name": "ResultSetLastInsertRowidOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "ResultSetLastInsertRowidOneOfOne": {
-      "name": "ResultSetLastInsertRowidOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
     "ResultSetLastInsertRowid": {
       "description": "ROWID of the last inserted row.\n\nThis value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
       "name": "ResultSetLastInsertRowid",
@@ -127,17 +103,19 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "ResultSetLastInsertRowidOneOfZero",
             "type": {
-              "type": "id",
-              "value": "ResultSetLastInsertRowidOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "ResultSetLastInsertRowidOneOfOne",
             "type": {
-              "type": "id",
-              "value": "ResultSetLastInsertRowidOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           }
         ]
@@ -1720,87 +1698,41 @@
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfZero": {
-      "description": "Simple SQL statement to run in SQLite",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfZero": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfOne": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfTwo": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItems": {
+    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItems",
+      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfOne",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfTwo",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItemsOneOfTwo"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZero": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZero",
+    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0": {
+      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0",
       "shape": {
         "type": "alias",
         "value": {
@@ -1809,50 +1741,47 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZeroItems"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf0Items"
             }
           }
         }
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfZero": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfZero",
+    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1": {
+      "description": "A value to be used as a parameter",
+      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
           }
-        }
+        ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfOne": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfTwo": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOneOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOne": {
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOne",
+    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1": {
+      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1",
       "shape": {
         "type": "alias",
         "value": {
@@ -1867,38 +1796,38 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOne"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1ArgsOneOf1"
             }
           }
         }
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgs": {
+    "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgs",
+      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZero",
+            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfZero"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args0"
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOne",
+            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgsOneOfOne"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args1"
             }
           }
         ]
       }
     },
-    "V1SqliteExecutePostRequestBodySchemaStatementOneOfOne": {
+    "V1SqliteExecutePostRequestBodySchemaStatement1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOne",
+      "name": "V1SqliteExecutePostRequestBodySchemaStatement1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -1918,7 +1847,7 @@
             "key": "args",
             "valueType": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOneArgs"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOf1Args"
             }
           }
         ]
@@ -1930,105 +1859,60 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfZero",
             "description": "Simple SQL statement to run in SQLite",
             "type": {
-              "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOne",
+            "typeName": "V1SqliteExecutePostRequestBodySchemaStatement1",
             "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
             "type": {
               "type": "id",
-              "value": "V1SqliteExecutePostRequestBodySchemaStatementOneOfOne"
+              "value": "V1SqliteExecutePostRequestBodySchemaStatement1"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfZero": {
-      "description": "Simple SQL statement to run in SQLite",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfZero": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfOne": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfTwo": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItems": {
+    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items": {
       "description": "A value to be used as a parameter",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItems",
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfOne",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfTwo",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItemsOneOfTwo"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZero": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZero",
+    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0": {
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0",
       "shape": {
         "type": "alias",
         "value": {
@@ -2037,50 +1921,47 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZeroItems"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf0Items"
             }
           }
         }
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfZero": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfZero",
+    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1": {
+      "description": "A value to be used as a parameter",
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
           }
-        }
+        ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfOne": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfTwo": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOneOneOfTwo",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOne": {
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOne",
+    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1": {
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1",
       "shape": {
         "type": "alias",
         "value": {
@@ -2095,38 +1976,38 @@
             "type": "optional",
             "itemType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOne"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1ArgsOneOf1"
             }
           }
         }
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgs": {
+    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args": {
       "description": "List of arguments to be used in the given statement",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgs",
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZero",
+            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfZero"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args0"
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOne",
+            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgsOneOfOne"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args1"
             }
           }
         ]
       }
     },
-    "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOne": {
+    "V1SqliteBatchPostRequestBodySchemaStatementsItems1": {
       "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
-      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOne",
+      "name": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2146,7 +2027,7 @@
             "key": "args",
             "valueType": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOneArgs"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOf1Args"
             }
           }
         ]
@@ -2158,19 +2039,20 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfZero",
             "description": "Simple SQL statement to run in SQLite",
             "type": {
-              "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOne",
+            "typeName": "V1SqliteBatchPostRequestBodySchemaStatementsItems1",
             "description": "A parameterized SQL query. See https://docs.turso.tech/sdk/ts/reference#batch-transactions for reference",
             "type": {
               "type": "id",
-              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItemsOneOfOne"
+              "value": "V1SqliteBatchPostRequestBodySchemaStatementsItems1"
             }
           }
         ]
@@ -2193,32 +2075,8 @@
         ]
       }
     },
-    "V1EvalPostResponsesSchemaOneOfZero": {
-      "name": "V1EvalPostResponsesSchemaOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchemaOneOfOne": {
-      "name": "V1EvalPostResponsesSchemaOneOfOne",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchemaOneOfTwo": {
-      "name": "V1EvalPostResponsesSchemaOneOfTwo",
+    "V1EvalPostResponsesSchema2": {
+      "name": "V1EvalPostResponsesSchema2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2228,26 +2086,14 @@
         }
       }
     },
-    "V1EvalPostResponsesSchemaOneOfThree": {
-      "name": "V1EvalPostResponsesSchemaOneOfThree",
+    "V1EvalPostResponsesSchema3": {
+      "name": "V1EvalPostResponsesSchema3",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "unknown"
-          }
-        }
-      }
-    },
-    "V1EvalPostResponsesSchemaOneOfFour": {
-      "name": "V1EvalPostResponsesSchemaOneOfFour",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
           }
         }
       }
@@ -2258,69 +2104,84 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EvalPostResponsesSchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchemaOneOfTwo",
+            "typeName": "V1EvalPostResponsesSchema2",
             "type": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchemaOneOfTwo"
+              "value": "V1EvalPostResponsesSchema2"
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchemaOneOfThree",
+            "typeName": "V1EvalPostResponsesSchema3",
             "type": {
               "type": "id",
-              "value": "V1EvalPostResponsesSchemaOneOfThree"
+              "value": "V1EvalPostResponsesSchema3"
             }
           },
           {
-            "typeName": "V1EvalPostResponsesSchemaOneOfFour",
             "type": {
-              "type": "id",
-              "value": "V1EvalPostResponsesSchemaOneOfFour"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1EvalCodeGetResponsesSchemaOneOfZero": {
-      "name": "V1EvalCodeGetResponsesSchemaOneOfZero",
+    "V1EvalPostResponsesSchemaType": {
+      "name": "V1EvalPostResponsesSchemaType",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
           }
-        }
+        ]
       }
     },
-    "V1EvalCodeGetResponsesSchemaOneOfOne": {
-      "name": "V1EvalCodeGetResponsesSchemaOneOfOne",
+    "EvalPostRequestBadRequestError": {
+      "name": "EvalPostRequestBadRequestError",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "integer"
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalPostResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
           }
-        }
+        ]
       }
     },
-    "V1EvalCodeGetResponsesSchemaOneOfTwo": {
-      "name": "V1EvalCodeGetResponsesSchemaOneOfTwo",
+    "V1EvalCodeGetResponsesSchema2": {
+      "name": "V1EvalCodeGetResponsesSchema2",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2330,8 +2191,8 @@
         }
       }
     },
-    "V1EvalCodeGetResponsesSchemaOneOfThree": {
-      "name": "V1EvalCodeGetResponsesSchemaOneOfThree",
+    "V1EvalCodeGetResponsesSchema3": {
+      "name": "V1EvalCodeGetResponsesSchema3",
       "shape": {
         "type": "alias",
         "value": {
@@ -2342,76 +2203,92 @@
         }
       }
     },
-    "V1EvalCodeGetResponsesSchemaOneOfFour": {
-      "name": "V1EvalCodeGetResponsesSchemaOneOfFour",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "boolean"
-          }
-        }
-      }
-    },
     "V1EvalCodeGetResponsesSchema": {
       "name": "V1EvalCodeGetResponsesSchema",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EvalCodeGetResponsesSchemaOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchemaOneOfOne",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaOneOfOne"
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchemaOneOfTwo",
+            "typeName": "V1EvalCodeGetResponsesSchema2",
             "type": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaOneOfTwo"
+              "value": "V1EvalCodeGetResponsesSchema2"
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchemaOneOfThree",
+            "typeName": "V1EvalCodeGetResponsesSchema3",
             "type": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaOneOfThree"
+              "value": "V1EvalCodeGetResponsesSchema3"
             }
           },
           {
-            "typeName": "V1EvalCodeGetResponsesSchemaOneOfFour",
             "type": {
-              "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaOneOfFour"
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaFromOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaFromOneOfZero",
+    "V1EvalCodeGetResponsesSchemaType": {
+      "name": "V1EvalCodeGetResponsesSchemaType",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
+        "type": "enum",
+        "values": [
+          {
+            "value": "error"
           }
-        }
+        ]
       }
     },
-    "V1EmailPostRequestBodySchemaFromOneOfOne": {
+    "EvalGetRequestBadRequestError": {
+      "description": "The function throw an error or had invalid syntax",
+      "name": "EvalGetRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalCodeGetResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "V1EmailPostRequestBodySchemaFrom1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaFromOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaFrom1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2446,38 +2323,27 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaFromOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaFromOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaFromOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaFrom1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaFromOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaFrom1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOfZeroOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaToOneOfZeroOneOfOne": {
+    "V1EmailPostRequestBodySchemaTo01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaTo01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2506,44 +2372,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaToOneOfZero",
+    "V1EmailPostRequestBodySchemaTo0": {
+      "name": "V1EmailPostRequestBodySchemaTo0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaTo01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfZeroOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaTo01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfOne": {
+    "V1EmailPostRequestBodySchemaToOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaToOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2572,38 +2427,39 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOfOneItems": {
-      "name": "V1EmailPostRequestBodySchemaToOneOfOneItems",
+    "V1EmailPostRequestBodySchemaToOneOf1Items": {
+      "name": "V1EmailPostRequestBodySchemaToOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaToOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfOneItemsOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaToOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaToOneOfOne": {
-      "name": "V1EmailPostRequestBodySchemaToOneOfOne",
+    "V1EmailPostRequestBodySchemaTo1": {
+      "name": "V1EmailPostRequestBodySchemaTo1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaToOneOfOneItems"
+            "value": "V1EmailPostRequestBodySchemaToOneOf1Items"
           }
         }
       }
@@ -2615,37 +2471,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfZero",
+            "typeName": "V1EmailPostRequestBodySchemaTo0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfZero"
+              "value": "V1EmailPostRequestBodySchemaTo0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaToOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaTo1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaToOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaTo1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfOne": {
+    "V1EmailPostRequestBodySchemaCc01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaCc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2674,44 +2518,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOfZero",
+    "V1EmailPostRequestBodySchemaCc0": {
+      "name": "V1EmailPostRequestBodySchemaCc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaCc01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfZeroOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaCc01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfOne": {
+    "V1EmailPostRequestBodySchemaCcOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2740,38 +2573,39 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOfOneItems": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOfOneItems",
+    "V1EmailPostRequestBodySchemaCcOneOf1Items": {
+      "name": "V1EmailPostRequestBodySchemaCcOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaCcOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfOneItemsOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaCcOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaCcOneOfOne": {
-      "name": "V1EmailPostRequestBodySchemaCcOneOfOne",
+    "V1EmailPostRequestBodySchemaCc1": {
+      "name": "V1EmailPostRequestBodySchemaCc1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaCcOneOfOneItems"
+            "value": "V1EmailPostRequestBodySchemaCcOneOf1Items"
           }
         }
       }
@@ -2783,37 +2617,25 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfZero",
+            "typeName": "V1EmailPostRequestBodySchemaCc0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfZero"
+              "value": "V1EmailPostRequestBodySchemaCc0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaCcOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaCc1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaCcOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaCc1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfOne": {
+    "V1EmailPostRequestBodySchemaBcc01": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaBcc01",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2842,44 +2664,33 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOfZero",
+    "V1EmailPostRequestBodySchemaBcc0": {
+      "name": "V1EmailPostRequestBodySchemaBcc0",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaBcc01",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfZeroOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaBcc01"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfZero": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfZero",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "primitive",
-          "value": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfOne": {
+    "V1EmailPostRequestBodySchemaBccOneOf1Items1": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfOne",
+      "name": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2908,38 +2719,39 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOfOneItems": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOfOneItems",
+    "V1EmailPostRequestBodySchemaBccOneOf1Items": {
+      "name": "V1EmailPostRequestBodySchemaBccOneOf1Items",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfZero",
             "type": {
-              "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfZero"
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaBccOneOf1Items1",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfOneItemsOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaBccOneOf1Items1"
             }
           }
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaBccOneOfOne": {
-      "name": "V1EmailPostRequestBodySchemaBccOneOfOne",
+    "V1EmailPostRequestBodySchemaBcc1": {
+      "name": "V1EmailPostRequestBodySchemaBcc1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaBccOneOfOneItems"
+            "value": "V1EmailPostRequestBodySchemaBccOneOf1Items"
           }
         }
       }
@@ -2951,17 +2763,17 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfZero",
+            "typeName": "V1EmailPostRequestBodySchemaBcc0",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfZero"
+              "value": "V1EmailPostRequestBodySchemaBcc0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaBccOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaBcc1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaBccOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaBcc1"
             }
           }
         ]
@@ -3030,9 +2842,9 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToListOneOfZero": {
+    "V1EmailPostRequestBodySchemaReplyToList0": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaReplyToListOneOfZero",
+      "name": "V1EmailPostRequestBodySchemaReplyToList0",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3061,9 +2873,9 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToListOneOfOneItems": {
+    "V1EmailPostRequestBodySchemaReplyToListOneOf1Items": {
       "description": "An email address and name",
-      "name": "V1EmailPostRequestBodySchemaReplyToListOneOfOneItems",
+      "name": "V1EmailPostRequestBodySchemaReplyToListOneOf1Items",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3092,15 +2904,15 @@
         ]
       }
     },
-    "V1EmailPostRequestBodySchemaReplyToListOneOfOne": {
-      "name": "V1EmailPostRequestBodySchemaReplyToListOneOfOne",
+    "V1EmailPostRequestBodySchemaReplyToList1": {
+      "name": "V1EmailPostRequestBodySchemaReplyToList1",
       "shape": {
         "type": "alias",
         "value": {
           "type": "list",
           "itemType": {
             "type": "id",
-            "value": "V1EmailPostRequestBodySchemaReplyToListOneOfOneItems"
+            "value": "V1EmailPostRequestBodySchemaReplyToListOneOf1Items"
           }
         }
       }
@@ -3112,18 +2924,18 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
-            "typeName": "V1EmailPostRequestBodySchemaReplyToListOneOfZero",
+            "typeName": "V1EmailPostRequestBodySchemaReplyToList0",
             "description": "An email address and name",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaReplyToListOneOfZero"
+              "value": "V1EmailPostRequestBodySchemaReplyToList0"
             }
           },
           {
-            "typeName": "V1EmailPostRequestBodySchemaReplyToListOneOfOne",
+            "typeName": "V1EmailPostRequestBodySchemaReplyToList1",
             "type": {
               "type": "id",
-              "value": "V1EmailPostRequestBodySchemaReplyToListOneOfOne"
+              "value": "V1EmailPostRequestBodySchemaReplyToList1"
             }
           }
         ]
@@ -3138,6 +2950,24 @@
         "properties": [
           {
             "key": "message",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EmailsSendRequestInternalServerError": {
+      "name": "EmailsSendRequestInternalServerError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "error",
             "valueType": {
               "type": "primitive",
               "value": {
@@ -3348,8 +3178,8 @@
     }
   },
   "subpackages": {
-    "search": {
-      "subpackageId": "search",
+    "subpackage_search": {
+      "subpackageId": "subpackage_search",
       "name": "search",
       "endpoints": [
         {
@@ -3433,13 +3263,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
               "path": "/v1/search/vals",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
+                "offset": 0,
+                "limit": 20,
                 "query": "foo"
               },
               "headers": {},
@@ -3520,8 +3350,8 @@
       "types": [],
       "subpackages": []
     },
-    "alias": {
-      "subpackageId": "alias",
+    "subpackage_alias": {
+      "subpackageId": "subpackage_alias",
       "name": "alias",
       "endpoints": [
         {
@@ -3586,9 +3416,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "usernameExample",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/foo",
               "pathParameters": {
                 "username": "foo"
               },
@@ -3707,9 +3537,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valExample",
               "description": "",
-              "path": "/v1/alias/",
+              "path": "/v1/alias/foo/foo",
               "pathParameters": {
                 "username": "foo",
                 "val_name": "foo"
@@ -3781,8 +3611,8 @@
       "types": [],
       "subpackages": []
     },
-    "me": {
-      "subpackageId": "me",
+    "subpackage_me": {
+      "subpackageId": "subpackage_me",
       "name": "me",
       "endpoints": [
         {
@@ -3828,7 +3658,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "me_get_example",
               "description": "",
               "path": "/v1/me",
               "pathParameters": {},
@@ -3940,13 +3770,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "likesExample",
               "description": "",
               "path": "/v1/me/likes",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4125,15 +3955,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "commentsExample",
               "description": "",
               "path": "/v1/me/comments",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
-                "since": "foo",
-                "until": "foo",
+                "offset": 0,
+                "limit": 20,
                 "relationship": "any"
               },
               "headers": {},
@@ -4303,15 +4131,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "referencesExample",
               "description": "",
               "path": "/v1/me/references",
               "pathParameters": {},
               "queryParameters": {
-                "offset": 42,
-                "limit": 42,
-                "since": "foo",
-                "until": "foo"
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -4381,8 +4207,8 @@
       "types": [],
       "subpackages": []
     },
-    "blobs": {
-      "subpackageId": "blobs",
+    "subpackage_blobs": {
+      "subpackageId": "subpackage_blobs",
       "name": "blobs",
       "endpoints": [
         {
@@ -4445,13 +4271,11 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobs_list_example",
               "description": "",
               "path": "/v1/blob",
               "pathParameters": {},
-              "queryParameters": {
-                "prefix": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -4540,9 +4364,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
@@ -4626,16 +4450,18 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "blobsStoreExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
               "queryParameters": {},
               "headers": {},
+              "requestBody": "foo",
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": "foo"
               },
               "responseStatusCode": 200
             }
@@ -4697,9 +4523,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v1/blob/",
+              "path": "/v1/blob/foo",
               "pathParameters": {
                 "key": "foo"
               },
@@ -4718,8 +4544,8 @@
       "types": [],
       "subpackages": []
     },
-    "users": {
-      "subpackageId": "users",
+    "subpackage_users": {
+      "subpackageId": "subpackage_users",
       "name": "users",
       "endpoints": [
         {
@@ -4784,9 +4610,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/foo",
               "pathParameters": {
                 "user_id": "foo"
               },
@@ -4913,15 +4739,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "valsExample",
               "description": "",
-              "path": "/v1/users/",
+              "path": "/v1/users/foo/vals",
               "pathParameters": {
                 "user_id": "foo"
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -5001,8 +4827,8 @@
       "types": [],
       "subpackages": []
     },
-    "sqlite": {
-      "subpackageId": "sqlite",
+    "subpackage_sqlite": {
+      "subpackageId": "subpackage_sqlite",
       "name": "sqlite",
       "endpoints": [
         {
@@ -5068,7 +4894,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/sqlite/execute",
               "pathParameters": {},
@@ -5081,6 +4907,70 @@
                 "type": "json",
                 "value": {
                   "statement": "SELECT 1;"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "columns": [
+                    "foo"
+                  ],
+                  "columnTypes": [
+                    "foo"
+                  ],
+                  "rows": [
+                    [
+                      null
+                    ]
+                  ],
+                  "rowsAffected": 42,
+                  "lastInsertRowid": "foo"
+                }
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/sqlite/execute",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "statement": {
+                  "sql": "SELECT * FROM table WHERE column = ?;",
+                  "args": [
+                    1
+                  ]
+                }
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "statement": {
+                    "sql": "SELECT * FROM table WHERE column = ?;",
+                    "args": [
+                      1
+                    ]
+                  }
                 }
               },
               "responseStatusCode": 200,
@@ -5205,7 +5095,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "sqlite_batch_example",
               "description": "",
               "path": "/v1/sqlite/batch",
               "pathParameters": {},
@@ -5277,8 +5167,8 @@
       "types": [],
       "subpackages": []
     },
-    "vals": {
-      "subpackageId": "vals",
+    "subpackage_vals": {
+      "subpackageId": "subpackage_vals",
       "name": "vals",
       "endpoints": [
         {
@@ -5360,10 +5250,24 @@
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EvalPostRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "Default Response",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
               "path": "/v1/eval",
               "pathParameters": {},
@@ -5376,6 +5280,38 @@
                 "type": "json",
                 "value": {
                   "code": "export default 1"
+                }
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/eval",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "code": "export default function main(value: number) { return value; }",
+                "args": [
+                  1
+                ]
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "code": "export default function main(value: number) { return value; }",
+                  "args": [
+                    1
+                  ]
                 }
               },
               "responseStatusCode": 200,
@@ -5469,18 +5405,30 @@
             "statusCode": 200,
             "description": "Default Response"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EvalGetRequestBadRequestError"
+                }
+              },
+              "statusCode": 400,
+              "description": "The function throw an error or had invalid syntax",
+              "name": "BadRequestError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "evalGetExample",
               "description": "",
-              "path": "/v1/eval/",
+              "path": "/v1/eval/foo",
               "pathParameters": {
                 "code": "foo"
               },
-              "queryParameters": {
-                "args": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
@@ -5564,15 +5512,13 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "runGetExample",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/foo",
               "pathParameters": {
                 "valname": "foo"
               },
-              "queryParameters": {
-                "args": "foo"
-              },
+              "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
             }
@@ -5659,9 +5605,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_runPost_example",
               "description": "",
-              "path": "/v1/run/",
+              "path": "/v1/run/foo",
               "pathParameters": {
                 "valname": "foo"
               },
@@ -5806,7 +5752,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_create_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -5957,7 +5903,7 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_put_example",
               "description": "",
               "path": "/v1/vals",
               "pathParameters": {},
@@ -6044,9 +5990,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6227,9 +6173,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "example1",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6244,6 +6190,26 @@
                 "value": {
                   "name": "myVal",
                   "readme": "# Updated readme"
+                }
+              },
+              "responseStatusCode": 200
+            },
+            {
+              "name": "example2",
+              "description": "",
+              "path": "/v1/vals/foo",
+              "pathParameters": {
+                "val_id": "foo"
+              },
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {
+                "type": "http"
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "type": "http"
                 }
               },
               "responseStatusCode": 200
@@ -6302,12 +6268,25 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "The val was not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6409,15 +6388,15 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "listExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions",
               "pathParameters": {
                 "val_id": "foo"
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -6600,9 +6579,9 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "vals_createVersion_example",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions",
               "pathParameters": {
                 "val_id": "foo"
               },
@@ -6792,16 +6771,16 @@
           "errorsV2": [],
           "examples": [
             {
-              "name": "",
+              "name": "getVersionExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
                 "val_id": "foo",
                 "version": 42
               },
               "queryParameters": {
-                "offset": 42,
-                "limit": 42
+                "offset": 0,
+                "limit": 20
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -6931,12 +6910,25 @@
           },
           "queryParameters": [],
           "headers": [],
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown"
+                }
+              },
+              "statusCode": 404,
+              "description": "The val was not found",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "deleteVersionExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/versions/42",
               "pathParameters": {
                 "val_id": "foo",
                 "version": 42
@@ -7029,12 +7021,28 @@
             "statusCode": 200,
             "description": "The evaluation_id was successfully searched for and the evaluation was either already done or now has been cancelled"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "statusCode": 404,
+              "description": "Default Response",
+              "name": "NotFoundError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "cancelExample",
               "description": "",
-              "path": "/v1/vals/",
+              "path": "/v1/vals/foo/evaluations/foo/cancel",
               "pathParameters": {
                 "val_id": "foo",
                 "evaluation_id": "foo"
@@ -7066,8 +7074,8 @@
       "types": [],
       "subpackages": []
     },
-    "emails": {
-      "subpackageId": "emails",
+    "subpackage_emails": {
+      "subpackageId": "subpackage_emails",
       "name": "emails",
       "endpoints": [
         {
@@ -7230,10 +7238,24 @@
             "statusCode": 200,
             "description": "Successfully sent email"
           },
-          "errorsV2": [],
+          "errorsV2": [
+            {
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "value": "EmailsSendRequestInternalServerError"
+                }
+              },
+              "statusCode": 500,
+              "description": "Default Response",
+              "name": "InternalServerError",
+              "examples": []
+            }
+          ],
           "examples": [
             {
-              "name": "",
+              "name": "emails_send_example",
               "description": "",
               "path": "/v1/email",
               "pathParameters": {},
@@ -7290,14 +7312,14 @@
       "PaginationLinks"
     ],
     "subpackages": [
-      "search",
-      "alias",
-      "me",
-      "blobs",
-      "users",
-      "sqlite",
-      "vals",
-      "emails"
+      "subpackage_search",
+      "subpackage_alias",
+      "subpackage_me",
+      "subpackage_blobs",
+      "subpackage_users",
+      "subpackage_sqlite",
+      "subpackage_vals",
+      "subpackage_emails"
     ]
   },
   "auth": {

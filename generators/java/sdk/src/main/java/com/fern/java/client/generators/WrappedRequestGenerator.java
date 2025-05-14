@@ -272,6 +272,18 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestBodyGetter visitInlinedRequestBody(InlinedRequestBody _inlinedRequestBody) {
+            // Check if the content type is application/x-www-form-urlencoded
+            if (_inlinedRequestBody.getContentType().isPresent()
+                    && _inlinedRequestBody.getContentType().get().equals("application/x-www-form-urlencoded")) {
+                return GeneratedWrappedRequest.UrlFormEncodedGetters.builder()
+                        .addAllProperties(requestBodyProperties.stream()
+                                .map(objectProperty ->
+                                        generatedObject.objectPropertyGetters().get(objectProperty))
+                                .collect(Collectors.toList()))
+                        .addAllProperties(generatedObject.extendedObjectPropertyGetters())
+                        .build();
+            }
+
             return InlinedRequestBodyGetters.builder()
                     .addAllProperties(requestBodyProperties.stream()
                             .map(objectProperty ->
