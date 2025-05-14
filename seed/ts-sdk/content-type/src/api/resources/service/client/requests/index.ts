@@ -1,1 +1,1 @@
-export { type PatchProxyRequest } from "./PatchProxyRequest";
+export { type PatchProxyRequest } from "./PatchProxyRequest.js";

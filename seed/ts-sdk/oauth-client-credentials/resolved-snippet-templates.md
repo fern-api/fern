@@ -7,8 +7,8 @@ const client = new SeedOauthClientCredentialsClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.getTokenWithClientCredentials({
-  clientId: "client_id",
-  clientSecret: "client_secret",
+  client_id: "client_id",
+  client_secret: "client_secret",
   scope: "scope",
 });
 
@@ -24,9 +24,9 @@ const client = new SeedOauthClientCredentialsClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.refreshToken({
-  clientId: "client_id",
-  clientSecret: "client_secret",
-  refreshToken: "refresh_token",
+  client_id: "client_id",
+  client_secret: "client_secret",
+  refresh_token: "refresh_token",
   scope: "scope",
 });
 

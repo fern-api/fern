@@ -1,4 +1,3 @@
-export * as SeedUnknownAsAny from "./api";
-export { SeedUnknownAsAnyClient } from "./Client";
-export { SeedUnknownAsAnyError, SeedUnknownAsAnyTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedUnknownAsAny from "./api/index.js";
+export { SeedUnknownAsAnyClient } from "./Client.js";
+export { SeedUnknownAsAnyError, SeedUnknownAsAnyTimeoutError } from "./errors/index.js";

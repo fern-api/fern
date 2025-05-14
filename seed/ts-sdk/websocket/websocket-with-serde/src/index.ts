@@ -1,3 +1,2 @@
-export * as SeedWebsocket from "./api";
-export * as serialization from "./serialization";
-export { SeedWebsocketError, SeedWebsocketTimeoutError } from "./errors";
+export * as SeedWebsocket from "./api/index.js";
+export { SeedWebsocketError, SeedWebsocketTimeoutError } from "./errors/index.js";

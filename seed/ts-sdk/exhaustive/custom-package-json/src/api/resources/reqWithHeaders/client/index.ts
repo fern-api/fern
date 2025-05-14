@@ -1,2 +1,2 @@
-export * from "./requests";
-export * as getWithCustomHeader from "./getWithCustomHeader";
+export * from "./requests/index.js";
+export * as getWithCustomHeader from "./getWithCustomHeader.js";

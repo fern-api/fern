@@ -4,6 +4,10 @@
 
 /**
  * @example
- *     {}
+ *     {
+ *         user_id: "user_id"
+ *     }
  */
-export interface GetUsersRequest {}
+export interface GetUsersRequest {
+    user_id: string;
+}

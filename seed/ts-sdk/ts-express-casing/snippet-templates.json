@@ -91,7 +91,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "movieTitle: $FERN_INPUT",
+                                        "templateString": "movie_title: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -107,7 +107,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "movieRating: $FERN_INPUT",
+                                        "templateString": "movie_rating: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

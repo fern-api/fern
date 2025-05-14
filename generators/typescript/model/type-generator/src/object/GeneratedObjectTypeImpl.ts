@@ -2,6 +2,7 @@ import {
     GetReferenceOpts,
     TypeReferenceNode,
     generateInlinePropertiesModule,
+    getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure
 } from "@fern-typescript/commons";
@@ -69,7 +70,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         return this.generatePropertiesInternal(context).map(({ name, type, hasQuestionToken, docs }) => {
             const propertyNode: PropertySignatureStructure = {
                 kind: StructureKind.PropertySignature,
-                name,
+                name: getPropertyKey(name),
                 type: getTextOfTsNode(type),
                 hasQuestionToken,
                 docs: docs != null ? [{ description: docs }] : undefined
@@ -83,7 +84,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
         const props = this.shape.properties.map((property) => {
             const value = this.getTypeForObjectProperty(context, property);
             const propertyNode: Property = {
-                name: `"${this.getPropertyKeyFromProperty(property)}"`,
+                name: getPropertyKey(this.getPropertyKeyFromProperty(property)),
                 type: this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined,
                 hasQuestionToken: !this.noOptionalProperties && value.isOptional,
                 docs: property.docs,

@@ -75,7 +75,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "requireAuth: $FERN_INPUT",
+                                        "templateString": "require_auth: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

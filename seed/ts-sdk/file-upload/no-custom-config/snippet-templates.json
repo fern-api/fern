@@ -52,88 +52,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
-                                        "innerTemplate": {
-                                            "imports": [
-                                                "import fs from \"fs\";"
-                                            ],
-                                            "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                            "isOptional": false,
-                                            "templateInputs": [],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "file_list",
-                                            "type": "payload"
-                                        },
-                                        "type": "iterable"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
-                                        "innerTemplate": {
-                                            "imports": [
-                                                "import fs from \"fs\";"
-                                            ],
-                                            "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                            "isOptional": false,
-                                            "templateInputs": [],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "maybe_file_list",
-                                            "type": "payload"
-                                        },
-                                        "type": "iterable"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -141,7 +59,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeString: $FERN_INPUT",
+                                        "templateString": "maybe_string: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -173,7 +91,99 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeInteger: $FERN_INPUT",
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file_list: [$FERN_INPUT]",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_file: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_file_list: [$FERN_INPUT]",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_integer: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -190,7 +200,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "optionalListOfStrings: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "optional_list_of_strings: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -217,7 +227,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfObjects: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_objects: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -256,7 +266,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalMetadata: $FERN_INPUT",
+                                        "templateString": "optional_metadata: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -277,7 +287,7 @@
                                             "FOO": "\"FOO\"",
                                             "BAR": "\"BAR\""
                                         },
-                                        "templateString": "optionalObjectType: $FERN_INPUT",
+                                        "templateString": "optional_object_type: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "optional_object_type",
@@ -290,7 +300,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalId: $FERN_INPUT",
+                                        "templateString": "optional_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -306,7 +316,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "aliasObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "alias_object: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
@@ -335,7 +345,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfAliasObject: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_alias_object: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -375,7 +385,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "aliasListOfObject: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "alias_list_of_object: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -475,18 +485,29 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
                             "templateInputs": [
                                 {
                                     "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                        "imports": [],
+                                        "templateString": "file: $FERN_INPUT",
                                         "isOptional": false,
-                                        "templateInputs": [],
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
                                         "type": "generic"
                                     },
                                     "type": "template"
@@ -552,30 +573,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -662,6 +659,29 @@
                                         "type": "generic"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
@@ -727,34 +747,33 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -802,7 +821,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "fooBar: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "foo_bar: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
@@ -891,34 +910,33 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],
@@ -1027,88 +1045,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
-                                        "innerTemplate": {
-                                            "imports": [
-                                                "import fs from \"fs\";"
-                                            ],
-                                            "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                            "isOptional": false,
-                                            "templateInputs": [],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "file_list",
-                                            "type": "payload"
-                                        },
-                                        "type": "iterable"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                },
-                                {
-                                    "value": {
-                                        "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
-                                        "innerTemplate": {
-                                            "imports": [
-                                                "import fs from \"fs\";"
-                                            ],
-                                            "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                            "isOptional": false,
-                                            "templateInputs": [],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "maybe_file_list",
-                                            "type": "payload"
-                                        },
-                                        "type": "iterable"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -1116,7 +1052,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeString: $FERN_INPUT",
+                                        "templateString": "maybe_string: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1148,7 +1084,99 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "maybeInteger: $FERN_INPUT",
+                                        "templateString": "file: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "file_list: [$FERN_INPUT]",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_file: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_file_list: [$FERN_INPUT]",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "maybe_integer: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1165,7 +1193,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "optionalListOfStrings: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "optional_list_of_strings: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -1192,7 +1220,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfObjects: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_objects: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -1231,7 +1259,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalMetadata: $FERN_INPUT",
+                                        "templateString": "optional_metadata: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1252,7 +1280,7 @@
                                             "FOO": "\"FOO\"",
                                             "BAR": "\"BAR\""
                                         },
-                                        "templateString": "optionalObjectType: $FERN_INPUT",
+                                        "templateString": "optional_object_type: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "optional_object_type",
@@ -1265,7 +1293,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "optionalId: $FERN_INPUT",
+                                        "templateString": "optional_id: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1282,7 +1310,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfObjectsWithOptionals: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_objects_with_optionals: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -1337,7 +1365,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "aliasObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "templateString": "alias_object: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
                                         "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
@@ -1366,7 +1394,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "listOfAliasObject: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "list_of_alias_object: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -1406,7 +1434,7 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "aliasListOfObject: [\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "containerTemplateString": "alias_list_of_object: [\n\t\t\t$FERN_INPUT\n\t\t]",
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
@@ -1506,34 +1534,33 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [
-                                {
-                                    "value": {
-                                        "imports": [
-                                            "import fs from \"fs\";"
-                                        ],
-                                        "templateString": "fs.createReadStream(\"/path/to/your/file\")",
-                                        "isOptional": false,
-                                        "templateInputs": [],
-                                        "type": "generic"
-                                    },
-                                    "type": "template"
-                                }
-                            ],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
                             "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "image_file: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [
+                                                        "import fs from \"fs\";"
+                                                    ],
+                                                    "templateString": "fs.createReadStream(\"/path/to/your/file\")",
+                                                    "isOptional": false,
+                                                    "templateInputs": [],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
                                 {
                                     "value": {
                                         "imports": [],

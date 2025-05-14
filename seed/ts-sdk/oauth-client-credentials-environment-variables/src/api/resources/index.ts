@@ -1,3 +1,3 @@
-export * as auth from "./auth";
-export * from "./auth/types";
-export * from "./auth/client/requests";
+export * as auth from "./auth/index.js";
+export * from "./auth/types/index.js";
+export * from "./auth/client/requests/index.js";

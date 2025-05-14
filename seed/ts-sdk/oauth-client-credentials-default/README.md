@@ -28,8 +28,8 @@ const client = new SeedOauthClientCredentialsDefaultClient({
     clientSecret: "YOUR_CLIENT_SECRET",
 });
 await client.auth.getToken({
-    clientId: "client_id",
-    clientSecret: "client_secret",
+    client_id: "client_id",
+    client_secret: "client_secret",
 });
 ```
 

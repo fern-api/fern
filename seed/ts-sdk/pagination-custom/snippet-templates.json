@@ -75,7 +75,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "startingAfter: $FERN_INPUT",
+                                        "templateString": "starting_after: $FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

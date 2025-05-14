@@ -1,1 +1,0 @@
-export { SendEnumInlinedRequest } from "./SendEnumInlinedRequest";

@@ -16,7 +16,7 @@
 
 ```typescript
 const response = await client.dummy.generateStream({
-    numEvents: 1,
+    num_events: 1,
 });
 for await (const item of response) {
     console.log(item);
@@ -69,7 +69,7 @@ for await (const item of response) {
 
 ```typescript
 await client.dummy.generate({
-    numEvents: 5,
+    num_events: 5,
 });
 ```
 

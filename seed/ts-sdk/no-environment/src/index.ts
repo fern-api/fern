@@ -1,4 +1,3 @@
-export { SeedNoEnvironmentClient } from "./Client";
-export * as SeedNoEnvironment from "./api";
-export { SeedNoEnvironmentError, SeedNoEnvironmentTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export { SeedNoEnvironmentClient } from "./Client.js";
+export * as SeedNoEnvironment from "./api/index.js";
+export { SeedNoEnvironmentError, SeedNoEnvironmentTimeoutError } from "./errors/index.js";

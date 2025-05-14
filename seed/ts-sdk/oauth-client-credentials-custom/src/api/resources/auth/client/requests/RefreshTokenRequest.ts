@@ -5,15 +5,15 @@
 /**
  * @example
  *     {
- *         clientId: "client_id",
- *         clientSecret: "client_secret",
- *         refreshToken: "refresh_token",
+ *         client_id: "client_id",
+ *         client_secret: "client_secret",
+ *         refresh_token: "refresh_token",
  *         scope: "scope"
  *     }
  */
 export interface RefreshTokenRequest {
-    clientId: string;
-    clientSecret: string;
-    refreshToken: string;
+    client_id: string;
+    client_secret: string;
+    refresh_token: string;
     scope?: string;
 }

@@ -1,3 +1,3 @@
-export * as completions from "./completions";
-export * from "./completions/types";
-export * from "./completions/client/requests";
+export * as completions from "./completions/index.js";
+export * from "./completions/types/index.js";
+export * from "./completions/client/requests/index.js";

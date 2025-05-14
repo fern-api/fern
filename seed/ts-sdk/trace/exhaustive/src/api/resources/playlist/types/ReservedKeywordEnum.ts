@@ -6,22 +6,4 @@ export type ReservedKeywordEnum = "is" | "as";
 export const ReservedKeywordEnum = {
     Is: "is",
     As: "as",
-    _visit: <R>(value: ReservedKeywordEnum, visitor: ReservedKeywordEnum.Visitor<R>) => {
-        switch (value) {
-            case ReservedKeywordEnum.Is:
-                return visitor.is();
-            case ReservedKeywordEnum.As:
-                return visitor.as();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export namespace ReservedKeywordEnum {
-    export interface Visitor<R> {
-        is: () => R;
-        as: () => R;
-        _other: () => R;
-    }
-}

@@ -1,2 +1,2 @@
-export { SeedMultiUrlEnvironmentError } from "./SeedMultiUrlEnvironmentError";
-export { SeedMultiUrlEnvironmentTimeoutError } from "./SeedMultiUrlEnvironmentTimeoutError";
+export { SeedMultiUrlEnvironmentError } from "./SeedMultiUrlEnvironmentError.js";
+export { SeedMultiUrlEnvironmentTimeoutError } from "./SeedMultiUrlEnvironmentTimeoutError.js";

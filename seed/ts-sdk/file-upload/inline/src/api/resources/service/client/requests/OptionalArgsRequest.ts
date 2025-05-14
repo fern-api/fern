@@ -5,6 +5,6 @@
 import * as fs from "fs";
 
 export interface OptionalArgsRequest {
-    imageFile?: File | fs.ReadStream | Blob | undefined;
+    image_file?: File | fs.ReadStream | Blob | undefined;
     request?: unknown;
 }

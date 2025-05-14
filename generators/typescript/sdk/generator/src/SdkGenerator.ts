@@ -367,7 +367,8 @@ export class SdkGenerator {
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
             intermediateRepresentation,
-            neverThrowErrors: this.config.neverThrowErrors
+            neverThrowErrors: this.config.neverThrowErrors,
+            includeSerdeLayer: this.config.includeSerdeLayer
         });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,

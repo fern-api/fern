@@ -4,5 +4,5 @@
 
 export interface NextPage {
     page: number;
-    startingAfter: string;
+    starting_after: string;
 }

@@ -1,5 +1,5 @@
-export * as auth from "./auth";
-export * from "./auth/types";
-export * as user from "./user";
-export * from "./user/types";
-export * from "./auth/client/requests";
+export * as auth from "./auth/index.js";
+export * from "./auth/types/index.js";
+export * as user from "./user/index.js";
+export * from "./user/types/index.js";
+export * from "./auth/client/requests/index.js";

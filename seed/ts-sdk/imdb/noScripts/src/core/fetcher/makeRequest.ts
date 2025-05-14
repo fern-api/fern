@@ -1,4 +1,4 @@
-import { anySignal, getTimeoutSignal } from "./signals";
+import { anySignal, getTimeoutSignal } from "./signals.js";
 
 export const makeRequest = async (
     fetchFn: (url: string, init: RequestInit) => Promise<Response>,

@@ -3,6 +3,6 @@
  */
 
 export interface StartingAfterPaging {
-    perPage: number;
-    startingAfter?: string;
+    per_page: number;
+    starting_after?: string;
 }

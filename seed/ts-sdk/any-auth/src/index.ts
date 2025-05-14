@@ -1,4 +1,3 @@
-export * as SeedAnyAuth from "./api";
-export { SeedAnyAuthClient } from "./Client";
-export { SeedAnyAuthError, SeedAnyAuthTimeoutError } from "./errors";
-export * as serialization from "./serialization";
+export * as SeedAnyAuth from "./api/index.js";
+export { SeedAnyAuthClient } from "./Client.js";
+export { SeedAnyAuthError, SeedAnyAuthTimeoutError } from "./errors/index.js";

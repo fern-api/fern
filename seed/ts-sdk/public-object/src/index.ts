@@ -1,3 +1,3 @@
-export { SeedPublicObjectClient } from "./Client";
-export * as SeedPublicObject from "./api";
-export { SeedPublicObjectError, SeedPublicObjectTimeoutError } from "./errors";
+export { SeedPublicObjectClient } from "./Client.js";
+export * as SeedPublicObject from "./api/index.js";
+export { SeedPublicObjectError, SeedPublicObjectTimeoutError } from "./errors/index.js";

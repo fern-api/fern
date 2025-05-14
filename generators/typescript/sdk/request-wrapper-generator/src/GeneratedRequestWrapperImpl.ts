@@ -4,6 +4,7 @@ import {
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getParameterNameForPropertyPathParameterName,
+    getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsNode,
     visitJavaScriptRuntime
@@ -119,7 +120,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const pathParameter of this.getPathParamsForRequestWrapper()) {
             const type = context.type.getReferenceToType(pathParameter.valueType);
             const property = requestInterface.addProperty({
-                name: `"${this.getPropertyNameOfPathParameter(pathParameter).propertyName}"`,
+                name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             });
@@ -129,7 +130,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const queryParameter of this.getAllQueryParameters()) {
             const type = context.type.getReferenceToType(queryParameter.valueType);
             const property = requestInterface.addProperty({
-                name: `"${this.getPropertyNameOfQueryParameter(queryParameter).propertyName}"`,
+                name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                 type: getTextOfTsNode(
                     queryParameter.allowMultiple
                         ? ts.factory.createUnionTypeNode([
@@ -145,7 +146,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         for (const header of this.getAllNonLiteralHeaders(context)) {
             const type = context.type.getReferenceToType(header.valueType);
             const property = requestInterface.addProperty({
-                name: `"${this.getPropertyNameOfNonLiteralHeader(header).propertyName}"`,
+                name: getPropertyKey(this.getPropertyNameOfNonLiteralHeader(header).propertyName),
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
                 hasQuestionToken: type.isOptional
             });
@@ -246,7 +247,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     ): OptionalKind<PropertySignatureStructure> {
         const type = this.getTypeForBodyProperty(requestBody, property, context);
         return {
-            name: `"${this.getInlinedRequestBodyPropertyKey(property)}"`,
+            name: getPropertyKey(this.getInlinedRequestBodyPropertyKey(property)),
             type: getTextOfTsNode(type.typeNodeWithoutUndefined),
             hasQuestionToken: type.isOptional,
             docs: property.docs != null ? [property.docs] : undefined
