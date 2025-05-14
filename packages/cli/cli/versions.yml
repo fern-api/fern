@@ -1,5 +1,13 @@
 - changelogEntry:
   - summary: |
+      Support text/plain content type response examples in the v3 parser.
+      Skip certain headers from being added to the IR.
+    type: fix
+  irVersion: 57
+  version: 0.61.7
+
+- changelogEntry:
+  - summary: |
       Support text/plain content type responses in the v3 parser.
     type: fix
   irVersion: 57
