@@ -5329,9 +5329,9 @@
               "path": "/institutionByLocator",
               "pathParameters": {},
               "queryParameters": {
-                "locator": "foo",
+                "locator": "locator",
                 "locatorType": "abaRoutingNumber",
-                "countryCode": "US"
+                "countryCode": "countryCode"
               },
               "headers": {},
               "responseStatusCode": 200,

@@ -5285,9 +5285,9 @@
             {
               "name": "getExample",
               "description": "",
-              "path": "/v2/transcript/foo",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5804,9 +5804,9 @@
             {
               "name": "deleteExample",
               "description": "",
-              "path": "/v2/transcript/foo",
+              "path": "/v2/transcript/transcript_id",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6350,9 +6350,9 @@
             {
               "name": "getSubtitlesExample",
               "description": "",
-              "path": "/v2/transcript/foo/srt",
+              "path": "/v2/transcript/transcript_id/srt",
               "pathParameters": {
-                "transcript_id": "foo",
+                "transcript_id": "transcript_id",
                 "subtitle_format": "srt"
               },
               "queryParameters": {},
@@ -6526,9 +6526,9 @@
             {
               "name": "getSentencesExample",
               "description": "",
-              "path": "/v2/transcript/foo/sentences",
+              "path": "/v2/transcript/transcript_id/sentences",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6743,9 +6743,9 @@
             {
               "name": "getParagraphsExample",
               "description": "",
-              "path": "/v2/transcript/foo/paragraphs",
+              "path": "/v2/transcript/transcript_id/paragraphs",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6974,9 +6974,9 @@
             {
               "name": "wordSearchExample",
               "description": "",
-              "path": "/v2/transcript/foo/word-search",
+              "path": "/v2/transcript/transcript_id/word-search",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {
                 "words": [
@@ -7187,9 +7187,9 @@
             {
               "name": "getRedactedAudioExample",
               "description": "",
-              "path": "/v2/transcript/foo/redacted-audio",
+              "path": "/v2/transcript/transcript_id/redacted-audio",
               "pathParameters": {
-                "transcript_id": "foo"
+                "transcript_id": "transcript_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8344,9 +8344,9 @@
             {
               "name": "purgeRequestDataExample",
               "description": "",
-              "path": "/lemur/v3/foo",
+              "path": "/lemur/v3/request_id",
               "pathParameters": {
-                "request_id": "foo"
+                "request_id": "request_id"
               },
               "queryParameters": {},
               "headers": {},

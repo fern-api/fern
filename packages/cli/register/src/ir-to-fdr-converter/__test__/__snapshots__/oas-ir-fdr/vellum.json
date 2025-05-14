@@ -7048,9 +7048,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/v1/deployments/foo",
+              "path": "/v1/deployments/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -7770,9 +7770,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/v1/model-versions/foo",
+              "path": "/v1/model-versions/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8025,9 +8025,9 @@
             {
               "name": "modelVersionsModelVersionCompilePromptExample",
               "description": "",
-              "path": "/v1/model-versions/foo/compile-prompt",
+              "path": "/v1/model-versions/id/compile-prompt",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8365,9 +8365,9 @@
             {
               "name": "Example1",
               "description": "",
-              "path": "/v1/sandboxes/foo/scenarios",
+              "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8465,9 +8465,9 @@
             {
               "name": "Example2",
               "description": "",
-              "path": "/v1/sandboxes/foo/scenarios",
+              "path": "/v1/sandboxes/id/scenarios",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8647,10 +8647,10 @@
             {
               "name": "deleteSandboxScenarioExample",
               "description": "",
-              "path": "/v1/sandboxes/foo/scenarios/foo",
+              "path": "/v1/sandboxes/id/scenarios/scenario_id",
               "pathParameters": {
-                "id": "foo",
-                "scenario_id": "foo"
+                "id": "id",
+                "scenario_id": "scenario_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8749,9 +8749,9 @@
             {
               "name": "testSuitesUpsertTestSuiteTestCaseExample",
               "description": "",
-              "path": "/v1/test-suites/foo/test-cases",
+              "path": "/v1/test-suites/id/test-cases",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -8867,10 +8867,10 @@
             {
               "name": "deleteTestSuiteTestCaseExample",
               "description": "",
-              "path": "/v1/test-suites/foo/test-cases/foo",
+              "path": "/v1/test-suites/id/test-cases/test_case_id",
               "pathParameters": {
-                "id": "foo",
-                "test_case_id": "foo"
+                "id": "id",
+                "test_case_id": "test_case_id"
               },
               "queryParameters": {},
               "headers": {},

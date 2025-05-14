@@ -702,9 +702,9 @@
             {
               "name": "getAgentApiV1AgentsAgentIdGetExample",
               "description": "",
-              "path": "/api/v1/agents/foo",
+              "path": "/api/v1/agents/agentId",
               "pathParameters": {
-                "agentId": "foo"
+                "agentId": "agentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -784,9 +784,9 @@
             {
               "name": "deleteAgentApiV1AgentsAgentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/agents/foo",
+              "path": "/api/v1/agents/agentId",
               "pathParameters": {
-                "agentId": "foo"
+                "agentId": "agentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -877,9 +877,9 @@
             {
               "name": "agentPatchAgentApiV1AgentsAgentIdPatchExample",
               "description": "",
-              "path": "/api/v1/agents/foo",
+              "path": "/api/v1/agents/agentId",
               "pathParameters": {
-                "agentId": "foo"
+                "agentId": "agentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -977,9 +977,9 @@
             {
               "name": "agentPromptAgentApiV1AgentsAgentIdPredictPostExample",
               "description": "",
-              "path": "/api/v1/agents/foo/predict",
+              "path": "/api/v1/agents/agentId/predict",
               "pathParameters": {
-                "agentId": "foo"
+                "agentId": "agentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -1304,9 +1304,9 @@
             {
               "name": "readUserApiV1UsersUserIdGetExample",
               "description": "",
-              "path": "/api/v1/users/foo",
+              "path": "/api/v1/users/userId",
               "pathParameters": {
-                "userId": "foo"
+                "userId": "userId"
               },
               "queryParameters": {},
               "headers": {},
@@ -1528,9 +1528,9 @@
             {
               "name": "getApiTokenApiV1ApiTokensTokenIdGetExample",
               "description": "",
-              "path": "/api/v1/api-tokens/foo",
+              "path": "/api/v1/api-tokens/tokenId",
               "pathParameters": {
-                "tokenId": "foo"
+                "tokenId": "tokenId"
               },
               "queryParameters": {},
               "headers": {},
@@ -1610,9 +1610,9 @@
             {
               "name": "deleteApiTokenApiV1ApiTokensTokenIdDeleteExample",
               "description": "",
-              "path": "/api/v1/api-tokens/foo",
+              "path": "/api/v1/api-tokens/tokenId",
               "pathParameters": {
-                "tokenId": "foo"
+                "tokenId": "tokenId"
               },
               "queryParameters": {},
               "headers": {},
@@ -1838,9 +1838,9 @@
             {
               "name": "getDocumentApiV1DocumentsDocumentIdGetExample",
               "description": "",
-              "path": "/api/v1/documents/foo",
+              "path": "/api/v1/documents/documentId",
               "pathParameters": {
-                "documentId": "foo"
+                "documentId": "documentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -1920,9 +1920,9 @@
             {
               "name": "deleteDocumentApiV1DocumentsDocumentIdDeleteExample",
               "description": "",
-              "path": "/api/v1/documents/foo",
+              "path": "/api/v1/documents/documentId",
               "pathParameters": {
-                "documentId": "foo"
+                "documentId": "documentId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2152,9 +2152,9 @@
             {
               "name": "getPromptApiV1PromptsPromptIdGetExample",
               "description": "",
-              "path": "/api/v1/prompts/foo",
+              "path": "/api/v1/prompts/promptId",
               "pathParameters": {
-                "promptId": "foo"
+                "promptId": "promptId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2234,9 +2234,9 @@
             {
               "name": "deletePromptApiV1PromptsPromptIdDeleteExample",
               "description": "",
-              "path": "/api/v1/prompts/foo",
+              "path": "/api/v1/prompts/promptId",
               "pathParameters": {
-                "promptId": "foo"
+                "promptId": "promptId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2327,9 +2327,9 @@
             {
               "name": "promptsPatchPromptApiV1PromptsPromptIdPatchExample",
               "description": "",
-              "path": "/api/v1/prompts/foo",
+              "path": "/api/v1/prompts/promptId",
               "pathParameters": {
-                "promptId": "foo"
+                "promptId": "promptId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2558,9 +2558,9 @@
             {
               "name": "getToolApiV1ToolsToolIdGetExample",
               "description": "",
-              "path": "/api/v1/tools/foo",
+              "path": "/api/v1/tools/toolId",
               "pathParameters": {
-                "toolId": "foo"
+                "toolId": "toolId"
               },
               "queryParameters": {},
               "headers": {},
@@ -2640,9 +2640,9 @@
             {
               "name": "deleteToolApiV1ToolsToolIdDeleteExample",
               "description": "",
-              "path": "/api/v1/tools/foo",
+              "path": "/api/v1/tools/toolId",
               "pathParameters": {
-                "toolId": "foo"
+                "toolId": "toolId"
               },
               "queryParameters": {},
               "headers": {},

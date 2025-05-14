@@ -1317,8 +1317,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "redirectUri": "https://example.com/redirect",
@@ -1465,8 +1465,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "requestBody": {
                 "authCode": "foo"
@@ -1628,8 +1628,8 @@
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -1796,8 +1796,8 @@
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2066,8 +2066,8 @@
               },
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -2194,8 +2194,8 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "x-client-id": "foo",
-                "x-client-secret": "foo"
+                "x-client-id": "x-client-id",
+                "x-client-secret": "x-client-secret"
               },
               "responseStatusCode": 200,
               "responseBody": {

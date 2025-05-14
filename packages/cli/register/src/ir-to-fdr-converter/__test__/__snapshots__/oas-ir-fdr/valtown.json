@@ -3270,7 +3270,7 @@
               "queryParameters": {
                 "offset": 0,
                 "limit": 20,
-                "query": "foo"
+                "query": "query"
               },
               "headers": {},
               "responseStatusCode": 200,
@@ -3418,9 +3418,9 @@
             {
               "name": "usernameExample",
               "description": "",
-              "path": "/v1/alias/foo",
+              "path": "/v1/alias/username",
               "pathParameters": {
-                "username": "foo"
+                "username": "username"
               },
               "queryParameters": {},
               "headers": {},
@@ -3539,10 +3539,10 @@
             {
               "name": "valExample",
               "description": "",
-              "path": "/v1/alias/foo/foo",
+              "path": "/v1/alias/username/val_name",
               "pathParameters": {
-                "username": "foo",
-                "val_name": "foo"
+                "username": "username",
+                "val_name": "val_name"
               },
               "queryParameters": {},
               "headers": {},
@@ -4366,9 +4366,9 @@
             {
               "name": "getExample",
               "description": "",
-              "path": "/v1/blob/foo",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4452,9 +4452,9 @@
             {
               "name": "blobsStoreExample",
               "description": "",
-              "path": "/v1/blob/foo",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4525,9 +4525,9 @@
             {
               "name": "deleteExample",
               "description": "",
-              "path": "/v1/blob/foo",
+              "path": "/v1/blob/key",
               "pathParameters": {
-                "key": "foo"
+                "key": "key"
               },
               "queryParameters": {},
               "headers": {},
@@ -4612,9 +4612,9 @@
             {
               "name": "getExample",
               "description": "",
-              "path": "/v1/users/foo",
+              "path": "/v1/users/user_id",
               "pathParameters": {
-                "user_id": "foo"
+                "user_id": "user_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -4741,9 +4741,9 @@
             {
               "name": "valsExample",
               "description": "",
-              "path": "/v1/users/foo/vals",
+              "path": "/v1/users/user_id/vals",
               "pathParameters": {
-                "user_id": "foo"
+                "user_id": "user_id"
               },
               "queryParameters": {
                 "offset": 0,
@@ -5424,9 +5424,9 @@
             {
               "name": "evalGetExample",
               "description": "",
-              "path": "/v1/eval/foo",
+              "path": "/v1/eval/code",
               "pathParameters": {
-                "code": "foo"
+                "code": "code"
               },
               "queryParameters": {},
               "headers": {},
@@ -5514,9 +5514,9 @@
             {
               "name": "runGetExample",
               "description": "",
-              "path": "/v1/run/foo",
+              "path": "/v1/run/valname",
               "pathParameters": {
-                "valname": "foo"
+                "valname": "valname"
               },
               "queryParameters": {},
               "headers": {},
@@ -5607,9 +5607,9 @@
             {
               "name": "vals_runPost_example",
               "description": "",
-              "path": "/v1/run/foo",
+              "path": "/v1/run/valname",
               "pathParameters": {
-                "valname": "foo"
+                "valname": "valname"
               },
               "queryParameters": {},
               "headers": {},
@@ -5992,9 +5992,9 @@
             {
               "name": "getExample",
               "description": "",
-              "path": "/v1/vals/foo",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6175,9 +6175,9 @@
             {
               "name": "example1",
               "description": "",
-              "path": "/v1/vals/foo",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6197,9 +6197,9 @@
             {
               "name": "example2",
               "description": "",
-              "path": "/v1/vals/foo",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6286,9 +6286,9 @@
             {
               "name": "deleteExample",
               "description": "",
-              "path": "/v1/vals/foo",
+              "path": "/v1/vals/val_id",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6390,9 +6390,9 @@
             {
               "name": "listExample",
               "description": "",
-              "path": "/v1/vals/foo/versions",
+              "path": "/v1/vals/val_id/versions",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {
                 "offset": 0,
@@ -6581,9 +6581,9 @@
             {
               "name": "vals_createVersion_example",
               "description": "",
-              "path": "/v1/vals/foo/versions",
+              "path": "/v1/vals/val_id/versions",
               "pathParameters": {
-                "val_id": "foo"
+                "val_id": "val_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -6773,9 +6773,9 @@
             {
               "name": "getVersionExample",
               "description": "",
-              "path": "/v1/vals/foo/versions/42",
+              "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
-                "val_id": "foo",
+                "val_id": "val_id",
                 "version": 42
               },
               "queryParameters": {
@@ -6928,9 +6928,9 @@
             {
               "name": "deleteVersionExample",
               "description": "",
-              "path": "/v1/vals/foo/versions/42",
+              "path": "/v1/vals/val_id/versions/42",
               "pathParameters": {
-                "val_id": "foo",
+                "val_id": "val_id",
                 "version": 42
               },
               "queryParameters": {},
@@ -7042,10 +7042,10 @@
             {
               "name": "cancelExample",
               "description": "",
-              "path": "/v1/vals/foo/evaluations/foo/cancel",
+              "path": "/v1/vals/val_id/evaluations/evaluation_id/cancel",
               "pathParameters": {
-                "val_id": "foo",
-                "evaluation_id": "foo"
+                "val_id": "val_id",
+                "evaluation_id": "evaluation_id"
               },
               "queryParameters": {},
               "headers": {},

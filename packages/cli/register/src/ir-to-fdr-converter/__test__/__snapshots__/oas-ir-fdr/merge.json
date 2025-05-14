@@ -10734,7 +10734,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -10850,9 +10850,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/account-token/foo",
+              "path": "/account-token/public_token",
               "pathParameters": {
-                "public_token": "foo"
+                "public_token": "public_token"
               },
               "queryParameters": {},
               "headers": {},
@@ -10973,7 +10973,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -11323,13 +11323,13 @@
               "pathParameters": {},
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee",
                 "remote_fields": "account_type",
                 "show_enum_origins": "account_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -11520,9 +11520,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/bank-info/foo",
+              "path": "/bank-info/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee",
@@ -11530,7 +11530,7 @@
                 "show_enum_origins": "account_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -11803,11 +11803,11 @@
               "pathParameters": {},
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -11978,15 +11978,15 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/benefits/foo",
+              "path": "/benefits/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -12239,7 +12239,7 @@
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -12395,13 +12395,13 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/companies/foo",
+              "path": "/companies/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -12515,7 +12515,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200
             }
@@ -12813,12 +12813,12 @@
               "pathParameters": {},
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee,payroll_run",
-                "payroll_run_id": "foo"
+                "payroll_run_id": "payroll_run_id"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -13101,15 +13101,15 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/employee-payroll-runs/foo",
+              "path": "/employee-payroll-runs/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee,payroll_run"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -13729,18 +13729,18 @@
               "path": "/employees",
               "pathParameters": {},
               "queryParameters": {
-                "company_id": "foo",
+                "company_id": "company_id",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
-                "manager_id": "foo",
-                "pay_group_id": "foo",
+                "manager_id": "manager_id",
+                "pay_group_id": "pay_group_id",
                 "remote_fields": "employment_status,ethnicity,gender,marital_status",
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status",
-                "team_id": "foo",
-                "work_location_id": "foo"
+                "team_id": "team_id",
+                "work_location_id": "work_location_id"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -13961,7 +13961,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "model": {}
@@ -14280,9 +14280,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/employees/foo",
+              "path": "/employees/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employments,groups,home_location,work_location,manager,team,company,pay_group",
@@ -14290,7 +14290,7 @@
                 "show_enum_origins": "employment_status,ethnicity,gender,marital_status"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -14476,13 +14476,13 @@
             {
               "name": "employeesIgnoreCreateExample",
               "description": "",
-              "path": "/employees/ignore/foo",
+              "path": "/employees/ignore/model_id",
               "pathParameters": {
-                "model_id": "foo"
+                "model_id": "model_id"
               },
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "reason": "GENERAL_CUSTOMER_REQUEST"
@@ -14564,7 +14564,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -14852,13 +14852,13 @@
               "pathParameters": {},
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee,pay_group",
                 "remote_fields": "employment_type,flsa_status,pay_frequency,pay_period",
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -15057,9 +15057,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/employments/foo",
+              "path": "/employments/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee,pay_group",
@@ -15067,7 +15067,7 @@
                 "show_enum_origins": "employment_type,flsa_status,pay_frequency,pay_period"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -15469,7 +15469,7 @@
                 "show_enum_origins": "type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -15643,16 +15643,16 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/groups/foo",
+              "path": "/groups/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "remote_fields": "type",
                 "show_enum_origins": "type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -16050,9 +16050,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/issues/foo",
+              "path": "/issues/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -16763,7 +16763,7 @@
                 "show_enum_origins": "location_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -16949,16 +16949,16 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/locations/foo",
+              "path": "/locations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "remote_fields": "location_type",
                 "show_enum_origins": "location_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -17104,7 +17104,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "method": "GET",
@@ -17346,7 +17346,7 @@
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -17494,13 +17494,13 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/pay-groups/foo",
+              "path": "/pay-groups/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -17832,7 +17832,7 @@
                 "show_enum_origins": "run_state,run_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18010,16 +18010,16 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/payroll-runs/foo",
+              "path": "/payroll-runs/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "remote_fields": "run_state,run_type",
                 "show_enum_origins": "run_state,run_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18253,7 +18253,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18376,7 +18376,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "sync_configurations": [
@@ -18416,7 +18416,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBodyV3": {
                 "type": "json"
@@ -18567,7 +18567,7 @@
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18733,7 +18733,7 @@
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -18855,7 +18855,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19113,10 +19113,10 @@
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
                 "expand": "parent_team",
-                "parent_team_id": "foo"
+                "parent_team_id": "parent_team_id"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19277,15 +19277,15 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/teams/foo",
+              "path": "/teams/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "parent_team"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19606,15 +19606,15 @@
               "path": "/time-off",
               "pathParameters": {},
               "queryParameters": {
-                "approver_id": "foo",
+                "approver_id": "approver_id",
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee,approver",
                 "remote_fields": "request_type,status,units",
                 "show_enum_origins": "request_type,status,units"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -19789,7 +19789,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "model": {}
@@ -20049,9 +20049,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/time-off/foo",
+              "path": "/time-off/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee,approver",
@@ -20059,7 +20059,7 @@
                 "show_enum_origins": "request_type,status,units"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20182,7 +20182,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20470,13 +20470,13 @@
               "pathParameters": {},
               "queryParameters": {
                 "cursor": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "employee_id": "foo",
+                "employee_id": "employee_id",
                 "expand": "employee",
                 "remote_fields": "policy_type",
                 "show_enum_origins": "policy_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20663,9 +20663,9 @@
             {
               "name": "retrieveExample",
               "description": "",
-              "path": "/time-off-balances/foo",
+              "path": "/time-off-balances/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {
                 "expand": "employee",
@@ -20673,7 +20673,7 @@
                 "show_enum_origins": "policy_type"
               },
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20799,7 +20799,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "responseStatusCode": 200,
               "responseBody": {
@@ -20905,7 +20905,7 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {
-                "X-Account-Token": "foo"
+                "X-Account-Token": "X-Account-Token"
               },
               "requestBody": {
                 "event": "foo",

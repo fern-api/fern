@@ -1,5 +1,20 @@
 - changelogEntry:
   - summary: |
+      String parameter examples will use the parameter name as the example value if no example is provided.
+    type: fix
+  irVersion: 57
+  version: 0.61.9
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken. 
+      The checker now properly recognizes these file paths as valid.
+    type: fix
+  irVersion: 57
+  version: 0.61.8
+
+- changelogEntry:
+  - summary: |
       Support text/plain content type response examples in the v3 parser.
       Skip certain headers from being added to the IR.
     type: fix

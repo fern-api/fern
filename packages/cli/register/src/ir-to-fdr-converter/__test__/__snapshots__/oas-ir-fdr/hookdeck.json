@@ -16775,9 +16775,9 @@
             {
               "name": "getIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/foo",
+              "path": "/issue-triggers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17014,9 +17014,9 @@
             {
               "name": "issueTriggersUpdateIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/foo",
+              "path": "/issue-triggers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17181,9 +17181,9 @@
             {
               "name": "deleteIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/foo",
+              "path": "/issue-triggers/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17307,9 +17307,9 @@
             {
               "name": "disableIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/foo/disable",
+              "path": "/issue-triggers/id/disable",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17469,9 +17469,9 @@
             {
               "name": "enableIssueTriggerExample",
               "description": "",
-              "path": "/issue-triggers/foo/enable",
+              "path": "/issue-triggers/id/enable",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -17895,9 +17895,9 @@
             {
               "name": "getAttemptExample",
               "description": "",
-              "path": "/attempts/foo",
+              "path": "/attempts/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18591,9 +18591,9 @@
             {
               "name": "getBookmarkExample",
               "description": "",
-              "path": "/bookmarks/foo",
+              "path": "/bookmarks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -18844,9 +18844,9 @@
             {
               "name": "bookmarksUpdateBookmarkExample",
               "description": "",
-              "path": "/bookmarks/foo",
+              "path": "/bookmarks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -19007,9 +19007,9 @@
             {
               "name": "deleteBookmarkExample",
               "description": "",
-              "path": "/bookmarks/foo",
+              "path": "/bookmarks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -19182,9 +19182,9 @@
             {
               "name": "bookmarksTriggerBookmarkExample",
               "description": "",
-              "path": "/bookmarks/foo/trigger",
+              "path": "/bookmarks/id/trigger",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20151,9 +20151,9 @@
             {
               "name": "getDestinationExample",
               "description": "",
-              "path": "/destinations/foo",
+              "path": "/destinations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20436,9 +20436,9 @@
             {
               "name": "destinationsUpdateDestinationExample",
               "description": "",
-              "path": "/destinations/foo",
+              "path": "/destinations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20591,9 +20591,9 @@
             {
               "name": "archiveDestinationExample",
               "description": "",
-              "path": "/destinations/foo/archive",
+              "path": "/destinations/id/archive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -20737,9 +20737,9 @@
             {
               "name": "unarchiveDestinationExample",
               "description": "",
-              "path": "/destinations/foo/unarchive",
+              "path": "/destinations/id/unarchive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21359,9 +21359,9 @@
             {
               "name": "getEventExample",
               "description": "",
-              "path": "/events/foo",
+              "path": "/events/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21535,9 +21535,9 @@
             {
               "name": "getRequestRawBodyExample",
               "description": "",
-              "path": "/events/foo/raw_body",
+              "path": "/events/id/raw_body",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21661,9 +21661,9 @@
             {
               "name": "retryEventExample",
               "description": "",
-              "path": "/events/foo/retry",
+              "path": "/events/id/retry",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -21887,9 +21887,9 @@
             {
               "name": "muteEventExample",
               "description": "",
-              "path": "/events/foo/mute",
+              "path": "/events/id/mute",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22688,9 +22688,9 @@
             {
               "name": "getEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/events/retry/foo",
+              "path": "/bulk/events/retry/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -22842,9 +22842,9 @@
             {
               "name": "cancelEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/events/retry/foo/cancel",
+              "path": "/bulk/events/retry/id/cancel",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23621,9 +23621,9 @@
             {
               "name": "getIgnoredEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/ignored-events/retry/foo",
+              "path": "/bulk/ignored-events/retry/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -23775,9 +23775,9 @@
             {
               "name": "cancelIgnoredEventBulkRetryExample",
               "description": "",
-              "path": "/bulk/ignored-events/retry/foo/cancel",
+              "path": "/bulk/ignored-events/retry/id/cancel",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24369,9 +24369,9 @@
             {
               "name": "getIntegrationExample",
               "description": "",
-              "path": "/integrations/foo",
+              "path": "/integrations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24615,9 +24615,9 @@
             {
               "name": "integrationsUpdateIntegrationExample",
               "description": "",
-              "path": "/integrations/foo",
+              "path": "/integrations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24780,9 +24780,9 @@
             {
               "name": "deleteIntegrationExample",
               "description": "",
-              "path": "/integrations/foo",
+              "path": "/integrations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -24936,10 +24936,10 @@
             {
               "name": "attachIntegrationToSourceExample",
               "description": "",
-              "path": "/integrations/foo/attach/foo",
+              "path": "/integrations/id/attach/source_id",
               "pathParameters": {
-                "id": "foo",
-                "source_id": "foo"
+                "id": "id",
+                "source_id": "source_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25093,10 +25093,10 @@
             {
               "name": "detachIntegrationToSourceExample",
               "description": "",
-              "path": "/integrations/foo/detach/foo",
+              "path": "/integrations/id/detach/source_id",
               "pathParameters": {
-                "id": "foo",
-                "source_id": "foo"
+                "id": "id",
+                "source_id": "source_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -25957,9 +25957,9 @@
             {
               "name": "getIssueExample",
               "description": "",
-              "path": "/issues/foo",
+              "path": "/issues/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26276,9 +26276,9 @@
             {
               "name": "issuesUpdateIssueExample",
               "description": "",
-              "path": "/issues/foo",
+              "path": "/issues/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -26465,9 +26465,9 @@
             {
               "name": "dismissIssueExample",
               "description": "",
-              "path": "/issues/foo",
+              "path": "/issues/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27059,9 +27059,9 @@
             {
               "name": "getRequestExample",
               "description": "",
-              "path": "/requests/foo",
+              "path": "/requests/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27231,9 +27231,9 @@
             {
               "name": "getRequestRawBodyExample",
               "description": "",
-              "path": "/requests/foo/raw_body",
+              "path": "/requests/id/raw_body",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27409,9 +27409,9 @@
             {
               "name": "requestsRetryRequestExample",
               "description": "",
-              "path": "/requests/foo/retry",
+              "path": "/requests/id/retry",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -27957,9 +27957,9 @@
             {
               "name": "getRequestEventsExample",
               "description": "",
-              "path": "/requests/foo/events",
+              "path": "/requests/id/events",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -28254,9 +28254,9 @@
             {
               "name": "getRequestIgnoredEventsExample",
               "description": "",
-              "path": "/requests/foo/ignored_events",
+              "path": "/requests/id/ignored_events",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29043,9 +29043,9 @@
             {
               "name": "getRequestBulkRetryExample",
               "description": "",
-              "path": "/bulk/requests/retry/foo",
+              "path": "/bulk/requests/retry/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -29197,9 +29197,9 @@
             {
               "name": "cancelRequestBulkRetryExample",
               "description": "",
-              "path": "/bulk/requests/retry/foo/cancel",
+              "path": "/bulk/requests/retry/id/cancel",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30047,9 +30047,9 @@
             {
               "name": "getRulesetExample",
               "description": "",
-              "path": "/rulesets/foo",
+              "path": "/rulesets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30297,9 +30297,9 @@
             {
               "name": "rulesetsUpdateRulesetExample",
               "description": "",
-              "path": "/rulesets/foo",
+              "path": "/rulesets/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30456,9 +30456,9 @@
             {
               "name": "archiveRulesetExample",
               "description": "",
-              "path": "/rulesets/foo/archive",
+              "path": "/rulesets/id/archive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -30610,9 +30610,9 @@
             {
               "name": "unarchiveRulesetExample",
               "description": "",
-              "path": "/rulesets/foo/unarchive",
+              "path": "/rulesets/id/unarchive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31424,9 +31424,9 @@
             {
               "name": "getSourceExample",
               "description": "",
-              "path": "/sources/foo",
+              "path": "/sources/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31650,9 +31650,9 @@
             {
               "name": "sourcesUpdateSourceExample",
               "description": "",
-              "path": "/sources/foo",
+              "path": "/sources/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31811,9 +31811,9 @@
             {
               "name": "archiveSourceExample",
               "description": "",
-              "path": "/sources/foo/archive",
+              "path": "/sources/id/archive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -31967,9 +31967,9 @@
             {
               "name": "unarchiveSourceExample",
               "description": "",
-              "path": "/sources/foo/unarchive",
+              "path": "/sources/id/unarchive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -32922,9 +32922,9 @@
             {
               "name": "getTransformationExample",
               "description": "",
-              "path": "/transformations/foo",
+              "path": "/transformations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33141,9 +33141,9 @@
             {
               "name": "transformationsUpdateTransformationExample",
               "description": "",
-              "path": "/transformations/foo",
+              "path": "/transformations/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33643,9 +33643,9 @@
             {
               "name": "getTransformationExecutionsExample",
               "description": "",
-              "path": "/transformations/foo/executions",
+              "path": "/transformations/id/executions",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -33872,10 +33872,10 @@
             {
               "name": "getTransformationExecutionExample",
               "description": "",
-              "path": "/transformations/foo/executions/foo",
+              "path": "/transformations/id/executions/execution_id",
               "pathParameters": {
-                "id": "foo",
-                "execution_id": "foo"
+                "id": "id",
+                "execution_id": "execution_id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35281,9 +35281,9 @@
             {
               "name": "getConnectionExample",
               "description": "",
-              "path": "/webhooks/foo",
+              "path": "/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35642,9 +35642,9 @@
             {
               "name": "connectionsUpdateConnectionExample",
               "description": "",
-              "path": "/webhooks/foo",
+              "path": "/webhooks/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -35913,9 +35913,9 @@
             {
               "name": "archiveConnectionExample",
               "description": "",
-              "path": "/webhooks/foo/archive",
+              "path": "/webhooks/id/archive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36179,9 +36179,9 @@
             {
               "name": "unarchiveConnectionExample",
               "description": "",
-              "path": "/webhooks/foo/unarchive",
+              "path": "/webhooks/id/unarchive",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36445,9 +36445,9 @@
             {
               "name": "pauseConnectionExample",
               "description": "",
-              "path": "/webhooks/foo/pause",
+              "path": "/webhooks/id/pause",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -36711,9 +36711,9 @@
             {
               "name": "unpauseConnectionExample",
               "description": "",
-              "path": "/webhooks/foo/unpause",
+              "path": "/webhooks/id/unpause",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},

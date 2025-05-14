@@ -25,6 +25,12 @@ in _generators.yml_.
 - Fix: When generating properties for interfaces and classes, we only surround the property name with quotes if necessary.
   In some cases where the property name wasn't a valid identifier before, we now surround it with quotes too. 
 
+
+## [0.51.7] - 2025-05-14
+
+- Fix: If an object extends an alias, the generator now visits the alias that is being extended (instead of throwing an error).
+
+
 ## [0.51.6] - 2025-05-13
 
 - Fix: Add support for the custom introduction setting in the generated README.md.

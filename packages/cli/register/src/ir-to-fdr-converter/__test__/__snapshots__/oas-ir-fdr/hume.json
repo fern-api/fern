@@ -4873,9 +4873,9 @@
             {
               "name": "getJobArtifactsExample",
               "description": "",
-              "path": "/v0/batch/jobs/foo/artifacts",
+              "path": "/v0/batch/jobs/id/artifacts",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -4950,9 +4950,9 @@
             {
               "name": "getJobExample",
               "description": "",
-              "path": "/v0/batch/jobs/foo",
+              "path": "/v0/batch/jobs/id",
               "pathParameters": {
-                "id": "foo"
+                "id": "id"
               },
               "queryParameters": {},
               "headers": {},
@@ -5646,9 +5646,9 @@
           {
             "name": "getJobPredictionsExample",
             "description": "",
-            "path": "/v0/batch/jobs/foo/predictions",
+            "path": "/v0/batch/jobs/id/predictions",
             "pathParameters": {
-              "id": "foo"
+              "id": "id"
             },
             "queryParameters": {},
             "headers": {},

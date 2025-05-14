@@ -1,4 +1,3 @@
-import { appendFileSync } from "fs";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { TypeId, TypeReference } from "@fern-api/ir-sdk";
@@ -35,7 +34,7 @@ export class ParameterConverter extends Converters.AbstractConverters.AbstractPa
             type: "string",
             enum: this.parameter.enum,
             default: this.parameter.default,
-            example: this.parameter.example,
+            example: this.parameter.example ?? this.parameter.name,
             examples: Object.values(this.parameter.examples ?? {}),
             deprecated: this.parameter.deprecated,
             required: undefined
