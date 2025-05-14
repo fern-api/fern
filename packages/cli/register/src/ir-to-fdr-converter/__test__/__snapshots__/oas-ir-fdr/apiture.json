@@ -3718,7 +3718,17 @@
           "originalEndpointId": "accounts.getAccount",
           "name": "Get an Account",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "accountId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -3796,8 +3806,10 @@
             {
               "name": "getAccountExample",
               "description": "",
-              "path": "/accounts/undefined",
-              "pathParameters": {},
+              "path": "/accounts/accountId",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -4367,7 +4379,17 @@
           "originalEndpointId": "accountJointOwners.listAccountJointOwners",
           "name": "Return a collection of account joint owners",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "accountId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -4458,8 +4480,10 @@
             {
               "name": "listAccountJointOwnersExample",
               "description": "",
-              "path": "/accounts/undefined/jointOwners",
-              "pathParameters": {},
+              "path": "/accounts/accountId/jointOwners",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -4670,9 +4694,9 @@
             {
               "name": "listEligibleOverdraftAccountsExample",
               "description": "",
-              "path": "/accounts/foo/eligibleOverdraftAccounts",
+              "path": "/accounts/accountId/eligibleOverdraftAccounts",
               "pathParameters": {
-                "accountId": "foo"
+                "accountId": "accountId"
               },
               "queryParameters": {},
               "headers": {},
@@ -4716,7 +4740,17 @@
           "originalEndpointId": "overdraftProtection.getOverdraftProtection",
           "name": "Fetch a representation of the account's overdraft protection settings",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "accountId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -4794,8 +4828,10 @@
             {
               "name": "getOverdraftProtectionExample",
               "description": "",
-              "path": "/accounts/undefined/overdraftProtection",
-              "pathParameters": {},
+              "path": "/accounts/accountId/overdraftProtection",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -4832,7 +4868,17 @@
           "originalEndpointId": "overdraftProtection.patchOverdraftAccounts",
           "name": "Update the overdraft accounts",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "accountId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -4951,8 +4997,10 @@
             {
               "name": "overdraftProtectionPatchOverdraftAccountsExample",
               "description": "",
-              "path": "/accounts/undefined/overdraftProtection",
-              "pathParameters": {},
+              "path": "/accounts/accountId/overdraftProtection",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
               "queryParameters": {},
               "headers": {},
               "requestBody": {},
@@ -5004,7 +5052,17 @@
           "originalEndpointId": "jointOwners.createJointOwnerInvitation",
           "name": "Invite a joint owner",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "accountId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -5123,8 +5181,10 @@
             {
               "name": "jointOwnersCreateJointOwnerInvitationExample",
               "description": "",
-              "path": "/accounts/undefined/jointOwnerInvitations",
-              "pathParameters": {},
+              "path": "/accounts/accountId/jointOwnerInvitations",
+              "pathParameters": {
+                "accountId": "accountId"
+              },
               "queryParameters": {},
               "headers": {},
               "requestBody": {
@@ -6534,9 +6594,9 @@
             {
               "name": "listTransactionsExample",
               "description": "",
-              "path": "/accounts/foo/transactions",
+              "path": "/accounts/accountId/transactions",
               "pathParameters": {
-                "accountId": "foo"
+                "accountId": "accountId"
               },
               "queryParameters": {},
               "headers": {},
@@ -7370,7 +7430,17 @@
           "originalEndpointId": "transfers.getTransfer",
           "name": "Fetch a representation of this transfer",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "transferId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -7448,8 +7518,10 @@
             {
               "name": "getTransferExample",
               "description": "",
-              "path": "/transfers/undefined",
-              "pathParameters": {},
+              "path": "/transfers/transferId",
+              "pathParameters": {
+                "transferId": "transferId"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200,
@@ -7528,7 +7600,17 @@
           "originalEndpointId": "transfers.deleteTransfer",
           "name": "Delete this transfer resource",
           "path": {
-            "pathParameters": [],
+            "pathParameters": [
+              {
+                "key": "transferId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            ],
             "parts": [
               {
                 "type": "literal",
@@ -7608,8 +7690,10 @@
             {
               "name": "deleteTransferExample",
               "description": "",
-              "path": "/transfers/undefined",
-              "pathParameters": {},
+              "path": "/transfers/transferId",
+              "pathParameters": {
+                "transferId": "transferId"
+              },
               "queryParameters": {},
               "headers": {},
               "responseStatusCode": 200
@@ -7775,9 +7859,9 @@
             {
               "name": "transfersPatchTransferExample",
               "description": "",
-              "path": "/transfers/foo",
+              "path": "/transfers/transferId",
               "pathParameters": {
-                "transferId": "foo"
+                "transferId": "transferId"
               },
               "queryParameters": {},
               "headers": {},

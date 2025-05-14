@@ -157,10 +157,10 @@
             {
               "name": "organizationsSearchExample",
               "description": "",
-              "path": "/organizations/foo/search",
+              "path": "/organizations/organization_id/search",
               "pathParameters": {
                 "id": "id",
-                "organization_id": "foo"
+                "organization_id": "organization_id"
               },
               "queryParameters": {},
               "headers": {},
