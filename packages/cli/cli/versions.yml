@@ -3,6 +3,14 @@
         Check for extensions without `-fern` in the name.
       type: chore
   irVersion: 57
+  version: 0.61.9
+
+- changelogEntry:
+    - summary: |
+        Fix a bug where the broken link checker would incorrectly flag links to llms.txt and llms-full.txt files as broken. 
+        The checker now properly recognizes these file paths as valid.
+      type: fix
+  irVersion: 57
   version: 0.61.8
 
 - changelogEntry:
