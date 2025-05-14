@@ -252,8 +252,8 @@
         ]
       }
     },
-    "BadRequestError": {
-      "name": "BadRequestError",
+    "ValidateAUserObjectRequestBadRequestError": {
+      "name": "ValidateAUserObjectRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -558,7 +558,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "value": "BadRequestError"
+                "value": "ValidateAUserObjectRequestBadRequestError"
               }
             },
             "statusCode": 400,

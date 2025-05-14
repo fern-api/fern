@@ -372,6 +372,8 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
 
     private isUntypedSchema(): boolean {
         if (
+            this.schema &&
+            typeof this.schema === "object" &&
             !("type" in this.schema) &&
             !("oneOf" in this.schema) &&
             !("anyOf" in this.schema) &&
