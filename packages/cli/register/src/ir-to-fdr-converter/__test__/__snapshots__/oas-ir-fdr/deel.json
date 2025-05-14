@@ -19750,7 +19750,15 @@
               },
               "queryParameters": {},
               "headers": {},
-              "responseStatusCode": 200
+              "responseStatusCode": 200,
+              "responseBody": {
+                "type": "json",
+                "value": "foo"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": "foo"
+              }
             }
           ],
           "protocol": {

@@ -29836,7 +29836,11 @@
                   }
                 },
                 "response": {
-                  "statusCode": 200
+                  "statusCode": 200,
+                  "body": {
+                    "value": "foo",
+                    "type": "json"
+                  }
                 }
               }
             },
@@ -56244,7 +56248,11 @@
                   "headers": {}
                 },
                 "response": {
-                  "statusCode": 200
+                  "statusCode": 200,
+                  "body": {
+                    "value": "foo",
+                    "type": "json"
+                  }
                 }
               }
             },
@@ -56879,7 +56887,11 @@
                   "headers": {}
                 },
                 "response": {
-                  "statusCode": 200
+                  "statusCode": 200,
+                  "body": {
+                    "value": "foo",
+                    "type": "json"
+                  }
                 }
               }
             },
@@ -57512,7 +57524,10 @@
                   "headers": {}
                 },
                 "response": {
-                  "statusCode": 200
+                  "statusCode": 200,
+                  "body": {
+                    "type": "json"
+                  }
                 }
               }
             },
