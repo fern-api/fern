@@ -1,4 +1,4 @@
-import { getTextOfTsNode } from "@fern-typescript/commons";
+import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { ModuleDeclarationStructure, OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -45,7 +45,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
     public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
-                name: UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
+                name: getPropertyKey(UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME),
                 type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
             }
         ];

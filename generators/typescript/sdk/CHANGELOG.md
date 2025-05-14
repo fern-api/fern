@@ -22,6 +22,8 @@ This release changes the defaults for the following custom configuration in _gen
 To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator
 in _generators.yml_.
 
+- Fix: When generating properties for interfaces and classes, we only surround the property name with quotes if necessary.
+  In some cases where the property name wasn't a valid identifier before, we now surround it with quotes too. 
 
 ## [0.51.6] - 2025-05-13
 

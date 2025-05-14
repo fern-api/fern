@@ -1,4 +1,4 @@
-import { PackageId, getTextOfTsNode } from "@fern-typescript/commons";
+import { PackageId, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
     ClassDeclarationStructure,
@@ -135,14 +135,14 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             properties: [
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     return {
-                        name: queryParameter.name.wireValue,
+                        name: getPropertyKey(queryParameter.name.wireValue),
                         type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
                         hasQuestionToken: true
                     };
                 }),
                 ...(this.channel.headers ?? []).map((header) => {
                     return {
-                        name: header.name.wireValue,
+                        name: getPropertyKey(header.name.wireValue),
                         type: getTextOfTsNode(context.type.getReferenceToType(header.valueType).typeNode),
                         hasQuestionToken: true
                     };
