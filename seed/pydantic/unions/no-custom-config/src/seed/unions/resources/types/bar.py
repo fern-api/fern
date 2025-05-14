@@ -11,7 +11,10 @@ class Bar(UniversalBaseModel):
     Examples
     --------
     from seed.unions.resources import Bar
-    Bar(name='example1', )
+
+    Bar(
+        name="example1",
+    )
     """
 
     name: str
