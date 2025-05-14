@@ -42,14 +42,14 @@ export class OAuthTokenProvider {
 
     private async refresh(): Promise<string> {
         const tokenResponse = await this._authClient.getToken({
-            clientId: await core.Supplier.get(this._clientId),
-            clientSecret: await core.Supplier.get(this._clientSecret),
+            client_id: await core.Supplier.get(this._clientId),
+            client_secret: await core.Supplier.get(this._clientSecret),
         });
         if (!tokenResponse.ok) {
             throw new errors.SeedOauthClientCredentialsError({ body: tokenResponse.error });
         }
-        this._accessToken = tokenResponse.body.accessToken;
-        this._expiresAt = this.getExpiresAt(tokenResponse.body.expiresIn, this.BUFFER_IN_MINUTES);
+        this._accessToken = tokenResponse.body.access_token;
+        this._expiresAt = this.getExpiresAt(tokenResponse.body.expires_in, this.BUFFER_IN_MINUTES);
         return this._accessToken;
     }
 
