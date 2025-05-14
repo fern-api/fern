@@ -18,7 +18,7 @@ import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
 import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
+import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
@@ -417,7 +417,7 @@ export class ApiReferenceNodeConverterLatest {
             }
             if (endpoint.id == null) {
                 this.taskContext.logger.error(
-                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathParts(endpoint.path)}. Got undefined.`
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
                 );
             } else {
                 this.#visitedEndpoints.add(endpoint.id);
@@ -567,7 +567,7 @@ export class ApiReferenceNodeConverterLatest {
         Object.entries(pkg.endpoints).forEach(([endpointId, endpoint]) => {
             if (endpointId == null) {
                 this.taskContext.logger.error(
-                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathParts(endpoint.path)}. Got undefined.`
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
                 );
                 return;
             }

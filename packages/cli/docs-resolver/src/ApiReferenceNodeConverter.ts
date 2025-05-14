@@ -17,7 +17,7 @@ import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
 import { isSubpackage } from "./utils/isSubpackage";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
+import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
@@ -417,7 +417,7 @@ export class ApiReferenceNodeConverter {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
                 this.taskContext.logger.error(
-                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathParts(endpoint.path.parts)}. Got undefined.`
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
                 );
             } else {
                 if (this.#visitedEndpoints.has(endpointId)) {
@@ -570,7 +570,7 @@ export class ApiReferenceNodeConverter {
             const endpointId = this.#holder.getEndpointId(endpoint);
             if (endpointId == null) {
                 this.taskContext.logger.error(
-                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathParts(endpoint.path.parts)}. Got undefined.`
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path.parts)}. Got undefined.`
                 );
                 return;
             }
