@@ -14936,8 +14936,8 @@
         "properties": []
       }
     },
-    "BadRequestError": {
-      "name": "BadRequestError",
+    "Booking_amendment_createRequestBadRequestError": {
+      "name": "Booking_amendment_createRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -14984,7 +14984,7 @@
               "type": "optional",
               "itemType": {
                 "type": "id",
-                "value": "ShipmentsShareablePostResponsesSchemaData"
+                "value": "BookingAmendmentsPostResponsesSchemaData"
               }
             }
           },
@@ -15079,6 +15079,71 @@
         ]
       }
     },
+    "Booking_line_item_indexRequestBadRequestError": {
+      "name": "Booking_line_item_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "BookingLineItem_booking_line_item_create_Response_200": {
       "name": "BookingLineItem_booking_line_item_create_Response_200",
       "shape": {
@@ -15142,6 +15207,71 @@
         "properties": []
       }
     },
+    "Booking_line_item_createRequestBadRequestError": {
+      "name": "Booking_line_item_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "BookingLineItem_booking_line_item_show_Response_200": {
       "name": "BookingLineItem_booking_line_item_show_Response_200",
       "shape": {
@@ -15203,6 +15333,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Booking_line_item_showRequestBadRequestError": {
+      "name": "Booking_line_item_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingLineItemsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "BookingsGetParametersSchema": {
@@ -15282,6 +15477,71 @@
         ]
       }
     },
+    "Bookings_indexRequestBadRequestError": {
+      "name": "Bookings_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Booking_create_Response_200": {
       "name": "Booking_create_Response_200",
       "shape": {
@@ -15343,6 +15603,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Booking_createRequestBadRequestError": {
+      "name": "Booking_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "Booking_show_Response_200": {
@@ -15408,6 +15733,71 @@
         "properties": []
       }
     },
+    "Booking_showRequestBadRequestError": {
+      "name": "Booking_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "BookingsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Carbon Calculation_create_Response_200": {
       "name": "Carbon Calculation_create_Response_200",
       "shape": {
@@ -15469,6 +15859,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Carbon_calculation_createRequestBadRequestError": {
+      "name": "Carbon_calculation_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CarbonCalculationPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "CommercialInvoicesGetResponsesSchemaData": {
@@ -15653,6 +16108,71 @@
         "properties": []
       }
     },
+    "Commercial_invoices_createRequestBadRequestError": {
+      "name": "Commercial_invoices_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CommercialInvoicesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Commercial Invoices_update_Response_200": {
       "name": "Commercial Invoices_update_Response_200",
       "shape": {
@@ -15714,6 +16234,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Commercial_invoices_updateRequestBadRequestError": {
+      "name": "Commercial_invoices_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CommercialInvoicesPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "Commercial Invoices_show_Response_200": {
@@ -15779,6 +16364,71 @@
         "properties": []
       }
     },
+    "Commercial_invoices_showRequestBadRequestError": {
+      "name": "Commercial_invoices_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CommercialInvoicesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "CustomsEntriesGetResponsesSchemaData": {
       "name": "CustomsEntriesGetResponsesSchemaData",
       "shape": {
@@ -15836,6 +16486,71 @@
               "itemType": {
                 "type": "id",
                 "value": "CustomsEntriesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Customs_entry_indexRequestBadRequestError": {
+      "name": "Customs_entry_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CustomsEntriesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -15905,6 +16620,71 @@
         "properties": []
       }
     },
+    "Customs_entries_showRequestBadRequestError": {
+      "name": "Customs_entries_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "CustomsEntriesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "DocumentsGetResponsesSchemaData": {
       "name": "DocumentsGetResponsesSchemaData",
       "shape": {
@@ -15962,6 +16742,71 @@
               "itemType": {
                 "type": "id",
                 "value": "DocumentsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Documents_indexRequestBadRequestError": {
+      "name": "Documents_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16031,6 +16876,71 @@
         "properties": []
       }
     },
+    "Documents_createRequestBadRequestError": {
+      "name": "Documents_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Document_documents_show_Response_200": {
       "name": "Document_documents_show_Response_200",
       "shape": {
@@ -16094,12 +17004,142 @@
         "properties": []
       }
     },
+    "Documents_showRequestBadRequestError": {
+      "name": "Documents_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "DocumentsIdDownloadGetResponsesSchemaData": {
       "name": "DocumentsIdDownloadGetResponsesSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Documents_downloadRequestBadRequestError": {
+      "name": "Documents_downloadRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "DocumentsIdDownloadGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "EventsGetParametersSchema": {
@@ -16191,6 +17231,71 @@
         ]
       }
     },
+    "Events_indexRequestBadRequestError": {
+      "name": "Events_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EventsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Event_events_show_Response_200": {
       "name": "Event_events_show_Response_200",
       "shape": {
@@ -16252,6 +17357,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Events_showRequestBadRequestError": {
+      "name": "Events_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EventsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "InvoicesGetParametersSchema": {
@@ -16337,6 +17507,71 @@
         ]
       }
     },
+    "Invoice_indexRequestBadRequestError": {
+      "name": "Invoice_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "InvoicesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Invoices_show_Response_200": {
       "name": "Invoices_show_Response_200",
       "shape": {
@@ -16400,6 +17635,71 @@
         "properties": []
       }
     },
+    "Invoices_showRequestBadRequestError": {
+      "name": "Invoices_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "InvoicesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "NetworkCompaniesGetResponsesSchemaData": {
       "name": "NetworkCompaniesGetResponsesSchemaData",
       "shape": {
@@ -16457,6 +17757,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkCompaniesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Network_company_indexRequestBadRequestError": {
+      "name": "Network_company_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompaniesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16524,6 +17889,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Network_company_createRequestBadRequestError": {
+      "name": "Network_company_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompaniesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "Company_network_company_show_Response_200": {
@@ -16644,6 +18074,71 @@
         "properties": []
       }
     },
+    "Network_company_updateRequestBadRequestError": {
+      "name": "Network_company_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompaniesIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "NetworkCompanyEntitiesGetResponsesSchemaData": {
       "name": "NetworkCompanyEntitiesGetResponsesSchemaData",
       "shape": {
@@ -16701,6 +18196,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Company_entity_indexRequestBadRequestError": {
+      "name": "Company_entity_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -16770,6 +18330,71 @@
         "properties": []
       }
     },
+    "Network_company_entity_createRequestBadRequestError": {
+      "name": "Network_company_entity_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "CompanyEntity_network_company_entity_show_Response_200": {
       "name": "CompanyEntity_network_company_entity_show_Response_200",
       "shape": {
@@ -16831,6 +18456,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Network_company_entity_showRequestBadRequestError": {
+      "name": "Network_company_entity_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "CompanyEntity_network_company_entity_update_Response_200": {
@@ -16896,6 +18586,71 @@
         "properties": []
       }
     },
+    "Network_company_entity_updateRequestBadRequestError": {
+      "name": "Network_company_entity_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkCompanyEntitiesIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "NetworkContactsGetResponsesSchemaData": {
       "name": "NetworkContactsGetResponsesSchemaData",
       "shape": {
@@ -16953,6 +18708,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkContactsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Network_contact_indexRequestBadRequestError": {
+      "name": "Network_contact_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17022,6 +18842,71 @@
         "properties": []
       }
     },
+    "Network_contact_createRequestBadRequestError": {
+      "name": "Network_contact_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Contact_network_contact_show_Response_200": {
       "name": "Contact_network_contact_show_Response_200",
       "shape": {
@@ -17083,6 +18968,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Network_contact_showRequestBadRequestError": {
+      "name": "Network_contact_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "Contact_network_contact_update_Response_200": {
@@ -17148,6 +19098,71 @@
         "properties": []
       }
     },
+    "Network_contact_updateRequestBadRequestError": {
+      "name": "Network_contact_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkContactsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "NetworkLocationsGetResponsesSchemaData": {
       "name": "NetworkLocationsGetResponsesSchemaData",
       "shape": {
@@ -17205,6 +19220,71 @@
               "itemType": {
                 "type": "id",
                 "value": "NetworkLocationsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Location_indexRequestBadRequestError": {
+      "name": "Location_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17274,6 +19354,71 @@
         "properties": []
       }
     },
+    "Network_location_createRequestBadRequestError": {
+      "name": "Network_location_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Location_network_location_show_Response_200": {
       "name": "Location_network_location_show_Response_200",
       "shape": {
@@ -17335,6 +19480,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Network_location_showRequestBadRequestError": {
+      "name": "Network_location_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "Location_update_Response_200": {
@@ -17400,6 +19610,71 @@
         "properties": []
       }
     },
+    "Location_updateRequestBadRequestError": {
+      "name": "Location_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkLocationsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Company_network_company_me_Response_200": {
       "name": "Company_network_company_me_Response_200",
       "shape": {
@@ -17463,6 +19738,71 @@
         "properties": []
       }
     },
+    "Network_company_meRequestBadRequestError": {
+      "name": "Network_company_meRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "NetworkMeCompaniesGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "OceanShipmentContainerLegsGetResponsesSchemaData": {
       "name": "OceanShipmentContainerLegsGetResponsesSchemaData",
       "shape": {
@@ -17520,6 +19860,71 @@
               "itemType": {
                 "type": "id",
                 "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Ocean_container_legs_indexRequestBadRequestError": {
+      "name": "Ocean_container_legs_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainerLegsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17589,6 +19994,71 @@
         "properties": []
       }
     },
+    "Ocean_container_legs_showRequestBadRequestError": {
+      "name": "Ocean_container_legs_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainerLegsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "OceanShipmentContainersGetResponsesSchemaData": {
       "name": "OceanShipmentContainersGetResponsesSchemaData",
       "shape": {
@@ -17646,6 +20116,71 @@
               "itemType": {
                 "type": "id",
                 "value": "OceanShipmentContainersGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Container_listRequestBadRequestError": {
+      "name": "Container_listRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainersGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17713,6 +20248,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Container_showRequestBadRequestError": {
+      "name": "Container_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "OceanShipmentContainersIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "PortsGetParametersSchema": {
@@ -17798,6 +20398,71 @@
         ]
       }
     },
+    "Ports_indexRequestBadRequestError": {
+      "name": "Ports_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PortsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "ProductsGetResponsesSchemaData": {
       "name": "ProductsGetResponsesSchemaData",
       "shape": {
@@ -17855,6 +20520,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ProductsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Product_indexRequestBadRequestError": {
+      "name": "Product_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -17924,6 +20654,71 @@
         "properties": []
       }
     },
+    "Product_createRequestBadRequestError": {
+      "name": "Product_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Product_show_Response_200": {
       "name": "Product_show_Response_200",
       "shape": {
@@ -17987,6 +20782,71 @@
         "properties": []
       }
     },
+    "Product_showRequestBadRequestError": {
+      "name": "Product_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Product_update_Response_200": {
       "name": "Product_update_Response_200",
       "shape": {
@@ -18048,6 +20908,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Product_updateRequestBadRequestError": {
+      "name": "Product_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ProductsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "PurchaseOrderLineItemsGetParametersSchema": {
@@ -18128,6 +21053,71 @@
         ]
       }
     },
+    "Purchase_order_line_item_indexRequestBadRequestError": {
+      "name": "Purchase_order_line_item_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrderLineItemsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PurchaseOrderLineItem_purchase_order_line_item_show_Response_200": {
       "name": "PurchaseOrderLineItem_purchase_order_line_item_show_Response_200",
       "shape": {
@@ -18189,6 +21179,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Purchase_order_line_item_showRequestBadRequestError": {
+      "name": "Purchase_order_line_item_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrderLineItemsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "PurchaseOrdersGetParametersSchema": {
@@ -18315,12 +21370,142 @@
         ]
       }
     },
+    "Purchase_order_indexRequestBadRequestError": {
+      "name": "Purchase_order_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PurchaseOrdersPostResponsesSchemaData": {
       "name": "PurchaseOrdersPostResponsesSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Purchase_order_createRequestBadRequestError": {
+      "name": "Purchase_order_createRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "PurchaseOrder_purchase_order_show_Response_200": {
@@ -18386,12 +21571,142 @@
         "properties": []
       }
     },
+    "Purchase_order_showRequestBadRequestError": {
+      "name": "Purchase_order_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "PurchaseOrdersIdPostResponsesSchemaData": {
       "name": "PurchaseOrdersIdPostResponsesSchemaData",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Purchase_order_updateRequestBadRequestError": {
+      "name": "Purchase_order_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "PurchaseOrdersIdPostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "ShipmentLegsGetResponsesSchemaData": {
@@ -18451,6 +21766,71 @@
               "itemType": {
                 "type": "id",
                 "value": "ShipmentLegsGetResponsesSchemaData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Shipment_leg_indexRequestBadRequestError": {
+      "name": "Shipment_leg_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentLegsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
               }
             }
           }
@@ -18518,6 +21898,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Shipment_leg_showRequestBadRequestError": {
+      "name": "Shipment_leg_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentLegsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "ShipmentsGetParametersSchema": {
@@ -18598,6 +22043,71 @@
         ]
       }
     },
+    "Shipment_indexRequestBadRequestError": {
+      "name": "Shipment_indexRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Shipment_show_Response_200": {
       "name": "Shipment_show_Response_200",
       "shape": {
@@ -18661,6 +22171,71 @@
         "properties": []
       }
     },
+    "Shipment_showRequestBadRequestError": {
+      "name": "Shipment_showRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsIdGetResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
+    },
     "Shipment_update_Response_200": {
       "name": "Shipment_update_Response_200",
       "shape": {
@@ -18722,6 +22297,71 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "Shipment_updateRequestBadRequestError": {
+      "name": "Shipment_updateRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsIdPatchResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
       }
     },
     "ShipmentsShareablePostResponsesSchemaDataShipmentsItems": {
@@ -18831,6 +22471,71 @@
           }
         ]
       }
+    },
+    "Shipments_shareableRequestBadRequestError": {
+      "name": "Shipments_shareableRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "_object",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "self",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "version",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ShipmentsShareablePostResponsesSchemaData"
+              }
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "Error"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -18896,7 +22601,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_amendment_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -19423,7 +23128,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_line_item_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -19568,7 +23273,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_line_item_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -19732,7 +23437,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_line_item_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -20123,7 +23828,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Bookings_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -20625,7 +24330,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -21357,7 +25062,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Booking_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -21894,7 +25599,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Carbon_calculation_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -22394,7 +26099,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Commercial_invoices_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -22694,7 +26399,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Commercial_invoices_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -22970,7 +26675,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Commercial_invoices_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -23281,7 +26986,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Customs_entry_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -23424,7 +27129,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Customs_entries_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -23671,7 +27376,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Documents_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -23820,7 +27525,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Documents_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -23956,7 +27661,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Documents_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -24095,7 +27800,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Documents_downloadRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -24241,7 +27946,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Events_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -25947,7 +29652,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Events_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -27840,7 +31545,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Invoice_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -28411,7 +32116,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Invoices_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -29021,7 +32726,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -29225,7 +32930,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -29614,7 +33319,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -29785,7 +33490,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_meRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30030,7 +33735,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Company_entity_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30194,7 +33899,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_entity_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30362,7 +34067,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_entity_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30533,7 +34238,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_company_entity_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30759,7 +34464,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_contact_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -30907,7 +34612,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_contact_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31061,7 +34766,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_contact_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31216,7 +34921,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_contact_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31452,7 +35157,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Location_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31626,7 +35331,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_location_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31806,7 +35511,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Network_location_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -31987,7 +35692,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Location_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -32220,7 +35925,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Ocean_container_legs_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -32378,7 +36083,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Ocean_container_legs_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -32587,7 +36292,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Container_listRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -32822,7 +36527,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Container_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -33091,7 +36796,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Ports_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -33363,7 +37068,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Product_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -33542,7 +37247,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Product_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -33728,7 +37433,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Product_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -33914,7 +37619,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Product_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -34178,7 +37883,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_line_item_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -34497,7 +38202,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_line_item_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -34993,7 +38698,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -35443,7 +39148,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_createRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -35807,7 +39512,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -35922,7 +39627,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Purchase_order_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -36299,7 +40004,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipment_leg_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -36682,7 +40387,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipment_leg_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -37427,7 +41132,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipment_indexRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -38054,7 +41759,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipment_showRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -38677,7 +42382,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipment_updateRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -39308,7 +43013,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Shipments_shareableRequestBadRequestError"
                 }
               },
               "statusCode": 400,
