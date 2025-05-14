@@ -45,8 +45,14 @@ class SubmissionClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.submission.create_execution_session(language="JAVA", )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.create_execution_session(
+            language="JAVA",
+        )
         """
         _response = self._raw_client.create_execution_session(language, request_options=request_options)
         return _response.data
@@ -71,8 +77,14 @@ class SubmissionClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.submission.get_execution_session(session_id='sessionId', )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.get_execution_session(
+            session_id="sessionId",
+        )
         """
         _response = self._raw_client.get_execution_session(session_id, request_options=request_options)
         return _response.data
@@ -97,8 +109,14 @@ class SubmissionClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.submission.stop_execution_session(session_id='sessionId', )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.submission.stop_execution_session(
+            session_id="sessionId",
+        )
         """
         _response = self._raw_client.stop_execution_session(session_id, request_options=request_options)
         return _response.data
@@ -119,7 +137,11 @@ class SubmissionClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
         client.submission.get_execution_sessions_state()
         """
         _response = self._raw_client.get_execution_sessions_state(request_options=request_options)
@@ -160,11 +182,22 @@ class AsyncSubmissionClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.submission.create_execution_session(language="JAVA", )
+            await client.submission.create_execution_session(
+                language="JAVA",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_execution_session(language, request_options=request_options)
@@ -189,11 +222,22 @@ class AsyncSubmissionClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.submission.get_execution_session(session_id='sessionId', )
+            await client.submission.get_execution_session(
+                session_id="sessionId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_execution_session(session_id, request_options=request_options)
@@ -218,11 +262,22 @@ class AsyncSubmissionClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.submission.stop_execution_session(session_id='sessionId', )
+            await client.submission.stop_execution_session(
+                session_id="sessionId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.stop_execution_session(session_id, request_options=request_options)
@@ -243,11 +298,20 @@ class AsyncSubmissionClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.submission.get_execution_sessions_state()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_execution_sessions_state(request_options=request_options)

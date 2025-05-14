@@ -76,17 +76,85 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-        from seed.problem import ProblemDescription
-        from seed.problem import ProblemDescriptionBoard_Html
-        from seed.problem import ProblemFiles
-        from seed.commons import FileInfo
-        from seed.problem import VariableTypeAndName
-        from seed.commons import VariableType
-        from seed.commons import TestCaseWithExpectedResult
-        from seed.commons import TestCase
-        from seed.commons import VariableValue_IntegerValue
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.problem.create_problem(problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
+        from seed.commons import (
+            FileInfo,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableValue_IntegerValue,
+        )
+        from seed.problem import (
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            VariableTypeAndName,
+        )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.create_problem(
+            problem_name="problemName",
+            problem_description=ProblemDescription(
+                boards=[
+                    ProblemDescriptionBoard_Html(value="boards"),
+                    ProblemDescriptionBoard_Html(value="boards"),
+                ],
+            ),
+            files={
+                "JAVA": ProblemFiles(
+                    solution_file=FileInfo(
+                        filename="filename",
+                        contents="contents",
+                    ),
+                    read_only_files=[
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                    ],
+                )
+            },
+            input_params=[
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+            ],
+            output_type=VariableType(),
+            testcases=[
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
+            ],
+            method_name="methodName",
+        )
         """
         _response = self._raw_client.create_problem(
             problem_name=problem_name,
@@ -144,17 +212,86 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-        from seed.problem import ProblemDescription
-        from seed.problem import ProblemDescriptionBoard_Html
-        from seed.problem import ProblemFiles
-        from seed.commons import FileInfo
-        from seed.problem import VariableTypeAndName
-        from seed.commons import VariableType
-        from seed.commons import TestCaseWithExpectedResult
-        from seed.commons import TestCase
-        from seed.commons import VariableValue_IntegerValue
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.problem.update_problem(problem_id='problemId', problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
+        from seed.commons import (
+            FileInfo,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableValue_IntegerValue,
+        )
+        from seed.problem import (
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            VariableTypeAndName,
+        )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.update_problem(
+            problem_id="problemId",
+            problem_name="problemName",
+            problem_description=ProblemDescription(
+                boards=[
+                    ProblemDescriptionBoard_Html(value="boards"),
+                    ProblemDescriptionBoard_Html(value="boards"),
+                ],
+            ),
+            files={
+                "JAVA": ProblemFiles(
+                    solution_file=FileInfo(
+                        filename="filename",
+                        contents="contents",
+                    ),
+                    read_only_files=[
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                    ],
+                )
+            },
+            input_params=[
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+            ],
+            output_type=VariableType(),
+            testcases=[
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
+                TestCaseWithExpectedResult(
+                    test_case=TestCase(
+                        id="id",
+                        params=[
+                            VariableValue_IntegerValue(value=1),
+                            VariableValue_IntegerValue(value=1),
+                        ],
+                    ),
+                    expected_result=VariableValue_IntegerValue(value=1),
+                ),
+            ],
+            method_name="methodName",
+        )
         """
         _response = self._raw_client.update_problem(
             problem_id,
@@ -187,8 +324,14 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.problem.delete_problem(problem_id='problemId', )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.delete_problem(
+            problem_id="problemId",
+        )
         """
         _response = self._raw_client.delete_problem(problem_id, request_options=request_options)
         return _response.data
@@ -228,10 +371,27 @@ class ProblemClient:
         Examples
         --------
         from seed import SeedTrace
-        from seed.problem import VariableTypeAndName
         from seed.commons import VariableType
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.problem.get_default_starter_files(input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), method_name='methodName', )
+        from seed.problem import VariableTypeAndName
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.problem.get_default_starter_files(
+            input_params=[
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+                VariableTypeAndName(
+                    variable_type=VariableType(),
+                    name="name",
+                ),
+            ],
+            output_type=VariableType(),
+            method_name="methodName",
+        )
         """
         _response = self._raw_client.get_default_starter_files(
             input_params=input_params, output_type=output_type, method_name=method_name, request_options=request_options
@@ -294,20 +454,93 @@ class AsyncProblemClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
-        from seed.problem import ProblemDescription
-        from seed.problem import ProblemDescriptionBoard_Html
-        from seed.problem import ProblemFiles
-        from seed.commons import FileInfo
-        from seed.problem import VariableTypeAndName
-        from seed.commons import VariableType
-        from seed.commons import TestCaseWithExpectedResult
-        from seed.commons import TestCase
-        from seed.commons import VariableValue_IntegerValue
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+        from seed.commons import (
+            FileInfo,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableValue_IntegerValue,
+        )
+        from seed.problem import (
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            VariableTypeAndName,
+        )
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.problem.create_problem(problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
+            await client.problem.create_problem(
+                problem_name="problemName",
+                problem_description=ProblemDescription(
+                    boards=[
+                        ProblemDescriptionBoard_Html(value="boards"),
+                        ProblemDescriptionBoard_Html(value="boards"),
+                    ],
+                ),
+                files={
+                    "JAVA": ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
+                ],
+                method_name="methodName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create_problem(
@@ -365,20 +598,94 @@ class AsyncProblemClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
-        from seed.problem import ProblemDescription
-        from seed.problem import ProblemDescriptionBoard_Html
-        from seed.problem import ProblemFiles
-        from seed.commons import FileInfo
-        from seed.problem import VariableTypeAndName
-        from seed.commons import VariableType
-        from seed.commons import TestCaseWithExpectedResult
-        from seed.commons import TestCase
-        from seed.commons import VariableValue_IntegerValue
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+        from seed.commons import (
+            FileInfo,
+            TestCase,
+            TestCaseWithExpectedResult,
+            VariableType,
+            VariableValue_IntegerValue,
+        )
+        from seed.problem import (
+            ProblemDescription,
+            ProblemDescriptionBoard_Html,
+            ProblemFiles,
+            VariableTypeAndName,
+        )
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.problem.update_problem(problem_id='problemId', problem_name='problemName', problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value='boards'), ProblemDescriptionBoard_Html(value='boards')], ), files={"JAVA": ProblemFiles(solution_file=FileInfo(filename='filename', contents='contents', ), read_only_files=[FileInfo(filename='filename', contents='contents', ), FileInfo(filename='filename', contents='contents', )], )}, input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), testcases=[TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), ), TestCaseWithExpectedResult(test_case=TestCase(id='id', params=[VariableValue_IntegerValue(value=1), VariableValue_IntegerValue(value=1)], ), expected_result=VariableValue_IntegerValue(value=1), )], method_name='methodName', )
+            await client.problem.update_problem(
+                problem_id="problemId",
+                problem_name="problemName",
+                problem_description=ProblemDescription(
+                    boards=[
+                        ProblemDescriptionBoard_Html(value="boards"),
+                        ProblemDescriptionBoard_Html(value="boards"),
+                    ],
+                ),
+                files={
+                    "JAVA": ProblemFiles(
+                        solution_file=FileInfo(
+                            filename="filename",
+                            contents="contents",
+                        ),
+                        read_only_files=[
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
+                            FileInfo(
+                                filename="filename",
+                                contents="contents",
+                            ),
+                        ],
+                    )
+                },
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                ],
+                output_type=VariableType(),
+                testcases=[
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
+                    TestCaseWithExpectedResult(
+                        test_case=TestCase(
+                            id="id",
+                            params=[
+                                VariableValue_IntegerValue(value=1),
+                                VariableValue_IntegerValue(value=1),
+                            ],
+                        ),
+                        expected_result=VariableValue_IntegerValue(value=1),
+                    ),
+                ],
+                method_name="methodName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.update_problem(
@@ -413,11 +720,22 @@ class AsyncProblemClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.problem.delete_problem(problem_id='problemId', )
+            await client.problem.delete_problem(
+                problem_id="problemId",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete_problem(problem_id, request_options=request_options)
@@ -457,13 +775,35 @@ class AsyncProblemClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
-        from seed.problem import VariableTypeAndName
-        from seed.commons import VariableType
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+        from seed.commons import VariableType
+        from seed.problem import VariableTypeAndName
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.problem.get_default_starter_files(input_params=[VariableTypeAndName(variable_type=VariableType(), name='name', ), VariableTypeAndName(variable_type=VariableType(), name='name', )], output_type=VariableType(), method_name='methodName', )
+            await client.problem.get_default_starter_files(
+                input_params=[
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                    VariableTypeAndName(
+                        variable_type=VariableType(),
+                        name="name",
+                    ),
+                ],
+                output_type=VariableType(),
+                method_name="methodName",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_default_starter_files(

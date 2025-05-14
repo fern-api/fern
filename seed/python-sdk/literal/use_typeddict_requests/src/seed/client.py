@@ -34,7 +34,10 @@ class SeedLiteral:
     Examples
     --------
     from seed import SeedLiteral
-    client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedLiteral(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -91,7 +94,10 @@ class AsyncSeedLiteral:
     Examples
     --------
     from seed import AsyncSeedLiteral
-    client = AsyncSeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedLiteral(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

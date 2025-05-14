@@ -16,7 +16,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -72,7 +72,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -111,7 +111,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -162,7 +162,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -201,7 +201,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -252,7 +252,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -291,7 +291,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -342,7 +342,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -408,7 +408,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -486,7 +486,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -568,7 +568,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -662,7 +662,7 @@
                     "from seed import SeedPathParameters"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -717,7 +717,7 @@
                         "from seed import AsyncSeedPathParameters"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPathParameters(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

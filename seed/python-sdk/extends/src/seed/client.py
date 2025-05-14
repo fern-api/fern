@@ -32,7 +32,10 @@ class SeedExtends:
     Examples
     --------
     from seed import SeedExtends
-    client = SeedExtends(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedExtends(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -90,8 +93,13 @@ class SeedExtends:
         Examples
         --------
         from seed import SeedExtends
-        client = SeedExtends(base_url="https://yourhost.com/path/to/api", )
-        client.extended_inline_request_body(unique='unique', )
+
+        client = SeedExtends(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.extended_inline_request_body(
+            unique="unique",
+        )
         """
         _response = self._raw_client.extended_inline_request_body(
             unique=unique, name=name, docs=docs, request_options=request_options
@@ -120,7 +128,10 @@ class AsyncSeedExtends:
     Examples
     --------
     from seed import AsyncSeedExtends
-    client = AsyncSeedExtends(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedExtends(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -177,11 +188,21 @@ class AsyncSeedExtends:
 
         Examples
         --------
-        from seed import AsyncSeedExtends
         import asyncio
-        client = AsyncSeedExtends(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedExtends
+
+        client = AsyncSeedExtends(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.extended_inline_request_body(unique='unique', )
+            await client.extended_inline_request_body(
+                unique="unique",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.extended_inline_request_body(

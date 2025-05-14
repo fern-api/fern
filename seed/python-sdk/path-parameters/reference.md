@@ -14,8 +14,14 @@
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.organizations.get_organization(tenant_id='tenant_id', organization_id='organization_id', )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.organizations.get_organization(
+    tenant_id="tenant_id",
+    organization_id="organization_id",
+)
 
 ```
 </dd>
@@ -73,8 +79,15 @@ client.organizations.get_organization(tenant_id='tenant_id', organization_id='or
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.organizations.get_organization_user(tenant_id='tenant_id', organization_id='organization_id', user_id='user_id', )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.organizations.get_organization_user(
+    tenant_id="tenant_id",
+    organization_id="organization_id",
+    user_id="user_id",
+)
 
 ```
 </dd>
@@ -140,8 +153,15 @@ client.organizations.get_organization_user(tenant_id='tenant_id', organization_i
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.organizations.search_organizations(tenant_id='tenant_id', organization_id='organization_id', limit=1, )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.organizations.search_organizations(
+    tenant_id="tenant_id",
+    organization_id="organization_id",
+    limit=1,
+)
 
 ```
 </dd>
@@ -208,8 +228,14 @@ client.organizations.search_organizations(tenant_id='tenant_id', organization_id
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.get_user(
+    tenant_id="tenant_id",
+    user_id="user_id",
+)
 
 ```
 </dd>
@@ -267,8 +293,15 @@ client.user.get_user(tenant_id='tenant_id', user_id='user_id', )
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'], )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.create_user(
+    tenant_id="tenant_id",
+    name="name",
+    tags=["tags", "tags"],
+)
 
 ```
 </dd>
@@ -334,8 +367,16 @@ client.user.create_user(tenant_id='tenant_id', name='name', tags=['tags', 'tags'
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', tags=['tags', 'tags'], )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.update_user(
+    tenant_id="tenant_id",
+    user_id="user_id",
+    name="name",
+    tags=["tags", "tags"],
+)
 
 ```
 </dd>
@@ -409,8 +450,15 @@ client.user.update_user(tenant_id='tenant_id', user_id='user_id', name='name', t
 
 ```python
 from seed import SeedPathParameters
-client = SeedPathParameters(base_url="https://yourhost.com/path/to/api", )
-client.user.search_users(tenant_id='tenant_id', user_id='user_id', limit=1, )
+
+client = SeedPathParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.user.search_users(
+    tenant_id="tenant_id",
+    user_id="user_id",
+    limit=1,
+)
 
 ```
 </dd>

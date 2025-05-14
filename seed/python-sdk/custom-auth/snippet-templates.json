@@ -16,7 +16,7 @@
                     "from seed import SeedCustomAuth"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedCustomAuth"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -72,7 +72,7 @@
                     "from seed import SeedCustomAuth"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -111,7 +111,7 @@
                         "from seed import AsyncSeedCustomAuth"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCustomAuth(custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\", base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

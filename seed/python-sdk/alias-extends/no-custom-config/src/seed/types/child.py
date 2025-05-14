@@ -12,7 +12,11 @@ class Child(Parent):
     Examples
     --------
     from seed import Child
-    Child(parent='Property from the parent', child='Property from the child', )
+
+    Child(
+        parent="Property from the parent",
+        child="Property from the child",
+    )
     """
 
     child: str

@@ -27,6 +27,7 @@ class Test_Or(UniversalBaseModel):
             smart_union = True
 """
 from seed.types import Test_And
+
 Test_And(value=True)
 """
 Test = typing.Union[Test_And, Test_Or]

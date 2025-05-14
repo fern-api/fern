@@ -11,7 +11,12 @@ class Metadata(UniversalBaseModel):
     Examples
     --------
     from seed.commons.types import Metadata
-    Metadata(id='metadata-js8dg24b', data={'foo': 'bar', 'baz': 'qux'}, json_string='{"foo": "bar", "baz": "qux"}', )
+    
+    Metadata(
+        id="metadata-js8dg24b",
+        data={"foo": "bar", "baz": "qux"},
+        json_string='{"foo": "bar", "baz": "qux"}',
+    )
     """
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None

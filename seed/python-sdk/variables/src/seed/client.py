@@ -28,7 +28,10 @@ class SeedVariables:
     Examples
     --------
     from seed import SeedVariables
-    client = SeedVariables(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedVariables(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -75,7 +78,10 @@ class AsyncSeedVariables:
     Examples
     --------
     from seed import AsyncSeedVariables
-    client = AsyncSeedVariables(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedVariables(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(

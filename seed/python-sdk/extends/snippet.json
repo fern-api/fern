@@ -1,9 +1,9 @@
 {
     "types": {
-        "type_:ExampleType": "from seed import ExampleType\nExampleType(docs='This is an example type.', name='Example', )",
-        "type_:NestedType": "from seed import NestedType\nNestedType(docs='This is an example nested type.', name='NestedExample', raw='{\"nested\": \"example\"}', )",
-        "type_:Docs": "from seed import Docs\nDocs(docs='Types extend this type to include a docs property.', )",
-        "type_:JSON": "from seed import Json\nJson(docs='Types extend this type to include a docs and json property.', raw='{\"docs\": true, \"json\": true}', )"
+        "type_:ExampleType": "from seed import ExampleType\n\nExampleType(\n    docs=\"This is an example type.\",\n    name=\"Example\",\n)\n",
+        "type_:NestedType": "from seed import NestedType\n\nNestedType(\n    docs=\"This is an example nested type.\",\n    name=\"NestedExample\",\n    raw='{\"nested\": \"example\"}',\n)\n",
+        "type_:Docs": "from seed import Docs\n\nDocs(\n    docs=\"Types extend this type to include a docs property.\",\n)\n",
+        "type_:JSON": "from seed import Json\n\nJson(\n    docs=\"Types extend this type to include a docs and json property.\",\n    raw='{\"docs\": true, \"json\": true}',\n)\n"
     },
     "endpoints": [
         {
@@ -14,8 +14,8 @@
                 "identifier_override": "endpoint_.extendedInlineRequestBody"
             },
             "snippet": {
-                "sync_client": "from seed import SeedExtends\nclient = SeedExtends(base_url=\"https://yourhost.com/path/to/api\", )\nclient.extended_inline_request_body(unique='unique', )\n",
-                "async_client": "from seed import AsyncSeedExtends\nimport asyncio\nclient = AsyncSeedExtends(base_url=\"https://yourhost.com/path/to/api\", )\nasync def main() -> None:\n    await client.extended_inline_request_body(unique='unique', )\nasyncio.run(main())",
+                "sync_client": "from seed import SeedExtends\n\nclient = SeedExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.extended_inline_request_body(\n    unique=\"unique\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedExtends\n\nclient = AsyncSeedExtends(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.extended_inline_request_body(\n        unique=\"unique\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }
