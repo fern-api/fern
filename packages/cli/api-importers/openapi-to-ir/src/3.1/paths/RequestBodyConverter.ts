@@ -1,5 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
+import { MediaType } from "@fern-api/core-utils";
 import {
     FileProperty,
     FileUploadRequestProperty,
@@ -32,7 +33,9 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return undefined;
         }
 
-        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => type.includes("json"));
+        const jsonContentTypes = Object.keys(this.requestBody.content).filter((type) => {
+            return MediaType.parse(type)?.isJSON();
+        });
         for (const contentType of jsonContentTypes) {
             const result = this.handleJsonOrFormContent({ contentType });
             if (result != null) {
@@ -40,84 +43,41 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             }
         }
 
-        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) =>
-            type.includes("multipart")
-        );
-        for (const contentType of multipartContentTypes) {
-            const mediaTypeObject = this.requestBody.content[contentType];
-            const schemaId = [...this.group, this.method, "Request"].join("_");
-            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
-                continue;
-            }
-            const convertedSchema = this.parseMediaTypeObject({
-                mediaTypeObject,
-                schemaId,
-                resolveSchema: true
-            });
-            if (convertedSchema == null) {
-                continue;
-            }
-
-            if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
-                const requestBody = HttpRequestBody.fileUpload({
-                    contentType,
-                    docs: this.requestBody.description,
-                    name: this.context.casingsGenerator.generateName(schemaId),
-                    properties: convertedSchema.schema?.typeDeclaration.shape.properties.map((property) => {
-                        return this.convertRequestBodyProperty({ property, contentType });
-                    }),
-                    v2Examples: this.convertMediaTypeObjectExamples({
-                        mediaTypeObject,
-                        exampleGenerationStrategy: "request"
-                    })
-                });
-                return {
-                    requestBody,
-                    inlinedTypes: this.context.removeSchemaFromInlinedTypes({
-                        id: schemaId,
-                        inlinedTypes: convertedSchema.inlinedTypes
-                    }),
-                    examples: convertedSchema.examples
-                };
-            }
-        }
-
-        const octetStreamContentTypes = Object.keys(this.requestBody.content).filter((type) =>
-            type.includes("octet-stream")
-        );
-        for (const contentType of octetStreamContentTypes) {
-            const mediaTypeObject = this.requestBody.content[contentType];
-            const schemaId = [...this.group, this.method, "Request"].join("_");
-            if (mediaTypeObject == null || mediaTypeObject.schema == null) {
-                continue;
-            }
-            const convertedSchema = this.parseMediaTypeObject({
-                mediaTypeObject,
-                schemaId
-            });
-            if (convertedSchema == null) {
-                continue;
-            }
-            const requestBody = HttpRequestBody.bytes({
-                contentType,
-                isOptional: this.requestBody.required === false,
-                docs: this.requestBody.description,
-                v2Examples: this.convertMediaTypeObjectExamples({
-                    mediaTypeObject,
-                    exampleGenerationStrategy: "request"
-                })
-            });
-            return {
-                requestBody,
-                inlinedTypes: convertedSchema.inlinedTypes ?? {}
-            };
-        }
-
-        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) =>
-            type.includes("urlencoded")
-        );
+        const urlEncodedContentTypes = Object.keys(this.requestBody.content).filter((type) => {
+            return MediaType.parse(type)?.isURLEncoded();
+        });
         for (const contentType of urlEncodedContentTypes) {
             const result = this.handleJsonOrFormContent({ contentType });
+            if (result != null) {
+                return result;
+            }
+        }
+
+        const plainTextContentTypes = Object.keys(this.requestBody.content).filter((type) => {
+            return MediaType.parse(type)?.isPlainText();
+        });
+        for (const contentType of plainTextContentTypes) {
+            const result = this.handleJsonOrFormContent({ contentType });
+            if (result != null) {
+                return result;
+            }
+        }
+
+        const multipartContentTypes = Object.keys(this.requestBody.content).filter((type) => {
+            return MediaType.parse(type)?.isMultipart();
+        });
+        for (const contentType of multipartContentTypes) {
+            const result = this.handleMultipartContent({ contentType });
+            if (result != null) {
+                return result;
+            }
+        }
+
+        const octetStreamContentTypes = Object.keys(this.requestBody.content).filter((type) => {
+            return MediaType.parse(type)?.isOctetStream();
+        });
+        for (const contentType of octetStreamContentTypes) {
+            const result = this.handleOctetStreamContent({ contentType });
             if (result != null) {
                 return result;
             }
@@ -175,6 +135,73 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                 inlinedTypes: convertedSchema.inlinedTypes ?? {}
             };
         }
+    }
+
+    private handleMultipartContent({ contentType }: { contentType: string }): RequestBodyConverter.Output | undefined {
+        const mediaTypeObject = this.requestBody.content[contentType];
+        const schemaId = [...this.group, this.method, "Request"].join("_");
+        if (mediaTypeObject == null || mediaTypeObject.schema == null) {
+            return undefined;
+        }
+        const convertedSchema = this.parseMediaTypeObject({
+            mediaTypeObject,
+            schemaId,
+            resolveSchema: true
+        });
+        if (convertedSchema == null) {
+            return undefined;
+        }
+
+        if (convertedSchema.schema?.typeDeclaration.shape.type === "object") {
+            const requestBody = HttpRequestBody.fileUpload({
+                contentType,
+                docs: this.requestBody.description,
+                name: this.context.casingsGenerator.generateName(schemaId),
+                properties: convertedSchema.schema?.typeDeclaration.shape.properties.map((property) => {
+                    return this.convertRequestBodyProperty({ property, contentType });
+                }),
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    exampleGenerationStrategy: "request"
+                })
+            });
+            return {
+                requestBody,
+                inlinedTypes: this.context.removeSchemaFromInlinedTypes({
+                    id: schemaId,
+                    inlinedTypes: convertedSchema.inlinedTypes
+                }),
+                examples: convertedSchema.examples
+            };
+        }
+
+        return undefined;
+    }
+
+    private handleOctetStreamContent({
+        contentType
+    }: {
+        contentType: string;
+    }): RequestBodyConverter.Output | undefined {
+        const mediaTypeObject = this.requestBody.content[contentType];
+        const schemaId = [...this.group, this.method, "Request"].join("_");
+        const convertedSchema = this.parseMediaTypeObject({
+            mediaTypeObject,
+            schemaId
+        });
+        const requestBody = HttpRequestBody.bytes({
+            contentType,
+            isOptional: this.requestBody.required === false,
+            docs: this.requestBody.description,
+            v2Examples: this.convertMediaTypeObjectExamples({
+                mediaTypeObject,
+                exampleGenerationStrategy: "request"
+            })
+        });
+        return {
+            requestBody,
+            inlinedTypes: convertedSchema?.inlinedTypes ?? {}
+        };
     }
 
     private convertRequestBodyProperty({ property, contentType }: { property: ObjectProperty; contentType: string }) {
