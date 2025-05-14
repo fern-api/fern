@@ -123,7 +123,25 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         break;
                     case "header": {
                         const headerName = convertedParameter.parameter.name.name.originalName;
-                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase())) {
+
+                        let duplicateHeader = false;
+                        const authSchemes = this.context.authOverrides?.["auth-schemes"];
+                        if (authSchemes != null) {
+                            const headerWireValue = convertedParameter.parameter.name.wireValue;
+                            for (const authScheme of Object.values(authSchemes)) {
+                                if (
+                                    authScheme &&
+                                    typeof authScheme === "object" &&
+                                    "header" in authScheme &&
+                                    authScheme.header === headerWireValue
+                                ) {
+                                    duplicateHeader = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;
