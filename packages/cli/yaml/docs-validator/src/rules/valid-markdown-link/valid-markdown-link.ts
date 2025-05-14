@@ -78,7 +78,7 @@ export const ValidMarkdownLinks: Rule = {
         for (const specialPage of specialDocPages) {
             const pageWithBasePath = baseUrl.basePath
                 ? `${removeLeadingSlash(baseUrl.basePath)}${specialPage}`
-                : specialPage;
+                : removeLeadingSlash(specialPage);
             visitableSlugs.add(pageWithBasePath);
         }
 
