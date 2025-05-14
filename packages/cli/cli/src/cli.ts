@@ -59,7 +59,7 @@ const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
     const isLocal = process.argv.includes("--local");
-    const cliContext = new CliContext(process.stdout, { isLocal });
+    const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
     const exit = async () => {
         await cliContext.exit();
