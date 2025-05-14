@@ -1189,7 +1189,10 @@ func (f *fileWriter) WriteClient(
 		}
 
 		if endpoint.RequestIsBytes {
-			if endpoint.RequestIsOptional {
+			if f.useReaderForBytesRequest {
+				// The io.Reader is already specified by the caller, so we don't need to
+				// do anything.
+			} else if endpoint.RequestIsOptional {
 				f.P("var requestBuffer io.Reader")
 				f.P("if ", endpoint.RequestBytesParameterName, " != nil {")
 				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
@@ -2359,9 +2362,13 @@ func (f *fileWriter) endpointFromIR(
 				case "typeReference":
 					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false, f.packageLayout)
 				case "bytes":
-					contentType = "application/octet-stream"
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestType = "io.Reader"
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
 					requestIsBytes = true
 					requestIsOptional = requestBody.Bytes.IsOptional
 					requestBytesParameterName = requestParameterName
@@ -2377,8 +2384,11 @@ func (f *fileWriter) endpointFromIR(
 					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
-					contentType = "application/octet-stream"
 					requestValueName = "requestBuffer"
+					if f.useReaderForBytesRequest {
+						requestValueName = requestParameterName
+					}
+					contentType = "application/octet-stream"
 					requestIsBytes = true
 					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
 					requestBytesParameterName = fmt.Sprintf(

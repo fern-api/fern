@@ -58,6 +58,7 @@ type Config struct {
 	AlwaysSendRequiredProperties bool
 	InlinePathParameters         bool
 	InlineFileProperties         bool
+	UseReaderForBytesRequest     bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -209,6 +210,7 @@ func newConfig(configFilename string) (*Config, error) {
 		InlineFileProperties:         customConfig.InlineFileProperties,
 		IncludeLegacyClientOptions:   customConfig.IncludeLegacyClientOptions,
 		EnableExplicitNull:           customConfig.EnableExplicitNull,
+		UseReaderForBytesRequest:     customConfig.UseReaderForBytesRequest,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -269,6 +271,7 @@ type customConfig struct {
 	InlineFileProperties         bool          `json:"inlineFileProperties,omitempty"`
 	IncludeLegacyClientOptions   bool          `json:"includeLegacyClientOptions,omitempty"`
 	AlwaysSendRequiredProperties bool          `json:"alwaysSendRequiredProperties,omitempty"`
+	UseReaderForBytesRequest     bool          `json:"useReaderForBytesRequest,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
