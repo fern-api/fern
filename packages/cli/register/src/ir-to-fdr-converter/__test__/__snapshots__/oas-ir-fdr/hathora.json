@@ -3287,6 +3287,14 @@
               "contentType": "multipart/form-data"
             }
           },
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
           "errorsV2": [
             {
               "type": {
@@ -6200,6 +6208,14 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
           "errorsV2": [
             {
               "type": {
@@ -6321,6 +6337,14 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
           "errorsV2": [
             {
               "type": {
@@ -6443,6 +6467,14 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
           "errorsV2": [
             {
               "type": {

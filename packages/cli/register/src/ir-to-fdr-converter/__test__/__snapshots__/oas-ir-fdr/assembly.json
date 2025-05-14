@@ -6247,6 +6247,14 @@
             }
           ],
           "headers": [],
+          "response": {
+            "statusCode": 200,
+            "type": {
+              "type": "object",
+              "extends": [],
+              "properties": []
+            }
+          },
           "errorsV2": [
             {
               "type": {
