@@ -3169,21 +3169,6 @@
         ]
       }
     },
-    "V1ListenPostParametersSchema1": {
-      "name": "V1ListenPostParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "V1ListenPostParametersSchema0": {
       "description": "Use the latest version of a model",
       "name": "V1ListenPostParametersSchema0",
@@ -3211,6 +3196,19 @@
             "value": "numbers"
           }
         ]
+      }
+    },
+    "V1ListenPostParametersSchema1": {
+      "name": "V1ListenPostParametersSchema1",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemType": {
+            "type": "id",
+            "value": "V1ListenPostParametersSchemaOneOf1Items"
+          }
+        }
       }
     },
     "BadRequestError": {
@@ -3284,21 +3282,6 @@
             "value": "en"
           }
         ]
-      }
-    },
-    "V1ReadPostParametersSchema1": {
-      "name": "V1ReadPostParametersSchema1",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "type": "list",
-          "itemType": {
-            "type": "primitive",
-            "value": {
-              "type": "string"
-            }
-          }
-        }
       }
     },
     "V1SpeakPostParametersSchema0": {

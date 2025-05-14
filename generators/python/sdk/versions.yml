@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Add support for the custom introduction setting in the generated README.md.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
 - version: 4.20.0
   changelogEntry:
     - summary: |

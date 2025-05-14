@@ -31,7 +31,8 @@ interface ConvertedRequestBody {
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
 interface ConvertedResponseBody {
-    value: HttpResponse | undefined;
+    response: HttpResponse | undefined;
+    streamResponse: HttpResponse | undefined;
     errors: ResponseErrorConverter.Output[];
     examples?: Record<string, OpenAPIV3_1.ExampleObject>;
 }
@@ -216,7 +217,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
             }
             if (convertedResponseBody == null) {
                 convertedResponseBody = {
-                    value: undefined,
+                    response: undefined,
+                    streamResponse: undefined,
                     errors: [],
                     examples: {}
                 };
@@ -248,9 +250,13 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         ...this.inlinedTypes,
                         ...converted.inlinedTypes
                     };
-                    convertedResponseBody.value = {
+                    convertedResponseBody.response = {
                         statusCode: statusCodeNum,
                         body: converted.responseBody
+                    };
+                    convertedResponseBody.streamResponse = {
+                        statusCode: statusCodeNum,
+                        body: converted.streamResponseBody
                     };
                 }
             }

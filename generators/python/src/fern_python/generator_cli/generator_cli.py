@@ -175,6 +175,7 @@ class GeneratorCli:
                 ),
             )
         return generatorcli.readme.ReadmeConfig(
+            introduction=self._ir.readme_config.introduction if self._ir.readme_config else None,
             organization=self._organization,
             language=self._get_language_info(),
             remote=self._get_remote(

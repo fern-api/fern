@@ -758,6 +758,7 @@ function convertV2HttpEndpointExample({
     if (example == null) {
         return undefined;
     }
+    const responseBodyType = example.response?.body?.type;
     const responseBodyValue = example.response?.body != null ? example.response.body.value : undefined;
     const { codeSamples } = example ?? { codeSamples: [] };
     return {
@@ -828,8 +829,27 @@ function convertV2HttpEndpointExample({
             _other: () => undefined
         }),
         responseStatusCode: example.response?.statusCode ?? irEndpoint.response?.statusCode ?? 200,
-        responseBody: responseBodyValue != null ? { type: "json", value: responseBodyValue } : undefined,
-        responseBodyV3: responseBodyValue != null ? { type: "json", value: responseBodyValue } : undefined,
+        responseBody: responseBodyValue != null ? { type: responseBodyType, value: responseBodyValue } : undefined,
+        responseBodyV3:
+            responseBodyValue != null
+                ? example.response?.body?._visit<FdrCjsSdk.api.v1.register.ExampleEndpointResponse | undefined>({
+                      json: (value: unknown) => {
+                          return { type: "json", value };
+                      },
+                      stream: (value: unknown[]) => {
+                          return {
+                              type: "stream",
+                              value: value.map((v) => ({ type: "json", value: v }))
+                          };
+                      },
+                      error: () => {
+                          return undefined;
+                      },
+                      _other: () => {
+                          throw new Error("Unknown ExampleResponseBody: " + example.response?.body?.type);
+                      }
+                  })
+                : undefined,
         codeSamples: codeSamples
             ?.map((codeSample) => ({
                 name: "",

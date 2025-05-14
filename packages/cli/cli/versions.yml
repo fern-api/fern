@@ -4,6 +4,27 @@
       scripts that act upon the output of the CLI. The upgrade message is now written to stderr.
     type: fix
   irVersion: 57
+  version: 0.61.5
+
+- changelogEntry:
+  - summary: |
+      Support application/octet-stream content type requests in the OpenAPI parser.
+    type: fix
+  irVersion: 57
+  version: 0.61.4
+
+- changelogEntry:
+  - summary: |
+      Fix a bug where streaming response examples would not be rendered correctly in the API Reference.
+    type: fix
+  irVersion: 57
+  version: 0.61.3
+
+- changelogEntry: 
+  - summary: |
+      Improve the naming for nested primitive types in union schemas.
+    type: fix
+  irVersion: 57
   version: 0.61.2
 
 - changelogEntry: 
