@@ -20500,10 +20500,10 @@ docs: >
           "scheme": "bearer",
         },
       },
-      "default-environment": "Default",
+      "default-environment": "Cloud",
       "display-name": "Permit.io API",
       "environments": {
-        "Default": "https://api.permit.io",
+        "Cloud": "https://api.permit.io",
       },
       "error-discrimination": {
         "strategy": "status-code",
@@ -20516,8 +20516,8 @@ error-discrimination:
   strategy: status-code
 display-name: Permit.io API
 environments:
-  Default: https://api.permit.io
-default-environment: Default
+  Cloud: https://api.permit.io
+default-environment: Cloud
 auth-schemes:
   BearerAuthScheme:
     scheme: bearer
