@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Fix a bug where the docs resolver would throw an error when encountering missing or duplicate endpoints.
+    type: fix
+  irVersion: 57
+  version: 0.61.10
+
+- changelogEntry:
+  - summary: |
       String parameter examples will use the parameter name as the example value if no example is provided.
     type: fix
   irVersion: 57

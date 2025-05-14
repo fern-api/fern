@@ -3,7 +3,7 @@ import urlJoin from "url-join";
 
 import { docsYml } from "@fern-api/configuration-loader";
 import { isNonNullish } from "@fern-api/core-utils";
-import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
@@ -18,7 +18,7 @@ import { enrichApiPackageChild } from "./utils/enrichApiPackageChild";
 import { getApiLatestToNavigationNodeUrlSlug } from "./utils/getApiLatestToNavigationNodeUrlSlug";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
-import { stringifyEndpointPathParts } from "./utils/stringifyEndpointPathParts";
+import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
@@ -412,35 +412,38 @@ export class ApiReferenceNodeConverterLatest {
         );
 
         if (endpoint != null) {
-            if (endpoint.id == null) {
-                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
-            }
             if (this.#visitedEndpoints.has(endpoint.id)) {
                 this.taskContext.logger.error(`Duplicate endpoint found in the API Reference layout: ${endpoint.id}`);
             }
-            this.#visitedEndpoints.add(endpoint.id);
-            const endpointSlug =
-                endpointItem.slug != null
-                    ? parentSlug.append(endpointItem.slug).get()
-                    : getApiLatestToNavigationNodeUrlSlug({ item: endpoint, parentSlug });
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
-                type: "endpoint",
-                method: endpoint.method,
-                endpointId: endpoint.id,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(endpoint.availability),
-                isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
-                title: endpointItem.title ?? endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
-                slug: endpointSlug,
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                playground: this.#convertPlaygroundSettings(endpointItem.playground),
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
+            if (endpoint.id == null) {
+                this.taskContext.logger.error(
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
+                );
+            } else {
+                this.#visitedEndpoints.add(endpoint.id);
+                const endpointSlug =
+                    endpointItem.slug != null
+                        ? parentSlug.append(endpointItem.slug).get()
+                        : getApiLatestToNavigationNodeUrlSlug({ item: endpoint, parentSlug });
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${endpoint.id}`),
+                    type: "endpoint",
+                    method: endpoint.method,
+                    endpointId: endpoint.id,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: FernNavigation.V1.convertAvailability(endpoint.availability),
+                    isResponseStream: endpoint.responses?.[0]?.body.type === "stream",
+                    title: endpointItem.title ?? endpoint.displayName ?? stringifyEndpointPathParts(endpoint.path),
+                    slug: endpointSlug,
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
+            }
         }
 
         const webSocket = this.#apiDefinitionHolder.getWebSocketByLocator(
@@ -449,65 +452,68 @@ export class ApiReferenceNodeConverterLatest {
         );
 
         if (webSocket != null) {
-            if (webSocket.id == null) {
-                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
-            }
             if (this.#visitedWebSockets.has(webSocket.id)) {
                 this.taskContext.logger.error(
                     `Duplicate web socket found in the API Reference layout: ${webSocket.id}`
                 );
             }
-            this.#visitedWebSockets.add(webSocket.id);
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${webSocket.id}`),
-                type: "webSocket",
-                webSocketId: webSocket.id,
-                title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
-                slug:
-                    endpointItem.slug != null
-                        ? parentSlug.append(endpointItem.slug).get()
-                        : getApiLatestToNavigationNodeUrlSlug({ item: webSocket, parentSlug }),
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.V1.convertAvailability(webSocket.availability),
-                playground: this.#convertPlaygroundSettings(endpointItem.playground),
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
+            if (webSocket.id == null) {
+                this.taskContext.logger.error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                return;
+            } else {
+                this.#visitedWebSockets.add(webSocket.id);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${webSocket.id}`),
+                    type: "webSocket",
+                    webSocketId: webSocket.id,
+                    title: endpointItem.title ?? webSocket.displayName ?? stringifyEndpointPathParts(webSocket.path),
+                    slug:
+                        endpointItem.slug != null
+                            ? parentSlug.append(endpointItem.slug).get()
+                            : getApiLatestToNavigationNodeUrlSlug({ item: webSocket, parentSlug }),
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: FernNavigation.V1.convertAvailability(webSocket.availability),
+                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
+            }
         }
 
         const webhook = this.#apiDefinitionHolder.getWebhookByLocator(endpointItem.endpoint, apiDefinitionPackageIdRaw);
 
         if (webhook != null) {
-            if (webhook.id == null) {
-                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
-            }
             if (this.#visitedWebhooks.has(webhook.id)) {
                 this.taskContext.logger.error(`Duplicate webhook found in the API Reference layout: ${webhook.id}`);
             }
-            this.#visitedWebhooks.add(webhook.id);
-            return {
-                id: this.#idgen.get(`${this.apiDefinitionId}:${webhook.id}`),
-                type: "webhook",
-                webhookId: webhook.id,
-                method: webhook.method,
-                title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
-                slug:
-                    endpointItem.slug != null
-                        ? parentSlug.append(endpointItem.slug).get()
-                        : getApiLatestToNavigationNodeUrlSlug({ item: webhook, parentSlug }),
-                icon: endpointItem.icon,
-                hidden: this.hideChildren || endpointItem.hidden,
-                apiDefinitionId: this.apiDefinitionId,
-                availability: undefined,
-                authed: undefined,
-                viewers: endpointItem.viewers,
-                orphaned: endpointItem.orphaned,
-                featureFlags: endpointItem.featureFlags
-            };
+            if (webhook.id == null) {
+                this.taskContext.logger.error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+            } else {
+                this.#visitedWebhooks.add(webhook.id);
+                return {
+                    id: this.#idgen.get(`${this.apiDefinitionId}:${webhook.id}`),
+                    type: "webhook",
+                    webhookId: webhook.id,
+                    method: webhook.method,
+                    title: endpointItem.title ?? webhook.displayName ?? urlJoin("/", ...webhook.path),
+                    slug:
+                        endpointItem.slug != null
+                            ? parentSlug.append(endpointItem.slug).get()
+                            : getApiLatestToNavigationNodeUrlSlug({ item: webhook, parentSlug }),
+                    icon: endpointItem.icon,
+                    hidden: this.hideChildren || endpointItem.hidden,
+                    apiDefinitionId: this.apiDefinitionId,
+                    availability: undefined,
+                    authed: undefined,
+                    viewers: endpointItem.viewers,
+                    orphaned: endpointItem.orphaned,
+                    featureFlags: endpointItem.featureFlags
+                };
+            }
         }
 
         this.taskContext.logger.error("Unknown identifier in the API Reference layout: ", endpointItem.endpoint);
@@ -560,7 +566,10 @@ export class ApiReferenceNodeConverterLatest {
         // Convert unvisited endpoints
         Object.entries(pkg.endpoints).forEach(([endpointId, endpoint]) => {
             if (endpointId == null) {
-                throw new Error(`Expected Endpoint ID for ${endpoint.id}. Got undefined.`);
+                this.taskContext.logger.error(
+                    `Expected Endpoint ID for ${endpoint.id} at path: ${stringifyEndpointPathPartsWithMethod(endpoint.method, endpoint.path)}. Got undefined.`
+                );
+                return;
             }
             if (
                 !this.#visitedEndpoints.has(FdrAPI.EndpointId(endpointId)) &&
@@ -573,7 +582,8 @@ export class ApiReferenceNodeConverterLatest {
         // Convert unvisited websockets
         Object.entries(pkg.websockets).forEach(([webSocketId, webSocket]) => {
             if (webSocketId == null) {
-                throw new Error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected WebSocket ID for ${webSocket.id}. Got undefined.`);
+                return;
             }
             if (
                 !this.#visitedWebSockets.has(FdrAPI.WebSocketId(webSocketId)) &&
@@ -586,7 +596,8 @@ export class ApiReferenceNodeConverterLatest {
         // Convert unvisited webhooks
         Object.entries(pkg.webhooks).forEach(([webhookId, webhook]) => {
             if (webhookId == null) {
-                throw new Error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+                this.taskContext.logger.error(`Expected Webhook ID for ${webhook.id}. Got undefined.`);
+                return;
             }
             if (
                 !this.#visitedWebhooks.has(FdrAPI.WebhookId(webhookId)) &&
