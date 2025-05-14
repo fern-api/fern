@@ -30,7 +30,8 @@ class Metadata(UniversalRootModel):
     Examples
     --------
     from seed.examples.resources.types import Metadata_Html
-    Metadata_Html(value='<head>...</head>')
+
+    Metadata_Html(value="<head>...</head>")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()

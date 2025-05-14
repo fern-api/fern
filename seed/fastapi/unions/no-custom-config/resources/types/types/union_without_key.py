@@ -32,7 +32,10 @@ class UnionWithoutKey(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithoutKey_Foo
-    UnionWithoutKey_Foo(name='example1', )
+
+    UnionWithoutKey_Foo(
+        name="example1",
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
