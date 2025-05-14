@@ -41,8 +41,8 @@ export class CliContext {
     private logLevel: LogLevel = LogLevel.Info;
     private isLocal: boolean;
 
-    constructor(stream: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
-        this.ttyAwareLogger = new TtyAwareLogger(stream);
+    constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
+        this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
         this.isLocal = isLocal ?? false;
 
         const packageName = this.getPackageName();
@@ -126,7 +126,7 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                this.logger.info(upgradeMessage);
+                this.stderr.info(upgradeMessage);
             }
         } catch {
             // swallow error when failing to check for upgrade
@@ -209,7 +209,8 @@ export class CliContext {
         }
     }
 
-    public readonly logger = createLogger(this.log.bind(this));
+    public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
+    public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
@@ -262,10 +263,24 @@ export class CliContext {
         ]);
     }
 
-    private logImmediately(logs: Log[]): void {
+    private logStderr(level: LogLevel, ...parts: string[]) {
+        this.logImmediately(
+            [
+                {
+                    parts,
+                    level,
+                    time: new Date()
+                }
+            ],
+            { stderr: true }
+        );
+    }
+
+    private logImmediately(logs: Log[], { stderr = false }: { stderr?: boolean } = {}): void {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
-            includeDebugInfo: this.logLevel === LogLevel.Debug
+            includeDebugInfo: this.logLevel === LogLevel.Debug,
+            stderr
         });
     }
 
