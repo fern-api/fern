@@ -59,6 +59,16 @@ export abstract class AbstractParameterConverter<
             breadcrumbs: this.breadcrumbs
         });
 
+        const resolvedParameterSchema: OpenAPIV3_1.SchemaObject | undefined =
+            this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                schemaOrReference: schema,
+                breadcrumbs: this.breadcrumbs
+            });
+
+        const parameterSchemaWithExampleOverride = this.getParameterSchemaWithExampleOverride({
+            schema: resolvedParameterSchema
+        });
+
         switch (this.parameter.in) {
             case "query":
                 return {
@@ -71,7 +81,9 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         allowMultiple: this.parameter.explode ?? false,
-                        v2Examples: this.convertParameterExamples({ schema }),
+                        v2Examples: this.convertParameterExamples({
+                            schema: parameterSchemaWithExampleOverride ?? schema
+                        }),
                         availability
                     },
                     inlinedTypes
@@ -87,7 +99,9 @@ export abstract class AbstractParameterConverter<
                         docs: this.parameter.description,
                         valueType: typeReference ?? AbstractConverter.OPTIONAL_STRING,
                         env: undefined,
-                        v2Examples: this.convertParameterExamples({ schema }),
+                        v2Examples: this.convertParameterExamples({
+                            schema: parameterSchemaWithExampleOverride ?? schema
+                        }),
                         availability
                     },
                     inlinedTypes
@@ -101,13 +115,34 @@ export abstract class AbstractParameterConverter<
                         valueType: typeReference ?? AbstractConverter.STRING,
                         location: "ENDPOINT",
                         variable: undefined,
-                        v2Examples: this.convertParameterExamples({ schema })
+                        v2Examples: this.convertParameterExamples({
+                            schema: parameterSchemaWithExampleOverride ?? schema
+                        })
                     },
                     inlinedTypes
                 };
             default:
                 return undefined;
         }
+    }
+
+    private getParameterSchemaWithExampleOverride({
+        schema
+    }: {
+        schema: OpenAPIV3_1.SchemaObject | undefined;
+    }): OpenAPIV3_1.SchemaObject | undefined {
+        if (schema == null) {
+            return undefined;
+        }
+
+        if (schema.type === "string" && schema.example == null) {
+            return {
+                ...schema,
+                example: this.parameter.name
+            };
+        }
+
+        return schema;
     }
 
     protected convertParameterExamples({
