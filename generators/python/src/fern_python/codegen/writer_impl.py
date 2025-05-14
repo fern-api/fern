@@ -93,6 +93,28 @@ class WriterImpl(AST.Writer):
         if not self._should_sort_imports:
             content = "# isort: skip_file\n\n" + content
 
+        if self._should_format_as_snippet:
+            import black
+            import isort
+
+            try:
+                if self._should_sort_imports:
+                    content = isort.code(self._content, quiet=True)
+
+                content = black.format_file_contents(
+                    content,
+                    fast=True,
+                    # todo read their config?
+                    mode=black.FileMode(
+                        magic_trailing_comma=self._should_format_as_snippet, line_length=self._line_length
+                    ),
+                )
+            except black.report.NothingChanged:
+                pass
+            except Exception as e:
+                print("Failed to format", e)
+                pass
+
         if self._should_include_header:
             if self._whitelabel:
                 content = "# This file was auto-generated from our API Definition.\n\n" + content

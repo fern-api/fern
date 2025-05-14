@@ -1,4 +1,12 @@
 # For unreleased changes, use unreleased.yml
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Support formatting the generated README.md and python code snippets.
+      type: fix
+  createdAt: '2025-05-13'
+  irVersion: 57
+
 - version: 4.20.1
   changelogEntry:
     - summary: |
