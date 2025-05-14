@@ -37,6 +37,7 @@ class UnionWithTime(UniversalRootModel):
     Examples
     --------
     from seed.unions.resources.types import UnionWithTime_Value
+
     UnionWithTime_Value(value=5)
     """
 

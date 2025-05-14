@@ -30,9 +30,15 @@ class UnionWithOptionalTime(UniversalRootModel):
     """
     Examples
     --------
-    from seed.unions.resources.types import UnionWithOptionalTime_Date
     import datetime
-    UnionWithOptionalTime_Date(value=datetime.date.fromisoformat("1994-01-01", ))
+
+    from seed.unions.resources.types import UnionWithOptionalTime_Date
+
+    UnionWithOptionalTime_Date(
+        value=datetime.date.fromisoformat(
+            "1994-01-01",
+        )
+    )
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
