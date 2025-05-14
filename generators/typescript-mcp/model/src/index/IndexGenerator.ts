@@ -12,26 +12,28 @@ export class IndexGenerator extends FileGenerator<
     TypescriptCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private readonly typeDeclarations: TypeDeclaration[];
-    constructor(context: ModelGeneratorContext, typeDeclarations: TypeDeclaration[]) {
+    private readonly schemaVariableNames: string[];
+    constructor(
+        context: ModelGeneratorContext,
+        private readonly typeDeclarations: TypeDeclaration[]
+    ) {
         super(context);
-        this.typeDeclarations = typeDeclarations;
-    }
-
-    public doGenerate(): TypescriptMcpFile {
-        const schemaNames = this.typeDeclarations.map((typeDeclaration) =>
+        this.schemaVariableNames = this.typeDeclarations.map((typeDeclaration) =>
             this.context.project.builder.getSchemaVariableName(
                 typeDeclaration.name.name,
                 typeDeclaration.name.fernFilepath
             )
         );
+    }
+
+    public doGenerate(): TypescriptMcpFile {
         return new TypescriptMcpFile({
             node: ts.codeblock((writer) => {
-                schemaNames.forEach((schemaName) => {
+                this.schemaVariableNames.forEach((schemaVariableName) => {
                     writer.writeNodeStatement(
                         new ReExportAsNamedNode({
-                            name: schemaName,
-                            importFrom: { type: "default", moduleName: schemaName }
+                            name: schemaVariableName,
+                            importFrom: { type: "default", moduleName: schemaVariableName }
                         })
                     );
                 });

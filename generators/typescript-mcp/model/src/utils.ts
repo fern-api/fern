@@ -2,17 +2,7 @@ import { ts } from "@fern-api/typescript-ast";
 
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 
-export function typeReferenceMapper(typeReference: TypeReference) {
-    return typeReference._visit<string>({
-        container: () => "unknown()",
-        named: () => "unknown()",
-        primitive: (value) => primitiveTypeV1Mapper(value.v1),
-        unknown: () => "unknown()",
-        _other: () => "any()"
-    });
-}
-
-export function primitiveTypeV1Mapper(primitiveTypeV1: PrimitiveTypeV1) {
+function primitiveTypeV1Mapper(primitiveTypeV1: PrimitiveTypeV1) {
     return PrimitiveTypeV1._visit(primitiveTypeV1, {
         integer: () => "number()",
         long: () => "number()",
@@ -27,6 +17,16 @@ export function primitiveTypeV1Mapper(primitiveTypeV1: PrimitiveTypeV1) {
         uuid: () => "string().uuid()",
         base64: () => "string().base64()",
         bigInteger: () => "bigint()",
+        _other: () => "any()"
+    });
+}
+
+function typeReferenceMapper(typeReference: TypeReference) {
+    return typeReference._visit({
+        container: () => "unknown()",
+        named: () => "unknown()",
+        primitive: (value) => primitiveTypeV1Mapper(value.v1),
+        unknown: () => "unknown()",
         _other: () => "any()"
     });
 }
@@ -47,19 +47,19 @@ export class ReExportAsNamedNode extends ts.AstNode {
     }
 
     public write(writer: ts.Writer) {
-        let exports;
+        writer.write("export ");
         switch (this.args.importFrom.type) {
             case "default":
-                exports = `{ default as ${this.args.name} }`;
+                writer.write(`{ default as ${this.args.name} }`);
                 break;
             case "star":
-                exports = `{ * as ${this.args.name} }`;
+                writer.write(`{ * as ${this.args.name} }`);
                 break;
             case "named":
-                exports = this.args.name;
+                writer.write(this.args.name);
                 break;
         }
-        writer.write(`export ${exports} from "./${this.args.importFrom.moduleName}"`);
+        writer.write(` from "./${this.args.importFrom.moduleName}"`);
     }
 }
 
@@ -79,5 +79,78 @@ export class ExportDefaultNode extends ts.AstNode {
     public write(writer: ts.Writer) {
         writer.write("export default ");
         writer.writeNode(this.args.initializer);
+    }
+}
+
+export declare namespace ZodImportNode {
+    interface Args {
+        importFrom: ts.Reference.ModuleImport;
+    }
+}
+
+export class ZodImportNode extends ts.AstNode {
+    public constructor(private readonly args: ZodImportNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.write("import ");
+        switch (this.args.importFrom.type) {
+            case "default":
+                writer.write("z");
+                break;
+            case "star":
+                writer.write("* as z");
+                break;
+            case "named":
+                writer.write("{ z }");
+                break;
+        }
+        writer.write(` from "${this.args.importFrom.moduleName}"`);
+    }
+}
+
+export declare namespace ZodAliasNode {
+    interface Args {
+        typeReference: TypeReference;
+    }
+}
+
+export class ZodAliasNode extends ts.AstNode {
+    public constructor(private readonly args: ZodAliasNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.write(`z.${typeReferenceMapper(this.args.typeReference)}`);
+    }
+}
+
+export declare namespace ZodObjectNode {
+    interface Args {
+        fields: {
+            name: string;
+            value: ts.AstNode;
+        }[];
+    }
+}
+
+export class ZodObjectNode extends ts.AstNode {
+    public constructor(private readonly args: ZodObjectNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.write("z.object({");
+        writer.newLine();
+        writer.indent();
+        for (const field of this.args.fields) {
+            writer.write(`${field.name}: `);
+            writer.writeNode(field.value);
+            writer.write(",");
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("})");
     }
 }
