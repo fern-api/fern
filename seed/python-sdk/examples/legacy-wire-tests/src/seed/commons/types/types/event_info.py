@@ -13,7 +13,12 @@ class EventInfo_Metadata(UniversalBaseModel):
     Examples
     --------
     from seed.commons.types import EventInfo_Metadata
-    EventInfo_Metadata(id='metadata-alskjfg8', data={'one': 'two'}, json_string='{"one": "two"}', )
+    
+    EventInfo_Metadata(
+        id="metadata-alskjfg8",
+        data={"one": "two"},
+        json_string='{"one": "two"}',
+    )
     """
     type: typing.Literal["metadata"] = "metadata"
     id: str
@@ -39,6 +44,11 @@ class EventInfo_Tag(UniversalBaseModel):
             smart_union = True
 """
 from seed.commons.types import EventInfo_Metadata
-EventInfo_Metadata(id='metadata-alskjfg8', data={'one': 'two'}, json_string='{"one": "two"}', )
+
+EventInfo_Metadata(
+    id="metadata-alskjfg8",
+    data={"one": "two"},
+    json_string='{"one": "two"}',
+)
 """
 EventInfo = typing.Union[EventInfo_Metadata, EventInfo_Tag]

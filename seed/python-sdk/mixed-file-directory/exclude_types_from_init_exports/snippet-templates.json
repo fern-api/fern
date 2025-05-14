@@ -16,7 +16,7 @@
                     "from seed import SeedMixedFileDirectory"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedMixedFileDirectory"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedMixedFileDirectory"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -145,7 +145,7 @@
                         "from seed import AsyncSeedMixedFileDirectory"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -196,7 +196,7 @@
                     "from seed import SeedMixedFileDirectory"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -235,7 +235,7 @@
                         "from seed import AsyncSeedMixedFileDirectory"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -286,7 +286,7 @@
                     "from seed import SeedMixedFileDirectory"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -325,7 +325,7 @@
                         "from seed import AsyncSeedMixedFileDirectory"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedFileDirectory(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedMixedFileDirectory(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

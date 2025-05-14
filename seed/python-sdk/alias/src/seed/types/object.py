@@ -4,6 +4,10 @@ from .type import Type
 
 """
 from seed import Type
-Type(id='kljasc85', name='bar', )
+
+Type(
+    id="kljasc85",
+    name="bar",
+)
 """
 Object = Type

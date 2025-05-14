@@ -44,8 +44,13 @@ class CompletionsClient:
         Examples
         --------
         from seed import SeedServerSentEvents
-        client = SeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
-        response = client.completions.stream(query='foo', )
+
+        client = SeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.completions.stream(
+            query="foo",
+        )
         for chunk in response:
             yield chunk
         """
@@ -85,13 +90,23 @@ class AsyncCompletionsClient:
 
         Examples
         --------
-        from seed import AsyncSeedServerSentEvents
         import asyncio
-        client = AsyncSeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedServerSentEvents
+
+        client = AsyncSeedServerSentEvents(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            response = await client.completions.stream(query='foo', )
+            response = await client.completions.stream(
+                query="foo",
+            )
             async for chunk in response:
                 yield chunk
+
+
         asyncio.run(main())
         """
         async with self._raw_client.stream(query=query, request_options=request_options) as r:

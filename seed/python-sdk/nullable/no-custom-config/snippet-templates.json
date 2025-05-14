@@ -16,7 +16,7 @@
                     "from seed import SeedNullable"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -119,7 +119,7 @@
                         "from seed import AsyncSeedNullable"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -234,7 +234,7 @@
                     "from seed import SeedNullable"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -511,7 +511,7 @@
                         "from seed import AsyncSeedNullable"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -800,7 +800,7 @@
                     "from seed import SeedNullable"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -839,7 +839,7 @@
                         "from seed import AsyncSeedNullable"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedNullable(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedNullable(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -11,7 +11,10 @@ class Organization(UniversalBaseModel):
     Examples
     --------
     from seed.service import Organization
-    Organization(name='orgName', )
+
+    Organization(
+        name="orgName",
+    )
     """
 
     name: str

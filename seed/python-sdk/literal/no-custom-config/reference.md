@@ -14,8 +14,13 @@
 
 ```python
 from seed import SeedLiteral
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-client.headers.send(query='What is the weather today', )
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.headers.send(
+    query="What is the weather today",
+)
 
 ```
 </dd>
@@ -66,10 +71,20 @@ client.headers.send(query='What is the weather today', )
 
 ```python
 from seed import SeedLiteral
-from seed.inlined import ATopLevelLiteral
-from seed.inlined import ANestedLiteral
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-client.inlined.send(temperature=10.1, context="You're super wise", maybe_context="You're super wise", object_with_literal=ATopLevelLiteral(nested_literal=ANestedLiteral(), ), query='What is the weather today', )
+from seed.inlined import ANestedLiteral, ATopLevelLiteral
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.inlined.send(
+    temperature=10.1,
+    context="You're super wise",
+    maybe_context="You're super wise",
+    object_with_literal=ATopLevelLiteral(
+        nested_literal=ANestedLiteral(),
+    ),
+    query="What is the weather today",
+)
 
 ```
 </dd>
@@ -152,7 +167,10 @@ client.inlined.send(temperature=10.1, context="You're super wise", maybe_context
 
 ```python
 from seed import SeedLiteral
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 client.path.send()
 
 ```
@@ -196,8 +214,13 @@ client.path.send()
 
 ```python
 from seed import SeedLiteral
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-client.query.send(query='What is the weather today', )
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.query.send(
+    query="What is the weather today",
+)
 
 ```
 </dd>
@@ -280,10 +303,21 @@ client.query.send(query='What is the weather today', )
 
 ```python
 from seed import SeedLiteral
-from seed.reference import ContainerObject
-from seed.reference import NestedObjectWithLiterals
-client = SeedLiteral(base_url="https://yourhost.com/path/to/api", )
-client.reference.send(query='What is the weather today', container_object=ContainerObject(nested_objects=[NestedObjectWithLiterals(str_prop='strProp', )], ), )
+from seed.reference import ContainerObject, NestedObjectWithLiterals
+
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.reference.send(
+    query="What is the weather today",
+    container_object=ContainerObject(
+        nested_objects=[
+            NestedObjectWithLiterals(
+                str_prop="strProp",
+            )
+        ],
+    ),
+)
 
 ```
 </dd>

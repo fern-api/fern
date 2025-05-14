@@ -16,7 +16,7 @@
                     "from seed import SeedPackageYml"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -71,7 +71,7 @@
                         "from seed import AsyncSeedPackageYml"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -138,7 +138,7 @@
                     "from seed import SeedPackageYml"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -177,7 +177,7 @@
                         "from seed import AsyncSeedPackageYml"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

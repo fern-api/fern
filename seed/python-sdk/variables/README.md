@@ -21,8 +21,13 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedVariables
-client = SeedVariables(base_url="https://yourhost.com/path/to/api", )
-client.service.post(endpoint_param='endpointParam', )
+
+client = SeedVariables(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.post(
+    endpoint_param="endpointParam",
+)
 ```
 
 ## Async Client
@@ -30,11 +35,21 @@ client.service.post(endpoint_param='endpointParam', )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedVariables
 import asyncio
-client = AsyncSeedVariables(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedVariables
+
+client = AsyncSeedVariables(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.service.post(endpoint_param='endpointParam', )
+    await client.service.post(
+        endpoint_param="endpointParam",
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +60,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.service.post()
 except ApiError as e:
@@ -61,7 +77,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedVariables
-client = SeedVariables(..., )
+
+client = SeedVariables(
+    ...,
+)
 response = client.service.with_raw_response.post()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -94,7 +113,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedVariables
-client = SeedVariables(..., timeout=20.0, )
+
+client = SeedVariables(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.service.post(request_options={
@@ -108,9 +132,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedVariables
 import httpx
-client = SeedVariables(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedVariables
+
+client = SeedVariables(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

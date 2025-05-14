@@ -27,6 +27,7 @@ class Data_Base64(UniversalBaseModel):
             smart_union = True
 """
 from seed.commons.types import Data_String
-Data_String(value='data')
+
+Data_String(value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

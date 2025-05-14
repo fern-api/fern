@@ -21,8 +21,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedContentTypes
-client = SeedContentTypes(base_url="https://yourhost.com/path/to/api", )
-client.service.patch(application='application', require_auth=True, )
+
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.service.patch(
+    application="application",
+    require_auth=True,
+)
 ```
 
 ## Async Client
@@ -30,11 +36,22 @@ client.service.patch(application='application', require_auth=True, )
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from seed import AsyncSeedContentTypes
 import asyncio
-client = AsyncSeedContentTypes(base_url="https://yourhost.com/path/to/api", )
+
+from seed import AsyncSeedContentTypes
+
+client = AsyncSeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
+
+
 async def main() -> None:
-    await client.service.patch(application='application', require_auth=True, )
+    await client.service.patch(
+        application="application",
+        require_auth=True,
+    )
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +62,7 @@ will be thrown.
 
 ```python
 from seed.core.api_error import ApiError
+
 try:
     client.service.patch()
 except ApiError as e:
@@ -61,7 +79,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from seed import SeedContentTypes
-client = SeedContentTypes(..., )
+
+client = SeedContentTypes(
+    ...,
+)
 response = client.service.with_raw_response.patch()
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -94,7 +115,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from seed import SeedContentTypes
-client = SeedContentTypes(..., timeout=20.0, )
+
+client = SeedContentTypes(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.service.patch(request_options={
@@ -108,9 +134,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from seed import SeedContentTypes
 import httpx
-client = SeedContentTypes(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from seed import SeedContentTypes
+
+client = SeedContentTypes(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 

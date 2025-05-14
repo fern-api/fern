@@ -14,8 +14,13 @@
 
 ```python
 from seed import SeedServerSentEvents
-client = SeedServerSentEvents(base_url="https://yourhost.com/path/to/api", )
-response = client.completions.stream(query='foo', )
+
+client = SeedServerSentEvents(
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.completions.stream(
+    query="foo",
+)
 for chunk in response.data:
     yield chunk
 

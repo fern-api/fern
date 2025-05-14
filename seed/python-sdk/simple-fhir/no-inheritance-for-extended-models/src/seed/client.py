@@ -30,7 +30,10 @@ class SeedApi:
     Examples
     --------
     from seed import SeedApi
-    client = SeedApi(base_url="https://yourhost.com/path/to/api", )
+
+    client = SeedApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -82,8 +85,13 @@ class SeedApi:
         Examples
         --------
         from seed import SeedApi
-        client = SeedApi(base_url="https://yourhost.com/path/to/api", )
-        client.get_account(account_id='account_id', )
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.get_account(
+            account_id="account_id",
+        )
         """
         _response = self._raw_client.get_account(account_id, request_options=request_options)
         return _response.data
@@ -110,7 +118,10 @@ class AsyncSeedApi:
     Examples
     --------
     from seed import AsyncSeedApi
-    client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
+
+    client = AsyncSeedApi(
+        base_url="https://yourhost.com/path/to/api",
+    )
     """
 
     def __init__(
@@ -161,11 +172,21 @@ class AsyncSeedApi:
 
         Examples
         --------
-        from seed import AsyncSeedApi
         import asyncio
-        client = AsyncSeedApi(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.get_account(account_id='account_id', )
+            await client.get_account(
+                account_id="account_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_account(account_id, request_options=request_options)

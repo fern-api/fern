@@ -16,7 +16,7 @@
                     "from seed import SeedCrossPackageTypeNames"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedCrossPackageTypeNames"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -72,7 +72,7 @@
                     "from seed import SeedCrossPackageTypeNames"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -94,7 +94,7 @@
                         "from seed import AsyncSeedCrossPackageTypeNames"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -128,7 +128,7 @@
                     "from seed import SeedCrossPackageTypeNames"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -199,7 +199,7 @@
                         "from seed import AsyncSeedCrossPackageTypeNames"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedCrossPackageTypeNames(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedCrossPackageTypeNames(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

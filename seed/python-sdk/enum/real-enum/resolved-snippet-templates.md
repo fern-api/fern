@@ -1,7 +1,9 @@
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -10,7 +12,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -19,7 +23,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -28,7 +34,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -37,7 +45,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -46,7 +56,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```
@@ -55,7 +67,9 @@ undefined
 ```python
 
 
-client = SeedEnum(base_url="https://yourhost.com/path/to/api", )        
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)        
 undefined
 
 ```

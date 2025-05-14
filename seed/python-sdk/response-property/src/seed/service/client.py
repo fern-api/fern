@@ -42,8 +42,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_movie(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_movie(
+            request="string",
+        )
         """
         _response = self._raw_client.get_movie(request=request, request_options=request_options)
         return _response.data
@@ -64,8 +69,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_movie_docs(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_movie_docs(
+            request="string",
+        )
         """
         _response = self._raw_client.get_movie_docs(request=request, request_options=request_options)
         return _response.data
@@ -86,8 +96,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_movie_name(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_movie_name(
+            request="string",
+        )
         """
         _response = self._raw_client.get_movie_name(request=request, request_options=request_options)
         return _response.data
@@ -110,8 +125,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_movie_metadata(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_movie_metadata(
+            request="string",
+        )
         """
         _response = self._raw_client.get_movie_metadata(request=request, request_options=request_options)
         return _response.data
@@ -134,8 +154,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_optional_movie(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_optional_movie(
+            request="string",
+        )
         """
         _response = self._raw_client.get_optional_movie(request=request, request_options=request_options)
         return _response.data
@@ -156,8 +181,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_optional_movie_docs(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_optional_movie_docs(
+            request="string",
+        )
         """
         _response = self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
         return _response.data
@@ -178,8 +208,13 @@ class ServiceClient:
         Examples
         --------
         from seed import SeedResponseProperty
-        client = SeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
-        client.service.get_optional_movie_name(request='string', )
+
+        client = SeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.service.get_optional_movie_name(
+            request="string",
+        )
         """
         _response = self._raw_client.get_optional_movie_name(request=request, request_options=request_options)
         return _response.data
@@ -215,11 +250,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_movie(request='string', )
+            await client.service.get_movie(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_movie(request=request, request_options=request_options)
@@ -240,11 +285,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_movie_docs(request='string', )
+            await client.service.get_movie_docs(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_movie_docs(request=request, request_options=request_options)
@@ -265,11 +320,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_movie_name(request='string', )
+            await client.service.get_movie_name(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_movie_name(request=request, request_options=request_options)
@@ -292,11 +357,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_movie_metadata(request='string', )
+            await client.service.get_movie_metadata(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_movie_metadata(request=request, request_options=request_options)
@@ -319,11 +394,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_optional_movie(request='string', )
+            await client.service.get_optional_movie(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_optional_movie(request=request, request_options=request_options)
@@ -346,11 +431,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_optional_movie_docs(request='string', )
+            await client.service.get_optional_movie_docs(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_optional_movie_docs(request=request, request_options=request_options)
@@ -373,11 +468,21 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import AsyncSeedResponseProperty
         import asyncio
-        client = AsyncSeedResponseProperty(base_url="https://yourhost.com/path/to/api", )
+
+        from seed import AsyncSeedResponseProperty
+
+        client = AsyncSeedResponseProperty(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
         async def main() -> None:
-            await client.service.get_optional_movie_name(request='string', )
+            await client.service.get_optional_movie_name(
+                request="string",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_optional_movie_name(request=request, request_options=request_options)

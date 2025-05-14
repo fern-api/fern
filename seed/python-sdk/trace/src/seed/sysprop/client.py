@@ -43,8 +43,15 @@ class SyspropClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
-        client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1, )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+        client.sysprop.set_num_warm_instances(
+            language="JAVA",
+            num_warm_instances=1,
+        )
         """
         _response = self._raw_client.set_num_warm_instances(
             language, num_warm_instances, request_options=request_options
@@ -67,7 +74,11 @@ class SyspropClient:
         Examples
         --------
         from seed import SeedTrace
-        client = SeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        client = SeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
         client.sysprop.get_num_warm_instances()
         """
         _response = self._raw_client.get_num_warm_instances(request_options=request_options)
@@ -108,11 +119,23 @@ class AsyncSyspropClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
-            await client.sysprop.set_num_warm_instances(language="JAVA", num_warm_instances=1, )
+            await client.sysprop.set_num_warm_instances(
+                language="JAVA",
+                num_warm_instances=1,
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.set_num_warm_instances(
@@ -135,11 +158,20 @@ class AsyncSyspropClient:
 
         Examples
         --------
-        from seed import AsyncSeedTrace
         import asyncio
-        client = AsyncSeedTrace(x_random_header="YOUR_X_RANDOM_HEADER", token="YOUR_TOKEN", )
+
+        from seed import AsyncSeedTrace
+
+        client = AsyncSeedTrace(
+            x_random_header="YOUR_X_RANDOM_HEADER",
+            token="YOUR_TOKEN",
+        )
+
+
         async def main() -> None:
             await client.sysprop.get_num_warm_instances()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get_num_warm_instances(request_options=request_options)

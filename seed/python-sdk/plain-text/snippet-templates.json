@@ -16,7 +16,7 @@
                     "from seed import SeedPlainText"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateString": "client = SeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -38,7 +38,7 @@
                         "from seed import AsyncSeedPlainText"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateString": "client = AsyncSeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
