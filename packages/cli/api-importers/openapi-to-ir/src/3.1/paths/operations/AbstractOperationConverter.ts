@@ -124,6 +124,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         break;
                     case "header": {
                         const headerName = convertedParameter.parameter.name.name.originalName;
+                        const headerWireValue = convertedParameter.parameter.name.wireValue;
 
                         let duplicateHeader = false;
                         const authSchemes = this.context.authOverrides?.["auth-schemes"];
@@ -131,7 +132,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                             for (const authScheme of Object.values(authSchemes)) {
                                 if (
                                     isHeaderAuthScheme(authScheme) &&
-                                    authScheme.header === convertedParameter.parameter.name.wireValue
+                                    authScheme.header.toLowerCase() === headerWireValue.toLowerCase()
                                 ) {
                                     duplicateHeader = true;
                                     break;
