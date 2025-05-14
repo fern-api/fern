@@ -1,6 +1,7 @@
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
 
+import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, HttpResponse, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v2-importer-commons";
 
@@ -123,7 +124,23 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         break;
                     case "header": {
                         const headerName = convertedParameter.parameter.name.name.originalName;
-                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase())) {
+                        const headerWireValue = convertedParameter.parameter.name.wireValue;
+
+                        let duplicateHeader = false;
+                        const authSchemes = this.context.authOverrides?.["auth-schemes"];
+                        if (authSchemes != null) {
+                            for (const authScheme of Object.values(authSchemes)) {
+                                if (
+                                    isHeaderAuthScheme(authScheme) &&
+                                    authScheme.header.toLowerCase() === headerWireValue.toLowerCase()
+                                ) {
+                                    duplicateHeader = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;
@@ -421,4 +438,10 @@ function splitOnCapitalLetters(input: string): string[] {
 
 function splitOnNonAlphanumericCharacters(input: string): string[] {
     return input.split(/[^a-zA-Z0-9]+/);
+}
+
+function isHeaderAuthScheme(
+    scheme: RawSchemas.AuthSchemeDeclarationSchema
+): scheme is RawSchemas.HeaderAuthSchemeSchema {
+    return (scheme as RawSchemas.HeaderAuthSchemeSchema)?.header != null;
 }
