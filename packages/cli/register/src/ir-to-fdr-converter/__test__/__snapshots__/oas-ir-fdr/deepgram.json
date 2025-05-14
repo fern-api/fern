@@ -3211,15 +3211,15 @@
         }
       }
     },
-    "BadRequestError": {
-      "name": "BadRequestError",
+    "ListenRequestBadRequestError": {
+      "name": "ListenRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
         "properties": [
           {
-            "description": "The error category",
-            "key": "category",
+            "description": "The error code",
+            "key": "err_code",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -3232,20 +3232,7 @@
           },
           {
             "description": "The error message",
-            "key": "message",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "Additional details about the error",
-            "key": "details",
+            "key": "err_msg",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -3280,6 +3267,54 @@
         "values": [
           {
             "value": "en"
+          }
+        ]
+      }
+    },
+    "TextReadRequestBadRequestError": {
+      "name": "TextReadRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error code",
+            "key": "err_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "err_msg",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ]
       }
@@ -3434,69 +3469,8 @@
         ]
       }
     },
-    "ForbiddenError": {
-      "name": "ForbiddenError",
-      "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "description": "The category of the error",
-            "key": "category",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "A message about the error",
-            "key": "message",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "A description of the error",
-            "key": "details",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          {
-            "description": "The unique identifier of the request",
-            "key": "request_id",
-            "valueType": {
-              "type": "optional",
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ]
-      }
-    },
-    "ContentTooLargeError": {
-      "name": "ContentTooLargeError",
+    "SpeakRequestBadRequestError": {
+      "name": "SpeakRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3543,8 +3517,104 @@
         ]
       }
     },
-    "UnsupportedMediaTypeError": {
-      "name": "UnsupportedMediaTypeError",
+    "SpeakRequestForbiddenError": {
+      "name": "SpeakRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error code",
+            "key": "err_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "err_msg",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "SpeakRequestContentTooLargeError": {
+      "name": "SpeakRequestContentTooLargeError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error code",
+            "key": "err_code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "err_msg",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "SpeakRequestUnsupportedMediaTypeError": {
+      "name": "SpeakRequestUnsupportedMediaTypeError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3648,6 +3718,67 @@
         ]
       }
     },
+    "ListProjectsRequestForbiddenError": {
+      "name": "ListProjectsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_getProject_Response_200": {
       "name": "Management API_getProject_Response_200",
       "shape": {
@@ -3683,8 +3814,130 @@
         ]
       }
     },
-    "NotFoundError": {
-      "name": "NotFoundError",
+    "GetProjectRequestBadRequestError": {
+      "name": "GetProjectRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectRequestForbiddenError": {
+      "name": "GetProjectRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectRequestNotFoundError": {
+      "name": "GetProjectRequestNotFoundError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -3766,6 +4019,189 @@
         ]
       }
     },
+    "DeleteProjectRequestBadRequestError": {
+      "name": "DeleteProjectRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectRequestForbiddenError": {
+      "name": "DeleteProjectRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectRequestNotFoundError": {
+      "name": "DeleteProjectRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_updateProject_Response_200": {
       "name": "Management API_updateProject_Response_200",
       "shape": {
@@ -3775,6 +4211,189 @@
           {
             "description": "confirmation message",
             "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateProjectRequestBadRequestError": {
+      "name": "UpdateProjectRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateProjectRequestForbiddenError": {
+      "name": "UpdateProjectRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateProjectRequestNotFoundError": {
+      "name": "UpdateProjectRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -3872,6 +4491,189 @@
         ]
       }
     },
+    "GetProjectBalancesRequestBadRequestError": {
+      "name": "GetProjectBalancesRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectBalancesRequestForbiddenError": {
+      "name": "GetProjectBalancesRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectBalancesRequestNotFoundError": {
+      "name": "GetProjectBalancesRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_getProjectBalance_Response_200": {
       "name": "Management API_getProjectBalance_Response_200",
       "shape": {
@@ -3934,6 +4736,189 @@
         ]
       }
     },
+    "GetProjectBalanceRequestBadRequestError": {
+      "name": "GetProjectBalanceRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectBalanceRequestForbiddenError": {
+      "name": "GetProjectBalanceRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectBalanceRequestNotFoundError": {
+      "name": "GetProjectBalanceRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_listProjectModels_Response_200": {
       "name": "Management API_listProjectModels_Response_200",
       "shape": {
@@ -3969,6 +4954,67 @@
         ]
       }
     },
+    "ListProjectModelsRequestBadRequestError": {
+      "name": "ListProjectModelsRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_getProjectModel_Response_200": {
       "name": "Management API_getProjectModel_Response_200",
       "shape": {
@@ -3986,6 +5032,67 @@
             "type": {
               "type": "id",
               "value": "tts_models"
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectModelRequestBadRequestError": {
+      "name": "GetProjectModelRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -4013,6 +5120,250 @@
         ]
       }
     },
+    "ListProjectKeysRequestForbiddenError": {
+      "name": "ListProjectKeysRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectKeysRequestNotFoundError": {
+      "name": "ListProjectKeysRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CreateProjectKeyRequestForbiddenError": {
+      "name": "CreateProjectKeyRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CreateProjectKeyRequestNotFoundError": {
+      "name": "CreateProjectKeyRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_getProjectKey_Response_200": {
       "name": "Management API_getProjectKey_Response_200",
       "shape": {
@@ -4032,6 +5383,128 @@
         ]
       }
     },
+    "GetProjectKeyRequestForbiddenError": {
+      "name": "GetProjectKeyRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectKeyRequestNotFoundError": {
+      "name": "GetProjectKeyRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_deleteProjectKey_Response_200": {
       "name": "Management API_deleteProjectKey_Response_200",
       "shape": {
@@ -4041,6 +5514,128 @@
           {
             "description": "A message indicating that the API key was deleted",
             "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectKeyRequestForbiddenError": {
+      "name": "DeleteProjectKeyRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectKeyRequestNotFoundError": {
+      "name": "DeleteProjectKeyRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -4098,6 +5693,128 @@
         ]
       }
     },
+    "ListProjectMembersRequestForbiddenError": {
+      "name": "ListProjectMembersRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectMembersRequestNotFoundError": {
+      "name": "ListProjectMembersRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_deleteProjectMember_Response_200": {
       "name": "Management API_deleteProjectMember_Response_200",
       "shape": {
@@ -4107,6 +5824,128 @@
           {
             "description": "confirmation message",
             "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectMemberRequestForbiddenError": {
+      "name": "DeleteProjectMemberRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectMemberRequestNotFoundError": {
+      "name": "DeleteProjectMemberRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -4145,6 +5984,128 @@
         ]
       }
     },
+    "ListProjectMemberScopesRequestForbiddenError": {
+      "name": "ListProjectMemberScopesRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectMemberScopesRequestNotFoundError": {
+      "name": "ListProjectMemberScopesRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_updateProjectMemberScopes_Response_200": {
       "name": "Management API_updateProjectMemberScopes_Response_200",
       "shape": {
@@ -4154,6 +6115,128 @@
           {
             "description": "confirmation message",
             "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateProjectMemberScopesRequestForbiddenError": {
+      "name": "UpdateProjectMemberScopesRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "UpdateProjectMemberScopesRequestNotFoundError": {
+      "name": "UpdateProjectMemberScopesRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -4246,6 +6329,128 @@
         ]
       }
     },
+    "CreateProjectInviteRequestForbiddenError": {
+      "name": "CreateProjectInviteRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "CreateProjectInviteRequestNotFoundError": {
+      "name": "CreateProjectInviteRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_deleteProjectInvite_Response_200": {
       "name": "Management API_deleteProjectInvite_Response_200",
       "shape": {
@@ -4268,6 +6473,128 @@
         ]
       }
     },
+    "DeleteProjectInviteRequestForbiddenError": {
+      "name": "DeleteProjectInviteRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectInviteRequestNotFoundError": {
+      "name": "DeleteProjectInviteRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "Management API_deleteProjectLeave_Response_200": {
       "name": "Management API_deleteProjectLeave_Response_200",
       "shape": {
@@ -4277,6 +6604,128 @@
           {
             "description": "confirmation message",
             "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectLeaveRequestForbiddenError": {
+      "name": "DeleteProjectLeaveRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteProjectLeaveRequestNotFoundError": {
+      "name": "DeleteProjectLeaveRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
             "valueType": {
               "type": "optional",
               "itemType": {
@@ -4331,6 +6780,189 @@
                 "itemType": {
                   "type": "id",
                   "value": "request"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectRequestsRequestBadRequestError": {
+      "name": "ListProjectRequestsRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectRequestsRequestForbiddenError": {
+      "name": "ListProjectRequestsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectRequestsRequestNotFoundError": {
+      "name": "ListProjectRequestsRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -4560,6 +7192,128 @@
         ]
       }
     },
+    "GetProjectUsageRequestForbiddenError": {
+      "name": "GetProjectUsageRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectUsageRequestNotFoundError": {
+      "name": "GetProjectUsageRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems": {
       "name": "V1ProjectsProjectIdUsageFieldsGetResponsesSchemaModelsItems",
       "shape": {
@@ -4685,6 +7439,128 @@
                   "value": {
                     "type": "string"
                   }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectUsageFieldsRequestForbiddenError": {
+      "name": "ListProjectUsageFieldsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectUsageFieldsRequestNotFoundError": {
+      "name": "ListProjectUsageFieldsRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -5104,6 +7980,128 @@
         ]
       }
     },
+    "GetProjectUsageBreakdownRequestBadRequestError": {
+      "name": "GetProjectUsageBreakdownRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetProjectUsageBreakdownRequestNotFoundError": {
+      "name": "GetProjectUsageBreakdownRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems": {
       "name": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems",
       "shape": {
@@ -5203,6 +8201,67 @@
                 "itemType": {
                   "type": "id",
                   "value": "V1ProjectsProjectIdPurchasesGetResponsesSchemaOrdersItems"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListProjectPurchasesRequestBadRequestError": {
+      "name": "ListProjectPurchasesRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -5535,6 +8594,67 @@
         ]
       }
     },
+    "ListModelsRequestBadRequestError": {
+      "name": "ListModelsRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "ManagementApiGetModelResponse2000": {
       "name": "ManagementApiGetModelResponse2000",
       "shape": {
@@ -5847,6 +8967,67 @@
         ]
       }
     },
+    "GetModelRequestBadRequestError": {
+      "name": "GetModelRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The error category",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The error message",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "Additional details about the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The request ID",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember": {
       "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItemsMember",
       "shape": {
@@ -5984,6 +9165,128 @@
                 "itemType": {
                   "type": "id",
                   "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsGetResponsesSchemaDistributionCredentialsItems"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListSelfHostedDistCredsRequestForbiddenError": {
+      "name": "ListSelfHostedDistCredsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ListSelfHostedDistCredsRequestNotFoundError": {
+      "name": "ListSelfHostedDistCredsRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             }
@@ -6156,6 +9459,128 @@
         ]
       }
     },
+    "GetSelfHostedCredentialsRequestForbiddenError": {
+      "name": "GetSelfHostedCredentialsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GetSelfHostedCredentialsRequestNotFoundError": {
+      "name": "GetSelfHostedCredentialsRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
     "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember": {
       "name": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaMember",
       "shape": {
@@ -6272,6 +9697,128 @@
             "valueType": {
               "type": "id",
               "value": "V1ProjectsProjectIdSelfHostedDistributionCredentialsDistributionCredentialsIdDeleteResponsesSchemaDistributionCredentials"
+            }
+          }
+        ]
+      }
+    },
+    "DeleteSelfHostedDistCredsRequestForbiddenError": {
+      "name": "DeleteSelfHostedDistCredsRequestForbiddenError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "DeleteSelfHostedDistCredsRequestNotFoundError": {
+      "name": "DeleteSelfHostedDistCredsRequestNotFoundError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The category of the error",
+            "key": "category",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A description of the error",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A message about the error",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "The unique identifier of the request",
+            "key": "request_id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -10012,7 +13559,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "ListenRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -10660,7 +14207,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "TextReadRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11030,7 +14577,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "SpeakRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11043,7 +14590,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "SpeakRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11056,7 +14603,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ContentTooLargeError"
+                  "value": "SpeakRequestContentTooLargeError"
                 }
               },
               "statusCode": 413,
@@ -11069,7 +14616,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "UnsupportedMediaTypeError"
+                  "value": "SpeakRequestUnsupportedMediaTypeError"
                 }
               },
               "statusCode": 415,
@@ -11163,7 +14710,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11331,7 +14878,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetProjectRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11344,7 +14891,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetProjectRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11357,7 +14904,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -11467,7 +15014,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "DeleteProjectRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11480,7 +15027,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteProjectRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11493,7 +15040,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteProjectRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -11611,7 +15158,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "UpdateProjectRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11624,7 +15171,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "UpdateProjectRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11637,7 +15184,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "UpdateProjectRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -11749,7 +15296,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetProjectBalancesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11762,7 +15309,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetProjectBalancesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11775,7 +15322,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectBalancesRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -11910,7 +15457,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetProjectBalanceRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -11923,7 +15470,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetProjectBalanceRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11936,7 +15483,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectBalanceRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -12057,7 +15604,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "ListProjectModelsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -12237,7 +15784,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetProjectModelRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -12362,7 +15909,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectKeysRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12375,7 +15922,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListProjectKeysRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -12527,7 +16074,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "CreateProjectKeyRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12540,7 +16087,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "CreateProjectKeyRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -12684,7 +16231,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetProjectKeyRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12697,7 +16244,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectKeyRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -12849,7 +16396,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteProjectKeyRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12862,7 +16409,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteProjectKeyRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -12966,7 +16513,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectMembersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12979,7 +16526,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListProjectMembersRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13108,7 +16655,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteProjectMemberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13121,7 +16668,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteProjectMemberRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13243,7 +16790,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectMemberScopesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13256,7 +16803,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListProjectMemberScopesRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13397,7 +16944,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "UpdateProjectMemberScopesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13410,7 +16957,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "UpdateProjectMemberScopesRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13637,7 +17184,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "CreateProjectInviteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13650,7 +17197,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "CreateProjectInviteRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13782,7 +17329,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteProjectInviteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13795,7 +17342,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteProjectInviteRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -13899,7 +17446,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteProjectLeaveRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13912,7 +17459,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteProjectLeaveRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -14073,7 +17620,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "ListProjectRequestsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -14086,7 +17633,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectRequestsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14099,7 +17646,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListProjectRequestsRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -14403,7 +17950,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetProjectUsageRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14416,7 +17963,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectUsageRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -14561,7 +18108,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListProjectUsageFieldsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14574,7 +18121,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListProjectUsageFieldsRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -14763,7 +18310,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetProjectUsageBreakdownRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -14776,7 +18323,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetProjectUsageBreakdownRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -14967,7 +18514,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "ListProjectPurchasesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -15083,7 +18630,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "ListModelsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -15256,7 +18803,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "GetModelRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -15379,7 +18926,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "ListSelfHostedDistCredsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15392,7 +18939,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "ListSelfHostedDistCredsRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -15670,7 +19217,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetSelfHostedCredentialsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15683,7 +19230,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "GetSelfHostedCredentialsRequestNotFoundError"
                 }
               },
               "statusCode": 404,
@@ -15829,7 +19376,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "DeleteSelfHostedDistCredsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15842,7 +19389,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "NotFoundError"
+                  "value": "DeleteSelfHostedDistCredsRequestNotFoundError"
                 }
               },
               "statusCode": 404,

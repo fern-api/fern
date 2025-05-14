@@ -2155,9 +2155,8 @@
         ]
       }
     },
-    "BadRequestError": {
-      "description": "The function throw an error or had invalid syntax",
-      "name": "BadRequestError",
+    "EvalPostRequestBadRequestError": {
+      "name": "EvalPostRequestBadRequestError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -2166,7 +2165,7 @@
             "key": "type",
             "valueType": {
               "type": "id",
-              "value": "V1EvalCodeGetResponsesSchemaType"
+              "value": "V1EvalPostResponsesSchemaType"
             }
           },
           {
@@ -2257,6 +2256,32 @@
         "values": [
           {
             "value": "error"
+          }
+        ]
+      }
+    },
+    "EvalGetRequestBadRequestError": {
+      "description": "The function throw an error or had invalid syntax",
+      "name": "EvalGetRequestBadRequestError",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueType": {
+              "type": "id",
+              "value": "V1EvalCodeGetResponsesSchemaType"
+            }
+          },
+          {
+            "key": "error",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
           }
         ]
       }
@@ -2935,8 +2960,8 @@
         ]
       }
     },
-    "InternalServerError": {
-      "name": "InternalServerError",
+    "EmailsSendRequestInternalServerError": {
+      "name": "EmailsSendRequestInternalServerError",
       "shape": {
         "type": "object",
         "extends": [],
@@ -5231,7 +5256,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "EvalPostRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -5386,7 +5411,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "EvalGetRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -7219,7 +7244,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "InternalServerError"
+                  "value": "EmailsSendRequestInternalServerError"
                 }
               },
               "statusCode": 500,

@@ -8231,8 +8231,8 @@
         ]
       }
     },
-    "ForbiddenError": {
-      "name": "ForbiddenError",
+    "Organization_iam_list_membersRequestForbiddenError": {
+      "name": "Organization_iam_list_membersRequestForbiddenError",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -8253,8 +8253,95 @@
         ]
       }
     },
-    "BadRequestError": {
-      "name": "BadRequestError",
+    "Organization_get_memberRequestForbiddenError": {
+      "name": "Organization_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Organization_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Organization_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Organization_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Organization_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Organization_iam_test_permissionsRequestBadRequestError": {
+      "name": "Organization_iam_test_permissionsRequestBadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
         "variants": [
@@ -8289,6 +8376,28 @@
         ]
       }
     },
+    "Organization_iam_test_permissionsRequestForbiddenError": {
+      "name": "Organization_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgGetParametersSchema": {
       "name": "OrgGetParametersSchema",
       "shape": {
@@ -8305,6 +8414,72 @@
           },
           {
             "value": "joinable_by_invite"
+          }
+        ]
+      }
+    },
+    "Org_get_org__org_id__getRequestForbiddenError": {
+      "name": "Org_get_org__org_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_update_org__org_id__postRequestForbiddenError": {
+      "name": "Org_update_org__org_id__postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_join_org__org_id__join_postRequestForbiddenError": {
+      "name": "Org_join_org__org_id__join_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8326,6 +8501,321 @@
         ]
       }
     },
+    "Org_invites_list_org__org_id__invite_getRequestForbiddenError": {
+      "name": "Org_invites_list_org__org_id__invite_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_invites_create_org__org_id__invite_postRequestBadRequestError": {
+      "name": "Org_invites_create_org__org_id__invite_postRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "OrganizationInviteAlreadyExistsErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "OrganizationInviteAlreadyExistsErrorResponse"
+            }
+          },
+          {
+            "typeName": "OrganizationMemberAlreadyExistsErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "OrganizationMemberAlreadyExistsErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_invites_create_org__org_id__invite_postRequestForbiddenError": {
+      "name": "Org_invites_create_org__org_id__invite_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_invites_delete_org__org_id__invite__org_invite_id__deleteRequestForbiddenError": {
+      "name": "Org_invites_delete_org__org_id__invite__org_invite_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_domains_list_org__org_id__domains_getRequestForbiddenError": {
+      "name": "Org_domains_list_org__org_id__domains_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_domains_post_org__org_id__domains_postRequestForbiddenError": {
+      "name": "Org_domains_post_org__org_id__domains_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_domain_delete_org__org_id__domains__domain_id__deleteRequestForbiddenError": {
+      "name": "Org_domain_delete_org__org_id__domains__domain_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Org_update_avatar_org__org_id__avatar_postRequestForbiddenError": {
+      "name": "Org_update_avatar_org__org_id__avatar_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_project_org__org_id__project_getRequestForbiddenError": {
+      "name": "List_project_org__org_id__project_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Create_project_org__org_id__project_postRequestForbiddenError": {
+      "name": "Create_project_org__org_id__project_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_project_org__org_id__project__project_id__getRequestForbiddenError": {
+      "name": "Get_project_org__org_id__project__project_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Update_project_org__org_id__project__project_id__postRequestForbiddenError": {
+      "name": "Update_project_org__org_id__project__project_id__postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_project_config_org__org_id__project__project_id__config_postRequestForbiddenError": {
+      "name": "Set_project_config_org__org_id__project__project_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_update_avatar_org__org_id__project__project_id__avatar_postRequestForbiddenError": {
+      "name": "Project_update_avatar_org__org_id__project__project_id__avatar_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdIamMembersGetParametersSchema",
       "shape": {
@@ -8339,6 +8829,283 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "Project_iam_list_membersRequestForbiddenError": {
+      "name": "Project_iam_list_membersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_get_memberRequestForbiddenError": {
+      "name": "Project_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Project_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Project_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_iam_test_permissionsRequestBadRequestError": {
+      "name": "Project_iam_test_permissionsRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Project_iam_test_permissionsRequestForbiddenError": {
+      "name": "Project_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_collections_org__org_id__project__project_id__collection_getRequestForbiddenError": {
+      "name": "List_collections_org__org_id__project__project_id__collection_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Create_collection_org__org_id__project__project_id__collection_postRequestForbiddenError": {
+      "name": "Create_collection_org__org_id__project__project_id__collection_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_collection_org__org_id__project__project_id__collection__collection_id__getRequestForbiddenError": {
+      "name": "Get_collection_org__org_id__project__project_id__collection__collection_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_edit_org__org_id__project__project_id__collection__collection_id__postRequestForbiddenError": {
+      "name": "Collection_edit_org__org_id__project__project_id__collection__collection_id__postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_stats_org__org_id__project__project_id__collection__collection_id__stats_getRequestForbiddenError": {
+      "name": "Collection_stats_org__org_id__project__project_id__collection__collection_id__stats_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8357,6 +9124,116 @@
         ]
       }
     },
+    "List_chats_org__org_id__project__project_id__collection__collection_id__chat_getRequestForbiddenError": {
+      "name": "List_chats_org__org_id__project__project_id__collection__collection_id__chat_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Query_collection_org__org_id__project__project_id__collection__collection_id__query_postRequestForbiddenError": {
+      "name": "Query_collection_org__org_id__project__project_id__collection__collection_id__query_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_postRequestForbiddenError": {
+      "name": "Update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_add_org__org_id__project__project_id__collection__collection_id__add_postRequestForbiddenError": {
+      "name": "Collection_add_org__org_id__project__project_id__collection__collection_id__add_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_remove_org__org_id__project__project_id__collection__collection_id__remove_postRequestForbiddenError": {
+      "name": "Collection_remove_org__org_id__project__project_id__collection__collection_id__remove_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdCollectionCollectionIdIamMembersGetParametersSchema",
       "shape": {
@@ -8370,6 +9247,173 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "Collection_iam_list_membersRequestForbiddenError": {
+      "name": "Collection_iam_list_membersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_get_memberRequestForbiddenError": {
+      "name": "Collection_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Collection_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Collection_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_iam_test_permissionsRequestBadRequestError": {
+      "name": "Collection_iam_test_permissionsRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Collection_iam_test_permissionsRequestForbiddenError": {
+      "name": "Collection_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8409,6 +9453,204 @@
         ]
       }
     },
+    "Document_list_org__org_id__project__project_id__document_getRequestForbiddenError": {
+      "name": "Document_list_org__org_id__project__project_id__document_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_create_org__org_id__project__project_id__document_postRequestForbiddenError": {
+      "name": "Document_create_org__org_id__project__project_id__document_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_upload_org__org_id__project__project_id__document_upload_postRequestForbiddenError": {
+      "name": "Document_upload_org__org_id__project__project_id__document_upload_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_status_org__org_id__project__project_id__document_create_status__group_id__getRequestForbiddenError": {
+      "name": "Task_status_org__org_id__project__project_id__document_create_status__group_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_query_org__org_id__project__project_id__document__document_id__query_getRequestForbiddenError": {
+      "name": "Document_query_org__org_id__project__project_id__document__document_id__query_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_fetch_org__org_id__project__project_id__document__document_id__getRequestForbiddenError": {
+      "name": "Document_fetch_org__org_id__project__project_id__document__document_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_update_org__org_id__project__project_id__document__document_id__postRequestForbiddenError": {
+      "name": "Document_update_org__org_id__project__project_id__document__document_id__postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_delete_org__org_id__project__project_id__document__document_id__deleteRequestForbiddenError": {
+      "name": "Document_delete_org__org_id__project__project_id__document__document_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_embedding_query_org__org_id__project__project_id__document__document_id__embeddings_getRequestForbiddenError": {
+      "name": "Document_embedding_query_org__org_id__project__project_id__document__document_id__embeddings_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema": {
       "name": "OrgOrgIdProjectProjectIdDocumentDocumentIdIamMembersGetParametersSchema",
       "shape": {
@@ -8422,6 +9664,305 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "Document_iam_list_membersRequestForbiddenError": {
+      "name": "Document_iam_list_membersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_get_memberRequestForbiddenError": {
+      "name": "Document_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Document_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Document_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_iam_test_permissionsRequestBadRequestError": {
+      "name": "Document_iam_test_permissionsRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Document_iam_test_permissionsRequestForbiddenError": {
+      "name": "Document_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_chat_chat__chat_id__getRequestForbiddenError": {
+      "name": "Get_chat_chat__chat_id__getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Update_chat_chat__chat_id__postRequestForbiddenError": {
+      "name": "Update_chat_chat__chat_id__postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_chat_config_chat__chat_id__config_getRequestForbiddenError": {
+      "name": "Get_chat_config_chat__chat_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_chat_config_chat__chat_id__config_postRequestForbiddenError": {
+      "name": "Set_chat_config_chat__chat_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Create_chat_chat_postRequestForbiddenError": {
+      "name": "Create_chat_chat_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Query_chat_chat__chat_id__query_getRequestForbiddenError": {
+      "name": "Query_chat_chat__chat_id__query_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8443,6 +9984,1493 @@
         ]
       }
     },
+    "Chat_iam_list_membersRequestForbiddenError": {
+      "name": "Chat_iam_list_membersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Chat_get_memberRequestForbiddenError": {
+      "name": "Chat_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Chat_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Chat_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Chat_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Chat_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Chat_iam_test_permissionsRequestBadRequestError": {
+      "name": "Chat_iam_test_permissionsRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Chat_iam_test_permissionsRequestForbiddenError": {
+      "name": "Chat_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_box_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_box_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_box__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_box__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_box__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_box__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_confluence_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_confluence_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_confluence__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_confluence__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_dropbox_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_dropbox_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_dropbox__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_dropbox__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_gdrive_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_gdrive_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_gdrive__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_gdrive__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_notion_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_notion_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_notion__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_notion__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_onedrive_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_onedrive_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_onedrive__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_onedrive__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_getRequestForbiddenError": {
+      "name": "Authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__deleteRequestForbiddenError": {
+      "name": "Delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__deleteRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "List_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_getRequestForbiddenError": {
+      "name": "List_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_getRequestForbiddenError": {
+      "name": "Check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_getRequestForbiddenError": {
+      "name": "Get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_getRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_postRequestForbiddenError": {
+      "name": "Set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Register_oauth_client_internal_project__project_id__register_oauth_client_postRequestForbiddenError": {
+      "name": "Register_oauth_client_internal_project__project_id__register_oauth_client_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Initialise_org__org_id__project__project_id__compose_postRequestForbiddenError": {
+      "name": "Initialise_org__org_id__project__project_id__compose_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Generate_org__org_id__project__project_id__compose_generate_postRequestForbiddenError": {
+      "name": "Generate_org__org_id__project__project_id__compose_generate_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Update_section_org__org_id__project__project_id__compose_update_section_postRequestForbiddenError": {
+      "name": "Update_section_org__org_id__project__project_id__compose_update_section_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Section_talking_points_org__org_id__project__project_id__compose_section_talking_points_postRequestForbiddenError": {
+      "name": "Section_talking_points_org__org_id__project__project_id__compose_section_talking_points_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Topic_org__org_id__project__project_id__compose_topic_postRequestForbiddenError": {
+      "name": "Topic_org__org_id__project__project_id__compose_topic_postRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetAllTasksRequestForbiddenError": {
+      "name": "GetAllTasksRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "CreateTaskRequestForbiddenError": {
+      "name": "CreateTaskRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetTaskRequestForbiddenError": {
+      "name": "GetTaskRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "EditTaskRequestForbiddenError": {
+      "name": "EditTaskRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetTaskRunsRequestForbiddenError": {
+      "name": "GetTaskRunsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
     "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput": {
       "description": "The data input to the Task. This should be relevant to the `user_prompt` and cover any dynamic `{...}` parameters that are referenced in the prompt. Not required if `image_required` is set to `true` and there are no dynamic parameters in the prompt.",
       "name": "OrgOrgIdProjectProjectIdTaskTaskIdRunPostRequestBodySchemaTaskInput",
@@ -8450,6 +11478,28 @@
         "type": "object",
         "extends": [],
         "properties": []
+      }
+    },
+    "RunTaskRequestForbiddenError": {
+      "name": "RunTaskRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
       }
     },
     "OrgOrgIdProjectProjectIdTaskTaskIdIamMembersGetParametersSchema": {
@@ -8465,6 +11515,305 @@
           },
           {
             "value": "project"
+          }
+        ]
+      }
+    },
+    "Task_iam_list_membersRequestForbiddenError": {
+      "name": "Task_iam_list_membersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_get_memberRequestForbiddenError": {
+      "name": "Task_get_memberRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_iam_update_member_rolesRequestBadRequestError": {
+      "name": "Task_iam_update_member_rolesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MultipleRolesNotAllowedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MultipleRolesNotAllowedErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_iam_update_member_rolesRequestForbiddenError": {
+      "name": "Task_iam_update_member_rolesRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_iam_test_permissionsRequestBadRequestError": {
+      "name": "Task_iam_test_permissionsRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "InvalidSubjectTypeErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidSubjectTypeErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidMemberErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidMemberErrorResponse"
+            }
+          },
+          {
+            "typeName": "InvalidRoleErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "InvalidRoleErrorResponse"
+            }
+          },
+          {
+            "typeName": "MalformedResourceIdentifierErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MalformedResourceIdentifierErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "Task_iam_test_permissionsRequestForbiddenError": {
+      "name": "Task_iam_test_permissionsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetAllTaskForwardersRequestForbiddenError": {
+      "name": "GetAllTaskForwardersRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "CreateTaskForwarderRequestForbiddenError": {
+      "name": "CreateTaskForwarderRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetTaskForwarderRequestForbiddenError": {
+      "name": "GetTaskForwarderRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "UpdateTaskForwarderRequestForbiddenError": {
+      "name": "UpdateTaskForwarderRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetTaskRunRequestForbiddenError": {
+      "name": "GetTaskRunRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
+          }
+        ]
+      }
+    },
+    "GetAllModelsRequestForbiddenError": {
+      "name": "GetAllModelsRequestForbiddenError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "MissingAuthenticationErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "MissingAuthenticationErrorResponse"
+            }
+          },
+          {
+            "typeName": "PermissionCheckFailedErrorResponse",
+            "type": {
+              "type": "id",
+              "value": "PermissionCheckFailedErrorResponse"
+            }
           }
         ]
       }
@@ -8560,7 +11909,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Organization_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -8729,7 +12078,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Organization_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -8881,7 +12230,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Organization_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -8894,7 +12243,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Organization_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -9047,7 +12396,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Organization_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -9060,7 +12409,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Organization_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -9418,7 +12767,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_get_org__org_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -9558,7 +12907,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_update_org__org_id__postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -9689,7 +13038,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_join_org__org_id__join_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -9861,7 +13210,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_invites_list_org__org_id__invite_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10007,7 +13356,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Org_invites_create_org__org_id__invite_postRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -10020,7 +13369,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_invites_create_org__org_id__invite_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10165,7 +13514,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_invites_delete_org__org_id__invite__org_invite_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10274,7 +13623,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_domains_list_org__org_id__domains_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10429,7 +13778,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_domains_post_org__org_id__domains_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10579,7 +13928,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_domain_delete_org__org_id__domains__domain_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -10725,7 +14074,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Org_update_avatar_org__org_id__avatar_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11211,7 +14560,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_project_org__org_id__project_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11371,7 +14720,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Create_project_org__org_id__project_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11527,7 +14876,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_project_org__org_id__project__project_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -11720,7 +15069,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Update_project_org__org_id__project__project_id__postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12036,7 +15385,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_project_config_org__org_id__project__project_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12237,7 +15586,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Project_update_avatar_org__org_id__project__project_id__avatar_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12411,7 +15760,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Project_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12598,7 +15947,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Project_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12768,7 +16117,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Project_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -12781,7 +16130,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Project_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -12952,7 +16301,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Project_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -12965,7 +16314,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Project_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13190,7 +16539,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_collections_org__org_id__project__project_id__collection_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13386,7 +16735,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Create_collection_org__org_id__project__project_id__collection_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13578,7 +16927,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_collection_org__org_id__project__project_id__collection__collection_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13776,7 +17125,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_edit_org__org_id__project__project_id__collection__collection_id__postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -13967,7 +17316,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_stats_org__org_id__project__project_id__collection__collection_id__stats_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14177,7 +17526,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_chats_org__org_id__project__project_id__collection__collection_id__chat_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14381,7 +17730,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Query_collection_org__org_id__project__project_id__collection__collection_id__query_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14537,7 +17886,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Update_summary_org__org_id__project__project_id__collection__collection_id__update_summary_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14715,7 +18064,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_add_org__org_id__project__project_id__collection__collection_id__add_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -14927,7 +18276,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_remove_org__org_id__project__project_id__collection__collection_id__remove_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15138,7 +18487,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15343,7 +18692,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15531,7 +18880,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Collection_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -15544,7 +18893,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -15733,7 +19082,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Collection_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -15746,7 +19095,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Collection_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -16034,7 +19383,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_list_org__org_id__project__project_id__document_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -16258,7 +19607,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_create_org__org_id__project__project_id__document_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -16466,7 +19815,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_upload_org__org_id__project__project_id__document_upload_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -16675,7 +20024,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Task_status_org__org_id__project__project_id__document_create_status__group_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -16861,7 +20210,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_query_org__org_id__project__project_id__document__document_id__query_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -17028,7 +20377,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_fetch_org__org_id__project__project_id__document__document_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -17232,7 +20581,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_update_org__org_id__project__project_id__document__document_id__postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -17431,7 +20780,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_delete_org__org_id__project__project_id__document__document_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -17605,7 +20954,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_embedding_query_org__org_id__project__project_id__document__document_id__embeddings_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -17950,7 +21299,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -18155,7 +21504,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -18343,7 +21692,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Document_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -18356,7 +21705,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -18545,7 +21894,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Document_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -18558,7 +21907,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Document_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -18837,7 +22186,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_chat_chat__chat_id__getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -18987,7 +22336,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Update_chat_chat__chat_id__postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19133,7 +22482,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_chat_config_chat__chat_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19303,7 +22652,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_chat_config_chat__chat_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19459,7 +22808,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Create_chat_chat_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19616,7 +22965,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Query_chat_chat__chat_id__query_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19762,7 +23111,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Chat_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -19931,7 +23280,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Chat_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -20083,7 +23432,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Chat_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -20096,7 +23445,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Chat_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -20249,7 +23598,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Chat_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -20262,7 +23611,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Chat_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -20822,7 +24171,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_box_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -20976,7 +24325,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_box__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -21122,7 +24471,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_box__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -21298,7 +24647,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_box__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -21512,7 +24861,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_box__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -21700,7 +25049,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -21874,7 +25223,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_box__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -22497,7 +25846,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_confluence_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -22651,7 +26000,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_confluence__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -22797,7 +26146,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_confluence__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -22973,7 +26322,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_confluence__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -23187,7 +26536,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_confluence__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -23375,7 +26724,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -23549,7 +26898,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_confluence__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -24172,7 +27521,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_dropbox_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -24326,7 +27675,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_dropbox__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -24472,7 +27821,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_dropbox__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -24648,7 +27997,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_dropbox__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -24862,7 +28211,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_dropbox__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -25050,7 +28399,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -25224,7 +28573,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_dropbox__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -25847,7 +29196,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_gdrive_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26001,7 +29350,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_gdrive__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26147,7 +29496,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_gdrive__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26323,7 +29672,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_gdrive__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26537,7 +29886,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_gdrive__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26725,7 +30074,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -26899,7 +30248,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_gdrive__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -27522,7 +30871,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_notion_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -27676,7 +31025,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_notion__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -27822,7 +31171,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_notion__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -27998,7 +31347,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_notion__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -28212,7 +31561,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_notion__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -28400,7 +31749,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -28574,7 +31923,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_notion__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -29197,7 +32546,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_onedrive_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -29351,7 +32700,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_onedrive__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -29497,7 +32846,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_onedrive__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -29673,7 +33022,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_onedrive__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -29887,7 +33236,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_onedrive__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -30075,7 +33424,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -30249,7 +33598,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_onedrive__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -30872,7 +34221,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_sharepoint_authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31026,7 +34375,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Authorize_org__org_id__project__project_id__datasource_sharepoint__connection_id__authorize_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31172,7 +34521,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Delete_org__org_id__project__project_id__datasource_sharepoint__connection_id__deleteRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31348,7 +34697,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "List_runs_org__org_id__project__project_id__datasource_sharepoint__connection_id__runs_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31562,7 +34911,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Check_status_org__org_id__project__project_id__datasource_sharepoint__connection_id__run_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31750,7 +35099,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Get_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_getRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -31924,7 +35273,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Set_configuration_org__org_id__project__project_id__datasource_sharepoint__connection_id__config_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -32256,7 +35605,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Register_oauth_client_internal_project__project_id__register_oauth_client_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -33299,7 +36648,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Initialise_org__org_id__project__project_id__compose_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -33446,7 +36795,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Generate_org__org_id__project__project_id__compose_generate_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -33613,7 +36962,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Update_section_org__org_id__project__project_id__compose_update_section_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -33784,7 +37133,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Section_talking_points_org__org_id__project__project_id__compose_section_talking_points_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -33947,7 +37296,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Topic_org__org_id__project__project_id__compose_topic_postRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -34149,7 +37498,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetAllTasksRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -34377,7 +37726,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "CreateTaskRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -34635,7 +37984,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetTaskRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -34864,7 +38213,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "EditTaskRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -35140,7 +38489,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetTaskRunsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -35363,7 +38712,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "RunTaskRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -35593,7 +38942,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Task_iam_list_membersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -35798,7 +39147,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Task_get_memberRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -35986,7 +39335,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Task_iam_update_member_rolesRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -35999,7 +39348,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Task_iam_update_member_rolesRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -36188,7 +39537,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "BadRequestError"
+                  "value": "Task_iam_test_permissionsRequestBadRequestError"
                 }
               },
               "statusCode": 400,
@@ -36201,7 +39550,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "Task_iam_test_permissionsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -36415,7 +39764,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetTaskRunRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -36640,7 +39989,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetAllTaskForwardersRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -36836,7 +40185,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "CreateTaskForwarderRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -37042,7 +40391,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetTaskForwarderRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -37239,7 +40588,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "UpdateTaskForwarderRequestForbiddenError"
                 }
               },
               "statusCode": 403,
@@ -37423,7 +40772,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "value": "ForbiddenError"
+                  "value": "GetAllModelsRequestForbiddenError"
                 }
               },
               "statusCode": 403,
