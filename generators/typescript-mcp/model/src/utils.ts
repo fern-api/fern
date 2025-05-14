@@ -1,6 +1,13 @@
 import { ts } from "@fern-api/typescript-ast";
 
-import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    EnumTypeDeclaration,
+    ObjectTypeDeclaration,
+    PrimitiveTypeV1,
+    SingleUnionType,
+    TypeReference,
+    UnionTypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 
 function primitiveTypeV1Mapper(primitiveTypeV1: PrimitiveTypeV1) {
     return PrimitiveTypeV1._visit(primitiveTypeV1, {
@@ -21,13 +28,24 @@ function primitiveTypeV1Mapper(primitiveTypeV1: PrimitiveTypeV1) {
     });
 }
 
+// TODO: finish this
+function singleUnionTypeMapper(singleUnionType: SingleUnionType) {
+    return singleUnionType.shape._visit({
+        samePropertiesAsObject: (value) => "unknown()",
+        singleProperty: (value) => "unknown()",
+        noProperties: () => "unknown()",
+        _other: (value) => "any()"
+    });
+}
+
+// TODO: finish this
 function typeReferenceMapper(typeReference: TypeReference) {
     return typeReference._visit({
-        container: () => "unknown()",
-        named: () => "unknown()",
+        container: (value) => "unknown()",
+        named: (value) => "unknown()",
         primitive: (value) => primitiveTypeV1Mapper(value.v1),
         unknown: () => "unknown()",
-        _other: () => "any()"
+        _other: (value) => "any()"
     });
 }
 
@@ -82,34 +100,6 @@ export class ExportDefaultNode extends ts.AstNode {
     }
 }
 
-// export declare namespace ZodImportNode {
-//     interface Args {
-//         importFrom: ts.Reference.ModuleImport;
-//     }
-// }
-
-// export class ZodImportNode extends ts.AstNode {
-//     public constructor(private readonly args: ZodImportNode.Args) {
-//         super();
-//     }
-
-//     public write(writer: ts.Writer) {
-//         writer.write("import ");
-//         switch (this.args.importFrom.type) {
-//             case "default":
-//                 writer.write("z");
-//                 break;
-//             case "star":
-//                 writer.write("* as z");
-//                 break;
-//             case "named":
-//                 writer.write("{ z }");
-//                 break;
-//         }
-//         writer.write(` from "${this.args.importFrom.moduleName}"`);
-//     }
-// }
-
 export declare namespace ZodAliasNode {
     interface Args {
         zodReference: ts.Reference;
@@ -128,13 +118,37 @@ export class ZodAliasNode extends ts.AstNode {
     }
 }
 
+export declare namespace ZodEnumNode {
+    interface Args {
+        zodReference: ts.Reference;
+        enumDeclaration: EnumTypeDeclaration;
+    }
+}
+
+// TODO: test this thoroughly
+export class ZodEnumNode extends ts.AstNode {
+    public constructor(private readonly args: ZodEnumNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(".enum([");
+        writer.newLine();
+        writer.indent();
+        for (const value of this.args.enumDeclaration.values) {
+            writer.write(`"${value.name.name.originalName}",`);
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("])");
+    }
+}
+
 export declare namespace ZodObjectNode {
     interface Args {
         zodReference: ts.Reference;
-        fields: {
-            name: string;
-            value: ts.AstNode;
-        }[];
+        objectDeclaration: ObjectTypeDeclaration;
     }
 }
 
@@ -148,13 +162,45 @@ export class ZodObjectNode extends ts.AstNode {
         writer.write(".object({");
         writer.newLine();
         writer.indent();
-        for (const field of this.args.fields) {
-            writer.write(`${field.name}: `);
-            writer.writeNode(field.value);
+        for (const property of this.args.objectDeclaration.properties) {
+            writer.write(`${property.name.name.camelCase.safeName}: `);
+            writer.writeNode(
+                new ZodAliasNode({
+                    zodReference: this.args.zodReference,
+                    typeReference: property.valueType
+                })
+            );
             writer.write(",");
             writer.newLine();
         }
         writer.dedent();
         writer.write("})");
+    }
+}
+
+export declare namespace ZodUnionNode {
+    interface Args {
+        zodReference: ts.Reference;
+        unionDeclaration: UnionTypeDeclaration;
+    }
+}
+
+// TODO: test this thoroughly
+export class ZodUnionNode extends ts.AstNode {
+    public constructor(private readonly args: ZodUnionNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(".union([");
+        writer.newLine();
+        writer.indent();
+        for (const type of this.args.unionDeclaration.types) {
+            writer.write(`"${singleUnionTypeMapper(type)}",`);
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("])");
     }
 }

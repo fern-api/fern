@@ -37,13 +37,7 @@ export class ObjectGenerator extends FileGenerator<
                     new ExportDefaultNode({
                         initializer: new ZodObjectNode({
                             zodReference: this.zodReference,
-                            fields: this.objectDeclaration.properties.map((field) => ({
-                                name: field.name.name.camelCase.safeName,
-                                value: new ZodAliasNode({
-                                    zodReference: this.zodReference,
-                                    typeReference: field.valueType
-                                })
-                            }))
+                            objectDeclaration: this.objectDeclaration
                         })
                     })
                 );
