@@ -1,5 +1,12 @@
 - changelogEntry:
   - summary: |
+      Support text/plain content type responses in the v3 parser.
+    type: fix
+  irVersion: 57
+  version: 0.61.6
+
+- changelogEntry:
+  - summary: |
       Fix a bug where the CLI upgrade message was written to stdout. This made it difficult to write shell
       scripts that act upon the output of the CLI. The upgrade message is now written to stderr.
     type: fix

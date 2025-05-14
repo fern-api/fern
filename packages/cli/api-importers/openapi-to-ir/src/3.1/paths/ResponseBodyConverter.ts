@@ -1,5 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
+import { MediaType } from "@fern-api/core-utils";
 import { HttpResponseBody, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
 import { Converters, SchemaOrReferenceConverter } from "@fern-api/v2-importer-commons";
 
@@ -39,9 +40,9 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }
 
     public convert(): ResponseBodyConverter.Output | undefined {
-        const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
         const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
-        for (const contentType of [...jsonContentTypes]) {
+        const jsonContentTypes = Object.keys(this.responseBody.content ?? {}).filter((type) => type.includes("json"));
+        for (const contentType of jsonContentTypes) {
             const mediaTypeObject = this.responseBody.content?.[contentType];
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
@@ -83,6 +84,11 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                     });
                 }
                 return this.returnFileDownloadResponse({
+                    mediaTypeObject
+                });
+            }
+            if (MediaType.parse(contentType)?.isText()) {
+                return this.returnTextResponse({
                     mediaTypeObject
                 });
             }
@@ -199,6 +205,25 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
     }): ResponseBodyConverter.Output | undefined {
         return {
             responseBody: HttpResponseBody.fileDownload({
+                docs: this.responseBody.description,
+                v2Examples: this.convertMediaTypeObjectExamples({
+                    mediaTypeObject,
+                    generateOptionalProperties: true,
+                    exampleGenerationStrategy: "response"
+                })
+            }),
+            streamResponseBody: undefined,
+            inlinedTypes: {}
+        };
+    }
+
+    private returnTextResponse({
+        mediaTypeObject
+    }: {
+        mediaTypeObject: OpenAPIV3_1.MediaTypeObject | undefined;
+    }): ResponseBodyConverter.Output | undefined {
+        return {
+            responseBody: HttpResponseBody.text({
                 docs: this.responseBody.description,
                 v2Examples: this.convertMediaTypeObjectExamples({
                     mediaTypeObject,
