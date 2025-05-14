@@ -1,3 +1,11 @@
+- version: 0.38.0
+  changelogEntry:
+    - summary: |
+        Add support for the `useReaderForBytesRequest` configuration option, which generates
+        `io.Reader` request parameters instead of `[]byte` request parameters.
+      type: feat
+  createdAt: '2025-05-14'
+  irVersion: 57
 - version: 0.37.5
   changelogEntry:
     - summary: |
