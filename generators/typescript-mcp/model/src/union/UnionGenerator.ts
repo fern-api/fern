@@ -5,7 +5,7 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { TypeDeclaration, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodUnionNode } from "../utils";
+import { ExportDefaultNode, singleUnionTypeMapper } from "../ast";
 
 export class UnionGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -50,5 +50,32 @@ export class UnionGenerator extends FileGenerator<
 
     protected getFilepath(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+}
+
+export declare namespace ZodUnionNode {
+    interface Args {
+        zodReference: ts.Reference;
+        unionDeclaration: UnionTypeDeclaration;
+    }
+}
+
+// TODO: test this thoroughly
+export class ZodUnionNode extends ts.AstNode {
+    public constructor(private readonly args: ZodUnionNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(".union([");
+        writer.newLine();
+        writer.indent();
+        for (const type of this.args.unionDeclaration.types) {
+            writer.write(`"${singleUnionTypeMapper(type)}",`);
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("])");
     }
 }

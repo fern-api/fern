@@ -2,10 +2,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypescriptCustomConfigSchema, ts } from "@fern-api/typescript-ast";
 import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base";
 
-import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodAliasNode } from "../utils";
+import { ExportDefaultNode, typeReferenceMapper } from "../ast";
 
 export class AliasGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -50,5 +50,23 @@ export class AliasGenerator extends FileGenerator<
 
     protected getFilepath(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+}
+
+export declare namespace ZodAliasNode {
+    interface Args {
+        zodReference: ts.Reference;
+        typeReference: TypeReference;
+    }
+}
+
+export class ZodAliasNode extends ts.AstNode {
+    public constructor(private readonly args: ZodAliasNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(`.${typeReferenceMapper(this.args.typeReference)}`);
     }
 }

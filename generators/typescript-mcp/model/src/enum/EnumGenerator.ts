@@ -5,7 +5,7 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodEnumNode } from "../utils";
+import { ExportDefaultNode } from "../ast";
 
 export class EnumGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -50,5 +50,31 @@ export class EnumGenerator extends FileGenerator<
 
     protected getFilepath(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+}
+
+export declare namespace ZodEnumNode {
+    interface Args {
+        zodReference: ts.Reference;
+        enumDeclaration: EnumTypeDeclaration;
+    }
+}
+
+export class ZodEnumNode extends ts.AstNode {
+    public constructor(private readonly args: ZodEnumNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(".enum([");
+        writer.newLine();
+        writer.indent();
+        for (const value of this.args.enumDeclaration.values) {
+            writer.write(`"${value.name.name.originalName}",`);
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("])");
     }
 }

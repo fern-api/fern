@@ -5,7 +5,8 @@ import { FileGenerator, TypescriptMcpFile } from "@fern-api/typescript-mcp-base"
 import { ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ExportDefaultNode, ZodAliasNode, ZodObjectNode } from "../utils";
+import { ZodAliasNode } from "../alias/AliasGenerator";
+import { ExportDefaultNode } from "../ast";
 
 export class ObjectGenerator extends FileGenerator<
     TypescriptMcpFile,
@@ -50,5 +51,38 @@ export class ObjectGenerator extends FileGenerator<
 
     protected getFilepath(): RelativeFilePath {
         return RelativeFilePath.of("");
+    }
+}
+
+export declare namespace ZodObjectNode {
+    interface Args {
+        zodReference: ts.Reference;
+        objectDeclaration: ObjectTypeDeclaration;
+    }
+}
+
+export class ZodObjectNode extends ts.AstNode {
+    public constructor(private readonly args: ZodObjectNode.Args) {
+        super();
+    }
+
+    public write(writer: ts.Writer) {
+        writer.writeNode(this.args.zodReference);
+        writer.write(".object({");
+        writer.newLine();
+        writer.indent();
+        for (const property of this.args.objectDeclaration.properties) {
+            writer.write(`${property.name.name.camelCase.safeName}: `);
+            writer.writeNode(
+                new ZodAliasNode({
+                    zodReference: this.args.zodReference,
+                    typeReference: property.valueType
+                })
+            );
+            writer.write(",");
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write("})");
     }
 }
