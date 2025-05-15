@@ -2,6 +2,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { ObjectProperty, TypeId } from "@fern-api/ir-sdk";
 
+import { Extensions } from "..";
 import { AbstractConverterContext } from "../AbstractConverterContext";
 import { ErrorCollector } from "../ErrorCollector";
 import { SchemaConverter } from "../converters/schema/SchemaConverter";
@@ -38,7 +39,9 @@ export function convertProperties({
             });
             continue;
         }
-        const propertyId = context.convertBreadcrumbsToName(propertyBreadcrumbs);
+        const propertyId =
+            maybeGetFernTypeNameExtension(breadcrumbs, propertySchema, context) ??
+            context.convertBreadcrumbsToName(propertyBreadcrumbs);
         const isNullable = "nullable" in propertySchema ? (propertySchema.nullable as boolean) : false;
 
         const propertySchemaConverter = new SchemaOrReferenceConverter({
@@ -87,4 +90,20 @@ export function convertProperties({
         referencedTypes.add(typeId);
     }
     return { convertedProperties, propertiesByAudience, inlinedTypesFromProperties, referencedTypes };
+}
+
+function maybeGetFernTypeNameExtension(
+    breadcrumbs: string[],
+    schema: OpenAPIV3_1.SchemaObject,
+    context: AbstractConverterContext<object>
+): string | undefined {
+    if (context.isReferenceObject(schema)) {
+        return undefined;
+    }
+    const fernTypeNameConverter = new Extensions.FernTypeNameExtension({
+        breadcrumbs,
+        schema,
+        context
+    });
+    return fernTypeNameConverter.convert();
 }
