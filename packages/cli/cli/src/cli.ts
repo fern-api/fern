@@ -5,6 +5,7 @@ import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 
+import { BaseOpenAPIWorkspace } from "@fern-api/api-workspace-commons";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     PROJECT_CONFIG_FILENAME,
@@ -15,6 +16,7 @@ import {
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
@@ -875,6 +877,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Run validation locally without sending data to Fern API.",
                     default: false
+                })
+                .option("from-openapi", {
+                    boolean: true,
+                    description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -885,7 +892,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
-                errorOnBrokenLinks: argv.strictBrokenLinks
+                errorOnBrokenLinks: argv.strictBrokenLinks,
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );

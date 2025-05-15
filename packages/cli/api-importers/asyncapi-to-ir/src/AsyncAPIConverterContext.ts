@@ -27,9 +27,13 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return messageMatch[1];
     }
 
-    public convertReferenceToTypeReference(
-        reference: OpenAPIV3_1.ReferenceObject
-    ): { ok: true; reference: TypeReference } | { ok: false } {
+    public convertReferenceToTypeReference({
+        reference,
+        breadcrumbs
+    }: {
+        reference: OpenAPIV3_1.ReferenceObject;
+        breadcrumbs?: string[];
+    }): { ok: true; reference: TypeReference } | { ok: false } {
         let typeId: string | undefined;
 
         const schemaMatch = reference.$ref.match(/^.*\/schemas\/(.+)$/);
@@ -49,7 +53,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         if (typeId == null) {
             return { ok: false };
         }
-        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>(reference);
+        const resolvedReference = this.resolveReference<OpenAPIV3_1.SchemaObject>({ reference, breadcrumbs });
         if (!resolvedReference.resolved) {
             return { ok: false };
         }

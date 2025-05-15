@@ -69,7 +69,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         for (const [index, param] of this.method.params.entries()) {
             let resolvedParam: ContentDescriptorObject;
             if (this.context.isReferenceObject(param)) {
-                const resolvedParamResponse = this.context.resolveReference<ContentDescriptorObject>(param);
+                const resolvedParamResponse = this.context.resolveReference<ContentDescriptorObject>({
+                    reference: param
+                });
                 if (resolvedParamResponse.resolved) {
                     resolvedParam = resolvedParamResponse.value;
                 } else {
@@ -207,7 +209,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             for (const example of this.method.examples ?? []) {
                 let resolvedExample: ExamplePairingObject;
                 if (this.context.isReferenceObject(example)) {
-                    const resolvedExampleResponse = this.context.resolveReference<ExamplePairingObject>(example);
+                    const resolvedExampleResponse = this.context.resolveReference<ExamplePairingObject>({
+                        reference: example
+                    });
                     if (resolvedExampleResponse.resolved) {
                         resolvedExample = resolvedExampleResponse.value;
                     } else {
@@ -221,9 +225,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                 let resolvedResult: ExampleObject | undefined;
                 if (resolvedExample.result) {
                     if (this.context.isReferenceObject(resolvedExample.result)) {
-                        const resolvedResultResponse = this.context.resolveReference<ExampleObject>(
-                            resolvedExample.result
-                        );
+                        const resolvedResultResponse = this.context.resolveReference<ExampleObject>({
+                            reference: resolvedExample.result
+                        });
                         if (resolvedResultResponse.resolved) {
                             resolvedResult = resolvedResultResponse.value;
                         }
@@ -240,7 +244,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     resolvedParams = [];
                     for (const param of resolvedExample.params) {
                         if (this.context.isReferenceObject(param)) {
-                            const resolvedParamResponse = this.context.resolveReference<ExampleObject>(param);
+                            const resolvedParamResponse = this.context.resolveReference<ExampleObject>({
+                                reference: param
+                            });
                             if (resolvedParamResponse.resolved) {
                                 resolvedParams.push(resolvedParamResponse.value);
                             } else {
