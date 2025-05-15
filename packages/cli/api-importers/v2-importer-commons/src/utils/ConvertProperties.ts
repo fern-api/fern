@@ -30,13 +30,13 @@ export function convertProperties({
     let inlinedTypesFromProperties: Record<TypeId, SchemaConverter.ConvertedSchema> = {};
     const propertiesByAudience: Record<string, Set<string>> = {};
     const referencedTypes: Set<string> = new Set();
-    for (const [propertyName, propertySchema] of Object.entries(properties ?? {})) {
-        const fernTypeName = maybeUseFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? propertyName;
+    for (const [rawPropertyName, propertySchema] of Object.entries(properties ?? {})) {
+        const propertyName = maybeUseFernTypeNameDeclaration(breadcrumbs, propertySchema, context) ?? rawPropertyName;
 
-        const propertyBreadcrumbs = [...breadcrumbs, "properties", fernTypeName];
+        const propertyBreadcrumbs = [...breadcrumbs, "properties", propertyName];
         if (typeof propertySchema !== "object") {
             errorCollector.collect({
-                message: `Schema property ${fernTypeName} should be an object`,
+                message: `Schema property ${propertyName} should be an object`,
                 path: propertyBreadcrumbs
             });
             continue;
@@ -49,15 +49,15 @@ export function convertProperties({
             breadcrumbs: propertyBreadcrumbs,
             schemaOrReference: propertySchema,
             schemaIdOverride: propertyId,
-            wrapAsOptional: !required.includes(fernTypeName),
+            wrapAsOptional: !required.includes(propertyName),
             wrapAsNullable: isNullable
         });
         const convertedProperty = propertySchemaConverter.convert();
         if (convertedProperty != null) {
             convertedProperties.push({
                 name: context.casingsGenerator.generateNameAndWireValue({
-                    name: fernTypeName,
-                    wireValue: fernTypeName
+                    name: propertyName,
+                    wireValue: propertyName
                 }),
                 valueType: convertedProperty.type,
                 docs: propertySchema.description,
@@ -82,7 +82,7 @@ export function convertProperties({
                 if (propertiesByAudience[audience] == null) {
                     propertiesByAudience[audience] = new Set<string>();
                 }
-                propertiesByAudience[audience].add(fernTypeName);
+                propertiesByAudience[audience].add(propertyName);
             }
         }
     }
