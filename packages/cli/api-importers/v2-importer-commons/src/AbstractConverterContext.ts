@@ -648,6 +648,10 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return $ref.startsWith("http://") || $ref.startsWith("https://");
     }
 
+    public isExampleWithSummary(example: unknown): example is { summary: string } {
+        return typeof example === "object" && example != null && "summary" in example;
+    }
+
     public isExampleWithValue(example: unknown): example is { value: unknown } {
         return typeof example === "object" && example != null && "value" in example;
     }
