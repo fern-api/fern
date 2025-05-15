@@ -250,13 +250,10 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "access_token": "foo",
-                  "token_type": "Bearer",
-                  "expires_in": 42,
-                  "refresh_token": "foo"
-                }
+                "access_token": "foo",
+                "token_type": "Bearer",
+                "expires_in": 42,
+                "refresh_token": "foo"
               },
               "responseBodyV3": {
                 "type": "json",

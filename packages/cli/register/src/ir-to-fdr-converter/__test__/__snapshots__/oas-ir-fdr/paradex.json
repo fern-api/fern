@@ -12653,26 +12653,23 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                      "algo_type": "",
-                      "avg_fill_price": "26000",
-                      "cancel_reason": "NOT_ENOUGH_MARGIN",
-                      "created_at": 1681493746016,
-                      "end_at": 1681493746016,
-                      "id": "123456",
-                      "last_updated_at": 1681493746016,
-                      "market": "BTC-USD-PERP",
-                      "remaining_size": "0",
-                      "side": "BUY",
-                      "size": "0.05",
-                      "status": "NEW"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
+                    "algo_type": "",
+                    "avg_fill_price": "26000",
+                    "cancel_reason": "NOT_ENOUGH_MARGIN",
+                    "created_at": 1681493746016,
+                    "end_at": 1681493746016,
+                    "id": "123456",
+                    "last_updated_at": 1681493746016,
+                    "market": "BTC-USD-PERP",
+                    "remaining_size": "0",
+                    "side": "BUY",
+                    "size": "0.05",
+                    "status": "NEW"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -12805,22 +12802,19 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                  "algo_type": "",
-                  "avg_fill_price": "26000",
-                  "cancel_reason": "NOT_ENOUGH_MARGIN",
-                  "created_at": 1681493746016,
-                  "end_at": 1681493746016,
-                  "id": "123456",
-                  "last_updated_at": 1681493746016,
-                  "market": "BTC-USD-PERP",
-                  "remaining_size": "0",
-                  "side": "BUY",
-                  "size": "0.05",
-                  "status": "NEW"
-                }
+                "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
+                "algo_type": "",
+                "avg_fill_price": "26000",
+                "cancel_reason": "NOT_ENOUGH_MARGIN",
+                "created_at": 1681493746016,
+                "end_at": 1681493746016,
+                "id": "123456",
+                "last_updated_at": 1681493746016,
+                "market": "BTC-USD-PERP",
+                "remaining_size": "0",
+                "side": "BUY",
+                "size": "0.05",
+                "status": "NEW"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13029,28 +13023,25 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
-                  "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
-                  "results": [
-                    {
-                      "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                      "algo_type": "",
-                      "avg_fill_price": "26000",
-                      "cancel_reason": "NOT_ENOUGH_MARGIN",
-                      "created_at": 1681493746016,
-                      "end_at": 1681493746016,
-                      "id": "123456",
-                      "last_updated_at": 1681493746016,
-                      "market": "BTC-USD-PERP",
-                      "remaining_size": "0",
-                      "side": "BUY",
-                      "size": "0.05",
-                      "status": "NEW"
-                    }
-                  ]
-                }
+                "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
+                "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
+                "results": [
+                  {
+                    "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
+                    "algo_type": "",
+                    "avg_fill_price": "26000",
+                    "cancel_reason": "NOT_ENOUGH_MARGIN",
+                    "created_at": 1681493746016,
+                    "end_at": 1681493746016,
+                    "id": "123456",
+                    "last_updated_at": 1681493746016,
+                    "market": "BTC-USD-PERP",
+                    "remaining_size": "0",
+                    "side": "BUY",
+                    "size": "0.05",
+                    "status": "NEW"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13168,22 +13159,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
-                  "algo_type": "",
-                  "avg_fill_price": "26000",
-                  "cancel_reason": "NOT_ENOUGH_MARGIN",
-                  "created_at": 1681493746016,
-                  "end_at": 1681493746016,
-                  "id": "123456",
-                  "last_updated_at": 1681493746016,
-                  "market": "BTC-USD-PERP",
-                  "remaining_size": "0",
-                  "side": "BUY",
-                  "size": "0.05",
-                  "status": "NEW"
-                }
+                "account": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7512",
+                "algo_type": "",
+                "avg_fill_price": "26000",
+                "cancel_reason": "NOT_ENOUGH_MARGIN",
+                "created_at": 1681493746016,
+                "end_at": 1681493746016,
+                "id": "123456",
+                "last_updated_at": 1681493746016,
+                "market": "BTC-USD-PERP",
+                "remaining_size": "0",
+                "side": "BUY",
+                "size": "0.05",
+                "status": "NEW"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13438,10 +13426,7 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "jwt_token": "eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJ0eXAiOiJhdCtKV1QiLCJleHAiOjE2ODE0NTI5MDcsImlhdCI6MTY4MTQ1MjYwNywiaXNzIjoiUGFyYWRleCBzdGFnaW5nIiwic3ViIjoiMHg0OTVkMmViNTIzNmExMmI4YjRhZDdkMzg0OWNlNmEyMDNjZTIxYzQzZjQ3M2MyNDhkZmQ1Y2U3MGQ5NDU0ZmEifQ.BPihIbGhnnsuPlReqC9x12JFXldpswg5EdA6tTiDQm-_UHaRz_8RfVBqWc2fPN6CzFsXTq7GowZu-2qMxPvZK_fGcxEhTp2k1r8MUxowlUIT4vPu2scCwrsyIujlCAwS"
-                }
+                "jwt_token": "eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJ0eXAiOiJhdCtKV1QiLCJleHAiOjE2ODE0NTI5MDcsImlhdCI6MTY4MTQ1MjYwNywiaXNzIjoiUGFyYWRleCBzdGFnaW5nIiwic3ViIjoiMHg0OTVkMmViNTIzNmExMmI4YjRhZDdkMzg0OWNlNmEyMDNjZTIxYzQzZjQ3M2MyNDhkZmQ1Y2U3MGQ5NDU0ZmEifQ.BPihIbGhnnsuPlReqC9x12JFXldpswg5EdA6tTiDQm-_UHaRz_8RfVBqWc2fPN6CzFsXTq7GowZu-2qMxPvZK_fGcxEhTp2k1r8MUxowlUIT4vPu2scCwrsyIujlCAwS"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13678,16 +13663,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "ask": "30130.15",
-                  "ask_size": "0.05",
-                  "bid": "30112.22",
-                  "bid_size": "0.04",
-                  "last_updated_at": 1681493939981,
-                  "market": "BTC-USD-PERP",
-                  "seq_no": 20784
-                }
+                "ask": "30130.15",
+                "ask_size": "0.05",
+                "bid": "30112.22",
+                "bid_size": "0.04",
+                "last_updated_at": 1681493939981,
+                "market": "BTC-USD-PERP",
+                "seq_no": 20784
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13840,20 +13822,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
-                  "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
-                  "results": [
-                    {
-                      "created_at": 42,
-                      "funding_index": "foo",
-                      "funding_premium": "foo",
-                      "funding_rate": "foo",
-                      "market": "foo"
-                    }
-                  ]
-                }
+                "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
+                "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
+                "results": [
+                  {
+                    "created_at": 42,
+                    "funding_index": "foo",
+                    "funding_premium": "foo",
+                    "funding_rate": "foo",
+                    "market": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -13956,75 +13935,72 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "asset_kind": "PERP",
-                      "base_currency": "ETH",
-                      "chain_details": {
-                        "collateral_address": "0x1234567890",
-                        "contract_address": "0x1234567890",
-                        "fee_account_address": "0x1234567890",
-                        "fee_maker": "0.01",
-                        "fee_taker": "0.01",
-                        "insurance_fund_address": "0x1234567890",
-                        "liquidation_fee": "0.01",
-                        "oracle_address": "0x1234567890",
-                        "symbol": "ETH-USD-PERP"
+                "results": [
+                  {
+                    "asset_kind": "PERP",
+                    "base_currency": "ETH",
+                    "chain_details": {
+                      "collateral_address": "0x1234567890",
+                      "contract_address": "0x1234567890",
+                      "fee_account_address": "0x1234567890",
+                      "fee_maker": "0.01",
+                      "fee_taker": "0.01",
+                      "insurance_fund_address": "0x1234567890",
+                      "liquidation_fee": "0.01",
+                      "oracle_address": "0x1234567890",
+                      "symbol": "ETH-USD-PERP"
+                    },
+                    "clamp_rate": "0.05",
+                    "delta1_cross_margin_params": {
+                      "imf_base": "0.11",
+                      "imf_factor": "0",
+                      "imf_shift": "0",
+                      "mmf_factor": "0.51"
+                    },
+                    "expiry_at": 0,
+                    "funding_period_hours": 8,
+                    "interest_rate": "0.01",
+                    "iv_bands_width": "0.05",
+                    "market_kind": "cross",
+                    "max_funding_rate": "0.05",
+                    "max_funding_rate_change": "0.0005",
+                    "max_open_orders": 100,
+                    "max_order_size": "100",
+                    "max_tob_spread": "0.2",
+                    "min_notional": "3",
+                    "open_at": 0,
+                    "option_cross_margin_params": {
+                      "imf": {
+                        "long_itm": "0.2",
+                        "premium_multiplier": "1.2",
+                        "short_itm": "0.4",
+                        "short_otm": "0.25",
+                        "short_put_cap": "0.5"
                       },
-                      "clamp_rate": "0.05",
-                      "delta1_cross_margin_params": {
-                        "imf_base": "0.11",
-                        "imf_factor": "0",
-                        "imf_shift": "0",
-                        "mmf_factor": "0.51"
-                      },
-                      "expiry_at": 0,
-                      "funding_period_hours": 8,
-                      "interest_rate": "0.01",
-                      "iv_bands_width": "0.05",
-                      "market_kind": "cross",
-                      "max_funding_rate": "0.05",
-                      "max_funding_rate_change": "0.0005",
-                      "max_open_orders": 100,
-                      "max_order_size": "100",
-                      "max_tob_spread": "0.2",
-                      "min_notional": "3",
-                      "open_at": 0,
-                      "option_cross_margin_params": {
-                        "imf": {
-                          "long_itm": "0.2",
-                          "premium_multiplier": "1.2",
-                          "short_itm": "0.4",
-                          "short_otm": "0.25",
-                          "short_put_cap": "0.5"
-                        },
-                        "mmf": {
-                          "long_itm": "0.2",
-                          "premium_multiplier": "1.2",
-                          "short_itm": "0.4",
-                          "short_otm": "0.25",
-                          "short_put_cap": "0.5"
-                        }
-                      },
-                      "option_type": "PUT",
-                      "oracle_ewma_factor": "0.2",
-                      "order_size_increment": "0.001",
-                      "position_limit": "500",
-                      "price_bands_width": "0.05",
-                      "price_feed_id": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
-                      "price_tick_size": "0.01",
-                      "quote_currency": "USD",
-                      "settlement_currency": "USDC",
-                      "strike_price": "66500",
-                      "symbol": "ETH-USD-PERP",
-                      "tags": [
-                        "foo"
-                      ]
-                    }
-                  ]
-                }
+                      "mmf": {
+                        "long_itm": "0.2",
+                        "premium_multiplier": "1.2",
+                        "short_itm": "0.4",
+                        "short_otm": "0.25",
+                        "short_put_cap": "0.5"
+                      }
+                    },
+                    "option_type": "PUT",
+                    "oracle_ewma_factor": "0.2",
+                    "order_size_increment": "0.001",
+                    "position_limit": "500",
+                    "price_bands_width": "0.05",
+                    "price_feed_id": "GVXRSBjFk6e6J3NbVPXohDJetcTjaeeuykUpbQF8UoMU",
+                    "price_tick_size": "0.01",
+                    "quote_currency": "USD",
+                    "settlement_currency": "USDC",
+                    "strike_price": "66500",
+                    "symbol": "ETH-USD-PERP",
+                    "tags": [
+                      "foo"
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14323,39 +14299,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "ask": "30130.15",
-                      "ask_iv": "0.2",
-                      "bid": "30112.22",
-                      "bid_iv": "0.2",
-                      "created_at": 42,
+                "results": [
+                  {
+                    "ask": "30130.15",
+                    "ask_iv": "0.2",
+                    "bid": "30112.22",
+                    "bid_iv": "0.2",
+                    "created_at": 42,
+                    "delta": "1",
+                    "funding_rate": "0.3",
+                    "future_funding_rate": "0.3",
+                    "greeks": {
                       "delta": "1",
-                      "funding_rate": "0.3",
-                      "future_funding_rate": "0.3",
-                      "greeks": {
-                        "delta": "1",
-                        "gamma": "0.2",
-                        "rho": "0.2",
-                        "vanna": "0.2",
-                        "vega": "0.2",
-                        "volga": "0.2"
-                      },
-                      "last_iv": "0.2",
-                      "last_traded_price": "30109.53",
-                      "mark_iv": "0.2",
-                      "mark_price": "29799.70877478",
-                      "open_interest": "6100048.3",
-                      "price_change_rate_24h": "0.05",
-                      "symbol": "BTC-USD-PERP",
-                      "total_volume": "141341.0424",
-                      "underlying_price": "29876.3",
-                      "volume_24h": "47041.0424"
-                    }
-                  ]
-                }
+                      "gamma": "0.2",
+                      "rho": "0.2",
+                      "vanna": "0.2",
+                      "vega": "0.2",
+                      "volga": "0.2"
+                    },
+                    "last_iv": "0.2",
+                    "last_traded_price": "30109.53",
+                    "mark_iv": "0.2",
+                    "mark_price": "29799.70877478",
+                    "open_interest": "6100048.3",
+                    "price_change_rate_24h": "0.05",
+                    "symbol": "BTC-USD-PERP",
+                    "total_volume": "141341.0424",
+                    "underlying_price": "29876.3",
+                    "volume_24h": "47041.0424"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14499,22 +14472,19 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "asks": [
-                    [
-                      "foo"
-                    ]
-                  ],
-                  "bids": [
-                    [
-                      "foo"
-                    ]
-                  ],
-                  "last_updated_at": 1681462770114,
-                  "market": "ETH-USD-PERP",
-                  "seq_no": 20784
-                }
+                "asks": [
+                  [
+                    "foo"
+                  ]
+                ],
+                "bids": [
+                  [
+                    "foo"
+                  ]
+                ],
+                "last_updated_at": 1681462770114,
+                "market": "ETH-USD-PERP",
+                "seq_no": 20784
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14601,13 +14571,10 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                  "account_value": "136285.069",
-                  "settlement_asset": "USDC",
-                  "updated_at": 1681471234972
-                }
+                "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                "account_value": "136285.069",
+                "settlement_asset": "USDC",
+                "updated_at": 1681471234972
               },
               "responseBodyV3": {
                 "type": "json",
@@ -14726,15 +14693,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "created_at": 1697213130097,
-                      "id": "0x123456789"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "created_at": 1697213130097,
+                    "id": "0x123456789"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15018,18 +14982,15 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "address": "foo",
-                      "created_at": 1715592690488,
-                      "referral_code": "maxdegen01",
-                      "referral_rewards": "0.123",
-                      "volume_traded": "0.123"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "address": "foo",
+                    "created_at": 1715592690488,
+                    "referral_code": "maxdegen01",
+                    "referral_rewards": "0.123",
+                    "volume_traded": "0.123"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15112,39 +15073,36 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "block_explorer_url": "https://voyager.testnet.paradex.trade/",
-                  "bridged_tokens": [
-                    {
-                      "decimals": 42,
-                      "l1_bridge_address": "foo",
-                      "l1_token_address": "foo",
-                      "l2_bridge_address": "foo",
-                      "l2_token_address": "foo",
-                      "name": "foo",
-                      "symbol": "foo"
-                    }
-                  ],
-                  "environment": "local",
-                  "l1_chain_id": "5",
-                  "l1_core_contract_address": "0x182FE62c57461d4c5Ab1aE6F04f1D51aA1607daf",
-                  "l1_operator_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
-                  "l1_withdraw_relayer_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
-                  "l2_withdraw_relayer_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
-                  "liquidation_fee": "0.20",
-                  "oracle_address": "0x47c622ce5f7ff7fa17725df596f4f506364e49be0621eb142a75b44ee3689c6",
-                  "paraclear_account_hash": "0x033434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2",
-                  "paraclear_account_proxy_hash": "0x3530cc4759d78042f1b543bf797f5f3d647cde0388c33734cf91b7f7b9314a9",
-                  "paraclear_address": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7554d",
-                  "paraclear_decimals": 42,
-                  "partial_liquidation_buffer": "0.2",
-                  "partial_liquidation_share_increment": "0.05",
-                  "starknet_chain_id": "SN_CHAIN_ID",
-                  "starknet_fullnode_rpc_url": "https://pathfinder.api.testnet.paradex.trade/rpc/v0_7",
-                  "starknet_gateway_url": "https://potc-testnet-02.starknet.io",
-                  "universal_deployer_address": "0x1f3f9d3f1f0b7f3f9f3f9f3f9f3f9f3f9f3f9f3f"
-                }
+                "block_explorer_url": "https://voyager.testnet.paradex.trade/",
+                "bridged_tokens": [
+                  {
+                    "decimals": 42,
+                    "l1_bridge_address": "foo",
+                    "l1_token_address": "foo",
+                    "l2_bridge_address": "foo",
+                    "l2_token_address": "foo",
+                    "name": "foo",
+                    "symbol": "foo"
+                  }
+                ],
+                "environment": "local",
+                "l1_chain_id": "5",
+                "l1_core_contract_address": "0x182FE62c57461d4c5Ab1aE6F04f1D51aA1607daf",
+                "l1_operator_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
+                "l1_withdraw_relayer_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
+                "l2_withdraw_relayer_address": "0x63e762538C70442758Fd622116d817761c94FD6A",
+                "liquidation_fee": "0.20",
+                "oracle_address": "0x47c622ce5f7ff7fa17725df596f4f506364e49be0621eb142a75b44ee3689c6",
+                "paraclear_account_hash": "0x033434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2",
+                "paraclear_account_proxy_hash": "0x3530cc4759d78042f1b543bf797f5f3d647cde0388c33734cf91b7f7b9314a9",
+                "paraclear_address": "0x4638e3041366aa71720be63e32e53e1223316c7f0d56f7aa617542ed1e7554d",
+                "paraclear_decimals": 42,
+                "partial_liquidation_buffer": "0.2",
+                "partial_liquidation_share_increment": "0.05",
+                "starknet_chain_id": "SN_CHAIN_ID",
+                "starknet_fullnode_rpc_url": "https://pathfinder.api.testnet.paradex.trade/rpc/v0_7",
+                "starknet_gateway_url": "https://potc-testnet-02.starknet.io",
+                "universal_deployer_address": "0x1f3f9d3f1f0b7f3f9f3f9f3f9f3f9f3f9f3f9f3f"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15238,10 +15196,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "status": "ok"
-                }
+                "status": "ok"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15306,10 +15261,7 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "server_time": "1681493415023"
-                }
+                "server_time": "1681493415023"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15525,32 +15477,29 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "address": "0x1234567890abcdef",
-                      "created_at": 1517171717,
-                      "description": "My description",
-                      "kind": "user",
-                      "last_updated_at": 1617171717,
-                      "lockup_period": 1,
-                      "max_tvl": 1000000,
-                      "name": "MyVault",
-                      "operator_account": "0x1234567890abcdef",
-                      "owner_account": "0x0234567890abcdef",
-                      "profit_share": 10,
-                      "status": "INITIALIZING",
-                      "strategies": [
-                        {
-                          "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
-                          "name": "Alpha Strategy"
-                        }
-                      ],
-                      "token_address": "foo"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "address": "0x1234567890abcdef",
+                    "created_at": 1517171717,
+                    "description": "My description",
+                    "kind": "user",
+                    "last_updated_at": 1617171717,
+                    "lockup_period": 1,
+                    "max_tvl": 1000000,
+                    "name": "MyVault",
+                    "operator_account": "0x1234567890abcdef",
+                    "owner_account": "0x0234567890abcdef",
+                    "profit_share": 10,
+                    "status": "INITIALIZING",
+                    "strategies": [
+                      {
+                        "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
+                        "name": "Alpha Strategy"
+                      }
+                    ],
+                    "token_address": "foo"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15717,28 +15666,25 @@
               },
               "responseStatusCode": 201,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "address": "0x1234567890abcdef",
-                  "created_at": 1517171717,
-                  "description": "My description",
-                  "kind": "user",
-                  "last_updated_at": 1617171717,
-                  "lockup_period": 1,
-                  "max_tvl": 1000000,
-                  "name": "MyVault",
-                  "operator_account": "0x1234567890abcdef",
-                  "owner_account": "0x0234567890abcdef",
-                  "profit_share": 10,
-                  "status": "INITIALIZING",
-                  "strategies": [
-                    {
-                      "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
-                      "name": "Alpha Strategy"
-                    }
-                  ],
-                  "token_address": "foo"
-                }
+                "address": "0x1234567890abcdef",
+                "created_at": 1517171717,
+                "description": "My description",
+                "kind": "user",
+                "last_updated_at": 1617171717,
+                "lockup_period": 1,
+                "max_tvl": 1000000,
+                "name": "MyVault",
+                "operator_account": "0x1234567890abcdef",
+                "owner_account": "0x0234567890abcdef",
+                "profit_share": 10,
+                "status": "INITIALIZING",
+                "strategies": [
+                  {
+                    "address": "0x29464b79b02543ed8746bba6e71c8a15401dd27b7279a5fa2f2fe8e8cdfabb",
+                    "name": "Alpha Strategy"
+                  }
+                ],
+                "token_address": "foo"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15849,19 +15795,16 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "address": "0x1234567890abcdef",
-                      "created_at": 1717171717,
-                      "deposited_amount": "123.45",
-                      "total_pnl": "149.12",
-                      "total_roi": "0.724",
-                      "vtoken_amount": "123.45"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "address": "0x1234567890abcdef",
+                    "created_at": 1717171717,
+                    "deposited_amount": "123.45",
+                    "total_pnl": "149.12",
+                    "total_roi": "0.724",
+                    "vtoken_amount": "123.45"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -15975,16 +15918,13 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "last_updated_at": 1681462770114,
-                      "size": "123003.620",
-                      "token": "USDC"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "last_updated_at": 1681462770114,
+                    "size": "123003.620",
+                    "token": "USDC"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16069,15 +16009,12 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "max_lockup_period_days": "4",
-                  "max_profit_share_percentage": "50",
-                  "min_initial_deposit": "1000",
-                  "min_lockup_period_days": "1",
-                  "min_owner_share_percentage": "5",
-                  "vault_factory_address": "0x1234567890abcdef"
-                }
+                "max_lockup_period_days": "4",
+                "max_profit_share_percentage": "50",
+                "min_initial_deposit": "1000",
+                "min_lockup_period_days": "1",
+                "min_owner_share_percentage": "5",
+                "vault_factory_address": "0x1234567890abcdef"
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16205,20 +16142,17 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "address": "0x1234567890abcdef",
-                      "data": [
-                        42
-                      ],
-                      "timestamps": [
-                        42
-                      ]
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "address": "0x1234567890abcdef",
+                    "data": [
+                      42
+                    ],
+                    "timestamps": [
+                      42
+                    ]
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16333,36 +16267,33 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "account": "foo",
-                      "average_entry_price": "29001.34",
-                      "average_entry_price_usd": "29001.34",
-                      "average_exit_price": "29001.34",
-                      "cached_funding_index": "1234.3",
-                      "closed_at": 1681493939981,
-                      "cost": "-10005.4623",
-                      "cost_usd": "-10005.4623",
-                      "created_at": 1681493939981,
-                      "id": "1234234",
-                      "last_fill_id": "1234234",
-                      "last_updated_at": 1681493939981,
-                      "leverage": "foo",
-                      "liquidation_price": "foo",
-                      "market": "BTC-USD-PERP",
-                      "realized_positional_funding_pnl": "12.234",
-                      "realized_positional_pnl": "-123.23",
-                      "seq_no": 1681471234972000000,
-                      "side": "SHORT",
-                      "size": "-0.345",
-                      "status": "OPEN",
-                      "unrealized_funding_pnl": "12.234",
-                      "unrealized_pnl": "-123.23"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "account": "foo",
+                    "average_entry_price": "29001.34",
+                    "average_entry_price_usd": "29001.34",
+                    "average_exit_price": "29001.34",
+                    "cached_funding_index": "1234.3",
+                    "closed_at": 1681493939981,
+                    "cost": "-10005.4623",
+                    "cost_usd": "-10005.4623",
+                    "created_at": 1681493939981,
+                    "id": "1234234",
+                    "last_fill_id": "1234234",
+                    "last_updated_at": 1681493939981,
+                    "leverage": "foo",
+                    "liquidation_price": "foo",
+                    "market": "BTC-USD-PERP",
+                    "realized_positional_funding_pnl": "12.234",
+                    "realized_positional_pnl": "-123.23",
+                    "seq_no": 1681471234972000000,
+                    "side": "SHORT",
+                    "size": "-0.345",
+                    "status": "OPEN",
+                    "unrealized_funding_pnl": "12.234",
+                    "unrealized_pnl": "-123.23"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16481,37 +16412,34 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "address": "0x1234567890abcdef",
-                      "last_month_return": "0.023",
-                      "max_drawdown": "0.1916",
-                      "max_drawdown_24h": "0.0138",
-                      "max_drawdown_30d": "0.1821",
-                      "max_drawdown_7d": "0.1124",
-                      "net_deposits": "1000000",
-                      "num_depositors": 100,
-                      "owner_equity": "0.145",
-                      "pnl_24h": "13.41",
-                      "pnl_30d": "114.19",
-                      "pnl_7d": "91.31",
-                      "roi_24h": "0.034",
-                      "roi_30d": "0.003",
-                      "roi_7d": "0.123",
-                      "total_pnl": "149.12",
-                      "total_roi": "0.724",
-                      "tvl": "1000000",
-                      "volume": "12345678.16",
-                      "volume_24h": "45678.16",
-                      "volume_30d": "2345678.16",
-                      "volume_7d": "345678.16",
-                      "vtoken_price": "1.23",
-                      "vtoken_supply": "1000000"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "address": "0x1234567890abcdef",
+                    "last_month_return": "0.023",
+                    "max_drawdown": "0.1916",
+                    "max_drawdown_24h": "0.0138",
+                    "max_drawdown_30d": "0.1821",
+                    "max_drawdown_7d": "0.1124",
+                    "net_deposits": "1000000",
+                    "num_depositors": 100,
+                    "owner_equity": "0.145",
+                    "pnl_24h": "13.41",
+                    "pnl_30d": "114.19",
+                    "pnl_7d": "91.31",
+                    "roi_24h": "0.034",
+                    "roi_30d": "0.003",
+                    "roi_7d": "0.123",
+                    "total_pnl": "149.12",
+                    "total_roi": "0.724",
+                    "tvl": "1000000",
+                    "volume": "12345678.16",
+                    "volume_24h": "45678.16",
+                    "volume_30d": "2345678.16",
+                    "volume_7d": "345678.16",
+                    "vtoken_price": "1.23",
+                    "vtoken_supply": "1000000"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -16630,33 +16558,30 @@
               "headers": {},
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    {
-                      "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                      "amount": "100",
-                      "auto_withdrawal_fee": "4.5",
-                      "bridge": "",
-                      "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                      "created_at": 1681497002041,
-                      "direction": "IN",
-                      "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                      "external_chain": "ETHEREUM",
-                      "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                      "failure_reason": "Gas fee too low",
-                      "id": "123456789",
-                      "kind": "DEPOSIT",
-                      "last_updated_at": 1681497002041,
-                      "socialized_loss_factor": "0",
-                      "status": "PENDING",
-                      "token": "USDC",
-                      "txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
-                      "vault_address": "0x7a3b1c8f9e2d4e6f8a0c2b4d6e8f0a2c4b6e8d0a",
-                      "vault_unwind_completion_percentage": "0.35"
-                    }
-                  ]
-                }
+                "results": [
+                  {
+                    "account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                    "amount": "100",
+                    "auto_withdrawal_fee": "4.5",
+                    "bridge": "",
+                    "counterparty": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                    "created_at": 1681497002041,
+                    "direction": "IN",
+                    "external_account": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                    "external_chain": "ETHEREUM",
+                    "external_txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                    "failure_reason": "Gas fee too low",
+                    "id": "123456789",
+                    "kind": "DEPOSIT",
+                    "last_updated_at": 1681497002041,
+                    "socialized_loss_factor": "0",
+                    "status": "PENDING",
+                    "token": "USDC",
+                    "txn_hash": "0x495d2eb5236a12b8b4ad7d3849ce6a203ce21c43f473c248dfd5ce70d9454fa",
+                    "vault_address": "0x7a3b1c8f9e2d4e6f8a0c2b4d6e8f0a2c4b6e8d0a",
+                    "vault_unwind_completion_percentage": "0.35"
+                  }
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -18199,22 +18124,19 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
-                "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
-                "results": [
-                  {
-                    "created_at": 1681497002041,
-                    "id": "12345643",
-                    "market": "BTC-USD-PERP",
-                    "price": "30001.2",
-                    "side": "BUY",
-                    "size": "0.01",
-                    "trade_type": "LIQUIDATION"
-                  }
-                ]
-              }
+              "next": "eyJmaWx0ZXIiMsIm1hcmtlciI6eyJtYXJrZXIiOiIxNjc1NjUwMDE3NDMxMTAxNjk5N=",
+              "prev": "eyJmaWx0ZXIiOnsiTGltaXQiOjkwfSwidGltZSI6MTY4MTY3OTgzNzk3MTMwOTk1MywibWFya2VyIjp7Im1zMjExMD==",
+              "results": [
+                {
+                  "created_at": 1681497002041,
+                  "id": "12345643",
+                  "market": "BTC-USD-PERP",
+                  "price": "30001.2",
+                  "side": "BUY",
+                  "size": "0.01",
+                  "trade_type": "LIQUIDATION"
+                }
+              ]
             },
             "responseBodyV3": {
               "type": "json",

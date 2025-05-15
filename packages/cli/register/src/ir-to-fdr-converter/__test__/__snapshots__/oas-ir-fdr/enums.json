@@ -129,10 +129,7 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": "ACTIVE"
-            },
+            "responseBody": "ACTIVE",
             "responseBodyV3": {
               "type": "json",
               "value": "ACTIVE"

@@ -1,5 +1,12 @@
 - changelogEntry:
     - summary: |
+        Example pairing operates on example summary fields.
+      type: fix
+  irVersion: 57
+  version: 0.61.15
+
+- changelogEntry:
+    - summary: |
         Exclude deprecated fields from examples.
       type: fix
   irVersion: 57

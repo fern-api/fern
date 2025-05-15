@@ -91,10 +91,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "id": "foo"
-              }
+              "id": "foo"
             },
             "responseBodyV3": {
               "type": "json",
@@ -153,14 +150,11 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "json",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "json",
               "value": [

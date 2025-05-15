@@ -215,14 +215,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -315,14 +312,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [
@@ -415,14 +409,11 @@
               "value": {}
             },
             "responseStatusCode": 200,
-            "responseBody": {
-              "type": "stream",
-              "value": [
-                {
-                  "id": "foo"
-                }
-              ]
-            },
+            "responseBody": [
+              {
+                "id": "foo"
+              }
+            ],
             "responseBodyV3": {
               "type": "stream",
               "value": [

@@ -107,10 +107,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "separator": "/"
-              }
+              "separator": "/"
             },
             "responseBodyV3": {
               "type": "json",

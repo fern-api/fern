@@ -314,10 +314,7 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "fine_setting": true
-              }
+              "fine_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -392,10 +389,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -494,10 +488,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -584,10 +575,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",
@@ -673,10 +661,7 @@
             },
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "not_deprecated_setting": true
-              }
+              "not_deprecated_setting": true
             },
             "responseBodyV3": {
               "type": "json",

@@ -171,12 +171,9 @@
               },
               "responseStatusCode": 200,
               "responseBody": {
-                "type": "json",
-                "value": {
-                  "results": [
-                    "foo"
-                  ]
-                }
+                "results": [
+                  "foo"
+                ]
               },
               "responseBodyV3": {
                 "type": "json",
@@ -353,12 +350,9 @@
             "headers": {},
             "responseStatusCode": 200,
             "responseBody": {
-              "type": "json",
-              "value": {
-                "results": [
-                  "foo"
-                ]
-              }
+              "results": [
+                "foo"
+              ]
             },
             "responseBodyV3": {
               "type": "json",
