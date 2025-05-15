@@ -770,7 +770,7 @@
               "new_cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -1328,7 +1328,7 @@
                     "new_cargo_ready_date": {
                       "value": {
                         "value": "2019-06-30",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -5322,14 +5322,14 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
                             "delivery_date": {
                               "value": {
                                 "value": "2019-07-31",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -6488,14 +6488,14 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
               "delivery_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -7578,7 +7578,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-05-30",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -7667,7 +7667,7 @@
                     "delivery_date": {
                       "value": {
                         "value": "2019-05-30",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -9435,7 +9435,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-01-30",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -9524,7 +9524,7 @@
                     "delivery_date": {
                       "value": {
                         "value": "2019-02-22",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -15211,7 +15211,7 @@
                             "release_date": {
                               "value": {
                                 "value": "2019-05-03",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -15668,7 +15668,7 @@
                     "release_date": {
                       "value": {
                         "value": "2019-05-03",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -20484,7 +20484,7 @@
                             "due_date": {
                               "value": {
                                 "value": "2019-05-22",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -22216,7 +22216,7 @@
                     "due_date": {
                       "value": {
                         "value": "2019-05-22",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -36292,14 +36292,14 @@
                             "empty_returned_date": {
                               "value": {
                                 "value": "2019-02-28",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-02-06",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -37095,14 +37095,14 @@
                     "empty_returned_date": {
                       "value": {
                         "value": "2019-02-28",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -41845,7 +41845,7 @@
                             "must_arrive_date": {
                               "value": {
                                 "value": "2019-03-11",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -42882,7 +42882,7 @@
                     "must_arrive_date": {
                       "value": {
                         "value": "2019-03-11",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -44445,7 +44445,7 @@
                             "issue_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -44460,14 +44460,14 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-06-30",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
                             "must_arrive_date": {
                               "value": {
                                 "value": "2019-07-31",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -46168,14 +46168,14 @@
               "must_arrive_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
               "issue_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -46186,7 +46186,7 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -46381,14 +46381,14 @@
                       "must_arrive_date": {
                         "value": {
                           "value": "2019-07-31",
-                          "type": "date"
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
                       "cargo_ready_date": {
                         "value": {
                           "value": "2019-06-30",
-                          "type": "date"
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
@@ -46579,8 +46579,8 @@
                 },
                 "issue_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "issue_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -46598,15 +46598,15 @@
                 },
                 "cargo_ready_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "cargo_ready_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
                 "must_arrive_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "must_arrive_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -47963,8 +47963,8 @@
                     },
                     "issue_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "issue_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -47982,15 +47982,15 @@
                     },
                     "cargo_ready_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "cargo_ready_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
                     "must_arrive_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "must_arrive_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -49209,14 +49209,14 @@
               "must_arrive_date": {
                 "value": {
                   "value": "2019-07-31",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
               "issue_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -49227,7 +49227,7 @@
               "cargo_ready_date": {
                 "value": {
                   "value": "2019-06-30",
-                  "type": "date"
+                  "type": "string"
                 },
                 "type": "primitive"
               },
@@ -49364,8 +49364,8 @@
                 },
                 "issue_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "issue_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -49383,15 +49383,15 @@
                 },
                 "cargo_ready_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "cargo_ready_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
                 "must_arrive_date": {
                   "value": {
-                    "value": "2023-01-15",
-                    "type": "date"
+                    "value": "must_arrive_date",
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -50921,7 +50921,7 @@
                                 "cargo_ready_date": {
                                   "value": {
                                     "value": "2019-02-06",
-                                    "type": "date"
+                                    "type": "string"
                                   },
                                   "type": "primitive"
                                 },
@@ -52138,7 +52138,7 @@
                         "cargo_ready_date": {
                           "value": {
                             "value": "2019-02-06",
-                            "type": "date"
+                            "type": "string"
                           },
                           "type": "primitive"
                         },
@@ -52739,8 +52739,8 @@
                     },
                     "cargo_ready_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "cargo_ready_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     }
@@ -54424,7 +54424,7 @@
                             "cargo_ready_date": {
                               "value": {
                                 "value": "2019-02-06",
-                                "type": "date"
+                                "type": "string"
                               },
                               "type": "primitive"
                             },
@@ -56507,7 +56507,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -56590,8 +56590,8 @@
                     },
                     "target_delivery_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "target_delivery_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -58619,7 +58619,7 @@
                     "cargo_ready_date": {
                       "value": {
                         "value": "2019-02-06",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -58773,8 +58773,8 @@
                     },
                     "target_delivery_date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "target_delivery_date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -61840,7 +61840,9 @@
               "value": {
                 "description": "Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-06-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateBookingAmendmentNewCargoReadyDate",
                 "groupName": [],
@@ -63503,7 +63505,8 @@
               "value": {
                 "description": "The requested new cargo ready date",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "BookingAmendmentNewCargoReadyDate",
                 "groupName": [],
@@ -66028,7 +66031,8 @@
               "generatedName": "bookingCargoReadyDate",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "BookingCargoReadyDate",
                 "groupName": [],
@@ -66069,7 +66073,8 @@
               "generatedName": "bookingDeliveryDate",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "BookingDeliveryDate",
                 "groupName": [],
@@ -67166,7 +67171,9 @@
             "schema": {
               "description": "Always required. Date when cargo is ready for pickup at the origin location.",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "example": "2019-06-30",
+                "type": "string"
               },
               "generatedName": "CreateBookingCargoReadyDate",
               "groupName": [],
@@ -67183,7 +67190,9 @@
               "value": {
                 "description": "Optional. Target date by when cargo must be delivered.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-07-23",
+                  "type": "string"
                 },
                 "generatedName": "CreateBookingDeliveryDate",
                 "groupName": [],
@@ -70513,7 +70522,8 @@
               "value": {
                 "description": "The cargo release date for this entry.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "CustomsEntryReleaseDate",
                 "groupName": [],
@@ -73102,7 +73112,8 @@
               "value": {
                 "description": "Date when cargo is ready for pickup at the origin location",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "ShipmentCargoReadyDate",
                 "groupName": [],
@@ -73399,7 +73410,8 @@
               "value": {
                 "description": "Target date for when the shipment will be fully delivered. This date is set when the shipment's booking is confirmed. This value may be different from estimated_delivered_in_full_date, which is updated when there is new information about the progress of a shipment.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "ShipmentTargetDeliveryDate",
                 "groupName": [],
@@ -73899,7 +73911,8 @@
               "value": {
                 "description": "Represents the date when the cargo on the leg is ready for pickup.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "AdditionalDatesCargoReadyDate",
                 "groupName": [],
@@ -75176,7 +75189,8 @@
               "value": {
                 "description": "[DEPRECATED] See additional_dates",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "ShipmentLegCargoReadyDate",
                 "groupName": [],
@@ -76010,7 +76024,8 @@
                 "generatedName": "ShipmentContainerEmptyReturnedDate",
                 "value": {
                   "schema": {
-                    "type": "date"
+                    "format": "date",
+                    "type": "string"
                   },
                   "generatedName": "ShipmentContainerEmptyReturnedDate",
                   "groupName": [],
@@ -76034,7 +76049,8 @@
                 "generatedName": "ShipmentContainerCargoReadyDate",
                 "value": {
                   "schema": {
-                    "type": "date"
+                    "format": "date",
+                    "type": "string"
                   },
                   "generatedName": "ShipmentContainerCargoReadyDate",
                   "groupName": [],
@@ -77326,7 +77342,9 @@
               "value": {
                 "description": "Due date of the invoice",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-05-22",
+                  "type": "string"
                 },
                 "generatedName": "InvoiceDueDate",
                 "groupName": [],
@@ -80913,7 +80931,8 @@
               "generatedName": "purchaseOrderLineItemMustArriveDate",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "PurchaseOrderLineItemMustArriveDate",
                 "groupName": [],
@@ -81762,7 +81781,8 @@
               "value": {
                 "description": "the date that the order was issued",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "PurchaseOrderIssueDate",
                 "groupName": [],
@@ -81867,7 +81887,8 @@
               "generatedName": "purchaseOrderCargoReadyDate",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "PurchaseOrderCargoReadyDate",
                 "groupName": [],
@@ -81886,7 +81907,8 @@
               "generatedName": "purchaseOrderMustArriveDate",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "PurchaseOrderMustArriveDate",
                 "groupName": [],
@@ -83052,7 +83074,9 @@
               "value": {
                 "description": "Required if there is no must_arrive_date in the line item's purchase order. The must arrive date for this purchase order.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-09-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateLineItemMustArriveDate",
                 "groupName": [],
@@ -83072,7 +83096,9 @@
               "value": {
                 "description": "Required if there is no cargo_ready_date in the line item's purchase order. Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-06-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateLineItemCargoReadyDate",
                 "groupName": [],
@@ -84277,7 +84303,9 @@
               "value": {
                 "description": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-09-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderMustArriveDate",
                 "groupName": [],
@@ -84297,7 +84325,9 @@
               "value": {
                 "description": "The issue date for this purchase order.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-09-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderIssueDate",
                 "groupName": [],
@@ -84350,7 +84380,9 @@
               "value": {
                 "description": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "example": "2019-06-30",
+                  "type": "string"
                 },
                 "generatedName": "CreateOrUpdatePurchaseOrderCargoReadyDate",
                 "groupName": [],

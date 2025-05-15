@@ -182,7 +182,7 @@
                 "date": {
                   "value": {
                     "value": "2024-03-30",
-                    "type": "date"
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -827,7 +827,7 @@
                         "date": {
                           "value": {
                             "value": "2024-03-30",
-                            "type": "date"
+                            "type": "string"
                           },
                           "type": "primitive"
                         },
@@ -1234,7 +1234,7 @@
                       "date": {
                         "value": {
                           "value": "2024-03-30",
-                          "type": "date"
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
@@ -1698,7 +1698,7 @@
                 "date": {
                   "value": {
                     "value": "2024-03-30",
-                    "type": "date"
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -2394,7 +2394,7 @@
                       "date": {
                         "value": {
                           "value": "2024-03-30",
-                          "type": "date"
+                          "type": "string"
                         },
                         "type": "primitive"
                       },
@@ -3975,14 +3975,14 @@
                 "start_date": {
                   "value": {
                     "value": "2024-01-01",
-                    "type": "date"
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
                 "end_date": {
                   "value": {
                     "value": "2024-02-01",
-                    "type": "date"
+                    "type": "string"
                   },
                   "type": "primitive"
                 },
@@ -4253,14 +4253,14 @@
                         "start_date": {
                           "value": {
                             "value": "2024-01-01",
-                            "type": "date"
+                            "type": "string"
                           },
                           "type": "primitive"
                         },
                         "end_date": {
                           "value": {
                             "value": "2024-02-01",
-                            "type": "date"
+                            "type": "string"
                           },
                           "type": "primitive"
                         },
@@ -4306,7 +4306,7 @@
                                 "date": {
                                   "value": {
                                     "value": "2024-03-30",
-                                    "type": "date"
+                                    "type": "string"
                                   },
                                   "type": "primitive"
                                 },
@@ -5187,14 +5187,14 @@
                     "start_date": {
                       "value": {
                         "value": "2024-03-01",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
                     "end_date": {
                       "value": {
                         "value": "2024-03-30",
-                        "type": "date"
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -9872,7 +9872,8 @@
               "value": {
                 "description": "The start date of the statement period.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "BankStatementAccountStartDate",
                 "title": "Start Date",
@@ -9895,7 +9896,8 @@
               "value": {
                 "description": "The end date of the statement period.",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "BankStatementAccountEndDate",
                 "title": "End Date",
@@ -10256,7 +10258,8 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "BankStatementTransactionDate",
               "nameOverride": "Date",
@@ -14506,7 +14509,8 @@
             "schema": {
               "description": "The date of the oldest transaction in the group",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "RecurrenceGroupStartDate",
               "title": "Start Date",
@@ -14522,7 +14526,8 @@
             "schema": {
               "description": "The date of the most recent transaction in the group",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "RecurrenceGroupEndDate",
               "title": "End Date",
@@ -15039,7 +15044,8 @@
               "title": "StatementInfo",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "StatementInfoStartDate",
                 "title": "Start Date",
@@ -15061,7 +15067,8 @@
               "title": "StatementInfo",
               "value": {
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "StatementInfoEndDate",
                 "title": "End Date",
@@ -15263,7 +15270,8 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "TransactionDate",
               "nameOverride": "Date",
@@ -15618,7 +15626,8 @@
             "schema": {
               "description": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "TransactionInputDate",
               "nameOverride": "Date",

@@ -438,7 +438,13 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
               },
               "contract_end_date": {
                 "docs": "The date when the loan is expected to be completed.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "contract_number": {
                 "docs": "The contract number of the loan, as given by the institution.",
@@ -446,7 +452,13 @@ The amount remaining to pay on the users's loan (same as `loan_data.outstanding_
               },
               "contract_start_date": {
                 "docs": "The date when the loan contract was signed (`YYYY-MM-DD`).",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "credit_limit": {
                 "availability": "deprecated",
@@ -854,7 +866,13 @@ The ISO-8601 timestamp when the data point was collected.
               },
               "value_date": {
                 "docs": "The date when the `balance` was available, in `YYYY-MM-DD` format.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -1366,7 +1384,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "type": "EnumCategorizationTransactionType",
               "value_date": {
                 "docs": "The date when the transaction occurred, in `YYYY-MM-DD` format.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -1416,7 +1440,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "type": "EnumCategorizationTransactionType",
               "value_date": {
                 "docs": "The date when the transaction occurred, in `YYYY-MM-DD` format.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -2434,7 +2464,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "personal_data": "optional<EmploymentRecordPersonalData>",
               "report_date": {
                 "docs": "The date when the employment record report was generated, in `YYYY-MM-DD` format.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "social_security_summary": "optional<EmploymentRecordSocialSecuritySummary>",
             },
@@ -2472,7 +2508,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "end_date": {
                 "docs": "Date when employment finished, in `YYYY-MM-DD` format.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "monthly_salary": {
                 "docs": "The monthly salary of the individual, including any additional perks.
@@ -2489,7 +2531,13 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
               "start_date": {
                 "docs": "Date when employment started, in `YYYY-MM-DD` format.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "state": {
                 "docs": "In what geographical state the individual was employed, according to the country.
@@ -2534,7 +2582,13 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
               "update_date": {
                 "docs": "The date that the employment event occured, in `YYYY-MM-DD` format.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -2559,7 +2613,13 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
               "valid_until": {
                 "docs": "Date until when the individual is covered by health insurance and/or company benefits. If `null` the employee is currently working and no end date is required.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -2592,7 +2652,13 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
               "birth_date": {
                 "docs": "The date of the birth of the individual, in `YYYY-MM-DD` format.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "document_ids": {
                 "docs": "Details regarding the individual's ID documents.",
@@ -3911,7 +3977,13 @@ We return one of the following enum values:
               "type": "optional<EnumIncomeVerificationType>",
               "value_date": {
                 "docs": "The date when the income transaction occurred, in `YYYY-MM-DD` format.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -4009,7 +4081,13 @@ We return one of the following enum values:
               "first_transaction_date": {
                 "docs": "The date when the first transaction occurred, in `YYYY-MM-DD` format.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "id": {
                 "docs": "Belvo's unique identifier for the current income.",
@@ -4029,7 +4107,13 @@ We return one of the following enum values:
               "last_transaction_date": {
                 "docs": "The date when when the last transaction occurred, in `YYYY-MM-DD` format.
 ",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "link": {
                 "docs": "The `link.id` the account belongs to.",
@@ -4156,7 +4240,13 @@ For each income stream, we provide additional insights such as:
               "last_income_date": {
                 "docs": "The date when the most recent income from the stream was received, in `YYYY-MM-DD` format.
 ",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "last_income_description": "unknown",
               "lookback_periods": {
@@ -4813,7 +4903,13 @@ Please note that other currencies other than in the list above may be returned.
               },
               "open_date": {
                 "docs": "The start date of the instrument. Only applicable for instruments of type `bond` or `savings`.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "price": {
                 "docs": "The current price of one share in the instrument.",
@@ -5121,7 +5217,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "cancelation_update_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "certification_authority": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -5131,7 +5233,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "certification_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -5166,7 +5274,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
 
 For example: If the invoice is paid in installments, this field indicates the date when the installment is to be paid.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "folio": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -5185,7 +5299,13 @@ For example: If the invoice is paid in installments, this field indicates the da
               },
               "invoice_date": {
                 "docs": "The date of the invoice.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "invoice_details": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -5417,7 +5537,13 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
               "cancelation_update_date": {
                 "docs": "The date of the invoice cancelation.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "certification_authority": {
                 "docs": "The fiscal ID of the certification provider.
@@ -5427,7 +5553,13 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
               "certification_date": {
                 "docs": "The date of the fiscal certification.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "collected_at": {
                 "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -5474,7 +5606,13 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
               },
               "invoice_date": {
                 "docs": "The date of the invoice.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "invoice_details": {
                 "docs": "A list of descriptions for each item (purchased product or service provided) in the invoice.
@@ -5870,12 +6008,24 @@ Please note that other currencies other than in the list above may be returned.
               "date_from": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "date_to": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "days": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -5885,7 +6035,13 @@ Please note that other currencies other than in the list above may be returned.
               "payment_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "type": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -5919,12 +6075,24 @@ Please note that other currencies other than in the list above may be returned.
               "date_from": {
                 "docs": "The start date of the payment period.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "date_to": {
                 "docs": "The end date of the payment period.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "days": {
                 "docs": "The number of days covered by the payment.
@@ -5934,7 +6102,13 @@ Please note that other currencies other than in the list above may be returned.
               "payment_date": {
                 "docs": "The payment date.
 ",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "type": {
                 "docs": "The payroll type, as defined by the legal entity of the country.
@@ -8273,7 +8447,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "type": "optional<EnumReceivableTransactionType>",
               "value_date": {
                 "docs": "The date that the transactions occurred, according to the institution, in `YYYY-MM-DD` format.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "value_hour": {
                 "docs": "The time that the transaction occurred, according to the institution, in `HH:MM` format.",
@@ -8377,7 +8557,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               },
               "value_date": {
                 "docs": "The date when the transaction occurred, in `YYYY-MM-DD` format.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -9298,7 +9484,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               },
               "date_issued": {
                 "docs": "The date the tax declaration was issued by the fiscal institution.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "document_information": "DocumentInformationBusiness",
               "equity_statement": "EquityStatementBusiness",
@@ -9376,7 +9568,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               },
               "date_issued": {
                 "docs": "The date the tax declaration was issued by the fiscal institution.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "document_information": "DocumentInformationIndividual",
               "equity_statement": "EquityStatementIndividual",
@@ -10432,11 +10630,23 @@ For detailed information regarding DIAN's economic activities, please see their 
               "end_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "initial_date": {
                 "docs": "The start date of the economic activity.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "order": {
                 "docs": "The order of the economic activity.",
@@ -10463,11 +10673,23 @@ For detailed information regarding DIAN's economic activities, please see their 
               "end_date": {
                 "docs": "The end date of the economic activity.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "initial_date": {
                 "docs": "The start date of the economic activity.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "order": {
                 "docs": "The order of the economic activity.",
@@ -10493,7 +10715,13 @@ For detailed information regarding DIAN's economic activities, please see their 
               "end_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "expiration": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10503,7 +10731,13 @@ For detailed information regarding DIAN's economic activities, please see their 
               "initial_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "obligation": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
@@ -10525,7 +10759,13 @@ For detailed information regarding DIAN's economic activities, please see their 
               "end_date": {
                 "docs": "The date when obligation ended.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "expiration": {
                 "docs": "The deadline to fulfill the obligation, as imposed by the tax authority.
@@ -10535,7 +10775,13 @@ For detailed information regarding DIAN's economic activities, please see their 
               "initial_date": {
                 "docs": "The date when obligation started.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "obligation": {
                 "docs": "The description of the obligation.
@@ -10599,12 +10845,24 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "end_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "initial_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "regimen": {
                 "docs": "The description of the regimen.",
@@ -10622,12 +10880,24 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "end_date": {
                 "docs": "The end date of the regimen.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "initial_date": {
                 "docs": "The start date of the regimen.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "regimen": {
                 "docs": "The description of the regimen.",
@@ -10753,7 +11023,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "last_status_change_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "name": {
                 "docs": "The tax payers's first name.",
@@ -10780,7 +11056,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "start_operations_date": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "status_padron": {
                 "docs": "**Note**: This field is not applicable for DIAN Colombia and will return `null`.",
@@ -10818,7 +11100,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "last_status_change_date": {
                 "docs": "Date when `status_padron` was most recently updated.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "name": {
                 "docs": "The tax payers's first name.",
@@ -10845,7 +11133,13 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               "start_operations_date": {
                 "docs": "Date when the tax payer commenced taxable commercial activities.
 ",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "status_padron": {
                 "docs": "Status of the taxpayer in the Federal Register of Taxpayers (RFC). Can be `ACTIVO` or `INACTIVO`.",
@@ -11064,7 +11358,13 @@ For `too_many_sessions` errors, the description is:
               "type": "optional<EnumTransactionType>",
               "value_date": {
                 "docs": "The date when the transaction occurred, in `YYYY-MM-DD` format.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": "^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$",
+                },
               },
             },
             "source": {
@@ -12506,11 +12806,15 @@ types:
         type: optional<integer>
         docs: The number of installments left to pay.
       contract_start_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date when the loan contract was signed (`YYYY-MM-DD`).
+        validation:
+          format: date
       contract_end_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date when the loan is expected to be completed.
+        validation:
+          format: date
       contract_number:
         type: optional<string>
         docs: The contract number of the loan, as given by the institution.
@@ -13076,8 +13380,11 @@ types:
           The ISO-8601 timestamp of when the data point was last updated in
           Belvo's database.
       value_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date when the transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
+          pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
       accounting_date:
         type: optional<datetime>
         docs: >-
@@ -13215,8 +13522,10 @@ types:
           format: uuid
       account: optional<Account>
       value_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date when the `balance` was available, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       balance:
         type: optional<float>
         docs: The funds available in the account by the end of the `value_date`.
@@ -13847,20 +14156,26 @@ types:
         docs: |
           The version of the payroll object.
       date_from:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The start date of the payment period.
+        validation:
+          format: date
       date_to:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The end date of the payment period.
+        validation:
+          format: date
       collected_at:
         type: optional<datetime>
         docs: The ISO-8601 timestamp when the data point was collected.
       payment_date:
-        type: date
+        type: string
         docs: |
           The payment date.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   InvoiceWarningsSat:
@@ -13899,8 +14214,10 @@ types:
         type: optional<string>
         docs: The fiscal institution's unique ID for the invoice.
       invoice_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date of the invoice.
+        validation:
+          format: date
       status:
         type: optional<string>
         docs: >-
@@ -13984,13 +14301,17 @@ types:
           If the invoice is cancelled, this field indicates the status of the
           cancellation.
       cancelation_update_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date of the invoice cancelation.
+        validation:
+          format: date
       certification_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date of the fiscal certification.
+        validation:
+          format: date
       certification_authority:
         type: optional<string>
         docs: |
@@ -14404,25 +14725,31 @@ types:
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
       date_from:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       date_to:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       collected_at:
         type: optional<datetime>
         docs: >-
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
       payment_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   InvoiceWarningsDian:
@@ -14464,8 +14791,10 @@ types:
         type: optional<string>
         docs: The fiscal institution's unique ID for the invoice.
       invoice_date:
-        type: optional<date>
+        type: optional<string>
         docs: The date of the invoice.
+        validation:
+          format: date
       status:
         type: optional<string>
         docs: |-
@@ -14475,13 +14804,15 @@ types:
             - *Cancelado* (cancelled)
             - *Aprobado* (approved)
       expiration_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           Indicates when the invoice is set to expire.
 
 
           For example: If the invoice is paid in installments, this field
           indicates the date when the installment is to be paid.
+        validation:
+          format: date
       invoice_type: optional<EnumInvoiceDianInvoiceType>
       type: optional<EnumInvoiceType>
       sender_id:
@@ -14521,15 +14852,19 @@ types:
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
       cancelation_update_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       certification_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       certification_authority:
         type: optional<string>
         docs: >
@@ -15120,18 +15455,22 @@ types:
         type: optional<string>
         docs: The tax payers's second last name.
       start_operations_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           Date when the tax payer commenced taxable commercial activities.
+        validation:
+          format: date
       status_padron:
         type: optional<string>
         docs: >-
           Status of the taxpayer in the Federal Register of Taxpayers (RFC). Can
           be `ACTIVO` or `INACTIVO`.
       last_status_change_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           Date when `status_padron` was most recently updated.
+        validation:
+          format: date
       commercial_name:
         type: optional<string>
         docs: >
@@ -15210,12 +15549,16 @@ types:
         type: optional<string>
         docs: The description of the economic activity.
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: The start date of the economic activity.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The end date of the economic activity.
+        validation:
+          format: date
       order:
         type: optional<string>
         docs: The order of the economic activity.
@@ -15228,13 +15571,17 @@ types:
   TaxStatusRegimensSat:
     properties:
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The end date of the regimen.
+        validation:
+          format: date
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The start date of the regimen.
+        validation:
+          format: date
       regimen:
         type: optional<string>
         docs: The description of the regimen.
@@ -15256,13 +15603,17 @@ types:
           The deadline to fulfill the obligation, as imposed by the tax
           authority.
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date when obligation started.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date when obligation ended.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   TaxStatusSat:
@@ -15351,20 +15702,24 @@ types:
         type: optional<string>
         docs: The tax payers's second last name.
       start_operations_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       status_padron:
         type: optional<string>
         docs: >-
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
       last_status_change_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       commercial_name:
         type: optional<string>
         docs: >
@@ -15456,13 +15811,17 @@ types:
           see their [official
           PDF](https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo_tecnico_factura_electronica_vr_1_7_2020.pdf).
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: The start date of the economic activity.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       order:
         type: optional<string>
         docs: The order of the economic activity.
@@ -15476,15 +15835,19 @@ types:
   TaxStatusRegimensDian:
     properties:
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       regimen:
         type: optional<string>
         docs: The description of the regimen.
@@ -15507,15 +15870,19 @@ types:
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
       initial_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: >
           **Note**: This field is not applicable for DIAN Colombia and will
           return `null`.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   TaxStatusDian:
@@ -15791,10 +16158,12 @@ types:
             • 🇲🇽 MXN (Mexican Peso)
       last_income_description: unknown
       last_income_date:
-        type: date
+        type: string
         docs: >
           The date when the most recent income from the stream was received, in
           `YYYY-MM-DD` format.
+        validation:
+          format: date
       stability:
         type: optional<float>
         docs: >
@@ -15887,14 +16256,18 @@ types:
         type: list<IncomeStreamsBody>
       income_source_type: EnumIncomeSourceType
       first_transaction_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date when the first transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       last_transaction_date:
-        type: date
+        type: string
         docs: >
           The date when when the last transaction occurred, in `YYYY-MM-DD`
           format.
+        validation:
+          format: date
       number_of_income_streams:
         type: integer
         docs: |
@@ -16077,8 +16450,10 @@ types:
           Usually, this is the text that the end user would see in the bank
           statement. The description can be an empty string.
       value_date:
-        type: date
+        type: string
         docs: The date when the transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   EnumRecurringExpenseFrequency:
@@ -16363,10 +16738,12 @@ types:
         type: optional<float>
         docs: The current profit earned in the instrument.
       open_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           The start date of the instrument. Only applicable for instruments of
           type `bond` or `savings`.
+        validation:
+          format: date
       redemption_conditions:
         type: >-
           optional<list<optional<InvestmentsPortfolioInstrumentRedemptionConditions>>>
@@ -16562,10 +16939,12 @@ types:
           The time that the transaction occurred, according to the institution,
           in `HH:MM` format.
       value_date:
-        type: date
+        type: string
         docs: >-
           The date that the transactions occurred, according to the institution,
           in `YYYY-MM-DD` format.
+        validation:
+          format: date
       institution_transaction_id:
         type: string
         docs: >-
@@ -17493,8 +17872,10 @@ types:
       pension_income_statement: PensionIncomeStatementIndividual
       tax_assessment: TaxAssessmentIndividual
       date_issued:
-        type: date
+        type: string
         docs: The date the tax declaration was issued by the fiscal institution.
+        validation:
+          format: date
       pdf:
         type: optional<string>
         docs: The PDF of the tax declaration, as a binary string.
@@ -17754,8 +18135,10 @@ types:
       annual_costs_and_deductions_statement: AnnualCostsAndDeductionsStatementBusiness
       tax_assessment: TaxAssessmentBusiness
       date_issued:
-        type: date
+        type: string
         docs: The date the tax declaration was issued by the fiscal institution.
+        validation:
+          format: date
       pdf:
         type: optional<string>
         docs: The PDF of the tax declaration, as a binary string.
@@ -17811,11 +18194,13 @@ types:
           Indicates whether or not the individual is entitled to company
           benefits.
       valid_until:
-        type: optional<date>
+        type: optional<string>
         docs: >
           Date until when the individual is covered by health insurance and/or
           company benefits. If `null` the employee is currently working and no
           end date is required.
+        validation:
+          format: date
       status: optional<EnumEmploymentRecordStatus>
     source:
       openapi: ../openapi.yml
@@ -17862,9 +18247,11 @@ types:
           The email address of the individual (as provided in the initial POST
           request).
       birth_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date of the birth of the individual, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       entitlements: optional<EmploymentRecordEntitlement>
       document_ids:
         type: optional<list<EmploymentRecordDocumentId>>
@@ -17920,9 +18307,11 @@ types:
         docs: |
           The base salary of the individual, current as of the `update_date`.
       update_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           The date that the employment event occured, in `YYYY-MM-DD` format.
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   EmploymentRecordDetail:
@@ -17940,13 +18329,17 @@ types:
         docs: |
           The official ID of the employer, according to the country.
       start_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           Date when employment started, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: |
           Date when employment finished, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       weeks_employed:
         type: optional<integer>
         docs: |
@@ -18013,10 +18406,12 @@ types:
         type: optional<datetime>
         docs: The ISO-8601 timestamp when the data point was collected.
       report_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           The date when the employment record report was generated, in
           `YYYY-MM-DD` format.
+        validation:
+          format: date
       internal_identification:
         type: optional<string>
         docs: >-
@@ -18098,8 +18493,10 @@ types:
         docs: Your unique ID for the account where the transaction occurred.
       account_category: EnumIncomeVerificationAccountCategory
       value_date:
-        type: date
+        type: string
         docs: The date when the income transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       description:
         type: string
         docs: The description of the income.
@@ -18211,8 +18608,10 @@ types:
         docs: Your unique ID for the account where the transaction occurred.
       account_category: EnumCategorizationAccountCategory
       value_date:
-        type: date
+        type: string
         docs: The date when the transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       description:
         type: string
         docs: The description of the transaction.
@@ -18389,8 +18788,10 @@ types:
           system.
       account_category: EnumCategorizationAccountCategory
       value_date:
-        type: date
+        type: string
         docs: The date when the transaction occurred, in `YYYY-MM-DD` format.
+        validation:
+          format: date
       description:
         type: string
         docs: The description of the transaction.
@@ -31867,7 +32268,7 @@ At the moment, the employment records resource is available for:
                           "entitled_to_company_benefits": true,
                           "entitled_to_health_insurance": true,
                           "status": "EMPLOYED",
-                          "valid_until": "2023-01-15",
+                          "valid_until": "valid_until",
                         },
                         "first_name": "Bruce",
                         "last_name": "Banner del Torro",
@@ -32393,7 +32794,7 @@ service:
                 entitlements:
                   entitled_to_health_insurance: true
                   entitled_to_company_benefits: true
-                  valid_until: '2023-01-15'
+                  valid_until: valid_until
                   status: EMPLOYED
                 document_ids:
                   - {}
@@ -37378,7 +37779,7 @@ client.connect()
                         "date_from": "2018-07-01",
                         "date_to": "2018-07-31",
                         "days": 30,
-                        "payment_date": "2023-01-15",
+                        "payment_date": "payment_date",
                         "type": "O",
                         "version": "1.2",
                       },
@@ -37564,7 +37965,7 @@ client.connect()
                         "date_from": "2018-07-01",
                         "date_to": "2018-07-31",
                         "days": 30,
-                        "payment_date": "2023-01-15",
+                        "payment_date": "payment_date",
                         "type": "O",
                         "version": "1.2",
                       },
@@ -37938,7 +38339,7 @@ client.connect()
                         "date_from": "2018-07-01",
                         "date_to": "2018-07-31",
                         "days": 30,
-                        "payment_date": "2023-01-15",
+                        "payment_date": "payment_date",
                         "type": "O",
                         "version": "1.2",
                       },
@@ -38124,7 +38525,7 @@ client.connect()
                         "date_from": "2018-07-01",
                         "date_to": "2018-07-31",
                         "days": 30,
-                        "payment_date": "2023-01-15",
+                        "payment_date": "payment_date",
                         "type": "O",
                         "version": "1.2",
                       },
@@ -38379,7 +38780,7 @@ client.connect()
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
-                            "payment_date": "2023-01-15",
+                            "payment_date": "payment_date",
                             "type": "O",
                             "version": "1.2",
                           },
@@ -38596,7 +38997,7 @@ client.connect()
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
-                            "payment_date": "2023-01-15",
+                            "payment_date": "payment_date",
                             "type": "O",
                             "version": "1.2",
                           },
@@ -39031,7 +39432,7 @@ client.connect()
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
-                            "payment_date": "2023-01-15",
+                            "payment_date": "payment_date",
                             "type": "O",
                             "version": "1.2",
                           },
@@ -39247,7 +39648,7 @@ client.connect()
                             "date_from": "2018-07-01",
                             "date_to": "2018-07-31",
                             "days": 30,
-                            "payment_date": "2023-01-15",
+                            "payment_date": "payment_date",
                             "type": "O",
                             "version": "1.2",
                           },
@@ -39617,7 +40018,7 @@ client.connect()
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 30,
-                          "payment_date": "2023-01-15",
+                          "payment_date": "payment_date",
                           "type": "O",
                           "version": "1.2",
                         },
@@ -39863,7 +40264,7 @@ client.connect()
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 30,
-                          "payment_date": "2023-01-15",
+                          "payment_date": "payment_date",
                           "type": "O",
                           "version": "1.2",
                         },
@@ -40068,7 +40469,7 @@ client.connect()
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 30,
-                          "payment_date": "2023-01-15",
+                          "payment_date": "payment_date",
                           "type": "O",
                           "version": "1.2",
                         },
@@ -40478,7 +40879,7 @@ client.connect()
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 30,
-                          "payment_date": "2023-01-15",
+                          "payment_date": "payment_date",
                           "type": "O",
                           "version": "1.2",
                         },
@@ -40682,7 +41083,7 @@ client.connect()
                           "date_from": "2018-07-01",
                           "date_to": "2018-07-31",
                           "days": 30,
-                          "payment_date": "2023-01-15",
+                          "payment_date": "payment_date",
                           "type": "O",
                           "version": "1.2",
                         },
@@ -41141,7 +41542,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
-                    payment_date: '2023-01-15'
+                    payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
                   warnings:
@@ -41329,7 +41730,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
-                    payment_date: '2023-01-15'
+                    payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
                   warnings:
@@ -41706,7 +42107,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
-                    payment_date: '2023-01-15'
+                    payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
                   warnings:
@@ -41893,7 +42294,7 @@ service:
                     version: '1.2'
                     date_from: '2018-07-01'
                     date_to: '2018-07-31'
-                    payment_date: '2023-01-15'
+                    payment_date: payment_date
                   folio: '28'
                   xml: '=XML-STRING='
                   warnings:
@@ -42143,7 +42544,7 @@ service:
                   date_from: '2018-07-01'
                   date_to: '2018-07-31'
                   collected_at: '2019-09-27T13:01:41Z'
-                  payment_date: '2023-01-15'
+                  payment_date: payment_date
                 folio: '28'
                 xml: '=XML-STRING='
                 warnings:
@@ -42316,7 +42717,7 @@ service:
                   date_from: '2018-07-01'
                   date_to: '2018-07-31'
                   collected_at: '2019-09-27T13:01:41Z'
-                  payment_date: '2023-01-15'
+                  payment_date: payment_date
                 folio: '28'
                 xml: '=XML-STRING='
                 warnings:
@@ -42662,7 +43063,7 @@ service:
                   date_from: '2018-07-01'
                   date_to: '2018-07-31'
                   collected_at: '2019-09-27T13:01:41Z'
-                  payment_date: '2023-01-15'
+                  payment_date: payment_date
                 folio: '28'
                 xml: '=XML-STRING='
                 warnings:
@@ -42834,7 +43235,7 @@ service:
                   date_from: '2018-07-01'
                   date_to: '2018-07-31'
                   collected_at: '2019-09-27T13:01:41Z'
-                  payment_date: '2023-01-15'
+                  payment_date: payment_date
                 folio: '28'
                 xml: '=XML-STRING='
                 warnings:
@@ -43040,7 +43441,7 @@ service:
                   date_from: '2018-07-01'
                   date_to: '2018-07-31'
                   collected_at: '2019-09-27T13:01:41Z'
-                  payment_date: '2023-01-15'
+                  payment_date: payment_date
                 folio: '26'
                 xml: xml
                 warnings:
@@ -43252,7 +43653,7 @@ service:
                 date_from: '2018-07-01'
                 date_to: '2018-07-31'
                 collected_at: '2019-09-27T13:01:41Z'
-                payment_date: '2023-01-15'
+                payment_date: payment_date
               folio: '28'
               xml: '=XML-STRING='
               warnings:
@@ -43408,7 +43809,7 @@ service:
                 date_from: '2018-07-01'
                 date_to: '2018-07-31'
                 collected_at: '2019-09-27T13:01:41Z'
-                payment_date: '2023-01-15'
+                payment_date: payment_date
               folio: '28'
               xml: '=XML-STRING='
               warnings:
@@ -43722,7 +44123,7 @@ service:
                 date_from: '2018-07-01'
                 date_to: '2018-07-31'
                 collected_at: '2019-09-27T13:01:41Z'
-                payment_date: '2023-01-15'
+                payment_date: payment_date
               folio: '28'
               xml: '=XML-STRING='
               warnings:
@@ -43878,7 +44279,7 @@ service:
                 date_from: '2018-07-01'
                 date_to: '2018-07-31'
                 collected_at: '2019-09-27T13:01:41Z'
-                payment_date: '2023-01-15'
+                payment_date: payment_date
               folio: '28'
               xml: '=XML-STRING='
               warnings:
@@ -69770,7 +70171,7 @@ client.connect()
                       "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                       "regimes": [
                         {
-                          "end_date": "2023-01-15",
+                          "end_date": "end_date",
                           "initial_date": "2003-01-01",
                           "regimen": "Régimen de Sueldos y Salarios e Ingresos Asimilados a Salarios",
                         },
@@ -69923,7 +70324,7 @@ client.connect()
                       "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                       "regimes": [
                         {
-                          "end_date": "2023-01-15",
+                          "end_date": "end_date",
                           "initial_date": "2003-01-01",
                           "regimen": "Régimen General de Ley Personas Morales",
                         },
@@ -70551,7 +70952,7 @@ client.connect()
                       "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                       "regimes": [
                         {
-                          "end_date": "2023-01-15",
+                          "end_date": "end_date",
                           "initial_date": "2003-01-01",
                           "regimen": "Régimen de Sueldos y Salarios e Ingresos Asimilados a Salarios",
                         },
@@ -70714,7 +71115,7 @@ client.connect()
                       "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                       "regimes": [
                         {
-                          "end_date": "2023-01-15",
+                          "end_date": "end_date",
                           "initial_date": "2003-01-01",
                           "regimen": "Régimen General de Ley Personas Morales",
                         },
@@ -71307,7 +71708,7 @@ service:
                   order: '1'
                   percentage: '100'
               regimes:
-                - end_date: '2023-01-15'
+                - end_date: end_date
                   initial_date: '2003-01-01'
                   regimen: >-
                     Régimen de Sueldos y Salarios e Ingresos Asimilados a
@@ -71440,7 +71841,7 @@ service:
                   order: '1'
                   percentage: '100'
               regimes:
-                - end_date: '2023-01-15'
+                - end_date: end_date
                   initial_date: '2003-01-01'
                   regimen: Régimen General de Ley Personas Morales
               obligations:
@@ -71612,7 +72013,7 @@ service:
                   order: '1'
                   percentage: '100'
               regimes:
-                - end_date: '2023-01-15'
+                - end_date: end_date
                   initial_date: '2003-01-01'
                   regimen: >-
                     Régimen de Sueldos y Salarios e Ingresos Asimilados a
@@ -71735,7 +72136,7 @@ service:
                   order: '1'
                   percentage: '100'
               regimes:
-                - end_date: '2023-01-15'
+                - end_date: end_date
                   initial_date: '2003-01-01'
                   regimen: Régimen General de Ley Personas Morales
               obligations:

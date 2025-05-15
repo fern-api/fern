@@ -1,8 +1,10 @@
 - changelogEntry:
-  - summary: Convert schemas of type `string` with format `date` to a Fern `date` type, instead of a `string` type.
-    type: fix
+  - summary: |
+      When you set `type-dates-as-strings` to `false` in the OpenAPI `settings` in _generators.yml_,
+      schemas of type `string` with format `date` will be converted to a Fern `date` type, instead of a `string` type.
+    type: feat
   irVersion: 57
-  version: 0.61.11
+  version: 0.61.12
 
 - changelogEntry:
   - summary: |

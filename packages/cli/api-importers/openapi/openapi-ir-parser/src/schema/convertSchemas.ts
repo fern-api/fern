@@ -452,7 +452,7 @@ export function convertSchemaObject(
             });
         }
 
-        if (schema.format === "date") {
+        if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
             return wrapPrimitive({
                 nameOverride,
                 generatedName,

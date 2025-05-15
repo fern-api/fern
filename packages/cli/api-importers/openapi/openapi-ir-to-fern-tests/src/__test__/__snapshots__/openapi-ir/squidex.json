@@ -5645,7 +5645,8 @@
           "name": "fromDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetUsagesRequestFromDate",
             "groupName": [],
@@ -5661,7 +5662,8 @@
           "name": "toDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetUsagesRequestToDate",
             "groupName": [],
@@ -5770,8 +5772,8 @@
               "name": "fromDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "fromDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -5780,8 +5782,8 @@
               "name": "toDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "toDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -5861,8 +5863,8 @@
                             "properties": {
                               "date": {
                                 "value": {
-                                  "value": "2023-01-15",
-                                  "type": "date"
+                                  "value": "date",
+                                  "type": "string"
                                 },
                                 "type": "primitive"
                               },
@@ -5946,7 +5948,8 @@
           "name": "fromDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetUsagesForTeamRequestFromDate",
             "groupName": [],
@@ -5962,7 +5965,8 @@
           "name": "toDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetUsagesForTeamRequestToDate",
             "groupName": [],
@@ -6071,8 +6075,8 @@
               "name": "fromDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "fromDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6081,8 +6085,8 @@
               "name": "toDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "toDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6162,8 +6166,8 @@
                             "properties": {
                               "date": {
                                 "value": {
-                                  "value": "2023-01-15",
-                                  "type": "date"
+                                  "value": "date",
+                                  "type": "string"
                                 },
                                 "type": "primitive"
                               },
@@ -6565,7 +6569,8 @@
           "name": "fromDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetStorageSizesRequestFromDate",
             "groupName": [],
@@ -6581,7 +6586,8 @@
           "name": "toDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetStorageSizesRequestToDate",
             "groupName": [],
@@ -6695,8 +6701,8 @@
               "name": "fromDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "fromDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6705,8 +6711,8 @@
               "name": "toDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "toDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6721,8 +6727,8 @@
                   "properties": {
                     "date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -6792,7 +6798,8 @@
           "name": "fromDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetStorageSizesForTeamRequestFromDate",
             "groupName": [],
@@ -6808,7 +6815,8 @@
           "name": "toDate",
           "schema": {
             "schema": {
-              "type": "date"
+              "format": "date",
+              "type": "string"
             },
             "generatedName": "StatisticsGetStorageSizesForTeamRequestToDate",
             "groupName": [],
@@ -6922,8 +6930,8 @@
               "name": "fromDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "fromDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6932,8 +6940,8 @@
               "name": "toDate",
               "value": {
                 "value": {
-                  "value": "2023-01-15",
-                  "type": "date"
+                  "value": "toDate",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -6948,8 +6956,8 @@
                   "properties": {
                     "date": {
                       "value": {
-                        "value": "2023-01-15",
-                        "type": "date"
+                        "value": "date",
+                        "type": "string"
                       },
                       "type": "primitive"
                     },
@@ -76072,7 +76080,8 @@
             "schema": {
               "description": "The date when the usage was tracked.",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "CallsUsagePerDateDtoDate",
               "groupName": [],
@@ -76190,7 +76199,8 @@
             "schema": {
               "description": "The date when the usage was tracked.",
               "schema": {
-                "type": "date"
+                "format": "date",
+                "type": "string"
               },
               "generatedName": "StorageUsagePerDateDtoDate",
               "groupName": [],

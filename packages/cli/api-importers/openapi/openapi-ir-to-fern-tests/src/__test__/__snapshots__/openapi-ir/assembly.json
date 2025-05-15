@@ -389,7 +389,8 @@
               "value": {
                 "description": "Only get transcripts created on this date",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "TranscriptListRequestCreatedOn",
                 "groupName": [],
@@ -12781,7 +12782,8 @@
               "value": {
                 "description": "Only get transcripts created on this date",
                 "schema": {
-                  "type": "date"
+                  "format": "date",
+                  "type": "string"
                 },
                 "generatedName": "TranscriptListParametersCreatedOn",
                 "groupName": [],

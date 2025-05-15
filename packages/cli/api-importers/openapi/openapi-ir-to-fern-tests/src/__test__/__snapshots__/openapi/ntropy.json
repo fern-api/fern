@@ -224,7 +224,13 @@
               },
               "end_date": {
                 "docs": "The end date of the statement period.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "is_balance_reconciled": {
                 "docs": "Indicates whether the balance has been reconciled.",
@@ -240,7 +246,13 @@
               },
               "start_date": {
                 "docs": "The start date of the statement period.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "total_incoming": {
                 "docs": "The sum of amounts of all incoming transactions.",
@@ -346,7 +358,13 @@
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -1751,7 +1769,13 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "end_date": {
                 "docs": "The date of the most recent transaction in the group",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "id": {
                 "docs": "A unique UUID identifier for the group",
@@ -1767,7 +1791,13 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "start_date": {
                 "docs": "The date of the oldest transaction in the group",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "total_amount": {
                 "docs": "The sum of all transaction amounts in this group",
@@ -1887,13 +1917,25 @@ whether a transaction is a one-time event or a part of a recurring series.",
                 "type": "optional<list<Account>>",
               },
               "end_date": {
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "institution": {
                 "type": "optional<string>",
               },
               "start_date": {
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
             },
             "source": {
@@ -1951,7 +1993,13 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -2043,7 +2091,13 @@ whether a transaction is a one-time event or a part of a recurring series.",
               },
               "date": {
                 "docs": "The date that the transaction was posted. Uses ISO 8601 format (YYYY-MM-DD)",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "description": {
                 "docs": "The description string of the transaction",
@@ -2418,11 +2472,15 @@ types:
         type: optional<double>
         docs: The closing balance of the account for the statement period.
       start_date:
-        type: optional<date>
+        type: optional<string>
         docs: The start date of the statement period.
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
         docs: The end date of the statement period.
+        validation:
+          format: date
       is_balance_reconciled:
         type: optional<boolean>
         docs: Indicates whether the balance has been reconciled.
@@ -2490,10 +2548,12 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: date
+        type: string
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
+        validation:
+          format: date
       amount:
         type: double
         docs: >-
@@ -3286,11 +3346,15 @@ types:
         type: string
         docs: A unique UUID identifier for the group
       start_date:
-        type: date
+        type: string
         docs: The date of the oldest transaction in the group
+        validation:
+          format: date
       end_date:
-        type: date
+        type: string
         docs: The date of the most recent transaction in the group
+        validation:
+          format: date
       total_amount:
         type: double
         docs: The sum of all transaction amounts in this group
@@ -3389,9 +3453,13 @@ types:
       institution:
         type: optional<string>
       start_date:
-        type: optional<date>
+        type: optional<string>
+        validation:
+          format: date
       end_date:
-        type: optional<date>
+        type: optional<string>
+        validation:
+          format: date
       account_holder:
         type: optional<AccountHolder>
       accounts:
@@ -3421,10 +3489,12 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: date
+        type: string
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
+        validation:
+          format: date
       amount:
         type: double
         docs: >-
@@ -3491,10 +3561,12 @@ types:
           minLength: 0
           maxLength: 1024
       date:
-        type: date
+        type: string
         docs: >-
           The date that the transaction was posted. Uses ISO 8601 format
           (YYYY-MM-DD)
+        validation:
+          format: date
       amount:
         type: double
         docs: >-

@@ -399,7 +399,13 @@
             "properties": {
               "cargo_ready_date": {
                 "docs": "Represents the date when the cargo on the leg is ready for pickup.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "delivery_appointment_requested_at_date": {
                 "docs": "Date at which the appointment was first requested",
@@ -580,10 +586,26 @@
               "air_booking": "optional<AirBookingDetail>",
               "booking_line_items": "optional<BookingLineItemCollectionRef>",
               "cargo": "optional<Cargo>",
-              "cargo_ready_date": "optional<date>",
+              "cargo_ready_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "consignee_entity": "optional<CompanyEntity>",
               "created_at": "optional<datetime>",
-              "delivery_date": "optional<date>",
+              "delivery_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "destination_address": "optional<Address>",
               "id": {
                 "docs": "Unique identifier for the booking",
@@ -643,7 +665,13 @@
               },
               "new_cargo_ready_date": {
                 "docs": "The requested new cargo ready date",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "new_container_counts": {
                 "docs": "The requested new container count values",
@@ -1515,7 +1543,13 @@
               },
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in the line item's purchase order. Date when cargo is ready for pickup at the origin location.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "destination_locations": {
                 "docs": "List of destinations locations for this line item and the number of units to be sent",
@@ -1553,7 +1587,13 @@
               "metadata": "optional<MetadataCreate>",
               "must_arrive_date": {
                 "docs": "Required if there is no must_arrive_date in the line item's purchase order. The must arrive date for this purchase order.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "origin_location_ref": {
                 "docs": "Optional. Customizable reference ID of network location that is the origin location.",
@@ -1905,7 +1945,13 @@
             "properties": {
               "cargo_ready_date": {
                 "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "currency_code": {
                 "docs": "Required if there is no currency_code in each line item. The currency code being used in this purchase order.",
@@ -1929,7 +1975,13 @@
               },
               "issue_date": {
                 "docs": "The issue date for this purchase order.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "line_items": {
                 "docs": "A list of the line items in this purchase order",
@@ -1942,7 +1994,13 @@
               "metadata": "optional<MetadataCreate>",
               "must_arrive_date": {
                 "docs": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "name": {
                 "docs": "Always required. Name of the purchase order.",
@@ -2347,7 +2405,13 @@
               },
               "release_date": {
                 "docs": "The cargo release date for this entry.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "release_status": {
                 "docs": "The release status for this entry.",
@@ -2670,7 +2734,13 @@
               },
               "due_date": {
                 "docs": "Due date of the invoice",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "id": {
                 "docs": "Unique ID for the invoice",
@@ -3410,7 +3480,15 @@
                 "type": "optional<string>",
               },
               "archived_at": "optional<string>",
-              "cargo_ready_date": "optional<date>",
+              "cargo_ready_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "created_at": "optional<string>",
               "destination_addresses": "optional<list<Address>>",
               "destination_port": "optional<Place>",
@@ -3422,12 +3500,26 @@
               "incoterm": "optional<PurchaseOrderIncoterm>",
               "issue_date": {
                 "docs": "the date that the order was issued",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "line_items": "optional<PurchaseOrderLineItemCollectionRef>",
               "memo": "optional<string>",
               "metadata": "optional<Metadata>",
-              "must_arrive_date": "optional<date>",
+              "must_arrive_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "name": {
                 "docs": "The name of the purchase order",
                 "type": "optional<string>",
@@ -3524,7 +3616,15 @@
                 "type": "optional<list<LineItemMeasurement>>",
               },
               "metadata": "optional<Metadata>",
-              "must_arrive_date": "optional<date>",
+              "must_arrive_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "origin_location": "optional<Address>",
               "origin_port": "optional<Place>",
               "parent_line_key": {
@@ -3835,7 +3935,13 @@
               "calculated_weight": "optional<Weight>",
               "cargo_ready_date": {
                 "docs": "Date when cargo is ready for pickup at the origin location",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "child_shipments": {
                 "docs": "Links to the child shipments if the shipment is the parent shipment in a buyer's consol.",
@@ -3911,7 +4017,13 @@
               "status": "optional<ShipmentStatus>",
               "target_delivery_date": {
                 "docs": "Target date for when the shipment will be fully delivered. This date is set when the shipment's booking is confirmed. This value may be different from estimated_delivered_in_full_date, which is updated when there is new information about the progress of a shipment.",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "transportation_mode": "optional<TransportationMode>",
               "updated_at": {
@@ -3976,13 +4088,29 @@
               "actual_departure_date": "optional<datetime>",
               "actual_pickup_date": "optional<datetime>",
               "available_for_pickup_date": "optional<datetime>",
-              "cargo_ready_date": "optional<date>",
+              "cargo_ready_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "container_legs": "optional<ContainerLegCollectionRef>",
               "container_number": "optional<string>",
               "container_size": "optional<ShipmentContainerContainerSize>",
               "container_type": "optional<ShipmentContainerContainerType>",
               "empty_ready_date": "optional<string>",
-              "empty_returned_date": "optional<date>",
+              "empty_returned_date": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
               "estimated_arrival_date": "optional<datetime>",
               "estimated_available_for_pickup_date": "optional<datetime>",
               "estimated_delivery_date": "optional<datetime>",
@@ -4155,7 +4283,13 @@
               "air_leg": "optional<AirShipmentLeg>",
               "cargo_ready_date": {
                 "docs": "[DEPRECATED] See additional_dates",
-                "type": "optional<date>",
+                "type": "optional<string>",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "carrier_name": "optional<string>",
               "deleted_at": {
@@ -5069,8 +5203,10 @@
         type: optional<Address>
         docs: The requested new destination port (port of unloading)
       new_cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: The requested new cargo ready date
+        validation:
+          format: date
       new_product_descriptions:
         type: optional<list<BookingAmendmentHsCode>>
         docs: New product (HS code) information
@@ -5411,9 +5547,15 @@
       air_booking: optional<AirBookingDetail>
       trucking_booking: optional<TruckingBookingDetail>
       origin_address: optional<Address>
-      cargo_ready_date: optional<date>
+      cargo_ready_date:
+        type: optional<string>
+        validation:
+          format: date
       destination_address: optional<Address>
-      delivery_date: optional<date>
+      delivery_date:
+        type: optional<string>
+        validation:
+          format: date
       wants_export_customs_service:
         type: optional<boolean>
         docs: >-
@@ -5916,8 +6058,10 @@
         type: optional<CustomsEntryReleaseStatus>
         docs: The release status for this entry.
       release_date:
-        type: optional<date>
+        type: optional<string>
         docs: The cargo release date for this entry.
+        validation:
+          format: date
       shipment: optional<ShipmentRef>
     source:
       openapi: ../openapi.yml
@@ -6293,8 +6437,10 @@
         type: optional<datetime>
         docs: Actual arrival date to the last port of the main voyage
       cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: Date when cargo is ready for pickup at the origin location
+        validation:
+          format: date
       wants_freight_management_bco:
         type: optional<boolean>
         docs: >-
@@ -6355,12 +6501,14 @@
           Actual pickup date from the origin location. For ocean shipments with
           multiple containers, this is the date of last picked up container
       target_delivery_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           Target date for when the shipment will be fully delivered. This date
           is set when the shipment's booking is confirmed. This value may be
           different from estimated_delivered_in_full_date, which is updated when
           there is new information about the progress of a shipment.
+        validation:
+          format: date
       estimated_delivered_in_full_date:
         type: optional<datetime>
         docs: >-
@@ -6412,8 +6560,10 @@
   AdditionalDates:
     properties:
       cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: Represents the date when the cargo on the leg is ready for pickup.
+        validation:
+          format: date
       delivery_appointment_requested_at_date:
         type: optional<datetime>
         docs: Date at which the appointment was first requested
@@ -6551,8 +6701,10 @@
       trucking_leg: optional<TruckingShipmentLeg>
       rail_leg: optional<RailShipmentLeg>
       cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: '[DEPRECATED] See additional_dates'
+        validation:
+          format: date
     source:
       openapi: ../openapi.yml
   ContainerRef:
@@ -6631,8 +6783,14 @@
       actual_delivery_date: optional<datetime>
       last_free_day_date: optional<datetime>
       empty_ready_date: optional<string>
-      empty_returned_date: optional<date>
-      cargo_ready_date: optional<date>
+      empty_returned_date:
+        type: optional<string>
+        validation:
+          format: date
+      cargo_ready_date:
+        type: optional<string>
+        validation:
+          format: date
       available_for_pickup_date: optional<datetime>
       estimated_available_for_pickup_date: optional<datetime>
       shipment: optional<ShipmentRef>
@@ -6834,8 +6992,10 @@
         type: optional<datetime>
         docs: When the invoice was issued
       due_date:
-        type: optional<date>
+        type: optional<string>
         docs: Due date of the invoice
+        validation:
+          format: date
       total:
         type: optional<Money>
         docs: Sum of charges on the invoice
@@ -7180,7 +7340,10 @@
       incoterm: optional<PurchaseOrderLineItemIncoterm>
       transportation_mode: optional<TransportationMode>
       unit_of_measure: optional<PurchaseOrderLineItemUnitOfMeasure>
-      must_arrive_date: optional<date>
+      must_arrive_date:
+        type: optional<string>
+        validation:
+          format: date
       origin_port: optional<Place>
       origin_location: optional<Address>
       destination_port: optional<Place>
@@ -7347,13 +7510,21 @@
         type: optional<PurchaseOrderOrderClass>
         docs: Class of the purchase order.
       issue_date:
-        type: optional<date>
+        type: optional<string>
         docs: the date that the order was issued
+        validation:
+          format: date
       freight_paymnet_terms: optional<PurchaseOrderFreightPaymnetTerms>
       priority: optional<PurchaseOrderPriority>
       transportation_mode: optional<TransportationMode>
-      cargo_ready_date: optional<date>
-      must_arrive_date: optional<date>
+      cargo_ready_date:
+        type: optional<string>
+        validation:
+          format: date
+      must_arrive_date:
+        type: optional<string>
+        validation:
+          format: date
       origin_port: optional<Place>
       origin_address: optional<Address>
       destination_port: optional<Place>
@@ -7729,15 +7900,19 @@
         type: optional<CreatePurchaseOrderPort>
         docs: Optional. The destination port
       must_arrive_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           Required if there is no must_arrive_date in the line item's purchase
           order. The must arrive date for this purchase order.
+        validation:
+          format: date
       cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           Required if there is no cargo_ready_date in the line item's purchase
           order. Date when cargo is ready for pickup at the origin location.
+        validation:
+          format: date
       transportation_mode:
         type: optional<CreateLineItemTransportationMode>
         docs: Required if there is no transportation_mode in purchase order
@@ -7898,21 +8073,27 @@
         type: optional<CreatePurchaseOrderPort>
         docs: The destination port
       must_arrive_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           Required if there is no must_arrive_date in each line item. The must
           arrive date for this purchase order.
+        validation:
+          format: date
       issue_date:
-        type: optional<date>
+        type: optional<string>
         docs: The issue date for this purchase order.
+        validation:
+          format: date
       freight_payment_terms:
         type: optional<CreateOrUpdatePurchaseOrderFreightPaymentTerms>
         docs: The freight payment term for the purchase order
       cargo_ready_date:
-        type: optional<date>
+        type: optional<string>
         docs: >-
           Required if there is no cargo_ready_date in each line item. Date when
           cargo is ready for pickup at the origin location.
+        validation:
+          format: date
       transportation_mode:
         type: optional<CreateOrUpdatePurchaseOrderTransportationMode>
         docs: Required if there is no transportation_mode in purchase order
@@ -8835,7 +9016,13 @@ errors:
                     "cargo": "root.CreateCargo",
                     "cargo_ready_date": {
                       "docs": "Always required. Date when cargo is ready for pickup at the origin location.",
-                      "type": "date",
+                      "type": "string",
+                      "validation": {
+                        "format": "date",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
                     },
                     "consignee_entity_ref": {
                       "docs": "Always required. Customizable reference ID of company entity that is the consignee of the booking.",
@@ -8847,7 +9034,13 @@ errors:
                     },
                     "delivery_date": {
                       "docs": "Optional. Target date by when cargo must be delivered.",
-                      "type": "optional<date>",
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": "date",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
                     },
                     "destination_address_ref": {
                       "docs": "Always required for trucking bookings. Always required for air and ocean bookings if `wants_delivery_service` is TRUE. Customizable reference ID of network location that is the delivery location.",
@@ -9691,13 +9884,17 @@ service:
                 Customizable reference ID of network location that is the
                 delivery location.
             cargo_ready_date:
-              type: date
+              type: string
               docs: >-
                 Always required. Date when cargo is ready for pickup at the
                 origin location.
+              validation:
+                format: date
             delivery_date:
-              type: optional<date>
+              type: optional<string>
               docs: Optional. Target date by when cargo must be delivered.
+              validation:
+                format: date
             wants_export_customs_service:
               type: boolean
               docs: >-
@@ -10477,7 +10674,13 @@ docs: Endpoints relating to Booking objects
                     "new_cargo": "optional<root.CreateCargo>",
                     "new_cargo_ready_date": {
                       "docs": "Date when cargo is ready for pickup at the origin location.",
-                      "type": "optional<date>",
+                      "type": "optional<string>",
+                      "validation": {
+                        "format": "date",
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
                     },
                     "new_container_counts": "optional<root.CreateContainerCounts>",
                     "new_destination_address_ref": {
@@ -10630,8 +10833,10 @@ service:
                 `new_destination_port_loc_code` may be specified. UN code for
                 the destination port.
             new_cargo_ready_date:
-              type: optional<date>
+              type: optional<string>
               docs: Date when cargo is ready for pickup at the origin location.
+              validation:
+                format: date
             new_product_descriptions:
               type: optional<list<root.CreateBookingAmendmentHsCode>>
               docs: New product (HS code) information
@@ -21395,7 +21600,7 @@ docs: Endpoints relating to Product objects
                     "body": {
                       "_object": "/api/response",
                       "archived_at": "archived_at",
-                      "cargo_ready_date": "2023-01-15",
+                      "cargo_ready_date": "cargo_ready_date",
                       "created_at": "created_at",
                       "destination_addresses": [
                         {
@@ -21441,7 +21646,7 @@ docs: Endpoints relating to Product objects
                       "freight_paymnet_terms": "freight_collect",
                       "id": 2983,
                       "incoterm": "EXW",
-                      "issue_date": "2023-01-15",
+                      "issue_date": "issue_date",
                       "line_items": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -21456,7 +21661,7 @@ docs: Endpoints relating to Product objects
                           "abc123",
                         ],
                       },
-                      "must_arrive_date": "2023-01-15",
+                      "must_arrive_date": "must_arrive_date",
                       "name": "PO 12345 - "shipment"",
                       "order_class": "purchase_order",
                       "order_type": "Apparel",
@@ -21898,7 +22103,7 @@ docs: Endpoints relating to Product objects
                       "data": {
                         "_object": "/booking",
                         "archived_at": "archived_at",
-                        "cargo_ready_date": "2023-01-15",
+                        "cargo_ready_date": "cargo_ready_date",
                         "created_at": "created_at",
                         "destination_addresses": [
                           {
@@ -21936,7 +22141,7 @@ docs: Endpoints relating to Product objects
                         "freight_paymnet_terms": "freight_collect",
                         "id": 2983,
                         "incoterm": "EXW",
-                        "issue_date": "2023-01-15",
+                        "issue_date": "issue_date",
                         "line_items": {
                           "_object": "/api/refs/collection",
                           "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -21951,7 +22156,7 @@ docs: Endpoints relating to Product objects
                             "abc123",
                           ],
                         },
-                        "must_arrive_date": "2023-01-15",
+                        "must_arrive_date": "must_arrive_date",
                         "name": "PO 12345 - "shipment"",
                         "order_class": "purchase_order",
                         "order_type": "Apparel",
@@ -22097,7 +22302,7 @@ docs: Endpoints relating to Product objects
                     "body": {
                       "_object": "/api/response",
                       "archived_at": "archived_at",
-                      "cargo_ready_date": "2023-01-15",
+                      "cargo_ready_date": "cargo_ready_date",
                       "created_at": "created_at",
                       "destination_addresses": [
                         {
@@ -22143,7 +22348,7 @@ docs: Endpoints relating to Product objects
                       "freight_paymnet_terms": "freight_collect",
                       "id": 2983,
                       "incoterm": "EXW",
-                      "issue_date": "2023-01-15",
+                      "issue_date": "issue_date",
                       "line_items": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
@@ -22158,7 +22363,7 @@ docs: Endpoints relating to Product objects
                           "abc123",
                         ],
                       },
-                      "must_arrive_date": "2023-01-15",
+                      "must_arrive_date": "must_arrive_date",
                       "name": "PO 12345 - "shipment"",
                       "order_class": "purchase_order",
                       "order_type": "Apparel",
@@ -22767,12 +22972,12 @@ service:
               incoterm: EXW
               order_type: Apparel
               order_class: purchase_order
-              issue_date: '2023-01-15'
+              issue_date: issue_date
               freight_paymnet_terms: freight_collect
               priority: standard
               transportation_mode: ocean
-              cargo_ready_date: '2023-01-15'
-              must_arrive_date: '2023-01-15'
+              cargo_ready_date: cargo_ready_date
+              must_arrive_date: must_arrive_date
               origin_port:
                 _object: /place
                 name: ORD - Chicago - IL
@@ -22918,12 +23123,12 @@ service:
                 incoterm: EXW
                 order_type: Apparel
                 order_class: purchase_order
-                issue_date: '2023-01-15'
+                issue_date: issue_date
                 freight_paymnet_terms: freight_collect
                 priority: standard
                 transportation_mode: ocean
-                cargo_ready_date: '2023-01-15'
-                must_arrive_date: '2023-01-15'
+                cargo_ready_date: cargo_ready_date
+                must_arrive_date: must_arrive_date
                 origin_port:
                   _object: /place
                   name: ORD - Chicago - IL
@@ -23063,12 +23268,12 @@ service:
               incoterm: EXW
               order_type: Apparel
               order_class: purchase_order
-              issue_date: '2023-01-15'
+              issue_date: issue_date
               freight_paymnet_terms: freight_collect
               priority: standard
               transportation_mode: ocean
-              cargo_ready_date: '2023-01-15'
-              must_arrive_date: '2023-01-15'
+              cargo_ready_date: cargo_ready_date
+              must_arrive_date: must_arrive_date
               origin_port:
                 _object: /place
                 name: ORD - Chicago - IL
@@ -24688,7 +24893,7 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "2023-01-15",
+                        "target_delivery_date": "target_delivery_date",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
@@ -25012,7 +25217,7 @@ docs: >-
                           },
                         ],
                         "status": "in_transit_to_arrival_port",
-                        "target_delivery_date": "2023-01-15",
+                        "target_delivery_date": "target_delivery_date",
                         "transportation_mode": "ocean",
                         "updated_at": "2019-02-06T19:28:25Z",
                         "visibility_only": false,
@@ -25731,7 +25936,7 @@ service:
                 belongs_to_a_buyers_consol: false
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: '2023-01-15'
+                target_delivery_date: target_delivery_date
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -25995,7 +26200,7 @@ service:
                   id: 123
                 estimated_picked_up_in_full_date: '2019-02-06T19:28:25Z'
                 actual_picked_up_in_full_date: '2019-02-06T19:28:25Z'
-                target_delivery_date: '2023-01-15'
+                target_delivery_date: target_delivery_date
                 estimated_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 actual_delivered_in_full_date: '2019-02-06T19:28:25Z'
                 wants_export_customs_service: true
@@ -26467,7 +26672,7 @@ docs: Endpoints relating to Shipment objects
                           "delivery_completed": "2019-07-14T04:00:00Z",
                           "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                         },
-                        "cargo_ready_date": "2023-01-15",
+                        "cargo_ready_date": "cargo_ready_date",
                         "carrier_name": "Liberty Carrier",
                         "deleted_at": "2024-01-15T09:30:00Z",
                         "destination": {
@@ -26991,7 +27196,7 @@ service:
                     ref_type: /ocean/shipment_container_leg
                     link: >-
                       https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123
-                cargo_ready_date: '2023-01-15'
+                cargo_ready_date: cargo_ready_date
   source:
     openapi: ../openapi.yml
   display-name: ShipmentLeg

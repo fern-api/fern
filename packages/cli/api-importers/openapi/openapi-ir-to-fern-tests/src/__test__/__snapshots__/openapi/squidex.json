@@ -1139,7 +1139,13 @@
               },
               "date": {
                 "docs": "The date when the usage was tracked.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "totalBytes": {
                 "docs": "The total number of bytes transferred.",
@@ -3915,7 +3921,13 @@
             "properties": {
               "date": {
                 "docs": "The date when the usage was tracked.",
-                "type": "date",
+                "type": "string",
+                "validation": {
+                  "format": "date",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
               },
               "totalCount": {
                 "docs": "The number of assets.",
@@ -5879,8 +5891,10 @@ types:
   CallsUsagePerDateDto:
     properties:
       date:
-        type: date
+        type: string
         docs: The date when the usage was tracked.
+        validation:
+          format: date
       totalCalls:
         type: long
         docs: The total number of API calls.
@@ -5905,8 +5919,10 @@ types:
   StorageUsagePerDateDto:
     properties:
       date:
-        type: date
+        type: string
         docs: The date when the usage was tracked.
+        validation:
+          format: date
       totalCount:
         type: long
         docs: The number of assets.
@@ -30598,13 +30614,13 @@ service:
                 {
                   "path-parameters": {
                     "app": "app",
-                    "fromDate": "2023-01-15",
-                    "toDate": "2023-01-15",
+                    "fromDate": "fromDate",
+                    "toDate": "toDate",
                   },
                   "response": {
                     "body": [
                       {
-                        "date": "2023-01-15",
+                        "date": "date",
                         "totalCount": 1000000,
                         "totalSize": 1000000,
                       },
@@ -30622,11 +30638,11 @@ service:
                 },
                 "fromDate": {
                   "docs": "The from date.",
-                  "type": "date",
+                  "type": "string",
                 },
                 "toDate": {
                   "docs": "The to date.",
-                  "type": "date",
+                  "type": "string",
                 },
               },
               "response": {
@@ -30649,14 +30665,14 @@ service:
               "examples": [
                 {
                   "path-parameters": {
-                    "fromDate": "2023-01-15",
+                    "fromDate": "fromDate",
                     "team": "team",
-                    "toDate": "2023-01-15",
+                    "toDate": "toDate",
                   },
                   "response": {
                     "body": [
                       {
-                        "date": "2023-01-15",
+                        "date": "date",
                         "totalCount": 1000000,
                         "totalSize": 1000000,
                       },
@@ -30670,7 +30686,7 @@ service:
               "path-parameters": {
                 "fromDate": {
                   "docs": "The from date.",
-                  "type": "date",
+                  "type": "string",
                 },
                 "team": {
                   "docs": "The ID of the team.",
@@ -30678,7 +30694,7 @@ service:
                 },
                 "toDate": {
                   "docs": "The to date.",
-                  "type": "date",
+                  "type": "string",
                 },
               },
               "response": {
@@ -30741,8 +30757,8 @@ service:
                 {
                   "path-parameters": {
                     "app": "app",
-                    "fromDate": "2023-01-15",
-                    "toDate": "2023-01-15",
+                    "fromDate": "fromDate",
+                    "toDate": "toDate",
                   },
                   "response": {
                     "body": {
@@ -30754,7 +30770,7 @@ service:
                         "key": [
                           {
                             "averageElapsedMs": 1.1,
-                            "date": "2023-01-15",
+                            "date": "date",
                             "totalBytes": 1000000,
                             "totalCalls": 1000000,
                           },
@@ -30778,11 +30794,11 @@ service:
                 },
                 "fromDate": {
                   "docs": "The from date.",
-                  "type": "date",
+                  "type": "string",
                 },
                 "toDate": {
                   "docs": "The to date.",
-                  "type": "date",
+                  "type": "string",
                 },
               },
               "response": {
@@ -30805,9 +30821,9 @@ service:
               "examples": [
                 {
                   "path-parameters": {
-                    "fromDate": "2023-01-15",
+                    "fromDate": "fromDate",
                     "team": "team",
-                    "toDate": "2023-01-15",
+                    "toDate": "toDate",
                   },
                   "response": {
                     "body": {
@@ -30819,7 +30835,7 @@ service:
                         "key": [
                           {
                             "averageElapsedMs": 1.1,
-                            "date": "2023-01-15",
+                            "date": "date",
                             "totalBytes": 1000000,
                             "totalCalls": 1000000,
                           },
@@ -30839,7 +30855,7 @@ service:
               "path-parameters": {
                 "fromDate": {
                   "docs": "The from date.",
-                  "type": "date",
+                  "type": "string",
                 },
                 "team": {
                   "docs": "The name of the team.",
@@ -30847,7 +30863,7 @@ service:
                 },
                 "toDate": {
                   "docs": "The to date.",
-                  "type": "date",
+                  "type": "string",
                 },
               },
               "response": {
@@ -30906,10 +30922,10 @@ service:
           variable: $appName
           docs: The name of the app.
         fromDate:
-          type: date
+          type: string
           docs: The from date.
         toDate:
-          type: date
+          type: string
           docs: The to date.
       display-name: Get api calls in date range.
       response:
@@ -30922,8 +30938,8 @@ service:
       examples:
         - path-parameters:
             app: app
-            fromDate: '2023-01-15'
-            toDate: '2023-01-15'
+            fromDate: fromDate
+            toDate: toDate
           response:
             body:
               totalCalls: 1000000
@@ -30936,7 +30952,7 @@ service:
               averageElapsedMs: 1.1
               details:
                 key:
-                  - date: '2023-01-15'
+                  - date: date
                     totalCalls: 1000000
                     totalBytes: 1000000
                     averageElapsedMs: 1.1
@@ -30951,10 +30967,10 @@ service:
           type: string
           docs: The name of the team.
         fromDate:
-          type: date
+          type: string
           docs: The from date.
         toDate:
-          type: date
+          type: string
           docs: The to date.
       display-name: Get api calls in date range for team.
       response:
@@ -30967,8 +30983,8 @@ service:
       examples:
         - path-parameters:
             team: team
-            fromDate: '2023-01-15'
-            toDate: '2023-01-15'
+            fromDate: fromDate
+            toDate: toDate
           response:
             body:
               totalCalls: 1000000
@@ -30981,7 +30997,7 @@ service:
               averageElapsedMs: 1.1
               details:
                 key:
-                  - date: '2023-01-15'
+                  - date: date
                     totalCalls: 1000000
                     totalBytes: 1000000
                     averageElapsedMs: 1.1
@@ -31046,10 +31062,10 @@ service:
           variable: $appName
           docs: The name of the app.
         fromDate:
-          type: date
+          type: string
           docs: The from date.
         toDate:
-          type: date
+          type: string
           docs: The to date.
       display-name: Get asset usage by date.
       response:
@@ -31062,11 +31078,11 @@ service:
       examples:
         - path-parameters:
             app: app
-            fromDate: '2023-01-15'
-            toDate: '2023-01-15'
+            fromDate: fromDate
+            toDate: toDate
           response:
             body:
-              - date: '2023-01-15'
+              - date: date
                 totalCount: 1000000
                 totalSize: 1000000
     getStorageSizesForTeam:
@@ -31080,10 +31096,10 @@ service:
           type: string
           docs: The ID of the team.
         fromDate:
-          type: date
+          type: string
           docs: The from date.
         toDate:
-          type: date
+          type: string
           docs: The to date.
       display-name: Get asset usage by date for team.
       response:
@@ -31096,11 +31112,11 @@ service:
       examples:
         - path-parameters:
             team: team
-            fromDate: '2023-01-15'
-            toDate: '2023-01-15'
+            fromDate: fromDate
+            toDate: toDate
           response:
             body:
-              - date: '2023-01-15'
+              - date: date
                 totalCount: 1000000
                 totalSize: 1000000
   source:
